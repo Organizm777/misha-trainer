@@ -1955,7 +1955,7 @@ async function pushRushRecord(name,min,score){
     const r=await fetch('https://api.npoint.io/'+rushBinId);
     const data=await r.json();
     if(!data.records)data.records=[];
-    data.records.push({name,min,score,date:new Date().toLocaleDateString('ru'),ts:Date.now()});
+    data.records.push({name,min,score,date:new Date().toLocaleDateString('ru',{day:'numeric',month:'short'}),ts:Date.now()});
     // Keep last 100 records
     if(data.records.length>100)data.records=data.records.slice(-100);
     await fetch('https://api.npoint.io/'+rushBinId,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
@@ -2511,8 +2511,8 @@ async function showRushRecords(){
   const best3={},best5={};
   records.forEach(r=>{
     const k=r.name||'?';
-    if(r.min===3&&r.score>(best3[k]||0))best3[k]=r.score;
-    if(r.min===5&&r.score>(best5[k]||0))best5[k]=r.score;
+    if(r.min===3&&(!(k in best3)||r.score>best3[k]))best3[k]=r.score;
+    if(r.min===5&&(!(k in best5)||r.score>best5[k]))best5[k]=r.score;
   });
 
   let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">🏆 Puzzle Rush — Рекорды</h3>';
