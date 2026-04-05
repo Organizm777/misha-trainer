@@ -115,16 +115,18 @@ header h1{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:800;whit
   <div style="text-align:center;margin-bottom:16px" class="fade"><div style="font-size:28px;margin-bottom:4px">📚</div>
     <h2 style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:800">Тренажёр</h2>
     <p style="font-size:12px;color:var(--muted);margin-top:3px">10 класс · все предметы</p>
+    <div id="player-badge" style="margin-top:8px"></div>
     <div style="background:var(--abg);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:12.5px;color:#1e40af;line-height:1.5;text-align:left">
-      <b>Миш, это от папы.</b> Тут шпаргалки и задания по всем предметам — от алгебры до истории. Правило: каждый день набери норму и отправь отчёт — потом свободен. Шорткат: 20 задач подряд без единой ошибки и подсказок = сразу свободен. Обычная норма: 100 задач с точностью 70%+. Жми «⚡ Общий микс» — задания из всех предметов, ближние экзамены чаще. Удачи 💪
+      Правило: каждый день набери норму и отправь отчёт — потом свободен. Шорткат: 20 задач подряд без единой ошибки и подсказок = сразу свободен. Обычная норма: 100 задач с точностью 70%+. Удачи 💪
     </div>
   </div>
   <div class="gap8" id="sg"></div>
   <div id="daily-meter"></div>
   <div style="display:flex;gap:8px;margin-top:12px">
-    <button class="btn btn-o" style="flex:1" onclick="go('info')">📖 Инструкция</button>
+    <button class="btn btn-o" style="flex:1" onclick="go('info')">📖</button>
     <button class="btn btn-o" style="flex:1" onclick="go('prog')">📊 Прогресс</button>
     <button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Бейджи</button>
+    <button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Зал славы</button>
   </div>
 </div></div>
 
@@ -1895,6 +1897,27 @@ const SUBJ=[
 
 // ═══ STATE ═══
 let cS=null,cT=null,mix=false,globalMix=false,diagMode=false,diagMax=15,prob=null,sel=null,hintOn=false,shpOn=false,usedHelp=false,curTheory=null;
+let mixFilter=null;
+let rushMode=false,rushTime=0,rushErrors=0,rushScore=0,rushBest={3:0,5:0};
+let rushBinId='c23d724d2193e8751f9c';
+
+// ═══ SHARED LEADERBOARD VIA NPOINT.IO ═══
+
+async function pushRushRecord(name,min,score){
+  if(!rushBinId)return;
+  try{
+    const r=await fetch('https://api.npoint.io/'+rushBinId);
+    const data=await r.json();
+    if(!data.records)data.records=[];
+    data.records.push({name,min,score,date:new Date().toLocaleDateString('ru'),ts:Date.now()});
+    // Keep last 100 records
+    if(data.records.length>100)data.records=data.records.slice(-100);
+    await fetch('https://api.npoint.io/'+rushBinId,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  }catch(e){console.log('push err:',e)}}
+
+async function fetchRushRecords(){
+  if(!rushBinId)return[];
+  try{const r=await fetch('https://api.npoint.io/'+rushBinId);const d=await r.json();return d.records||[]}catch{return[]}}
 let st={ok:0,err:0,streak:0,best:0};
 let sesTopics={};// track per-topic stats for current session
 let seenQs={};// track question repeats: question_text → count
@@ -1923,7 +1946,18 @@ function daysTo(ds){const m={'января':0,'февраля':1,'марта':2,
 function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');
   if(id==='main'){document.getElementById('hdr').textContent='ПОДГОТОВКА';document.getElementById('hb').style.display='none';refreshMain()}
   if(id==='prog')renderProg()}
-function refreshMain(){const g=document.getElementById('sg');g.innerHTML='';
+function refreshMain(){
+  // Show player badge
+  const name=getPlayerName();
+  const pb=document.getElementById('player-badge');
+  if(pb){
+    const rank=STR.totalQs>=5000?'💎 Легенда':STR.totalQs>=1000?'🏅 Мастер':STR.totalQs>=500?'🧠 Знаток':STR.totalQs>=100?'📚 Ученик':'🌱 Новичок';
+    pb.innerHTML=`<div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#fef9c3,#fff7ed);padding:6px 16px;border-radius:20px;cursor:pointer" onclick="pickName()">
+      <span style="font-size:16px;font-weight:800;color:#1a1a2e">${name}</span>
+      <span style="font-size:11px;color:#6b6b7e">${rank}</span>
+      <span style="font-size:10px;color:#aaa">✏️</span>
+    </div>`}
+  const g=document.getElementById('sg');g.innerHTML='';
   SUBJ.forEach((s,i)=>{const d=daysTo(s.date);const btn=document.createElement('button');btn.className='scard';
     let tok=0,terr=0;s.tops.forEach(t=>{const p=getTP(s.id,t.id);tok+=p.ok;terr+=p.err});
     const ttot=tok+terr;const pct=ttot?Math.round(tok/ttot*100):0;
@@ -1961,23 +1995,78 @@ function renderDailyMeter(){
     ${chips?'<div class="dm-chips">'+chips+'</div>':''}
     ${badgeHtml}
     <div style="display:flex;gap:6px;margin-top:10px">
-      <button class="btn btn-p" style="flex:1;font-size:12px;padding:9px" onclick="startGlobalMix()">⚡ Общий микс</button>
+      <button class="btn btn-p" style="flex:1;font-size:12px;padding:9px" onclick="showMixFilter()">⚡ Общий микс</button>
       ${done?'<button class="btn btn-g" style="flex:1;font-size:12px;padding:9px" onclick="shareDailyReport()">📤 Отправить папе</button>':'<button class="btn btn-o" style="flex:1;font-size:12px;padding:9px;opacity:.35;pointer-events:none">🔒 Сначала норма</button>'}
+    </div>
+    <div style="display:flex;gap:6px;margin-top:6px">
+      <button class="btn" style="flex:1;font-size:11px;padding:8px;background:linear-gradient(135deg,#fef9c3,#fff7ed);color:#92400e;font-weight:700;border:none;border-radius:8px" onclick="startRush(3)">🏃 Rush 3 мин</button>
+      <button class="btn" style="flex:1;font-size:11px;padding:8px;background:linear-gradient(135deg,#fee2e2,#fef9c3);color:#991b1b;font-weight:700;border:none;border-radius:8px" onclick="startRush(5)">🏃 Rush 5 мин</button>
+      <button class="btn" style="flex:1;font-size:11px;padding:8px;background:linear-gradient(135deg,#ede9fe,#dbeafe);color:#3730a3;font-weight:700;border:none;border-radius:8px" onclick="showRushRecords()">🏆 Рекорды</button>
     </div>
   </div>`}
 
+function showMixFilter(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:20px;max-width:360px;width:100%;max-height:80vh;overflow-y:auto';
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:15px;font-weight:800;margin-bottom:12px;text-align:center">⚡ Выбери предметы для микса</h3>';
+  h+='<div style="display:flex;gap:6px;margin-bottom:12px;justify-content:center"><button onclick="mfAll(true)" style="font-size:11px;padding:5px 10px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer">Все</button><button onclick="mfAll(false)" style="font-size:11px;padding:5px 10px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer">Ничего</button></div>';
+  SUBJ.forEach(s=>{
+    h+=`<label style="display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid #f0f0f0;cursor:pointer;font-size:14px">
+      <input type="checkbox" checked data-sid="${s.id}" class="mf-cb" style="width:20px;height:20px;accent-color:${s.cl}">
+      <span style="font-size:18px">${s.ic}</span>
+      <span style="flex:1;font-weight:600;color:#1a1a2e">${s.nm}</span>
+      <span style="font-size:11px;color:#6b6b7e">${s.date}</span>
+    </label>`;
+  });
+  h+=`<button id="mf-go" style="margin-top:14px;width:100%;padding:12px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="launchMix()">⚡ Начать микс</button>`;
+  h+=`<button style="margin-top:8px;width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#6b6b7e;font-weight:600;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Отмена</button>`;
+  box.innerHTML=h;d.appendChild(box);document.body.appendChild(d);
+  window._mfOverlay=d}
+function mfAll(on){document.querySelectorAll('.mf-cb').forEach(c=>c.checked=on)}
+function launchMix(){
+  const cbs=document.querySelectorAll('.mf-cb:checked');
+  const ids=[...cbs].map(c=>c.dataset.sid);
+  if(ids.length===0){alert('Выбери хотя бы один предмет');return}
+  mixFilter=ids.length===SUBJ.length?null:ids;
+  if(window._mfOverlay)window._mfOverlay.remove();
+  startGlobalMix()}
+
 function startGlobalMix(){globalMix=true;diagMode=false;cS=null;cT=null;mix=true;mixStreak={id:null,count:0};
-  document.getElementById('hdr').textContent='ОБЩИЙ МИКС';startQuiz()}
+  const label=mixFilter?SUBJ.filter(s=>mixFilter.includes(s.id)).map(s=>s.ic).join('')+' МИКС':'ОБЩИЙ МИКС';
+  document.getElementById('hdr').textContent=label;startQuiz()}
 
 function startDiag(){
-  diagMode=true;diagMax=15;mix=true;cT=null;
+  diagMode=true;rushMode=false;diagMax=15;mix=true;cT=null;
   document.getElementById('hdr').textContent='📝 ДИАГНОСТИКА: '+cS.nm.toUpperCase();
   startQuiz()}
 
+function startRush(minutes){
+  rushMode=true;diagMode=false;globalMix=true;rushTime=minutes*60;rushErrors=0;rushScore=0;
+  cS=null;cT=null;mix=true;mixStreak={id:null,count:0};
+  // Load best scores
+  try{const b=JSON.parse(localStorage.getItem('misha_rush_best')||'{}');rushBest={3:b[3]||0,5:b[5]||0}}catch{}
+  document.getElementById('hdr').textContent=`⚡ PUZZLE RUSH ${minutes} мин`;
+  startQuiz()}
+
+function saveRushBest(min,score){
+  try{const b=JSON.parse(localStorage.getItem('misha_rush_best')||'{}');
+    const name=getPlayerName();
+    if(!b._records)b._records=[];
+    if(score>(b[min]||0))b[min]=score;
+    b._records.push({name,min,score,date:new Date().toLocaleDateString('ru')});
+    if(b._records.length>50)b._records=b._records.slice(-50);
+    localStorage.setItem('misha_rush_best',JSON.stringify(b));
+    rushBest=b;
+  }catch{}
+  // Push to shared leaderboard
+  pushRushRecord(getPlayerName(),min,score)}
+
 let mixStreak={id:null,count:0};
 function genGlobalMix(){
+  // Filter subjects if user selected specific ones
+  const subjs=mixFilter?SUBJ.filter(s=>mixFilter.includes(s.id)):SUBJ;
   // Weight by days until exam + adaptive: weak subjects get higher weight
-  const weights=SUBJ.map(s=>{
+  const weights=subjs.map(s=>{
     const d=daysTo(s.date);const raw=d!==null&&d>0?1000/d:1;
     // Adaptive: check subject accuracy from PROG
     let subjOk=0,subjErr=0;
@@ -2014,7 +2103,7 @@ function shareDailyReport(){
   const today=new Date().toLocaleDateString('ru',{day:'numeric',month:'long'});
   let emoji=done==='shortcut'?'🎯':done==='done'?'✅':'⏳';
   let status=done==='shortcut'?'ШОРТКАТ — 20/20!':done==='done'?'НОРМА ВЫПОЛНЕНА':'в процессе';
-  let txt=`📅 ${today} — ${emoji} ${status}\n\n`;
+  let txt=`📅 ${today} — ${getPlayerName()} — ${emoji} ${status}\n\n`;
   txt+=`Решено: ${total}, верных: ${DAILY.ok} (${acc}%), без подсказок: ${DAILY.pure}\n`;
   if(STR.current>0)txt+=`🔥 Серия: ${STR.current} дн. подряд (рекорд: ${STR.best})\n`;
   const newBadges=BADGES.filter(b=>STR.badges.includes(b.id));
@@ -2044,12 +2133,20 @@ function openSubj(id){
   dg.innerHTML=`<span style="font-size:14px">📝</span><span style="flex:1;font-weight:700">Диагностика (15 задач, оценка)</span>`;
   dg.onclick=()=>startDiag();tl.appendChild(dg);
   go('subj')}
-function goSubj(){if(ti)clearInterval(ti);document.getElementById('hb').style.display='none';diagMode=false;if(globalMix){globalMix=false;go('main')}else{openSubj(cS.id)}}
+function goSubj(){if(ti)clearInterval(ti);document.getElementById('hb').style.display='none';diagMode=false;rushMode=false;if(globalMix){globalMix=false;go('main')}else{openSubj(cS.id)}}
 
 // ═══ QUIZ ═══
 function startQuiz(){st={ok:0,err:0,streak:0,best:0};sesTopics={};seenQs={};tv=0;sel=null;hintOn=false;shpOn=false;usedHelp=false;
-  if(ti)clearInterval(ti);ti=setInterval(()=>{tv++;document.getElementById('tmr').textContent=fmt(tv)},1000);
-  document.getElementById('tmr').textContent='0:00';go('play');nextQ()}
+  if(ti)clearInterval(ti);
+  if(rushMode){
+    tv=rushTime;
+    ti=setInterval(()=>{tv--;document.getElementById('tmr').textContent=fmt(tv);if(tv<=0){clearInterval(ti);endSession()}},1000);
+    document.getElementById('tmr').textContent=fmt(rushTime);
+  }else{
+    ti=setInterval(()=>{tv++;document.getElementById('tmr').textContent=fmt(tv)},1000);
+    document.getElementById('tmr').textContent='0:00';
+  }
+  go('play');nextQ()}
 function fmt(s){return(0|s/60)+':'+(''+s%60).padStart(2,'0')}
 function nextQ(){
   // Auto-end diagnostic after diagMax questions
@@ -2072,7 +2169,9 @@ function nextQ(){
 function render(){
   const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
   const hb=document.getElementById('hb');if(tot>0){hb.style.display='inline-block';hb.textContent=st.ok+'/'+tot+' '+pct+'%'}
-  document.getElementById('sts').innerHTML=`<div class="st"><span class="v" style="color:var(--green)">${st.ok}</span><span class="l">верно</span></div><div class="st"><span class="v" style="color:var(--red)">${st.err}</span><span class="l">ошибки</span></div><div class="st"><span class="v" style="color:var(--accent)">${pct}%</span><span class="l">точность</span></div>${st.streak>=3?'<div class="st streak"><span class="v" style="color:var(--orange)">🔥'+st.streak+'</span><span class="l">серия</span></div>':''}`;
+  document.getElementById('sts').innerHTML=rushMode?
+    `<div class="st"><span class="v" style="color:var(--green);font-size:20px">${rushScore}</span><span class="l">очков</span></div><div class="st"><span class="v" style="font-size:18px">${'❤️'.repeat(3-rushErrors)+'🖤'.repeat(rushErrors)}</span><span class="l">жизни</span></div><div class="st"><span class="v" style="color:${tv<=30?'var(--red)':'var(--accent)'}">⏱${fmt(tv)}</span><span class="l">осталось</span></div>`:
+    `<div class="st"><span class="v" style="color:var(--green)">${st.ok}</span><span class="l">верно</span></div><div class="st"><span class="v" style="color:var(--red)">${st.err}</span><span class="l">ошибки</span></div><div class="st"><span class="v" style="color:var(--accent)">${pct}%</span><span class="l">точность</span></div>${st.streak>=3?'<div class="st streak"><span class="v" style="color:var(--orange)">🔥'+st.streak+'</span><span class="l">серия</span></div>':''}`;
   document.getElementById('qt').textContent=prob.tag;document.getElementById('qt').style.background=prob.bg;document.getElementById('qt').style.color=prob.color;
   document.getElementById('qb').className=prob.isMath?'qmath':'qtxt';document.getElementById('qb').textContent=prob.question;
   const cd=document.getElementById('qcd');if(prob.code){cd.style.display='block';cd.textContent=prob.code}else cd.style.display='none';
@@ -2080,7 +2179,7 @@ function render(){
 
   // theory toggle - works in both topic mode and global mix (disabled in diag)
   const theoryHtml=cT?cT.th:curTheory;
-  let ta='';if(sel===null&&theoryHtml&&!diagMode){ta=`<button class="shpb" onclick="shpOn=!shpOn;if(shpOn)usedHelp=true;render()">📖 ${shpOn?'Скрыть шпаргалку':'Шпаргалка'}</button>`;if(shpOn)ta+=`<div class="shpbox">${theoryHtml.replace(/<h3>.*?<\/h3>/g,'')}</div>`}
+  let ta='';if(sel===null&&theoryHtml&&!diagMode&&!rushMode){ta=`<button class="shpb" onclick="shpOn=!shpOn;if(shpOn)usedHelp=true;render()">📖 ${shpOn?'Скрыть шпаргалку':'Шпаргалка'}</button>`;if(shpOn)ta+=`<div class="shpbox">${theoryHtml.replace(/<h3>.*?<\/h3>/g,'')}</div>`}
   document.getElementById('shp-area').innerHTML=ta;
 
   const keys='ABCD';let oh='';
@@ -2088,10 +2187,15 @@ function render(){
     oh+=`<button class="${c}" onclick="ans(${i})" ${sel!==null?'disabled':''}><span class="k">${keys[i]}</span><span>${esc(o)}</span></button>`});
   document.getElementById('opts').innerHTML=oh;
 
-  let fb='';if(sel!==null){const ok=sel===prob.answer;const helpedOk=ok&&usedHelp;fb=`<div class="fb"><div class="fbr" style="color:${ok?helpedOk?'var(--orange)':'var(--green)':'var(--red)'}">${ok?(helpedOk?'✓ Верно, но с подсказкой — не в зачёт серии':'✓ Верно!'):'✗ Ответ: '+esc(prob.answer)}</div>${!ok&&prob.hint?'<div class="fbh">💡 '+esc(prob.hint)+'</div>':''}<button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>`}
+  let fb='';if(sel!==null){const ok=sel===prob.answer;const helpedOk=ok&&usedHelp;
+    if(rushMode){
+      fb=`<div class="fb"><div class="fbr" style="color:${ok?'var(--green)':'var(--red)'}; font-size:18px">${ok?'✓':'✗ '+esc(prob.answer)}</div></div>`;
+    }else{
+      fb=`<div class="fb"><div class="fbr" style="color:${ok?helpedOk?'var(--orange)':'var(--green)':'var(--red)'}">${ok?(helpedOk?'✓ Верно, но с подсказкой — не в зачёт серии':'✓ Верно!'):'✗ Ответ: '+esc(prob.answer)}</div>${!ok&&prob.hint?'<div class="fbh">💡 '+esc(prob.hint)+'</div>':''}<button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>`;
+    }}
   document.getElementById('fba').innerHTML=fb;
 
-  let hh='';if(sel===null&&!diagMode){hh=`<button class="hintt" onclick="hintOn=!hintOn;if(hintOn)usedHelp=true;render()">${hintOn?'Скрыть':'💡 Подсказка'}</button>`;if(hintOn)hh+=`<div class="hintb">${prob.hint}</div>`}
+  let hh='';if(sel===null&&!diagMode&&!rushMode){hh=`<button class="hintt" onclick="hintOn=!hintOn;if(hintOn)usedHelp=true;render()">${hintOn?'Скрыть':'💡 Подсказка'}</button>`;if(hintOn)hh+=`<div class="hintb">${prob.hint}</div>`}
   document.getElementById('ha').innerHTML=hh;
 
   let pg='';
@@ -2101,13 +2205,17 @@ function render(){
 }
 
 function ans(idx){if(sel!==null)return;const o=prob.options[idx];sel=o;const ok=o===prob.answer;
-  const cleanOk=ok&&!usedHelp;// correct WITHOUT help
+  const cleanOk=ok&&!usedHelp;
   st.ok+=ok?1:0;st.err+=ok?0:1;st.streak=cleanOk?st.streak+1:0;st.best=Math.max(st.best,st.streak);
-  // track per topic
   const tag=prob.tag;if(!sesTopics[tag])sesTopics[tag]={ok:0,err:0};sesTopics[tag].ok+=ok?1:0;sesTopics[tag].err+=ok?0:1;
-  // save to persistent storage + daily
   if(cS){const tid=cT?cT.id:(mix?'mix':'?');addTP(cS.id,tid==='mix'?findTopicId(prob.tag):tid,ok?1:0,ok?0:1);addDaily(cS.id,ok?1:0,ok?0:1,usedHelp)}
-  render()}
+  if(rushMode){
+    if(ok){rushScore++}else{rushErrors++}
+    render();
+    if(rushErrors>=3){setTimeout(()=>endSession(),600);return}
+    // Auto-advance after brief flash
+    setTimeout(()=>nextQ(),ok?400:900);
+  }else{render()}}
 
 function findTopicId(tag){if(!cS)return'?';const t=cS.tops.find(t=>t.nm===tag||tag.includes(t.nm.slice(0,4)));return t?t.id:'mix'}
 
@@ -2115,7 +2223,16 @@ function endSession(){
   if(ti)clearInterval(ti);document.getElementById('hb').style.display='none';
   const tot=st.ok+st.err;if(tot===0){if(globalMix)go('main');else goSubj();return}
   const pct=Math.round(st.ok/tot*100);
-  if(diagMode){
+  if(rushMode){
+    const min=rushTime/60;
+    const isNewBest=rushScore>(rushBest[min]||0);
+    saveRushBest(min,rushScore);
+    document.getElementById('res-emoji').textContent=isNewBest?'🎉':'⚡';
+    document.getElementById('res-title').textContent=isNewBest?'НОВЫЙ РЕКОРД!':'Puzzle Rush';
+    document.getElementById('res-score').textContent=rushScore+'';
+    const reason=rushErrors>=3?'3 ошибки':'Время вышло';
+    document.getElementById('res-detail').textContent=`${reason} · ${getPlayerName()} · ${min} мин · Лучший: ${rushBest[min]||rushScore}`;
+  }else if(diagMode){
     const grade=pct>=85?5:pct>=65?4:pct>=45?3:2;
     const emoji={5:'🏆',4:'👍',3:'⚠️',2:'📛'};
     const title={5:'Отлично!',4:'Хорошо',3:'Удовлетворительно',2:'Неудовлетворительно'};
@@ -2137,7 +2254,10 @@ function endSession(){
 function shareSession(){
   const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
   let txt;
-  if(diagMode){
+  if(rushMode){
+    const min=rushTime/60;
+    txt=`🏃 PUZZLE RUSH ${min} мин — ${getPlayerName()}\n⚡ Результат: ${rushScore} очков\n${rushErrors>=3?'💀 3 ошибки':'⏱ Время вышло'}\n🏆 Рекорд: ${rushBest[min]||rushScore}\n`;
+  }else if(diagMode){
     const grade=pct>=85?5:pct>=65?4:pct>=45?3:2;
     txt=`📝 ДИАГНОСТИКА: ${cS?cS.nm:'?'}\n🎯 Оценка: ${grade} (${pct}%)\n${st.ok} верно из ${tot} · ${fmt(tv)}\n\n`;
   }else{
@@ -2196,6 +2316,138 @@ function showBadges(){
     </div>`});
   h+=`<button style="margin-top:16px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Закрыть</button>`;
   box.innerHTML=h;d.appendChild(box);document.body.appendChild(d)}
+
+// ═══ PLAYER NAME & HALL OF FAME ═══
+function getPlayerName(){try{return localStorage.getItem('misha_player_name')||'Ученик'}catch{return'Ученик'}}
+function setPlayerName(n){try{localStorage.setItem('misha_player_name',n)}catch{}}
+
+function pickName(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:340px;width:100%;text-align:center';
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px">Как тебя зовут?</h3>';
+  ['Миша','Вероника'].forEach(n=>{
+    h+=`<button style="display:block;width:100%;padding:14px;margin-bottom:8px;border:2px solid #e2e0d8;border-radius:12px;background:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:Golos Text,sans-serif" onclick="setPlayerName('${n}');this.closest('div[style*=fixed]').remove();refreshMain()">${n}</button>`;
+  });
+  h+=`<div style="margin-top:8px"><input id="custom-name" placeholder="Другое имя" style="width:70%;padding:10px;border:2px solid #e2e0d8;border-radius:10px;font-size:14px;font-family:Golos Text,sans-serif"><button style="padding:10px 16px;margin-left:6px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer;font-size:14px" onclick="const v=document.getElementById('custom-name').value.trim();if(v){setPlayerName(v);this.closest('div[style*=fixed]').remove();refreshMain()}">OK</button></div>`;
+  box.innerHTML=h;d.appendChild(box);document.body.appendChild(d)}
+
+function showHallOfFame(){
+  const name=getPlayerName();
+  const rank=STR.totalQs>=5000?'💎 Легенда':STR.totalQs>=1000?'🏅 Мастер':STR.totalQs>=500?'🧠 Знаток':STR.totalQs>=100?'📚 Ученик':'🌱 Новичок';
+  const acc=STR.totalQs>0?Math.round(STR.totalOk/STR.totalQs*100):0;
+  const earnedBadges=BADGES.filter(b=>STR.badges.includes(b.id));
+  // Per-subject stats
+  let subjStats='';
+  SUBJ.forEach(s=>{
+    let ok=0,err=0;s.tops.forEach(t=>{const p=getTP(s.id,t.id);ok+=p.ok;err+=p.err});
+    const tot=ok+err;if(tot===0)return;
+    const pct=Math.round(ok/tot*100);
+    subjStats+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0">
+      <span style="font-size:16px">${s.ic}</span>
+      <span style="flex:1;font-size:12px;font-weight:600">${s.nm}</span>
+      <span style="font-size:12px;font-weight:800;color:${pct>=80?'#16a34a':pct>=50?'#ea580c':'#dc2626'}">${pct}%</span>
+      <span style="font-size:10px;color:#6b6b7e">${tot} задач</span>
+    </div>`});
+
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:linear-gradient(135deg,#1a1a2e,#2d2b55);border-radius:20px;padding:24px 20px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;color:#fff';box.onclick=e=>e.stopPropagation();
+  box.innerHTML=`
+    <div style="text-align:center;margin-bottom:16px">
+      <div style="font-size:40px;margin-bottom:4px">👑</div>
+      <h3 style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900;margin-bottom:4px">${name}</h3>
+      <div style="font-size:14px;color:#fbbf24;font-weight:700">${rank}</div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:20px;margin-bottom:16px">
+      <div style="text-align:center"><div style="font-size:24px;font-weight:900">${STR.current}</div><div style="font-size:10px;color:#a5b4fc">🔥 серия</div></div>
+      <div style="text-align:center"><div style="font-size:24px;font-weight:900">${STR.best}</div><div style="font-size:10px;color:#a5b4fc">⭐ рекорд</div></div>
+      <div style="text-align:center"><div style="font-size:24px;font-weight:900">${STR.totalQs}</div><div style="font-size:10px;color:#a5b4fc">📊 задач</div></div>
+      <div style="text-align:center"><div style="font-size:24px;font-weight:900">${acc}%</div><div style="font-size:10px;color:#a5b4fc">🎯 точность</div></div>
+    </div>
+    ${earnedBadges.length?`<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:14px">${earnedBadges.map(b=>`<span style="font-size:10px;padding:3px 8px;border-radius:10px;background:rgba(251,191,36,.2);color:#fbbf24;font-weight:600">${b.icon} ${b.name}</span>`).join('')}</div>`:''}
+    <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:12px;margin-bottom:14px">${subjStats||'<div style="text-align:center;color:#a5b4fc;font-size:12px">Пока нет результатов</div>'}</div>
+    <div style="display:flex;gap:8px">
+      <button style="flex:1;padding:10px;border:none;border-radius:10px;background:#fbbf24;color:#1a1a2e;font-weight:800;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="shareHallOfFame()">📤 Поделиться</button>
+      <button style="flex:1;padding:10px;border:none;border-radius:10px;background:rgba(255,255,255,.15);color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Закрыть</button>
+    </div>`;
+  d.appendChild(box);document.body.appendChild(d)}
+
+function shareHallOfFame(){
+  const name=getPlayerName();
+  const rank=STR.totalQs>=5000?'💎 Легенда':STR.totalQs>=1000?'🏅 Мастер':STR.totalQs>=500?'🧠 Знаток':STR.totalQs>=100?'📚 Ученик':'🌱 Новичок';
+  const acc=STR.totalQs>0?Math.round(STR.totalOk/STR.totalQs*100):0;
+  let txt=`👑 ЗАЛ СЛАВЫ: ${name}\n${rank}\n\n🔥 Серия: ${STR.current} дн. | ⭐ Рекорд: ${STR.best}\n📊 Задач: ${STR.totalQs} | 🎯 Точность: ${acc}%\n`;
+  if(STR.badges.length)txt+='🏆 Бейджи: '+BADGES.filter(b=>STR.badges.includes(b.id)).map(b=>b.icon).join('')+'\n';
+  txt+='\n';
+  SUBJ.forEach(s=>{
+    let ok=0,err=0;s.tops.forEach(t=>{const p=getTP(s.id,t.id);ok+=p.ok;err+=p.err});
+    const tot=ok+err;if(tot===0)return;
+    const pct=Math.round(ok/tot*100);
+    txt+=`${pct>=80?'✅':pct>=50?'⚠️':'❌'} ${s.nm}: ${pct}% (${tot})\n`});
+  doShare('Зал славы — '+name,txt)}
+
+// Init: ask name on first visit
+if(!localStorage.getItem('misha_player_name')){setTimeout(pickName,500)}
+
+async function showRushRecords(){
+  // Load local best
+  try{const b=JSON.parse(localStorage.getItem('misha_rush_best')||'{}');rushBest={3:b[3]||0,5:b[5]||0}}catch{}
+
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:380px;width:100%;max-height:85vh;overflow-y:auto';box.onclick=e=>e.stopPropagation();
+  box.innerHTML='<div style="text-align:center;padding:30px"><div style="font-size:24px">⏳</div><div style="color:#6b6b7e;font-size:13px;margin-top:8px">Загружаю рекорды...</div></div>';
+  d.appendChild(box);document.body.appendChild(d);
+
+  // Fetch shared records
+  let records=[];
+  if(rushBinId){records=await fetchRushRecords()}
+  else{
+    // No bin yet — try local
+    try{const b=JSON.parse(localStorage.getItem('misha_rush_best')||'{}');records=b._records||[]}catch{}}
+
+  // Build leaderboard
+  const best3={},best5={};
+  records.forEach(r=>{
+    const k=r.name||'?';
+    if(r.min===3&&r.score>(best3[k]||0))best3[k]=r.score;
+    if(r.min===5&&r.score>(best5[k]||0))best5[k]=r.score;
+  });
+
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">🏆 Puzzle Rush — Рекорды</h3>';
+
+  // Top scores tables
+  function renderTop(title,bestMap,color){
+    const sorted=Object.entries(bestMap).sort((a,b)=>b[1]-a[1]);
+    if(!sorted.length)return`<div style="text-align:center;color:#aaa;font-size:12px;padding:8px">Пока нет игр</div>`;
+    let t=`<div style="font-size:11px;font-weight:700;color:${color};margin-bottom:6px">${title}</div>`;
+    sorted.forEach(([name,score],i)=>{
+      const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+      t+=`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;${i<3?'font-weight:800':''}">
+        <span style="width:24px;text-align:center;font-size:${i<3?'16px':'12px'}">${medal||(i+1)}</span>
+        <span style="flex:1;font-size:13px">${name}</span>
+        <span style="font-size:${i<3?'18':'14'}px;font-weight:900;color:${color}">${score}</span>
+      </div>`});
+    return t}
+
+  h+=`<div style="display:flex;gap:12px;margin-bottom:16px">
+    <div style="flex:1;background:#fef9c3;border-radius:12px;padding:12px">${renderTop('⏱ 3 минуты',best3,'#92400e')}</div>
+    <div style="flex:1;background:#fee2e2;border-radius:12px;padding:12px">${renderTop('⏱ 5 минут',best5,'#991b1b')}</div>
+  </div>`;
+
+  // Recent games
+  if(records.length){
+    h+='<h4 style="font-size:13px;font-weight:700;margin-bottom:8px;color:#6b6b7e">Последние игры</h4>';
+    records.slice(-20).reverse().forEach(r=>{
+      h+=`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:12px">
+        <span style="color:#6b6b7e;width:55px">${r.date||''}</span>
+        <span style="font-weight:700;flex:1">${r.name||'?'}</span>
+        <span style="color:#6b6b7e">${r.min}м</span>
+        <span style="font-weight:900;font-size:15px">${r.score}</span>
+      </div>`})}
+
+  h+=`<div style="margin-top:8px;text-align:center;font-size:10px;color:#aaa">🌐 Общий рейтинг для всех игроков</div>`;
+
+  h+=`<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Закрыть</button>`;
+  box.innerHTML=h}
 
 function toggleHint(){hintOn=!hintOn;render()}
 </script>
