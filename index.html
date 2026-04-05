@@ -166,7 +166,7 @@ header h1{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:800;whit
 <div id="s-theory" class="scr"><div class="w">
   <button class="qback mb8" onclick="goSubj()">← Темы</button>
   <div id="tc"></div>
-  <button class="btn btn-p mt12" onclick="startQuiz()">✏️ Начать тренажёр</button>
+  <button class="btn btn-p mt12" onclick="rushMode=false;diagMode=false;startQuiz()">✏️ Начать тренажёр</button>
 </div></div>
 
 <!-- PLAY -->
@@ -2042,7 +2042,7 @@ function clearDates(){
 
 // ═══ NAVIGATION ═══
 function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');
-  if(id==='main'){document.getElementById('hdr').textContent='ПОДГОТОВКА';document.getElementById('hb').style.display='none';refreshMain()}
+  if(id==='main'){document.getElementById('hdr').textContent='ПОДГОТОВКА';document.getElementById('hb').style.display='none';rushMode=false;diagMode=false;globalMix=false;refreshMain()}
   if(id==='prog')renderProg()}
 function refreshMain(){
   // Show player badge
@@ -2214,9 +2214,9 @@ function shareDailyReport(){
   doShare('Дневной отчёт',txt)}
 
 function openSubj(id){
-  globalMix=false;
+  globalMix=false;rushMode=false;diagMode=false;
   cS=SUBJ.find(s=>s.id===id);document.getElementById('hdr').textContent=cS.nm.toUpperCase();
-  document.getElementById('sh').innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div class="ic" style="background:${cS.bg};color:${cS.cl};width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800">${cS.ic}</div><div><div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800">${cS.nm}</div><div style="font-size:11px;color:var(--muted)">Диагностика: ${cS.date}</div></div></div>`;
+  document.getElementById('sh').innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div class="ic" style="background:${cS.bg};color:${cS.cl};width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800">${cS.ic}</div><div><div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800">${cS.nm}</div>${cS.date?`<div style="font-size:11px;color:var(--muted)">Диагностика: ${cS.date}</div>`:''}</div></div>`;
   const tl=document.getElementById('tl');tl.innerHTML='';
   cS.tops.forEach((t,i)=>{
     const p=getTP(cS.id,t.id);const tot=p.ok+p.err;const pct=tot?Math.round(p.ok/tot*100):null;
@@ -2227,7 +2227,7 @@ function openSubj(id){
   const mx=document.createElement('button');mx.className='tbtn';mx.style.animation=`fu .3s ease ${cS.tops.length*.04}s both`;
   mx.style.background=`linear-gradient(135deg,${cS.bg},var(--abg))`;
   mx.innerHTML=`<span style="font-size:14px">⚡</span><span style="flex:1;font-weight:700">Всё вперемешку</span>`;
-  mx.onclick=()=>{cT=null;mix=true;diagMode=false;startQuiz()};tl.appendChild(mx);
+  mx.onclick=()=>{cT=null;mix=true;diagMode=false;rushMode=false;startQuiz()};tl.appendChild(mx);
   // Diagnostic button
   const dg=document.createElement('button');dg.className='tbtn';dg.style.animation=`fu .3s ease ${(cS.tops.length+1)*.04}s both`;
   dg.style.background='linear-gradient(135deg,#fee2e2,#fef9c3)';
