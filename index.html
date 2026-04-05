@@ -126,7 +126,10 @@ header h1{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:800;whit
     <button class="btn btn-o" style="flex:1" onclick="go('info')">📖</button>
     <button class="btn btn-o" style="flex:1" onclick="go('prog')">📊 Прогресс</button>
     <button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Бейджи</button>
-    <button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Зал славы</button>
+    <button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Слава</button>
+  </div>
+  <div style="text-align:center;margin-top:8px">
+    <button style="font-size:11px;color:#6b6b7e;background:none;border:none;cursor:pointer;text-decoration:underline" onclick="showDateEditor()">📅 Указать даты диагностик</button>
   </div>
 </div></div>
 
@@ -1867,31 +1870,31 @@ verse:[
 function genLitF(tid){const pool=LIT_DB[tid]||Object.values(LIT_DB).flat();const ex=pick(pool);const tags={works:'Произведения',heroes:'Герои',terms:'Термины',verse:'Стихосложение'};return mkQ(ex.q,ex.a,shuffle([...ex.o]),ex.h,tags[tid]||'Литература','#7c3aed','#ede9fe')}
 
 const SUBJ=[
-{id:'alg',nm:'Алгебра',ic:'∑',date:'21 апреля',cl:'#dc2626',bg:'#fee2e2',
+{id:'alg',nm:'Алгебра',ic:'∑',date:'',cl:'#dc2626',bg:'#fee2e2',
   tops:[{id:'trig',nm:'Тригонометрия',gen:genTrig,th:ALG_TH.trig,dot:'#dc2626'},{id:'pow',nm:'Степени и корни',gen:genPow,th:ALG_TH.pow,dot:'#16a34a'},{id:'eq',nm:'Уравнения',gen:genEq,th:ALG_TH.eq,dot:'#2563eb'},{id:'ineq',nm:'Неравенства',gen:genIneq,th:ALG_TH.ineq,dot:'#7c3aed'}]},
-{id:'geo',nm:'Геометрия',ic:'△',date:'21 апреля',cl:'#ea580c',bg:'#fff7ed',
+{id:'geo',nm:'Геометрия',ic:'△',date:'',cl:'#ea580c',bg:'#fff7ed',
   tops:[{id:'tri',nm:'Треугольники',gen:genGTri,th:GEO_TH.tri,dot:'#dc2626'},{id:'circ',nm:'Окружность',gen:genGCirc,th:GEO_TH.circ,dot:'#ea580c'},{id:'quad',nm:'Четырёхугольники',gen:genGQuad,th:GEO_TH.quad,dot:'#2563eb'},{id:'stereo',nm:'Стереометрия',gen:genGStereo,th:GEO_TH.stereo,dot:'#7c3aed'}]},
-{id:'prob',nm:'Вероятность',ic:'🎲',date:'24 апреля',cl:'#16a34a',bg:'#dcfce7',
+{id:'prob',nm:'Вероятность',ic:'🎲',date:'',cl:'#16a34a',bg:'#dcfce7',
   tops:[{id:'classic',nm:'Классическая P',gen:genPClass,th:PRB_TH.classic,dot:'#16a34a'},{id:'comb',nm:'Комбинаторика',gen:genPComb,th:PRB_TH.comb,dot:'#2563eb'},{id:'stats',nm:'Статистика',gen:genPStats,th:PRB_TH.stats,dot:'#ea580c'}]},
-{id:'rus',nm:'Русский язык',ic:'Аа',date:'28 апреля',cl:'#0d9488',bg:'#ccfbf1',
+{id:'rus',nm:'Русский язык',ic:'Аа',date:'',cl:'#0d9488',bg:'#ccfbf1',
   tops:[{id:'nn',nm:'Н и НН',gen:()=>genRusF('nn'),th:RUS_TH.nn,dot:'#0d9488'},{id:'orth',nm:'ПРЕ-/ПРИ-',gen:()=>genRusF('orth'),th:RUS_TH.orth,dot:'#ca8a04'},{id:'neni',nm:'НЕ и НИ',gen:()=>genRusF('neni'),th:RUS_TH.neni,dot:'#dc2626'},{id:'vocab',nm:'Словарные слова',gen:()=>genRusF('vocab'),th:RUS_TH.vocab,dot:'#2563eb'},{id:'punct',nm:'Пунктуация',gen:()=>genRusF('punct'),th:RUS_TH.punct,dot:'#ea580c'},{id:'accent',nm:'Ударения',gen:()=>genRusF('accent'),th:RUS_TH.accent,dot:'#7c3aed'}]},
-{id:'soc',nm:'Обществознание',ic:'⚖',date:'14 мая',cl:'#7c3aed',bg:'#ede9fe',
+{id:'soc',nm:'Обществознание',ic:'⚖',date:'',cl:'#7c3aed',bg:'#ede9fe',
   tops:[{id:'human',nm:'Человек и общество',gen:()=>genSocF('human'),th:SOC_TH.human,dot:'#7c3aed'},{id:'econ',nm:'Экономика',gen:()=>genSocF('econ'),th:SOC_TH.econ,dot:'#16a34a'},{id:'law',nm:'Право',gen:()=>genSocF('law'),th:SOC_TH.law,dot:'#2563eb'},{id:'pol',nm:'Политика',gen:()=>genSocF('pol'),th:SOC_TH.pol,dot:'#dc2626'}]},
-{id:'inf',nm:'Информатика',ic:'>_',date:'19 мая',cl:'#2563eb',bg:'#dbeafe',
+{id:'inf',nm:'Информатика',ic:'>_',date:'',cl:'#2563eb',bg:'#dbeafe',
   tops:[{id:'numsys',nm:'Системы счисления',gen:genINS,th:INF_TH.numsys,dot:'#16a34a'},{id:'logic',nm:'Логика',gen:genILog,th:INF_TH.logic,dot:'#dc2626'},{id:'encode',nm:'Кодирование',gen:genIEnc,th:INF_TH.encode,dot:'#ea580c'},{id:'algo',nm:'Алгоритмы',gen:genIAlg,th:INF_TH.algo,dot:'#2563eb'},{id:'python',nm:'Python',gen:genIPy,th:INF_TH.python,dot:'#7c3aed'}]},
-{id:'phy',nm:'Физика',ic:'⚛',date:'15 мая',cl:'#dc2626',bg:'#fee2e2',
+{id:'phy',nm:'Физика',ic:'⚛',date:'',cl:'#dc2626',bg:'#fee2e2',
   tops:[{id:'kin',nm:'Кинематика',gen:genPhyKin,th:PHY_TH.kin,dot:'#dc2626'},{id:'dyn',nm:'Динамика',gen:genPhyDyn,th:PHY_TH.dyn,dot:'#2563eb'},{id:'energy',nm:'Энергия и импульс',gen:genPhyEnergy,th:PHY_TH.energy,dot:'#16a34a'},{id:'mol',nm:'Молекул. физика',gen:genPhyMol,th:PHY_TH.mol,dot:'#7c3aed'}]},
-{id:'his',nm:'История',ic:'📜',date:'20 мая',cl:'#ca8a04',bg:'#fef9c3',
+{id:'his',nm:'История',ic:'📜',date:'',cl:'#ca8a04',bg:'#fef9c3',
   tops:[{id:'rus20',nm:'Россия нач. XX в.',gen:()=>genHisF('rus20'),th:HIS_TH.rus20,dot:'#dc2626'},{id:'ussr',nm:'СССР',gen:()=>genHisF('ussr'),th:HIS_TH.ussr,dot:'#ea580c'},{id:'ww2',nm:'Вторая мировая',gen:()=>genHisF('ww2'),th:HIS_TH.ww2,dot:'#2563eb'},{id:'cold',nm:'Холодная война',gen:()=>genHisF('cold'),th:HIS_TH.cold,dot:'#7c3aed'}]},
-{id:'bio',nm:'Биология',ic:'🧬',date:'22 мая',cl:'#16a34a',bg:'#dcfce7',
+{id:'bio',nm:'Биология',ic:'🧬',date:'',cl:'#16a34a',bg:'#dcfce7',
   tops:[{id:'cell',nm:'Клетка',gen:()=>genBioF('cell'),th:BIO_TH.cell,dot:'#16a34a'},{id:'genetics',nm:'Генетика',gen:()=>genBioF('genetics'),th:BIO_TH.genetics,dot:'#2563eb'},{id:'evolution',nm:'Эволюция',gen:()=>genBioF('evolution'),th:BIO_TH.evolution,dot:'#ea580c'},{id:'ecology',nm:'Экология',gen:()=>genBioF('ecology'),th:BIO_TH.ecology,dot:'#7c3aed'}]},
-{id:'chem',nm:'Химия',ic:'⚗',date:'23 мая',cl:'#ea580c',bg:'#fff7ed',
+{id:'chem',nm:'Химия',ic:'⚗',date:'',cl:'#ea580c',bg:'#fff7ed',
   tops:[{id:'atom',nm:'Строение атома',gen:()=>genChemF('atom'),th:CHEM_TH.atom,dot:'#dc2626'},{id:'reactions',nm:'Реакции',gen:()=>genChemF('reactions'),th:CHEM_TH.reactions,dot:'#2563eb'},{id:'organic',nm:'Органика',gen:()=>genChemF('organic'),th:CHEM_TH.organic,dot:'#16a34a'}]},
-{id:'eng',nm:'Английский',ic:'🇬🇧',date:'25 мая',cl:'#2563eb',bg:'#dbeafe',
+{id:'eng',nm:'Английский',ic:'🇬🇧',date:'',cl:'#2563eb',bg:'#dbeafe',
   tops:[{id:'tenses',nm:'Tenses',gen:()=>genEngF('tenses'),th:ENG_TH.tenses,dot:'#2563eb'},{id:'grammar',nm:'Grammar',gen:()=>genEngF('grammar'),th:ENG_TH.grammar,dot:'#7c3aed'}]},
-{id:'geog',nm:'География',ic:'🌍',date:'26 мая',cl:'#0d9488',bg:'#ccfbf1',
+{id:'geog',nm:'География',ic:'🌍',date:'',cl:'#0d9488',bg:'#ccfbf1',
   tops:[{id:'earth',nm:'Земля и карта',gen:()=>genGeogF('earth'),th:GEOG_TH.earth,dot:'#0d9488'},{id:'population',nm:'Население',gen:()=>genGeogF('population'),th:GEOG_TH.population,dot:'#ea580c'},{id:'resources',nm:'Ресурсы',gen:()=>genGeogF('resources'),th:GEOG_TH.resources,dot:'#2563eb'}]},
-{id:'lit',nm:'Литература',ic:'📖',date:'27 мая',cl:'#7c3aed',bg:'#ede9fe',
+{id:'lit',nm:'Литература',ic:'📖',date:'',cl:'#7c3aed',bg:'#ede9fe',
   tops:[{id:'works',nm:'Произведения',gen:()=>genLitF('works'),th:LIT_TH.works,dot:'#7c3aed'},{id:'heroes',nm:'Герои',gen:()=>genLitF('heroes'),th:LIT_TH.heroes,dot:'#dc2626'},{id:'terms',nm:'Термины',gen:()=>genLitF('terms'),th:LIT_TH.terms,dot:'#2563eb'},{id:'verse',nm:'Стихосложение',gen:()=>genLitF('verse'),th:LIT_TH.verse,dot:'#16a34a'}]}
 ];
 
@@ -1924,7 +1927,59 @@ let seenQs={};// track question repeats: question_text → count
 let tv=0,ti=null;
 
 // ═══ INIT ═══
-function daysTo(ds){const m={'января':0,'февраля':1,'марта':2,'апреля':3,'мая':4,'июня':5};const p=ds.split(' ');const d=+p[0],mo=m[p[1]];if(mo===undefined)return null;return Math.ceil((new Date(2026,mo,d)-new Date())/(864e5))}
+function daysTo(ds){if(!ds)return null;const m={'января':0,'февраля':1,'марта':2,'апреля':3,'мая':4,'июня':5,'июля':6,'августа':7,'сентября':8,'октября':9,'ноября':10,'декабря':11};const p=ds.split(' ');const d=+p[0],mo=m[p[1]];if(mo===undefined)return null;return Math.ceil((new Date(2026,mo,d)-new Date())/(864e5))}
+
+// ═══ DIAGNOSTIC DATES (optional) ═══
+function loadDates(){
+  try{const d=JSON.parse(localStorage.getItem('misha_dates')||'{}');
+    SUBJ.forEach(s=>{if(d[s.id])s.date=d[s.id]});
+  }catch{}}
+function saveDates(){
+  const d={};SUBJ.forEach(s=>{if(s.date)d[s.id]=s.date});
+  try{localStorage.setItem('misha_dates',JSON.stringify(d))}catch{}}
+loadDates();
+
+function showDateEditor(){
+  const months=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:20px;max-width:380px;width:100%;max-height:85vh;overflow-y:auto';
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:15px;font-weight:800;margin-bottom:14px;text-align:center">📅 Даты диагностик</h3>';
+  h+='<p style="font-size:11px;color:#6b6b7e;text-align:center;margin-bottom:12px">Необязательно. Если указать — ближние экзамены будут чаще в миксе.</p>';
+  SUBJ.forEach(s=>{
+    let dayVal='',monVal='';
+    if(s.date){const p=s.date.split(' ');dayVal=p[0]||'';monVal=p[1]||''}
+    h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0">
+      <span style="font-size:16px;width:28px;text-align:center">${s.ic}</span>
+      <span style="flex:1;font-size:13px;font-weight:600">${s.nm}</span>
+      <input type="number" min="1" max="31" placeholder="дд" value="${dayVal}" data-sid="${s.id}" class="dd-day" style="width:40px;padding:6px;border:1px solid #ddd;border-radius:6px;font-size:13px;text-align:center">
+      <select data-sid="${s.id}" class="dd-mon" style="padding:6px;border:1px solid #ddd;border-radius:6px;font-size:12px">
+        <option value="">—</option>
+        ${months.map((m,i)=>`<option value="${m}"${m===monVal?' selected':''}>${m}</option>`).join('')}
+      </select>
+    </div>`});
+  h+=`<div style="display:flex;gap:8px;margin-top:14px">
+    <button style="flex:1;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="applyDates()">Сохранить</button>
+    <button style="flex:1;padding:10px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#6b6b7e;font-weight:600;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Отмена</button>
+  </div>
+  <button style="margin-top:8px;width:100%;padding:8px;border:none;background:transparent;color:#dc2626;font-size:12px;cursor:pointer" onclick="clearDates()">Очистить все даты</button>`;
+  box.innerHTML=h;d.appendChild(box);document.body.appendChild(d);
+  window._dateOverlay=d}
+
+function applyDates(){
+  document.querySelectorAll('.dd-day').forEach(inp=>{
+    const sid=inp.dataset.sid;const day=inp.value;
+    const mon=document.querySelector('.dd-mon[data-sid="'+sid+'"]').value;
+    const s=SUBJ.find(x=>x.id===sid);
+    if(s)s.date=(day&&mon)?day+' '+mon:'';
+  });
+  saveDates();
+  if(window._dateOverlay)window._dateOverlay.remove();
+  refreshMain()}
+
+function clearDates(){
+  SUBJ.forEach(s=>s.date='');saveDates();
+  if(window._dateOverlay)window._dateOverlay.remove();
+  refreshMain()}
 
 (function(){
   const g=document.getElementById('sg');
@@ -1935,7 +1990,7 @@ function daysTo(ds){const m={'января':0,'февраля':1,'марта':2,
     let tok=0,terr=0;s.tops.forEach(t=>{const p=getTP(s.id,t.id);tok+=p.ok;terr+=p.err});
     const ttot=tok+terr;const pct=ttot?Math.round(tok/ttot*100):0;
     const pctStr=ttot>0?`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:${pct>=80?'var(--green)':pct>=50?'var(--orange)':'var(--muted)'};margin-left:6px">${pct}%</span>`:'';
-    btn.innerHTML=`<div class="ic" style="background:${s.bg};color:${s.cl}">${s.ic}</div><div style="flex:1"><div class="nm">${s.nm}${pctStr}</div><div class="dt">${s.date}</div>${d!==null?`<div class="dd" style="color:${d<=7?'var(--red)':d<=21?'var(--orange)':'var(--green)'}">${d<=0?'Сегодня!':d+' дн.'}</div>`:''}</div>`;
+    btn.innerHTML=`<div class="ic" style="background:${s.bg};color:${s.cl}">${s.ic}</div><div style="flex:1"><div class="nm">${s.nm}${pctStr}</div>${s.date?`<div class="dt">${s.date}</div>`:""}${d!==null?`<div class="dd" style="color:${d<=7?'var(--red)':d<=21?'var(--orange)':'var(--green)'}">${d<=0?'Сегодня!':d+' дн.'}</div>`:''}</div>`;
     btn.onclick=()=>openSubj(s.id);
     g.appendChild(btn);
   });
@@ -1962,7 +2017,7 @@ function refreshMain(){
     let tok=0,terr=0;s.tops.forEach(t=>{const p=getTP(s.id,t.id);tok+=p.ok;terr+=p.err});
     const ttot=tok+terr;const pct=ttot?Math.round(tok/ttot*100):0;
     const pctStr=ttot>0?`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:${pct>=80?'var(--green)':pct>=50?'var(--orange)':'var(--muted)'};margin-left:6px">${pct}%</span>`:'';
-    btn.innerHTML=`<div class="ic" style="background:${s.bg};color:${s.cl}">${s.ic}</div><div style="flex:1"><div class="nm">${s.nm}${pctStr}</div><div class="dt">${s.date}</div>${d!==null?`<div class="dd" style="color:${d<=7?'var(--red)':d<=21?'var(--orange)':'var(--green)'}">${d<=0?'Сегодня!':d+' дн.'}</div>`:''}</div>`;
+    btn.innerHTML=`<div class="ic" style="background:${s.bg};color:${s.cl}">${s.ic}</div><div style="flex:1"><div class="nm">${s.nm}${pctStr}</div>${s.date?`<div class="dt">${s.date}</div>`:""}${d!==null?`<div class="dd" style="color:${d<=7?'var(--red)':d<=21?'var(--orange)':'var(--green)'}">${d<=0?'Сегодня!':d+' дн.'}</div>`:''}</div>`;
     btn.onclick=()=>openSubj(s.id);g.appendChild(btn)});
   renderDailyMeter()}
 
@@ -2015,7 +2070,7 @@ function showMixFilter(){
       <input type="checkbox" checked data-sid="${s.id}" class="mf-cb" style="width:20px;height:20px;accent-color:${s.cl}">
       <span style="font-size:18px">${s.ic}</span>
       <span style="flex:1;font-weight:600;color:#1a1a2e">${s.nm}</span>
-      <span style="font-size:11px;color:#6b6b7e">${s.date}</span>
+      ${s.date?`<span style="font-size:11px;color:#6b6b7e">${s.date}</span>`:""}
     </label>`;
   });
   h+=`<button id="mf-go" style="margin-top:14px;width:100%;padding:12px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="launchMix()">⚡ Начать микс</button>`;
