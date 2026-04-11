@@ -580,9 +580,19 @@ function renderQ(){
   // Options
   const opts = document.getElementById('opts');
   const shuffled = shuffle(q.opts);
+  window._curShuffled = shuffled;
+  window._curAnswer = q.a;
+  window._curHint = q.hint;
   opts.innerHTML = shuffled.map((o,i)=>`
-    <button class="opt" onclick="selectOpt(this,'${esc(o)}','${esc(q.a)}','${esc(q.hint)}')">${o}</button>
+    <button class="opt" onclick="selectOptIdx(this,${i})">${o}</button>
   `).join('');
+}
+
+function selectOptIdx(btn, idx){
+  const chosen = window._curShuffled[idx];
+  const correct = window._curAnswer;
+  const hint = window._curHint;
+  selectOpt(btn, chosen, correct, hint);
 }
 
 function esc(s){ return (s+'').replace(/'/g,"&#39;").replace(/"/g,"&quot;"); }
