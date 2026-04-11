@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Golos+Text:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f5f3ee;--ink:#0f0e17;--card:#fff;--muted:#6b6a74;--border:#e2e0d8;--green:#16a34a;--orange:#ea580c;--red:#dc2626;--accent:#2563eb}
+:root{color-scheme:light dark;--bg:#f5f3ee;--ink:#0f0e17;--card:#fff;--muted:#6b6a74;--border:#e2e0d8;--green:#16a34a;--orange:#ea580c;--red:#dc2626;--accent:#2563eb}
 html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-ui,sans-serif;min-height:100dvh;-webkit-tap-highlight-color:transparent}
 .w{max-width:540px;margin:0 auto;padding:0 16px}
 .scr{display:none}.scr.on{display:block}
@@ -83,7 +83,7 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .3s ease both}
-</style>
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e}html,body{background:#141420!important;color:#e8e6e0!important}.card{background:var(--card)!important;border-color:var(--border)!important;color:var(--text)!important}.card .cn,.card .cl{color:var(--text)!important}.card .cs{color:var(--muted)!important}header,footer{background:#0e0e1a!important}a{color:var(--text)}.sub{color:var(--muted)!important}.stat-l{color:var(--muted)!important}.foot-text{color:#9a9aae!important}}</style>
 </head>
 <body>
 

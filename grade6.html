@@ -5,13 +5,10 @@
 <title>Тренажёр 6 класс</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light;--bg:#f5f3ee;--card:#fff;--accent:#2563eb;--abg:#dbeafe;--green:#16a34a;--gbg:#dcfce7;--red:#dc2626;--rbg:#fee2e2;--orange:#ea580c;--obg:#fff7ed;--purple:#7c3aed;--pbg:#ede9fe;--yellow:#ca8a04;--ybg:#fef9c3;--teal:#0d9488;--tbg:#ccfbf1;--text:#1a1a2e;--muted:#6b6b7e;--border:#e2e0d8;--R:16px}
+:root{color-scheme:light dark;--bg:#f5f3ee;--card:#fff;--accent:#2563eb;--abg:#dbeafe;--green:#16a34a;--gbg:#dcfce7;--red:#dc2626;--rbg:#fee2e2;--orange:#ea580c;--obg:#fff7ed;--purple:#7c3aed;--pbg:#ede9fe;--yellow:#ca8a04;--ybg:#fef9c3;--teal:#0d9488;--tbg:#ccfbf1;--text:#1a1a2e;--muted:#6b6b7e;--border:#e2e0d8;--R:16px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{background:#f5f3ee;color:#1a1a2e}
-@media(prefers-color-scheme:dark){:root{color-scheme:light!important}html,body{background:#f5f3ee!important;color:#1a1a2e!important}
-.scard,.qcard,.opt,.tcard,.rcard,.icard,.dm,.fb,.tbtn{background:#fff!important;color:#1a1a2e!important}
-.tcard p,.tcard li,.tcard .fm{color:#374151!important}
-}
+html{background:var(--bg);color:var(--text)}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e;--abg:#1e2a4a;--gbg:#0e2e1a;--rbg:#2e1010;--obg:#2e2010;--pbg:#201e30;--ybg:#2e2a10;--tbg:#0e2e2a}html,body{background:#141420!important;color:#e8e6e0!important}header{background:#0e0e1a}.scard,.tcard,.qcard,.rcard,.icard,.opt,.tbtn,.fb,.dm{background:var(--card)!important;color:var(--text)!important;border-color:var(--border)!important}.tcard .fm,.tcard li,.tcard p{color:#b0aec0!important}.tcard .fm{background:#1a1a2a!important;border-color:#2e2e3e!important}.tcard .ex{background:#0e2e1a!important;color:#4ade80!important}.opt .k{background:#2a2a3a!important;color:#9a9aae!important}.shpbox{background:#1e2a4a!important;border-color:#2a3a5a!important;color:#93c5fd!important}.hintb{background:#2e2010!important;border-color:#5a4a2a!important}.qcode{background:#1a1a2a!important;border-color:#2e2e3e!important;color:#b0aec0!important}.pgbar,.ptrack{background:#2a2a3a!important}.btn-o{background:transparent!important;border-color:var(--border)!important;color:var(--muted)!important}input{background:#1a1a2a!important;color:#e8e6e0!important;border-color:#3a3a4e!important}}
 body{font-family:'Golos Text',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}
 .mono{font-family:'JetBrains Mono',monospace}
 header{background:var(--text);color:#fff;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
@@ -122,7 +119,7 @@ header h1{font-family:'Unbounded',system-ui,sans-serif;font-size:12px;font-weigh
   <div id="daily-panel"></div>
   <div id="subjects"></div>
   <div style="display:flex;gap:6px;margin:14px 0">
-    <button class="btn btn-p" style="flex:1" onclick="globalMix=true;mix=true;cT=null;mixFilter=null;cS=SUBJ[0];document.getElementById('hdr').textContent='⚡ ВСЁ ВПЕРЕМЕШКУ';startQuiz()">⚡ Вперемешку</button>
+    <button class="btn btn-p" style="flex:1" onclick="globalMix=true;mix=true;cT=null;mixFilter=null;cS=SUBJ[0];document.getElementById('hdr').textContent='⚡ ВСЁ ВПЕРЕМЕШКУ';startQuiz()" aria-label="Все темы вперемешку">⚡ Вперемешку</button>
   </div>
   <div style="display:flex;gap:6px;margin-bottom:8px"><button class="btn btn-o" style="flex:1" onclick="go('info')">📖 Справка</button><button class="btn btn-o" style="flex:1" onclick="showJournal()">📊 Слабые места</button><button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Награды</button></div><div style="display:flex;gap:6px;margin-top:6px"><button class="btn btn-o" style="flex:1" onclick="showClassSelect()">🏫 Класс</button><button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Профиль</button></div>
 </div>
@@ -156,7 +153,7 @@ header h1{font-family:'Unbounded',system-ui,sans-serif;font-size:12px;font-weigh
     <span id="qt" class="qtag"></span>
     <div id="qb" class="qtxt"></div>
   </div>
-  <div id="opts"></div>
+  <div id="opts" role="group" aria-label="Варианты ответа"></div>
   <div id="fb"></div>
   <div id="shp"></div>
 </div></div>

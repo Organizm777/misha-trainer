@@ -9,7 +9,7 @@
 <style>
 
 *{box-sizing:border-box;margin:0;padding:0}
-:root{color-scheme:light;--bg:#f5f3ee;--card:#fff;--text:#1a1a2e;--muted:#6b6b7e;--accent:#2563eb;--green:#16a34a;--red:#dc2626;--orange:#ea580c;--gold:#fbbf24}
+:root{color-scheme:light dark;--bg:#f5f3ee;--card:#fff;--text:#1a1a2e;--muted:#6b6b7e;--accent:#2563eb;--green:#16a34a;--red:#dc2626;--orange:#ea580c;--gold:#fbbf24}
 html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .w{max-width:520px;margin:0 auto;padding:16px}.scr{display:none}.scr.active{display:block}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Golos Text',sans-serif;transition:all .15s;width:100%}
@@ -59,7 +59,7 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 .likert-opt.selected .likert-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
 /* Radar chart placeholder */
 .radar-placeholder{width:200px;height:200px;margin:16px auto;border-radius:50%;border:2px solid #eee;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
-</style>
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e}html,body{background:#141420!important;color:#e8e6e0!important}.card{background:var(--card)!important;border-color:var(--border)!important;color:var(--text)!important}.card .cn,.card .cl{color:var(--text)!important}.card .cs{color:var(--muted)!important}header,footer{background:#0e0e1a!important}a{color:var(--text)}.sub{color:var(--muted)!important}.stat-l{color:var(--muted)!important}.foot-text{color:#9a9aae!important}}</style>
 </head>
 <body>
 <div id="app">

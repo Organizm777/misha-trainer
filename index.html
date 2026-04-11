@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f5f3ee;--ink:#0f0e17;--muted:#6b6a74;--card:#fff;--border:#e2e0d8}
+:root{color-scheme:light dark;--bg:#f5f3ee;--ink:#0f0e17;--muted:#6b6a74;--card:#fff;--border:#e2e0d8}
 html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-ui,sans-serif;min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0);overflow-x:hidden}
 .w{max-width:680px;margin:0 auto;padding:0 20px}
 .header{padding:calc(24px + env(safe-area-inset-top,0)) 0 0}
@@ -48,7 +48,7 @@ h1 em{font-style:normal;color:var(--muted)}
 .foot-text{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px;max-width:400px}
 .tg{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:9px 16px;border-radius:10px;text-decoration:none;transition:opacity .15s}
 .tg:hover{opacity:.85}
-</style>
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e}html,body{background:#141420!important;color:#e8e6e0!important}.card{background:var(--card)!important;border-color:var(--border)!important;color:var(--text)!important}.card .cn,.card .cl{color:var(--text)!important}.card .cs{color:var(--muted)!important}header,footer{background:#0e0e1a!important}a{color:var(--text)}.sub{color:var(--muted)!important}.stat-l{color:var(--muted)!important}.foot-text{color:#9a9aae!important}}</style>
 </head>
 <body>
 <div class="w">
