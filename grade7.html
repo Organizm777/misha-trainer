@@ -633,7 +633,7 @@ function showJournal(){
 // Demo mode removed
 let demoMode=false;
 if(!localStorage.getItem('trainer_player_name')){setTimeout(pickName,300)}
-else refreshMain();
+else{go('main');refreshMain();}
 
 const _origNextQ=nextQ;
 const _nextQRef=function(){
