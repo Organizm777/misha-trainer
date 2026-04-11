@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0f0e17">
@@ -17,14 +17,14 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 .live-pill{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.5px;margin-bottom:20px}
 .live-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-h1{font-family:'Unbounded',sans-serif;font-size:clamp(28px,7vw,46px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:12px}
+h1{font-family:'Unbounded',system-ui,sans-serif;font-size:clamp(28px,7vw,46px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:12px}
 h1 em{font-style:normal;color:var(--muted)}
 .sub{font-size:14px;color:var(--muted);line-height:1.6;max-width:420px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:24px 0}
 .stat{padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:12px}
-.stat-n{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;line-height:1}
+.stat-n{font-family:'Unbounded',system-ui,sans-serif;font-size:22px;font-weight:900;line-height:1}
 .stat-l{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
-.section-label{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.section-label{font-family:'Unbounded',system-ui,sans-serif;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin-bottom:14px}
 .card{position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:18px 16px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:transform .15s,border-color .2s;cursor:pointer;overflow:hidden;animation:up .4s ease both}
 @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -32,7 +32,7 @@ h1 em{font-style:normal;color:var(--muted)}
 .card:hover{transform:translateY(-3px);border-color:var(--c)}
 .card:hover::after{opacity:1}
 .card:active{transform:scale(.97)}
-.cn{font-family:'Unbounded',sans-serif;font-size:28px;font-weight:900;color:var(--c);line-height:1}
+.cn{font-family:'Unbounded',system-ui,sans-serif;font-size:28px;font-weight:900;color:var(--c);line-height:1}
 .cl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
 .cs{font-size:11px;color:var(--muted);line-height:1.4;flex:1}
 .cf{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);margin-top:auto}
@@ -161,5 +161,5 @@ h1 em{font-style:normal;color:var(--muted)}
 </div>
 
 </div>
-</body>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script></body>
 </html>

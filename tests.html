@@ -16,7 +16,7 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 .btn:active{transform:scale(.97)}.btn-p{background:var(--accent);color:#fff}.btn-d{background:var(--text);color:#fff}.btn-o{background:transparent;border:1.5px solid #ddd;color:var(--text)}
 .mono{font-family:'JetBrains Mono',monospace}
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;margin-bottom:8px;border-bottom:1px solid #eee}
-.hdr-title{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:800;color:var(--muted)}
+.hdr-title{font-family:'Unbounded',system-ui,sans-serif;font-size:12px;font-weight:800;color:var(--muted)}
 .hdr-timer{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--accent)}
 .hdr-timer.warn{color:var(--red);animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.5}}
 .pgbar{height:4px;background:#e8e6e0;border-radius:2px;overflow:hidden;margin-bottom:6px}
@@ -32,7 +32,7 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 .opt{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:var(--card);border:1.5px solid #e8e6e0;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;transition:all .1s;text-align:center;min-height:52px}
 .opt:hover{border-color:var(--accent);background:#f8faff}.opt.selected{border-color:var(--accent);background:#eff6ff}
 .rcard{background:var(--card);border-radius:20px;padding:28px 20px;text-align:center;border:1.5px solid #eee}
-.iq-num{font-family:'Unbounded',sans-serif;font-size:72px;font-weight:900;line-height:1}
+.iq-num{font-family:'Unbounded',system-ui,sans-serif;font-size:72px;font-weight:900;line-height:1}
 .iq-label{font-size:13px;color:var(--muted);margin-top:4px}
 .iq-range{display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;margin:12px 0}
 .bd-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
@@ -46,7 +46,7 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 .tcard{display:flex;align-items:center;gap:14px;padding:16px;background:var(--card);border:1.5px solid #eee;border-radius:14px;margin-bottom:8px;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--text)}
 .tcard:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
 .tcard .tic{font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:12px;flex-shrink:0}
-.tcard .tnm{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:800}
+.tcard .tnm{font-family:'Unbounded',system-ui,sans-serif;font-size:13px;font-weight:800}
 .tcard .tdesc{font-size:11px;color:var(--muted);margin-top:2px}
 .tcard .tdone{font-size:10px;color:var(--green);font-weight:700;margin-top:3px}
 .tcard .arrow{margin-left:auto;color:#ccc;font-size:16px}
@@ -68,7 +68,7 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <div id="s-menu" class="scr active"><div class="w">
 <div style="text-align:center;margin-bottom:20px;padding-top:16px">
 <div style="font-size:42px;margin-bottom:8px">🧠</div>
-<h1 style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:900">Тесты</h1>
+<h1 style="font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900">Тесты</h1>
 <p style="color:var(--muted);font-size:12px;margin-top:4px">Портрет ученика: мышление, стиль, характер</p>
 </div>
 
@@ -121,7 +121,7 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <div id="s-intro" class="scr"><div class="w">
 <div style="text-align:center;padding-top:20px">
 <div style="font-size:42px;margin-bottom:8px">🧠</div>
-<h1 style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">Логическое мышление</h1>
+<h1 style="font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">Логическое мышление</h1>
 </div>
 <div style="background:var(--card);border-radius:16px;padding:18px;border:1.5px solid #eee;margin-bottom:12px">
 <div style="font-size:13px;line-height:2">
@@ -354,7 +354,7 @@ function finishPsych(mode){
     };
     const colors={v:'#2563eb',a:'#16a34a',k:'#ea580c'};
     let h='<div style="font-size:36px;margin-bottom:4px">📚</div>';
-    h+='<div style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900;color:'+colors[dominant]+'">'+names[dominant]+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900;color:'+colors[dominant]+'">'+names[dominant]+'</div>';
     h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">Ваш преобладающий стиль обучения</div>';
     // Bars
     [{k:'v',n:'👁 Визуал',p:pv},{k:'a',n:'👂 Аудиал',p:pa},{k:'k',n:'✋ Кинестетик',p:pk}].forEach(b=>{
@@ -377,7 +377,7 @@ function finishPsych(mode){
     else{type='Меланхолик';emoji='🌧';desc='Чувствительный, вдумчивый, перфекционист. Глубоко переживает, склонен к тревоге. Лучший режим: тихая обстановка, индивидуальный темп, поддержка.'}
 
     let h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
-    h+='<div style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900">'+type+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900">'+type+'</div>';
     h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">Ваш тип темперамента</div>';
     // Axes
     h+='<div style="margin:16px 0">';
@@ -444,7 +444,7 @@ refreshMenu();
   }
 })();
 </script>
-</body>
+<script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.querySelector('div[style*="z-index:9999"]');if(m)m.remove()}});if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script></body>
 </html>
 <script>
 // ═══ MOTIVATION TEST ═══
@@ -608,7 +608,7 @@ function finishPsych2(mode){
     const dominant=iPct>ePct?'Внутренняя':'Внешняя';
     const emoji=iPct>ePct?'🌟':'🏆';
     h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
-    h+='<div style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900">'+dominant+' мотивация</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900">'+dominant+' мотивация</div>';
     h+='<div style="font-size:12px;color:var(--muted);margin:8px 0 16px">Что движет вашим учеником</div>';
     h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">🌟 Внутренняя</span><div class="bd-bar"><div class="bd-fill" style="width:'+iPct+'%;background:var(--green)"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700">'+iPct+'%</span></div>';
     h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">🏆 Внешняя</span><div class="bd-bar"><div class="bd-fill" style="width:'+ePct+'%;background:var(--orange)"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700">'+ePct+'%</span></div>';
@@ -625,7 +625,7 @@ function finishPsych2(mode){
     else if(pct>=40){level='Средняя';color='var(--orange)';emoji='😐';tip='Умеренное волнение — это нормально. Помогите ребёнку с планированием, учите не катастрофизировать. Режим сна и спорт.'}
     else{level='Низкая';color='var(--green)';emoji='😊';tip='Ребёнок спокойно относится к учёбе. Следите, чтобы это не перешло в безразличие — умеренное волнение полезно.'}
     h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
-    h+='<div style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900;color:'+color+'">'+level+' тревожность</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900;color:'+color+'">'+level+' тревожность</div>';
     h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">'+score+'/'+ANXIETY_Q.length+' признаков ('+pct+'%)</div>';
     h+='<div style="margin:12px 0;height:12px;background:#e8e6e0;border-radius:6px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+color+';border-radius:6px"></div></div>';
     h+='<div style="background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6;text-align:left"><b>💡 Рекомендации:</b><br>'+tip+'</div>';
@@ -640,7 +640,7 @@ function finishPsych2(mode){
     const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
     const top3=sorted.slice(0,3);
     h='<div style="font-size:36px;margin-bottom:4px">'+icons[top3[0][0]]+'</div>';
-    h+='<div style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:900">'+names[top3[0][0]]+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:18px;font-weight:900">'+names[top3[0][0]]+'</div>';
     h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">Ваш ведущий тип по Голланду</div>';
     sorted.forEach(([k,v])=>{const mx=Math.max(...Object.values(scores))||1;const pct=Math.round(v/5*100);
       h+='<div class="bd-row"><span style="width:32px;font-size:16px">'+icons[k]+'</span><span style="width:60px;font-weight:600;font-size:11px">'+names[k].slice(0,6)+'</span><div class="bd-bar"><div class="bd-fill" style="width:'+pct+'%;background:var(--accent)"></div></div><span class="mono" style="width:25px;text-align:right;font-size:12px;font-weight:700">'+v+'</span></div>'});
@@ -662,7 +662,7 @@ function finishPsych2(mode){
     else if(pPct>=60){profile='Практик-интуит';emoji='💡'}
     else{profile='Начинающий';emoji='🌱'}
     h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
-    h+='<div style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:900">'+profile+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:18px;font-weight:900">'+profile+'</div>';
     h+='<div style="font-size:12px;color:var(--muted);margin:8px 0 16px">Два измерения: знания и понимание людей</div>';
     h+='<div class="bd-row"><span style="width:80px;font-weight:600;font-size:12px">📖 Теория</span><div class="bd-bar"><div class="bd-fill" style="width:'+tPct+'%;background:var(--accent)"></div></div><span class="mono" style="width:50px;text-align:right;font-size:12px;font-weight:700">'+theory+'/'+tTotal+'</span></div>';
     h+='<div class="bd-row"><span style="width:80px;font-weight:600;font-size:12px">💡 Практика</span><div class="bd-bar"><div class="bd-fill" style="width:'+pPct+'%;background:var(--green)"></div></div><span class="mono" style="width:50px;text-align:right;font-size:12px;font-weight:700">'+practice+'/'+pTotal+'</span></div>';
@@ -717,7 +717,7 @@ function showClassSelect(){
     {g:'10',f:'index.html',ic:'∑',color:'#1a1a2e',bg:'#e8e6e0'},
     {g:'11',f:'grade11.html',ic:'🎓',color:'#7c3aed',bg:'#ede9fe'},
   ];
-  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">📚 Выбери класс</h3>';
+  let h='<h3 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">📚 Выбери класс</h3>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">';
   grades.forEach(({g,f,ic,color,bg})=>{
     const currentFile=window.location.pathname.split('/').pop()||'index.html';
@@ -873,7 +873,7 @@ function showPortrait(){
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
         <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#4ade80,#2563eb);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0">🧠</div>
         <div>
-          <div style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:900;margin-bottom:2px">Портрет ученика</div>
+          <div style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:900;margin-bottom:2px">Портрет ученика</div>
           <div style="font-size:11px;opacity:.5">${now} · ${done} из 7 тестов</div>
         </div>
         <button onclick="this.closest('[style*=position]').remove()" style="margin-left:auto;background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">×</button>
@@ -899,7 +899,7 @@ function showPortrait(){
 
     <!-- Insights -->
     <div style="padding:16px">
-      <div style="font-family:Unbounded,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Ключевые выводы</div>
+      <div style="font-family:Unbounded,system-ui,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Ключевые выводы</div>
       ${insights.slice(0,5).map(ins=>`
       <div style="display:flex;gap:12px;margin-bottom:12px;padding:12px;background:#fff;border-radius:12px;border:1px solid #e2e0d8">
         <span style="font-size:20px;flex-shrink:0;margin-top:1px">${ins.icon}</span>
@@ -910,7 +910,7 @@ function showPortrait(){
     <!-- Holland careers if available -->
     ${holTop2.length?`
     <div style="padding:0 16px 16px">
-      <div style="font-family:Unbounded,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Направления для профессии</div>
+      <div style="font-family:Unbounded,system-ui,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Направления для профессии</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
         ${holTop2.map(k=>`
         <div style="background:#fff;border-radius:10px;padding:12px;border:1px solid #e2e0d8">

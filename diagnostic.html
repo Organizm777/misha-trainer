@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f0e17">
 <title>Сквозная диагностика</title>
@@ -17,25 +17,25 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 /* ── HEADER ── */
 .hdr{padding:calc(16px + env(safe-area-inset-top,0)) 0 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);margin-bottom:20px}
 .hdr-back{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;flex-shrink:0}
-.hdr-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:800}
+.hdr-title{font-family:'Unbounded',system-ui,sans-serif;font-size:13px;font-weight:800}
 .hdr-sub{font-size:11px;color:var(--muted);margin-top:1px}
 
 /* ── SUBJECT GRID ── */
 .subj-intro{text-align:center;padding:20px 0 24px}
-.subj-intro h1{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;line-height:1.1;margin-bottom:8px}
+.subj-intro h1{font-family:'Unbounded',system-ui,sans-serif;font-size:22px;font-weight:900;line-height:1.1;margin-bottom:8px}
 .subj-intro p{font-size:13px;color:var(--muted);line-height:1.5}
 .subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
 .scard{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;text-align:left;transition:transform .12s,border-color .15s;-webkit-tap-highlight-color:transparent}
 .scard:active{transform:scale(.97)}
 .scard:hover{border-color:var(--c)}
 .scard-ic{font-size:24px;margin-bottom:8px}
-.scard-nm{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:800;color:var(--c);margin-bottom:3px}
+.scard-nm{font-family:'Unbounded',system-ui,sans-serif;font-size:12px;font-weight:800;color:var(--c);margin-bottom:3px}
 .scard-cl{font-size:10px;color:var(--muted)}
 .scard-desc{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
 
 /* ── QUIZ ── */
 .qhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.grade-pill{background:var(--c,#2563eb);color:#fff;font-family:'Unbounded',sans-serif;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px}
+.grade-pill{background:var(--c,#2563eb);color:#fff;font-family:'Unbounded',system-ui,sans-serif;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px}
 .qprog{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
 .qbar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:16px}
 .qbar-fill{height:100%;background:var(--c,#2563eb);border-radius:2px;transition:width .4s}
@@ -65,7 +65,7 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 /* ── RESULTS ── */
 .res-hero{text-align:center;padding:24px 0 20px}
 .res-emoji{font-size:48px;margin-bottom:8px}
-.res-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;margin-bottom:6px}
+.res-title{font-family:'Unbounded',system-ui,sans-serif;font-size:20px;font-weight:900;margin-bottom:6px}
 .res-sub{font-size:13px;color:var(--muted);line-height:1.5}
 .grade-map{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
 .grow{display:flex;align-items:center;gap:10px}
@@ -76,7 +76,7 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 .gscore{font-family:'JetBrains Mono',monospace;font-size:10px;width:34px;text-align:right;flex-shrink:0}
 .not-tested{opacity:.35}
 .ins-block{background:var(--card);border-radius:14px;padding:16px;border:1.5px solid var(--border);margin-bottom:10px}
-.ins-block h3{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.ins-block h3{font-family:'Unbounded',system-ui,sans-serif;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 .ins-row{display:flex;gap:10px;margin-bottom:8px;font-size:13px;line-height:1.5}
 .share-btn{width:100%;padding:13px;border:none;border-radius:11px;background:var(--ink);color:#fff;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px}
 .again-btn{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:11px;background:var(--card);font-family:'Golos Text',sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink)}
@@ -829,5 +829,5 @@ function copyText(text){
     .catch(()=>prompt('Скопируй:',text));
 }
 </script>
-</body>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script></body>
 </html>
