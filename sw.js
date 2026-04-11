@@ -1,35 +1,31 @@
-const CACHE_NAME = 'trainer-v2';
+const CACHE_NAME = "trainer-v3";
 const ASSETS = [
-  './',
-  './index.html',
-  './grade1.html',
-  './grade2.html',
-  './grade3.html',
-  './grade4.html',
-  './grade5.html',
-  './grade6.html',
-  './grade7.html',
-  './grade8.html',
-  './grade9.html',
-  './grade10.html',
-  './grade11.html',
-  './diagnostic.html',
-  './tests.html',
-  './dashboard.html'
+  "./",
+  "./index.html",
+  "./grade1_v2.html",
+  "./grade2_v2.html",
+  "./grade3_v2.html",
+  "./grade4_v2.html",
+  "./grade5_v2.html",
+  "./grade6_v2.html",
+  "./grade7_v2.html",
+  "./grade8_v2.html",
+  "./grade9_v2.html",
+  "./grade10_v2.html",
+  "./grade11_v2.html",
+  "./engine10.js",
+  "./engine10.css",
+  "./diagnostic.html",
+  "./tests.html",
+  "./dashboard.html"
 ];
 
-const FONT_URLS = [
-  'https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap'
-];
-
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
-  );
+self.addEventListener("install", e => {
+  e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
   self.skipWaiting();
 });
 
-self.addEventListener('activate', e => {
+self.addEventListener("activate", e => {
   e.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
@@ -38,11 +34,10 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-self.addEventListener('fetch', e => {
+self.addEventListener("fetch", e => {
   const url = new URL(e.request.url);
   
-  // For Google Fonts: cache-first (cache on first load, serve from cache after)
-  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) {
+  if (url.hostname.includes("fonts.googleapis.com") || url.hostname.includes("fonts.gstatic.com")) {
     e.respondWith(
       caches.match(e.request).then(cached => {
         if (cached) return cached;
@@ -56,7 +51,6 @@ self.addEventListener('fetch', e => {
     return;
   }
   
-  // For local assets: network-first with cache fallback
   if (url.origin === self.location.origin) {
     e.respondWith(
       fetch(e.request)
@@ -70,6 +64,5 @@ self.addEventListener('fetch', e => {
     return;
   }
   
-  // Everything else: network only
   e.respondWith(fetch(e.request));
 });

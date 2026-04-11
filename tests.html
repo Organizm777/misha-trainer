@@ -74,12 +74,12 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 
 <div onclick="launchIQ()" class="tcard">
 <div class="tic" style="background:#eff6ff">🧠</div>
-<div><div class="tnm">Логическое мышление (IQ)</div><div class="tdesc">60 заданий · 40 мин · матрицы, ряды, память</div><div class="tdone" id="iq-done"></div></div>
+<div><div class="tnm">Логическое мышление</div><div class="tdesc">60 заданий · 40 мин · матрицы, ряды, память</div><div class="tdone" id="iq-done"></div></div>
 <div class="arrow">→</div></div>
 
 <div onclick="launchStyle()" class="tcard">
 <div class="tic" style="background:#f0fdf4">📚</div>
-<div><div class="tnm">Стиль обучения</div><div class="tdesc">20 вопросов · 5 мин · визуал / аудиал / кинестетик</div><div class="tdone" id="style-done"></div></div>
+<div><div class="tnm">Стиль восприятия</div><div class="tdesc">20 вопросов · 5 мин · визуал / аудиал / кинестетик</div><div class="tdone" id="style-done"></div></div>
 <div class="arrow">→</div></div>
 
 <div onclick="launchTemp()" class="tcard">
@@ -117,11 +117,11 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <a href="index.html" style="display:block;text-align:center;margin-top:8px;font-size:13px;color:var(--accent);text-decoration:none">← Назад к тренажёру</a>
 </div></div>
 
-<!-- IQ SCREENS (reuse) -->
+<!-- LOGIC SCREENS (reuse) -->
 <div id="s-intro" class="scr"><div class="w">
 <div style="text-align:center;padding-top:20px">
 <div style="font-size:42px;margin-bottom:8px">🧠</div>
-<h1 style="font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">Логическое мышление</h1>
+<h1 style="font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">Логическое мышление</h1><p style="font-size:11px;color:var(--muted);margin-top:4px">Оценка логического мышления. Не является клиническим тестом IQ.</p>
 </div>
 <div style="background:var(--card);border-radius:16px;padding:18px;border:1.5px solid #eee;margin-bottom:12px">
 <div style="font-size:13px;line-height:2">
@@ -183,7 +183,7 @@ function range(a,b){const r=[];for(let i=a;i<=b;i++)r.push(i);return r}
 function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active'));document.getElementById('s-'+id).classList.add('active')}
 
 // ═══════════════════════════════════════
-// IQ TEST (same as before)
+// LOGIC TEST (same as before)
 // ═══════════════════════════════════════
 const ALL=[],PN=['Матрицы и паттерны','Числовые последовательности','Вербальные аналогии','Пространственное мышление','Рабочая память'];
 function MX(g,a,w,h,d){ALL.push({part:0,diff:d,render(){let s='<div class="qtxt" style="margin-bottom:8px">Какой элемент заменит <b style="color:var(--gold)">?</b></div><div class="matrix" style="grid-template-columns:repeat(3,48px);grid-template-rows:repeat(3,48px)">';g.forEach(c=>{s+=c==='?'?'<div class="mcell empty"></div>':'<div class="mcell">'+c+'</div>'});return s+'</div>'},answer:a,opts:shuffle([a,...w]),hint:h})}
@@ -306,7 +306,7 @@ function renderPsych(mode){
   psychMode=mode;
   const qs=mode==='style'?STYLE_Q:TEMP_Q;
   const cur=mode==='style'?styleCur:tempCur;
-  const title=mode==='style'?'📚 Стиль обучения':'🎭 Темперамент';
+  const title=mode==='style'?'📚 Стиль восприятия':'🎭 Темперамент';
 
   if(cur>=qs.length){finishPsych(mode);return}
 
@@ -346,7 +346,7 @@ function finishPsych(mode){
     const total=styleAns.length;
     const pv=Math.round(counts.v/total*100),pa=Math.round(counts.a/total*100),pk=Math.round(counts.k/total*100);
     const dominant=pv>=pa&&pv>=pk?'v':pa>=pk?'a':'k';
-    const names={v:'Визуал 👁',a:'Аудиал 👂',k:'Кинестетик ✋'};
+    const names={v:'Визуальный стиль 👁',a:'Слуховой стиль 👂',k:'Практический стиль ✋'};
     const descs={
       v:'Вы лучше всего воспринимаете информацию через зрение: схемы, таблицы, картинки, цветные пометки. Используйте майнд-карты, выделяйте маркером, смотрите обучающие видео.',
       a:'Вы лучше всего воспринимаете информацию на слух: лекции, обсуждения, аудиокниги. Читайте вслух, обсуждайте материал с друзьями, записывайте голосовые заметки.',
@@ -357,7 +357,7 @@ function finishPsych(mode){
     h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900;color:'+colors[dominant]+'">'+names[dominant]+'</div>';
     h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">Ваш преобладающий стиль обучения</div>';
     // Bars
-    [{k:'v',n:'👁 Визуал',p:pv},{k:'a',n:'👂 Аудиал',p:pa},{k:'k',n:'✋ Кинестетик',p:pk}].forEach(b=>{
+    [{k:'v',n:'👁 Визуальный стиль',p:pv},{k:'a',n:'👂 Слуховой стиль',p:pa},{k:'k',n:'✋ Практический стиль',p:pk}].forEach(b=>{
       h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">'+b.n+'</span><div class="bd-bar"><div class="bd-fill" style="width:'+b.p+'%;background:'+colors[b.k]+'"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700;color:'+colors[b.k]+'">'+b.p+'%</span></div>';
     });
     h+='<div style="margin-top:14px;text-align:left;background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6"><b>💡 Рекомендации:</b><br>'+descs[dominant]+'</div>';
@@ -406,7 +406,7 @@ function shareResult(){
   if(!lastResult)return;
   let t='';
   if(lastResult.type==='iq'){
-    const l=lastResult;t='🧠 Тест логического мышления\nIQ: '+l.iq+' ('+l.pctl+'-й перцентиль)\n'+l.tOk+'/'+l.tQ+' ('+l.rawPct+'%)\n';
+    const l=lastResult;t='🧠 Тест логического мышления\nБалл: '+l.iq+' ('+l.pctl+'-й перцентиль)\n'+l.tOk+'/'+l.tQ+' ('+l.rawPct+'%)\n';
     l.parts.forEach((p,i)=>{t+=(p.pct>=80?'🟢':p.pct>=50?'🟡':'🔴')+' '+l.sn[i]+': '+p.ok+'/'+p.total+'\n'});
   }
   t+='\nhttps://organizm777.github.io/misha-trainer/tests.html';
@@ -414,7 +414,7 @@ function shareResult(){
 }
 function sharePsych(){
   let t='';
-  if(lastResult&&lastResult.type==='style'){t='📚 Стиль обучения\nРезультат: '+lastResult.dominant+'\n👁 Визуал: '+lastResult.pv+'%\n👂 Аудиал: '+lastResult.pa+'%\n✋ Кинестетик: '+lastResult.pk+'%'}
+  if(lastResult&&lastResult.type==='style'){t='📚 Стиль восприятия\nРезультат: '+lastResult.dominant+'\n👁 Визуальный стиль: '+lastResult.pv+'%\n👂 Слуховой стиль: '+lastResult.pa+'%\n✋ Практический стиль: '+lastResult.pk+'%'}
   else if(lastResult&&lastResult.type==='temp'){t='🎭 Темперамент: '+lastResult.tempType+'\nЭкстраверсия: '+lastResult.eScore+'/10\nНейротизм: '+lastResult.nScore+'/10'}
   t+='\nhttps://organizm777.github.io/misha-trainer/tests.html';
   if(navigator.share)navigator.share({text:t}).catch(()=>{});else navigator.clipboard.writeText(t).then(()=>alert('Скопировано!')).catch(()=>{});
@@ -422,15 +422,15 @@ function sharePsych(){
 
 // ═══ MENU REFRESH ═══
 function refreshMenu(){
-  try{const r=JSON.parse(localStorage.getItem('iq_results')||'[]');if(r.length){const l=r[r.length-1];document.getElementById('iq-done').textContent='✓ IQ '+l.iq+' ('+l.pct+'%)'}}catch{}
-  try{const s=JSON.parse(localStorage.getItem('style_result')||'null');if(s)document.getElementById('style-done').textContent='✓ '+{v:'Визуал',a:'Аудиал',k:'Кинестетик'}[s.dominant]}catch{}
+  try{const r=JSON.parse(localStorage.getItem('iq_results')||'[]');if(r.length){const l=r[r.length-1];document.getElementById('iq-done').textContent='✓ Логика: '+l.iq+' ('+l.pct+'%)'}}catch{}
+  try{const s=JSON.parse(localStorage.getItem('style_result')||'null');if(s)document.getElementById('style-done').textContent='✓ '+{v:'Визуальный стиль',a:'Слуховой стиль',k:'Практический стиль'}[s.dominant]}catch{}
   try{const t=JSON.parse(localStorage.getItem('temp_result')||'null');if(t)document.getElementById('temp-done').textContent='✓ '+t.type}catch{}
-}
+;if(typeof updatePortraitCTA==="function")updatePortraitCTA()}
 refreshMenu();
 
 // Update portrait CTA state
 (function updatePortraitCTA(){
-  const done = countDoneTests ? countDoneTests() : 0;
+  const done = typeof countDoneTests==="function" ? countDoneTests() : 0;
   const cta = document.getElementById('portrait-cta');
   const hint = document.getElementById('portrait-hint');
   if(!cta) return;
@@ -751,7 +751,7 @@ function showPortrait(){
   const done=[iq,style,temp,motiv,anxiety,holland,psych].filter(Boolean).length;
 
   // ── Helpers ──────────────────────────────────────
-  const styleNames={v:'Визуал',a:'Аудиал',k:'Кинестетик'};
+  const styleNames={v:'Визуальный стиль',a:'Слуховой стиль',k:'Практический стиль'};
   const styleEmoji={v:'👁',a:'👂',k:'✋'};
   const styleDesc={v:'лучше воспринимает информацию визуально — схемы, графики, цвет',a:'лучше воспринимает на слух — объяснения, подкасты, проговаривание',k:'учится через действие — практика, эксперимент, движение'};
   const hollandNames={R:'Реалистический',I:'Исследовательский',A:'Артистический',S:'Социальный',E:'Предприимчивый',C:'Конвенциональный'};
@@ -781,12 +781,12 @@ function showPortrait(){
   // ── Generate insights ────────────────────────────
   const insights=[];
 
-  // IQ insight
+  // Logic insight
   if(iq){
     const pct=iq.pct||iq.pctl||50;
-    if(pct>=80) insights.push({icon:'🏆',text:`<b>Высокие когнитивные способности</b> — IQ ${iq.iq}, лучше ${pct}% сверстников. Мозг хорошо справляется с абстрактным мышлением и анализом. Не бойся брать сложные задачи — они тебе по силам.`});
-    else if(pct>=50) insights.push({icon:'💡',text:`<b>Хороший потенциал</b> — IQ ${iq.iq}, лучше ${pct}% сверстников. Особенно сильны там, где работала внимательность и последовательность. Регулярная практика заметно поднимает результат.`});
-    else insights.push({icon:'🌱',text:`<b>IQ ${iq.iq}</b> — есть куда расти. Это рабочий показатель, а не приговор: логику и память развивают тренировкой. Кроссворды, шахматы, задачники — вполне работают.`});
+    if(pct>=80) insights.push({icon:'🏆',text:`<b>Высокие когнитивные способности</b> — балл ${iq.iq}, лучше ${pct}% сверстников. Мозг хорошо справляется с абстрактным мышлением и анализом. Не бойся брать сложные задачи — они тебе по силам.`});
+    else if(pct>=50) insights.push({icon:'💡',text:`<b>Хороший потенциал</b> — балл ${iq.iq}, лучше ${pct}% сверстников. Особенно сильны там, где работала внимательность и последовательность. Регулярная практика заметно поднимает результат.`});
+    else insights.push({icon:'🌱',text:`<b>балл ${iq.iq}</b> — есть куда расти. Это рабочий показатель, а не приговор: логику и память развивают тренировкой. Кроссворды, шахматы, задачники — вполне работают.`});
   }
 
   // Style + study tip
@@ -855,7 +855,7 @@ function showPortrait(){
 
   // ── Build profile bars ───────────────────────────
   const bars=[];
-  if(iq) bars.push({label:'Когнитивный индекс',val:'IQ '+iq.iq,pct:Math.min(100,Math.max(0,Math.round((iq.iq-60)/90*100))),color:'#2563eb'});
+  if(iq) bars.push({label:'Когнитивный индекс',val:'Балл: '+iq.iq,pct:Math.min(100,Math.max(0,Math.round((iq.iq-60)/90*100))),color:'#2563eb'});
   if(motiv) bars.push({label:'Внутренняя мотивация',val:(motiv.iPct||0)+'%',pct:motiv.iPct||0,color:'#16a34a'});
   if(anxiety) bars.push({label:'Тревожность',val:anxiety.pct+'%',pct:anxiety.pct,color:anxiety.pct>=70?'#dc2626':anxiety.pct>=40?'#ea580c':'#16a34a'});
 
@@ -942,8 +942,8 @@ function sharePortrait(){
   const now=new Date().toLocaleDateString('ru',{day:'numeric',month:'long'});
   let text=`🧠 Портрет ученика — ${now}\n(${d.done||'?'} из 7 тестов пройдено)\n\n`;
   
-  if(d.iq) text+=`📊 IQ: ${d.iq.iq} (лучше ${d.iq.pct||d.iq.pctl}% сверстников)\n`;
-  if(d.style) text+=`👁 Стиль обучения: ${({v:'Визуал',a:'Аудиал',k:'Кинестетик'})[d.style.dominant]||d.style.dominant}\n`;
+  if(d.iq) text+=`📊 Балл: ${d.iq.iq} (лучше ${d.iq.pct||d.iq.pctl}% сверстников)\n`;
+  if(d.style) text+=`👁 Стиль восприятия: ${({v:'Визуальный стиль',a:'Слуховой стиль',k:'Практический стиль'})[d.style.dominant]||d.style.dominant}\n`;
   if(d.temp) text+=`🎭 Темперамент: ${d.temp.type}\n`;
   if(d.motiv) text+=`💪 Мотивация: ${d.motiv.dominant==='Внутренняя'||d.motiv.iPct>d.motiv.ePct?'Внутренняя ('+d.motiv.iPct+'%)':'Внешняя ('+d.motiv.ePct+'%)'}\n`;
   if(d.anxiety) text+=`😌 Тревожность: ${d.anxiety.level} (${d.anxiety.pct}%)\n`;

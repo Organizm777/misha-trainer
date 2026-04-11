@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="color-scheme" content="light"><meta name="theme-color" content="#1a1a2e"><link rel="manifest" href="data:application/json,%7B%22name%22%3A%22%D0%A2%D1%80%D0%B5%D0%BD%D0%B0%D0%B6%D1%91%D1%80%22%2C%22short_name%22%3A%22%D0%A2%D1%80%D0%B5%D0%BD%D0%B0%D0%B6%D1%91%D1%80%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f3ee%22%2C%22theme_color%22%3A%22%231a1a2e%22%2C%22icons%22%3A%5B%5D%7D"><title>Подготовка к диагностикам</title><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="engine10.css">
+</head><body><header><h1 id="hdr">ПОДГОТОВКА</h1><div class="hbadge" id="hb" style="display:none"></div></header><div id="s-main" class="scr on"><div class="w"><div style="text-align:center;margin-bottom:16px" class="fade"><div style="font-size:28px;margin-bottom:4px">📚</div><h2 style="font-family:Unbounded,system-ui,sans-serif;font-size:18px;font-weight:800">Тренажёр</h2><p style="font-size:12px;color:var(--muted);margin-top:3px">1 класс · 15 предметов · 8000+ задач</p><a href="index.html?choose" style="font-size:11px;color:var(--accent);text-decoration:none;margin-top:4px;display:inline-block">← Другой класс</a><div id="player-badge" style="margin-top:8px"></div></div><div class="gap8" id="sg"></div><div id="daily-meter"></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-o" style="flex:1" onclick='go("info")'>📖 Справка</button> <button class="btn btn-o" style="flex:1" onclick="showJournal()">📊 Слабые</button> <button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Награды</button></div><div style="display:flex;gap:8px;margin-top:6px"><button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Профиль</button> <button class="btn btn-o" style="flex:1" onclick="showClassSelect()">🏫 Классы</button></div><div style="display:flex;gap:6px;margin-bottom:8px"><button class="btn btn-o" style="flex:1" onclick='go("prog")'>📈 Прогресс</button> <button class="btn btn-o" style="flex:1" onclick="showAbout()">ℹ️ О проекте</button></div><div style="margin-bottom:8px"><button class="btn btn-o" style="width:100%;border-color:#16a34a;color:#16a34a" onclick="generateReport()">📊 Отчёт для родителя</button></div><div style="text-align:center;margin-top:8px"><button style="font-size:11px;color:#6b6b7e;background:0 0;border:none;cursor:pointer;text-decoration:underline" onclick="showDateEditor()">📅 Указать даты диагностик</button></div></div></div><div id="s-info" class="scr"><div class="w"><div class="icard fade"><h2>📖 Справка</h2><div class="istp"><span class="isn">1</span><div><b>Предмет → тема → теория → тест</b><p>Выбери предмет, потом тему. Сначала прочитай шпаргалку (📖), потом жми «Тренажёр». Во время теста можно открыть шпаргалку и подсказку (💡).</p></div></div><div class="istp"><span class="isn">2</span><div><b>⚡ Всё вперемешку</b><p>Задачи из всех предметов вперемешку. Можно выбрать, какие предметы включить. Тренажёр подстраивается: слабые темы выпадают чаще — чтобы подтянуть то, что хромает.</p></div></div><div class="istp"><span class="isn">3</span><div><b>⚡ Молния</b><p>Режим на скорость: 3 или 5 минут. Три жизни (❤️❤️❤️) — три ошибки и конец. Рекорды сохраняются в общий рейтинг — соревнуйся с друзьями и одноклассниками!</p></div></div><div class="istp"><span class="isn">4</span><div><b>📝 Диагностика</b><p>Зайди в предмет → «Диагностика». 20 задач за 10 минут, без подсказок, оценка от 2 до 5. Как на настоящей контрольной.</p></div></div><div style="background:var(--abg);border-radius:12px;padding:14px 16px;margin:12px 0"><div style="font-family:Unbounded,system-ui,sans-serif;font-size:13px;font-weight:800;margin-bottom:8px">📅 Зачем дневная норма?</div><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px">Знания закрепляются через <b>регулярное повторение</b>. Как в спорте — одна тренировка в неделю не даст результата, а 15–20 минут каждый день дадут. Дневная норма — это минимум, чтобы мозг запоминал.</p><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px"><b>🎯 Рывок:</b> 20 задач подряд без единой ошибки и подсказок. Если реально знаешь материал — справишься за 10 минут и свободен.</p><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px"><b>📊 Обычная норма:</b> 100 задач с точностью 75%+. Это ~25 минут. Ошибаться можно — главное решать и разбирать ошибки.</p><p style="font-size:12px;color:#374151;line-height:1.6"><b>🔥 Серия дней:</b> каждый день, когда выполнил норму, серия растёт. Не выполнил — обнуляется. Держи серию — это работает.</p></div><div class="istp"><span class="isn">5</span><div><b>🏆 Награды и 👑 Профиль</b><p>Награды за достижения — одноразовые и повторяющиеся — от «Первых шагов» до «Легенды». Профиль — твоя карточка со статистикой по всем предметам. Можно поделиться с друзьями.</p></div></div><div class="istp"><span class="isn">6</span><div><b>🏅 Олимпиада</b><p>Секретный раздел! Откроется после 500 правильных ответов. Внутри: задачи на логику, межпредметные, ловушки и углублённые — совсем другой уровень сложности.</p></div></div><div class="istp"><span class="isn">7</span><div><b>☁️ Облако и код</b><p>Прогресс сохраняется в облаке. Если данные пропали — введи свой 4-значный код (показывается при регистрации) и всё восстановится. Код виден в профиле.</p></div></div><button class="btn btn-d mt12" onclick='go("main")'>← Назад</button></div></div></div><div id="s-prog" class="scr"><div class="w"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><h2 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800">📊 Прогресс</h2><button class="qback" onclick='go("main")'>← Назад</button></div><div id="prog-content"></div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-p" style="flex:1" onclick="shareReport()">📤 Поделиться</button> <button class="btn btn-o" style="flex:1" onclick="resetProgress()">🗑 Сбросить</button></div><button class="btn btn-d mt12" onclick='go("main")'>← Назад</button></div></div><div id="s-subj" class="scr"><div class="w"><div id="sh" class="mb12"></div><div class="gap8" id="tl"></div><button class="btn btn-o mt12" onclick='go("main")'>← Все предметы</button></div></div><div id="s-theory" class="scr"><div class="w"><button class="qback mb8" onclick="goSubj()">← Темы</button><div id="tc"></div><button class="btn btn-p mt12" onclick="rushMode=!1,diagMode=!1,startQuiz()">✏️ Начать тренажёр</button></div></div><div id="s-play" class="scr"><div class="w"><div class="qh"><button class="qback" onclick="endSession()">← Завершить</button><span class="qtimer mono" id="tmr">0:00</span></div><div class="sbar" id="sts"></div><div id="shp-area"></div><div class="qcard fade" id="qc"><div class="qtag" id="qt"></div><div id="qb"></div><pre class="qcode" id="qcd" style="display:none"></pre></div><div class="opts" id="opts" role="group" aria-label="Варианты ответа"></div><div id="fba"></div><div id="ha"></div><div id="pa"></div></div></div><div id="s-result" class="scr"><div class="w"><div class="rcard fade" style="text-align:center"><div style="font-size:36px;margin-bottom:8px" id="res-emoji"></div><h3 id="res-title"></h3><div style="font-size:28px;font-weight:800;margin:8px 0" id="res-score"></div><div style="font-size:13px;color:var(--muted);margin-bottom:4px" id="res-detail"></div></div><div id="res-topics"></div><div id="privacy-row" style="display:none;margin-bottom:8px;text-align:center"><button id="privacy-btn" onclick="togglePrivacy()" style="border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Golos Text,sans-serif;width:100%"></button></div><div style="display:flex;gap:8px;margin-top:4px"><button class="btn btn-p" style="flex:1" onclick="shareSession()">📤 Поделиться</button> <button class="btn btn-d" style="flex:1" onclick='globalMix?go("main"):goSubj()'>← Назад</button></div></div></div>
+<script>
+window.GRADE_NUM="1";window.GRADE_TITLE="🌱 1 класс";window.RUSH_BIN_ID="";window.DAILY_NORM=30;
+</script>
+<script>
+var MATH_TH={
+count:'<h3>Счёт до 20</h3><p>Считаем по порядку: 1, 2, 3... 20.</p><div class="fm">Запомни: после 9 идёт 10, после 19 — 20.\nСостав числа 10 = 1+9 = 2+8 = 3+7 = 4+6 = 5+5</div><div class="ex">💡 Считай на пальцах или по линейке!</div>',
+add:'<h3>Сложение до 20</h3><div class="fm">4 + 3 = 7\n8 + 5 = 13 (8+2=10, ещё 3 → 13)\n9 + 7 = 16</div><p>Способ: сначала добавь до 10, потом остаток.</p>',
+sub:'<h3>Вычитание до 20</h3><div class="fm">9 − 4 = 5\n15 − 6 = 9 (15−5=10, ещё 1 → 9)\n12 − 7 = 5</div><p>Способ: сначала вычти до 10, потом остаток.</p>',
+shapes:'<h3>Фигуры</h3><div class="fm">Круг — нет углов\nКвадрат — 4 равные стороны, 4 угла\nПрямоугольник — 4 стороны, 4 угла\nТреугольник — 3 стороны, 3 угла</div>'
+};
+var RUS_TH={
+letters:'<h3>Буквы и звуки</h3><p><b>Гласные:</b> А, Е, Ё, И, О, У, Ы, Э, Ю, Я</p><p><b>Согласные:</b> все остальные.</p><div class="fm">Гласных в слове столько, сколько слогов!\nМО-ЛО-КО → 3 слога → 3 гласных</div>',
+syllable:'<h3>Слоги</h3><p>Слог — это один или несколько звуков с одной гласной.</p><div class="fm">МА-МА → 2 слога\nШКО-LA → 2 слога\nЯ → 1 слог</div><p>Переносить слово можно только по слогам.</p>',
+jishi:'<h3>ЖИ-ШИ, ЧА-ЩА, ЧУ-ЩУ</h3><div class="fm">ЖИ-ШИ пиши с И: жираф, шина, мыши\nЧА-ЩА пиши с А: чайник, щавель\nЧУ-ЩУ пиши с У: чудо, щука</div>',
+capital:'<h3>Заглавная буква</h3><p>Пишем с заглавной буквы:</p><ul><li>Начало предложения</li><li>Имена людей: Маша, Ваня</li><li>Клички животных: Шарик, Мурка</li><li>Названия городов: Москва</li></ul>'
+};
+var MIR_TH={
+seasons:'<h3>Времена года</h3><div class="fm">Зима: декабрь, январь, февраль\nВесна: март, апрель, май\nЛето: июнь, июль, август\nОсень: сентябрь, октябрь, ноябрь</div>',
+body:'<h3>Части тела</h3><p>Голова — туловище — руки — ноги.</p><p>Органы чувств: глаза (зрение), уши (слух), нос (обоняние), язык (вкус), кожа (осязание).</p>',
+nature:'<h3>Живая и неживая природа</h3><p><b>Живая:</b> растения, животные, грибы, люди, бактерии.<br><b>Неживая:</b> камни, вода, воздух, солнце, облака.</p><div class="ex">💡 Живые — дышат, растут, питаются, размножаются</div>'
+};
+
+// ГЕНЕРАТОРЫ — 1 КЛАСС
+function pick(a){return a[0|Math.random()*a.length]}
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=0|Math.random()*(i+1);[r[i],r[j]]=[r[j],r[i]]}return r}
+function mkQ(q,a,o,h,t,c,b){return{question:q,answer:a,options:shuffle([...new Set(o)].slice(0,4)),hint:h,tag:t,color:c,bg:b}}
+
+function genCount(){
+  const a=1+Math.floor(Math.random()*9), b=1+Math.floor(Math.random()*9);
+  const s=a+b;
+  if(s>20) return genCount();
+  const w=[s-1,s+1,s+2].filter(x=>x>0&&x<=20).map(String);
+  return mkQ(`${a} + ${b} = ?`,`${s}`,[`${s}`,...w],'Считай по пальцам или по линейке','Сложение','#2563eb','#dbeafe');
+}
+function genSub(){
+  const b=2+Math.floor(Math.random()*8), a=b+1+Math.floor(Math.random()*10);
+  if(a>20) return genSub();
+  const r=a-b;
+  const w=[r-1,r+1,r+2].filter(x=>x>0).map(String);
+  return mkQ(`${a} − ${b} = ?`,`${r}`,[`${r}`,...w],'Считай в обратную сторону','Вычитание','#dc2626','#fee2e2');
+}
+function genShapes(){
+  const qs=[
+    {q:'У квадрата сколько сторон?',a:'4',o:['4','3','5','6'],h:'Квадрат — 4 равные стороны'},
+    {q:'У треугольника сколько углов?',a:'3',o:['3','4','2','5'],h:'Треугольник — 3 угла'},
+    {q:'Какая фигура не имеет углов?',a:'Круг',o:['Круг','Квадрат','Треугольник','Прямоугольник'],h:'У круга нет углов'},
+    {q:'Прямоугольник: сколько сторон?',a:'4',o:['4','3','6','2'],h:'Прямоугольник — 4 стороны'},
+    {q:'Какая фигура похожа на колесо?',a:'Круг',o:['Круг','Квадрат','Треугольник','Ромб'],h:'Колесо — круглое'},
+  ];
+  const q=pick(qs);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'Фигуры','#7c3aed','#ede9fe');
+}
+function genCompare(){
+  const a=1+Math.floor(Math.random()*19), b=1+Math.floor(Math.random()*19);
+  if(a===b) return genCompare();
+  const bigger=a>b?`${a}`:`${b}`;
+  const qs=[
+    {q:`Какое число больше: ${a} или ${b}?`,a:bigger,o:[`${a}`,`${b}`,'равны'],h:`${bigger} стоит правее на числовой прямой`},
+    {q:`${a} ${a>b?'>':'<'} ${b} — это верно?`,a:'Да',o:['Да','Нет'],h:`${a>b?a+' > '+b:a+' < '+b}`},
+  ];
+  const q=pick(qs);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'Сравнение чисел','#0d9488','#ccfbf1');
+}
+
+const JISHI=[
+  {q:'«Ж_раф» — какую букву вставим?',a:'и',o:['и','ы','е'],h:'ЖИ-ШИ пиши с И'},
+  {q:'«Ш_на» — какую букву вставим?',a:'и',o:['и','ы','е'],h:'ЖИ-ШИ пиши с И'},
+  {q:'«Ч_йник» — какую букву вставим?',a:'а',o:['а','я','е'],h:'ЧА-ЩА пиши с А'},
+  {q:'«Щ_вель» — какую букву вставим?',a:'а',o:['а','я','е'],h:'ЧА-ЩА пиши с А'},
+  {q:'«Ч_до» — какую букву вставим?',a:'у',o:['у','ю','о'],h:'ЧУ-ЩУ пиши с У'},
+  {q:'«Мы_и» — какую букву вставим?',a:'ш',o:['ш','ж','щ'],h:'Мыши — ЖИ-ШИ пиши с И'},
+];
+function genJishi(){
+  const q=pick(JISHI);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'ЖИ-ШИ ЧА-ЩА','#ea580c','#fff7ed');
+}
+function genCapital(){
+  const qs=[
+    {q:'Как написать имя «маша»?',a:'Маша',o:['Маша','маша','МАША','мАша'],h:'Имена пишутся с заглавной буквы'},
+    {q:'Как написать название города «москва»?',a:'Москва',o:['Москва','москва','МоСкВа','МОСКВА'],h:'Города пишутся с заглавной буквы'},
+    {q:'Кличка собаки «шарик» — как правильно?',a:'Шарик',o:['Шарик','шарик','ШАРИК'],h:'Клички животных — с заглавной'},
+    {q:'Начало предложения «солнце светит» — как написать?',a:'Солнце',o:['Солнце','солнце','СОЛНЦЕ'],h:'Первое слово предложения — с заглавной'},
+  ];
+  const q=pick(qs);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'Заглавная буква','#16a34a','#dcfce7');
+}
+function genSyllable(){
+  const words=[
+    {w:'МА-МА',n:2},{w:'РЕ-КА',n:2},{w:'ДОМ',n:1},{w:'ШКО-ЛА',n:2},
+    {w:'КО-РО-ВА',n:3},{w:'МО-ЛО-КО',n:3},{w:'Я',n:1},{w:'У-ЧЕ-НИК',n:3},
+  ];
+  const item=pick(words);
+  const wrong=[item.n-1,item.n+1,item.n+2].filter(x=>x>0&&x!==item.n);
+  return mkQ(`Сколько слогов в слове «${item.w.replace(/-/g,'')}»?`,`${item.n}`,[`${item.n}`,...wrong.slice(0,3).map(String)],'Слогов столько, сколько гласных','Слоги','#7c3aed','#ede9fe');
+}
+function genSeasons(){
+  const qs=[
+    {q:'Какой месяц — зимний?',a:'Январь',o:['Январь','Март','Июнь','Сентябрь'],h:'Зима: декабрь, январь, февраль'},
+    {q:'Какой месяц — летний?',a:'Июль',o:['Июль','Апрель','Ноябрь','Февраль'],h:'Лето: июнь, июль, август'},
+    {q:'Сколько времён года?',a:'4',o:['4','3','6','12'],h:'Зима, весна, лето, осень'},
+    {q:'Что бывает весной?',a:'Тают снег и лёд',o:['Тают снег и лёд','Всё покрывается снегом','Опадают листья','Очень жарко'],h:'Весна — потепление, таяние снега'},
+    {q:'Первый месяц года?',a:'Январь',o:['Январь','Март','Декабрь','Февраль'],h:'Год начинается с января'},
+    {q:'Последний месяц года?',a:'Декабрь',o:['Декабрь','Ноябрь','Октябрь','Январь'],h:'Год заканчивается декабрём'},
+  ];
+  const q=pick(qs);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'Времена года','#ea580c','#fff7ed');
+}
+function genNature(){
+  const qs=[
+    {q:'Кошка — это...?',a:'Живая природа',o:['Живая природа','Неживая природа'],h:'Кошка дышит, растёт, питается — живая'},
+    {q:'Камень — это...?',a:'Неживая природа',o:['Неживая природа','Живая природа'],h:'Камень не дышит и не растёт'},
+    {q:'Солнце — это...?',a:'Неживая природа',o:['Неживая природа','Живая природа'],h:'Солнце — часть неживой природы'},
+    {q:'Дерево — это...?',a:'Живая природа',o:['Живая природа','Неживая природа'],h:'Дерево растёт и дышит'},
+    {q:'Что относится к органам чувств?',a:'Глаза',o:['Глаза','Камень','Облако','Земля'],h:'Глаза — орган зрения'},
+  ];
+  const q=pick(qs);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'Окружающий мир','#16a34a','#dcfce7');
+}
+function genGlobalMix(){
+  const gens=[genCount,genSub,genShapes,genCompare,genJishi,genCapital,genSyllable,genSeasons,genNature];
+  return pick(gens)();
+}
+
+function genLetters(){
+  const qs=[
+    {q:'Сколько букв в русском алфавите?',a:'33',o:['33','30','26','36'],h:'А Б В ... Я — 33 буквы'},
+    {q:'А, О, У, Э, Ы — это какие звуки?',a:'Гласные',o:['Гласные','Согласные','Мягкие','Твёрдые'],h:'Гласные — звуки, которые можно тянуть и петь'},
+    {q:'Б, В, Г, Д — это какие звуки?',a:'Согласные',o:['Согласные','Гласные','Звонкие гласные','Немые'],h:'Согласные нельзя пропеть'},
+    {q:'Какая буква не обозначает звука?',a:'Ь',o:['Ь','А','М','О'],h:'Мягкий знак только смягчает'},
+    {q:'Сколько гласных букв?',a:'10',o:['10','6','8','5'],h:'А, Е, Ё, И, О, У, Ы, Э, Ю, Я'},
+    {q:'Буквы Е, Ё, Ю, Я могут обозначать:',a:'Два звука',o:['Два звука','Один звук','Три звука','Ни одного'],h:'В начале слова: Я = [йа], Е = [йэ]'},
+    {q:'В слове «кот» сколько звуков?',a:'3',o:['3','2','4','1'],h:'К-О-Т = 3 звука'},
+    {q:'В слове «конь» сколько звуков?',a:'3',o:['3','4','2','5'],h:'К-О-НЬ = 3 звука (Ь не звук)'},
+    {q:'Звуки [б] и [п] — это:',a:'Парные согласные',o:['Парные согласные','Гласные','Непарные','Мягкие'],h:'Б — звонкий, П — глухой'},
+    {q:'В слове «юла» сколько звуков?',a:'4',o:['4','3','2','5'],h:'Ю-Л-А: Ю = [йу] = 2 звука'},
+  ];
+  const q=pick(qs);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'Буквы и звуки','#0d9488','#ccfbf1');
+}
+function genBody(){
+  const qs=[
+    {q:'Сколько рук у человека?',a:'2',o:['2','4','1','3'],h:'Две руки — левая и правая'},
+    {q:'Чем мы дышим?',a:'Лёгкими',o:['Лёгкими','Желудком','Сердцем','Руками'],h:'Лёгкие вдыхают воздух'},
+    {q:'Что качает кровь по телу?',a:'Сердце',o:['Сердце','Мозг','Желудок','Лёгкие'],h:'Сердце стучит и гонит кровь'},
+    {q:'Сколько пальцев на одной руке?',a:'5',o:['5','4','6','10'],h:'Пять пальцев на каждой руке'},
+    {q:'Чем мы видим?',a:'Глазами',o:['Глазами','Ушами','Носом','Ртом'],h:'Глаза — орган зрения'},
+    {q:'Чем мы слышим?',a:'Ушами',o:['Ушами','Глазами','Носом','Руками'],h:'Уши — орган слуха'},
+    {q:'Сколько зубов у ребёнка (молочных)?',a:'20',o:['20','32','10','28'],h:'20 молочных зубов'},
+    {q:'Что защищает мозг?',a:'Череп',o:['Череп','Кожа','Волосы','Шапка'],h:'Череп — костная защита мозга'},
+    {q:'Чем мы чувствуем запахи?',a:'Носом',o:['Носом','Ртом','Ушами','Кожей'],h:'Нос — орган обоняния'},
+    {q:'Что помогает нам двигаться?',a:'Мышцы и кости',o:['Мышцы и кости','Только кожа','Только кровь','Волосы'],h:'Скелет и мышцы — опора и движение'},
+  ];
+  const q=pick(qs);
+  return mkQ(q.q,q.a,shuffle(q.o),q.h,'Тело человека','#dc2626','#fee2e2');
+}
+var SUBJ=[
+  {id:'math',nm:'Математика',ic:'🔢',date:'',cl:'#2563eb',bg:'#dbeafe',tops:[
+    {id:'count',nm:'Сложение',gen:genCount,th:MATH_TH.count,dot:'#2563eb'},
+    {id:'sub',nm:'Вычитание',gen:genSub,th:MATH_TH.sub,dot:'#dc2626'},
+    {id:'shapes',nm:'Фигуры',gen:genShapes,th:MATH_TH.shapes,dot:'#7c3aed'},
+    {id:'compare',nm:'Сравнение чисел',gen:genCompare,th:MATH_TH.count,dot:'#0d9488'},
+  ]},
+  {id:'rus',nm:'Русский язык',ic:'📝',date:'',cl:'#ea580c',bg:'#fff7ed',tops:[
+    {id:'jishi',nm:'ЖИ-ШИ, ЧА-ЩА',gen:genJishi,th:RUS_TH.jishi,dot:'#ea580c'},
+    {id:'capital',nm:'Заглавная буква',gen:genCapital,th:RUS_TH.capital,dot:'#16a34a'},
+    {id:'syllable',nm:'Слоги',gen:genSyllable,th:RUS_TH.syllable,dot:'#7c3aed'},
+    {id:'letters',nm:'Буквы и звуки',gen:genLetters,th:RUS_TH.letters,dot:'#0d9488'},
+  ]},
+  {id:'world',nm:'Окружающий мир',ic:'🌍',date:'',cl:'#16a34a',bg:'#dcfce7',tops:[
+    {id:'seasons',nm:'Времена года',gen:genSeasons,th:MIR_TH.seasons,dot:'#ea580c'},
+    {id:'nature',nm:'Живая природа',gen:genNature,th:MIR_TH.nature,dot:'#16a34a'},
+    {id:'body',nm:'Тело человека',gen:genBody,th:MIR_TH.body,dot:'#2563eb'},
+  ]},
+];
+</script>
+<script src="engine10.js"></script>
+</body></html>
