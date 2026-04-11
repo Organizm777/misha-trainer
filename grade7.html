@@ -590,8 +590,8 @@ function renderPlayerBadge(){
   const rank=STR.totalQs>=1000?'🏅 Мастер':STR.totalQs>=500?'🧠 Знаток':STR.totalQs>=100?'📚 Ученик':'🌱 Новичок';
   pb.innerHTML='<div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#fef9c3,#fff7ed);padding:6px 16px;border-radius:20px;cursor:pointer" onclick="pickName()"><span style="font-size:16px;font-weight:800;color:#1a1a2e">'+name+'</span><span style="font-size:11px;color:#6b6b7e">'+rank+'</span></div>'}
 
-function getPlayerName(){try{return localStorage.getItem(PFX+'player_name')||'Ученик'}catch{return'Ученик'}}
-function setPlayerName(n){try{localStorage.setItem(PFX+'player_name',n)}catch{}}
+function getPlayerName(){try{return localStorage.getItem('trainer_player_name')||'Ученик'}catch{return'Ученик'}}
+function setPlayerName(n){try{localStorage.setItem('trainer_player_name',n)}catch{}}
 
 function pickName(){
   const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
@@ -630,11 +630,9 @@ function showJournal(){
   h+='<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
   box.innerHTML=h;d.appendChild(box);document.body.appendChild(d)}
 
-// Demo mode
+// Demo mode removed
 let demoMode=false;
-if(!localStorage.getItem(PFX+'player_name')){setTimeout(()=>{
-  demoMode=true;globalMix=true;mix=true;cT=null;mixFilter=null;cS=SUBJ[0];
-  document.getElementById('hdr').textContent='ПОПРОБУЙ!';startQuiz()},500)}
+if(!localStorage.getItem('trainer_player_name')){setTimeout(pickName,300)}
 else refreshMain();
 
 const _origNextQ=nextQ;

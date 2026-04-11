@@ -107,7 +107,14 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <div><div class="tnm">Тревожность</div><div class="tdesc">15 вопросов · 3 мин · уровень стресса</div><div class="tdone" id="anxiety-done"></div></div>
 <div class="arrow">→</div></div>
 
-<a href="index.html?choose" style="display:block;text-align:center;margin-top:16px;font-size:13px;color:var(--accent);text-decoration:none">← Назад к тренажёру</a>
+
+<div id="portrait-cta" style="margin:16px 0;opacity:.4;transition:opacity .3s">
+  <button onclick="showPortrait()" style="width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#1a1a2e,#2d2b55);color:#fff;font-family:'Golos Text',sans-serif;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+    <span style="font-size:20px">🪞</span> Портрет ученика
+  </button>
+  <div id="portrait-hint" style="text-align:center;font-size:11px;color:var(--muted);margin-top:6px">Пройди хотя бы 3 теста, чтобы открыть</div>
+</div>
+<a href="index.html" style="display:block;text-align:center;margin-top:8px;font-size:13px;color:var(--accent);text-decoration:none">← Назад к тренажёру</a>
 </div></div>
 
 <!-- IQ SCREENS (reuse) -->
@@ -420,6 +427,22 @@ function refreshMenu(){
   try{const t=JSON.parse(localStorage.getItem('temp_result')||'null');if(t)document.getElementById('temp-done').textContent='✓ '+t.type}catch{}
 }
 refreshMenu();
+
+// Update portrait CTA state
+(function updatePortraitCTA(){
+  const done = countDoneTests ? countDoneTests() : 0;
+  const cta = document.getElementById('portrait-cta');
+  const hint = document.getElementById('portrait-hint');
+  if(!cta) return;
+  if(done >= 3){
+    cta.style.opacity='1';
+    cta.querySelector('button').style.pointerEvents='auto';
+    if(hint) hint.textContent = done >= 7 ? '✓ Все тесты пройдены — полный портрет!' : `✓ ${done} из 7 тестов — портрет уже доступен`;
+  } else {
+    cta.style.opacity='.4';
+    cta.querySelector('button').style.pointerEvents='none';
+  }
+})();
 </script>
 </body>
 </html>
@@ -706,4 +729,243 @@ function showClassSelect(){
   h+='<button style="width:100%;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
   a.innerHTML=h;o.appendChild(a);document.body.appendChild(o);
 }
+
+function countDoneTests(){
+  const keys=['iq_results','style_result','temp_result','motiv_result','anxiety_result','holland_result','psychknow_result'];
+  return keys.filter(k=>{try{const v=localStorage.getItem(k);return v&&v!=='[]'&&v!=='null'}catch{return false}}).length;
+}
+
+function showPortrait(){
+  // Read all results
+  let iq=null,style=null,temp=null,motiv=null,anxiety=null,holland=null,psych=null;
+  try{const r=JSON.parse(localStorage.getItem('iq_results')||'[]');if(r.length)iq=r[r.length-1]}catch{}
+  try{style=JSON.parse(localStorage.getItem('style_result')||'null')}catch{}
+  try{temp=JSON.parse(localStorage.getItem('temp_result')||'null')}catch{}
+  try{motiv=JSON.parse(localStorage.getItem('motiv_result')||'null')}catch{}
+  try{anxiety=JSON.parse(localStorage.getItem('anxiety_result')||'null')}catch{}
+  try{holland=JSON.parse(localStorage.getItem('holland_result')||'null')}catch{}
+  try{psych=JSON.parse(localStorage.getItem('psychknow_result')||'null')}catch{}
+
+  const done=[iq,style,temp,motiv,anxiety,holland,psych].filter(Boolean).length;
+
+  // ── Helpers ──────────────────────────────────────
+  const styleNames={v:'Визуал',a:'Аудиал',k:'Кинестетик'};
+  const styleEmoji={v:'👁',a:'👂',k:'✋'};
+  const styleDesc={v:'лучше воспринимает информацию визуально — схемы, графики, цвет',a:'лучше воспринимает на слух — объяснения, подкасты, проговаривание',k:'учится через действие — практика, эксперимент, движение'};
+  const hollandNames={R:'Реалистический',I:'Исследовательский',A:'Артистический',S:'Социальный',E:'Предприимчивый',C:'Конвенциональный'};
+  const hollandEmoji={R:'🔧',I:'🔬',A:'🎨',S:'🤝',E:'💼',C:'📋'};
+  const hollandCareers={
+    R:'инженер, программист, архитектор, механик',
+    I:'учёный, аналитик, врач, исследователь',
+    A:'дизайнер, режиссёр, писатель, музыкант',
+    S:'психолог, учитель, врач, соцработник',
+    E:'предприниматель, менеджер, юрист, маркетолог',
+    C:'бухгалтер, аналитик данных, логист, администратор'
+  };
+
+  // Holland top-2
+  let holTop2=[];
+  if(holland&&holland.scores){
+    holTop2=Object.entries(holland.scores).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>k);
+  }
+
+  // Temperament label
+  const tempLabel=temp?temp.type:'';
+  const tempEmoji={
+    'Холерик':'⚡','Сангвиник':'☀️','Флегматик':'🏔','Меланхолик':'🌙',
+    'Экстраверт':'🌟','Интроверт':'💎'
+  };
+
+  // ── Generate insights ────────────────────────────
+  const insights=[];
+
+  // IQ insight
+  if(iq){
+    const pct=iq.pct||iq.pctl||50;
+    if(pct>=80) insights.push({icon:'🏆',text:`<b>Высокие когнитивные способности</b> — IQ ${iq.iq}, лучше ${pct}% сверстников. Мозг хорошо справляется с абстрактным мышлением и анализом. Не бойся брать сложные задачи — они тебе по силам.`});
+    else if(pct>=50) insights.push({icon:'💡',text:`<b>Хороший потенциал</b> — IQ ${iq.iq}, лучше ${pct}% сверстников. Особенно сильны там, где работала внимательность и последовательность. Регулярная практика заметно поднимает результат.`});
+    else insights.push({icon:'🌱',text:`<b>IQ ${iq.iq}</b> — есть куда расти. Это рабочий показатель, а не приговор: логику и память развивают тренировкой. Кроссворды, шахматы, задачники — вполне работают.`});
+  }
+
+  // Style + study tip
+  if(style){
+    const d=style.dominant;
+    const tips={
+      v:'Делай конспекты с цветами и схемами, рисуй mind-maps, смотри видеоуроки. При запоминании — представляй визуально.',
+      a:'Проговаривай материал вслух, слушай подкасты и лекции. Объясни тему другу — и сам запомнишь лучше.',
+      k:'Учи через практику: делай, пробуй, экспериментируй. Перемещайся при зубрёжке, пиши от руки — двигательная память работает.'
+    };
+    insights.push({icon:styleEmoji[d],text:`<b>${styleNames[d]} по стилю обучения</b> — ${styleDesc[d]}. <br>💬 ${tips[d]}`});
+  }
+
+  // Motivation insight (combined with anxiety)
+  if(motiv){
+    const isInternal=motiv.dominant==='Внутренняя'||motiv.iPct>motiv.ePct;
+    if(isInternal){
+      insights.push({icon:'🔥',text:`<b>Внутренняя мотивация ${motiv.iPct||''}%</b> — учишься ради интереса, а не оценок. Это самый устойчивый ресурс. Выбирай предметы, которые зажигают, ищи связь между школой и реальной жизнью.`});
+    } else {
+      const anxHigh=anxiety&&anxiety.pct>=50;
+      insights.push({icon:'🏅',text:`<b>Внешняя мотивация ${motiv.ePct||''}%</b> — тебя двигают оценки и одобрение. Это работает, но быстро истощает.${anxHigh?' Плюс высокая тревожность — риск выгорания.'  :''} Попробуй найти хотя бы один предмет, который интересен сам по себе.`});
+    }
+  }
+
+  // Anxiety insight (standalone if notable)
+  if(anxiety){
+    if(anxiety.level==='Высокая'){
+      insights.push({icon:'😤',text:`<b>Высокая тревожность (${anxiety.pct}%)</b> — экзамены и оценки вызывают сильный стресс. Это мешает показать реальный уровень. Помогают: дыхательные техники, подготовка заранее, разговор с родителями. Не молчи.`});
+    } else if(anxiety.level==='Средняя'){
+      insights.push({icon:'😌',text:`<b>Умеренная тревожность (${anxiety.pct}%)</b> — лёгкое волнение перед контрольной есть, но не мешает. Это нормально и даже полезно: небольшой стресс мобилизует. Главное — не доводить до зубрёжки ночью.`});
+    }
+  }
+
+  // Holland career insight
+  if(holTop2.length){
+    const t1=holTop2[0],t2=holTop2[1]||holTop2[0];
+    const code=t1+(t2!==t1?t2:'');
+    insights.push({icon:hollandEmoji[t1],text:`<b>Профтип ${code} — ${hollandNames[t1]}${t2!==t1?' + '+hollandNames[t2]:''}</b>. Тебе подойдут профессии: ${hollandCareers[t1]}${t2!==t1?', '+hollandCareers[t2]:''}.`});
+  }
+
+  // Psych knowledge insight
+  if(psych){
+    const both=psych.tPct>=60&&psych.pPct>=60;
+    const theoryWin=psych.tPct>psych.pPct;
+    if(both) insights.push({icon:'🌟',text:`<b>Психология: профиль «${psych.profile}»</b> — и теорию знаешь, и людей чувствуешь. Редкое сочетание. Это большой ресурс в командной работе и любой профессии с людьми.`});
+    else if(theoryWin) insights.push({icon:'📖',text:`<b>Психология: профиль «${psych.profile}»</b> — хорошая теоретическая база. Попробуй применять знания в жизни: наблюдай за собой и другими, это делает психологию живой.`});
+    else insights.push({icon:'💡',text:`<b>Психология: профиль «${psych.profile}»</b> — сильная интуиция в общении. Подтяни теорию — она объяснит то, что ты уже чувствуешь.`});
+  }
+
+  // Cross-synthesis (only if enough data)
+  if(style&&temp&&motiv){
+    const isV=style.dominant==='v';
+    const highInt=motiv.iPct>60||motiv.dominant==='Внутренняя';
+    const isSang=tempLabel.includes('Сангвиник')||tempLabel.includes('Холерик');
+    if(isV&&highInt) insights.push({icon:'✨',text:`<b>Твоя сильная комбинация:</b> визуальное мышление + внутренняя мотивация. Такие люди хорошо работают над сложными проектами — видят целое и не теряют интерес. Ищи задачи с видимым результатом.`});
+    else if(!highInt&&anxiety&&anxiety.pct>=50) insights.push({icon:'⚠️',text:`<b>Зона внимания:</b> внешняя мотивация + тревожность — риск выгорания при неудачах. Важно сформировать "подушку" — хотя бы 1-2 предмета, в которых ты уверен и который нравится независимо от оценок.`});
+  }
+
+  // ── Build badges ─────────────────────────────────
+  const badges=[];
+  if(style) badges.push({icon:styleEmoji[style.dominant],label:styleNames[style.dominant],bg:'#dbeafe',color:'#1e40af'});
+  if(temp) badges.push({icon:tempEmoji[tempLabel]||'🎭',label:tempLabel,bg:'#fff7ed',color:'#9a3412'});
+  if(holland&&holTop2.length) badges.push({icon:hollandEmoji[holTop2[0]],label:hollandNames[holTop2[0]].split(' ')[0],bg:'#ede9fe',color:'#5b21b6'});
+  if(psych) badges.push({icon:psych.tPct>=60&&psych.pPct>=60?'🌟':psych.tPct>psych.pPct?'📖':'💡',label:psych.profile,bg:'#dcfce7',color:'#166534'});
+  if(motiv) badges.push({icon:motiv.dominant==='Внутренняя'||motiv.iPct>motiv.ePct?'🔥':'🏅',label:(motiv.dominant==='Внутренняя'||motiv.iPct>motiv.ePct?'Внутренняя':'Внешняя')+' мотивация',bg:'#fef9c3',color:'#92400e'});
+
+  // ── Build profile bars ───────────────────────────
+  const bars=[];
+  if(iq) bars.push({label:'Когнитивный индекс',val:'IQ '+iq.iq,pct:Math.min(100,Math.max(0,Math.round((iq.iq-60)/90*100))),color:'#2563eb'});
+  if(motiv) bars.push({label:'Внутренняя мотивация',val:(motiv.iPct||0)+'%',pct:motiv.iPct||0,color:'#16a34a'});
+  if(anxiety) bars.push({label:'Тревожность',val:anxiety.pct+'%',pct:anxiety.pct,color:anxiety.pct>=70?'#dc2626':anxiety.pct>=40?'#ea580c':'#16a34a'});
+
+  // ── Render overlay ───────────────────────────────
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(15,14,23,.75);z-index:9999;overflow-y:auto;padding:16px;display:flex;justify-content:center;-webkit-overflow-scrolling:touch';
+  
+  const now=new Date().toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
+
+  let html=`
+  <div style="background:#f5f3ee;border-radius:20px;max-width:480px;width:100%;overflow:hidden;margin:auto">
+
+    <!-- Header -->
+    <div style="background:#1a1a2e;color:#fff;padding:20px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#4ade80,#2563eb);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0">🧠</div>
+        <div>
+          <div style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:900;margin-bottom:2px">Портрет ученика</div>
+          <div style="font-size:11px;opacity:.5">${now} · ${done} из 7 тестов</div>
+        </div>
+        <button onclick="this.closest('[style*=position]').remove()" style="margin-left:auto;background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">×</button>
+      </div>
+      <!-- Bars -->
+      ${bars.map(b=>`
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span style="font-size:11px;opacity:.6;font-weight:600">${b.label}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700">${b.val}</span>
+        </div>
+        <div style="height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden">
+          <div style="width:${b.pct}%;height:100%;background:${b.color};border-radius:3px;transition:width .6s"></div>
+        </div>
+      </div>`).join('')}
+    </div>
+
+    <!-- Badges -->
+    ${badges.length?`
+    <div style="padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid #e2e0d8">
+      ${badges.map(b=>`<span style="background:${b.bg};color:${b.color};font-size:11px;font-weight:700;padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:4px">${b.icon} ${b.label}</span>`).join('')}
+    </div>`:''}
+
+    <!-- Insights -->
+    <div style="padding:16px">
+      <div style="font-family:Unbounded,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Ключевые выводы</div>
+      ${insights.slice(0,5).map(ins=>`
+      <div style="display:flex;gap:12px;margin-bottom:12px;padding:12px;background:#fff;border-radius:12px;border:1px solid #e2e0d8">
+        <span style="font-size:20px;flex-shrink:0;margin-top:1px">${ins.icon}</span>
+        <div style="font-size:13px;line-height:1.55;color:#1a1a2e">${ins.text}</div>
+      </div>`).join('')}
+    </div>
+
+    <!-- Holland careers if available -->
+    ${holTop2.length?`
+    <div style="padding:0 16px 16px">
+      <div style="font-family:Unbounded,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Направления для профессии</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${holTop2.map(k=>`
+        <div style="background:#fff;border-radius:10px;padding:12px;border:1px solid #e2e0d8">
+          <div style="font-size:18px;margin-bottom:4px">${hollandEmoji[k]}</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">${hollandNames[k]}</div>
+          <div style="font-size:11px;color:#6b6a74;line-height:1.4">${hollandCareers[k]}</div>
+        </div>`).join('')}
+      </div>
+    </div>`:''}
+
+    <!-- Disclaimer + share -->
+    <div style="padding:0 16px 16px">
+      <div style="font-size:10px;color:#9b9aad;text-align:center;margin-bottom:12px;line-height:1.5">Результаты носят ознакомительный характер и не являются клинической диагностикой.</div>
+      <button onclick="sharePortrait()" style="width:100%;padding:13px;border:none;border-radius:12px;background:#1a1a2e;color:#fff;font-family:'Golos Text',sans-serif;font-weight:700;font-size:14px;cursor:pointer">📤 Отправить родителям</button>
+      ${done<7?`<div style="text-align:center;margin-top:10px;font-size:12px;color:#6b6a74">Пройди все ${7-done} оставшихся тестов — портрет станет полнее</div>`:''}
+    </div>
+  </div>`;
+
+  overlay.innerHTML=html;
+  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
+  document.body.appendChild(overlay);
+  
+  // Store for share
+  window._portraitData={iq,style,temp,motiv,anxiety,holland,psych,insights,badges,holTop2,done};
+}
+
+function sharePortrait(){
+  const d=window._portraitData||{};
+  const now=new Date().toLocaleDateString('ru',{day:'numeric',month:'long'});
+  let text=`🧠 Портрет ученика — ${now}\n(${d.done||'?'} из 7 тестов пройдено)\n\n`;
+  
+  if(d.iq) text+=`📊 IQ: ${d.iq.iq} (лучше ${d.iq.pct||d.iq.pctl}% сверстников)\n`;
+  if(d.style) text+=`👁 Стиль обучения: ${({v:'Визуал',a:'Аудиал',k:'Кинестетик'})[d.style.dominant]||d.style.dominant}\n`;
+  if(d.temp) text+=`🎭 Темперамент: ${d.temp.type}\n`;
+  if(d.motiv) text+=`💪 Мотивация: ${d.motiv.dominant==='Внутренняя'||d.motiv.iPct>d.motiv.ePct?'Внутренняя ('+d.motiv.iPct+'%)':'Внешняя ('+d.motiv.ePct+'%)'}\n`;
+  if(d.anxiety) text+=`😌 Тревожность: ${d.anxiety.level} (${d.anxiety.pct}%)\n`;
+  if(d.holland) text+=`🧭 Профтип: ${d.holland.top}\n`;
+  if(d.psych) text+=`🔬 Психология: ${d.psych.profile}\n`;
+  
+  if(d.insights&&d.insights.length){
+    text+='\n💡 Главные выводы:\n';
+    d.insights.slice(0,3).forEach(ins=>{
+      text+='• '+ins.text.replace(/<[^>]+>/g,'').trim()+'\n';
+    });
+  }
+  
+  if(navigator.share){
+    navigator.share({title:'Портрет ученика',text}).catch(()=>fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text){
+  navigator.clipboard&&navigator.clipboard.writeText(text)
+    .then(()=>alert('✅ Скопировано! Вставь в сообщение.'))
+    .catch(()=>prompt('Скопируй текст:',text));
+}
+
 </script>
