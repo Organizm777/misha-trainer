@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="color-scheme" content="light"><meta name="theme-color" content="#1a1a2e">
+<title>Тренажёр 6 класс</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#f5f3ee;--card:#fff;--accent:#2563eb;--abg:#dbeafe;--green:#16a34a;--gbg:#dcfce7;--red:#dc2626;--rbg:#fee2e2;--orange:#ea580c;--obg:#fff7ed;--purple:#7c3aed;--pbg:#ede9fe;--yellow:#ca8a04;--ybg:#fef9c3;--teal:#0d9488;--tbg:#ccfbf1;--text:#1a1a2e;--muted:#6b6b7e;--border:#e2e0d8;--R:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:#f5f3ee;color:#1a1a2e}
+@media(prefers-color-scheme:dark){:root{color-scheme:light!important}html,body{background:#f5f3ee!important;color:#1a1a2e!important}
+.scard,.qcard,.opt,.tcard,.rcard,.icard,.dm,.fb,.tbtn{background:#fff!important;color:#1a1a2e!important}
+.tcard p,.tcard li,.tcard .fm{color:#374151!important}
+}
+body{font-family:'Golos Text',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}
+.mono{font-family:'JetBrains Mono',monospace}
+header{background:var(--text);color:#fff;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+header h1{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.hbadge{padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;background:var(--accent);margin-left:8px;white-space:nowrap}
+.scr{display:none}.scr.on{display:block}
+.w{max-width:600px;margin:0 auto;padding:16px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0))}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.fade{animation:fu .3s ease both}
+.btn{display:block;width:100%;text-align:center;padding:12px;border:none;border-radius:10px;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;transition:transform .1s}
+.btn:active{transform:scale(.97)}.btn-p{background:var(--accent);color:#fff}.btn-d{background:var(--text);color:#fff}
+.btn-o{background:transparent;border:1.5px solid var(--border);color:var(--muted);font-size:13px;font-weight:600}
+.btn-g{background:var(--green);color:#fff}
+.btn-share{background:#25D366;color:#fff}
+
+/* Cards */
+.scard{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;width:100%;text-align:left;outline:none;font-family:'Golos Text',sans-serif;-webkit-appearance:none;touch-action:manipulation;min-height:60px;transition:transform .1s}
+.scard:active{transform:scale(.98)}.scard .ic{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.scard .nm{font-size:14px;font-weight:700}.scard .dt{font-size:11px;color:var(--muted);margin-top:1px}.scard .dd{font-size:10px;font-weight:700;margin-top:1px}
+
+/* Progress bars */
+.prow{margin-bottom:10px}.prow .plabel{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.prow .pname{font-weight:600}.prow .pval{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px}
+.ptrack{height:6px;background:#e8e6e0;border-radius:3px;overflow:hidden}.ptrack .pfill{height:100%;border-radius:3px;transition:width .5s}
+
+/* Topic buttons */
+.tbtn{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;cursor:pointer;width:100%;text-align:left;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:600;-webkit-appearance:none;touch-action:manipulation;min-height:48px;transition:transform .1s;outline:none}
+.tbtn:active{transform:scale(.98)}.tbtn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tbtn .tpct{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;opacity:.7}
+
+/* Theory */
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}
+.tcard h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:800;margin-bottom:8px}
+.tcard p,.tcard li{font-size:12.5px;line-height:1.6;color:#374151}.tcard ul{padding-left:16px;margin:4px 0}
+.tcard .fm{background:#f8f7f4;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:6px 0;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text);line-height:1.5;text-align:center}
+.tcard .ex{background:var(--gbg);border-radius:8px;padding:8px 12px;margin:6px 0;font-size:12px;color:#15803d;line-height:1.5}
+
+/* Quiz */
+.qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.qback{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;padding:6px 0;touch-action:manipulation}
+.qtimer{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)}
+.sbar{display:flex;justify-content:center;gap:14px;padding:6px 0;margin-bottom:8px}
+.st{display:flex;flex-direction:column;align-items:center;gap:0}.st .v{font-weight:800;font-size:17px}.st .l{font-size:9px;color:var(--muted)}
+
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}
+.qtag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;margin-bottom:8px}
+.qtxt{font-size:15px;font-weight:600;line-height:1.5}.qmath{font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;text-align:center;line-height:1.4}
+.qcode{background:#f8f7f4;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#374151;line-height:1.6;white-space:pre-wrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+.opts{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+.opt{display:flex;align-items:center;gap:10px;padding:13px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text);cursor:pointer;width:100%;text-align:left;outline:none;-webkit-appearance:none;touch-action:manipulation;min-height:48px}
+.opt:active:not(.done){background:#f0eee8;transform:scale(.98)}
+.opt .k{width:26px;height:26px;border-radius:6px;background:#f0eee8;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--muted);flex-shrink:0}
+.opt.ok{background:var(--gbg);border-color:var(--green)}.opt.ok .k{background:var(--green);color:#fff}
+.opt.no{background:var(--rbg);border-color:var(--red);animation:sh .35s}.opt.no .k{background:var(--red);color:#fff}
+.opt.dim{opacity:.35}
+
+.fb{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px 14px;text-align:center;margin-bottom:8px}
+.fbr{font-weight:700;font-size:14px;margin-bottom:3px}.fbh{font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5}
+.hintt{display:block;width:100%;text-align:center;padding:6px;background:none;border:none;font-size:12px;color:var(--orange);opacity:.5;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;touch-action:manipulation;-webkit-appearance:none}
+.hintb{background:var(--obg);border:1px solid #fed7aa;border-radius:9px;padding:8px 12px;font-size:12px;color:var(--orange);text-align:center;line-height:1.5;margin-top:4px}
+.shpb{display:block;width:100%;text-align:center;padding:5px;background:none;border:none;font-size:11px;color:var(--accent);opacity:.4;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;touch-action:manipulation;-webkit-appearance:none;margin-bottom:4px}
+.shpbox{background:var(--abg);border:1px solid #93c5fd;border-radius:9px;padding:10px 12px;font-size:11px;color:#1e40af;line-height:1.5;margin-bottom:6px;max-height:180px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.pgbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px}.pgfill{height:100%;border-radius:2px;transition:width .4s,background .4s}
+.streak{animation:fireIn .4s ease}
+@keyframes fireIn{0%{transform:scale(0.5);opacity:0}50%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+.gap8{display:flex;flex-direction:column;gap:8px}
+.mb12{margin-bottom:12px}.mb8{margin-bottom:8px}.mt12{margin-top:12px}
+
+/* Info */
+.icard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:20px 18px}
+.icard h2{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800;margin-bottom:12px}
+.istp{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.isn{width:24px;height:24px;border-radius:6px;background:var(--abg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.istp b{font-size:13px}.istp p{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.5}
+.tipb{background:var(--gbg);border-radius:9px;padding:10px 12px;font-size:12px;color:#15803d;line-height:1.5;margin:12px 0}
+
+/* Results card */
+.rcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}
+.rcard h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:800;margin-bottom:10px}
+.rempty{font-size:13px;color:var(--muted);text-align:center;padding:20px 0}
+
+/* Daily meter */
+.dm{background:var(--card);border:1.5px solid var(--border);border-radius:var(--R);padding:16px;margin-top:14px;text-align:center}
+.dm.done{border-color:var(--green);background:var(--gbg)}
+.dm-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.dm-bar{height:12px;background:#e8e6e0;border-radius:6px;overflow:hidden;margin-bottom:8px}
+.dm-fill{height:100%;border-radius:6px;transition:width .5s,background .3s}
+.dm-num{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:800;margin-bottom:2px}
+.dm-sub{font-size:11px;color:var(--muted);line-height:1.5}
+.dm-done-msg{font-size:15px;font-weight:800;color:var(--green);margin:6px 0}
+.dm-chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px}
+.dm-chip{font-size:10px;padding:3px 8px;border-radius:12px;font-weight:600}
+</style>
+</head>
+<body>
+<div id="app">
+
+<div id="s-main" class="scr">
+<div class="w">
+  <div style="text-align:center;margin-bottom:16px">
+    <h1 style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:var(--text)">📙 Тренажёр 6 класс</h1>
+    <p style="font-size:12px;color:var(--muted);margin-top:3px">Математика · Русский · История · Биология · География</p>
+    <a href="index.html?choose" style="font-size:11px;color:var(--accent);text-decoration:none;margin-top:4px;display:inline-block">← Другой класс</a>
+  </div>
+  <div id="player-badge" style="text-align:center;margin-bottom:14px"></div>
+  <div id="daily-panel"></div>
+  <div id="subjects"></div>
+  <div style="display:flex;gap:6px;margin:14px 0">
+    <button class="btn btn-p" style="flex:1" onclick="globalMix=true;mix=true;cT=null;mixFilter=null;cS=SUBJ[0];document.getElementById('hdr').textContent='⚡ ВСЁ ВПЕРЕМЕШКУ';startQuiz()">⚡ Вперемешку</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:8px">
+    <button class="btn btn-o" style="flex:1" onclick="go('info')">📖 Справка</button>
+    <button class="btn btn-o" style="flex:1" onclick="showJournal()">📊 Слабые места</button>
+    <button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Награды</button> <button class="btn btn-o" style="flex:1" onclick="showClassSelect()">🏫 Класс</button>
+    <button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Профиль</button>
+  </div>
+</div>
+</div>
+
+<div id="s-subj" class="scr"><div class="w">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <h2 id="subj-title" style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800"></h2>
+    <button class="qback" onclick="go('main')">← Назад</button>
+  </div>
+  <div id="topics"></div>
+</div></div>
+
+<div id="s-info" class="scr"><div class="w">
+  <h2 style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800;margin-bottom:12px">📖 Справка</h2>
+  <div class="icard"><b>🌱 Как заниматься:</b> решай каждый день по 15 минут. Слабые темы будут выпадать чаще.</div>
+  <div class="icard"><b>🔥 Серия дней:</b> занимайся каждый день и не прерывай серию!</div>
+  <div class="icard"><b>📊 Слабые места:</b> все ошибки сохраняются. Нажми «Слабые места» чтобы увидеть.</div>
+  <button class="btn btn-d mt12" onclick="go('main')">← Назад</button>
+</div></div>
+
+<div id="s-quiz" class="scr"><div class="w">
+  <div class="qh"><button class="qback" onclick="endSession()">← Завершить</button><span class="qtimer mono" id="tmr">0:00</span></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <span id="hdr" style="font-family:'Unbounded',sans-serif;font-size:13px;font-weight:800"></span>
+    <span class="mono" id="hb" style="display:none;font-size:12px;background:var(--green);color:#fff;padding:2px 8px;border-radius:8px"></span>
+  </div>
+  <div id="sts" style="display:flex;gap:10px;margin-bottom:12px"></div>
+  <div id="pa"></div>
+  <div id="qc" class="qcard fade">
+    <span id="qt" class="qtag"></span>
+    <div id="qb" class="qtxt"></div>
+  </div>
+  <div id="opts"></div>
+  <div id="fb"></div>
+  <div id="shp"></div>
+</div></div>
+
+<div id="s-result" class="scr"><div class="w">
+  <div class="rcard fade" style="text-align:center">
+    <div style="font-size:36px;margin-bottom:8px" id="res-emoji"></div>
+    <h3 id="res-title"></h3>
+    <div style="font-size:28px;font-weight:800;margin:8px 0" id="res-score"></div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:4px" id="res-detail"></div>
+  </div>
+  <div id="res-topics"></div>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn btn-p" style="flex:1" onclick="shareSession()">📤 Поделиться</button>
+    <button class="btn btn-d" style="flex:1" onclick="globalMix?go('main'):goSubj()">← Назад</button>
+  </div>
+</div></div>
+
+</div>
+
+<script>
+
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function range(a,b){const r=[];for(let i=a;i<=b;i++)r.push(i);return r}
+function uniq(a){return[...new Set(a)]}
+function esc(s){return String(s).replace(/</g,'&lt;')}
+function declNum(n,o,t,f){const a=Math.abs(n)%100,b=a%10;if(a>10&&a<20)return f;if(b>1&&b<5)return t;if(b===1)return o;return f}
+function mkQ(q,a,opts,h,tag,color,bg){let o=uniq(opts);if(o.length>4)o=o.slice(0,4);return{question:q,answer:a,options:shuffle(o),hint:h,tag,color,bg,isMath:false}}
+function fillW(c,gs){const o=[c];for(const g of gs){let v,tries=0;do{v=typeof g==='function'?g():g;tries++}while((v===c||o.includes(v))&&tries<20);o.push(v)}return o}
+
+const MTH={
+negative:`<h3>Отрицательные числа</h3><div class="fm">Числовая прямая: ...−3, −2, −1, 0, 1, 2, 3...
+Модуль |a| — расстояние до нуля: |−5| = 5, |3| = 3
+(+)+(+)=+ : 3+5=8
+(−)+(−)=− : (−3)+(−5)=−8
+(+)+(−)=знак большего: 5+(−3)=2, 3+(−5)=−2
+(−)×(−)=+ : (−2)×(−3)=6
+(+)×(−)=− : 2×(−3)=−6</div>`,
+divisibility:`<h3>Делимость</h3><div class="fm">НОД — наибольший общий делитель
+НОК — наименьшее общее кратное
+Признаки делимости:
+на 2: последняя цифра чётная
+на 3: сумма цифр делится на 3
+на 5: оканчивается на 0 или 5
+на 9: сумма цифр делится на 9
+на 10: оканчивается на 0
+Простое число: делится только на 1 и на себя</div>`,
+ratio:`<h3>Отношения и пропорции</h3><div class="fm">Отношение a:b = a/b
+Пропорция: a/b = c/d → a×d = b×c (крест-накрест)
+Масштаб — отношение длины на карте к реальной
+Прямая пропорциональность: y = kx (больше x → больше y)
+Обратная: y = k/x (больше x → меньше y)</div>`,
+coords:`<h3>Координатная плоскость</h3><div class="fm">Ось X — горизонтальная (абсцисса)
+Ось Y — вертикальная (ордината)
+Точка (3; 5) — вправо 3, вверх 5
+Четверти: I(+;+) II(−;+) III(−;−) IV(+;−)
+Начало координат: (0; 0)</div>`
+};
+const RTH={
+pronoun:`<h3>Местоимения</h3><div class="fm">Личные: я, ты, он, она, оно, мы, вы, они
+Возвратное: себя (нет И.п.)
+Притяжательные: мой, твой, его, её, наш, ваш, их
+Указательные: этот, тот, такой
+Вопросительные: кто? что? какой? который? сколько?
+Отрицательные: никто, ничто, некого, нечего
+Неопределённые: кто-то, что-нибудь, некоторый</div>`,
+numeral:`<h3>Числительные</h3><div class="fm">Количественные: сколько? (один, два, пять)
+Порядковые: который? (первый, второй, пятый)
+Простые: один, два, сто
+Составные: двадцать пять, сто сорок два
+Ь в середине: пятьдесят, шестьсот
+Ь в конце: пять, шесть, двадцать</div>`,
+adjective:`<h3>Разряды прилагательных</h3><div class="fm">Качественные: можно степени сравнения (красивый — красивее)
+Относительные: материал, место, время (деревянный, городской, зимний)
+Притяжательные: чей? (мамин, лисий, отцов)
+Степени сравнения:
+Сравнительная: красивее, более красивый
+Превосходная: красивейший, самый красивый</div>`
+};
+const HTH={
+medieval:`<h3>Средние века</h3><div class="fm">V—XV вв. (476 — падение Рима → 1492/1453)
+Феодализм: сеньор → вассал → крестьяне
+Замок — жилище и крепость феодала
+Рыцарь — конный воин, кодекс чести
+Крестовые походы: 1096—1291 (за Святую землю)
+Города: ремесленники, купцы, цеха, гильдии
+Эпидемия чумы: XIV в., погибла 1/3 Европы</div>`,
+byzantium:`<h3>Византия и ислам</h3><div class="fm">Византия: Восточная Римская империя, столица — Константинополь
+Юстиниан I: расцвет, законы, храм Святой Софии
+1453 — Константинополь пал, турки-османы
+Ислам: VII в., пророк Мухаммед, Мекка
+Коран — священная книга мусульман
+Арабы: алгебра, медицина, астрономия, 0 (ноль)</div>`,
+rus_medieval:`<h3>Русь в Средние века</h3><div class="fm">862 — Рюрик, начало Руси
+988 — Крещение (Владимир)
+1019—1054 — Ярослав Мудрый, «Русская Правда»
+Раздробленность: XII—XIII вв.
+1237—1240 — нашествие Батыя
+1240 — Невская битва (Александр Невский)
+1380 — Куликовская битва (Дмитрий Донской)
+1480 — конец ига (Иван III)</div>`
+};
+const BTH={
+animals:`<h3>Животные</h3><div class="fm">Беспозвоночные: черви, моллюски, насекомые, пауки, ракообразные
+Позвоночные: рыбы → земноводные → пресмыкающиеся → птицы → млекопитающие
+Признаки животных: движение, питание готовой пищей, нервная система
+Насекомые — самый многочисленный класс (>1 млн видов)
+Млекопитающие — кормят молоком, теплокровные</div>`,
+classification:`<h3>Классификация</h3><div class="fm">Царства: бактерии, грибы, растения, животные
+Вид → род → семейство → отряд → класс → тип → царство
+Линней — создатель классификации (XVIII в.)
+Латинские названия: Homo sapiens (человек разумный)
+Клетка животных: нет клеточной стенки и хлоропластов (в отличие от растений)</div>`
+};
+const GTH={
+litho:`<h3>Литосфера</h3><div class="fm">Литосфера — твёрдая оболочка Земли (кора + верх мантии)
+Земная кора: материковая (до 70 км) и океаническая (5—10 км)
+Горные породы: магматические (гранит), осадочные (известняк), метаморфические (мрамор)
+Землетрясения: на границах литосферных плит
+Вулканы: действующие (Этна), потухшие (Эльбрус)
+Полезные ископаемые: руды, нефть, газ, уголь</div>`,
+hydro:`<h3>Гидросфера</h3><div class="fm">Гидросфера — водная оболочка Земли
+Мировой океан: 71% поверхности
+Океаны: Тихий (крупнейший), Атлантический, Индийский, Северный Ледовитый
+Река: исток → русло → устье, бассейн, притоки
+Озёра: Байкал (глубочайшее, 1642 м), Каспийское (крупнейшее)
+Круговорот воды: испарение → облака → осадки → реки → океан</div>`
+};
+
+// ═══ GENERATORS ═══
+function genNegative(){return pick([
+()=>{const a=pick(range(-10,-1)),b=pick(range(-10,-1));const v=a+b;return mkQ('('+a+') + ('+b+') = ?',''+v,fillW(''+v,[()=>''+(v+1),()=>''+(-v),()=>''+(a-b)]),'Минус+минус=минус','Отрицательные числа','#dc2626','#fee2e2')},
+()=>{const a=pick(range(1,10)),b=pick(range(a+1,15));const v=a-b;return mkQ(a+' − '+b+' = ?',''+v,fillW(''+v,[()=>''+(b-a),()=>''+(a+b),()=>''+(v-1)]),'Уходим в минус','Отрицательные числа','#dc2626','#fee2e2')},
+()=>{const a=pick(range(-9,-1)),b=pick(range(-9,-1));const v=a*b;return mkQ('('+a+') × ('+b+') = ?',''+v,fillW(''+v,[()=>''+(-v),()=>''+(a+b),()=>''+(v+1)]),'Минус×минус=плюс','Отрицательные числа','#dc2626','#fee2e2')},
+()=>{const a=pick(range(2,9)),b=pick(range(-9,-2));const v=a*b;return mkQ(a+' × ('+b+') = ?',''+v,fillW(''+v,[()=>''+(-v),()=>''+(a-b),()=>''+(v-a)]),'Плюс×минус=минус','Отрицательные числа','#dc2626','#fee2e2')},
+()=>{const a=pick(range(-10,10));return mkQ('|'+a+'| = ?',''+Math.abs(a),fillW(''+Math.abs(a),[()=>''+a,()=>''+(-a),()=>''+(Math.abs(a)+1)]),'Модуль = расстояние до 0','Отрицательные числа','#dc2626','#fee2e2')},
+()=>{const a=pick(range(-8,-1)),b=pick(range(1,10));const v=a+b;return mkQ('('+a+') + '+b+' = ?',''+v,fillW(''+v,[()=>''+(a-b),()=>''+(-v),()=>''+(v+2)]),'Знак большего','Отрицательные числа','#dc2626','#fee2e2')}
+])()}
+
+function genDivisibility(){return pick([
+()=>{const n=pick(range(10,200));const d3=n%3===0;return mkQ(n+' делится на 3?',d3?'да (сумма цифр '+(''+ n).split('').reduce((a,c)=>a+(+c),0)+')':'нет',[d3?'да (сумма цифр '+(''+ n).split('').reduce((a,c)=>a+(+c),0)+')':'нет',d3?'нет':'да','не знаю','иногда'],'Сумма цифр ÷ 3','Делимость','#2563eb','#dbeafe')},
+()=>{const a=pick([12,18,24,30,36]),b=pick([8,9,15,16,20]);function gcd(x,y){return y?gcd(y,x%y):x}const g=gcd(a,b);return mkQ('НОД('+a+', '+b+') = ?',''+g,fillW(''+g,[()=>''+(g+1),()=>''+Math.min(a,b),()=>'1']),'Наибольший общий делитель','Делимость','#2563eb','#dbeafe')},
+()=>{const a=pick([4,6,8,10,12]),b=pick([3,5,6,9,10]);function gcd(x,y){return y?gcd(y,x%y):x}const l=a*b/gcd(a,b);return mkQ('НОК('+a+', '+b+') = ?',''+l,fillW(''+l,[()=>''+(a*b),()=>''+(l+a),()=>''+Math.max(a,b)]),'Наименьшее общее кратное','Делимость','#2563eb','#dbeafe')},
+()=>{const primes=[2,3,5,7,11,13,17,19,23,29,31];const n=pick(primes);return mkQ('Число '+n+' — простое или составное?','простое (делится только на 1 и '+n+')',['простое (делится только на 1 и '+n+')','составное','ни то ни другое','чётное'],'Простое = 2 делителя','Делимость','#2563eb','#dbeafe')},
+()=>{const composites=[4,6,8,9,10,12,14,15,16,18,20,21,22,24,25];const n=pick(composites);return mkQ('Число '+n+' — простое или составное?','составное (есть другие делители)',['составное (есть другие делители)','простое','ни то ни другое','отрицательное'],'Составное = >2 делителей','Делимость','#2563eb','#dbeafe')}
+])()}
+
+function genRatio(){return pick([
+()=>{const a=pick([2,3,4,5]),b=pick([3,4,5,6,7].filter(x=>x!==a)),c=a*pick([2,3,4]),d=b*pick([2,3,4]);const cross=a*d===b*c;return mkQ(a+'/'+b+' = '+c+'/'+d+' — верная пропорция?',cross?'да ('+a+'×'+d+'='+b+'×'+c+')':'нет ('+a+'×'+d+'≠'+b+'×'+c+')',[cross?'да ('+a+'×'+d+'='+b+'×'+c+')':'нет ('+a+'×'+d+'≠'+b+'×'+c+')','да','нет','нельзя определить'],'Крест-накрест','Пропорции','#16a34a','#dcfce7')},
+()=>{const a=pick([2,3,4,5]),b=pick([5,6,8,10]),c=pick([6,9,12,15]);const d=b*c/a;return mkQ(a+'/'+b+' = '+c+'/x. x = ?',''+d,fillW(''+d,[()=>''+(d+1),()=>''+(a*c),()=>''+(b-a)]),'Крест-накрест: x = b×c/a','Пропорции','#16a34a','#dcfce7')},
+()=>{const q=pick([{q:'Скорость увеличилась в 2 раза → время:',a:'уменьшилось в 2 раза (обратная пропорциональность)',o:['уменьшилось в 2 раза (обратная пропорциональность)','увеличилось в 2 раза','не изменилось','увеличилось в 4 раза'],h:'V↑ → T↓'},{q:'Цена увеличилась в 3 раза → количество (при тех же деньгах):',a:'уменьшилось в 3 раза',o:['уменьшилось в 3 раза','увеличилось в 3 раза','не изменилось','увеличилось в 9 раз'],h:'Обратная пропорц.'},{q:'Рабочих стало в 2 раза больше → работа (за то же время):',a:'увеличилась в 2 раза (прямая пропорциональность)',o:['увеличилась в 2 раза (прямая пропорциональность)','уменьшилась в 2 раза','не изменилась','увеличилась в 4 раза'],h:'Прямая пропорц.'}]);return mkQ(q.q,q.a,shuffle([...q.o]),q.h,'Пропорции','#16a34a','#dcfce7')}
+])()}
+
+function genCoords(){return pick([
+()=>{const x=pick(range(-5,5).filter(v=>v!==0)),y=pick(range(-5,5).filter(v=>v!==0));let q_num;if(x>0&&y>0)q_num='I';else if(x<0&&y>0)q_num='II';else if(x<0&&y<0)q_num='III';else q_num='IV';return mkQ('Точка ('+x+'; '+y+') находится в:',q_num+' четверти',fillW(q_num+' четверти',[()=>'I четверти',()=>'II четверти',()=>'III четверти']),'I(+;+) II(−;+) III(−;−) IV(+;−)','Координаты','#7c3aed','#ede9fe')},
+()=>{const q=pick([{q:'Ось X называется:',a:'ось абсцисс',o:['ось абсцисс','ось ординат','ось аппликат','начало координат'],h:'Горизонтальная'},{q:'Ось Y называется:',a:'ось ординат',o:['ось ординат','ось абсцисс','ось аппликат','начало координат'],h:'Вертикальная'},{q:'Начало координат — это точка:',a:'(0; 0)',o:['(0; 0)','(1; 1)','(0; 1)','(1; 0)'],h:'Пересечение осей'},{q:'Сколько четвертей на координатной плоскости?',a:'4',o:['4','2','6','8'],h:'I, II, III, IV'}]);return mkQ(q.q,q.a,shuffle([...q.o]),q.h,'Координаты','#7c3aed','#ede9fe')}
+])()}
+
+// Russian
+function genPronoun(){const qs=[
+{q:'«Я, ты, он, она» — это местоимения:',a:'личные',o:['личные','притяжательные','указательные','вопросительные'],h:'Указывают на лицо'},
+{q:'«Мой, твой, наш» — это местоимения:',a:'притяжательные',o:['притяжательные','личные','указательные','вопросительные'],h:'Чей?'},
+{q:'«Этот, тот, такой» — это местоимения:',a:'указательные',o:['указательные','личные','притяжательные','определительные'],h:'Указывают на предмет'},
+{q:'«Кто? Что? Какой?» — это местоимения:',a:'вопросительные',o:['вопросительные','относительные','личные','неопределённые'],h:'В вопросительных предложениях'},
+{q:'«Никто, ничто, некого» — это местоимения:',a:'отрицательные',o:['отрицательные','неопределённые','личные','вопросительные'],h:'Отрицание'},
+{q:'«Кто-то, что-нибудь, некоторый» — это:',a:'неопределённые местоимения',o:['неопределённые местоимения','отрицательные','личные','указательные'],h:'Не знаем точно кто/что'},
+{q:'Местоимение «себя» — это:',a:'возвратное (нет И.п.)',o:['возвратное (нет И.п.)','личное','притяжательное','указательное'],h:'Действие на самого себя'},
+{q:'«Его, её, их» — притяжательные. Они:',a:'не изменяются',o:['не изменяются','склоняются','спрягаются','имеют род'],h:'Его книга, его книги — неизменно'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genNumeral(){const qs=[
+{q:'«Пять, двенадцать, сто» — числительные:',a:'количественные (сколько?)',o:['количественные (сколько?)','порядковые (который?)','собирательные','дробные'],h:'Сколько?'},
+{q:'«Первый, второй, десятый» — числительные:',a:'порядковые (который?)',o:['порядковые (который?)','количественные (сколько?)','собирательные','дробные'],h:'Который по счёту?'},
+{q:'«Двадцать пять» — числительное:',a:'составное (из двух слов)',o:['составное (из двух слов)','простое (одно слово)','дробное','собирательное'],h:'Два слова'},
+{q:'Мягкий знак в «пятьдесят» пишется:',a:'в середине',o:['в середине','в конце','не пишется','в начале'],h:'50-80: Ь в середине'},
+{q:'Мягкий знак в «двадцать» пишется:',a:'в конце',o:['в конце','в середине','не пишется','в начале'],h:'5-20, 30: Ь в конце'},
+{q:'Слово «двое» — это числительное:',a:'собирательное',o:['собирательное','количественное','порядковое','дробное'],h:'Двое, трое, четверо...'},
+{q:'Как склоняется «пятьсот»?',a:'обе части: пятисот, пятистам',o:['обе части: пятисот, пятистам','не склоняется','только первая часть','только вторая часть'],h:'Оба слова изменяются'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genAdjective(){const qs=[
+{q:'«Красивый, большой, умный» — прилагательные:',a:'качественные (есть степени сравнения)',o:['качественные (есть степени сравнения)','относительные','притяжательные','числительные'],h:'Можно сказать «красивее»'},
+{q:'«Деревянный, городской, зимний» — прилагательные:',a:'относительные (материал, место, время)',o:['относительные (материал, место, время)','качественные','притяжательные','причастия'],h:'Нельзя сказать «деревяннее»'},
+{q:'«Мамин, лисий, отцов» — прилагательные:',a:'притяжательные (чей?)',o:['притяжательные (чей?)','качественные','относительные','порядковые'],h:'Чей? — мамин'},
+{q:'Сравнительная степень «красивый»:',a:'красивее / более красивый',o:['красивее / более красивый','красивейший','самый красивый','красивый'],h:'Простая и составная форма'},
+{q:'Превосходная степень «красивый»:',a:'красивейший / самый красивый',o:['красивейший / самый красивый','красивее','более красивый','наикрасивый'],h:'Высшая степень'},
+{q:'Краткая форма «красивый»:',a:'красив',o:['красив','красивый','красивее','красивейший'],h:'Каков? — красив'},
+{q:'«Железный характер» — прилагательное:',a:'качественное (в переносном значении)',o:['качественное (в переносном значении)','относительное','притяжательное','наречие'],h:'Железный забор — относит., характер — качеств.'},
+];return mkQ(...Object.values(pick(qs)))}
+
+// History
+function genMedieval(){const qs=[
+{q:'Средние века — это период:',a:'V—XV вв. (476—1492)',o:['V—XV вв. (476—1492)','I—V вв.','XV—XVIII вв.','до нашей эры'],h:'От падения Рима до открытия Америки'},
+{q:'Феодал — это:',a:'землевладелец, имеющий вассалов и крестьян',o:['землевладелец, имеющий вассалов и крестьян','раб','торговец','священник'],h:'Сеньор даёт землю в обмен на службу'},
+{q:'Рыцарь — это:',a:'конный воин-феодал',o:['конный воин-феодал','крестьянин','купец','монах'],h:'Латы, меч, конь, замок'},
+{q:'Крестовые походы — это:',a:'войны за Святую землю (1096—1291)',o:['войны за Святую землю (1096—1291)','торговые экспедиции','научные путешествия','паломничества'],h:'Крест на одежде воинов'},
+{q:'«Чёрная смерть» XIV века — это:',a:'эпидемия чумы (погибла 1/3 Европы)',o:['эпидемия чумы (погибла 1/3 Европы)','война','голод','наводнение'],h:'1347—1353'},
+{q:'Цех в средневековом городе — это:',a:'объединение ремесленников одной профессии',o:['объединение ремесленников одной профессии','тюрьма','храм','рынок'],h:'Кузнецы, ткачи, гончары'},
+{q:'Замок феодала — это:',a:'укреплённое жилище с башнями и рвом',o:['укреплённое жилище с башнями и рвом','деревянная изба','городской дом','храм'],h:'Стены, ров, подъёмный мост'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genByzantium(){const qs=[
+{q:'Столица Византии:',a:'Константинополь',o:['Константинополь','Рим','Афины','Александрия'],h:'Сейчас — Стамбул'},
+{q:'Храм Святой Софии построен при:',a:'Юстиниане I',o:['Юстиниане I','Константине','Августе','Карле Великом'],h:'532—537 н.э.'},
+{q:'Константинополь пал в:',a:'1453 (турки-османы)',o:['1453 (турки-османы)','476','1204','1066'],h:'Конец Византии'},
+{q:'Ислам основал:',a:'пророк Мухаммед (VII в.)',o:['пророк Мухаммед (VII в.)','Иисус Христос','Будда','Моисей'],h:'Мекка, 622 г. — хиджра'},
+{q:'Священная книга мусульман:',a:'Коран',o:['Коран','Библия','Тора','Веды'],h:'Слово Аллаха'},
+{q:'Арабские учёные подарили миру:',a:'алгебру, ноль, медицинские знания',o:['алгебру, ноль, медицинские знания','паровой двигатель','книгопечатание','компас'],h:'Аль-Хорезми → алгоритм'},
+{q:'Мечеть — это:',a:'мусульманский храм для молитвы',o:['мусульманский храм для молитвы','христианская церковь','буддийский храм','дворец'],h:'Минарет — башня для азана'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genRusMed(){const qs=[
+{q:'«Русская Правда» — это:',a:'первый свод законов Руси (Ярослав Мудрый)',o:['первый свод законов Руси (Ярослав Мудрый)','летопись','библия','договор'],h:'XI век'},
+{q:'Нашествие Батыя на Русь:',a:'1237—1240',o:['1237—1240','1147','1380','988'],h:'Монголо-татарское нашествие'},
+{q:'Раздробленность Руси — это:',a:'распад на самостоятельные княжества (XII—XIII вв.)',o:['распад на самостоятельные княжества (XII—XIII вв.)','объединение','крещение','война с Византией'],h:'Киев, Новгород, Владимир — каждый сам по себе'},
+{q:'Ярослав Мудрый правил в:',a:'1019—1054',o:['1019—1054','862','988','1380'],h:'Расцвет Киевской Руси'},
+{q:'Александр Невский прославился:',a:'победами над шведами (1240) и немцами (1242)',o:['победами над шведами (1240) и немцами (1242)','крещением Руси','строительством Москвы','объединением Руси'],h:'Невская битва + Ледовое побоище'},
+{q:'Дань, которую платила Русь Орде:',a:'выход',o:['выход','оброк','десятина','подать'],h:'Ежегодная плата монголам'},
+{q:'Первый московский князь:',a:'Даниил Александрович (сын Невского)',o:['Даниил Александрович (сын Невского)','Иван Калита','Дмитрий Донской','Юрий Долгорукий'],h:'Конец XIII в.'},
+];return mkQ(...Object.values(pick(qs)))}
+
+// Biology
+function genAnimals(){const qs=[
+{q:'Самый многочисленный класс животных:',a:'насекомые (>1 млн видов)',o:['насекомые (>1 млн видов)','рыбы','птицы','млекопитающие'],h:'Жуки, бабочки, пчёлы'},
+{q:'Млекопитающие отличаются тем, что:',a:'кормят детёнышей молоком',o:['кормят детёнышей молоком','откладывают яйца','дышат жабрами','имеют чешую'],h:'+ теплокровные, шерсть'},
+{q:'Земноводные (амфибии) — это:',a:'лягушки, тритоны, жабы',o:['лягушки, тритоны, жабы','змеи, ящерицы','рыбы','насекомые'],h:'Живут и в воде, и на суше'},
+{q:'Пресмыкающиеся (рептилии) — это:',a:'змеи, ящерицы, крокодилы, черепахи',o:['змеи, ящерицы, крокодилы, черепахи','лягушки, жабы','рыбы','насекомые'],h:'Чешуя, яйца на суше'},
+{q:'Рыбы дышат:',a:'жабрами',o:['жабрами','лёгкими','кожей','трахеями'],h:'Извлекают кислород из воды'},
+{q:'Птицы — теплокровные. Это значит:',a:'температура тела постоянная',o:['температура тела постоянная','температура зависит от среды','они всегда горячие','они не мёрзнут'],h:'~40°C у птиц'},
+{q:'Членистоногие — это:',a:'насекомые, пауки, ракообразные',o:['насекомые, пауки, ракообразные','черви','моллюски','рыбы'],h:'Суставчатые ноги, хитиновый покров'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genClassification(){const qs=[
+{q:'Создатель системы классификации:',a:'Карл Линней (XVIII в.)',o:['Карл Линней (XVIII в.)','Чарльз Дарвин','Грегор Мендель','Луи Пастер'],h:'Латинские двойные названия'},
+{q:'Правильный порядок: вид →',a:'род → семейство → отряд → класс → тип → царство',o:['род → семейство → отряд → класс → тип → царство','класс → тип → род','царство → тип → вид','семейство → вид → род'],h:'От мелкого к крупному'},
+{q:'Сколько царств живой природы?',a:'4 (бактерии, грибы, растения, животные)',o:['4 (бактерии, грибы, растения, животные)','3','5','2'],h:'Основные группы'},
+{q:'Клетка животного отличается от растительной:',a:'нет клеточной стенки и хлоропластов',o:['нет клеточной стенки и хлоропластов','нет ядра','нет мембраны','нет цитоплазмы'],h:'Животные не фотосинтезируют'},
+{q:'Homo sapiens — это:',a:'человек разумный',o:['человек разумный','обезьяна','собака','кошка'],h:'Латинское название нашего вида'},
+{q:'Вид — это:',a:'группа организмов, дающих плодовитое потомство',o:['группа организмов, дающих плодовитое потомство','один организм','все животные','все растения'],h:'Основная единица классификации'},
+{q:'Бактерии отличаются от животных:',a:'нет ядра (прокариоты)',o:['нет ядра (прокариоты)','есть ядро','есть хлоропласты','нет клетки'],h:'Самые примитивные организмы'},
+];return mkQ(...Object.values(pick(qs)))}
+
+// Geography
+function genLitho(){const qs=[
+{q:'Литосфера — это:',a:'твёрдая оболочка Земли (кора + верх мантии)',o:['твёрдая оболочка Земли (кора + верх мантии)','водная оболочка','воздушная оболочка','живая оболочка'],h:'Литос = камень (греч.)'},
+{q:'Магматические горные породы:',a:'гранит, базальт (из магмы)',o:['гранит, базальт (из магмы)','известняк, мел','мрамор, кварцит','глина, песок'],h:'Застывшая магма'},
+{q:'Осадочные горные породы:',a:'известняк, песчаник, глина',o:['известняк, песчаник, глина','гранит, базальт','мрамор, кварцит','алмаз, рубин'],h:'Накопились на дне'},
+{q:'Землетрясения происходят на:',a:'границах литосферных плит',o:['границах литосферных плит','экваторе','полюсах','в центре материков'],h:'Плиты движутся и сталкиваются'},
+{q:'Вулкан извергает:',a:'лаву, пепел, газы',o:['лаву, пепел, газы','воду','песок','снег'],h:'Магма выходит на поверхность'},
+{q:'Самый высокий действующий вулкан в России:',a:'Ключевская Сопка (Камчатка)',o:['Ключевская Сопка (Камчатка)','Эльбрус','Казбек','Этна'],h:'4750 м, Камчатка'},
+{q:'Эпицентр землетрясения — это:',a:'точка на поверхности над очагом',o:['точка на поверхности над очагом','центр Земли','вершина горы','дно океана'],h:'Прямо над гипоцентром'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genHydro(){const qs=[
+{q:'Гидросфера — это:',a:'водная оболочка Земли',o:['водная оболочка Земли','твёрдая оболочка','воздушная оболочка','живая оболочка'],h:'Гидро = вода (греч.)'},
+{q:'Мировой океан покрывает:',a:'71% поверхности Земли',o:['71% поверхности Земли','50%','90%','30%'],h:'Больше половины'},
+{q:'Самый большой океан:',a:'Тихий',o:['Тихий','Атлантический','Индийский','Северный Ледовитый'],h:'Треть поверхности Земли'},
+{q:'Самое глубокое озеро мира:',a:'Байкал (1642 м)',o:['Байкал (1642 м)','Каспийское','Танганьика','Виктория'],h:'Россия, Сибирь'},
+{q:'Круговорот воды в природе:',a:'испарение → облака → осадки → реки → океан',o:['испарение → облака → осадки → реки → океан','только дождь','только испарение','вода не двигается'],h:'Замкнутый цикл'},
+{q:'Исток реки — это:',a:'место, где река начинается',o:['место, где река начинается','место впадения в море','середина реки','самое широкое место'],h:'Начало реки'},
+{q:'Устье реки — это:',a:'место впадения в море/озеро/другую реку',o:['место впадения в море/озеро/другую реку','начало реки','приток','русло'],h:'Конец реки'},
+];return mkQ(...Object.values(pick(qs)))}
+
+const SUBJ=[
+{id:'math',nm:'Математика',ic:'🔢',date:'',cl:'#2563eb',bg:'#dbeafe',
+  tops:[{id:'neg',nm:'Отрицательные числа',gen:genNegative,th:MTH.negative,dot:'#dc2626'},{id:'div',nm:'Делимость',gen:genDivisibility,th:MTH.divisibility,dot:'#2563eb'},{id:'rat',nm:'Пропорции',gen:genRatio,th:MTH.ratio,dot:'#16a34a'},{id:'coord',nm:'Координаты',gen:genCoords,th:MTH.coords,dot:'#7c3aed'}]},
+{id:'rus',nm:'Русский язык',ic:'📝',date:'',cl:'#ea580c',bg:'#fff7ed',
+  tops:[{id:'pron',nm:'Местоимения',gen:genPronoun,th:RTH.pronoun,dot:'#ea580c'},{id:'num',nm:'Числительные',gen:genNumeral,th:RTH.numeral,dot:'#dc2626'},{id:'adj',nm:'Прилагательные',gen:genAdjective,th:RTH.adjective,dot:'#0d9488'}]},
+{id:'his',nm:'История',ic:'🏛',date:'',cl:'#b45309',bg:'#fef3c7',
+  tops:[{id:'med',nm:'Средние века',gen:genMedieval,th:HTH.medieval,dot:'#b45309'},{id:'byz',nm:'Византия и ислам',gen:genByzantium,th:HTH.byzantium,dot:'#2563eb'},{id:'rmed',nm:'Русь',gen:genRusMed,th:HTH.rus_medieval,dot:'#dc2626'}]},
+{id:'bio',nm:'Биология',ic:'🌿',date:'',cl:'#16a34a',bg:'#dcfce7',
+  tops:[{id:'anim',nm:'Животные',gen:genAnimals,th:BTH.animals,dot:'#16a34a'},{id:'class',nm:'Классификация',gen:genClassification,th:BTH.classification,dot:'#22c55e'}]},
+{id:'geo6',nm:'География',ic:'🌍',date:'',cl:'#0d9488',bg:'#ccfbf1',
+  tops:[{id:'litho',nm:'Литосфера',gen:genLitho,th:GTH.litho,dot:'#b45309'},{id:'hydro',nm:'Гидросфера',gen:genHydro,th:GTH.hydro,dot:'#2563eb'}]}
+];
+
+// ═══ ENGINE (same as grade10 but with m3_ prefix) ═══
+const PFX='m6_';
+let PROG={};function loadProg(){try{PROG=JSON.parse(localStorage.getItem(PFX+'progress')||'{}')}catch{PROG={}}}
+function saveProg(){try{localStorage.setItem(PFX+'progress',JSON.stringify(PROG))}catch{}}
+function getTP(s,t){return(PROG[s+'_'+t]||{ok:0,err:0})}
+function addTP(s,t,ok,err){const k=s+'_'+t;if(!PROG[k])PROG[k]={ok:0,err:0};PROG[k].ok+=ok;PROG[k].err+=err;saveProg()}
+loadProg();
+
+const DAILY_PCT=75,SHORTCUT_N=20;
+let DAILY={ok:0,err:0,pure:0,mixErr:0,date:'',subjs:{}};
+function loadDaily(){try{const d=JSON.parse(localStorage.getItem(PFX+'daily')||'{}');if(d.date===new Date().toDateString())DAILY=d;else DAILY={ok:0,err:0,pure:0,mixErr:0,date:new Date().toDateString(),subjs:{}}}catch{}}
+function saveDaily(){DAILY.date=new Date().toDateString();try{localStorage.setItem(PFX+'daily',JSON.stringify(DAILY))}catch{}}
+function addDaily(sid,ok,err,isFiltered,isFullMix){
+  DAILY.ok+=ok;DAILY.err+=err;
+  if(isFullMix){DAILY.pure+=ok;DAILY.mixErr+=err}
+  if(!DAILY.subjs)DAILY.subjs={};if(!DAILY.subjs[sid])DAILY.subjs[sid]={ok:0,err:0};
+  DAILY.subjs[sid].ok+=ok;DAILY.subjs[sid].err+=err;saveDaily()
+}
+function dailyDone(){
+  if(DAILY.pure>=SHORTCUT_N&&DAILY.mixErr===0)return'shortcut';
+  const tot=DAILY.ok+DAILY.err;if(tot>=100&&DAILY.ok/tot*100>=DAILY_PCT)return'done';return false
+}
+loadDaily();
+
+let STR={current:0,best:0,lastDone:'',totalDone:0,totalQs:0,totalOk:0,shortcuts:0,badges:[]};
+function loadStreak(){try{const s=localStorage.getItem(PFX+'streak');if(s)STR=JSON.parse(s);if(!STR.badges)STR.badges=[]}catch{}}
+function saveStreak(){try{localStorage.setItem(PFX+'streak',JSON.stringify(STR))}catch{}}
+loadStreak();
+function completeDay(type){
+  const today=new Date().toDateString();
+  if(STR.lastDone===today)return;
+  const dates=JSON.parse(localStorage.getItem(PFX+'dates')||'[]');
+  const yesterday=new Date(Date.now()-86400000).toDateString();
+  STR.current=dates.includes(yesterday)?STR.current+1:1;
+  if(STR.current>STR.best)STR.best=STR.current;
+  STR.lastDone=today;STR.totalDone++;
+  if(type==='shortcut')STR.shortcuts++;
+  dates.push(today);try{localStorage.setItem(PFX+'dates',JSON.stringify(dates.slice(-90)))}catch{}
+  saveStreak();
+}
+
+const BADGES=[
+  {id:'first',icon:'🌟',name:'Первый шаг',desc:'Реши 1 задачу',check:s=>s.totalQs>=1},
+  {id:'ten',icon:'🔟',name:'Десяточка',desc:'Реши 10 задач',check:s=>s.totalQs>=10},
+  {id:'fifty',icon:'💪',name:'Полтинник',desc:'Реши 50 задач',check:s=>s.totalQs>=50},
+  {id:'hundred',icon:'💯',name:'Сотня',desc:'Реши 100 задач',check:s=>s.totalQs>=100},
+  {id:'streak3',icon:'🔥',name:'3 дня подряд',desc:'Серия 3 дня',check:s=>s.best>=3},
+  {id:'streak7',icon:'🔥',name:'Неделя!',desc:'Серия 7 дней',check:s=>s.best>=7},
+  {id:'streak14',icon:'🏆',name:'Две недели',desc:'Серия 14 дней',check:s=>s.best>=14},
+  {id:'acc80',icon:'🎯',name:'Меткий',desc:'80%+ точность (50+ задач)',check:s=>s.totalQs>=50&&s.totalOk/s.totalQs>=0.8},
+  {id:'acc90',icon:'💎',name:'Снайпер',desc:'90%+ точность (100+ задач)',check:s=>s.totalQs>=100&&s.totalOk/s.totalQs>=0.9},
+  {id:'daily',icon:'✅',name:'Норма',desc:'Выполни дневную норму',check:()=>dailyDone(),repeat:true,count:s=>s.totalDone},
+  {id:'shortcut',icon:'⚡',name:'Рывок',desc:'20/20 в миксе',check:()=>dailyDone()==='shortcut',repeat:true,count:s=>s.shortcuts},
+];
+function checkBadges(){BADGES.forEach(b=>{if(!b.repeat&&STR.badges.includes(b.id))return;if(b.check(STR)&&!STR.badges.includes(b.id)){STR.badges.push(b.id);saveStreak()}})}
+
+// ═══ QUIZ ENGINE ═══
+let cS=null,cT=null,mix=false,globalMix=false,prob=null,sel=null,hintOn=false,shpOn=false,usedHelp=false,curTheory=null;
+let st={ok:0,err:0,streak:0,best:0},sesTopics={},seenQs={},wrongAnswers=[];
+let ti=null,tv=0;
+function go(id){document.querySelectorAll('.scr').forEach(s=>s.style.display='none');
+  document.getElementById('s-'+id).style.display='block';
+  if(id==='main')refreshMain()}
+function goSubj(){
+  document.querySelectorAll('.scr').forEach(s=>s.style.display='none');
+  document.getElementById('s-subj').style.display='block';openSubj(cS)}
+
+function genGlobalMix(){
+  const all=[];SUBJ.forEach(s=>{if(s.locked)return;s.tops.forEach(t=>{
+    const w=getTP(s.id,t.id);const errR=w.err/(w.ok+w.err+1);
+    const weight=1+errR*2.9;for(let i=0;i<Math.ceil(weight);i++)all.push(t)})});
+  return pick(all).gen()
+}
+
+function startQuiz(){st={ok:0,err:0,streak:0,best:0};sesTopics={};seenQs={};tv=0;sel=null;hintOn=false;shpOn=false;usedHelp=false;wrongAnswers=[];
+  go('quiz');if(ti)clearInterval(ti);ti=setInterval(()=>{tv++;document.getElementById('tmr').textContent=fmt(tv)},1000);nextQ()}
+
+function fmt(s){return(0|s/60)+':'+(''+s%60).padStart(2,'0')}
+function nextQ(){
+  let best=null,bestCount=999;
+  for(let attempt=0;attempt<50;attempt++){
+    let p;if(globalMix)p=genGlobalMix();
+    else{let gen;if(mix)gen=pick(cS.tops).gen;else if(cT)gen=cT.gen;if(!gen)return;p=gen()}
+    const key=p.question+p.answer;const count=seenQs[key]||0;
+    if(count===0){best=p;break}
+    if(count<bestCount){best=p;bestCount=count}
+  }
+  if(best){prob=best;const bk=best.question+best.answer;seenQs[bk]=(seenQs[bk]||0)+1}
+  sel=null;hintOn=false;shpOn=false;usedHelp=false;render();window.scrollTo({top:0,behavior:'smooth'})
+}
+
+function render(){
+  const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
+  const hb=document.getElementById('hb');if(tot>0){hb.style.display='inline-block';hb.textContent=st.ok+'/'+tot+' '+pct+'%'}
+  document.getElementById('sts').innerHTML=
+    '<div class="st"><span class="v" style="color:var(--green)">'+st.ok+'</span><span class="l">верно</span></div>'+
+    '<div class="st"><span class="v" style="color:var(--red)">'+st.err+'</span><span class="l">'+declNum(st.err,'ошибка','ошибки','ошибок')+'</span></div>'+
+    '<div class="st"><span class="v" style="color:var(--accent)">'+pct+'%</span><span class="l">точность</span></div>'+
+    (st.streak>=3?'<div class="st streak"><span class="v" style="color:var(--orange)">🔥'+st.streak+'</span><span class="l">серия</span></div>':'');
+  document.getElementById('qt').textContent=prob.tag;document.getElementById('qt').style.background=prob.bg;document.getElementById('qt').style.color=prob.color;
+  document.getElementById('qb').className=prob.isMath?'qmath':'qtxt';document.getElementById('qb').textContent=prob.question;
+  // Theory
+  let theoryHtml=cT?cT.th:null;
+  if(!theoryHtml&&prob&&prob.tag){for(const s of SUBJ){for(const tp of s.tops){if(tp.nm===prob.tag){theoryHtml=tp.th;break}}if(theoryHtml)break}}
+  let ta='';if(sel===null&&theoryHtml){ta='<button class="shpb" onclick="shpOn=!shpOn;if(shpOn)usedHelp=true;render()">📖 '+(shpOn?'Скрыть шпаргалку':'Шпаргалка')+'</button>';if(shpOn)ta+='<div class="shpbox">'+theoryHtml.replace(/<h3>.*?<\/h3>/g,'')+'</div>'}
+  document.getElementById('shp').innerHTML=ta;
+  // Options
+  let oh='';prob.options.forEach((o,i)=>{
+    const letter='ABCD'[i];let cls='opt';
+    if(sel!==null){if(o===prob.answer)cls+=' correct';else if(o===sel)cls+=' wrong'}
+    oh+='<button class="'+cls+'" '+(sel!==null?'disabled':'')+' onclick="ans('+i+')"><span class="ol">'+letter+'</span><span>'+esc(o)+'</span></button>'});
+  document.getElementById('opts').innerHTML=oh;
+  // Feedback
+  let fb='';if(sel!==null){
+    if(sel===prob.answer){fb='<div class="fb ok">✓ Верно!'+(prob.hint?' <span style="opacity:.7">'+prob.hint+'</span>':'')+'</div>'}
+    else{fb='<div class="fb err">✗ Ответ: '+esc(prob.answer)+(prob.hint?' — '+prob.hint:'')+'</div>'}
+    fb+='<button class="btn btn-p mt12" style="width:100%" onclick="nextQ()">Дальше →</button>'}
+  document.getElementById('fb').innerHTML=fb;
+  document.getElementById('pa').innerHTML=tot>0?'<div class="pgbar"><div class="pgfill" style="width:'+pct+'%"></div></div>':'';
+}
+
+// Journal
+function loadJournal(){try{return JSON.parse(localStorage.getItem(PFX+'journal')||'[]')}catch{return[]}}
+function saveJournal(j){try{localStorage.setItem(PFX+'journal',JSON.stringify(j.slice(-50)))}catch{}}
+function addToJournal(err){const j=loadJournal();j.push(err);saveJournal(j)}
+
+function ans(idx){
+  if(sel!==null)return;sel=prob.options[idx];
+  const ok=sel===prob.answer;
+  if(ok){st.ok++;st.streak++;if(st.streak>st.best)st.best=st.streak;STR.totalOk++;
+    try{navigator.vibrate&&navigator.vibrate(30)}catch{}}
+  else{st.err++;st.streak=0;wrongAnswers.push({q:prob.question,your:sel,correct:prob.answer,hint:prob.hint});
+    addToJournal({q:prob.question,yourAnswer:sel,correct:prob.answer,hint:prob.hint,tag:prob.tag,ts:Date.now()})}
+  STR.totalQs++;saveStreak();
+  // Track topic
+  if(!sesTopics[prob.tag])sesTopics[prob.tag]={ok:0,err:0};
+  sesTopics[prob.tag][ok?'ok':'err']++;
+  // Daily
+  if(cS)addDaily(cS.id,ok?1:0,ok?0:1,!!mixFilter,globalMix&&!mixFilter);
+  // Progress
+  if(cT)addTP(cS.id,cT.id,ok?1:0,ok?0:1);
+  else if(prob.tag){SUBJ.forEach(s=>s.tops.forEach(t=>{if(t.nm===prob.tag)addTP(s.id,t.id,ok?1:0,ok?0:1)}))}
+  checkBadges();
+  const done=dailyDone();if(done)completeDay(done);
+  render()
+}
+
+let mixFilter=null;
+function endSession(){if(ti)clearInterval(ti);globalMix=false;
+  const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
+  const emoji={5:'🌟',4:'👍',3:'😐',2:'📖'};
+  const grade=pct>=90?5:pct>=70?4:pct>=50?3:2;
+  document.getElementById('res-emoji').textContent=emoji[grade];
+  document.getElementById('res-title').textContent=pct+'% правильно';
+  document.getElementById('res-score').textContent=st.ok+'/'+tot;
+  document.getElementById('res-detail').textContent=fmt(tv);
+  let th='';Object.entries(sesTopics).sort((a,b)=>(b[1].ok/(b[1].ok+b[1].err))-(a[1].ok/(a[1].ok+a[1].err))).forEach(([tag,d])=>{
+    const p=Math.round(d.ok/(d.ok+d.err)*100);const c=p>=80?'var(--green)':p>=50?'var(--orange)':'var(--red)';
+    th+='<div style="display:flex;align-items:center;gap:6px;padding:4px 0"><span style="width:10px;height:10px;border-radius:50%;background:'+c+'"></span><span style="flex:1;font-size:13px">'+tag+'</span><span style="font-weight:700;color:'+c+'">'+p+'%</span></div>'});
+  document.getElementById('res-topics').innerHTML=th;
+  go('result')
+}
+
+function shareSession(){
+  const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
+  let txt='🌱 3 класс — '+getPlayerName()+'\n✅ '+st.ok+'/'+tot+' ('+pct+'%) · '+fmt(tv);
+  Object.entries(sesTopics).forEach(([tag,d])=>{const p=Math.round(d.ok/(d.ok+d.err)*100);txt+='\n'+(p>=80?'🟢':p>=50?'🟡':'🔴')+' '+tag+': '+p+'%'});
+  if(navigator.share)navigator.share({text:txt}).catch(()=>{});
+  else{navigator.clipboard.writeText(txt).then(()=>alert('Скопировано!')).catch(()=>{})}
+}
+
+// ═══ UI ═══
+function refreshMain(){
+  renderPlayerBadge();renderDaily();
+  const c=document.getElementById('subjects');let h='';
+  SUBJ.forEach(s=>{
+    let pctStr='';const tots=s.tops.reduce((a,t)=>{const p=getTP(s.id,t.id);return{ok:a.ok+p.ok,err:a.err+p.err}},{ok:0,err:0});
+    if(tots.ok+tots.err>0){const p=Math.round(tots.ok/(tots.ok+tots.err)*100);pctStr=' · '+p+'%'}
+    h+='<button class="scard" onclick="openSubj(SUBJ.find(x=>x.id===\''+s.id+'\'))"><div class="ic" style="background:'+s.bg+';color:'+s.cl+'">'+s.ic+'</div><div style="flex:1"><div class="nm">'+s.nm+pctStr+'</div></div></button>'});
+  c.innerHTML=h}
+
+function openSubj(s){cS=s;cT=null;mix=false;globalMix=false;
+  document.getElementById('subj-title').textContent=s.ic+' '+s.nm;
+  const c=document.getElementById('topics');let h='';
+  h+='<button class="scard" onclick="cS=SUBJ.find(x=>x.id===\''+s.id+'\');mix=true;globalMix=false;cT=null;document.getElementById(\'hdr\').textContent=\''+s.ic+' '+s.nm.toUpperCase()+'\';startQuiz()"><div class="ic" style="background:'+s.bg+';color:'+s.cl+'">⚡</div><div style="flex:1"><div class="nm">Всё вперемешку</div></div></button>';
+  s.tops.forEach(t=>{
+    const p=getTP(s.id,t.id);let ps='';if(p.ok+p.err>0)ps=' · '+Math.round(p.ok/(p.ok+p.err)*100)+'%';
+    h+='<button class="scard" onclick="cS=SUBJ.find(x=>x.id===\''+s.id+'\');cT=SUBJ.find(x=>x.id===\''+s.id+'\').tops.find(x=>x.id===\''+t.id+'\');mix=false;globalMix=false;curTheory=cT.th;document.getElementById(\'hdr\').textContent=\''+t.nm.toUpperCase()+'\';startQuiz()"><div class="ic" style="background:'+s.bg+';color:'+s.cl+'"><span style=\"width:8px;height:8px;border-radius:50%;background:'+t.dot+'\"></span></div><div style="flex:1"><div class="nm">'+t.nm+ps+'</div></div></button>'});
+  c.innerHTML=h;go('subj')}
+
+function renderDaily(){
+  const dp=document.getElementById('daily-panel');const done=dailyDone();
+  const tot=DAILY.ok+DAILY.err;const pct=tot?Math.round(DAILY.ok/tot*100):0;
+  if(done==='shortcut')dp.innerHTML='<div class="dm" style="border-color:var(--gold);background:#fef9c3"><b>⚡ Рывок!</b> 20/20 без ошибок</div>';
+  else if(done==='done')dp.innerHTML='<div class="dm" style="border-color:var(--green);background:#dcfce7"><b>✅ Норма!</b> '+tot+' задач, '+pct+'%</div>';
+  else dp.innerHTML='<div class="dm"><b>📋 Сегодня:</b> '+tot+'/100 задач'+(tot>0?', '+pct+'%':'')+'</div>'}
+
+function renderPlayerBadge(){
+  const pb=document.getElementById('player-badge');if(!pb)return;
+  const name=getPlayerName();
+  const rank=STR.totalQs>=1000?'🏅 Мастер':STR.totalQs>=500?'🧠 Знаток':STR.totalQs>=100?'📚 Ученик':'🌱 Новичок';
+  pb.innerHTML='<div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#fef9c3,#fff7ed);padding:6px 16px;border-radius:20px;cursor:pointer" onclick="pickName()"><span style="font-size:16px;font-weight:800;color:#1a1a2e">'+name+'</span><span style="font-size:11px;color:#6b6b7e">'+rank+'</span></div>'}
+
+function getPlayerName(){try{return localStorage.getItem(PFX+'player_name')||'Ученик'}catch{return'Ученик'}}
+function setPlayerName(n){try{localStorage.setItem(PFX+'player_name',n)}catch{}}
+
+function pickName(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:28px 20px;max-width:320px;width:100%;text-align:center';
+  box.innerHTML='<div style="font-size:36px;margin-bottom:8px">🌱</div><h3 style="font-family:Unbounded,sans-serif;font-size:16px;margin-bottom:16px">Как тебя зовут?</h3><input id="pn" placeholder="Имя" value="'+(getPlayerName()==='Ученик'?'':getPlayerName())+'" style="width:100%;padding:12px;border:2px solid #e8e6e0;border-radius:10px;font-size:16px;font-family:Golos Text,sans-serif;text-align:center;outline:none" autofocus><button style="width:100%;margin-top:10px;padding:12px;border:none;border-radius:10px;background:#fbbf24;color:#1a1a2e;font-weight:800;font-size:15px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="const v=document.getElementById(\'pn\').value.trim();if(v){setPlayerName(v);this.closest(\'div[style*=fixed]\').remove();refreshMain()}">Начать! →</button>';
+  d.appendChild(box);document.body.appendChild(d);d.onclick=e=>{if(e.target===d&&getPlayerName()!=='Ученик')d.remove()};
+  document.getElementById('pn').focus()}
+
+function showBadges(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:360px;width:100%;max-height:80vh;overflow-y:auto';box.onclick=e=>e.stopPropagation();
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;text-align:center;margin-bottom:16px">🏆 Награды</h3>';
+  BADGES.forEach(b=>{const earned=STR.badges.includes(b.id);
+    h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee;opacity:'+(earned?1:.35)+'"><span style="font-size:24px">'+b.icon+'</span><div><div style="font-weight:700;font-size:13px">'+b.name+'</div><div style="font-size:11px;color:#6b6b7e">'+b.desc+'</div></div>'+(earned?'<span style="margin-left:auto;color:var(--green)">✓</span>':'')+'</div>'});
+  h+='<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  box.innerHTML=h;d.appendChild(box);document.body.appendChild(d)}
+
+function showHallOfFame(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:360px;width:100%;text-align:center';box.onclick=e=>e.stopPropagation();
+  const acc=STR.totalQs>0?Math.round(STR.totalOk/STR.totalQs*100):0;
+  box.innerHTML='<div style="font-size:48px;margin-bottom:8px">👑</div><h3 style="font-family:Unbounded,sans-serif;font-size:16px;margin-bottom:12px">'+getPlayerName()+'</h3><div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px"><div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:22px;font-weight:900">'+STR.totalQs+'</div><div style="font-size:11px;color:#6b6b7e">задач</div></div><div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:22px;font-weight:900">'+acc+'%</div><div style="font-size:11px;color:#6b6b7e">точность</div></div><div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:22px;font-weight:900">🔥'+STR.best+'</div><div style="font-size:11px;color:#6b6b7e">рекорд серии</div></div></div><button style="width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  d.appendChild(box);document.body.appendChild(d)}
+
+function showJournal(){
+  const j=loadJournal();
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto';box.onclick=e=>e.stopPropagation();
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;text-align:center;margin-bottom:12px">📊 Слабые места</h3>';
+  if(!j.length){h+='<div style="text-align:center;color:#aaa;padding:30px;font-size:13px">Ошибок пока нет!</div>'}
+  else{const byTag={};j.forEach(e=>{if(!byTag[e.tag])byTag[e.tag]=[];byTag[e.tag].push(e)});
+    Object.entries(byTag).sort((a,b)=>b[1].length-a[1].length).forEach(([tag,errs])=>{
+      const c=errs.length>=5?'#dc2626':errs.length>=3?'#ea580c':'#ca8a04';const bg=errs.length>=5?'#fee2e2':errs.length>=3?'#fff7ed':'#fef9c3';
+      h+='<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:4px;background:'+bg+';border-radius:8px"><span style="font-size:11px;font-weight:700;color:'+c+';flex:1">'+tag+'</span><span style="font-weight:900;font-size:16px;color:'+c+'">'+errs.length+'</span></div>'});
+    j.slice(-8).reverse().forEach(e=>{h+='<div style="padding:6px 0;border-bottom:1px solid #eee;font-size:12px"><div style="font-weight:600">'+esc(e.q)+'</div><div><span style="color:#dc2626">✗ '+esc(e.yourAnswer)+'</span> → <span style="color:#16a34a">✓ '+esc(e.correct)+'</span></div></div>'})}
+  h+='<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  box.innerHTML=h;d.appendChild(box);document.body.appendChild(d)}
+
+// Demo mode
+let demoMode=false;
+if(!localStorage.getItem(PFX+'player_name')){setTimeout(()=>{
+  demoMode=true;globalMix=true;mix=true;cT=null;mixFilter=null;cS=SUBJ[0];
+  document.getElementById('hdr').textContent='ПОПРОБУЙ!';startQuiz()},500)}
+else refreshMain();
+
+const _origNextQ=nextQ;
+const _nextQRef=function(){
+  if(demoMode&&(st.ok+st.err)>=10){
+    if(ti)clearInterval(ti);demoMode=false;globalMix=false;
+    const pct=st.ok>0?Math.round(st.ok/10*100):0;
+    const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+    const box=document.createElement('div');box.style.cssText='background:linear-gradient(135deg,#1a1a2e,#2d2b55);border-radius:20px;padding:28px 24px;max-width:340px;width:100%;text-align:center;color:#fff';
+    box.innerHTML='<div style="font-size:42px;margin-bottom:8px">'+(pct>=80?'🌟':pct>=50?'💪':'📖')+'</div><div style="font-size:48px;font-weight:900;font-family:JetBrains Mono,monospace;margin:12px 0">'+pct+'%</div><div style="font-size:13px;color:#a5b4fc;margin-bottom:20px">'+st.ok+' из 10 верно</div><div style="background:rgba(255,255,255,.08);border-radius:12px;padding:14px;margin-bottom:16px"><div style="font-size:12px;color:#a5b4fc;margin-bottom:8px">Сохрани прогресс — введи имя:</div><input id="demo-name" placeholder="Твоё имя" autofocus style="width:100%;padding:12px;border:none;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;font-size:15px;font-weight:600;text-align:center;outline:none;margin-bottom:8px;font-family:Golos Text,sans-serif"><button style="width:100%;padding:13px;border:none;border-radius:10px;background:#fbbf24;color:#1a1a2e;font-weight:800;cursor:pointer;font-size:15px;font-family:Golos Text,sans-serif" onclick="const v=document.getElementById(\'demo-name\').value.trim();if(v){setPlayerName(v);this.closest(\'div[style*=fixed]\').remove();go(\'main\')}else{document.getElementById(\'demo-name\').focus()}">Начать тренировку →</button></div>';
+    d.appendChild(box);document.body.appendChild(d);go('main');return}
+  _origNextQ()
+};
+nextQ=_nextQRef;
+
+
+function showClassSelect(){
+  const o=document.createElement('div');
+  o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';
+  o.onclick=()=>o.remove();
+  const a=document.createElement('div');
+  a.style.cssText='background:#fff;border-radius:20px;padding:24px 20px;max-width:360px;width:100%;max-height:85vh;overflow-y:auto';
+  a.onclick=e=>e.stopPropagation();
+  const grades=[
+    {g:'3',f:'grade3.html',ic:'🎒',color:'#16a34a',bg:'#dcfce7'},
+    {g:'4',f:'grade4.html',ic:'📐',color:'#2563eb',bg:'#dbeafe'},
+    {g:'5',f:'grade5.html',ic:'🔢',color:'#7c3aed',bg:'#ede9fe'},
+    {g:'6',f:'grade6.html',ic:'🌍',color:'#ea580c',bg:'#fff7ed'},
+    {g:'7',f:'grade7.html',ic:'⚗️',color:'#0d9488',bg:'#ccfbf1'},
+    {g:'8',f:'grade8.html',ic:'⚡',color:'#dc2626',bg:'#fee2e2'},
+    {g:'9',f:'grade9.html',ic:'∫',color:'#ca8a04',bg:'#fef9c3'},
+    {g:'10',f:'index.html',ic:'∑',color:'#1a1a2e',bg:'#e8e6e0'},
+    {g:'11',f:'grade11.html',ic:'🎓',color:'#7c3aed',bg:'#ede9fe'},
+  ];
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">📚 Выбери класс</h3>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">';
+  grades.forEach(({g,f,ic,color,bg})=>{
+    const currentFile=window.location.pathname.split('/').pop()||'index.html';
+    const isCurrent=f===currentFile;
+    h+=`<a href="${f}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;background:${bg};border-radius:12px;text-decoration:none;border:${isCurrent?'2.5px solid '+color:'2px solid transparent'};min-height:70px">
+      <span style="font-size:20px;margin-bottom:4px">${ic}</span>
+      <span style="font-size:13px;font-weight:800;color:${color}">${g} класс</span>
+    </a>`;
+  });
+  h+='</div>';
+  h+='<button style="width:100%;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  a.innerHTML=h;o.appendChild(a);document.body.appendChild(o);
+}
+</script></body></html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Настройка лидербордов</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Golos+Text:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Golos Text',sans-serif;background:#f5f3ee;color:#1a1a2e;min-height:100vh;padding:24px 16px}
+.w{max-width:560px;margin:0 auto}
+h1{font-family:Unbounded,sans-serif;font-size:20px;font-weight:900;margin-bottom:6px}
+.sub{font-size:13px;color:#6b6b7e;margin-bottom:24px;line-height:1.5}
+.card{background:#fff;border:1.5px solid #e2e0d8;border-radius:14px;padding:20px;margin-bottom:16px}
+.card h2{font-family:Unbounded,sans-serif;font-size:13px;font-weight:800;margin-bottom:12px}
+.step{display:flex;gap:12px;margin-bottom:10px;font-size:13px;line-height:1.5}
+.step .num{width:24px;height:24px;border-radius:50%;background:#1a1a2e;color:#fff;font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.grade-row{display:flex;align-items:center;gap:10px;padding:12px;background:#f8f7f4;border-radius:10px;margin-bottom:8px}
+.grade-ic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+.grade-label{flex:1;font-weight:700;font-size:13px}
+.grade-status{font-size:11px;color:#6b6b7e}
+input.bin-id{width:100%;padding:10px 12px;border:1.5px solid #e2e0d8;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#1a1a2e;background:#fff;margin-top:4px}
+input.bin-id:focus{outline:none;border-color:#2563eb}
+input.bin-id.ok{border-color:#16a34a;background:#f0fdf4}
+input.bin-id.err{border-color:#dc2626;background:#fef2f2}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-family:'Golos Text',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s}
+.btn-p{background:#1a1a2e;color:#fff}
+.btn-g{background:#16a34a;color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:active:not(:disabled){opacity:.85}
+.log{background:#1a1a2e;color:#4ade80;border-radius:10px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;margin-top:12px;min-height:60px;white-space:pre-wrap;display:none}
+.log.show{display:block}
+.tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700}
+.tag-ok{background:#dcfce7;color:#16a34a}
+.tag-wait{background:#fef9c3;color:#92400e}
+.tag-err{background:#fee2e2;color:#dc2626}
+.dl-btn{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#dcfce7;border:1.5px solid #16a34a;border-radius:8px;color:#15803d;font-weight:700;font-size:13px;cursor:pointer;width:100%;margin-top:6px;text-decoration:none}
+.dl-btn:hover{background:#bbf7d0}
+a.link{color:#2563eb;font-size:13px}
+.divider{height:1px;background:#e2e0d8;margin:16px 0}
+.info{background:#dbeafe;border-radius:8px;padding:10px 12px;font-size:12px;color:#1e40af;line-height:1.5;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div class="w">
+  <div style="margin-bottom:20px">
+    <h1>📚 Настройка лидербордов</h1>
+    <p class="sub">Создаём отдельные бины на npoint.io для 8, 9 и 11 классов.<br>Запусти один раз — и лидерборды заработают у всех учеников автоматически.</p>
+  </div>
+
+  <!-- AUTO MODE -->
+  <div class="card" id="auto-card">
+    <h2>⚡ Автоматическая настройка</h2>
+    <div class="info">Нажми кнопку — страница сама создаст 3 бина на npoint.io и скачает готовые файлы grade8/9/11.html с прописанными ID.</div>
+    <button class="btn btn-p" id="auto-btn" onclick="autoSetup()">🚀 Создать бины и скачать файлы</button>
+    <div class="log" id="auto-log"></div>
+    <div id="dl-links"></div>
+  </div>
+
+  <div style="text-align:center;font-size:12px;color:#6b6b7e;margin:8px 0">— или вручную —</div>
+
+  <!-- MANUAL MODE -->
+  <div class="card">
+    <h2>🔧 Ручная настройка</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div>Открой <a class="link" href="https://www.npoint.io/" target="_blank">www.npoint.io</a>, нажми <b>New Document</b>, вставь <code style="background:#f0f0f0;padding:1px 5px;border-radius:4px">{"records":[]}</code> и сохрани. Скопируй ID из URL (20 символов).</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div>Сделай так для каждого класса ниже и вставь ID в поля.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div>Нажми <b>Скачать файлы</b> — получишь 3 готовых HTML с вшитыми ID.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="grade-row">
+      <div class="grade-ic" style="background:#fee2e2;color:#dc2626">8</div>
+      <div style="flex:1">
+        <div class="grade-label">8 класс</div>
+        <input class="bin-id" id="bin8" placeholder="Вставь ID бина для 8 класса..." oninput="validateBin(this,'status8')">
+        <div id="status8" style="font-size:11px;margin-top:3px;color:#6b6b7e"></div>
+      </div>
+    </div>
+
+    <div class="grade-row">
+      <div class="grade-ic" style="background:#fef9c3;color:#ca8a04">9</div>
+      <div style="flex:1">
+        <div class="grade-label">9 класс</div>
+        <input class="bin-id" id="bin9" placeholder="Вставь ID бина для 9 класса..." oninput="validateBin(this,'status9')">
+        <div id="status9" style="font-size:11px;margin-top:3px;color:#6b6b7e"></div>
+      </div>
+    </div>
+
+    <div class="grade-row">
+      <div class="grade-ic" style="background:#ede9fe;color:#7c3aed">11</div>
+      <div style="flex:1">
+        <div class="grade-label">11 класс</div>
+        <input class="bin-id" id="bin11" placeholder="Вставь ID бина для 11 класса..." oninput="validateBin(this,'status11')">
+        <div id="status11" style="font-size:11px;margin-top:3px;color:#6b6b7e"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <button class="btn btn-g" id="manual-btn" onclick="manualSetup()" disabled>⬇️ Скачать готовые файлы</button>
+    <div class="log" id="manual-log"></div>
+  </div>
+
+  <div class="card" style="background:#f8f7f4;border-color:#e2e0d8">
+    <h2>ℹ️ 10 класс (index.html)</h2>
+    <p style="font-size:12px;color:#6b6b7e;line-height:1.5">У 10 класса бин уже настроен (<code style="font-family:'JetBrains Mono',monospace">c23d724d2193e8751f9c</code>). Ничего делать не нужно.</p>
+  </div>
+</div>
+
+<script>
+const PLACEHOLDERS = {
+  grade8:  'grade8bin0000000000',
+  grade9:  'grade9bin0000000000',
+  grade11: 'grade11bin000000000',
+};
+const GRADE_INFO = {
+  grade8:  {label:'8 класс', file:'grade8.html'},
+  grade9:  {label:'9 класс', file:'grade9.html'},
+  grade11: {label:'11 класс', file:'grade11.html'},
+};
+
+// ─── AUTO SETUP ────────────────────────────────────────────────────────────
+async function autoSetup() {
+  const btn = document.getElementById('auto-btn');
+  const log = document.getElementById('auto-log');
+  const dlDiv = document.getElementById('dl-links');
+  btn.disabled = true;
+  log.className = 'log show';
+  log.textContent = '';
+  dlDiv.innerHTML = '';
+
+  function out(msg) { log.textContent += msg + '\n'; }
+
+  const results = {};
+
+  for (const [grade, info] of Object.entries(GRADE_INFO)) {
+    out(`[${info.label}] Создаю бин на npoint.io...`);
+    try {
+      // Try to create a bin via POST
+      const res = await fetch('https://api.npoint.io/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({records: [], players: {}})
+      });
+
+      let binId = null;
+
+      if (res.ok) {
+        const data = await res.json();
+        // npoint returns the bin data; ID is in URL or response
+        binId = data.id || extractIdFromUrl(res.url);
+        if (binId) {
+          out(`[${info.label}] ✓ Бин создан: ${binId}`);
+          results[grade] = binId;
+        }
+      }
+
+      if (!binId) {
+        // Try alternative endpoint
+        const res2 = await fetch('https://api.npoint.io/documents', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({contents: '{"records":[],"players":{}}'})
+        });
+        if (res2.ok) {
+          const data2 = await res2.json();
+          binId = data2.token || data2.id || data2._id;
+          if (binId) {
+            out(`[${info.label}] ✓ Бин создан: ${binId}`);
+            results[grade] = binId;
+          }
+        }
+      }
+
+      if (!binId) {
+        out(`[${info.label}] ✗ Не удалось создать бин автоматически.`);
+        out(`  → Создай вручную на npoint.io и используй ручной режим ниже.`);
+      }
+    } catch(e) {
+      out(`[${info.label}] ✗ Ошибка: ${e.message}`);
+      out(`  → Попробуй ручной режим ниже.`);
+    }
+  }
+
+  // Now fetch and patch each grade file
+  const successGrades = Object.keys(results);
+  if (successGrades.length > 0) {
+    out('\nГенерирую файлы с прописанными ID...');
+    for (const grade of successGrades) {
+      const binId = results[grade];
+      await fetchAndPatch(grade, binId, dlDiv, out);
+    }
+    out('\n✅ Готово! Скачай файлы выше и замени в репозитории.');
+  } else {
+    out('\n⚠️ Автоматическое создание не сработало.');
+    out('Используй ручной режим: создай бины на npoint.io и вставь ID.');
+    btn.disabled = false;
+  }
+}
+
+function extractIdFromUrl(url) {
+  const m = url.match(/api\.npoint\.io\/([a-f0-9]{16,24})/);
+  return m ? m[1] : null;
+}
+
+// ─── MANUAL SETUP ──────────────────────────────────────────────────────────
+function validateBin(input, statusId) {
+  const val = input.value.trim();
+  const status = document.getElementById(statusId);
+  if (val.length === 0) {
+    input.className = 'bin-id';
+    status.textContent = '';
+  } else if (/^[a-f0-9]{16,24}$/.test(val)) {
+    input.className = 'bin-id ok';
+    status.innerHTML = '<span style="color:#16a34a">✓ Похоже на валидный ID</span>';
+  } else {
+    input.className = 'bin-id err';
+    status.innerHTML = '<span style="color:#ea580c">⚠ ID должен быть 16–24 шестнадцатеричных символа</span>';
+  }
+  checkManualReady();
+}
+
+function checkManualReady() {
+  const b8 = document.getElementById('bin8').value.trim();
+  const b9 = document.getElementById('bin9').value.trim();
+  const b11 = document.getElementById('bin11').value.trim();
+  const allFilled = b8.length >= 16 && b9.length >= 16 && b11.length >= 16;
+  document.getElementById('manual-btn').disabled = !allFilled;
+}
+
+async function manualSetup() {
+  const log = document.getElementById('manual-log');
+  log.className = 'log show';
+  log.textContent = '';
+  document.getElementById('manual-btn').disabled = true;
+
+  function out(msg) { log.textContent += msg + '\n'; }
+
+  const bins = {
+    grade8: document.getElementById('bin8').value.trim(),
+    grade9: document.getElementById('bin9').value.trim(),
+    grade11: document.getElementById('bin11').value.trim(),
+  };
+
+  out('Генерирую файлы...');
+  for (const [grade, binId] of Object.entries(bins)) {
+    await fetchAndPatch(grade, binId, log.parentNode, out);
+  }
+  out('\n✅ Готово! Скачай файлы и замени в репозитории.');
+  document.getElementById('manual-btn').disabled = false;
+}
+
+// ─── SHARED: FETCH + PATCH + DOWNLOAD ─────────────────────────────────────
+async function fetchAndPatch(grade, binId, container, out) {
+  const info = GRADE_INFO[grade];
+  const placeholder = PLACEHOLDERS[grade];
+  try {
+    out(`[${info.label}] Загружаю ${info.file}...`);
+    const res = await fetch(info.file + '?_=' + Date.now());
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    let html = await res.text();
+
+    // Replace placeholder bin ID
+    if (html.includes(placeholder)) {
+      html = html.replaceAll(placeholder, binId);
+      out(`[${info.label}] ✓ Заменён bin ID: ${placeholder} → ${binId}`);
+    } else {
+      // Try to replace any existing rushBinId value
+      html = html.replace(/rushBinId="[^"]*"/, `rushBinId="${binId}"`);
+      out(`[${info.label}] ✓ Обновлён rushBinId: ${binId}`);
+    }
+
+    // Create download link
+    const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = info.file;
+    a.className = 'dl-btn';
+    a.innerHTML = `⬇️ ${info.file} <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#065f46;margin-left:auto">${binId.slice(0,12)}...</span>`;
+    container.appendChild(a);
+
+    out(`[${info.label}] ✓ Готов к скачиванию`);
+  } catch(e) {
+    out(`[${info.label}] ✗ Ошибка: ${e.message}`);
+    out(`  Убедись, что setup.html открыт с того же сервера, что и grade-файлы.`);
+  }
+}
+</script>
+</body>
+</html>

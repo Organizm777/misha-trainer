@@ -1,0 +1,935 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="color-scheme" content="light"><meta name="theme-color" content="#1a1a2e"><link rel="manifest" href="data:application/json,%7B%22name%22%3A%22%D0%A2%D1%80%D0%B5%D0%BD%D0%B0%D0%B6%D1%91%D1%80%22%2C%22short_name%22%3A%22%D0%A2%D1%80%D0%B5%D0%BD%D0%B0%D0%B6%D1%91%D1%80%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f3ee%22%2C%22theme_color%22%3A%22%231a1a2e%22%2C%22icons%22%3A%5B%5D%7D"><title>Тренажёр 11 класс</title><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet"><style>:root{color-scheme:light;--bg:#f5f3ee;--card:#fff;--accent:#2563eb;--abg:#dbeafe;--green:#16a34a;--gbg:#dcfce7;--red:#dc2626;--rbg:#fee2e2;--orange:#ea580c;--obg:#fff7ed;--purple:#7c3aed;--pbg:#ede9fe;--yellow:#ca8a04;--ybg:#fef9c3;--teal:#0d9488;--tbg:#ccfbf1;--text:#1a1a2e;--muted:#6b6b7e;--border:#e2e0d8;--R:16px}*,::after,::before{box-sizing:border-box;margin:0;padding:0}html{background:#f5f3ee;color:#1a1a2e}@media(prefers-color-scheme:dark){:root{color-scheme:light!important}body,html{background:#f5f3ee!important;color:#1a1a2e!important}.dm,.fb,.icard,.opt,.qcard,.rcard,.scard,.tbtn,.tcard{background:#fff!important;color:#1a1a2e!important}.tcard .fm,.tcard li,.tcard p{color:#374151!important}}body{font-family:'Golos Text',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}.mono{font-family:'JetBrains Mono',monospace}header{background:var(--text);color:#fff;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}header h1{font-family:Unbounded,sans-serif;font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}.hbadge{padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;background:var(--accent);margin-left:8px;white-space:nowrap}.scr{display:none}.scr.on{display:block}.w{max-width:600px;margin:0 auto;padding:16px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0))}@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}.fade{animation:fu .3s ease both}.btn{display:block;width:100%;text-align:center;padding:12px;border:none;border-radius:10px;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;transition:transform .1s}.btn:active{transform:scale(.97)}.btn-p{background:var(--accent);color:#fff}.btn-d{background:var(--text);color:#fff}.btn-o{background:0 0;border:1.5px solid var(--border);color:var(--muted);font-size:13px;font-weight:600}.btn-g{background:var(--green);color:#fff}.btn-share{background:#25d366;color:#fff}.scard{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;width:100%;text-align:left;outline:0;font-family:'Golos Text',sans-serif;-webkit-appearance:none;touch-action:manipulation;min-height:60px;transition:transform .1s}.scard:active{transform:scale(.98)}.scard .ic{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}.scard .nm{font-size:14px;font-weight:700}.scard .dt{font-size:11px;color:var(--muted);margin-top:1px}.scard .dd{font-size:10px;font-weight:700;margin-top:1px}.prow{margin-bottom:10px}.prow .plabel{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}.prow .pname{font-weight:600}.prow .pval{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px}.ptrack{height:6px;background:#e8e6e0;border-radius:3px;overflow:hidden}.ptrack .pfill{height:100%;border-radius:3px;transition:width .5s}.tbtn{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;cursor:pointer;width:100%;text-align:left;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:600;-webkit-appearance:none;touch-action:manipulation;min-height:48px;transition:transform .1s;outline:0}.tbtn:active{transform:scale(.98)}.tbtn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}.tbtn .tpct{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;opacity:.7}.tcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}.tcard h3{font-family:Unbounded,sans-serif;font-size:14px;font-weight:800;margin-bottom:8px}.tcard li,.tcard p{font-size:12.5px;line-height:1.6;color:#374151}.tcard ul{padding-left:16px;margin:4px 0}.tcard .fm{background:#f8f7f4;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:6px 0;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text);line-height:1.5;text-align:center}.tcard .ex{background:var(--gbg);border-radius:8px;padding:8px 12px;margin:6px 0;font-size:12px;color:#15803d;line-height:1.5}.qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.qback{background:0 0;border:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;padding:6px 0;touch-action:manipulation}.qtimer{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)}.sbar{display:flex;justify-content:center;gap:14px;padding:6px 0;margin-bottom:8px}.st{display:flex;flex-direction:column;align-items:center;gap:0}.st .v{font-weight:800;font-size:17px}.st .l{font-size:9px;color:var(--muted)}.qcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}.qtag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;margin-bottom:8px}.qtxt{font-size:15px;font-weight:600;line-height:1.5}.qmath{font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;text-align:center;line-height:1.4}.qcode{background:#f8f7f4;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#374151;line-height:1.6;white-space:pre-wrap;overflow-x:auto;-webkit-overflow-scrolling:touch}.opts{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}.opt{display:flex;align-items:center;gap:10px;padding:13px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text);cursor:pointer;width:100%;text-align:left;outline:0;-webkit-appearance:none;touch-action:manipulation;min-height:48px}.opt:active:not(.done){background:#f0eee8;transform:scale(.98)}.opt .k{width:26px;height:26px;border-radius:6px;background:#f0eee8;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--muted);flex-shrink:0}.opt.ok{background:var(--gbg);border-color:var(--green)}.opt.ok .k{background:var(--green);color:#fff}.opt.no{background:var(--rbg);border-color:var(--red);animation:sh .35s}.opt.no .k{background:var(--red);color:#fff}.opt.dim{opacity:.35}.fb{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px 14px;text-align:center;margin-bottom:8px}.fbr{font-weight:700;font-size:14px;margin-bottom:3px}.fbh{font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5}.hintt{display:block;width:100%;text-align:center;padding:6px;background:0 0;border:none;font-size:12px;color:var(--orange);opacity:.5;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;touch-action:manipulation;-webkit-appearance:none}.hintb{background:var(--obg);border:1px solid #fed7aa;border-radius:9px;padding:8px 12px;font-size:12px;color:var(--orange);text-align:center;line-height:1.5;margin-top:4px}.shpb{display:block;width:100%;text-align:center;padding:5px;background:0 0;border:none;font-size:11px;color:var(--accent);opacity:.4;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;touch-action:manipulation;-webkit-appearance:none;margin-bottom:4px}.shpbox{background:var(--abg);border:1px solid #93c5fd;border-radius:9px;padding:10px 12px;font-size:11px;color:#1e40af;line-height:1.5;margin-bottom:6px;max-height:180px;overflow-y:auto;-webkit-overflow-scrolling:touch}.pgbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px}.pgfill{height:100%;border-radius:2px;transition:width .4s,background .4s}.streak{animation:fireIn .4s ease}@keyframes fireIn{0%{transform:scale(.5);opacity:0}50%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}.gap8{display:flex;flex-direction:column;gap:8px}.mb12{margin-bottom:12px}.mb8{margin-bottom:8px}.mt12{margin-top:12px}.icard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:20px 18px}.icard h2{font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:12px}.istp{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}.isn{width:24px;height:24px;border-radius:6px;background:var(--abg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;font-family:'JetBrains Mono',monospace}.istp b{font-size:13px}.istp p{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.5}.tipb{background:var(--gbg);border-radius:9px;padding:10px 12px;font-size:12px;color:#15803d;line-height:1.5;margin:12px 0}.rcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}.rcard h3{font-family:Unbounded,sans-serif;font-size:14px;font-weight:800;margin-bottom:10px}.rempty{font-size:13px;color:var(--muted);text-align:center;padding:20px 0}.dm{background:var(--card);border:1.5px solid var(--border);border-radius:var(--R);padding:16px;margin-top:14px;text-align:center}.dm.done{border-color:var(--green);background:var(--gbg)}.dm-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}.dm-bar{height:12px;background:#e8e6e0;border-radius:6px;overflow:hidden;margin-bottom:8px}.dm-fill{height:100%;border-radius:6px;transition:width .5s,background .3s}.dm-num{font-family:Unbounded,sans-serif;font-size:22px;font-weight:800;margin-bottom:2px}.dm-sub{font-size:11px;color:var(--muted);line-height:1.5}.dm-done-msg{font-size:15px;font-weight:800;color:var(--green);margin:6px 0}.dm-chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px}.dm-chip{font-size:10px;padding:3px 8px;border-radius:12px;font-weight:600}</style></head><body><header><h1 id="hdr">ПОДГОТОВКА</h1><div class="hbadge" id="hb" style="display:none"></div></header><div id="s-main" class="scr on"><div class="w"><div style="text-align:center;margin-bottom:16px" class="fade"><div style="font-size:28px;margin-bottom:4px">📚</div><h2 style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:800">Тренажёр</h2><p style="font-size:12px;color:var(--muted);margin-top:3px">11 класс · 7 предметов · 5000+ задач</p><a href="index.html?choose" style="font-size:11px;color:var(--accent);text-decoration:none;margin-top:4px;display:inline-block">← Другой класс</a><div id="player-badge" style="margin-top:8px"></div></div><div class="gap8" id="sg"></div><div id="daily-meter"></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-o" style="flex:1" onclick='go("info")'>📖 Справка</button> <button class="btn btn-o" style="flex:1" onclick="showJournal()">📊 Слабые места</button> <button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Награды</button> <button class="btn btn-o" style="flex:1" onclick="showClassSelect()">🏫 Класс</button> <button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Профиль</button></div><div style="display:flex;gap:6px;margin-bottom:8px"><button class="btn btn-o" style="flex:1" onclick='go("prog")'>📈 Прогресс</button> <button class="btn btn-o" style="flex:1" onclick="showAbout()">ℹ️ О проекте</button></div><div style="margin-bottom:8px"><button class="btn btn-o" style="width:100%;border-color:#16a34a;color:#16a34a" onclick="generateReport()">📊 Отчёт для родителя</button></div><div style="text-align:center;margin-top:8px"><button style="font-size:11px;color:#6b6b7e;background:0 0;border:none;cursor:pointer;text-decoration:underline" onclick="showDateEditor()">📅 Указать даты диагностик</button></div></div></div><div id="s-info" class="scr"><div class="w"><div class="icard fade"><h2>📖 Справка</h2><div class="istp"><span class="isn">1</span><div><b>Предмет → тема → теория → тест</b><p>Выбери предмет, потом тему. Сначала прочитай шпаргалку (📖), потом жми «Тренажёр». Во время теста можно открыть шпаргалку и подсказку (💡).</p></div></div><div class="istp"><span class="isn">2</span><div><b>⚡ Всё вперемешку</b><p>Задачи из всех предметов вперемешку. Можно выбрать, какие предметы включить. Тренажёр подстраивается: слабые темы выпадают чаще — чтобы подтянуть то, что хромает.</p></div></div><div class="istp"><span class="isn">3</span><div><b>⚡ Молния</b><p>Режим на скорость: 3 или 5 минут. Три жизни (❤️❤️❤️) — три ошибки и конец. Рекорды сохраняются в общий рейтинг — соревнуйся с друзьями и одноклассниками!</p></div></div><div class="istp"><span class="isn">4</span><div><b>📝 Диагностика</b><p>Зайди в предмет → «Диагностика». 20 задач за 10 минут, без подсказок, оценка от 2 до 5. Как на настоящей контрольной.</p></div></div><div style="background:var(--abg);border-radius:12px;padding:14px 16px;margin:12px 0"><div style="font-family:Unbounded,sans-serif;font-size:13px;font-weight:800;margin-bottom:8px">📅 Зачем дневная норма?</div><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px">Знания закрепляются через <b>регулярное повторение</b>. Как в спорте — одна тренировка в неделю не даст результата, а 15–20 минут каждый день дадут. Дневная норма — это минимум, чтобы мозг запоминал.</p><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px"><b>🎯 Рывок:</b> 20 задач подряд без единой ошибки и подсказок. Если реально знаешь материал — справишься за 10 минут и свободен.</p><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px"><b>📊 Обычная норма:</b> 100 задач с точностью 75%+. Это ~25 минут. Ошибаться можно — главное решать и разбирать ошибки.</p><p style="font-size:12px;color:#374151;line-height:1.6"><b>🔥 Серия дней:</b> каждый день, когда выполнил норму, серия растёт. Не выполнил — обнуляется. Держи серию — это работает.</p></div><div class="istp"><span class="isn">5</span><div><b>🏆 Награды и 👑 Профиль</b><p>Награды за достижения — одноразовые и повторяющиеся — от «Первых шагов» до «Легенды». Профиль — твоя карточка со статистикой по всем предметам. Можно поделиться с друзьями.</p></div></div><div class="istp"><span class="isn">6</span><div><b>🏅 Олимпиада</b><p>Секретный раздел! Откроется после 500 правильных ответов. Внутри: задачи на логику, межпредметные, ловушки и углублённые — совсем другой уровень сложности.</p></div></div><div class="istp"><span class="isn">7</span><div><b>☁️ Облако и код</b><p>Прогресс сохраняется в облаке. Если данные пропали — введи свой 4-значный код (показывается при регистрации) и всё восстановится. Код виден в профиле.</p></div></div><button class="btn btn-d mt12" onclick='go("main")'>← Назад</button></div></div></div><div id="s-prog" class="scr"><div class="w"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><h2 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800">📊 Прогресс</h2><button class="qback" onclick='go("main")'>← Назад</button></div><div id="prog-content"></div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-p" style="flex:1" onclick="shareReport()">📤 Поделиться</button> <button class="btn btn-o" style="flex:1" onclick="resetProgress()">🗑 Сбросить</button></div><button class="btn btn-d mt12" onclick='go("main")'>← Назад</button></div></div><div id="s-subj" class="scr"><div class="w"><div id="sh" class="mb12"></div><div class="gap8" id="tl"></div><button class="btn btn-o mt12" onclick='go("main")'>← Все предметы</button></div></div><div id="s-theory" class="scr"><div class="w"><button class="qback mb8" onclick="goSubj()">← Темы</button><div id="tc"></div><button class="btn btn-p mt12" onclick="rushMode=!1,diagMode=!1,startQuiz()">✏️ Начать тренажёр</button></div></div><div id="s-play" class="scr"><div class="w"><div class="qh"><button class="qback" onclick="endSession()">← Завершить</button><span class="qtimer mono" id="tmr">0:00</span></div><div class="sbar" id="sts"></div><div id="shp-area"></div><div class="qcard fade" id="qc"><div class="qtag" id="qt"></div><div id="qb"></div><pre class="qcode" id="qcd" style="display:none"></pre></div><div class="opts" id="opts"></div><div id="fba"></div><div id="ha"></div><div id="pa"></div></div></div><div id="s-result" class="scr"><div class="w"><div class="rcard fade" style="text-align:center"><div style="font-size:36px;margin-bottom:8px" id="res-emoji"></div><h3 id="res-title"></h3><div style="font-size:28px;font-weight:800;margin:8px 0" id="res-score"></div><div style="font-size:13px;color:var(--muted);margin-bottom:4px" id="res-detail"></div></div><div id="res-topics"></div><div id="privacy-row" style="display:none;margin-bottom:8px;text-align:center"><button id="privacy-btn" onclick="togglePrivacy()" style="border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Golos Text,sans-serif;width:100%"></button></div><div style="display:flex;gap:8px;margin-top:4px"><button class="btn btn-p" style="flex:1" onclick="shareSession()">📤 Поделиться</button> <button class="btn btn-d" style="flex:1" onclick='globalMix?go("main"):goSubj()'>← Назад</button></div></div></div><script>const shuffle=o=>{const a=[...o];for(let o=a.length-1;o>0;o--){const e=0|Math.random()*(o+1);[a[o],a[e]]=[a[e],a[o]]}return a},pick=o=>o[0|Math.random()*o.length],range=(o,a)=>{const e=[];for(let n=o;n<=a;n++)e.push(n);return e},uniq=o=>o.filter((a,e)=>o.indexOf(a)===e),esc=o=>(o+"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"),sub=o=>(o+"").split("").map(o=>"₀₁₂₃₄₅₆₇₈₉"["0123456789".indexOf(o)]||o).join(""),sup=o=>(o+"").split("").map(o=>"⁰¹²³⁴⁵⁶⁷⁸⁹"["0123456789".indexOf(o)]||o).join("");function mkQ(o,a,e,n,t,h,i,s,r){let c=uniq(e);return c.length>4&&(c=c.slice(0,4)),{question:o,answer:a,options:shuffle(c),hint:n,tag:t,color:h,bg:i,code:s||null,isMath:!!r}}function fillW(o,a){let e=uniq([o,...a.map(o=>{try{return o()}catch{return"?"}})]),n=0;for(;e.length<4&&n<10;)a.forEach(o=>{try{const a=o();e.includes(a)||e.push(a)}catch{}}),n++;for(;e.length<4;)e.push(""+pick(range(0,50)));return e}function gcd(o,a){for(o=Math.abs(o),a=Math.abs(a);a;)[o,a]=[a,o%a];return o}function vibrate(o){try{navigator.vibrate&&navigator.vibrate(o)}catch{}}const _audioCtx=()=>(window._ac||(window._ac=new(window.AudioContext||window.webkitAudioContext)),window._ac);function playTone(o,a,e,n){try{const t=_audioCtx(),h=t.createOscillator(),i=t.createGain();h.connect(i),i.connect(t.destination),h.type=e||"sine",h.frequency.value=o,i.gain.value=n||.08,h.start(),i.gain.exponentialRampToValueAtTime(.001,t.currentTime+a),h.stop(t.currentTime+a)}catch{}}function sfxCorrect(){playTone(880,.1,"sine",.06),playTone(1320,.15,"sine",.04)}function sfxWrong(){playTone(220,.15,"square",.05),playTone(180,.2,"square",.04)}function sfxBadge(){playTone(523,.1),playTone(659,.1),playTone(784,.15),playTone(1047,.2)}function sfxRush(){playTone(440,.08),setTimeout(()=>playTone(660,.08),80),setTimeout(()=>playTone(880,.1),160)}function confetti(o){const a=["#fbbf24","#f87171","#34d399","#60a5fa","#a78bfa","#fb923c"];for(let e=0;e<(o||40);e++){const o=document.createElement("div");o.style.cssText=`position:fixed;top:-10px;left:${100*Math.random()}%;width:${6+6*Math.random()}px;height:${6+6*Math.random()}px;background:${a[e%a.length]};border-radius:${Math.random()>.5?"50%":"2px"};z-index:99999;pointer-events:none;opacity:0.9`,document.body.appendChild(o);const n=200*Math.random()-100,t=1.5+2*Math.random();o.animate([{transform:"translateY(0) translateX(0) rotate(0deg)",opacity:1},{transform:`translateY(${window.innerHeight+50}px) translateX(${n}px) rotate(${360+720*Math.random()}deg)`,opacity:0}],{duration:1e3*t,easing:"cubic-bezier(.25,.46,.45,.94)"}).onfinish=()=>o.remove()}}let PROG={};function loadProg(){try{const o=localStorage.getItem("trainer_progress");o&&(PROG=JSON.parse(o))}catch{PROG={}}}function saveProg(){try{localStorage.setItem("trainer_progress",JSON.stringify(PROG))}catch{}}function getTP(o,a){return PROG[o]&&PROG[o][a]?PROG[o][a]:{ok:0,err:0}}function addTP(o,a,e,n){PROG[o]||(PROG[o]={}),PROG[o][a]||(PROG[o][a]={ok:0,err:0}),PROG[o][a].ok+=e,PROG[o][a].err+=n,PROG[o][a].last=(new Date).toLocaleDateString("ru"),saveProg()}loadProg();const DAILY_TOTAL=100,DAILY_PCT=75,SHORTCUT_N=20;let DAILY={date:"",ok:0,err:0,pure:0,subjs:{}};function todayStr(){return(new Date).toISOString().slice(0,10)}function loadDaily(){try{const o=localStorage.getItem("trainer_daily");o&&(DAILY=JSON.parse(o),DAILY.pure||(DAILY.pure=0),DAILY.date!==todayStr()&&(DAILY={date:todayStr(),ok:0,err:0,pure:0,subjs:{}},saveDaily()))}catch{DAILY={date:todayStr(),ok:0,err:0,pure:0,subjs:{}}}}function saveDaily(){DAILY.date=todayStr();try{localStorage.setItem("trainer_daily",JSON.stringify(DAILY))}catch{}}function addDaily(o,a,e,n,t){DAILY.subjs[o]||(DAILY.subjs[o]={ok:0,err:0}),DAILY.subjs[o].ok+=a,DAILY.subjs[o].err+=e,DAILY.ok+=a,DAILY.err+=e,t&&(a&&!n&&(DAILY.pure+=1),e&&(DAILY.mixErr=(DAILY.mixErr||0)+1)),saveDaily(),STR.totalQs+=a+e,STR.totalOk+=a,saveStreak()}function dailyDone(){if(DAILY.pure>=20&&0===(DAILY.mixErr||0))return"shortcut";const o=DAILY.ok+DAILY.err;return o>=100&&o>0&&DAILY.ok/o>=.75&&"done"}loadDaily();const BADGES=[{id:"s3",icon:"🔥",name:"3 дня подряд",desc:"Серия 3 дня",check:o=>o.best>=3},{id:"s7",icon:"🔥",name:"Неделя!",desc:"Серия 7 дней",check:o=>o.best>=7},{id:"s14",icon:"🔥",name:"Две недели!",desc:"Серия 14 дней",check:o=>o.best>=14},{id:"s30",icon:"🔥",name:"Месяц!",desc:"Серия 30 дней",check:o=>o.best>=30},{id:"s60",icon:"🔥",name:"Два месяца!",desc:"Серия 60 дней",check:o=>o.best>=60},{id:"q100",icon:"📚",name:"Сотня",desc:"100 задач",check:o=>o.totalQs>=100},{id:"q500",icon:"📚",name:"Полтысячи",desc:"500 задач",check:o=>o.totalQs>=500},{id:"q1k",icon:"📚",name:"Тысяча!",desc:"1000 задач",check:o=>o.totalQs>=1e3},{id:"q2k",icon:"📚",name:"Две тысячи",desc:"2000 задач",check:o=>o.totalQs>=2e3},{id:"q5k",icon:"📚",name:"Пять тысяч!",desc:"5000 задач",check:o=>o.totalQs>=5e3},{id:"sc1",icon:"⚡",name:"Первый рывок",desc:"20/20 без ошибок",check:o=>o.shortcuts>=1},{id:"sc5",icon:"⚡",name:"5 рывков",desc:"Рывок 5 раз",check:o=>o.shortcuts>=5},{id:"sc10",icon:"⚡",name:"10 рывков",desc:"Рывок 10 раз",check:o=>o.shortcuts>=10},{id:"sc25",icon:"⚡",name:"25 рывков!",desc:"Рывок 25 раз",check:o=>o.shortcuts>=25},{id:"rep_rush",icon:"🎯",name:"Рывок",desc:"20/20 без ошибок",check:o=>o.shortcuts>=1,repeat:!0,count:o=>o.shortcuts},{id:"rep_norm",icon:"📅",name:"Дневная норма",desc:"Выполняй каждый день",check:o=>o.totalDone>=1,repeat:!0,count:o=>o.totalDone},{id:"rep_5",icon:"🏆",name:"Пятёрка",desc:"Оценка 5 на диагностике",check:o=>(o.diag5s||0)>=1,repeat:!0,count:o=>o.diag5s||0},{id:"rep_100",icon:"💯",name:"Безупречно",desc:"100% на диагностике",check:o=>(o.diagPerfect||0)>=1,repeat:!0,count:o=>o.diagPerfect||0},{id:"dg1",icon:"📝",name:"Первая диагностика",desc:"Пройди диагностику",check:o=>(o.diags||0)>=1},{id:"dg5",icon:"📝",name:"5 диагностик",desc:"Пройди 5 диагностик",check:o=>(o.diags||0)>=5},{id:"dg10",icon:"📝",name:"10 диагностик",desc:"Пройди 10 диагностик",check:o=>(o.diags||0)>=10},{id:"dg3s",icon:"🎓",name:"Отличник",desc:"Пятёрка по 3 предметам",check:o=>(o.diag5subjs||[]).length>=3},{id:"dg6s",icon:"🎓",name:"Эрудит",desc:"Пятёрка по 6 предметам",check:o=>(o.diag5subjs||[]).length>=6},{id:"dgAll",icon:"👑",name:"Мастер всех наук",desc:"Пятёрка по всем предметам",check:o=>(o.diag5subjs||[]).length>=14},{id:"first",icon:"🌟",name:"Первый день",desc:"Выполнил норму",check:o=>o.totalDone>=1},{id:"all6",icon:"🌈",name:"Все предметы",desc:"Все предметы за день",check:(o,a)=>{if(!a||!a.subjs)return!1;let e=0;return SUBJ.forEach(o=>{a.subjs[o.id]&&a.subjs[o.id].ok+a.subjs[o.id].err>0&&e++}),e>=SUBJ.length}}];let STR={current:0,best:0,lastDone:"",totalDone:0,totalQs:0,totalOk:0,shortcuts:0,badges:[],diags:0,diag5s:0,diagPerfect:0,diag5subjs:[]};function loadStreak(){try{const o=localStorage.getItem("trainer_streak");o&&(STR=JSON.parse(o)),STR.badges||(STR.badges=[]),STR.diags||(STR.diags=0),STR.diag5s||(STR.diag5s=0),STR.diagPerfect||(STR.diagPerfect=0),STR.diag5subjs||(STR.diag5subjs=[])}catch{}}function saveStreak(){try{localStorage.setItem("trainer_streak",JSON.stringify(STR))}catch{}}function completeDay(o){const a=todayStr();if(STR.lastDone===a)return;const e=new Date(Date.now()-864e5).toISOString().slice(0,10);STR.lastDone===e?STR.current++:(STR.lastDone,STR.current=1),STR.best=Math.max(STR.best,STR.current),STR.lastDone=a,STR.totalDone++,"shortcut"===o&&STR.shortcuts++,BADGES.forEach(o=>{!STR.badges.includes(o.id)&&o.check(STR,DAILY)&&STR.badges.push(o.id)}),saveStreak()}function checkBadges(){const o=STR.badges.length;BADGES.forEach(o=>{!STR.badges.includes(o.id)&&o.check(STR,DAILY)&&STR.badges.push(o.id)}),STR.badges.length>o&&(confetti(50),sfxBadge()),saveStreak()}loadStreak();
+
+const ALG_TH={
+deriv:`<h3>Производная</h3>
+<p><b>Производная</b> f'(x) — скорость изменения функции, тангенс угла касательной.</p>
+<p><b>Основные формулы:</b></p>
+<div class="fm">(C)' = 0
+(xⁿ)' = nxⁿ⁻¹
+(sin x)' = cos x
+(cos x)' = −sin x
+(eˣ)' = eˣ
+(ln x)' = 1/x</div>
+<p><b>Правила:</b></p>
+<div class="fm">(u+v)' = u' + v'
+(u·v)' = u'v + uv'
+(u/v)' = (u'v − uv')/v²
+(f(g))' = f'(g)·g' — цепное правило</div>
+<p>f'(x₀)=0 → точка экстремума. f'(x)&gt;0 → f возрастает.</p>`,
+
+integ:`<h3>Интеграл</h3>
+<p><b>Неопределённый:</b></p>
+<div class="fm">∫f(x)dx = F(x) + C, где F'(x) = f(x)</div>
+<p><b>Таблица:</b></p>
+<div class="fm">∫xⁿdx = xⁿ⁺¹/(n+1) + C
+∫1/x dx = ln|x| + C
+∫eˣdx = eˣ + C
+∫sin x dx = −cos x + C
+∫cos x dx = sin x + C</div>
+<p><b>Определённый</b> (Ньютон–Лейбниц):</p>
+<div class="fm">∫ᵃᵇ f(x)dx = F(b) − F(a)</div>
+<div class="ex">💡 Геометрический смысл: площадь криволинейной трапеции</div>`,
+
+logexp:`<h3>Логарифмы и экспонента</h3>
+<p><b>y = aˣ</b> (a&gt;0, a≠1): при a&gt;1 — возрастает; при 0&lt;a&lt;1 — убывает.</p>
+<p><b>Свойства логарифма:</b></p>
+<div class="fm">logₐ(mn) = logₐm + logₐn
+logₐ(m/n) = logₐm − logₐn
+logₐmⁿ = n·logₐm
+logₐa = 1;   logₐ1 = 0</div>
+<p>Уравнение: aˣ = b → x = logₐb</p>
+<p><b>Натуральный логарифм:</b> ln x = logₑx (e ≈ 2.718)</p>`,
+
+trieq:`<h3>Тригонометрические уравнения</h3>
+<div class="fm">sin x = a → x = (−1)ⁿ arcsin a + πn
+cos x = a → x = ±arccos a + 2πn
+tg x = a  → x = arctg a + πn</div>
+<p><b>Частные случаи:</b></p>
+<div class="fm">sin x = 0 → x = πn
+cos x = 0 → x = π/2 + πn
+sin x = 1 → x = π/2 + 2πn
+cos x = 1 → x = 2πn</div>
+<p><b>Формулы двойного угла:</b></p>
+<div class="fm">sin 2α = 2 sin α cos α
+cos 2α = cos²α − sin²α</div>`
+};
+
+const GEO_TH={
+poly:`<h3>Многогранники</h3>
+<div class="fm">V_призмы = S_осн · h
+V_пирамиды = ⅓ · S_осн · h
+Формула Эйлера: В − Р + Г = 2</div>
+<p><b>Куб:</b> 8 вершин, 12 рёбер, 6 граней.<br>
+<b>Тетраэдр:</b> 4 вершины, 6 рёбер, 4 грани.</p>`,
+
+rotat:`<h3>Тела вращения</h3>
+<div class="fm">Цилиндр: V = πr²h;  S_полн = 2πr(r+h)
+Конус:   V = ⅓πr²h; S_бок = πrl (l — образующая)
+Шар:     V = (4/3)πr³; S = 4πr²</div>
+<p>Образующая конуса: l = √(r²+h²)</p>`,
+
+coord3:`<h3>Координаты в пространстве</h3>
+<div class="fm">|AB| = √((x₂−x₁)²+(y₂−y₁)²+(z₂−z₁)²)
+Середина: M = ((x₁+x₂)/2; (y₁+y₂)/2; (z₁+z₂)/2)
+Скалярное произведение: ā·b̄ = x₁x₂+y₁y₂+z₁z₂
+Перпендикулярность: ā·b̄ = 0</div>`,
+
+angles:`<h3>Углы и перпендикулярность</h3>
+<p><b>Признак перп. прямой к плоскости:</b> прямая ⊥ двум пересекающимся прямым плоскости.</p>
+<p><b>Двугранный угол</b> измеряется линейным углом (перпендикулярно ребру).</p>
+<p><b>Угол между прямой и плоскостью</b> — угол между прямой и её проекцией.</p>
+<div class="ex">💡 Теорема о трёх перпендикулярах помогает находить угол между прямой и плоскостью</div>`
+};
+
+const PHY_TH={
+elfield:`<h3>Электростатика</h3>
+<div class="fm">Закон Кулона: F = k·q₁q₂/r²; k = 9·10⁹
+Напряжённость: E = F/q = kq/r² [В/м]
+Потенциал: φ = kq/r [В]
+Конденсатор: Q = CU; W = CU²/2
+Последовательно: 1/C = 1/C₁+1/C₂
+Параллельно: C = C₁+C₂</div>`,
+
+emwave:`<h3>ЭМ волны и колебания</h3>
+<div class="fm">Период контура: T = 2π√(LC) (формула Томсона)
+Длина волны: λ = c·T = c/f; c = 3·10⁸ м/с
+Переменный ток: I_эфф = I_макс/√2</div>
+<p>Спектр (частота↑): радио → микро → ИК → видимый → УФ → рентген → γ</p>`,
+
+optics:`<h3>Волновая оптика</h3>
+<p><b>Интерференция:</b></p>
+<div class="fm">Усиление: Δ = mλ
+Гашение: Δ = (2m+1)λ/2</div>
+<p><b>Дифракционная решётка:</b> d·sin φ = mλ</p>
+<p><b>Дисперсия</b> — зависимость n от λ → разложение в спектр.</p>`,
+
+quantum:`<h3>Квантовая и ядерная физика</h3>
+<div class="fm">Энергия фотона: E = hf; h = 6.63·10⁻³⁴ Дж·с
+Фотоэффект: hf = A_вых + mv²/2
+Период полураспада: N = N₀·(½)^(t/T½)</div>
+<p><b>Распады:</b> α → −2 протона, −4 нуклона; β⁻ → +1 протон, A=const; γ → только энергия.</p>`
+};
+
+const RUS_TH={
+punct:`<h3>Пунктуация. ЕГЭ-фокус</h3>
+<p><b>СПП:</b> перед придаточным всегда запятая.</p>
+<p><b>БСП:</b></p>
+<div class="fm">Запятая: перечисление
+Двоеточие: вторая часть — пояснение/причина
+Тире: следствие/противопоставление
+Точка с запятой: распространённые части</div>
+<p><b>Обособление:</b> деепричастный оборот — всегда; причастный — после определяемого слова; вводные слова — всегда.</p>`,
+
+nn:`<h3>Н и НН — ЕГЭ</h3>
+<ul><li>-ан-, -ян-, -ин- → Н: кожаный, серебряный</li>
+<li>Исключения → НН: стеклянный, оловянный, деревянный</li>
+<li>-онн-, -енн- → НН: революционный, торжественный</li>
+<li>Корень Н + суфф. Н → НН: туманный</li>
+<li>Причастие с приставкой → НН: сваренный</li>
+<li>Причастие без приставки + несов.вид → Н: жареная</li></ul>`,
+
+style:`<h3>Средства выразительности</h3>
+<p><b>Тропы:</b></p>
+<div class="fm">Метафора: скрытое сравнение («море смеётся»)
+Эпитет: образное определение («золотая осень»)
+Олицетворение: неодушевлённое = живое
+Гипербола: преувеличение; Литота: преуменьшение
+Сравнение: «быстрый, как ветер»
+Перифраза: «царь зверей» = лев</div>
+<p><b>Фигуры:</b> анафора, эпифора, антитеза, градация, инверсия, парцелляция.</p>`,
+
+orth:`<h3>Орфография. ЕГЭ-фокус</h3>
+<p><b>НЕ слитно:</b> без НЕ не употребляется; = синониму без НЕ.<br>
+<b>НЕ раздельно:</b> есть противопоставление; при причастии с зависимым словом.</p>
+<p><b>Корни с чередованием:</b></p>
+<div class="fm">КАС/КОС: А если суффикс -А-: касаться
+ЛАГ/ЛОЖ: Г перед -А-: слагать / Ж иначе: положить
+ГАР/ГОР: без ударения О: загорать
+ЗАР/ЗОР: без ударения А: заря</div>`
+};
+
+const HIS_TH={
+ussr2:`<h3>СССР после 1945</h3>
+<p><b>Холодная война (1947–1991):</b> противостояние СССР и США. НАТО vs ОВД (1955).</p>
+<p><b>Хрущёв (1953–1964):</b> осуждение культа Сталина (1956), спутник (1957), Гагарин (1961), Карибский кризис (1962).</p>
+<p><b>Брежнев (1964–1982):</b> «застой», Конституция 1977, Афганистан (1979).</p>
+<p><b>Горбачёв (1985–1991):</b> гласность, перестройка, падение Берлинской стены (1989).</p>
+<p><b>Распад СССР:</b> ГКЧП (август 1991) → Беловежские соглашения (8.12.1991).</p>`,
+
+russia90:`<h3>Россия в 1990–2000-е</h3>
+<p><b>1991–1999 — Ельцин:</b> «шоковая терапия», приватизация, Конституция 1993, чеченские войны, дефолт 1998.</p>
+<p><b>С 2000 — Путин:</b> стабилизация, рост нефтяных доходов, вертикаль власти.</p>
+<div class="fm">1993 — Конституция РФ (12 декабря)
+1998 — дефолт
+1999 — вторая чеченская война</div>`,
+
+world21:`<h3>Мир во второй половине XX–XXI в.</h3>
+<p><b>Деколонизация 1950–70-х:</b> независимость стран Азии и Африки.</p>
+<p><b>1989–1991:</b> «бархатные революции», объединение Германии (1990), распад СССР.</p>
+<p><b>11 сентября 2001:</b> теракты в США, война в Афганистане, в Ираке.</p>
+<p><b>Глобализация:</b> ЕС, ВТО, БРИКС (Бразилия, Россия, Индия, Китай, ЮАР).</p>`
+};
+
+const SOC_TH={
+politic:`<h3>Политология</h3>
+<div class="fm">Монархия: абсолютная / конституционная
+Республика: президентская / парламентская / смешанная
+Территория: унитарное / федерация / конфедерация
+Режимы: демократия / авторитаризм / тоталитаризм</div>
+<p>РФ — президентско-парламентская республика, федерация, 89 субъектов.</p>`,
+
+econ:`<h3>Экономика (углублённо)</h3>
+<div class="fm">Акция: доля в компании, дивиденды (непостоянный доход)
+Облигация: долговая бумага, купон (фиксированный доход)
+НДФЛ: 13%; НДС: 20%
+ВВП, инфляция, безработица — макропоказатели</div>
+<p><b>ЦБ</b> — монетарная политика (ставка, эмиссия).<br>
+<b>Правительство</b> — фискальная политика (налоги, бюджет).</p>`,
+
+law:`<h3>Право (углублённо)</h3>
+<div class="fm">Трудовой договор: срочный — до 5 лет
+Отпуск: минимум 28 календарных дней
+Брак: с 18 лет (с 16 — с разрешения)
+Имущество супругов: 50/50 по умолчанию</div>
+<p><b>Международное право:</b> субъекты — государства и ММПО (ООН, ВТО).</p>`
+};
+
+const INF_TH={
+numsys:`<h3>Системы счисления</h3>
+<div class="fm">Двоичная ↔ Десятичная: деление на 2 / степени двойки
+Двоичная ↔ Шестнадцатеричная: группы по 4 бита
+1111₂ = F₁₆ = 15₁₀;  FF₁₆ = 255₁₀
+2¹⁰ = 1024; 1 Кб = 1024 байт</div>`,
+
+logic:`<h3>Логика</h3>
+<div class="fm">НЕ, И(∧), ИЛИ(∨), →, XOR
+Де Морган: ¬(A∧B)=¬A∨¬B
+A∨¬A = 1; A∧¬A = 0
+n переменных → 2ⁿ строк таблицы истинности</div>`,
+
+algo:`<h3>Алгоритмы и Python</h3>
+<div class="fm">O(1) — константа; O(log n) — бинарный поиск
+O(n) — линейный поиск; O(n²) — пузырьковая
+O(n log n) — быстрая сортировка, слиянием</div>
+<p>Рекурсия — функция вызывает себя. Нужно базовое условие.</p>`,
+
+db:`<h3>Базы данных и сети</h3>
+<div class="fm">PRIMARY KEY: уникальный идентификатор строки
+SQL: SELECT поля FROM таблица WHERE условие
+JOIN: объединение таблиц
+IP (IPv4): 4 октета, 32 бита (192.168.1.1)
+DNS: доменное имя → IP-адрес
+HTTP/HTTPS: протокол передачи веб-страниц</div>`
+};
+
+
+
+function genDeriv(){
+  const r=Math.random();
+  if(r<0.3){
+    // Basic derivatives
+    const rules=[
+      {q:'(x⁵)\'',a:'5x⁴',o:['5x⁴','5x⁵','x⁴','4x⁵'],h:'(xⁿ)\'=nxⁿ⁻¹'},
+      {q:'(3x²)\'',a:'6x',o:['6x','6x²','3x','2x'],h:'(3x²)\'=3·2x=6x'},
+      {q:'(sin x)\'',a:'cos x',o:['cos x','−cos x','sin x','−sin x'],h:'(sin x)\'=cos x — запомни!'},
+      {q:'(cos x)\'',a:'−sin x',o:['−sin x','sin x','cos x','−cos x'],h:'(cos x)\'=−sin x'},
+      {q:'(eˣ)\'',a:'eˣ',o:['eˣ','xeˣ','eˣ⁻¹','1/x'],h:'Экспонента — производная сама себя'},
+      {q:'(ln x)\'',a:'1/x',o:['1/x','ln x','x','1/ln x'],h:'(ln x)\'=1/x при x>0'},
+      {q:'(7)\'',a:'0',o:['0','7','1','7x'],h:'Производная константы = 0'},
+      {q:'(x)\'',a:'1',o:['1','0','x','2x'],h:'(x¹)\'=1·x⁰=1'},
+      {q:'(x³+2x)\'',a:'3x²+2',o:['3x²+2','3x²','x²+2','3x³+2'],h:'Дифференцируем слагаемые'},
+      {q:'(x²−5x+3)\'',a:'2x−5',o:['2x−5','2x+5','x−5','2x'],h:'Слагаемые по очереди'},
+    ];
+    const q=pick(rules);
+    return mkQ(q.q,q.a,shuffle(q.o),q.h,`Производная`,`#dc2626`,`#fee2e2`,null,true);
+  } else if(r<0.55){
+    // Apply to find extrema or monotonicity
+    const cases=[
+      {q:'f(x)=x²−4x+3. f\'(x)=0 при x=?',a:'2',o:['2','-2','4','0'],h:'f\'=2x−4=0 → x=2'},
+      {q:'f(x)=−x²+6x. Максимум при x=?',a:'3',o:['3','-3','6','0'],h:'f\'=−2x+6=0 → x=3 (ветви вниз → максимум)'},
+      {q:'f(x)=x³−3x. f\'(x)=?',a:'3x²−3',o:['3x²−3','3x²','x²−3','3x³'],h:'(x³)\'=3x², (3x)\'=3'},
+      {q:'f\'(x)>0 означает, что f:',a:'Возрастает',o:['Возрастает','Убывает','Имеет минимум','Равна нулю'],h:'Положительная производная → функция возрастает'},
+      {q:'Касательная к y=x² в точке x=1: y=?',a:'2x−1',o:['2x−1','x+1','2x','x−1'],h:'f\'(1)=2, f(1)=1, y−1=2(x−1) → y=2x−1'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Производная`,`#dc2626`,`#fee2e2`,null,true);
+  } else {
+    // Product/chain rule
+    const rules2=[
+      {q:'(u·v)\'=?',a:'u\'v+uv\'',o:['u\'v+uv\'','u\'v\'','u\'+v\'','u\'v−uv\''],h:'Правило произведения'},
+      {q:'(u/v)\'=?',a:'(u\'v−uv\')/v²',o:['(u\'v−uv\')/v²','u\'/v\'','(u\'v+uv\')/v²','u\'v/v'],h:'Правило частного'},
+      {q:'(f(g(x)))\'=?',a:'f\'(g)·g\'',o:['f\'(g)·g\'','f\'·g\'','f\'(g)','f(g\')+g'],h:'Цепное правило'},
+      {q:'(sin(3x))\'=?',a:'3cos(3x)',o:['3cos(3x)','cos(3x)','3cos x','−3cos(3x)'],h:'Цепное: (sin u)\'=cos u · u\', u\'=3'},
+      {q:'(e²ˣ)\'=?',a:'2e²ˣ',o:['2e²ˣ','e²ˣ','2xe²ˣ','e^(2x-1)'],h:'Цепное: (eᵘ)\'=eᵘ·u\', u\'=2'},
+    ];
+    const q=pick(rules2);
+    return mkQ(q.q,q.a,shuffle(q.o),q.h,`Производная`,`#dc2626`,`#fee2e2`,null,true);
+  }
+}
+
+function genInteg(){
+  const r=Math.random();
+  if(r<0.35){
+    // Indefinite integral
+    const integrals=[
+      {q:'∫x³dx',a:'x⁴/4+C',o:['x⁴/4+C','x⁴+C','3x²+C','x⁴/3+C'],h:'∫xⁿdx=xⁿ⁺¹/(n+1)+C'},
+      {q:'∫2x dx',a:'x²+C',o:['x²+C','2x²+C','x+C','2+C'],h:'∫2x dx=2·x²/2+C=x²+C'},
+      {q:'∫cos x dx',a:'sin x+C',o:['sin x+C','−sin x+C','cos x+C','−cos x+C'],h:'∫cos x dx=sin x+C'},
+      {q:'∫sin x dx',a:'−cos x+C',o:['−cos x+C','cos x+C','sin x+C','−sin x+C'],h:'∫sin x dx=−cos x+C'},
+      {q:'∫eˣdx',a:'eˣ+C',o:['eˣ+C','eˣ⁺¹+C','xeˣ+C','1/eˣ+C'],h:'∫eˣdx=eˣ+C'},
+      {q:'∫(1/x)dx',a:'ln|x|+C',o:['ln|x|+C','1/x²+C','ln x+C','x⁻²+C'],h:'∫(1/x)dx=ln|x|+C'},
+      {q:'∫5dx',a:'5x+C',o:['5x+C','5+C','0+C','5x²+C'],h:'∫С dx=Cx+C₀'},
+      {q:'∫(x²+3)dx',a:'x³/3+3x+C',o:['x³/3+3x+C','x³+3x+C','x²+3+C','2x+C'],h:'Интегрируем каждое слагаемое'},
+    ];
+    const q=pick(integrals);
+    return mkQ(q.q,q.a,shuffle(q.o),q.h,`Интеграл`,`#7c3aed`,`#ede9fe`,null,true);
+  } else if(r<0.65){
+    // Definite integral — Newton-Leibniz
+    const cases=[
+      {q:'∫₀¹ 2x dx',a:'1',o:['1','2','0.5','4'],h:'F=x², F(1)−F(0)=1'},
+      {q:'∫₀² x² dx',a:'8/3',o:['8/3','4','8','2'],h:'F=x³/3, F(2)−F(0)=8/3'},
+      {q:'∫₁² (2x+1)dx',a:'4',o:['4','6','3','8'],h:'F=x²+x, (4+2)−(1+1)=4'},
+      {q:'∫₀^π sin x dx',a:'2',o:['2','0','1','π'],h:'F=−cos x, −cos π+cos 0=1+1=2'},
+      {q:'∫₀¹ eˣdx',a:'e−1',o:['e−1','e','1','e+1'],h:'F=eˣ, e¹−e⁰=e−1'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Интеграл`,`#7c3aed`,`#ede9fe`,null,true);
+  } else {
+    const facts=[
+      {q:'Геометрический смысл определённого интеграла:',a:'Площадь криволинейной трапеции',o:['Площадь криволинейной трапеции','Объём тела','Длина дуги','Скорость'],h:'∫ᵃᵇ f(x)dx = площадь между графиком и осью Ox'},
+      {q:'Первообразная F(x) функции f(x) означает:',a:'F\'(x) = f(x)',o:['F\'(x)=f(x)','F(x)=f\'(x)','F=∫f','∫F=f'],h:'Первообразная — «антипроизводная»'},
+      {q:'Почему добавляем +C при неопределённом интеграле?',a:'Производная константы = 0',o:['Производная константы = 0','Чтобы было решение','Всегда так принято','Формула Ньютона'],h:'(F(x)+C)\'=f(x)+0=f(x) — значит, любая константа подходит'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Интеграл`,`#7c3aed`,`#ede9fe`);
+  }
+}
+
+function genLogExp(){
+  const r=Math.random();
+  if(r<0.3){
+    // Log properties
+    const rules=[
+      {q:'log₂8 = ?',a:'3',o:['3','8','4','2'],h:'2³=8'},
+      {q:'log₃27 = ?',a:'3',o:['3','27','9','2'],h:'3³=27'},
+      {q:'log₁₀1000 = ?',a:'3',o:['3','4','2','1000'],h:'10³=1000'},
+      {q:'log₂(4·8) = ?',a:'5',o:['5','6','32','3'],h:'log₂4+log₂8=2+3=5'},
+      {q:'log₃9 = ?',a:'2',o:['2','3','9','4'],h:'3²=9'},
+      {q:'log₅125 = ?',a:'3',o:['3','5','25','4'],h:'5³=125'},
+      {q:'logₐa = ?',a:'1',o:['1','0','a','1/a'],h:'logₐa=1 (по определению)'},
+      {q:'logₐ1 = ?',a:'0',o:['0','1','a','−1'],h:'a⁰=1, значит logₐ1=0'},
+      {q:'log₂(16/4) = ?',a:'2',o:['2','4','6','12'],h:'log₂16−log₂4=4−2=2'},
+      {q:'2·log₅5 = ?',a:'2',o:['2','5','1','10'],h:'log₅5=1 → 2·1=2'},
+    ];
+    const q=pick(rules);
+    return mkQ(q.q,q.a,shuffle(q.o),q.h,`Логарифмы и экспонента`,`#ea580c`,`#fff7ed`,null,true);
+  } else if(r<0.55){
+    // Solve exponential equation
+    const cases=[
+      {q:'2ˣ = 8',a:'x = 3',o:['x=3','x=4','x=8','x=2'],h:'2³=8'},
+      {q:'3ˣ = 81',a:'x = 4',o:['x=4','x=3','x=27','x=2'],h:'3⁴=81'},
+      {q:'5ˣ = 1',a:'x = 0',o:['x=0','x=1','x=5','x=−1'],h:'a⁰=1 для любого a≠0'},
+      {q:'2ˣ = 1/4',a:'x = −2',o:['x=−2','x=2','x=−4','x=4'],h:'2⁻²=1/4'},
+      {q:'10ˣ = 1000',a:'x = 3',o:['x=3','x=4','x=100','x=2'],h:'10³=1000'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Логарифмы и экспонента`,`#ea580c`,`#fff7ed`,null,true);
+  } else {
+    const facts=[
+      {q:'y=2ˣ при x→+∞:',a:'→+∞',o:['→+∞','→0','→1','→−∞'],h:'Экспоненциальный рост'},
+      {q:'y=log₂x: область допустимых значений:',a:'x>0',o:['x>0','x≥0','x∈ℝ','x≠0'],h:'Логарифм определён только для положительных аргументов'},
+      {q:'ln e = ?',a:'1',o:['1','e','0','1/e'],h:'ln e = logₑe = 1'},
+      {q:'Показательная функция y=aˣ при a>1:',a:'Возрастает',o:['Возрастает','Убывает','Постоянна','Убывает при x<0'],h:'a>1 → функция возрастает на всей области'},
+      {q:'log₂(x²) = 2·log₂|x| — это:',a:'Свойство логарифма степени',o:['Свойство логарифма степени','Формула смены основания','Основное тождество','Свойство суммы'],h:'logₐmⁿ = n·logₐm'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Логарифмы и экспонента`,`#ea580c`,`#fff7ed`);
+  }
+}
+
+function genTriEq(){
+  const r=Math.random();
+  if(r<0.35){
+    // Simple trig equations
+    const cases=[
+      {q:'sin x = 0',a:'x = πn',o:['x=πn','x=π/2+πn','x=2πn','x=0'],h:'sin x=0 при x=0,π,2π,... → x=πn'},
+      {q:'cos x = 0',a:'x = π/2+πn',o:['x=π/2+πn','x=πn','x=2πn','x=±π/2'],h:'cos x=0 при x=π/2, 3π/2,... → x=π/2+πn'},
+      {q:'sin x = 1',a:'x = π/2+2πn',o:['x=π/2+2πn','x=π+2πn','x=2πn','x=π/2+πn'],h:'sin(π/2)=1 → x=π/2+2πn'},
+      {q:'cos x = 1',a:'x = 2πn',o:['x=2πn','x=πn','x=0','x=π+2πn'],h:'cos(0)=1 → x=0+2πn=2πn'},
+      {q:'cos x = −1',a:'x = π+2πn',o:['x=π+2πn','x=πn','x=−1+2πn','x=2πn−π'],h:'cos(π)=−1 → x=π+2πn'},
+      {q:'tg x = 0',a:'x = πn',o:['x=πn','x=π/2+πn','x=2πn','x=0'],h:'tg x=sin x/cos x=0 → sin x=0 → x=πn'},
+      {q:'sin x = sin(π/6): ОДЗ-решение на [0;2π]?',a:'x=π/6 и x=5π/6',o:['x=π/6 и x=5π/6','x=π/6 только','x=5π/6 только','x=π/3'],h:'sin симметричен: π−π/6=5π/6'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Тригонометрические уравнения`,`#0d9488`,`#ccfbf1`,null,true);
+  } else if(r<0.6){
+    // Identities
+    const ids=[
+      {q:'sin²x+cos²x = ?',a:'1',o:['1','0','2','sin 2x'],h:'Основное тригонометрическое тождество'},
+      {q:'sin 2x = ?',a:'2 sin x cos x',o:['2 sin x cos x','sin x cos x','2sin²x','cos²x−sin²x'],h:'Формула двойного угла для синуса'},
+      {q:'cos 2x = ?',a:'cos²x−sin²x',o:['cos²x−sin²x','2 sin x cos x','1−cos²x','2cos²x'],h:'Формула двойного угла для косинуса'},
+      {q:'1−cos 2x = ?',a:'2sin²x',o:['2sin²x','sin²x','2cos²x','1−sin 2x'],h:'cos 2x=1−2sin²x → 1−cos 2x=2sin²x'},
+      {q:'tg x = ?',a:'sin x/cos x',o:['sin x/cos x','cos x/sin x','sin x·cos x','1/sin x'],h:'По определению tg x = sin x / cos x'},
+    ];
+    const id=pick(ids);
+    return mkQ(id.q,id.a,shuffle(id.o),id.h,`Тригонометрические уравнения`,`#0d9488`,`#ccfbf1`,null,true);
+  } else {
+    const facts=[
+      {q:'Период функции y=sin x:',a:'2π',o:['2π','π','π/2','4π'],h:'sin(x+2π)=sin x'},
+      {q:'Период функции y=cos 2x:',a:'π',o:['π','2π','π/2','4π'],h:'Период cos kx = 2π/k = 2π/2 = π'},
+      {q:'Множество значений sin x:',a:'[−1; 1]',o:['[−1; 1]','[0; 1]','(−∞;+∞)','[0;+∞)'],h:'Синус всегда от −1 до 1'},
+      {q:'arcsin(1/2) = ?',a:'π/6',o:['π/6','π/3','π/4','π/2'],h:'sin(π/6)=1/2'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Тригонометрические уравнения`,`#0d9488`,`#ccfbf1`);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// ГЕНЕРАТОРЫ — ГЕОМЕТРИЯ 11
+// ═══════════════════════════════════════════════════════
+
+function genPoly(){
+  const r=Math.random();
+  if(r<0.35){
+    // Volume of prism/pyramid
+    const S=pick([4,6,8,9,12,16]);
+    const h=pick([3,4,5,6,8,10]);
+    const isPyramid=Math.random()<0.5;
+    const V=isPyramid?Math.round(S*h/3*100)/100:S*h;
+    const name=isPyramid?'пирамида':'призма';
+    return mkQ(`${name[0].toUpperCase()+name.slice(1)}: S_осн=${S}, h=${h}. V=?`,`${V}`,shuffle([`${V}`,`${V*2}`,`${V*3}`,`${S+h}`]),isPyramid?`V=⅓·S·h=⅓·${S}·${h}=${V}`:`V=S·h=${S}·${h}=${V}`,`Многогранники`,`#dc2626`,`#fee2e2`,null,true);
+  } else if(r<0.6){
+    // Euler formula
+    const shapes=[
+      {n:'Куб',V:8,E:12,F:6},
+      {n:'Тетраэдр',V:4,E:6,F:4},
+      {n:'Октаэдр',V:6,E:12,F:8},
+      {n:'Правильная треугольная призма',V:6,E:9,F:5},
+      {n:'Правильная четырёхугольная пирамида',V:5,E:8,F:5},
+    ];
+    const s=pick(shapes);
+    const ask=pick(['V','E','F']);
+    const vals={V:s.V,E:s.E,F:s.F};
+    const names={V:'вершин',E:'рёбер',F:'граней'};
+    const correct=String(vals[ask]);
+    const wrong=[vals[ask]+1,vals[ask]-1,vals[ask]+2].map(String);
+    return mkQ(`${s.n}: количество ${names[ask]}?`,correct,shuffle([correct,...wrong]),`В−Р+Г=2: ${s.V}−${s.E}+${s.F}=2 ✓`,`Многогранники`,`#dc2626`,`#fee2e2`,null,true);
+  } else {
+    const facts=[
+      {q:'Формула объёма пирамиды:',a:'V=⅓·S·h',o:['V=⅓·S·h','V=S·h','V=⅔·S·h','V=S·h/2'],h:'Пирамида в 3 раза меньше призмы с тем же основанием и высотой'},
+      {q:'Формула Эйлера для многогранника:',a:'В−Р+Г=2',o:['В−Р+Г=2','В+Р+Г=2','В−Р−Г=2','В+Р−Г=0'],h:'Эйлер: вершины − рёбра + грани = 2'},
+      {q:'Куб: вершины, рёбра, грани:',a:'8, 12, 6',o:['8, 12, 6','6, 12, 8','4, 6, 4','8, 6, 12'],h:'8 вершин, 12 рёбер, 6 граней'},
+      {q:'Правильный тетраэдр: все грани — это:',a:'Равносторонние треугольники',o:['Равносторонние треугольники','Квадраты','Ромбы','Прямоугольники'],h:'Правильный тетраэдр = 4 равносторонних треугольника'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Многогранники`,`#dc2626`,`#fee2e2`);
+  }
+}
+
+function genRotat(){
+  const r=Math.random();
+  if(r<0.4){
+    // Cylinder/cone/sphere volume
+    const rad=pick([2,3,4,5]);
+    const h=pick([3,4,5,6,8,10]);
+    const shape=pick(['cylinder','cone','sphere']);
+    if(shape==='cylinder'){
+      return mkQ(`Цилиндр r=${rad}, h=${h}. V (через π)?`,`${rad*rad*h}π`,shuffle([`${rad*rad*h}π`,`${2*rad*h}π`,`${rad*h}π`,`${rad*rad*h*2}π`]),`V=πr²h=π·${rad}²·${h}=${rad*rad*h}π`,`Тела вращения`,`#ea580c`,`#fff7ed`,null,true);
+    } else if(shape==='cone'){
+      const V=Math.round(rad*rad*h/3*10)/10;
+      return mkQ(`Конус r=${rad}, h=${h}. V (через π)?`,`${V}π`,shuffle([`${V}π`,`${rad*rad*h}π`,`${V*2}π`,`${V/2}π`]),`V=⅓πr²h=⅓π·${rad}²·${h}=${V}π`,`Тела вращения`,`#ea580c`,`#fff7ed`,null,true);
+    } else {
+      const V=Math.round(4/3*rad*rad*rad*10)/10;
+      return mkQ(`Шар r=${rad}. V (через π)?`,`${V}π`,shuffle([`${V}π`,`${4*rad*rad}π`,`${rad*rad*rad}π`,`${V/2}π`]),`V=4πr³/3=4π·${rad}³/3=${V}π`,`Тела вращения`,`#ea580c`,`#fff7ed`,null,true);
+    }
+  } else if(r<0.7){
+    // Surface area
+    const rad=pick([2,3,4,5]);
+    const h=pick([4,5,6,8]);
+    const l=Math.round(Math.sqrt(rad*rad+h*h)*10)/10;
+    const shape=pick(['cylinder_full','sphere','cone_lat']);
+    if(shape==='sphere') return mkQ(`Сфера r=${rad}. S (через π)?`,`${4*rad*rad}π`,shuffle([`${4*rad*rad}π`,`${2*rad*rad}π`,`${rad*rad}π`,`${3*rad*rad}π`]),`S=4πr²=4π·${rad}²=${4*rad*rad}π`,`Тела вращения`,`#ea580c`,`#fff7ed`,null,true);
+    if(shape==='cylinder_full') return mkQ(`Цилиндр r=${rad}, h=${h}. Полная поверхность (через π)?`,`${2*rad*(rad+h)}π`,shuffle([`${2*rad*(rad+h)}π`,`${2*rad*h}π`,`${rad*(rad+h)}π`,`${4*rad*(rad+h)}π`]),`S=2πr(r+h)=2π·${rad}·${rad+h}=${2*rad*(rad+h)}π`,`Тела вращения`,`#ea580c`,`#fff7ed`,null,true);
+    return mkQ(`Конус r=${rad}, образующая l=${l}. S_бок (через π)?`,`${Math.round(rad*l*10)/10}π`,shuffle([`${Math.round(rad*l*10)/10}π`,`${rad*rad}π`,`${Math.round(rad*l*2*10)/10}π`,`${h*rad}π`]),`S_бок=πrl=π·${rad}·${l}=${Math.round(rad*l*10)/10}π`,`Тела вращения`,`#ea580c`,`#fff7ed`,null,true);
+  } else {
+    const facts=[
+      {q:'Формула объёма конуса:',a:'⅓πr²h',o:['⅓πr²h','πr²h','⅔πr²h','πrh'],h:'Конус = ⅓ цилиндра с тем же основанием и высотой'},
+      {q:'Формула площади поверхности шара:',a:'4πr²',o:['4πr²','πr²','2πr²','πr³'],h:'S_сферы = 4πr²'},
+      {q:'Цилиндр: боковая поверхность — это:',a:'Прямоугольник (2πr × h)',o:['Прямоугольник (2πr × h)','Круг','Трапеция','Параллелограмм'],h:'При развёртке: прямоугольник шириной 2πr и высотой h'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Тела вращения`,`#ea580c`,`#fff7ed`);
+  }
+}
+
+function genCoord3(){
+  const r=Math.random();
+  if(r<0.4){
+    // Distance in 3D
+    const x1=pick([0,1,2]);const y1=pick([0,1,2]);const z1=pick([0,0,0]);
+    const dx=pick([1,2,3,4]);const dy=pick([0,1,2,3]);const dz=pick([0,0,2,3]);
+    const x2=x1+dx;const y2=y1+dy;const z2=z1+dz;
+    const d=Math.round(Math.sqrt(dx*dx+dy*dy+dz*dz)*100)/100;
+    return mkQ(`A(${x1};${y1};${z1}), B(${x2};${y2};${z2}). |AB|=?`,`${d}`,shuffle([`${d}`,`${dx+dy+dz}`,`${d+1}`,`${Math.round(d*d*10)/10}`]),`|AB|=√(${dx}²+${dy}²+${dz}²)=√${dx*dx+dy*dy+dz*dz}=${d}`,`Координаты в пространстве`,`#2563eb`,`#dbeafe`,null,true);
+  } else if(r<0.65){
+    // Scalar product = 0 means perpendicular
+    const cases=[
+      {q:'ā=(1;2;0), b̄=(2;−1;0). ā·b̄=?',a:'0',o:['0','3','5','−1'],h:'1·2+2·(−1)+0=2−2=0 → перпендикулярны'},
+      {q:'ā=(3;0;4). |ā|=?',a:'5',o:['5','7','12','25'],h:'√(9+0+16)=√25=5'},
+      {q:'ā=(1;1;1). |ā|=?',a:'√3',o:['√3','3','1','√2'],h:'√(1+1+1)=√3'},
+      {q:'ā=(2;−2;1). |ā|=?',a:'3',o:['3','5','1','9'],h:'√(4+4+1)=√9=3'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Координаты в пространстве`,`#2563eb`,`#dbeafe`,null,true);
+  } else {
+    const facts=[
+      {q:'Два вектора перпендикулярны, если их скалярное произведение:',a:'Равно 0',o:['Равно 0','Равно 1','Максимально','Отрицательно'],h:'ā⊥b̄ ⟺ ā·b̄=|ā||b̄|cos90°=0'},
+      {q:'Уравнение плоскости общего вида:',a:'Ax+By+Cz+D=0',o:['Ax+By+Cz+D=0','y=kx+b','r=r₀+t·a','Ax+By=C'],h:'Нормальный вектор плоскости: n=(A;B;C)'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Координаты в пространстве`,`#2563eb`,`#dbeafe`);
+  }
+}
+
+function genAngles(){
+  const facts=[
+    {q:'Признак перпендикулярности прямой к плоскости:',a:'Прямая ⊥ двум пересекающимся прямым плоскости',o:['Прямая ⊥ двум пересекающимся прямым плоскости','Прямая ⊥ одной прямой плоскости','Прямая параллельна нормали','Прямая лежит в плоскости'],h:'Если ⊥ двум пересекающимся прямым — то ⊥ всей плоскости'},
+    {q:'Двугранный угол измеряется через:',a:'Линейный угол (⊥ ребру)',o:['Линейный угол (⊥ ребру)','Центральный угол','Вписанный угол','Угол наклона'],h:'Линейный угол — угол в сечении, перпендикулярном ребру двугранного угла'},
+    {q:'Угол между прямой и плоскостью — это угол между прямой и:',a:'Её проекцией на плоскость',o:['Её проекцией на плоскость','Нормалью к плоскости','Любой прямой плоскости','Перпендикуляром к прямой'],h:'Проекция прямой на плоскость — основание угла'},
+    {q:'Теорема о трёх перпендикулярах помогает:',a:'Находить угол между прямой и плоскостью',o:['Находить угол между прямой и плоскостью','Вычислять объёмы','Строить параллелепипед','Доказывать формулу Эйлера'],h:'Связывает проекцию наклонной и перпендикуляр к проекции'},
+    {q:'Скрещивающиеся прямые — это:',a:'Не параллельные и не пересекающиеся',o:['Не параллельные и не пересекающиеся','Параллельные прямые','Перпендикулярные прямые','Совпадающие прямые'],h:'Скрещивающиеся — в разных плоскостях, не пересекаются'},
+    {q:'Угол между скрещивающимися прямыми:',a:'Угол между параллельными им прямыми через одну точку',o:['Угол между параллельными им прямыми через одну точку','Прямой угол','0°','Не определён'],h:'Переносим прямые в одну точку — угол сохраняется'},
+  ];
+  const f=pick(facts);
+  return mkQ(f.q,f.a,shuffle(f.o),f.h,`Углы и перпендикулярность`,`#0d9488`,`#ccfbf1`);
+}
+
+// ═══════════════════════════════════════════════════════
+// ГЕНЕРАТОРЫ — ФИЗИКА 11
+// ═══════════════════════════════════════════════════════
+
+function genElField(){
+  const r=Math.random();
+  if(r<0.35){
+    // Coulomb's law
+    const k=9e9;
+    const cases=[
+      {q:'Заряды q₁=q₂=10⁻⁶ Кл, r=0.1 м. F≈?',a:'0.9 Н',o:['0.9 Н','9 Н','0.09 Н','9·10⁻³ Н'],h:'F=k·q²/r²=9·10⁹·10⁻¹²/10⁻²=0.9 Н'},
+      {q:'F=Kq₁q₂/r². При r×2: F изменится как?',a:'Уменьшится в 4 раза',o:['Уменьшится в 4 раза','Уменьшится в 2 раза','Увеличится в 4 раза','Не изменится'],h:'F~1/r² → r×2 → F÷4'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Электростатика`,`#dc2626`,`#fee2e2`,null,true);
+  } else if(r<0.6){
+    // Capacitor
+    const C=pick([2,4,5,10]);
+    const U=pick([10,20,50,100]);
+    const Q=C*U;
+    const W=Math.round(C*U*U/2);
+    const askW=Math.random()<0.5;
+    if(askW) return mkQ(`C=${C} мкФ, U=${U} В. Энергия W=?`,`${W} мкДж`,shuffle([`${W} мкДж`,`${Q} мкДж`,`${W*2} мкДж`,`${C*U} мкДж`]),`W=CU²/2=${C}·${U}²/2=${W}`,`Электростатика`,`#dc2626`,`#fee2e2`,null,true);
+    return mkQ(`C=${C} мкФ, U=${U} В. Заряд Q=?`,`${Q} мкКл`,shuffle([`${Q} мкКл`,`${W} мкКл`,`${C+U} мкКл`,`${Q/2} мкКл`]),`Q=CU=${C}·${U}=${Q}`,`Электростатика`,`#dc2626`,`#fee2e2`,null,true);
+  } else {
+    const facts=[
+      {q:'Напряжённость электрического поля — это:',a:'Сила, действующая на единичный заряд',o:['Сила, действующая на единичный заряд','Работа по перемещению заряда','Потенциал поля','Заряд конденсатора'],h:'E=F/q [В/м]'},
+      {q:'Потенциал электрического поля — это:',a:'Работа по перемещению заряда из точки в бесконечность',o:['Работа по перемещению заряда из точки в бесконечность','Сила на заряд','Напряжённость','Ёмкость'],h:'φ=kq/r [В]'},
+      {q:'Конденсаторы параллельно: C_общ=?',a:'C₁+C₂',o:['C₁+C₂','1/C₁+1/C₂','C₁·C₂','C₁/C₂'],h:'Параллельно: C=C₁+C₂; последовательно: 1/C=1/C₁+1/C₂'},
+      {q:'Закон Кулона открыт:',a:'Шарлем Кулоном (1785)',o:['Шарлем Кулоном (1785)','Ньютоном (1687)','Максвеллом (1865)','Фарадеем (1831)'],h:'Кулон установил закон взаимодействия зарядов в 1785 г.'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Электростатика`,`#dc2626`,`#fee2e2`);
+  }
+}
+
+function genEMWave(){
+  const r=Math.random();
+  if(r<0.35){
+    // LC circuit period
+    const cases=[
+      {q:'L=0.1 Гн, C=10⁻⁴ Ф. T=2π·?',a:'√(LC)=√(10⁻⁵) с',o:['√(LC)=√(10⁻⁵) с','LC','√(L/C)','2π/LC'],h:'T=2π√(LC) — формула Томсона'},
+      {q:'При увеличении ёмкости C контура в 4 раза период T:',a:'Увеличится в 2 раза',o:['Увеличится в 2 раза','Увеличится в 4 раза','Уменьшится в 2 раза','Не изменится'],h:'T=2π√(LC), T~√C → C×4, T×2'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`ЭМ волны`,`#2563eb`,`#dbeafe`,null,true);
+  } else if(r<0.6){
+    // Wavelength
+    const f=pick([100e6,1e9,500e12,1e15]);
+    const fLabel={100e6:'100 МГц',1e9:'1 ГГц',500e12:'500 ТГц',1e15:'10¹⁵ Гц'}[f];
+    const lam=3e8/f;
+    const lamLabel=lam>=1?`${lam} м`:lam>=0.001?`${lam*100} см`:lam>=1e-6?`${Math.round(lam*1e9)} нм`:`${lam} м`;
+    const wrongs=[lamLabel.replace(/\d+/,m=>String(parseInt(m)+1)),lamLabel.replace(/\d+/,m=>String(parseInt(m)*2))];
+    return mkQ(`f=${fLabel}, c=3·10⁸ м/с. λ=c/f=?`,lamLabel,shuffle([lamLabel,...wrongs,'∞']),`λ=c/f=3·10⁸/${fLabel}`,`ЭМ волны`,`#2563eb`,`#dbeafe`,null,true);
+  } else {
+    const facts=[
+      {q:'Переменный ток: I_эфф = ?',a:'I_макс/√2',o:['I_макс/√2','I_макс','I_макс·√2','I_макс/2'],h:'Действующее (эффективное) значение тока'},
+      {q:'Электромагнитная волна — поперечная. Это значит:',a:'Колебания E и B ⊥ направлению распространения',o:['Колебания E и B ⊥ направлению распространения','Волна движется поперёк','Нет скорости','Нужна среда'],h:'В ЭМ волне E⊥B⊥v'},
+      {q:'Видимый свет в спектре ЭМ волн:',a:'Между УФ и ИК',o:['Между УФ и ИК','Больше рентгена','Меньше радиоволн','Равен микроволнам'],h:'Спектр: радио → микро → ИК → видимый → УФ → рентген → γ'},
+      {q:'Электромагнитная волна распространяется в вакууме со скоростью:',a:'3·10⁸ м/с',o:['3·10⁸ м/с','340 м/с','∞','0'],h:'c=3·10⁸ м/с = скорость света'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`ЭМ волны`,`#2563eb`,`#dbeafe`);
+  }
+}
+
+function genOptics11(){
+  const facts=[
+    {q:'Условие максимума интерференции:',a:'Δ = mλ',o:['Δ = mλ','Δ = (2m+1)λ/2','Δ = λ/2','Δ = 0 только'],h:'Оптическая разность хода = целому числу длин волн → усиление'},
+    {q:'Условие минимума интерференции:',a:'Δ = (2m+1)λ/2',o:['Δ = (2m+1)λ/2','Δ = mλ','Δ = λ','Δ = 2mλ'],h:'Разность хода = полуцелому числу → гашение'},
+    {q:'Дифракционная решётка: d·sin φ = mλ. d — это:',a:'Период решётки',o:['Период решётки','Длина волны','Угол','Порядок'],h:'d — расстояние между соседними щелями (период)'},
+    {q:'Дисперсия света — это:',a:'Зависимость показателя преломления от длоины волны',o:['Зависимость показателя преломления от длоины волны','Отражение','Поглощение','Интерференция'],h:'Разные λ → разные n → разное отклонение → спектр'},
+    {q:'Красный цвет имеет длину волны:',a:'Наибольшую (~700 нм)',o:['Наибольшую (~700 нм)','Наименьшую (~400 нм)','Среднюю (~550 нм)','Не определена'],h:'Красный: ~700 нм. Фиолетовый: ~400 нм'},
+    {q:'Поляризация доказывает, что свет является:',a:'Поперечной волной',o:['Поперечной волной','Продольной волной','Частицей','Скалярной волной'],h:'Поляризуются только поперечные волны'},
+    {q:'В опыте Юнга наблюдается:',a:'Интерференция',o:['Интерференция','Дифракция','Дисперсия','Поляризация'],h:'Юнг (1801): два источника когерентного света → полосы интерференции'},
+  ];
+  const f=pick(facts);
+  return mkQ(f.q,f.a,shuffle(f.o),f.h,`Волновая оптика`,`#7c3aed`,`#ede9fe`);
+}
+
+function genQuantum(){
+  const r=Math.random();
+  if(r<0.35){
+    // Photon energy E = hf
+    const h=6.63e-34;
+    const cases=[
+      {q:'E фотона = hf. При удвоении частоты E:',a:'Удвоится',o:['Удвоится','Учетверится','Не изменится','Уменьшится вдвое'],h:'E=hf → f×2 → E×2'},
+      {q:'Формула Планка для энергии фотона:',a:'E=hf=hc/λ',o:['E=hf=hc/λ','E=mv²/2','E=mc²','E=qU'],h:'h — постоянная Планка ≈ 6.63·10⁻³⁴ Дж·с'},
+      {q:'Красная граница фотоэффекта — это:',a:'Минимальная частота, при которой есть фотоэффект',o:['Минимальная частота, при которой есть фотоэффект','Максимальная частота','Красный свет','Длина волны 700 нм'],h:'При ν < ν_кр фотон не имеет достаточно энергии для вырывания электрона'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Квантовая физика`,`#ca8a04`,`#fef9c3`);
+  } else if(r<0.6){
+    // Nuclear reactions
+    const cases=[
+      {q:'α-распад: ²²⁶₈₈Ra → ? + ⁴₂He',a:'²²²₈₆Rn',o:['²²²₈₆Rn','²²⁴₈₆Rn','²²²₈₈Ra','²²⁶₈₆Rn'],h:'Z: 88−2=86 (Rn), A: 226−4=222'},
+      {q:'β⁻-распад: изменяется ли массовое число A?',a:'Нет (A=const)',o:['Нет (A=const)','Уменьшается на 1','Увеличивается на 1','Удваивается'],h:'β⁻: n→p+e, Z+1, A не меняется'},
+      {q:'γ-излучение при радиоактивном распаде:',a:'Не меняет Z и A ядра',o:['Не меняет Z и A ядра','Уменьшает A на 4','Увеличивает Z на 1','Выбивает нейтрон'],h:'γ-квант — фотон, переносит только энергию'},
+    ];
+    const c=pick(cases);
+    return mkQ(c.q,c.a,shuffle(c.o),c.h,`Ядерная физика`,`#ca8a04`,`#fef9c3`);
+  } else {
+    const facts=[
+      {q:'Закон сохранения в ядерной реакции:',a:'Заряд (Z) и массовое число (A)',o:['Заряд (Z) и массовое число (A)','Только масса','Только энергия','Число нейтронов'],h:'Сумма Z и сумма A до и после реакции сохраняются'},
+      {q:'T½ — период полураспада — это:',a:'Время, за которое распадается половина ядер',o:['Время, за которое распадается половина ядер','Полный период колебания','Время жизни одного ядра','Частота распада'],h:'N(t)=N₀·(½)^(t/T½)'},
+      {q:'Ядерная реакция деления урана-235 используется в:',a:'Атомных реакторах и бомбах',o:['Атомных реакторах и бомбах','Солнечных батареях','Лазерах','Рентгеновских трубках'],h:'Деление U-235 → цепная реакция → огромное выделение энергии'},
+      {q:'Дефект масс ядра означает:',a:'Масса ядра < суммы масс отдельных нуклонов',o:['Масса ядра < суммы масс отдельных нуклонов','Масса ядра > суммы','Потеря нейтронов','Заряд изменился'],h:'Дефект масс Δm → энергия связи ΔE=Δm·c²'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Ядерная физика`,`#ca8a04`,`#fef9c3`);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// ГЕНЕРАТОРЫ — РУССКИЙ ЯЗЫК 11
+// ═══════════════════════════════════════════════════════
+
+const RUS_DB={
+punct:[
+  {q:'«Я знаю__ что он придёт»',o:['нужна запятая (СПП)','запятая не нужна'],a:'нужна запятая (СПП)',h:'Перед придаточным изъяснительным'},
+  {q:'«Пришла весна__ запели птицы» (БСП)',o:['тире (следствие)','двоеточие','запятая','точка с запятой'],a:'тире (следствие)',h:'Быстрая смена/следствие → тире'},
+  {q:'«Он устал__ но продолжал»',o:['запятая перед НО','запятая не нужна'],a:'запятая перед НО',h:'НО — противительный союз, запятая всегда'},
+  {q:'«Я вошёл__ в комнате никого не было» (БСП)',o:['двоеточие (пояснение)','тире','запятая','точка'],a:'двоеточие (пояснение)',h:'Вторая часть поясняет первую → двоеточие'},
+  {q:'«Конечно__ вы правы»',o:['запятая (вводное)','запятая не нужна'],a:'запятая (вводное)',h:'«Конечно» — вводное слово, обособляется'},
+  {q:'«Читая книгу__ он улыбался»',o:['запятая (дееприч. оборот)','запятая не нужна'],a:'запятая (дееприч. оборот)',h:'Деепричастный оборот всегда обособляется'},
+  {q:'«Небо__ покрытое тучами__ потемнело»',o:['запятые (прич. оборот после сущ.)','запятые не нужны'],a:'запятые (прич. оборот после сущ.)',h:'Причастный оборот после определяемого слова'},
+  {q:'«Он был рад__ а она — нет»',o:['запятая перед А','запятая не нужна'],a:'запятая перед А',h:'А — противительный союз'},
+  {q:'Тире в предложении «Математика__ царица наук»',o:['нужно (оба — сущ. в И.п.)','не нужно'],a:'нужно (оба — сущ. в И.п.)',h:'Подлежащее и сказуемое — существительные → тире'},
+  {q:'«Я позвоню__ когда вернусь»',o:['запятая перед «когда»','запятая не нужна'],a:'запятая перед «когда»',h:'Придаточное времени — запятая'},
+],
+nn:[
+  {q:'серебр_ый',o:['серебряный','серебрянный'],a:'серебряный',h:'-ян- → Н'},
+  {q:'стекл_ый',o:['стеклянный','стекляный'],a:'стеклянный',h:'Исключение: НН'},
+  {q:'торжестве_ый',o:['торжественный','торжественый'],a:'торжественный',h:'-енн- → НН'},
+  {q:'революцио_ый',o:['революционный','революционый'],a:'революционный',h:'-онн- → НН'},
+  {q:'сваре_ый суп',o:['сваренный','свареный'],a:'сваренный',h:'Приставка → НН'},
+  {q:'жаре_ая рыба',o:['жареная','жаренная'],a:'жареная',h:'Без прист. несов. → Н'},
+  {q:'кожа_ый',o:['кожаный','кожанный'],a:'кожаный',h:'-ан- → Н'},
+  {q:'деревя_ый',o:['деревянный','деревяный'],a:'деревянный',h:'Исключение: НН'},
+  {q:'туман_ый',o:['туманный','туманый'],a:'туманный',h:'Корень Н + суфф. Н'},
+  {q:'краш_ый (покрашенный)',o:['крашеный','крашенный'],a:'крашеный',h:'Без прист. несов. → Н (но: покрашенный)'},
+  {q:'посея_ый',o:['посеянный','посеяный'],a:'посеянный',h:'Приставка → НН'},
+  {q:'маши_ый',o:['машинный','машиный'],a:'машинный',h:'Корень Н + суфф. Н'},
+],
+style:[
+  {q:'«Море смеётся» — троп:',o:['Олицетворение','Метафора','Эпитет','Сравнение'],a:'Олицетворение',h:'Олицетворение — неодушевлённому приписывают свойства живого'},
+  {q:'«Золотая осень» — троп:',o:['Эпитет','Метафора','Гипербола','Олицетворение'],a:'Эпитет',h:'Эпитет — образное определение'},
+  {q:'«Быстрый, как ветер» — троп:',o:['Сравнение','Метафора','Эпитет','Литота'],a:'Сравнение',h:'Сравнение использует союзы «как», «словно», «будто»'},
+  {q:'«Сто лет не виделись» — троп:',o:['Гипербола','Литота','Метафора','Ирония'],a:'Гипербола',h:'Гипербола — намеренное преувеличение'},
+  {q:'«Мужичок с ноготок» — троп:',o:['Литота','Гипербола','Эпитет','Перифраза'],a:'Литота',h:'Литота — намеренное преуменьшение'},
+  {q:'«Царь зверей» вместо «лев» — троп:',o:['Перифраза','Метафора','Эпитет','Антитеза'],a:'Перифраза',h:'Перифраза — описательное выражение вместо прямого названия'},
+  {q:'Единоначалие строк — фигура речи:',o:['Анафора','Эпифора','Антитеза','Градация'],a:'Анафора',h:'Анафора — повторение в начале строк/предложений'},
+  {q:'Намеренное дробление предложения — фигура речи:',o:['Парцелляция','Инверсия','Градация','Анафора'],a:'Парцелляция',h:'Парцелляция: «Он ушёл. Навсегда.»'},
+  {q:'Противопоставление — фигура речи:',o:['Антитеза','Анафора','Градация','Эпифора'],a:'Антитеза',h:'Антитеза: «Ты богат — я беден»'},
+],
+orth:[
+  {q:'НЕ с причастием при зависимом слове:',o:['Раздельно','Слитно','Зависит от слова','Только тире'],a:'Раздельно',h:'«не прочитанная мной книга» — зависимое слово → раздельно'},
+  {q:'НЕ с глаголом всегда:',o:['Раздельно','Слитно','Зависит от контекста','Через дефис'],a:'Раздельно',h:'Глаголы: не читал, не ходил — всегда раздельно'},
+  {q:'«Кас/кос»: ПОК_САТЬСЯ — какая гласная?',o:['А (суффикс -а-)','О','Зависит от ударения','Словарное'],a:'А (суффикс -а-)',h:'Кас/Кос: А если за корнем суффикс -А-: касаться'},
+  {q:'«Лаг/лож»: ПОЛ_ЖИТЬ — какая гласная?',o:['О (нет суффикса -а-)','А','Зависит от ударения','Словарное'],a:'О (нет суффикса -а-)',h:'Лаг/Лож: Г перед -а- (слагать), Ж иначе (положить)'},
+  {q:'«Гар/гор»: ЗАГ_РЕТЬ — какая гласная?',o:['О (без ударения)','А','Зависит от слова','Всегда А'],a:'О (без ударения)',h:'Гар/Гор: под ударением А (загАр), без ударения О (загОреть)'},
+  {q:'НЕ с прилагательным слитно, если:',o:['Нет противопоставления и = синониму без НЕ','Есть противопоставление','Есть зависимое слово','При краткой форме'],a:'Нет противопоставления и = синониму без НЕ',h:'«Нехороший» = плохой → слитно'},
+]
+};
+
+function genRusF(o){const a=RUS_DB[o]||Object.values(RUS_DB).flat(),e=pick(a);const colors={punct:['#7c3aed','#ede9fe'],nn:['#0d9488','#ccfbf1'],style:['#2563eb','#dbeafe'],orth:['#ca8a04','#fef9c3']};const [cl,bg]=colors[o]||['#dc2626','#fee2e2'];return mkQ(e.q,e.a,shuffle([...e.o]),e.h,{punct:'Пунктуация',nn:'Н и НН',style:'Средства выразительности',orth:'Орфография'}[o]||'Русский',cl,bg)}
+
+// ═══════════════════════════════════════════════════════
+// ГЕНЕРАТОРЫ — ИСТОРИЯ 11
+// ═══════════════════════════════════════════════════════
+
+const HIS_DB={
+ussr2:[
+  {q:'Полёт Гагарина в космос:',o:['1961','1957','1969','1965'],a:'1961',h:'12 апреля 1961 — Юрий Гагарин, «Восток-1»'},
+  {q:'Первый искусственный спутник Земли:',o:['1957','1961','1969','1955'],a:'1957',h:'4 октября 1957 — СССР запустил первый спутник'},
+  {q:'«Оттепель» — период правления:',o:['Хрущёва','Сталина','Брежнева','Горбачёва'],a:'Хрущёва',h:'1953–1964 — Никита Хрущёв, осуждение культа личности (1956)'},
+  {q:'Карибский кризис произошёл в:',o:['1962','1957','1961','1969'],a:'1962',h:'Октябрь 1962 — СССР и США на грани ядерной войны из-за ракет на Кубе'},
+  {q:'Перестройка — политика:',o:['Горбачёва','Брежнева','Андропова','Ельцина'],a:'Горбачёва',h:'1985–1991: гласность, ускорение, многопартийность'},
+  {q:'ГКЧП — попытка переворота — в:',o:['1991','1993','1989','1985'],a:'1991',h:'Август 1991 — провалившийся путч, ускоривший распад СССР'},
+  {q:'Берлинская стена пала в:',o:['1989','1991','1985','1961'],a:'1989',h:'9 ноября 1989 — жители Берлина снесли стену'},
+  {q:'СССР прекратил существование:',o:['25 декабря 1991','8 декабря 1991','19 августа 1991','1 января 1992'],a:'25 декабря 1991',h:'25 декабря 1991 — Горбачёв сложил полномочия'},
+  {q:'Конституция «Брежнева» принята в:',o:['1977','1936','1993','1961'],a:'1977',h:'«Конституция развитого социализма» 1977 г.'},
+  {q:'Доктрина «ограниченного суверенитета» — это:',o:['Доктрина Брежнева','Доктрина Трумэна','Доктрина Монро','Программа «Мир»'],a:'Доктрина Брежнева',h:'СССР мог вмешиваться в дела соцстран: Чехословакия 1968'},
+],
+russia90:[
+  {q:'Конституция РФ принята:',o:['12 декабря 1993','25 декабря 1991','12 июня 1990','7 ноября 1991'],a:'12 декабря 1993',h:'Принята на всенародном голосовании одновременно с выборами в Думу'},
+  {q:'«Шоковая терапия» — это:',o:['Резкий переход к рыночной экономике','Медицинская реформа','Постепенная реформа','Плановая экономика'],a:'Резкий переход к рыночной экономике',h:'Либерализация цен, приватизация, открытие рынка'},
+  {q:'Первая чеченская война — годы:',o:['1994–1996','1999–2009','1991–1993','2000–2003'],a:'1994–1996',h:'Федеральный центр против Ичкерии. Итог: Хасавюртовские соглашения'},
+  {q:'Ельцин стал первым Президентом России в:',o:['1991','1993','1989','1990'],a:'1991',h:'12 июня 1991 — первые прямые выборы президента РСФСР'},
+  {q:'Дефолт в России произошёл в:',o:['1998','1991','1993','2000'],a:'1998',h:'17 августа 1998 — дефолт по ГКО, девальвация рубля'},
+],
+world21:[
+  {q:'Распад Советского Союза произошёл в:',o:['1991','1989','1993','1985'],a:'1991',h:'Формально — 25 декабря 1991'},
+  {q:'Теракты 11 сентября 2001 — страна:',o:['США','Великобритания','Франция','Германия'],a:'США',h:'Захваченные самолёты врезались в башни ВТЦ и Пентагон'},
+  {q:'Европейский союз основан договором в:',o:['Маастрихте (1992)','Риме (1957)','Лиссабоне (2007)','Брюсселе (1999)'],a:'Маастрихте (1992)',h:'Маастрихтский договор 1992 — основание ЕС (введена валюта евро)'},
+  {q:'Евро введён в наличное обращение в:',o:['2002','1999','2001','2004'],a:'2002',h:'1 января 2002 — монеты и банкноты евро'},
+  {q:'БРИКС — что это?',o:['Группа крупных развивающихся экономик','Военный блок','Торговый союз','ООН-организация'],a:'Группа крупных развивающихся экономик',h:'Бразилия, Россия, Индия, Китай, ЮАР — крупнейшие развивающиеся страны'},
+]
+};
+
+function genHisF(o){const a=HIS_DB[o]||Object.values(HIS_DB).flat(),e=pick(a);return mkQ(e.q,e.a,shuffle([...e.o]),e.h,{ussr2:'СССР после 1945',russia90:'Россия 1990–2000-е',world21:'Мир во 2-й пол. XX–XXI в.'}[o]||'История','#ca8a04','#fef9c3')}
+
+// ═══════════════════════════════════════════════════════
+// ГЕНЕРАТОРЫ — ОБЩЕСТВОЗНАНИЕ 11
+// ═══════════════════════════════════════════════════════
+
+const SOC_DB={
+politic:[
+  {q:'Форма правления в РФ:',o:['Президентско-парламентская республика','Монархия','Парламентская республика','Федерация'],a:'Президентско-парламентская республика',h:'РФ — смешанная республика с сильным президентом'},
+  {q:'Тоталитаризм отличается от авторитаризма:',o:['Полным контролем всех сфер жизни','Наличием выборов','Отсутствием армии','Рыночной экономикой'],a:'Полным контролем всех сфер жизни',h:'Тоталитаризм контролирует даже частную жизнь; авторитаризм — только политику'},
+  {q:'Гражданское общество — это:',o:['Независимые от государства объединения граждан','Государственные органы','Правительство','Парламент'],a:'Независимые от государства объединения граждан',h:'НКО, профсоюзы, СМИ, церковь — часть гражданского общества'},
+  {q:'Федерация отличается от унитарного государства:',o:['Наличием субъектов с собственными полномочиями','Единой конституцией','Отсутствием регионов','Монархией'],a:'Наличием субъектов с собственными полномочиями',h:'РФ — федерация: 89 субъектов с конституциями/уставами'},
+  {q:'Политическая партия — это:',o:['Организация, борющаяся за государственную власть','Государственный орган','Объединение работодателей','Международная организация'],a:'Организация, борющаяся за государственную власть',h:'Признаки: идеология, программа, борьба за власть'},
+],
+econ:[
+  {q:'Акция даёт владельцу:',o:['Долю в компании и право на дивиденды','Фиксированный процент','Возврат суммы через срок','Страховку'],a:'Долю в компании и право на дивиденды',h:'Акция = доля собственности; доход непостоянный (дивиденды)'},
+  {q:'Облигация — это:',o:['Долговая ценная бумага с фиксированным доходом','Доля в компании','Страховой полис','Налоговый сертификат'],a:'Долговая ценная бумага с фиксированным доходом',h:'Облигация = долг; купон — процент; в конце срока возвращают номинал'},
+  {q:'НДФЛ в России (стандартная ставка):',o:['13%','20%','18%','30%'],a:'13%',h:'Налог на доходы физических лиц — 13% (для большинства доходов)'},
+  {q:'НДС в России:',o:['20%','13%','18%','10%'],a:'20%',h:'Налог на добавленную стоимость — 20% (льготная 10% на часть товаров)'},
+  {q:'Монетарная политика — это политика:',o:['Центрального банка (ставка, эмиссия)','Правительства (налоги, расходы)','Министерства труда','Парламента'],a:'Центрального банка (ставка, эмиссия)',h:'ЦБ управляет денежным обращением: ключевая ставка, эмиссия'},
+],
+law:[
+  {q:'Трудовой договор заключается на срок не более (срочный):',o:['5 лет','1 год','3 года','10 лет'],a:'5 лет',h:'Срочный трудовой договор — до 5 лет (ст. 58 ТК РФ)'},
+  {q:'Минимальный ежегодный оплачиваемый отпуск в РФ:',o:['28 календарных дней','14 дней','21 день','30 дней'],a:'28 календарных дней',h:'ТК РФ: минимальный отпуск — 28 кал. дней'},
+  {q:'Брачный возраст в РФ (по общему правилу):',o:['18 лет','16 лет','17 лет','21 год'],a:'18 лет',h:'С разрешения органов местного самоуправления — с 16 лет'},
+  {q:'При разводе совместно нажитое имущество делится:',o:['Поровну (50/50) по умолчанию','По заработку','Всё мужу','По договору только'],a:'Поровну (50/50) по умолчанию',h:'Ст. 34 СК РФ: совместная собственность супругов делится поровну'},
+  {q:'Международное право: субъекты — это:',o:['Государства и международные организации','Только физические лица','Только ТНК','Частные компании'],a:'Государства и международные организации',h:'Основные субъекты МП — суверенные государства и ММПО (ООН, ВТО...)'},
+]
+};
+
+function genSocF(o){const a=SOC_DB[o]||Object.values(SOC_DB).flat(),e=pick(a);return mkQ(e.q,e.a,shuffle([...e.o]),e.h,{politic:'Политология',econ:'Экономика',law:'Право'}[o]||'Обществознание','#7c3aed','#ede9fe')}
+
+// ═══════════════════════════════════════════════════════
+// ГЕНЕРАТОРЫ — ИНФОРМАТИКА 11
+// ═══════════════════════════════════════════════════════
+
+function genINS(){
+  const r=Math.random();
+  if(r<0.3){
+    const nums=[10,11,15,16,32,63,64,100,127,128,255,256];
+    const n=pick(nums);
+    const bin=n.toString(2);
+    const wrong=[(n+1).toString(2),(n-1).toString(2)].filter(x=>x!==bin);
+    return mkQ(`${n}₁₀ → двоичная:`,`${bin}₂`,shuffle([`${bin}₂`,...wrong.slice(0,3).map(x=>x+'₂')]),`${bin}₂`,`Системы счисления`,`#2563eb`,`#dbeafe`,null,true);
+  } else if(r<0.55){
+    const hexs=['A','B','F','10','1F','FF','A3','3C'];
+    const h=pick(hexs);
+    const dec=parseInt(h,16);
+    return mkQ(`${h}₁₆ → десятичная:`,`${dec}`,shuffle([`${dec}`,`${dec+1}`,`${dec-1}`,`${dec+16}`].map(String)),`${h}₁₆=${dec}₁₀`,`Системы счисления`,`#2563eb`,`#dbeafe`,null,true);
+  } else {
+    const facts=[
+      {q:'FF₁₆ = ? в десятичной',o:['255','256','128','15'],a:'255',h:'F=15, FF=15·16+15=255'},
+      {q:'1 байт = ? бит',o:['8','4','16','2'],a:'8',h:'1 байт = 8 бит'},
+      {q:'2¹⁰ = ?',o:['1024','1000','512','2048'],a:'1024',h:'2¹⁰=1024 (основа Кбайт)'},
+      {q:'Как перевести двоичное в шестнадцатеричное?',o:['Группировать по 4 бита справа','Делить на 16','Группировать по 3 бита','Умножать на 16'],a:'Группировать по 4 бита справа',h:'4 бита = 1 шестнадцатеричная цифра: 1111₂=F₁₆'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Системы счисления`,`#2563eb`,`#dbeafe`);
+  }
+}
+
+function genILog(){
+  const r=Math.random();
+  if(r<0.4){
+    const ops=[
+      {q:'1 AND 0',a:'0',o:['0','1'],h:'AND: оба 1 → 1'},
+      {q:'1 OR 0',a:'1',o:['0','1'],h:'OR: хотя бы один 1'},
+      {q:'NOT 1',a:'0',o:['0','1'],h:'NOT инвертирует'},
+      {q:'1 XOR 1',a:'0',o:['0','1'],h:'XOR (исключающее ИЛИ): одинаковые → 0'},
+      {q:'1 XOR 0',a:'1',o:['0','1'],h:'XOR: разные → 1'},
+      {q:'0 AND 0',a:'0',o:['0','1'],h:'AND: нет обеих единиц → 0'},
+    ];
+    const op=pick(ops);
+    return mkQ(op.q,op.a,shuffle(op.o),op.h,`Логика`,`#dc2626`,`#fee2e2`,null,true);
+  } else {
+    const facts=[
+      {q:'¬(A∧B) = ?',o:['¬A∨¬B','¬A∧¬B','A∨B','A∧B'],a:'¬A∨¬B',h:'Закон де Моргана'},
+      {q:'¬(A∨B) = ?',o:['¬A∧¬B','¬A∨¬B','A∧B','¬A'],a:'¬A∧¬B',h:'Закон де Моргана'},
+      {q:'Эквивалентность A↔B:',o:['(A→B)∧(B→A)','A∧B','A∨B','A→B'],a:'(A→B)∧(B→A)',h:'A↔B = взаимная импликация'},
+      {q:'НДНФ — нормальная дизъюнктивная нормальная форма — это:',o:['Дизъюнкция конъюнктивных членов','Конъюнкция дизъюнктивных','Отрицание','Импликация'],a:'Дизъюнкция конъюнктивных членов',h:'НДНФ: (A∧B)∨(¬A∧C)∨...'},
+    ];
+    const f=pick(facts);
+    return mkQ(f.q,f.a,shuffle(f.o),f.h,`Логика`,`#dc2626`,`#fee2e2`);
+  }
+}
+
+function genAlgo(){
+  const r=Math.random();
+  if(r<0.45){
+    const pyqs=[
+      {q:'def fact(n): return 1 if n<=1 else n*fact(n-1). fact(5)=?',a:'120',o:['120','24','60','25'],h:'5·4·3·2·1=120'},
+      {q:'a=[3,1,4,1,5]; max(a)=?',a:'5',o:['5','4','3','1'],h:'max() возвращает максимальный элемент'},
+      {q:'sum([1,2,3,4,5])=?',a:'15',o:['15','10','12','20'],h:'1+2+3+4+5=15'},
+      {q:'len("Информатика")=?',a:'11',o:['11','10','12','9'],h:'И-н-ф-о-р-м-а-т-и-к-а = 11 символов'},
+      {q:'"abc"[−1]=?',a:'"c"',o:['"c"','"a"','"b"','ошибка'],h:'Индекс −1 = последний элемент'},
+      {q:'list(range(1,6))=?',a:'[1,2,3,4,5]',o:['[1,2,3,4,5]','[0,1,2,3,4,5]','[1,2,3,4,5,6]','[0,1,2,3,4]'],h:'range(start,stop): от 1 до 5 включительно'},
+      {q:'"hello".upper()=?',a:'"HELLO"',o:['"HELLO"','"hello"','"Hello"','ошибка'],h:'.upper() переводит в верхний регистр'},
+    ];
+    const q=pick(pyqs);
+    return mkQ(q.q,q.a,shuffle(q.o),q.h,`Алгоритмы и Python`,`#16a34a`,`#dcfce7`,null,true);
+  } else {
+    const algqs=[
+      {q:'Сложность бинарного поиска:',o:['O(log n)','O(n)','O(1)','O(n²)'],a:'O(log n)',h:'Каждый шаг делит область поиска пополам'},
+      {q:'Сложность сортировки слиянием:',o:['O(n log n)','O(n²)','O(n)','O(log n)'],a:'O(n log n)',h:'Лучшая из сравнительных сортировок по сложности'},
+      {q:'Очередь (Queue) работает по принципу:',o:['FIFO (первый вошёл — первый вышел)','LIFO','Случайный доступ','Сортировка'],a:'FIFO (первый вошёл — первый вышел)',h:'Очередь: enqueue/dequeue; стек: push/pop (LIFO)'},
+      {q:'Граф G(V,E): V — вершины, E — …',a:'Рёбра',o:['Рёбра','Евклидовы точки','Значения','Элементы'],h:'E — edges (рёбра), соединяющие вершины V'},
+      {q:'Хэш-таблица обеспечивает поиск за:',o:['O(1) в среднем','O(n)','O(log n)','O(n²)'],a:'O(1) в среднем',h:'Хэш-функция вычисляет индекс → прямой доступ'},
+    ];
+    const q=pick(algqs);
+    return mkQ(q.q,q.a,shuffle(q.o),q.h,`Алгоритмы и Python`,`#16a34a`,`#dcfce7`);
+  }
+}
+
+function genDB(){
+  const facts=[
+    {q:'Первичный ключ (PRIMARY KEY) в реляционной БД:',o:['Уникальный идентификатор строки','Имя таблицы','Внешняя ссылка','Тип данных столбца'],a:'Уникальный идентификатор строки',h:'PRIMARY KEY — уникален, не NULL, однозначно идентифицирует запись'},
+    {q:'SQL-запрос для выборки данных:',o:['SELECT','INSERT','UPDATE','DELETE'],a:'SELECT',h:'SELECT поля FROM таблица WHERE условие'},
+    {q:'JOIN в SQL нужен для:',o:['Объединения таблиц','Удаления данных','Создания таблицы','Индексирования'],a:'Объединения таблиц',h:'INNER JOIN, LEFT JOIN и др. — объединяют строки из разных таблиц'},
+    {q:'IP-адрес версии IPv4 состоит из:',o:['4 октетов (32 бита)','6 октетов','8 байт','16 бит'],a:'4 октетов (32 бита)',h:'Например: 192.168.1.1 — четыре числа от 0 до 255'},
+    {q:'DNS (Domain Name System) — это:',o:['Система перевода доменных имён в IP','Почтовый сервер','Файловая система','Протокол шифрования'],a:'Система перевода доменных имён в IP',h:'DNS: google.com → 142.250.74.14'},
+    {q:'Протокол HTTP используется для:',o:['Передачи веб-страниц','Электронной почты','Файлового обмена','Удалённого доступа'],a:'Передачи веб-страниц',h:'HTTP/HTTPS — протокол передачи гипертекста'},
+    {q:'Реляционная БД хранит данные в:',o:['Таблицах (relations)','Деревьях','Графах','Файлах XML'],a:'Таблицах (relations)',h:'Реляционная модель: таблицы со строками и столбцами'},
+    {q:'SQL-команда для добавления строки:',o:['INSERT INTO','SELECT','UPDATE','CREATE'],a:'INSERT INTO',h:'INSERT INTO таблица (поля) VALUES (значения)'},
+  ];
+  const f=pick(facts);
+  return mkQ(f.q,f.a,shuffle(f.o),f.h,`БД и сети`,`#0d9488`,`#ccfbf1`);
+}
+
+// ═══════════════════════════════════════════════════════
+// СУБЪЕКТЫ — 11 КЛАСС
+// ═══════════════════════════════════════════════════════
+
+const SUBJ=[
+  {id:'alg',nm:'Алгебра и начала анализа',ic:'∫',date:'',cl:'#dc2626',bg:'#fee2e2',tops:[
+    {id:'deriv',nm:'Производная',gen:genDeriv,th:ALG_TH.deriv,dot:'#dc2626'},
+    {id:'integ',nm:'Интеграл',gen:genInteg,th:ALG_TH.integ,dot:'#7c3aed'},
+    {id:'logexp',nm:'Логарифмы и экспонента',gen:genLogExp,th:ALG_TH.logexp,dot:'#ea580c'},
+    {id:'trieq',nm:'Тригонометрические уравнения',gen:genTriEq,th:ALG_TH.trieq,dot:'#0d9488'},
+  ]},
+  {id:'geo',nm:'Геометрия',ic:'△',date:'',cl:'#ea580c',bg:'#fff7ed',tops:[
+    {id:'poly',nm:'Многогранники',gen:genPoly,th:GEO_TH.poly,dot:'#dc2626'},
+    {id:'rotat',nm:'Тела вращения',gen:genRotat,th:GEO_TH.rotat,dot:'#ea580c'},
+    {id:'coord3',nm:'Координаты в пространстве',gen:genCoord3,th:GEO_TH.coord3,dot:'#2563eb'},
+    {id:'angles',nm:'Углы и перпендикулярность',gen:genAngles,th:GEO_TH.angles,dot:'#0d9488'},
+  ]},
+  {id:'phy',nm:'Физика',ic:'⚛',date:'',cl:'#2563eb',bg:'#dbeafe',tops:[
+    {id:'elfield',nm:'Электростатика',gen:genElField,th:PHY_TH.elfield,dot:'#dc2626'},
+    {id:'emwave',nm:'ЭМ волны и колебания',gen:genEMWave,th:PHY_TH.emwave,dot:'#2563eb'},
+    {id:'optics',nm:'Волновая оптика',gen:genOptics11,th:PHY_TH.optics,dot:'#7c3aed'},
+    {id:'quantum',nm:'Квантовая и ядерная физика',gen:genQuantum,th:PHY_TH.quantum,dot:'#ca8a04'},
+  ]},
+  {id:'rus',nm:'Русский язык',ic:'Аа',date:'',cl:'#0d9488',bg:'#ccfbf1',tops:[
+    {id:'punct',nm:'Пунктуация',gen:()=>genRusF('punct'),th:RUS_TH.punct,dot:'#7c3aed'},
+    {id:'nn',nm:'Н и НН',gen:()=>genRusF('nn'),th:RUS_TH.nn,dot:'#0d9488'},
+    {id:'style',nm:'Средства выразительности',gen:()=>genRusF('style'),th:RUS_TH.style,dot:'#2563eb'},
+    {id:'orth',nm:'Орфография',gen:()=>genRusF('orth'),th:RUS_TH.orth,dot:'#ca8a04'},
+  ]},
+  {id:'his',nm:'История',ic:'📜',date:'',cl:'#ca8a04',bg:'#fef9c3',tops:[
+    {id:'ussr2',nm:'СССР после 1945',gen:()=>genHisF('ussr2'),th:HIS_TH.ussr2,dot:'#dc2626'},
+    {id:'russia90',nm:'Россия 1990–2000-е',gen:()=>genHisF('russia90'),th:HIS_TH.russia90,dot:'#7c3aed'},
+    {id:'world21',nm:'Мир во 2-й пол. XX–XXI в.',gen:()=>genHisF('world21'),th:HIS_TH.world21,dot:'#2563eb'},
+  ]},
+  {id:'soc',nm:'Обществознание',ic:'⚖',date:'',cl:'#7c3aed',bg:'#ede9fe',tops:[
+    {id:'politic',nm:'Политология',gen:()=>genSocF('politic'),th:SOC_TH.politic,dot:'#7c3aed'},
+    {id:'econ',nm:'Экономика',gen:()=>genSocF('econ'),th:SOC_TH.econ,dot:'#16a34a'},
+    {id:'law',nm:'Право',gen:()=>genSocF('law'),th:SOC_TH.law,dot:'#dc2626'},
+  ]},
+  {id:'inf',nm:'Информатика',ic:'>_',date:'',cl:'#16a34a',bg:'#dcfce7',tops:[
+    {id:'numsys',nm:'Системы счисления',gen:genINS,th:INF_TH.numsys,dot:'#2563eb'},
+    {id:'logic',nm:'Логика',gen:genILog,th:INF_TH.logic,dot:'#dc2626'},
+    {id:'algo',nm:'Алгоритмы и Python',gen:genAlgo,th:INF_TH.algo,dot:'#16a34a'},
+    {id:'db',nm:'БД и сети',gen:genDB,th:INF_TH.db,dot:'#0d9488'},
+  ]},
+];
+
+
+// === КОНФИГУРАЦИЯ ЛИДЕРБОРДА ===
+// Создайте свой бин на https://www.npoint.io/ и вставьте ID сюда.
+// Формат бина: {"scores":[]}
+rushBinId="grade11bin000000000";const CLOUD_URL="https://api.npoint.io/"+rushBinId;function getPrivateMode(){return localStorage.getItem("trainer_private")==="1"}function setPrivateMode(v){localStorage.setItem("trainer_private",v?"1":"0")}function renderPrivacyBtn(){const b=document.getElementById("privacy-btn");if(!b)return;const on=getPrivateMode();b.textContent=on?"👤 Результаты скрыты":"🌐 Результаты публикуются";b.style.background=on?"#fee2e2":"#dcfce7";b.style.color=on?"#dc2626":"#16a34a"}function togglePrivacy(){setPrivateMode(!getPrivateMode());renderPrivacyBtn()}function declNum(o,a,e,n){const t=Math.abs(o)%100,h=t%10;return t>10&&t<20?n:h>1&&h<5?e:1===h?a:n}async function pushRushRecord(o,a,e){if(getPrivateMode())return;if(rushBinId)try{const n=await fetch("https://api.npoint.io/"+rushBinId),t=await n.json();t.records||(t.records=[]),t.records.push({name:o,min:a,score:e,date:(new Date).toLocaleDateString("ru",{day:"numeric",month:"short"})+" "+(new Date).toLocaleTimeString("ru",{hour:"2-digit",minute:"2-digit"}),ts:Date.now()}),t.records.length>100&&(t.records=t.records.slice(-100)),await fetch("https://api.npoint.io/"+rushBinId,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(t)})}catch(o){console.log("push err:",o)}}async function fetchRushRecords(){if(!rushBinId)return[];try{const o=await fetch("https://api.npoint.io/"+rushBinId);return(await o.json()).records||[]}catch{return[]}}let st={ok:0,err:0,streak:0,best:0},sesTopics={},seenQs={},tv=0,ti=null;function daysTo(o){if(!o)return null;const a=o.split(" "),e=+a[0],n={"января":0,"февраля":1,"марта":2,"апреля":3,"мая":4,"июня":5,"июля":6,"августа":7,"сентября":8,"октября":9,"ноября":10,"декабря":11}[a[1]];return void 0===n?null:Math.ceil((new Date(2026,n,e)-new Date)/864e5)}function loadDates(){try{const o=JSON.parse(localStorage.getItem("trainer_dates_11")||"{}");SUBJ.forEach(a=>{o[a.id]&&(a.date=o[a.id])})}catch{}}function saveDates(){const o={};SUBJ.forEach(a=>{a.date&&(o[a.id]=a.date)});try{localStorage.setItem("trainer_dates_11",JSON.stringify(o))}catch{}}function showDateEditor(){const o=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],a=document.createElement("div");a.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto";const e=document.createElement("div");e.style.cssText="background:#fff;border-radius:16px;padding:20px;max-width:380px;width:100%;max-height:85vh;overflow-y:auto";let n='<h3 style="font-family:Unbounded,sans-serif;font-size:15px;font-weight:800;margin-bottom:14px;text-align:center">📅 Даты диагностик</h3>';n+='<p style="font-size:11px;color:#6b6b7e;text-align:center;margin-bottom:12px">Необязательно. Если указать — ближние экзамены будут чаще в миксе.</p>',SUBJ.forEach(a=>{let e="",t="";if(a.date){const o=a.date.split(" ");e=o[0]||"",t=o[1]||""}n+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0">\n      <span style="font-size:16px;width:28px;text-align:center">${a.ic}</span>\n      <span style="flex:1;font-size:13px;font-weight:600">${a.nm}</span>\n      <input type="number" min="1" max="31" placeholder="дд" value="${e}" data-sid="${a.id}" class="dd-day" style="width:40px;padding:6px;border:1px solid #ddd;border-radius:6px;font-size:13px;text-align:center">\n      <select data-sid="${a.id}" class="dd-mon" style="padding:6px;border:1px solid #ddd;border-radius:6px;font-size:12px">\n        <option value="">—</option>\n        ${o.map((o,a)=>`<option value="${o}"${o===t?" selected":""}>${o}</option>`).join("")}\n      </select>\n    </div>`}),n+='<div style="display:flex;gap:8px;margin-top:14px">\n    <button style="flex:1;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="applyDates()">Сохранить</button>\n    <button style="flex:1;padding:10px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#6b6b7e;font-weight:600;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Отмена</button>\n  </div>\n  <button style="margin-top:8px;width:100%;padding:8px;border:none;background:transparent;color:#dc2626;font-size:12px;cursor:pointer" onclick="clearDates()">Очистить все даты</button>',e.innerHTML=n,a.appendChild(e),document.body.appendChild(a),window._dateOverlay=a}function applyDates(){document.querySelectorAll(".dd-day").forEach(o=>{const a=o.dataset.sid,e=o.value,n=document.querySelector('.dd-mon[data-sid="'+a+'"]').value,t=SUBJ.find(o=>o.id===a);t&&(t.date=e&&n?e+" "+n:"")}),saveDates(),window._dateOverlay&&window._dateOverlay.remove(),refreshMain()}function clearDates(){SUBJ.forEach(o=>o.date=""),saveDates(),window._dateOverlay&&window._dateOverlay.remove(),refreshMain()}
+function go(o){document.querySelectorAll(".scr").forEach(o=>o.classList.remove("on")),document.getElementById("s-"+o).classList.add("on"),"main"===o&&(document.getElementById("hdr").textContent="ПОДГОТОВКА",document.getElementById("hb").style.display="none",rushMode=!1,diagMode=!1,globalMix=!1,refreshMain()),"prog"===o&&renderProg()}function refreshMain(){renderPlayerBadge();const o=document.getElementById("sg");o.innerHTML="";const a=[...SUBJ].map(o=>{let a=0,e=0;o.tops.forEach(n=>{const t=getTP(o.id,n.id);a+=t.ok,e+=t.err});const n=a+e;return{s:o,pct:n?Math.round(a/n*100):999,tot:n}});a.sort((o,a)=>{const e=o.s.locked&&(STR.totalOk||0)<(o.s.unlockAt||0),n=a.s.locked&&(STR.totalOk||0)<(a.s.unlockAt||0);if(e&&!n)return 1;if(n&&!e)return-1;const t=daysTo(o.s.date),h=daysTo(a.s.date);return null!==t&&t<=7&&(null===h||h>7)?-1:null!==h&&h<=7&&(null===t||t>7)||0===o.tot&&a.tot>0?1:0===a.tot&&o.tot>0?-1:o.pct-a.pct}),a.forEach(({s:a,pct:e,tot:n},t)=>{const h=daysTo(a.date),i=document.createElement("button");if(i.className="scard",i.style.animation=`fu .3s ease ${.04*t}s both`,a.locked&&(STR.totalOk||0)<(a.unlockAt||0)){const o=a.unlockAt-(STR.totalOk||0);i.innerHTML=`<div class="ic" style="background:#e8e6e0;color:#aaa">🔒</div><div style="flex:1"><div class="nm" style="color:#aaa">${a.nm}</div><div class="dt" style="color:#aaa">Ещё ${o} ${declNum(o,"правильный ответ","правильных ответа","правильных ответов")} до разблокировки</div></div>`,i.style.opacity=".6",i.onclick=()=>alert("🔒 "+a.nm+" откроется после "+a.unlockAt+" правильных ответов.\nСейчас: "+(STR.totalOk||0))}else{const o=n>0?`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:${e>=80?"var(--green)":e>=50?"var(--orange)":"var(--muted)"};margin-left:6px">${e}%</span>`:"";i.innerHTML=`<div class="ic" style="background:${a.bg};color:${a.cl}">${a.ic}</div><div style="flex:1"><div class="nm">${a.nm}${o}</div>${a.date?`<div class="dt">${a.date}</div>`:""}${null!==h?`<div class="dd" style="color:${h<=7?"var(--red)":h<=21?"var(--orange)":"var(--green)"}">${h<=0?"Сегодня!":h+" "+declNum(h,"день","дня","дней")}</div>`:""}</div>`,i.onclick=()=>openSubj(a.id)}o.appendChild(i)}),renderDailyMeter()}function renderDailyMeter(){const o=dailyDone();o&&completeDay(o),checkBadges();const a=DAILY.ok+DAILY.err,e=a?Math.round(DAILY.ok/a*100):0,n=0===(DAILY.mixErr||0)&&DAILY.pure<20,t=o?100:n?Math.min(100,Math.round(DAILY.pure/20*100)):Math.min(100,Math.round(a/100*100)),h=o?"var(--green)":t>=50?"var(--orange)":"var(--red)";let i,s="";SUBJ.forEach(o=>{const a=DAILY.subjs[o.id];if(a&&a.ok+a.err>0){const e=Math.round(a.ok/(a.ok+a.err)*100);s+=`<span class="dm-chip" style="background:${o.bg};color:${o.cl}">${o.ic} ${a.ok}✓ ${e}%</span>`}}),"shortcut"===o?(i='<div class="dm-done-msg">🎯 Рывок! 20 из 20 — свободен!</div>',confetti(40)):"done"===o?(i='<div class="dm-done-msg">✅ Норма выполнена — можно отдыхать!</div>',confetti(30)):i=n?`<div class="dm-num" style="color:var(--green)">${DAILY.pure} / 20</div><div class="dm-sub">🎯 Рывок: ещё ${20-DAILY.pure} без ошибок<br><span style="font-size:10px;opacity:.6">только «Всё вперемешку» без фильтра</span></div>`:`<div class="dm-num" style="color:${h}">${a} / 100</div><div class="dm-sub">Верных: ${DAILY.ok} (${e}%), нужно 75% из 100</div>`;const r=STR.current>0||STR.best>0?`<div style="display:flex;justify-content:center;gap:16px;margin-top:10px;font-size:13px"><div style="text-align:center"><div style="font-size:22px">${STR.current>0?"🔥":""}</div><div style="font-weight:800;font-size:18px;color:${STR.current>=7?"var(--green)":STR.current>=3?"var(--orange)":"var(--text)"}">${STR.current}</div><div style="font-size:10px;color:var(--muted)">${declNum(STR.current,"день","дня","дней")} подряд</div></div><div style="text-align:center"><div style="font-size:22px">⭐</div><div style="font-weight:800;font-size:18px;color:var(--muted)">${STR.best}</div><div style="font-size:10px;color:var(--muted)">рекорд</div></div><div style="text-align:center"><div style="font-size:22px">📊</div><div style="font-weight:800;font-size:18px;color:var(--muted)">${STR.totalQs}</div><div style="font-size:10px;color:var(--muted)">${declNum(STR.totalQs,"задача","задачи","задач")}</div></div></div>`:"",c=BADGES.filter(o=>STR.badges.includes(o.id)),q=c.length>0?`<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px">${c.map(o=>`<span style="font-size:10px;padding:3px 8px;border-radius:12px;background:var(--ybg);color:var(--yellow);font-weight:600">${o.icon} ${o.name}</span>`).join("")}</div>`:"";document.getElementById("daily-meter").innerHTML=`<div class="dm${o?" done":""}">\n    <div class="dm-title">📅 Дневная норма</div>\n    <div class="dm-bar"><div class="dm-fill" style="width:${t}%;background:${h}"></div></div>\n    ${i}\n    ${r}\n    ${s?'<div class="dm-chips">'+s+"</div>":""}\n    ${q}\n    <div style="display:flex;gap:6px;margin-top:10px">\n      <button class="btn btn-p" style="flex:1;font-size:12px;padding:9px" onclick="showMixFilter()">⚡ Всё вперемешку</button>\n      ${o?'<button class="btn btn-g" style="flex:1;font-size:12px;padding:9px" onclick="shareDailyReport()">📤 Отправить папе</button>':'<button class="btn btn-o" style="flex:1;font-size:12px;padding:9px;opacity:.35;pointer-events:none">🔒 Сначала норма</button>'}\n    </div>\n    <div style="display:flex;gap:6px;margin-top:6px">\n      <button class="btn" style="flex:1;font-size:11px;padding:8px;background:linear-gradient(135deg,#fef9c3,#fff7ed);color:#92400e;font-weight:700;border:none;border-radius:8px" onclick="startRush(3)">⚡ Молния 3 мин</button>\n      <button class="btn" style="flex:1;font-size:11px;padding:8px;background:linear-gradient(135deg,#fee2e2,#fef9c3);color:#991b1b;font-weight:700;border:none;border-radius:8px" onclick="startRush(5)">⚡ Молния 5 мин</button>\n      <button class="btn" style="flex:1;font-size:11px;padding:8px;background:linear-gradient(135deg,#ede9fe,#dbeafe);color:#3730a3;font-weight:700;border:none;border-radius:8px" onclick="showRushRecords()">🏆 Рейтинг</button>\n    </div>\n  </div>`}function showMixFilter(){const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";const a=document.createElement("div");a.style.cssText="background:#fff;border-radius:16px;padding:20px;max-width:360px;width:100%;max-height:80vh;overflow-y:auto";let e='<h3 style="font-family:Unbounded,sans-serif;font-size:15px;font-weight:800;margin-bottom:12px;text-align:center">⚡ Выбери предметы</h3>';e+='<div style="display:flex;gap:6px;margin-bottom:12px;justify-content:center"><button onclick="mfAll(true)" style="font-size:11px;padding:5px 10px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer">Все</button><button onclick="mfAll(false)" style="font-size:11px;padding:5px 10px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer">Ничего</button></div>',SUBJ.forEach(o=>{e+=`<label style="display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid #f0f0f0;cursor:pointer;font-size:14px">\n      <input type="checkbox" checked data-sid="${o.id}" class="mf-cb" style="width:20px;height:20px;accent-color:${o.cl}">\n      <span style="font-size:18px">${o.ic}</span>\n      <span style="flex:1;font-weight:600;color:#1a1a2e">${o.nm}</span>\n      ${o.date?`<span style="font-size:11px;color:#6b6b7e">${o.date}</span>`:""}\n    </label>`}),e+='<button id="mf-go" style="margin-top:14px;width:100%;padding:12px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="launchMix()">⚡ Поехали!</button>',e+='<button style="margin-top:8px;width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#6b6b7e;font-weight:600;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Отмена</button>',a.innerHTML=e,o.appendChild(a),document.body.appendChild(o),window._mfOverlay=o}function mfAll(o){document.querySelectorAll(".mf-cb").forEach(a=>a.checked=o)}function launchMix(){const o=[...document.querySelectorAll(".mf-cb:checked")].map(o=>o.dataset.sid);if(0!==o.length){if(mixFilter=o.length===SUBJ.length?null:o,document.querySelectorAll('div[style*="position:fixed"],div[style*="position: fixed"]').forEach(o=>o.remove()),window._mfOverlay)try{window._mfOverlay.remove()}catch{}window._mfOverlay=null,startGlobalMix()}else alert("Выбери хотя бы один предмет")}function startGlobalMix(){globalMix=!0,diagMode=!1,rushMode=!1,cS=null,cT=null,mix=!0,mixStreak={id:null,count:0};const o=mixFilter?SUBJ.filter(o=>mixFilter.includes(o.id)).map(o=>o.ic).join("")+" СБОРНАЯ":"ВСЁ ВПЕРЕМЕШКУ";document.getElementById("hdr").textContent=o,startQuiz()}function startDiag(){diagMode=!0,rushMode=!1,diagMax=20,mix=!0,cT=null,document.getElementById("hdr").textContent="📝 ДИАГНОСТИКА: "+cS.nm.toUpperCase(),startQuiz()}function startRush(o){rushMode=!0,diagMode=!1,globalMix=!0,rushTime=60*o,rushErrors=0,rushScore=0,cS=null,cT=null,mix=!0,mixStreak={id:null,count:0};try{const o=JSON.parse(localStorage.getItem("trainer_rush_best_11")||"{}");rushBest={3:o[3]||0,5:o[5]||0}}catch{}document.getElementById("hdr").textContent=`⚡ МОЛНИЯ ${o} мин`,startQuiz()}function saveRushBest(o,a){try{const e=JSON.parse(localStorage.getItem("trainer_rush_best_11")||"{}"),n=getPlayerName();e._records||(e._records=[]),a>(e[o]||0)&&(e[o]=a),e._records.push({name:n,min:o,score:a,date:(new Date).toLocaleDateString("ru")}),e._records.length>50&&(e._records=e._records.slice(-50)),localStorage.setItem("trainer_rush_best_11",JSON.stringify(e)),rushBest=e}catch{}pushRushRecord(getPlayerName(),o,a)}loadDates(),refreshMain();let mixStreak={id:null,count:0};function genGlobalMix(){const o=(mixFilter?SUBJ.filter(o=>mixFilter.includes(o.id)):SUBJ).map(o=>{const a=daysTo(o.date),e=null!==a&&a>0?1e3/a:1;let n=0,t=0;o.tops.forEach(a=>{const e=getTP(o.id,a.id);n+=e.ok,t+=e.err});const h=n+t,i=h>5?2*(1.5-(h>5?n/h:.5)):1,s=Math.max(10,Math.min(e*i,120));return{s:o,w:s}});let a=o;mixStreak.count>=3&&(a=o.filter(o=>o.s.id!==mixStreak.id),0===a.length&&(a=o));const e=a.reduce((o,a)=>o+a.w,0);let n=Math.random()*e,t=a[0].s;for(const{s:o,w:e}of a)if(n-=e,n<=0){t=o;break}t.id===mixStreak.id?mixStreak.count++:mixStreak={id:t.id,count:1};const h=t.tops.map(o=>{const a=getTP(t.id,o.id),e=a.ok+a.err,n=e>3?a.ok/e:.5;return{t:o,w:Math.max(1,2*(1.5-n))}}),i=h.reduce((o,a)=>o+a.w,0);let s=Math.random()*i,r=h[0].t;for(const{t:o,w:a}of h)if(s-=a,s<=0){r=o;break}return curTheory=r.th||null,cS=t,r.gen()}function shareDailyReport(){const o=DAILY.ok+DAILY.err,a=o?Math.round(DAILY.ok/o*100):0,e=dailyDone();let n="shortcut"===e?"🎯":"done"===e?"✅":"⏳",t="shortcut"===e?"РЫВОК — 20/20!":"done"===e?"НОРМА ВЫПОЛНЕНА":"в процессе",h=`📅 ${(new Date).toLocaleDateString("ru",{day:"numeric",month:"long"})} — ${getPlayerName()} — ${n} ${t}\n\n`;h+=`Решено: ${o}, верных: ${DAILY.ok} (${a}%), без подсказок: ${DAILY.pure}\n`,STR.current>0&&(h+=`🔥 Серия: ${STR.current} ${declNum(STR.current,"день","дня","дней")} подряд (рекорд: ${STR.best})\n`);const i=BADGES.filter(o=>STR.badges.includes(o.id));i.length&&(h+="Награды: "+i.map(o=>o.icon+o.name).join(", ")+"\n"),h+="\n",SUBJ.forEach(o=>{const a=DAILY.subjs[o.id];if(a&&a.ok+a.err>0){const e=Math.round(a.ok/(a.ok+a.err)*100);h+=`${e>=80?"✅":e>=50?"⚠️":"❌"} ${o.nm}: ${a.ok}/${a.ok+a.err} (${e}%)\n`}}),doShare("Дневной отчёт",h)}function openSubj(o){const a=SUBJ.find(a=>a.id===o);if(a.locked&&(STR.totalOk||0)<(a.unlockAt||0))return void alert("🔒 "+a.nm+" откроется после "+a.unlockAt+" правильных ответов.\nСейчас: "+(STR.totalOk||0));globalMix=!1,rushMode=!1,diagMode=!1,cS=a,document.getElementById("hdr").textContent=cS.nm.toUpperCase(),document.getElementById("sh").innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div class="ic" style="background:${cS.bg};color:${cS.cl};width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800">${cS.ic}</div><div><div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800">${cS.nm}</div>${cS.date?`<div style="font-size:11px;color:var(--muted)">Диагностика: ${cS.date}</div>`:""}</div></div>`;const e=document.getElementById("tl");e.innerHTML="",cS.tops.forEach((o,a)=>{const n=getTP(cS.id,o.id),t=n.ok+n.err,h=t?Math.round(n.ok/t*100):null,i=document.createElement("button");i.className="tbtn",i.style.animation=`fu .3s ease ${.04*a}s both`,i.innerHTML=`<span class="dot" style="background:${o.dot}"></span><span style="flex:1">${o.nm}</span>${null!==h?`<span class="tpct" style="color:${h>=80?"var(--green)":h>=50?"var(--orange)":"var(--red)"}">${h}%</span>`:'<span class="tpct">—</span>'}`,i.onclick=()=>{cT=o,mix=!1,document.getElementById("tc").innerHTML=o.th,go("theory")},e.appendChild(i)});const n=document.createElement("button");n.className="tbtn",n.style.animation=`fu .3s ease ${.04*cS.tops.length}s both`,n.style.background=`linear-gradient(135deg,${cS.bg},var(--abg))`,n.innerHTML='<span style="font-size:14px">⚡</span><span style="flex:1;font-weight:700">Всё вперемешку</span>',n.onclick=()=>{cT=null,mix=!0,diagMode=!1,rushMode=!1,startQuiz()},e.appendChild(n);const t=document.createElement("button");t.className="tbtn",t.style.animation=`fu .3s ease ${.04*(cS.tops.length+1)}s both`,t.style.background="linear-gradient(135deg,#fee2e2,#fef9c3)",t.innerHTML='<span style="font-size:14px">📝</span><span style="flex:1;font-weight:700">Диагностика (20 задач, 10 мин)</span>',t.onclick=()=>startDiag(),e.appendChild(t),go("subj")}function goSubj(){ti&&clearInterval(ti),document.getElementById("hb").style.display="none",diagMode=!1,rushMode=!1,globalMix?(globalMix=!1,go("main")):openSubj(cS.id)}function startQuiz(){st={ok:0,err:0,streak:0,best:0},sesTopics={},seenQs={},tv=0,sel=null,hintOn=!1,shpOn=!1,usedHelp=!1,wrongAnswers=[],ti&&clearInterval(ti),rushMode?(tv=rushTime,ti=setInterval(()=>{tv--,document.getElementById("tmr").textContent=fmt(tv),tv<=0&&(clearInterval(ti),endSession())},1e3),document.getElementById("tmr").textContent=fmt(rushTime)):diagMode?(tv=diagTime,ti=setInterval(()=>{tv--,document.getElementById("tmr").textContent=fmt(tv),tv<=0&&(clearInterval(ti),endSession())},1e3),document.getElementById("tmr").textContent=fmt(diagTime)):(ti=setInterval(()=>{tv++,document.getElementById("tmr").textContent=fmt(tv)},1e3),document.getElementById("tmr").textContent="0:00"),go("play"),nextQ()}function fmt(o){return(0|o/60)+":"+(""+o%60).padStart(2,"0")}function nextQ(){if(diagMode&&st.ok+st.err>=diagMax)return void endSession();let o=null,a=999;for(let e=0;e<50;e++){let e;if(globalMix)e=genGlobalMix();else{let o;if(mix?o=pick(cS.tops).gen:cT&&(o=cT.gen),!o)return;e=o()}const n=e.question+e.answer,t=seenQs[n]||0;if(0===t){o=e;break}t<a&&(o=e,a=t)}if(o){prob=o;const a=o.question+o.answer;seenQs[a]=(seenQs[a]||0)+1}sel=null,hintOn=!1,shpOn=!1,usedHelp=!1,render(),window.scrollTo({top:0,behavior:"smooth"})}function render(){const o=st.ok+st.err,a=o?Math.round(st.ok/o*100):0,e=document.getElementById("hb");o>0&&(e.style.display="inline-block",e.textContent=st.ok+"/"+o+" "+a+"%"),document.getElementById("sts").innerHTML=rushMode?`<div class="st"><span class="v" style="color:var(--green);font-size:20px">${rushScore}</span><span class="l">${declNum(rushScore,"очко","очка","очков")}</span></div><div class="st"><span class="v" style="font-size:18px">${"❤️".repeat(3-rushErrors)+"🖤".repeat(rushErrors)}</span><span class="l">жизни</span></div><div class="st"><span class="v" style="color:${tv<=30?"var(--red)":"var(--accent)"}">⏱${fmt(tv)}</span><span class="l">осталось</span></div>`:`<div class="st"><span class="v" style="color:var(--green)">${st.ok}</span><span class="l">верно</span></div><div class="st"><span class="v" style="color:var(--red)">${st.err}</span><span class="l">${declNum(st.err,"ошибка","ошибки","ошибок")}</span></div><div class="st"><span class="v" style="color:var(--accent)">${a}%</span><span class="l">точность</span></div>${st.streak>=3?'<div class="st streak"><span class="v" style="color:var(--orange)">🔥'+st.streak+'</span><span class="l">серия</span></div>':""}`,document.getElementById("qt").textContent=prob.tag,document.getElementById("qt").style.background=prob.bg,document.getElementById("qt").style.color=prob.color,document.getElementById("qb").className=prob.isMath?"qmath":"qtxt",document.getElementById("qb").textContent=prob.question;const n=document.getElementById("qcd");prob.code?(n.style.display="block",n.textContent=prob.code):n.style.display="none";const t=document.getElementById("qc");t.classList.remove("fade"),t.offsetWidth,t.classList.add("fade");let h=cT?cT.th:null;if(!h&&prob&&prob.tag)for(const o of SUBJ){for(const a of o.tops)if(a.nm===prob.tag){h=a.th;break}if(h)break}h||(h=curTheory);let i="";null!==sel||!h||diagMode||rushMode||(i=`<button class="shpb" onclick="shpOn=!shpOn;if(shpOn)usedHelp=true;render()">📖 ${shpOn?"Скрыть шпаргалку":"Шпаргалка"}</button>`,shpOn&&(i+=`<div class="shpbox">${h.replace(/<h3>.*?<\/h3>/g,"")}</div>`)),document.getElementById("shp-area").innerHTML=i;let s="";prob.options.forEach((o,a)=>{let e="opt";null!==sel&&(e+=" done",o===prob.answer?e+=" ok":e+=o===sel?" no":" dim"),s+=`<button class="${e}" onclick="ans(${a})" ${null!==sel?"disabled":""}><span class="k">${"ABCD"[a]}</span><span>${esc(o)}</span></button>`}),document.getElementById("opts").innerHTML=s;let r="";if(null!==sel){const o=sel===prob.answer,a=o&&usedHelp;r=rushMode?`<div class="fb"><div class="fbr" style="color:${o?"var(--green)":"var(--red)"}; font-size:18px">${o?"✓":"✗ "+esc(prob.answer)}</div></div>`:`<div class="fb"><div class="fbr" style="color:${o?a?"var(--orange)":"var(--green)":"var(--red)"}">${o?a?"✓ Верно, но с подсказкой — не в зачёт серии":"✓ Верно!":"✗ Ответ: "+esc(prob.answer)}</div>${!o&&prob.hint?'<div class="fbh">💡 '+esc(prob.hint)+"</div>":""}<button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>`}document.getElementById("fba").innerHTML=r;let c="";null!==sel||diagMode||rushMode||(c=`<button class="hintt" onclick="hintOn=!hintOn;if(hintOn)usedHelp=true;render()">${hintOn?"Скрыть":"💡 Подсказка"}</button>`,hintOn&&(c+=`<div class="hintb">${prob.hint}</div>`)),document.getElementById("ha").innerHTML=c;let q="";diagMode?q=`<div class="pgbar"><div class="pgfill" style="width:${Math.round(o/diagMax*100)}%;background:var(--accent)"></div></div><div style="text-align:center;font-size:11px;color:var(--muted);margin-top:4px">Вопрос ${o+1} из ${diagMax}</div>`:o>=10&&(q=`<div class="pgbar"><div class="pgfill" style="width:${a}%;background:${a>=80?"var(--green)":a>=50?"var(--orange)":"var(--red)"}"></div></div>`),document.getElementById("pa").innerHTML=q}function ans(o){if(null!==sel)return;const a=prob.options[o];sel=a;const e=a===prob.answer;e?(vibrate(50),sfxCorrect()):(vibrate([40,30,40]),sfxWrong());const n=e&&!usedHelp;st.ok+=e?1:0,st.err+=e?0:1,st.streak=n?st.streak+1:0,st.best=Math.max(st.best,st.streak);const t=prob.tag;if(sesTopics[t]||(sesTopics[t]={ok:0,err:0}),sesTopics[t].ok+=e?1:0,sesTopics[t].err+=e?0:1,cS){const o=cT?cT.id:mix?"mix":"?";addTP(cS.id,"mix"===o?findTopicId(prob.tag):o,e?1:0,e?0:1),addDaily(cS.id,e?1:0,e?0:1,usedHelp,globalMix&&!mixFilter)}if(rushMode){if(e?rushScore++:rushErrors++,render(),rushErrors>=3)return void setTimeout(()=>endSession(),600);setTimeout(()=>nextQ(),e?400:900)}else render()}function findTopicId(o){if(!cS)return"?";const a=cS.tops.find(a=>a.nm===o||o.includes(a.nm.slice(0,4)));return a?a.id:"mix"}function endSession(){ti&&clearInterval(ti),document.getElementById("hb").style.display="none";const o=st.ok+st.err;if(0===o)return void(globalMix?go("main"):goSubj());const a=Math.round(st.ok/o*100);if(rushMode){const o=rushTime/60,a=rushScore>(rushBest[o]||0);saveRushBest(o,rushScore),document.getElementById("res-emoji").textContent=a?"🎉":"⚡",document.getElementById("res-title").textContent=a?"НОВЫЙ РЕКОРД!":"Молния",a&&(confetti(60),sfxRush()),document.getElementById("res-score").textContent=rushScore+"";const e=rushErrors>=3?"3 ошибки":"Время вышло";document.getElementById("res-detail").textContent=`${e} · ${getPlayerName()} · ${o} мин · Лучший: ${rushBest[o]||rushScore}`}const _pr=document.getElementById("privacy-row");if(_pr){_pr.style.display="block";renderPrivacyBtn()}else if(diagMode){const e=a>=85?5:a>=65?4:a>=45?3:2,n={5:"🏆",4:"👍",3:"⚠️",2:"📛"},t={5:"Отлично!",4:"Хорошо",3:"Удовлетворительно",2:"Неудовлетворительно"};document.getElementById("res-emoji").textContent=n[e],document.getElementById("res-title").textContent="Оценка: "+e+" — "+t[e],document.getElementById("res-score").textContent=a+"%";const h=diagMode?diagTime-tv:tv,i=diagMode&&tv<=0?" · ⏱ Время вышло":"";document.getElementById("res-detail").textContent=`${st.ok} верно из ${o} · ${fmt(h)}${i} · Без подсказок`,STR.diags||(STR.diags=0),STR.diag5s||(STR.diag5s=0),STR.diagPerfect||(STR.diagPerfect=0),STR.diag5subjs||(STR.diag5subjs=[]),STR.diags++,5===e&&(STR.diag5s++,cS&&!STR.diag5subjs.includes(cS.id)&&STR.diag5subjs.push(cS.id)),100===a&&STR.diagPerfect++,saveStreak()}else document.getElementById("res-emoji").textContent=a>=80?"🎉":a>=50?"💪":"📘",document.getElementById("res-title").textContent=a>=80?"Отлично!":a>=50?"Неплохо!":"Нужна практика",document.getElementById("res-score").textContent=a+"%",document.getElementById("res-detail").textContent=`${st.ok} верно из ${o} · ${fmt(tv)}${st.best>=3?" · 🔥серия "+st.best:""}`;let e="";if(Object.entries(sesTopics).forEach(([o,a])=>{const n=a.ok+a.err?Math.round(a.ok/(a.ok+a.err)*100):0,t=n>=80?"var(--green)":n>=50?"var(--orange)":"var(--red)";e+=`<div class="prow"><div class="plabel"><span class="pname">${o}</span><span class="pval" style="color:${t}">${a.ok}/${a.ok+a.err} ${n}%</span></div><div class="ptrack"><div class="pfill" style="width:${n}%;background:${t}"></div></div></div>`}),document.getElementById("res-topics").innerHTML=e?`<div class="rcard"><h3>По темам</h3>${e}</div>`:"",wrongAnswers.length>0&&!rushMode){let o='<div class="rcard"><h3>📝 Разбор ошибок</h3>';wrongAnswers.slice(-10).forEach(a=>{o+=`<div style="padding:8px 0;border-bottom:1px solid var(--border)">\n        <div style="font-size:12px;font-weight:700;margin-bottom:3px">${esc(a.q)}</div>\n        <div style="font-size:11px"><span style="color:var(--red)">✗ ${esc(a.yourAnswer)}</span> → <span style="color:var(--green)">✓ ${esc(a.correct)}</span></div>\n        ${a.hint?`<div style="font-size:10px;color:var(--muted);margin-top:2px">💡 ${esc(a.hint)}</div>`:""}\n      </div>`}),o+="</div>",document.getElementById("res-topics").innerHTML+=o}wrongAnswers=[],go("result")}function shareSession(){const o=st.ok+st.err,a=o?Math.round(st.ok/o*100):0;let e;if(rushMode){const o=rushTime/60;e=`⚡ МОЛНИЯ ${o} мин — ${getPlayerName()}\n⚡ Результат: ${rushScore} очков\n${rushErrors>=3?"💀 3 ошибки":"⏱ Время вышло"}\n🏆 Рекорд: ${rushBest[o]||rushScore}\n`}else if(diagMode){const n=a>=85?5:a>=65?4:a>=45?3:2;e=`📝 ДИАГНОСТИКА: ${cS?cS.nm:"?"}\n🎯 Оценка: ${n} (${a}%)\n${st.ok} верно из ${o} · ${fmt(tv)}\n\n`}else e=`📊 ${cS?cS.nm:"Тренировка"} — ${a}% (${st.ok}/${o})\n`;Object.entries(sesTopics).forEach(([o,a])=>{const n=a.ok+a.err?Math.round(a.ok/(a.ok+a.err)*100):0;e+=`${n>=80?"✅":n>=50?"⚠️":"❌"} ${o}: ${n}%\n`}),doShare(diagMode?"Результат диагностики":"Результат тренировки",e)}function renderProg(){let o="",a=0,e=0;SUBJ.forEach(n=>{let t=0,h=0,i="";n.tops.forEach(o=>{const a=getTP(n.id,o.id);t+=a.ok,h+=a.err;const e=a.ok+a.err;if(e>0){const n=Math.round(a.ok/e*100),t=n>=80?"var(--green)":n>=50?"var(--orange)":"var(--red)";i+=`<div class="prow"><div class="plabel"><span class="pname" style="font-size:12px;color:var(--muted)">${o.nm}</span><span class="pval" style="color:${t}">${a.ok}/${e} ${n}%</span></div><div class="ptrack"><div class="pfill" style="width:${n}%;background:${t}"></div></div></div>`}else i+=`<div class="prow"><div class="plabel"><span class="pname" style="font-size:12px;color:var(--muted)">${o.nm}</span><span class="pval" style="color:var(--muted)">—</span></div><div class="ptrack"><div class="pfill" style="width:0"></div></div></div>`}),a+=t,e+=h;const s=t+h,r=s?Math.round(t/s*100):0;o+=`<div class="rcard"><h3 style="display:flex;align-items:center;gap:8px"><span style="color:${n.cl}">${n.ic}</span> ${n.nm} ${s>0?`<span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;color:${r>=80?"var(--green)":r>=50?"var(--orange)":"var(--red)"}; margin-left:auto">${r}%</span>`:""}</h3>${s>0?i:'<div class="rempty">Ещё не начато</div>'}</div>`});const n=a+e;o=`<div class="rcard" style="text-align:center;background:var(--text);color:#fff"><div style="font-size:12px;opacity:.5;margin-bottom:4px">ОБЩИЙ ПРОГРЕСС</div><div style="font-size:28px;font-weight:800">${n>0?Math.round(a/n*100)+"%":"—"}</div><div style="font-size:12px;opacity:.5;margin-top:2px">${n>0?a+" верно из "+n:"Начни решать!"}</div></div>`+o,document.getElementById("prog-content").innerHTML=o}function shareReport(){let o="📊 Прогресс подготовки к диагностикам\n\n";SUBJ.forEach(a=>{let e=0,n=0;a.tops.forEach(o=>{const t=getTP(a.id,o.id);e+=t.ok,n+=t.err});const t=e+n;if(0===t)o+=`${a.ic} ${a.nm} (${a.date}): ещё не начато\n`;else{const n=Math.round(e/t*100);o+=`${n>=80?"✅":n>=50?"⚠️":"❌"} ${a.nm} (${a.date}): ${n}% (${e}/${t})\n`,a.tops.forEach(e=>{const n=getTP(a.id,e.id),t=n.ok+n.err;if(t>0){const a=Math.round(n.ok/t*100);o+=`   ${a>=80?"✅":a>=50?"⚠️":"❌"} ${e.nm}: ${a}%\n`}})}}),doShare("Прогресс подготовки",o)}function doShare(o,a){try{if(navigator.share)return void navigator.share({title:o,text:a}).catch(()=>showShareText(a))}catch{}try{if(navigator.clipboard&&navigator.clipboard.writeText)return void navigator.clipboard.writeText(a).then(()=>alert("✅ Скопировано! Вставь в сообщение папе.")).catch(()=>showShareText(a))}catch{}showShareText(a)}function showShareText(o){const a=document.createElement("div");a.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px",a.onclick=()=>a.remove();const e=document.createElement("div");e.style.cssText="background:#fff;border-radius:14px;padding:20px;max-width:400px;width:100%;max-height:80vh;overflow-y:auto",e.onclick=o=>o.stopPropagation();const n=document.createElement("pre");n.style.cssText="font-size:11px;white-space:pre-wrap;background:#f5f3ee;padding:12px;border-radius:8px;user-select:all;-webkit-user-select:all",n.textContent=o;const t=document.createElement("h3");t.textContent="Скопируй и отправь папе:",t.style.cssText="margin-bottom:10px;font-size:14px";const h=document.createElement("button");h.textContent="Закрыть",h.style.cssText="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer",h.onclick=()=>a.remove(),e.appendChild(t),e.appendChild(n),e.appendChild(h),a.appendChild(e),document.body.appendChild(a)}function resetProgress(){confirm("Сбросить весь прогресс? Это нельзя отменить.")&&(PROG={},saveProg(),STR={current:0,best:0,lastDone:"",totalDone:0,totalQs:0,totalOk:0,shortcuts:0,badges:[]},saveStreak(),renderProg())}function showBadges(){const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto",o.onclick=()=>o.remove();const a=document.createElement("div");a.style.cssText="background:#fff;border-radius:16px;padding:24px 20px;max-width:400px;width:100%;max-height:85vh;overflow-y:auto",a.onclick=o=>o.stopPropagation();let e='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">🏆 Награды</h3>';const n=BADGES.filter(o=>!o.repeat),t=n.filter(o=>STR.badges.includes(o.id)).length;e+=`<div style="text-align:center;margin-bottom:16px"><span style="font-size:28px">${t}</span><span style="color:#6b6b7e;font-size:13px"> / ${n.length}</span></div>`;const h=BADGES.filter(o=>o.repeat);h.length&&(e+='<div style="font-size:11px;font-weight:700;color:#6b6b7e;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Повторяющиеся</div>',h.forEach(o=>{const a=o.count?o.count(STR):0,n=a>0;e+=`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e2e0d8;${n?"":"opacity:.4"}">\n        <div style="font-size:28px;width:40px;text-align:center">${o.icon}</div>\n        <div style="flex:1"><div style="font-weight:700;font-size:13px;color:#1a1a2e">${o.name}</div><div style="font-size:11px;color:#6b6b7e">${o.desc}</div></div>\n        ${n?`<div style="margin-left:auto;background:#dcfce7;color:#16a34a;font-weight:900;font-size:14px;padding:4px 10px;border-radius:10px">×${a}</div>`:'<div style="margin-left:auto;color:#ccc;font-size:20px">🔒</div>'}\n      </div>`}),e+='<div style="height:12px"></div>'),e+='<div style="font-size:11px;font-weight:700;color:#6b6b7e;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Достижения</div>',n.forEach(o=>{const a=STR.badges.includes(o.id);e+=`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #e2e0d8;${a?"":"opacity:.4"}">\n      <div style="font-size:28px;width:40px;text-align:center">${o.icon}</div>\n      <div><div style="font-weight:700;font-size:13px;color:#1a1a2e">${o.name}</div><div style="font-size:11px;color:#6b6b7e">${o.desc}</div></div>\n      ${a?'<div style="margin-left:auto;color:#16a34a;font-weight:700;font-size:12px">✓</div>':'<div style="margin-left:auto;color:#ccc;font-size:20px">🔒</div>'}\n    </div>`}),e+='<button style="margin-top:16px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>',a.innerHTML=e,o.appendChild(a),document.body.appendChild(o)}function genCode(){let o="";for(let a=0;a<4;a++)o+="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(32*Math.random())];return o}function getPlayerName(){try{return localStorage.getItem("trainer_player_name")||"Ученик"}catch{return"Ученик"}}function getPlayerCode(){try{return localStorage.getItem("trainer_player_code")||""}catch{return""}}function setPlayerName(o){try{localStorage.setItem("trainer_player_name",o)}catch{}}function setPlayerCode(o){try{localStorage.setItem("trainer_player_code",o)}catch{}}async function cloudSave(){if(getPrivateMode())return;const o=getPlayerCode();if(o)try{const a=await fetch(CLOUD_URL),e=await a.json();e.players||(e.players={}),e.players[o]={name:getPlayerName(),streak:{current:STR.current,best:STR.best,lastDone:STR.lastDone,totalDone:STR.totalDone,totalQs:STR.totalQs,totalOk:STR.totalOk,shortcuts:STR.shortcuts,badges:STR.badges},progress:PROG,rushBest:rushBest,updated:Date.now()},await fetch(CLOUD_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(e)})}catch(o){console.log("sync:",o)}}async function cloudRestore(o){try{const a=await fetch(CLOUD_URL),e=await a.json();if(!e.players||!e.players[o])return!1;const n=e.players[o];if(setPlayerName(n.name),setPlayerCode(o),n.streak&&(Object.assign(STR,n.streak),saveStreak()),n.progress&&(PROG=n.progress,saveProg()),n.rushBest){rushBest=n.rushBest;try{localStorage.setItem("trainer_rush_best_11",JSON.stringify(n.rushBest))}catch{}}return n}catch{return!1}}let _syncTimer=null;function scheduleSave(){_syncTimer||(_syncTimer=setTimeout(()=>{_syncTimer=null,cloudSave()},1e4))}const _origSaveStreak=saveStreak;saveStreak=function(){_origSaveStreak(),scheduleSave()};const _origSaveProg=saveProg;function pickName(){const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";const a=document.createElement("div");a.style.cssText="background:linear-gradient(135deg,#1a1a2e,#2d2b55);border-radius:20px;padding:28px 24px;max-width:340px;width:100%;text-align:center;color:#fff";let e='<div style="font-size:36px;margin-bottom:8px">📚</div>';e+='<h3 style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">Добро пожаловать!</h3>',e+='<p style="font-size:12px;color:#a5b4fc;margin-bottom:16px">Тренажёр для подготовки к диагностикам</p>',e+='<input id="custom-name" placeholder="Твоё имя" autofocus style="width:100%;padding:14px;border:none;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:16px;font-weight:600;font-family:Golos Text,sans-serif;outline:none;text-align:center;margin-bottom:10px">',e+="<button style=\"width:100%;padding:14px;border:none;border-radius:12px;background:#fbbf24;color:#1a1a2e;font-weight:800;cursor:pointer;font-size:15px;font-family:Golos Text,sans-serif\" onclick=\"const v=document.getElementById('custom-name').value.trim();if(v)registerPlayer(v,this.closest('div[style*=fixed]'));else document.getElementById('custom-name').focus()\">Начать →</button>",e+='<div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)">',e+='<p style="font-size:11px;color:#6b6b7e;margin-bottom:8px">Уже играл? Восстанови прогресс:</p>',e+='<div style="display:flex;gap:8px"><input id="recover-code" placeholder="Код" maxlength="4" style="flex:1;padding:10px;border:none;border-radius:10px;background:rgba(255,255,255,.08);color:#fff;font-size:16px;font-family:JetBrains Mono,monospace;text-align:center;letter-spacing:4px;text-transform:uppercase;outline:none"><button style="padding:10px 14px;border:none;border-radius:10px;background:rgba(255,255,255,.12);color:#a5b4fc;font-weight:700;cursor:pointer;font-size:13px" onclick="recoverByCode(this.closest(\'div[style*=fixed]\'))">Найти</button></div></div>',a.innerHTML='<div style="font-size:36px;margin-bottom:8px">📚</div><h3 style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">Добро пожаловать!</h3><p style="font-size:12px;color:#a5b4fc;margin-bottom:16px">Тренажёр для подготовки к диагностикам</p><input id="custom-name" placeholder="Твоё имя" autofocus style="width:100%;padding:14px;border:none;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:16px;font-weight:600;font-family:Golos Text,sans-serif;outline:none;text-align:center;margin-bottom:10px"><button style="width:100%;padding:14px;border:none;border-radius:12px;background:#fbbf24;color:#1a1a2e;font-weight:800;cursor:pointer;font-size:15px;font-family:Golos Text,sans-serif" onclick="const v=document.getElementById(\'custom-name\').value.trim();if(v)registerPlayer(v,this.closest(\'div[style*=fixed]\'));else document.getElementById(\'custom-name\').focus()">Начать →</button><div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)"><p style="font-size:11px;color:#6b6b7e;margin-bottom:8px">Уже играл? Восстанови прогресс:</p><div style="display:flex;gap:8px"><input id="recover-code" placeholder="Код" maxlength="4" style="flex:1;padding:10px;border:none;border-radius:10px;background:rgba(255,255,255,.08);color:#fff;font-size:16px;font-family:JetBrains Mono,monospace;text-align:center;letter-spacing:4px;text-transform:uppercase;outline:none"><button style="padding:10px 14px;border:none;border-radius:10px;background:rgba(255,255,255,.12);color:#a5b4fc;font-weight:700;cursor:pointer;font-size:13px" onclick="recoverByCode(this.closest(\'div[style*=fixed]\'))">Найти</button></div></div>',o.appendChild(a),document.body.appendChild(o)}async function registerPlayer(o,a){const e=genCode();setPlayerName(o),setPlayerCode(e),a&&a.remove(),refreshMain(),await cloudSave(),showCodeCard(o,e)}function showCodeCard(o,a){const e=document.createElement("div");e.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px",e.onclick=()=>e.remove();const n=document.createElement("div");n.style.cssText="background:#fff;border-radius:20px;padding:28px 24px;max-width:320px;width:100%;text-align:center",n.onclick=o=>o.stopPropagation(),n.innerHTML=`<div style="font-size:32px;margin-bottom:8px">🎉</div>\n    <h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:4px">Привет, ${o}!</h3>\n    <p style="font-size:12px;color:#6b6b7e;margin-bottom:16px">Твой код для восстановления:</p>\n    <div style="font-family:JetBrains Mono,monospace;font-size:32px;font-weight:900;letter-spacing:8px;color:#1a1a2e;background:#f5f3ee;padding:16px;border-radius:14px;margin-bottom:12px">${a}</div>\n    <p style="font-size:11px;color:#6b6b7e;margin-bottom:16px">Запомни или сделай скриншот 📸</p>\n    <button style="width:100%;padding:14px;border:none;border-radius:12px;background:#1a1a2e;color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Поехали! 🚀</button>`,e.appendChild(n),document.body.appendChild(e)}async function recoverByCode(o){const a=document.getElementById("recover-code"),e=(a.value||"").toUpperCase().trim();if(4!==e.length)return void alert("Введи 4-значный код");a.disabled=!0;const n=a.value;a.value="...";const t=await cloudRestore(e);t?(o&&o.remove(),refreshMain(),alert("✅ Восстановлено!\n"+t.name+" · Задач: "+(t.streak?.totalQs||0))):(a.disabled=!1,a.value=n,alert("❌ Код не найден"))}function renderPlayerBadge(){const o=document.getElementById("player-badge");if(!o)return;const a=getPlayerName(),e=getPlayerCode(),n=STR.totalQs>=5e3?"💎 Легенда":STR.totalQs>=1e3?"🏅 Мастер":STR.totalQs>=500?"🧠 Знаток":STR.totalQs>=100?"📚 Ученик":"🌱 Новичок";o.innerHTML=`<div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#fef9c3,#fff7ed);padding:6px 16px;border-radius:20px;cursor:pointer" onclick="pickName()">\n    <span style="font-size:16px;font-weight:800;color:#1a1a2e">${a}</span>\n    <span style="font-size:11px;color:#6b6b7e">${n}</span>\n    ${e?`<span style="font-family:JetBrains Mono,monospace;font-size:9px;color:#aaa;background:#f0f0f0;padding:2px 5px;border-radius:4px">${e}</span>`:""}\n  </div>`}saveProg=function(){_origSaveProg(),scheduleSave()};let demoMode=!1,demoCount=0;function showPWAPrompt(){if(localStorage.getItem("trainer_pwa_dismissed"))return;if(window.matchMedia("(display-mode:standalone)").matches)return;if(window.navigator.standalone)return;const o=+(localStorage.getItem("trainer_visits")||"0")+1;if(localStorage.setItem("trainer_visits",""+o),o<3)return;const a=/iPhone|iPad|iPod/.test(navigator.userAgent),e=/Android/.test(navigator.userAgent);if(!a&&!e)return;const n=document.createElement("div");n.style.cssText="position:fixed;bottom:0;left:0;right:0;z-index:9998;padding:12px;animation:slideUp .3s";const t=document.createElement("div");t.style.cssText="background:#1a1a2e;color:#fff;border-radius:16px;padding:16px;max-width:520px;margin:0 auto;display:flex;align-items:center;gap:12px";const h=a?"Нажми <b>Поделиться</b> (📤) внизу экрана, затем <b>«На экран Домой»</b>":"Нажми <b>⋮</b> (три точки) вверху, затем <b>«Добавить на главный экран»</b>";t.innerHTML='<div style="position:relative;width:100%"><span onclick="this.closest(\'div[style*=fixed]\').remove();localStorage.setItem(\'trainer_pwa_dismissed\',\'1\')" style="position:absolute;top:8px;right:12px;cursor:pointer;font-size:18px;color:#aaa">×</span><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:24px">📱</span><span style="font-weight:700;font-size:14px">Добавь на экран!</span></div><div style="font-size:12px;color:#a5b4fc;line-height:1.5">'+h+"<br>Тренажёр будет работать как приложение — даже без интернета.</div></div>",n.appendChild(t),document.body.appendChild(n);const i=document.createElement("style");i.textContent="@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}",document.head.appendChild(i)}function showWelcome(){const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;background:rgba(26,26,46,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";const a=document.createElement("div");a.style.cssText="background:#fff;border-radius:20px;padding:28px 24px;max-width:360px;width:100%;text-align:center",a.innerHTML='<div style="font-size:48px;margin-bottom:8px">📚</div><h2 style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:900;margin-bottom:8px">Тренажёр к диагностикам</h2><p style="font-size:13px;color:#6b6b7e;margin-bottom:20px;line-height:1.5">7 предметов · 5000+ задач<br>Попробуй 10 вопросов бесплатно!</p><button style="width:100%;padding:14px;border:none;border-radius:12px;background:#fbbf24;color:#1a1a2e;font-weight:800;font-size:16px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove();startDemo()">▶ Попробовать</button><a href="index.html?choose" style="display:block;margin-top:10px;font-size:12px;color:#2563eb;text-decoration:none">← Другой класс</a>',o.appendChild(a),document.body.appendChild(o)}function startDemo(){demoMode=!0,demoCount=0,globalMix=!0,mix=!0,cT=null,mixFilter=null,rushMode=!1,diagMode=!1,cS=SUBJ[0],document.getElementById("hdr").textContent="ПОПРОБУЙ!",startQuiz()}localStorage.getItem("trainer_player_name")?(getPlayerCode()||setPlayerCode(genCode()),setTimeout(cloudSave,3e3),setTimeout(showPWAPrompt,2e3),setTimeout(showRushSetupBanner,1500)):setTimeout(showWelcome,300);const _origNextQ=nextQ;function endDemo(){ti&&clearInterval(ti),demoMode=!1,globalMix=!1;const o=st.ok+st.err>0?Math.round(st.ok/(st.ok+st.err)*100):0,a=document.createElement("div");a.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";const e=document.createElement("div");e.style.cssText="background:linear-gradient(135deg,#1a1a2e,#2d2b55);border-radius:20px;padding:28px 24px;max-width:360px;width:100%;text-align:center;color:#fff";let n=`<div style="font-size:42px;margin-bottom:8px">${o>=80?"🎉":o>=50?"💪":"📘"}</div>`;n+=`<h3 style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">${o>=80?"Отлично!":o>=50?"Неплохо!":"Есть над чем поработать"}</h3>`,n+=`<div style="font-size:48px;font-weight:900;font-family:JetBrains Mono,monospace;margin:12px 0">${o}%</div>`,n+=`<div style="font-size:13px;color:#a5b4fc;margin-bottom:20px">${st.ok} из 10 верно</div>`,n+='<div style="background:rgba(255,255,255,.08);border-radius:12px;padding:14px;margin-bottom:16px;text-align:left">\n    <div style="font-size:12px;color:#a5b4fc;margin-bottom:8px">Сохрани прогресс — введи имя:</div>\n    <input id="demo-name" placeholder="Твоё имя" autofocus style="width:100%;padding:12px;border:none;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;font-size:15px;font-weight:600;font-family:Golos Text,sans-serif;outline:none;text-align:center;margin-bottom:8px">\n    <button style="width:100%;padding:13px;border:none;border-radius:10px;background:#fbbf24;color:#1a1a2e;font-weight:800;cursor:pointer;font-size:15px;font-family:Golos Text,sans-serif" onclick="const v=document.getElementById(\'demo-name\').value.trim();if(v){registerPlayer(v,this.closest(\'div[style*=fixed]\'))}else{document.getElementById(\'demo-name\').focus()}">Начать тренировку →</button>\n  </div>',n+='<div style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px">\n    <p style="font-size:11px;color:#6b6b7e;margin-bottom:8px">Уже играл?</p>\n    <div style="display:flex;gap:8px"><input id="recover-code" placeholder="Код" maxlength="4" style="flex:1;padding:10px;border:none;border-radius:10px;background:rgba(255,255,255,.08);color:#fff;font-size:16px;font-family:JetBrains Mono,monospace;text-align:center;letter-spacing:4px;text-transform:uppercase;outline:none"><button style="padding:10px 14px;border:none;border-radius:10px;background:rgba(255,255,255,.12);color:#a5b4fc;font-weight:700;cursor:pointer;font-size:13px" onclick="recoverByCode(this.closest(\'div[style*=fixed]\'))">Найти</button></div></div>',e.innerHTML=n,a.appendChild(e),document.body.appendChild(a),go("main")}function showHallOfFame(){const o=getPlayerName(),a=getPlayerCode(),e=STR.totalQs>=5e3?"💎 Легенда":STR.totalQs>=1e3?"🏅 Мастер":STR.totalQs>=500?"🧠 Знаток":STR.totalQs>=100?"📚 Ученик":"🌱 Новичок",n=STR.totalQs>0?Math.round(STR.totalOk/STR.totalQs*100):0,t=BADGES.filter(o=>STR.badges.includes(o.id));let h="";SUBJ.forEach(o=>{let a=0,e=0;o.tops.forEach(n=>{const t=getTP(o.id,n.id);a+=t.ok,e+=t.err});const n=a+e;if(0===n)return;const t=Math.round(a/n*100);h+=`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08)">\n      <span style="font-size:16px;width:24px;text-align:center">${o.ic}</span>\n      <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o.nm}</div><div style="font-size:10px;color:#a5b4fc">${n} ${declNum(n,"задача","задачи","задач")}</div></div>\n      <div style="font-size:14px;font-weight:900;color:${t>=80?"#4ade80":t>=50?"#fbbf24":"#f87171"}">${t}%</div>\n    </div>`});const i=document.createElement("div");i.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto",i.onclick=()=>i.remove();const s=document.createElement("div");s.style.cssText="background:linear-gradient(135deg,#1a1a2e,#2d2b55);border-radius:20px;padding:24px 20px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;color:#fff",s.onclick=o=>o.stopPropagation(),s.innerHTML=`\n    <div style="text-align:center;margin-bottom:16px">\n      <div style="font-size:40px;margin-bottom:4px">👑</div>\n      <h3 style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900;margin-bottom:4px">${o}</h3>\n      <div style="font-size:14px;color:#fbbf24;font-weight:700">${e}</div>\n      ${a?`<div style="font-family:JetBrains Mono,monospace;font-size:11px;color:#6b6b7e;margin-top:4px">Код: ${a}</div>`:""}\n    </div>\n    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">\n      <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:10px 4px"><div style="font-size:22px;font-weight:900">${STR.current}</div><div style="font-size:10px;color:#a5b4fc">🔥 ${declNum(STR.current,"день","дня","дней")}</div></div>\n      <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:10px 4px"><div style="font-size:22px;font-weight:900">${STR.best}</div><div style="font-size:10px;color:#a5b4fc">⭐ рекорд</div></div>\n      <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:10px 4px"><div style="font-size:22px;font-weight:900">${STR.totalQs}</div><div style="font-size:10px;color:#a5b4fc">📊 задач</div></div>\n      <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:10px 4px"><div style="font-size:22px;font-weight:900">${n}%</div><div style="font-size:10px;color:#a5b4fc">🎯 точность</div></div>\n    </div>\n    ${t.length?`<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:14px">${t.map(o=>`<span style="font-size:10px;padding:3px 8px;border-radius:10px;background:rgba(251,191,36,.2);color:#fbbf24;font-weight:600">${o.icon} ${o.name}</span>`).join("")}</div>`:""}\n    <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:12px;margin-bottom:14px">${h||'<div style="text-align:center;color:#a5b4fc;font-size:12px">Пока нет результатов</div>'}</div>\n    <div style="display:flex;gap:8px">\n      <button style="flex:1;padding:12px;border:none;border-radius:10px;background:#fbbf24;color:#1a1a2e;font-weight:800;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="shareHallOfFame()">📤 Поделиться</button>\n      <button style="flex:1;padding:12px;border:none;border-radius:10px;background:rgba(255,255,255,.15);color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Закрыть</button>\n    </div>`,i.appendChild(s),document.body.appendChild(i)}function shareHallOfFame(){const o=getPlayerName(),a=getPlayerCode(),e=STR.totalQs>=5e3?"💎 Легенда":STR.totalQs>=1e3?"🏅 Мастер":STR.totalQs>=500?"🧠 Знаток":STR.totalQs>=100?"📚 Ученик":"🌱 Новичок",n=STR.totalQs>0?Math.round(STR.totalOk/STR.totalQs*100):0;let t=`👑 ${o} · ${e}\n🔥 Серия: ${STR.current} | ⭐ Рекорд: ${STR.best}\n📊 ${declNum(STR.totalQs,"задача","задачи","задач")}: ${STR.totalQs} | 🎯 ${n}%\n`;STR.badges.length&&(t+="🏆 "+BADGES.filter(o=>STR.badges.includes(o.id)).map(o=>o.icon).join("")+"\n"),t+="\n",SUBJ.forEach(o=>{let a=0,e=0;o.tops.forEach(n=>{const t=getTP(o.id,n.id);a+=t.ok,e+=t.err});const n=a+e;if(!n)return;const h=Math.round(a/n*100);t+=`${h>=80?"✅":h>=50?"⚠️":"❌"} ${o.nm}: ${h}%\n`}),a&&(t+=`\nКод: ${a}`),doShare("Профиль — "+o,t)}async function showRushRecords(){try{const o=JSON.parse(localStorage.getItem("trainer_rush_best_11")||"{}");rushBest={3:o[3]||0,5:o[5]||0}}catch{}const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto",o.onclick=()=>o.remove();const a=document.createElement("div");a.style.cssText="background:#fff;border-radius:16px;padding:24px 20px;max-width:380px;width:100%;max-height:85vh;overflow-y:auto",a.onclick=o=>o.stopPropagation(),a.innerHTML='<div style="text-align:center;padding:30px"><div style="font-size:24px">⏳</div><div style="color:#6b6b7e;font-size:13px;margin-top:8px">Загружаю рекорды...</div></div>',o.appendChild(a),document.body.appendChild(o);let e=[];if(rushBinId)e=await fetchRushRecords();else try{e=JSON.parse(localStorage.getItem("trainer_rush_best_11")||"{}")._records||[]}catch{}const n={},t={};e.forEach(o=>{const a=o.name||"?";3===o.min&&(!(a in n)||o.score>n[a])&&(n[a]=o.score),5===o.min&&(!(a in t)||o.score>t[a])&&(t[a]=o.score)});let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">🏆 Молния 11 класс — Рейтинг</h3>';function i(o,a,e,n){const t=Object.entries(a).sort((o,a)=>a[1]-o[1]);if(!t.length)return'<div style="text-align:center;color:#aaa;font-size:11px;padding:12px">Сыграй первым!</div>';let h=`<div style="font-size:10px;font-weight:700;color:${e};margin-bottom:8px;text-align:center">${o}</div>`;return t.forEach(([o,a],n)=>{h+=`<div style="display:flex;align-items:center;gap:6px;padding:${n<3?"6":"4"}px 0;${0===n?"border-bottom:2px solid "+e+";margin-bottom:4px":""}">\n        <span style="width:22px;text-align:center;font-size:${n<3?"14":"11"}px">${(0===n?"🥇":1===n?"🥈":2===n?"🥉":"")||n+1}</span>\n        <span style="flex:1;font-size:12px;${n<3?"font-weight:800":""}overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o}</span>\n        <span style="${0===n?"font-size:22px":"font-size:16px"};font-weight:900;color:${e}">${a}</span>\n      </div>`}),h}h+=`<div style="display:flex;gap:12px;margin-bottom:16px">\n    <div style="flex:1;background:#fef9c3;border-radius:12px;padding:12px">${i("⏱ 3 минуты",n,"#92400e")}</div>\n    <div style="flex:1;background:#fee2e2;border-radius:12px;padding:12px">${i("⏱ 5 минут",t,"#991b1b")}</div>\n  </div>`,e.length&&(h+='<h4 style="font-size:13px;font-weight:700;margin-bottom:8px;color:#6b6b7e">Последние игры</h4>',e.slice(-10).reverse().forEach(o=>{h+=`<div style="display:flex;align-items:center;padding:6px 0;border-bottom:1px solid #f0f0f0">\n        <div style="flex:1;min-width:0">\n          <div style="font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o.name||"?"}</div>\n          <div style="font-size:10px;color:#aaa">${o.date||""} · ${o.min} мин</div>\n        </div>\n        <div style="font-weight:900;font-size:18px;margin-left:12px;min-width:30px;text-align:right">${o.score}</div>\n      </div>`})),h+=getPrivateMode()?'<div style="margin-top:8px;text-align:center;font-size:11px;color:#dc2626">👤 Ваши результаты скрыты</div>':'<div style="margin-top:8px;text-align:center;font-size:11px;color:#aaa">🌐 Общий рейтинг для всех игроков</div>';h+='<button onclick="togglePrivacy();this.closest(\'div[style*=fixed]\').remove()" style="margin-top:6px;width:100%;padding:8px;border:1.5px solid #e2e0d8;border-radius:8px;background:transparent;font-size:12px;font-weight:700;cursor:pointer;font-family:Golos Text,sans-serif;color:#6b6b7e">'+(getPrivateMode()?"🌐 Участвовать в рейтинге":"👤 Не публиковать результаты")+'</button>',h+='<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>',a.innerHTML=h}function toggleHint(){hintOn=!hintOn,render()}function loadJournal(){try{return JSON.parse(localStorage.getItem("trainer_journal")||"[]")}catch{return[]}}function saveJournal(o){try{localStorage.setItem("trainer_journal",JSON.stringify(o.slice(-50)))}catch{}}function addToJournal(o){const a=loadJournal();a.push({q:o.q,your:o.yourAnswer,correct:o.correct,hint:o.hint,tag:o.tag,ts:Date.now()}),saveJournal(a)}nextQ=function(){if(demoMode&&st.ok+st.err>=10)endDemo();else if(_origNextQ(),demoMode){const o=document.getElementById("pa");o&&(o.innerHTML=`<div class="pgbar"><div class="pgfill" style="width:${Math.round((st.ok+st.err)/10*100)}%;background:var(--accent)"></div></div><div style="text-align:center;font-size:11px;color:var(--muted);margin-top:4px">Пробный режим: ${st.ok+st.err} из 10</div>`)}};const _origAns2=ans;function showJournal(){const o=loadJournal(),a=document.createElement("div");a.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto",a.onclick=()=>a.remove();const e=document.createElement("div");e.style.cssText="background:#fff;border-radius:16px;padding:24px 20px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto",e.onclick=o=>o.stopPropagation();let n='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:12px;text-align:center">📊 Мои слабые места</h3>';if(o.length){const a={};o.forEach(o=>{a[o.tag]||(a[o.tag]=[]),a[o.tag].push(o)});const e=Object.entries(a).sort((o,a)=>a[1].length-o[1].length);n+='<div style="margin-bottom:16px">',e.forEach(([o,a])=>{const e=a.length>=5?"#dc2626":a.length>=3?"#ea580c":"#ca8a04",t=a.length>=5?"#fee2e2":a.length>=3?"#fff7ed":"#fef9c3";n+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:4px;background:${t};border-radius:8px">\n        <span style="font-size:11px;font-weight:700;color:${e};flex:1">${o}</span>\n        <span style="font-weight:900;font-size:16px;color:${e}">${a.length}</span>\n        <span style="font-size:10px;color:${e}">${declNum(a.length,"ошибка","ошибки","ошибок")}</span>\n      </div>`}),n+="</div>",n+='<div style="font-size:11px;font-weight:700;color:#6b6b7e;margin-bottom:6px">Последние ошибки:</div>',o.slice(-10).reverse().forEach(o=>{n+=`<div style="padding:6px 0;border-bottom:1px solid #eee;font-size:12px">\n        <div style="font-weight:600">${esc(o.q)}</div>\n        <div><span style="color:#dc2626">✗ ${esc(o.your)}</span> → <span style="color:#16a34a">✓ ${esc(o.correct)}</span></div>\n        ${o.hint?`<div style="color:#aaa;font-size:10px">💡 ${esc(o.hint)}</div>`:""}\n      </div>`}),n+='<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#ea580c;color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove();startWeakTraining()">🎯 Повторить слабые темы</button>',n+="<button style=\"margin-top:6px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:#dc2626;font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif\" onclick=\"if(confirm('Очистить журнал ошибок?')){localStorage.removeItem('trainer_journal');this.closest('div[style*=fixed]').remove()}\">Очистить журнал</button>"}else n+='<div style="text-align:center;color:#aaa;padding:30px;font-size:13px">Ошибок пока нет. Решай задачи!</div>';n+='<button style="margin-top:8px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>',e.innerHTML=n,a.appendChild(e),document.body.appendChild(a)}function startWeakTraining(){const o=loadJournal(),a={};o.forEach(o=>{a[o.tag]=(a[o.tag]||0)+1}),Object.entries(a).forEach(([o,a])=>{SUBJ.forEach(e=>e.tops.forEach(n=>{(n.nm===o||o.includes(n.nm))&&addTP(e.id,n.id,0,2*a)}))}),globalMix=!0,mix=!0,cT=null,mixFilter=null,cS=SUBJ[0],document.getElementById("hdr").textContent="🎯 СЛАБЫЕ ТЕМЫ",startQuiz()}function sendToTeacher(){const o=getPlayerName(),a=st.ok+st.err,e=a?Math.round(st.ok/a*100):0,n=diagMode?diagTime-tv:tv;let t=`📚 ${o} — тренажёр к диагностикам\n`;diagMode&&cS&&(t+=`📝 Диагностика: ${cS.nm}\n`),t+=`✅ ${st.ok}/${a} верно (${e}%) · ${fmt(n)}\n`,Object.entries(sesTopics).sort((o,a)=>a[1].ok/(a[1].ok+a[1].err)-o[1].ok/(o[1].ok+o[1].err)).forEach(([o,a])=>{const e=Math.round(a.ok/(a.ok+a.err)*100);t+=`${e>=80?"🟢":e>=50?"🟡":"🔴"} ${o}: ${e}%\n`});const h=getPlayerCode();h&&(t+=`🔑 Код: ${h}`),navigator.share?navigator.share({text:t}).catch(()=>{}):navigator.clipboard.writeText(t).then(()=>alert("Скопировано!")).catch(()=>{})}function generateReport(){const o=getPlayerName(),a=JSON.parse(localStorage.getItem("trainer_dates_11")||"[]").length,e=STR.current,n=STR.totalQs,t=STR.totalOk,h=n>0?Math.round(t/n*100):0,i=[];SUBJ.forEach(o=>{if(o.locked)return;let a=0,e=0;o.tops.forEach(n=>{const t=getTP(o.id,n.id);a+=t.ok,e+=t.err});const n=a+e;if(n>0){const e=Math.round(a/n*100),t=e>=80?"🟢":e>=60?"🟡":"🔴";i.push({name:o.nm,ic:o.ic,pct:e,light:t,ok:a,total:n})}}),i.sort((o,a)=>o.pct-a.pct);const s=[];SUBJ.forEach(o=>{o.locked||o.tops.forEach(a=>{const e=getTP(o.id,a.id),n=e.ok+e.err;if(n>=3){const t=Math.round(e.ok/n*100);t<60&&s.push({subj:o.nm,topic:a.nm,pct:t,total:n})}})}),s.sort((o,a)=>o.pct-a.pct);let r="📊 Отчёт — "+o+"\n";r+="📅 "+(new Date).toLocaleDateString("ru")+"\n",r+="━━━━━━━━━━━━━━━\n",r+="🔢 Всего: "+n+" задач, "+h+"% точность\n",r+="🔥 Серия: "+e+" "+declNum(e,"день","дня","дней")+"\n",r+="📆 Занимался: "+a+" "+declNum(a,"день","дня","дней")+"\n",r+="━━━━━━━━━━━━━━━\n",i.length>0&&(r+="По предметам:\n",i.forEach(o=>{r+=o.light+" "+o.name+": "+o.pct+"% ("+o.ok+"/"+o.total+")\n"})),s.length>0&&(r+="━━━━━━━━━━━━━━━\n",r+="⚠️ Слабые темы:\n",s.slice(0,5).forEach(o=>{r+="🔴 "+o.subj+" → "+o.topic+": "+o.pct+"%\n"})),r+="━━━━━━━━━━━━━━━\n";const c=dailyDone();r+="Норма сегодня: "+(c?"✅ выполнена":"❌ не выполнена")+"\n";const q=document.createElement("div");q.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto",q.onclick=()=>q.remove();const d=document.createElement("div");d.style.cssText="background:#fff;border-radius:16px;padding:24px 20px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto",d.onclick=o=>o.stopPropagation();let l='<h3 style="font-family:Unbounded,sans-serif;font-size:15px;text-align:center;margin-bottom:14px">📊 Отчёт для родителя</h3>';l+='<div style="background:#1a1a2e;color:#fff;border-radius:12px;padding:16px;margin-bottom:12px">',l+='<div style="font-size:12px;color:#a5b4fc;margin-bottom:8px">'+o+" · "+(new Date).toLocaleDateString("ru")+"</div>",l+='<div style="display:flex;gap:12px;margin-bottom:10px">',l+='<div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900">'+n+'</div><div style="font-size:10px;color:#a5b4fc">задач</div></div>',l+='<div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900">'+h+'%</div><div style="font-size:10px;color:#a5b4fc">точность</div></div>',l+='<div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:20px;font-weight:900">🔥'+e+'</div><div style="font-size:10px;color:#a5b4fc">серия</div></div>',l+="</div>",i.forEach(o=>{o.pct>=80||o.pct;const a=o.pct>=80?"#4ade80":o.pct>=60?"#facc15":"#f87171";l+='<div style="display:flex;align-items:center;gap:8px;padding:5px 0"><span style="font-size:14px">'+o.light+'</span><span style="flex:1;font-size:13px">'+o.name+'</span><span style="font-weight:700;color:'+a+';font-size:13px">'+o.pct+"%</span></div>"}),s.length>0&&(l+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:#f87171">',l+="<b>Слабые темы:</b> "+s.slice(0,3).map(o=>o.topic+" ("+o.pct+"%)").join(", ")+"</div>"),l+="</div>",l+='<div style="display:flex;gap:6px">',window._reportTxt=r,window._reportName=o,l+='<button style="flex:1;padding:12px;border:none;border-radius:10px;background:#229ED9;color:#fff;font-weight:700;font-size:13px;cursor:pointer" onclick="doShare(window._reportName,window._reportTxt);this.closest(\'div[style*=fixed]\').remove()">💬 Отправить</button>',l+='<button style="flex:1;padding:12px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:13px;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>',l+="</div>",d.innerHTML=l,q.appendChild(d),document.body.appendChild(q)}function showAbout(){const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto",o.onclick=()=>o.remove();const a=document.createElement("div");a.style.cssText="background:#fff;border-radius:16px;padding:28px 24px;max-width:380px;width:100%;max-height:85vh;overflow-y:auto;text-align:center",a.onclick=o=>o.stopPropagation();const e=SUBJ.reduce((o,a)=>o+a.tops.length,0);a.innerHTML=`\n    <div style="font-size:48px;margin-bottom:8px">📚</div>\n    <h3 style="font-family:Unbounded,sans-serif;font-size:18px;font-weight:900;margin-bottom:4px">Тренажёр к диагностикам</h3>\n    <div style="font-size:12px;color:#6b6b7e;margin-bottom:16px">${SUBJ.length} предметов · ${e} тем · 5000+ задач</div>\n    <div style="background:#f8f7f4;border-radius:12px;padding:16px;text-align:left;margin-bottom:16px">\n      <p style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px">Я папа одиннадцатиклассника. Устал ругаться из-за подготовки и написал этот тренажёр — сначала для сына, потом для его друзей.</p>\n      <p style="font-size:13px;color:#374151;line-height:1.6">Тренажёр заставляет ребёнка заниматься каждый день по 15 минут. Слабые темы выпадают чаще. Родитель видит прогресс.</p>\n    </div>\n    <div style="display:flex;gap:8px;margin-bottom:12px">\n      <a href="https://t.me/vityun_s" style="flex:1;display:block;padding:10px;background:#229ED9;color:#fff;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;font-family:Golos Text,sans-serif">Telegram</a>\n      <button style="flex:1;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest('div[style*=fixed]').remove()">Закрыть</button>\n    </div>`,o.appendChild(a),document.body.appendChild(o)}let wrongAnswers=[];
+ans=function(o){const a=sel;_origAns2(o);if(null===a&&null!==sel&&sel!==prob.answer){const e={q:prob.question,yourAnswer:sel,correct:prob.answer,hint:prob.hint,tag:prob.tag};addToJournal(e);wrongAnswers.push(e)}},document.addEventListener("keydown",o=>{if(!document.getElementById("s-play").classList.contains("on"))return;if(null!==sel)return void("Enter"!==o.key&&" "!==o.key||(o.preventDefault(),rushMode||nextQ()));const a={1:0,2:1,3:2,4:3,a:0,b:1,c:2,d:3,A:0,B:1,C:2,D:3,"ф":0,"и":1,"с":2,"в":3};void 0!==a[o.key]&&prob&&void 0!==prob.options[a[o.key]]&&(o.preventDefault(),ans(a[o.key]))});
+function showClassSelect(){
+  const o=document.createElement('div');
+  o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';
+  o.onclick=()=>o.remove();
+  const a=document.createElement('div');
+  a.style.cssText='background:#fff;border-radius:20px;padding:24px 20px;max-width:360px;width:100%;max-height:85vh;overflow-y:auto';
+  a.onclick=e=>e.stopPropagation();
+  const grades=[
+    {g:'3',f:'grade3.html',ic:'🎒',color:'#16a34a',bg:'#dcfce7'},
+    {g:'4',f:'grade4.html',ic:'📐',color:'#2563eb',bg:'#dbeafe'},
+    {g:'5',f:'grade5.html',ic:'🔢',color:'#7c3aed',bg:'#ede9fe'},
+    {g:'6',f:'grade6.html',ic:'🌍',color:'#ea580c',bg:'#fff7ed'},
+    {g:'7',f:'grade7.html',ic:'⚗️',color:'#0d9488',bg:'#ccfbf1'},
+    {g:'8',f:'grade8.html',ic:'⚡',color:'#dc2626',bg:'#fee2e2'},
+    {g:'9',f:'grade9.html',ic:'∫',color:'#ca8a04',bg:'#fef9c3'},
+    {g:'10',f:'index.html',ic:'∑',color:'#1a1a2e',bg:'#e8e6e0'},
+    {g:'11',f:'grade11.html',ic:'🎓',color:'#7c3aed',bg:'#ede9fe'},
+  ];
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">📚 Выбери класс</h3>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">';
+  grades.forEach(({g,f,ic,color,bg})=>{
+    const currentFile=window.location.pathname.split('/').pop()||'index.html';
+    const isCurrent=f===currentFile;
+    h+=`<a href="${f}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;background:${bg};border-radius:12px;text-decoration:none;border:${isCurrent?'2.5px solid '+color:'2px solid transparent'};min-height:70px">
+      <span style="font-size:20px;margin-bottom:4px">${ic}</span>
+      <span style="font-size:13px;font-weight:800;color:${color}">${g} класс</span>
+    </a>`;
+  });
+  h+='</div>';
+  h+='<button style="width:100%;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  a.innerHTML=h;o.appendChild(a);document.body.appendChild(o);
+}
+
+function showRushSetupBanner(){
+  // Only show if bin is a placeholder (not a real npoint bin)
+  if(!rushBinId||rushBinId.length===20&&!/^[a-f0-9]{20}$/.test(rushBinId)){
+    const existing=document.getElementById('rush-setup-banner');
+    if(existing)return;
+    const b=document.createElement('div');
+    b.id='rush-setup-banner';
+    b.style.cssText='background:#fef9c3;border:1.5px solid #ca8a04;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:11px;color:#92400e;line-height:1.5;display:flex;gap:10px;align-items:flex-start';
+    b.innerHTML='<span style="font-size:16px;flex-shrink:0">⚡</span><div><b>Подключи общий рейтинг</b> (по желанию):<br>1. Зайди на <a href=\'https://www.npoint.io\' target=\'_blank\' style=\'color:#2563eb\'>npoint.io</a>, создай бин: <code>{"records":[]}</code><br>2. Скопируй ID из URL и замени <code>rushBinId</code> в HTML файле.<br>Пока рейтинг хранится только локально — это тоже работает!</div>';
+    document.getElementById('daily-meter')&&document.getElementById('daily-meter').after(b);
+  }
+}
+</script></body></html>

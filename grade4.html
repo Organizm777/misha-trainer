@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#1a1a2e">
+<title>Тренажёр 4 класс</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#f5f3ee;--card:#fff;--accent:#2563eb;--abg:#dbeafe;--green:#16a34a;--gbg:#dcfce7;--red:#dc2626;--rbg:#fee2e2;--orange:#ea580c;--obg:#fff7ed;--purple:#7c3aed;--pbg:#ede9fe;--yellow:#ca8a04;--ybg:#fef9c3;--teal:#0d9488;--tbg:#ccfbf1;--text:#1a1a2e;--muted:#6b6b7e;--border:#e2e0d8;--R:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:#f5f3ee;color:#1a1a2e}
+@media(prefers-color-scheme:dark){:root{color-scheme:light!important}html,body{background:#f5f3ee!important;color:#1a1a2e!important}
+.scard,.qcard,.opt,.tcard,.rcard,.icard,.dm,.fb,.tbtn{background:#fff!important;color:#1a1a2e!important}
+.tcard p,.tcard li,.tcard .fm{color:#374151!important}
+}
+body{font-family:'Golos Text',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}
+.mono{font-family:'JetBrains Mono',monospace}
+header{background:var(--text);color:#fff;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+header h1{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.hbadge{padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;background:var(--accent);margin-left:8px;white-space:nowrap}
+.scr{display:none}.scr.on{display:block}
+.w{max-width:600px;margin:0 auto;padding:16px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0))}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.fade{animation:fu .3s ease both}
+.btn{display:block;width:100%;text-align:center;padding:12px;border:none;border-radius:10px;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;transition:transform .1s}
+.btn:active{transform:scale(.97)}.btn-p{background:var(--accent);color:#fff}.btn-d{background:var(--text);color:#fff}
+.btn-o{background:transparent;border:1.5px solid var(--border);color:var(--muted);font-size:13px;font-weight:600}
+.btn-g{background:var(--green);color:#fff}
+.btn-share{background:#25D366;color:#fff}
+
+/* Cards */
+.scard{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;width:100%;text-align:left;outline:none;font-family:'Golos Text',sans-serif;-webkit-appearance:none;touch-action:manipulation;min-height:60px;transition:transform .1s}
+.scard:active{transform:scale(.98)}.scard .ic{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.scard .nm{font-size:14px;font-weight:700}.scard .dt{font-size:11px;color:var(--muted);margin-top:1px}.scard .dd{font-size:10px;font-weight:700;margin-top:1px}
+
+/* Progress bars */
+.prow{margin-bottom:10px}.prow .plabel{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.prow .pname{font-weight:600}.prow .pval{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:12px}
+.ptrack{height:6px;background:#e8e6e0;border-radius:3px;overflow:hidden}.ptrack .pfill{height:100%;border-radius:3px;transition:width .5s}
+
+/* Topic buttons */
+.tbtn{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;cursor:pointer;width:100%;text-align:left;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:600;-webkit-appearance:none;touch-action:manipulation;min-height:48px;transition:transform .1s;outline:none}
+.tbtn:active{transform:scale(.98)}.tbtn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tbtn .tpct{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;opacity:.7}
+
+/* Theory */
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}
+.tcard h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:800;margin-bottom:8px}
+.tcard p,.tcard li{font-size:12.5px;line-height:1.6;color:#374151}.tcard ul{padding-left:16px;margin:4px 0}
+.tcard .fm{background:#f8f7f4;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:6px 0;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text);line-height:1.5;text-align:center}
+.tcard .ex{background:var(--gbg);border-radius:8px;padding:8px 12px;margin:6px 0;font-size:12px;color:#15803d;line-height:1.5}
+
+/* Quiz */
+.qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.qback{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;padding:6px 0;touch-action:manipulation}
+.qtimer{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)}
+.sbar{display:flex;justify-content:center;gap:14px;padding:6px 0;margin-bottom:8px}
+.st{display:flex;flex-direction:column;align-items:center;gap:0}.st .v{font-weight:800;font-size:17px}.st .l{font-size:9px;color:var(--muted)}
+
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}
+.qtag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:5px;margin-bottom:8px}
+.qtxt{font-size:15px;font-weight:600;line-height:1.5}.qmath{font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;text-align:center;line-height:1.4}
+.qcode{background:#f8f7f4;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#374151;line-height:1.6;white-space:pre-wrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+.opts{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+.opt{display:flex;align-items:center;gap:10px;padding:13px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:11px;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text);cursor:pointer;width:100%;text-align:left;outline:none;-webkit-appearance:none;touch-action:manipulation;min-height:48px}
+.opt:active:not(.done){background:#f0eee8;transform:scale(.98)}
+.opt .k{width:26px;height:26px;border-radius:6px;background:#f0eee8;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--muted);flex-shrink:0}
+.opt.ok{background:var(--gbg);border-color:var(--green)}.opt.ok .k{background:var(--green);color:#fff}
+.opt.no{background:var(--rbg);border-color:var(--red);animation:sh .35s}.opt.no .k{background:var(--red);color:#fff}
+.opt.dim{opacity:.35}
+
+.fb{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px 14px;text-align:center;margin-bottom:8px}
+.fbr{font-weight:700;font-size:14px;margin-bottom:3px}.fbh{font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5}
+.hintt{display:block;width:100%;text-align:center;padding:6px;background:none;border:none;font-size:12px;color:var(--orange);opacity:.5;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;touch-action:manipulation;-webkit-appearance:none}
+.hintb{background:var(--obg);border:1px solid #fed7aa;border-radius:9px;padding:8px 12px;font-size:12px;color:var(--orange);text-align:center;line-height:1.5;margin-top:4px}
+.shpb{display:block;width:100%;text-align:center;padding:5px;background:none;border:none;font-size:11px;color:var(--accent);opacity:.4;cursor:pointer;font-family:'Golos Text',sans-serif;font-weight:600;touch-action:manipulation;-webkit-appearance:none;margin-bottom:4px}
+.shpbox{background:var(--abg);border:1px solid #93c5fd;border-radius:9px;padding:10px 12px;font-size:11px;color:#1e40af;line-height:1.5;margin-bottom:6px;max-height:180px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.pgbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px}.pgfill{height:100%;border-radius:2px;transition:width .4s,background .4s}
+.streak{animation:fireIn .4s ease}
+@keyframes fireIn{0%{transform:scale(0.5);opacity:0}50%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+.gap8{display:flex;flex-direction:column;gap:8px}
+.mb12{margin-bottom:12px}.mb8{margin-bottom:8px}.mt12{margin-top:12px}
+
+/* Info */
+.icard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:20px 18px}
+.icard h2{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800;margin-bottom:12px}
+.istp{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.isn{width:24px;height:24px;border-radius:6px;background:var(--abg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.istp b{font-size:13px}.istp p{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.5}
+.tipb{background:var(--gbg);border-radius:9px;padding:10px 12px;font-size:12px;color:#15803d;line-height:1.5;margin:12px 0}
+
+/* Results card */
+.rcard{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:18px 16px;margin-bottom:10px}
+.rcard h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:800;margin-bottom:10px}
+.rempty{font-size:13px;color:var(--muted);text-align:center;padding:20px 0}
+
+/* Daily meter */
+.dm{background:var(--card);border:1.5px solid var(--border);border-radius:var(--R);padding:16px;margin-top:14px;text-align:center}
+.dm.done{border-color:var(--green);background:var(--gbg)}
+.dm-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.dm-bar{height:12px;background:#e8e6e0;border-radius:6px;overflow:hidden;margin-bottom:8px}
+.dm-fill{height:100%;border-radius:6px;transition:width .5s,background .3s}
+.dm-num{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:800;margin-bottom:2px}
+.dm-sub{font-size:11px;color:var(--muted);line-height:1.5}
+.dm-done-msg{font-size:15px;font-weight:800;color:var(--green);margin:6px 0}
+.dm-chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px}
+.dm-chip{font-size:10px;padding:3px 8px;border-radius:12px;font-weight:600}
+</style>
+</head>
+<body>
+<div id="app">
+
+<div id="s-main" class="scr">
+<div class="w">
+  <div style="text-align:center;margin-bottom:16px">
+    <h1 style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:900;color:var(--text)">🌿 Тренажёр 4 класс</h1>
+    <p style="font-size:12px;color:var(--muted);margin-top:3px">Математика · Русский · Окружающий мир · ВПР</p>
+    <a href="index.html?choose" style="font-size:11px;color:var(--accent);text-decoration:none;margin-top:4px;display:inline-block">← Другой класс</a>
+  </div>
+  <div id="player-badge" style="text-align:center;margin-bottom:14px"></div>
+  <div id="daily-panel"></div>
+  <div id="subjects"></div>
+  <div style="display:flex;gap:6px;margin:14px 0">
+    <button class="btn btn-p" style="flex:1" onclick="globalMix=true;mix=true;cT=null;mixFilter=null;cS=SUBJ[0];document.getElementById('hdr').textContent='⚡ ВСЁ ВПЕРЕМЕШКУ';startQuiz()">⚡ Вперемешку</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:8px">
+    <button class="btn btn-o" style="flex:1" onclick="go('info')">📖 Справка</button>
+    <button class="btn btn-o" style="flex:1" onclick="showJournal()">📊 Слабые места</button>
+    <button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Награды</button> <button class="btn btn-o" style="flex:1" onclick="showClassSelect()">🏫 Класс</button>
+    <button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Профиль</button>
+  </div>
+</div>
+</div>
+
+<div id="s-subj" class="scr"><div class="w">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <h2 id="subj-title" style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800"></h2>
+    <button class="qback" onclick="go('main')">← Назад</button>
+  </div>
+  <div id="topics"></div>
+</div></div>
+
+<div id="s-info" class="scr"><div class="w">
+  <h2 style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:800;margin-bottom:12px">📖 Справка</h2>
+  <div class="icard"><b>🌱 Как заниматься:</b> решай каждый день по 15 минут. Слабые темы будут выпадать чаще.</div>
+  <div class="icard"><b>🔥 Серия дней:</b> занимайся каждый день и не прерывай серию!</div>
+  <div class="icard"><b>📊 Слабые места:</b> все ошибки сохраняются. Нажми «Слабые места» чтобы увидеть.</div>
+  <button class="btn btn-d mt12" onclick="go('main')">← Назад</button>
+</div></div>
+
+<div id="s-quiz" class="scr"><div class="w">
+  <div class="qh"><button class="qback" onclick="endSession()">← Завершить</button><span class="qtimer mono" id="tmr">0:00</span></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <span id="hdr" style="font-family:'Unbounded',sans-serif;font-size:13px;font-weight:800"></span>
+    <span class="mono" id="hb" style="display:none;font-size:12px;background:var(--green);color:#fff;padding:2px 8px;border-radius:8px"></span>
+  </div>
+  <div id="sts" style="display:flex;gap:10px;margin-bottom:12px"></div>
+  <div id="pa"></div>
+  <div id="qc" class="qcard fade">
+    <span id="qt" class="qtag"></span>
+    <div id="qb" class="qtxt"></div>
+  </div>
+  <div id="opts"></div>
+  <div id="fb"></div>
+  <div id="shp"></div>
+</div></div>
+
+<div id="s-result" class="scr"><div class="w">
+  <div class="rcard fade" style="text-align:center">
+    <div style="font-size:36px;margin-bottom:8px" id="res-emoji"></div>
+    <h3 id="res-title"></h3>
+    <div style="font-size:28px;font-weight:800;margin:8px 0" id="res-score"></div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:4px" id="res-detail"></div>
+  </div>
+  <div id="res-topics"></div>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn btn-p" style="flex:1" onclick="shareSession()">📤 Поделиться</button>
+    <button class="btn btn-d" style="flex:1" onclick="globalMix?go('main'):goSubj()">← Назад</button>
+  </div>
+</div></div>
+
+</div>
+
+<script>
+
+// ═══ UTILITY ═══
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function range(a,b){const r=[];for(let i=a;i<=b;i++)r.push(i);return r}
+function uniq(a){return[...new Set(a)]}
+function esc(s){return String(s).replace(/</g,'&lt;')}
+function declNum(n,o,t,f){const a=Math.abs(n)%100,b=a%10;if(a>10&&a<20)return f;if(b>1&&b<5)return t;if(b===1)return o;return f}
+function mkQ(q,a,opts,h,tag,color,bg){let o=uniq(opts);if(o.length>4)o=o.slice(0,4);return{question:q,answer:a,options:shuffle(o),hint:h,tag,color,bg,isMath:false}}
+function fillW(c,gs){const o=[c];for(const g of gs){let v,tries=0;do{v=typeof g==='function'?g():g;tries++}while((v===c||o.includes(v))&&tries<20);o.push(v)}return o}
+function sup(n){return String(n).replace(/(\d)/g,'$1')}
+
+// ═══ THEORY ═══
+const MATH_TH={
+bignum:`<h3>Многозначные числа</h3>
+<div class="fm">Умножение столбиком: разбиваем на разряды.
+245 × 36 = 245×30 + 245×6 = 7350 + 1470 = 8820
+Деление уголком: делим поразрядно.
+846 ÷ 3 = (600+240+6)÷3 = 200+80+2 = 282</div>`,
+fractions:`<h3>Доли и дроби</h3>
+<div class="fm">Доля — одна равная часть целого.
+1/2 — половина, 1/4 — четверть, 3/4 — три четверти.
+Чтобы найти дробь от числа: число × числитель ÷ знаменатель.
+1/4 от 20 = 20 ÷ 4 = 5
+3/4 от 20 = 20 ÷ 4 × 3 = 15</div>`,
+speed:`<h3>Скорость, время, расстояние</h3>
+<div class="fm">S = V × T (расстояние = скорость × время)
+V = S ÷ T (скорость = расстояние ÷ время)
+T = S ÷ V (время = расстояние ÷ скорость)</div>
+<div class="ex">Поезд 80 км/ч, 3 часа → S = 80×3 = 240 км
+Прошёл 12 км за 4 часа → V = 12÷4 = 3 км/ч</div>`,
+area:`<h3>Периметр и площадь</h3>
+<div class="fm">Прямоугольник: P = 2(a+b), S = a×b
+Квадрат: P = 4a, S = a²
+1 дм² = 100 см², 1 м² = 100 дм², 1 км² = 1 000 000 м²</div>`
+};
+const RUS_TH={
+cases:`<h3>Падежи</h3>
+<div class="fm">И.п. — Кто? Что? (есть)
+Р.п. — Кого? Чего? (нет)
+Д.п. — Кому? Чему? (дать)
+В.п. — Кого? Что? (вижу)
+Т.п. — Кем? Чем? (доволен)
+П.п. — О ком? О чём? (думаю)</div>
+<p><b>Запомни:</b> Иван Рубит Дрова, Василиса Топит Печь</p>`,
+conj:`<h3>Спряжение глаголов</h3>
+<div class="fm">I спряжение: -ешь,-ет,-ем,-ете,-ут/-ют
+II спряжение: -ишь,-ит,-им,-ите,-ат/-ят
+Исключения II: гнать, дышать, держать, слышать,
+смотреть, видеть, обидеть, ненавидеть,
+зависеть, вертеть, терпеть + «брить, стелить» → I</div>`,
+wordparts:`<h3>Состав слова</h3>
+<div class="fm">Приставка — перед корнем (по-, за-, пере-, на-)
+Корень — главная часть (общая у родственных слов)
+Суффикс — после корня (-ник, -тель, -ость)
+Окончание — изменяемая часть в конце</div>
+<div class="ex">Пере-лёт-н-ая: пере(прист.)лёт(корень)н(суфф.)ая(оконч.)</div>`,
+spelling:`<h3>Правописание</h3>
+<div class="fm">ЖИ-ШИ пиши с И. ЧА-ЩА пиши с А. ЧУ-ЩУ пиши с У.
+Ь после шипящих: у сущ. ж.р. 3 скл. (ночь, мышь)
+НЕ с глаголами — раздельно (не знал)
+Разделительный Ъ после приставок (подъезд, объявление)
+Разделительный Ь перед е,ё,ю,я,и (семья, вьюга)</div>`
+};
+const OKR_TH={
+history:`<h3>История России</h3>
+<div class="fm">862 — призвание варягов (Рюрик)
+988 — Крещение Руси (Владимир)
+1240 — Невская битва (Александр Невский)
+1380 — Куликовская битва (Дмитрий Донской)
+1480 — конец ига (стояние на Угре)
+1612 — освобождение Москвы (Минин и Пожарский)
+1703 — основание Петербурга (Пётр I)
+1812 — война с Наполеоном (Кутузов)</div>`,
+zones:`<h3>Природные зоны России</h3>
+<div class="fm">Арктика → ледяная пустыня, белые медведи
+Тундра → мхи, лишайники, олени, вечная мерзлота
+Тайга → хвойные леса, медведь, рысь, соболь
+Смеш. лес → хвойные + лиственные, лиса, заяц
+Степь → травы, суслик, хомяк, мало деревьев
+Пустыня → песок, жара, верблюд, ящерицы</div>`,
+state:`<h3>Государство</h3>
+<div class="fm">Россия — федеративная республика.
+Президент — глава государства.
+Конституция — основной закон (1993).
+Три ветви власти: законодательная, исполнительная, судебная.
+Государственные символы: флаг 🇷🇺 (бело-сине-красный), герб (двуглавый орёл), гимн.</div>`
+};
+
+// ═══ GENERATORS ═══
+function genBigNum(){return pick([
+()=>{const a=pick(range(12,99)),b=pick(range(2,9));const v=a*b;return mkQ(a+'×'+b+' = ?',''+v,fillW(''+v,[()=>''+(v+a),()=>''+(v-b),()=>''+(v+pick([-5,5,10]))]),'Умножение столбиком','Многозначные числа','#dc2626','#fee2e2')},
+()=>{const b=pick(range(2,9)),q=pick(range(11,99));const a=b*q;return mkQ(a+'÷'+b+' = ?',''+q,fillW(''+q,[()=>''+(q+1),()=>''+(q-1),()=>''+b]),'Деление','Многозначные числа','#dc2626','#fee2e2')},
+()=>{const a=pick(range(100,500)),b=pick(range(100,500));const s=a+b;return mkQ(a+' + '+b+' = ?',''+s,fillW(''+s,[()=>''+(s+10),()=>''+(s-10),()=>''+(s+1)]),'Сложение','Многозначные числа','#dc2626','#fee2e2')},
+()=>{const a=pick(range(500,999)),b=pick(range(100,a-1));const d=a-b;return mkQ(a+' − '+b+' = ?',''+d,fillW(''+d,[()=>''+(d+10),()=>''+(d-1),()=>''+(a+b)]),'Вычитание','Многозначные числа','#dc2626','#fee2e2')},
+()=>{const a=pick([2,3,4,5]),b=pick([100,200,300,500]);const v=a*b;return mkQ(a+'×'+b+' = ?',''+v,fillW(''+v,[()=>''+(v+100),()=>''+(v-100),()=>''+(a+b)]),'Умножение на круглые','Многозначные числа','#dc2626','#fee2e2')}
+])()}
+
+function genFractions(){return pick([
+()=>{const d=pick([2,3,4,5,8,10]),n=pick(range(20,100).filter(x=>x%d===0));const v=n/d;return mkQ('1/'+d+' от '+n+' = ?',''+v,fillW(''+v,[()=>''+(v+1),()=>''+d,()=>''+(n-d)]),'Доля: число÷знаменатель','Дроби','#2563eb','#dbeafe')},
+()=>{const n=pick([3,5,7]),d=pick([4,8,10]);return mkQ('Что больше: '+n+'/'+d+' или 1/2?',n/d>0.5?n+'/'+d:'1/2',[n+'/'+d,'1/2','равны','нельзя сравнить'],n+'/'+d+'='+(n/d).toFixed(2),'Дроби','#2563eb','#dbeafe')},
+()=>{const d=pick([4,5,8,10]),num=pick(range(1,d-1));const whole=pick(range(20,60).filter(x=>x%d===0));const v=whole/d*num;return mkQ(num+'/'+d+' от '+whole+' = ?',''+v,fillW(''+v,[()=>''+(v+1),()=>''+whole,()=>''+(whole/d)]),'Дробь от числа','Дроби','#2563eb','#dbeafe')},
+()=>{const q=pick([
+  {q:'Какая дробь больше: 3/4 или 2/3?',a:'3/4',o:['3/4','2/3','равны','нельзя сказать'],h:'3/4=0.75, 2/3≈0.67'},
+  {q:'1/2 + 1/4 = ?',a:'3/4',o:['3/4','2/6','1/6','2/4'],h:'2/4+1/4=3/4'},
+  {q:'1 − 1/3 = ?',a:'2/3',o:['2/3','1/3','3/3','0'],h:'3/3−1/3=2/3'},
+  {q:'Половина от половины = ?',a:'1/4 (четверть)',o:['1/4 (четверть)','1/2 (половина)','1/8 (восьмая)','1/3 (треть)'],h:'1/2 × 1/2 = 1/4'},
+]);return mkQ(q.q,q.a,shuffle([...q.o]),q.h,'Дроби','#2563eb','#dbeafe')}
+])()}
+
+function genSpeed(){return pick([
+()=>{const v=pick([40,50,60,80,100]),t=pick([2,3,4,5]);const s=v*t;return mkQ('Скорость '+v+' км/ч, время '+t+' ч. Расстояние?',''+s+' км',fillW(''+s+' км',[()=>''+(s+v)+' км',()=>''+(v)+' км',()=>''+(s-t)+' км']),'S=V×T','Скорость','#16a34a','#dcfce7')},
+()=>{const s=pick([60,100,120,150,200]),t=pick([2,3,4,5]);const v=s/t;return mkQ('Расстояние '+s+' км за '+t+' ч. Скорость?',''+v+' км/ч',fillW(''+v+' км/ч',[()=>''+(v+10)+' км/ч',()=>''+(s)+' км/ч',()=>''+(t)+' км/ч']),'V=S÷T','Скорость','#16a34a','#dcfce7')},
+()=>{const v=pick([4,5,6,10]),s=pick([20,30,40,50,60]);const t=s/v;return mkQ('Скорость '+v+' км/ч, расстояние '+s+' км. Время?',''+t+' ч',fillW(''+t+' ч',[()=>''+(t+1)+' ч',()=>''+(v)+' ч',()=>''+(s)+' ч']),'T=S÷V','Скорость','#16a34a','#dcfce7')},
+()=>{const v1=pick([40,50,60]),v2=pick([60,70,80]);return mkQ('Два поезда навстречу: '+v1+' и '+v2+' км/ч. Скорость сближения?',''+(v1+v2)+' км/ч',fillW(''+(v1+v2)+' км/ч',[()=>''+(v2-v1)+' км/ч',()=>''+v1+' км/ч',()=>''+v2+' км/ч']),'Навстречу: V₁+V₂','Скорость','#16a34a','#dcfce7')},
+])()}
+
+function genArea(){return pick([
+()=>{const a=pick(range(3,12)),b=pick(range(3,12));return mkQ('Прямоугольник '+a+'×'+b+'. Площадь?',''+(a*b),fillW(''+(a*b),[()=>''+(2*(a+b)),()=>''+(a+b),()=>''+(a*b+a)]),'S=a×b','Площадь','#7c3aed','#ede9fe')},
+()=>{const a=pick(range(3,12)),b=pick(range(3,12));return mkQ('Прямоугольник '+a+'×'+b+'. Периметр?',''+(2*(a+b)),fillW(''+(2*(a+b)),[()=>''+(a*b),()=>''+(a+b),()=>''+(2*(a+b)+2)]),'P=2(a+b)','Площадь','#7c3aed','#ede9fe')},
+()=>{const a=pick(range(3,10));return mkQ('Квадрат со стороной '+a+'. Площадь?',''+(a*a),fillW(''+(a*a),[()=>''+(4*a),()=>''+(a*a+a),()=>''+(a*a-1)]),'S=a²','Площадь','#7c3aed','#ede9fe')},
+()=>{const a=pick(range(3,10));return mkQ('Квадрат со стороной '+a+'. Периметр?',''+(4*a),fillW(''+(4*a),[()=>''+(a*a),()=>''+(4*a+4),()=>''+(2*a)]),'P=4a','Площадь','#7c3aed','#ede9fe')},
+()=>{const s=pick([12,16,20,24,28,36]),a=pick(range(2,6).filter(x=>s%x===0&&s/x!==x));const b=s/a;return mkQ('Площадь прямоугольника '+s+' см², одна сторона '+a+' см. Другая?',''+b+' см',fillW(''+b+' см',[()=>''+(b+1)+' см',()=>''+(a)+' см',()=>''+(s)+' см']),'b=S÷a','Площадь','#7c3aed','#ede9fe')}
+])()}
+
+// Russian
+function genCases(){
+const qs=[
+{q:'«Книга лежит на столе». Падеж слова «столе»:',a:'предложный (о чём?)',o:['предложный (о чём?)','дательный (чему?)','творительный (чем?)','винительный (что?)'],h:'На чём? На столе'},
+{q:'«Дал другу мяч». Падеж слова «другу»:',a:'дательный (кому?)',o:['дательный (кому?)','родительный (кого?)','винительный (кого?)','творительный (кем?)'],h:'Дал кому? Другу'},
+{q:'«Нет учебника». Падеж слова «учебника»:',a:'родительный (чего?)',o:['родительный (чего?)','винительный (что?)','предложный (о чём?)','именительный (что?)'],h:'Нет чего? Учебника'},
+{q:'«Рисую карандашом». Падеж слова «карандашом»:',a:'творительный (чем?)',o:['творительный (чем?)','предложный (о чём?)','дательный (чему?)','родительный (чего?)'],h:'Рисую чем? Карандашом'},
+{q:'«Вижу кошку». Падеж слова «кошку»:',a:'винительный (кого?)',o:['винительный (кого?)','именительный (кто?)','родительный (кого?)','дательный (кому?)'],h:'Вижу кого? Кошку'},
+{q:'«Кошка спит». Падеж слова «кошка»:',a:'именительный (кто?)',o:['именительный (кто?)','винительный (кого?)','родительный (кого?)','дательный (кому?)'],h:'Кто спит? Кошка'},
+{q:'Вопросы родительного падежа:',a:'кого? чего?',o:['кого? чего?','кому? чему?','кем? чем?','о ком? о чём?'],h:'Нет кого? чего?'},
+{q:'Вопросы дательного падежа:',a:'кому? чему?',o:['кому? чему?','кого? чего?','кем? чем?','кого? что?'],h:'Дать кому? чему?'},
+{q:'Вопросы творительного падежа:',a:'кем? чем?',o:['кем? чем?','кому? чему?','кого? чего?','о ком? о чём?'],h:'Доволен кем? чем?'},
+{q:'Вопросы предложного падежа:',a:'о ком? о чём?',o:['о ком? о чём?','кем? чем?','кому? чему?','кого? что?'],h:'Думаю о ком? о чём?'},
+{q:'Сколько падежей в русском языке?',a:'6',o:['6','5','7','4'],h:'И,Р,Д,В,Т,П'},
+{q:'«Играю с братом». Падеж «братом»:',a:'творительный (с кем?)',o:['творительный (с кем?)','дательный (кому?)','предложный (о ком?)','родительный (кого?)'],h:'Играю с кем?'},
+{q:'«Думаю о маме». Падеж «маме»:',a:'предложный (о ком?)',o:['предложный (о ком?)','дательный (кому?)','творительный (кем?)','винительный (кого?)'],h:'О ком думаю?'},
+{q:'«У папы есть машина». Падеж «папы»:',a:'родительный (у кого?)',o:['родительный (у кого?)','именительный (кто?)','дательный (кому?)','предложный (о ком?)'],h:'У кого?'},
+{q:'«Подарил сестре книгу». Падеж «сестре»:',a:'дательный (кому?)',o:['дательный (кому?)','винительный (кого?)','предложный (о ком?)','родительный (кого?)'],h:'Подарил кому?'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genConj(){
+const qs=[
+{q:'Глагол «читать» — спряжение:',a:'I (читаЕшь, читаЮт)',o:['I (читаЕшь, читаЮт)','II (читаИшь, читаЯт)','I и II','нет спряжения'],h:'-ать → I спряжение'},
+{q:'Глагол «говорить» — спряжение:',a:'II (говорИшь, говорЯт)',o:['II (говорИшь, говорЯт)','I (говорЕшь, говорЮт)','I и II','нет спряжения'],h:'-ить → II спряжение'},
+{q:'Глагол «брить» — спряжение:',a:'I (исключение!)',o:['I (исключение!)','II','нет спряжения','оба'],h:'Брить и стелить — исключения'},
+{q:'Глагол «смотреть» — спряжение:',a:'II (исключение!)',o:['II (исключение!)','I','нет спряжения','оба'],h:'Смотреть — исключение II спряжения'},
+{q:'Глагол «дышать» — спряжение:',a:'II (исключение!)',o:['II (исключение!)','I','нет спряжения','оба'],h:'Гнать, дышать, держать, слышать — II'},
+{q:'Окончание глагола I спр., 3 лицо, мн.ч.:',a:'-ут / -ют',o:['-ут / -ют','-ат / -ят','-ем','-ите'],h:'Они читаЮТ'},
+{q:'Окончание глагола II спр., 3 лицо, мн.ч.:',a:'-ат / -ят',o:['-ат / -ят','-ут / -ют','-им','-ите'],h:'Они говорЯТ'},
+{q:'Он пиш_т — вставь букву:',a:'е (I спр.)',o:['е (I спр.)','и (II спр.)','а','у'],h:'Писать → I спряжение'},
+{q:'Он стро_т — вставь букву:',a:'и (II спр.)',o:['и (II спр.)','е (I спр.)','а','у'],h:'Строить → II спряжение'},
+{q:'Они кле_т — вставь букву:',a:'я (II спр.)',o:['я (II спр.)','ю (I спр.)','а','е'],h:'Клеить → II спряжение'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genWordParts(){
+const qs=[
+{q:'В слове «перелётная» приставка:',a:'пере-',o:['пере-','пе-','перелёт-','нет приставки'],h:'Пере-лёт-н-ая'},
+{q:'В слове «подснежник» корень:',a:'-снеж-',o:['-снеж-','-подснеж-','-ник-','-снежник-'],h:'Снег, снежный, снежок'},
+{q:'В слове «учитель» суффикс:',a:'-тель',o:['-тель','-ель','-ль','-итель'],h:'Как строитель, водитель'},
+{q:'В слове «домик» суффикс:',a:'-ик',o:['-ик','-мик','-домик','-к'],h:'Уменьшительный суффикс'},
+{q:'Окончание в слове «красивая»:',a:'-ая',o:['-ая','-ая','-а','-вая'],h:'Красив-ый, красив-ого → -ая'},
+{q:'Какая часть слова изменяется при склонении?',a:'окончание',o:['окончание','корень','приставка','суффикс'],h:'Стол, стола, столу — меняется конец'},
+{q:'Корень — это:',a:'главная значимая часть слова',o:['главная значимая часть слова','начало слова','конец слова','изменяемая часть'],h:'Общая у родственных слов'},
+{q:'Однокоренные слова: лес, лесной, лесник. Корень:',a:'-лес-',o:['-лес-','-лесн-','-л-','-лесник-'],h:'Общая часть'},
+{q:'Разделительный Ъ пишется:',a:'после приставки перед е,ё,ю,я',o:['после приставки перед е,ё,ю,я','перед любой гласной','после корня','везде'],h:'Подъезд, объявление'},
+{q:'Разделительный Ь пишется:',a:'в корне и после корня перед е,ё,ю,я,и',o:['в корне и после корня перед е,ё,ю,я,и','после приставки','перед согласной','везде'],h:'Семья, вьюга, ручьи'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genSpelling(){
+const qs=[
+{q:'Как пишется: ж_знь?',a:'и (жизнь)',o:['и (жизнь)','ы (жызнь)','е','а'],h:'ЖИ-ШИ пиши с И'},
+{q:'Как пишется: ч_до?',a:'у (чудо)',o:['у (чудо)','ю (чюдо)','о','а'],h:'ЧУ-ЩУ пиши с У'},
+{q:'Как пишется: рощ_?',a:'а (роща)',o:['а (роща)','я (рощя)','о','у'],h:'ЧА-ЩА пиши с А'},
+{q:'Мягкий знак в слове «ночь» — потому что:',a:'ж.р., 3 склонение',o:['ж.р., 3 склонение','м.р., 2 склонение','всегда пишется','для мягкости'],h:'Ночь, мышь, рожь — ж.р. 3 скл.'},
+{q:'«Нож» пишется без Ь, потому что:',a:'м.р., 2 склонение',o:['м.р., 2 склонение','ж.р.','нет шипящей','множественное число'],h:'Нож, плащ, мяч — м.р. без Ь'},
+{q:'«Не знал» пишется:',a:'раздельно',o:['раздельно','слитно','через дефис','оба варианта'],h:'НЕ с глаголами раздельно'},
+{q:'«Ненавидеть» пишется:',a:'слитно (не употр. без НЕ)',o:['слитно (не употр. без НЕ)','раздельно','через дефис','оба варианта'],h:'Без «не» слова нет'},
+{q:'Непроизносимая согласная в слове «сер_це»:',a:'д (сердце)',o:['д (сердце)','нет буквы','т','к'],h:'Проверка: сердечный'},
+{q:'Непроизносимая согласная в «со_нце»:',a:'л (солнце)',o:['л (солнце)','нет буквы','н','р'],h:'Проверка: солнечный'},
+{q:'Удвоенная согласная: кла_?',a:'сс (класс)',o:['сс (класс)','с (клас)','ссс','зз'],h:'Запомни: класс, масса, касса'},
+];return mkQ(...Object.values(pick(qs)))}
+
+// Okruzhayushiy mir
+function genHistory(){
+const qs=[
+{q:'Крещение Руси произошло в:',a:'988 году',o:['988 году','862 году','1147 году','1380 году'],h:'Князь Владимир'},
+{q:'Куликовская битва — год:',a:'1380',o:['1380','1240','1480','1612'],h:'Дмитрий Донской vs Мамай'},
+{q:'Невская битва — год:',a:'1240',o:['1240','1380','1480','1612'],h:'Александр Невский vs шведы'},
+{q:'Основание Санкт-Петербурга:',a:'1703',o:['1703','1612','1812','1380'],h:'Пётр I'},
+{q:'Война с Наполеоном:',a:'1812',o:['1812','1703','1612','1917'],h:'Бородино, Кутузов'},
+{q:'Кто крестил Русь?',a:'князь Владимир',o:['князь Владимир','Ярослав Мудрый','Пётр I','Иван Грозный'],h:'Владимир Красное Солнышко'},
+{q:'Кто победил на Куликовом поле?',a:'Дмитрий Донской',o:['Дмитрий Донской','Александр Невский','Иван Грозный','Пётр I'],h:'1380, поле у Дона'},
+{q:'Кто основал Петербург?',a:'Пётр I',o:['Пётр I','Екатерина II','Иван Грозный','Ярослав Мудрый'],h:'1703, «окно в Европу»'},
+{q:'Первый русский царь:',a:'Иван Грозный (Иван IV)',o:['Иван Грозный (Иван IV)','Пётр I','Рюрик','Владимир'],h:'Венчан на царство в 1547'},
+{q:'Минин и Пожарский освободили Москву в:',a:'1612',o:['1612','1380','1812','1703'],h:'Народное ополчение'},
+{q:'Конец монголо-татарского ига:',a:'1480',o:['1480','1380','1240','1612'],h:'Стояние на Угре, Иван III'},
+{q:'Ледовое побоище — кто командовал?',a:'Александр Невский',o:['Александр Невский','Дмитрий Донской','Иван Грозный','Пётр I'],h:'1242, Чудское озеро'},
+{q:'Кто напечатал первую русскую книгу?',a:'Иван Фёдоров',o:['Иван Фёдоров','Пётр I','Ломоносов','Пушкин'],h:'«Апостол», 1564'},
+{q:'Кто открыл Московский университет?',a:'Ломоносов',o:['Ломоносов','Пётр I','Пушкин','Менделеев'],h:'1755, МГУ'},
+{q:'Столица России до Петербурга:',a:'Москва',o:['Москва','Киев','Новгород','Владимир'],h:'С XIV века'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genZones(){
+const qs=[
+{q:'Белый медведь живёт в зоне:',a:'арктических пустынь',o:['арктических пустынь','тундры','тайги','степи'],h:'Лёд и холод'},
+{q:'Олень — типичное животное:',a:'тундры',o:['тундры','тайги','степи','пустыни'],h:'Мхи, лишайники'},
+{q:'Соболь обитает в:',a:'тайге',o:['тайге','степи','пустыне','тундре'],h:'Хвойные леса'},
+{q:'Суслик — животное:',a:'степи',o:['степи','тайги','тундры','арктики'],h:'Травы, мало деревьев'},
+{q:'Верблюд — животное:',a:'пустыни',o:['пустыни','степи','тундры','тайги'],h:'Жара, песок'},
+{q:'Самая холодная природная зона:',a:'арктическая пустыня',o:['арктическая пустыня','тундра','тайга','пустыня'],h:'Льды и снег круглый год'},
+{q:'В какой зоне самые длинные деревья?',a:'в тайге',o:['в тайге','в тундре','в степи','в пустыне'],h:'Ели, сосны, кедры'},
+{q:'Чернозём — почва:',a:'степи',o:['степи','тундры','тайги','пустыни'],h:'Самая плодородная'},
+{q:'Мхи и лишайники — основа:',a:'тундры',o:['тундры','тайги','степи','арктики'],h:'Вечная мерзлота'},
+{q:'Природные зоны сменяются с:',a:'севера на юг',o:['севера на юг','запада на восток','юга на север','случайно'],h:'Арктика→тундра→тайга→степь→пустыня'},
+{q:'Красная книга содержит:',a:'редкие и исчезающие виды',o:['редкие и исчезающие виды','все виды животных','опасных животных','домашних животных'],h:'Для охраны природы'},
+{q:'Заповедник — это территория, где:',a:'запрещена хозяйственная деятельность',o:['запрещена хозяйственная деятельность','разрешена охота','строят дома','добывают полезные ископаемые'],h:'Полная охрана природы'},
+];return mkQ(...Object.values(pick(qs)))}
+
+function genState(){
+const qs=[
+{q:'Основной закон России:',a:'Конституция',o:['Конституция','Уголовный кодекс','Указ Президента','Гражданский кодекс'],h:'Принята в 1993 году'},
+{q:'Глава государства в России:',a:'Президент',o:['Президент','Премьер-министр','Спикер Думы','Патриарх'],h:'Глава исполнительной власти'},
+{q:'Цвета российского флага (сверху вниз):',a:'белый, синий, красный',o:['белый, синий, красный','красный, синий, белый','белый, красный, синий','синий, белый, красный'],h:'Триколор'},
+{q:'На гербе России изображён:',a:'двуглавый орёл',o:['двуглавый орёл','медведь','лев','звезда'],h:'С XV века'},
+{q:'Сколько ветвей власти?',a:'3',o:['3','2','4','5'],h:'Законодательная, исполнительная, судебная'},
+{q:'Законы в России принимает:',a:'Государственная Дума',o:['Государственная Дума','Президент','Суд','Правительство'],h:'Законодательная власть'},
+{q:'Судебная власть — это:',a:'суды (разрешают споры)',o:['суды (разрешают споры)','Дума (пишет законы)','Президент (управляет)','полиция (охраняет)'],h:'Третья ветвь власти'},
+{q:'Права ребёнка записаны в:',a:'Конвенции о правах ребёнка',o:['Конвенции о правах ребёнка','Уголовном кодексе','Конституции','Гражданском кодексе'],h:'ООН, 1989 год'},
+{q:'С какого возраста гражданин может голосовать?',a:'с 18 лет',o:['с 18 лет','с 16 лет','с 14 лет','с 21 года'],h:'Совершеннолетие'},
+{q:'День Конституции России:',a:'12 декабря',o:['12 декабря','1 января','9 мая','12 июня'],h:'1993 год'},
+];return mkQ(...Object.values(pick(qs)))}
+
+const SUBJ=[
+{id:'math',nm:'Математика',ic:'🔢',date:'',cl:'#2563eb',bg:'#dbeafe',
+  tops:[{id:'bignum',nm:'Многозначные числа',gen:genBigNum,th:MATH_TH.bignum,dot:'#dc2626'},{id:'frac',nm:'Дроби',gen:genFractions,th:MATH_TH.fractions,dot:'#2563eb'},{id:'speed',nm:'Скорость',gen:genSpeed,th:MATH_TH.speed,dot:'#16a34a'},{id:'area',nm:'Площадь и периметр',gen:genArea,th:MATH_TH.area,dot:'#7c3aed'}]},
+{id:'rus',nm:'Русский язык',ic:'📝',date:'',cl:'#ea580c',bg:'#fff7ed',
+  tops:[{id:'cases',nm:'Падежи',gen:genCases,th:RUS_TH.cases,dot:'#dc2626'},{id:'conj',nm:'Спряжение',gen:genConj,th:RUS_TH.conj,dot:'#ea580c'},{id:'wparts',nm:'Состав слова',gen:genWordParts,th:RUS_TH.wordparts,dot:'#0d9488'},{id:'spell',nm:'Правописание',gen:genSpelling,th:RUS_TH.spelling,dot:'#ca8a04'}]},
+{id:'okr',nm:'Окружающий мир',ic:'🌍',date:'',cl:'#16a34a',bg:'#dcfce7',
+  tops:[{id:'hist',nm:'История России',gen:genHistory,th:OKR_TH.history,dot:'#b45309'},{id:'zones',nm:'Природные зоны',gen:genZones,th:OKR_TH.zones,dot:'#16a34a'},{id:'state',nm:'Государство',gen:genState,th:OKR_TH.state,dot:'#2563eb'}]}
+];
+
+// ═══ ENGINE (same as grade10 but with m3_ prefix) ═══
+const PFX='m4_';
+let PROG={};function loadProg(){try{PROG=JSON.parse(localStorage.getItem(PFX+'progress')||'{}')}catch{PROG={}}}
+function saveProg(){try{localStorage.setItem(PFX+'progress',JSON.stringify(PROG))}catch{}}
+function getTP(s,t){return(PROG[s+'_'+t]||{ok:0,err:0})}
+function addTP(s,t,ok,err){const k=s+'_'+t;if(!PROG[k])PROG[k]={ok:0,err:0};PROG[k].ok+=ok;PROG[k].err+=err;saveProg()}
+loadProg();
+
+const DAILY_PCT=75,SHORTCUT_N=20;
+let DAILY={ok:0,err:0,pure:0,mixErr:0,date:'',subjs:{}};
+function loadDaily(){try{const d=JSON.parse(localStorage.getItem(PFX+'daily')||'{}');if(d.date===new Date().toDateString())DAILY=d;else DAILY={ok:0,err:0,pure:0,mixErr:0,date:new Date().toDateString(),subjs:{}}}catch{}}
+function saveDaily(){DAILY.date=new Date().toDateString();try{localStorage.setItem(PFX+'daily',JSON.stringify(DAILY))}catch{}}
+function addDaily(sid,ok,err,isFiltered,isFullMix){
+  DAILY.ok+=ok;DAILY.err+=err;
+  if(isFullMix){DAILY.pure+=ok;DAILY.mixErr+=err}
+  if(!DAILY.subjs)DAILY.subjs={};if(!DAILY.subjs[sid])DAILY.subjs[sid]={ok:0,err:0};
+  DAILY.subjs[sid].ok+=ok;DAILY.subjs[sid].err+=err;saveDaily()
+}
+function dailyDone(){
+  if(DAILY.pure>=SHORTCUT_N&&DAILY.mixErr===0)return'shortcut';
+  const tot=DAILY.ok+DAILY.err;if(tot>=100&&DAILY.ok/tot*100>=DAILY_PCT)return'done';return false
+}
+loadDaily();
+
+let STR={current:0,best:0,lastDone:'',totalDone:0,totalQs:0,totalOk:0,shortcuts:0,badges:[]};
+function loadStreak(){try{const s=localStorage.getItem(PFX+'streak');if(s)STR=JSON.parse(s);if(!STR.badges)STR.badges=[]}catch{}}
+function saveStreak(){try{localStorage.setItem(PFX+'streak',JSON.stringify(STR))}catch{}}
+loadStreak();
+function completeDay(type){
+  const today=new Date().toDateString();
+  if(STR.lastDone===today)return;
+  const dates=JSON.parse(localStorage.getItem(PFX+'dates')||'[]');
+  const yesterday=new Date(Date.now()-86400000).toDateString();
+  STR.current=dates.includes(yesterday)?STR.current+1:1;
+  if(STR.current>STR.best)STR.best=STR.current;
+  STR.lastDone=today;STR.totalDone++;
+  if(type==='shortcut')STR.shortcuts++;
+  dates.push(today);try{localStorage.setItem(PFX+'dates',JSON.stringify(dates.slice(-90)))}catch{}
+  saveStreak();
+}
+
+const BADGES=[
+  {id:'first',icon:'🌟',name:'Первый шаг',desc:'Реши 1 задачу',check:s=>s.totalQs>=1},
+  {id:'ten',icon:'🔟',name:'Десяточка',desc:'Реши 10 задач',check:s=>s.totalQs>=10},
+  {id:'fifty',icon:'💪',name:'Полтинник',desc:'Реши 50 задач',check:s=>s.totalQs>=50},
+  {id:'hundred',icon:'💯',name:'Сотня',desc:'Реши 100 задач',check:s=>s.totalQs>=100},
+  {id:'streak3',icon:'🔥',name:'3 дня подряд',desc:'Серия 3 дня',check:s=>s.best>=3},
+  {id:'streak7',icon:'🔥',name:'Неделя!',desc:'Серия 7 дней',check:s=>s.best>=7},
+  {id:'streak14',icon:'🏆',name:'Две недели',desc:'Серия 14 дней',check:s=>s.best>=14},
+  {id:'acc80',icon:'🎯',name:'Меткий',desc:'80%+ точность (50+ задач)',check:s=>s.totalQs>=50&&s.totalOk/s.totalQs>=0.8},
+  {id:'acc90',icon:'💎',name:'Снайпер',desc:'90%+ точность (100+ задач)',check:s=>s.totalQs>=100&&s.totalOk/s.totalQs>=0.9},
+  {id:'daily',icon:'✅',name:'Норма',desc:'Выполни дневную норму',check:()=>dailyDone(),repeat:true,count:s=>s.totalDone},
+  {id:'shortcut',icon:'⚡',name:'Рывок',desc:'20/20 в миксе',check:()=>dailyDone()==='shortcut',repeat:true,count:s=>s.shortcuts},
+];
+function checkBadges(){BADGES.forEach(b=>{if(!b.repeat&&STR.badges.includes(b.id))return;if(b.check(STR)&&!STR.badges.includes(b.id)){STR.badges.push(b.id);saveStreak()}})}
+
+// ═══ QUIZ ENGINE ═══
+let cS=null,cT=null,mix=false,globalMix=false,prob=null,sel=null,hintOn=false,shpOn=false,usedHelp=false,curTheory=null;
+let st={ok:0,err:0,streak:0,best:0},sesTopics={},seenQs={},wrongAnswers=[];
+let ti=null,tv=0;
+function go(id){document.querySelectorAll('.scr').forEach(s=>s.style.display='none');
+  document.getElementById('s-'+id).style.display='block';
+  if(id==='main')refreshMain()}
+function goSubj(){
+  document.querySelectorAll('.scr').forEach(s=>s.style.display='none');
+  document.getElementById('s-subj').style.display='block';openSubj(cS)}
+
+function genGlobalMix(){
+  const all=[];SUBJ.forEach(s=>{if(s.locked)return;s.tops.forEach(t=>{
+    const w=getTP(s.id,t.id);const errR=w.err/(w.ok+w.err+1);
+    const weight=1+errR*2.9;for(let i=0;i<Math.ceil(weight);i++)all.push(t)})});
+  return pick(all).gen()
+}
+
+function startQuiz(){st={ok:0,err:0,streak:0,best:0};sesTopics={};seenQs={};tv=0;sel=null;hintOn=false;shpOn=false;usedHelp=false;wrongAnswers=[];
+  go('quiz');if(ti)clearInterval(ti);ti=setInterval(()=>{tv++;document.getElementById('tmr').textContent=fmt(tv)},1000);nextQ()}
+
+function fmt(s){return(0|s/60)+':'+(''+s%60).padStart(2,'0')}
+function nextQ(){
+  let best=null,bestCount=999;
+  for(let attempt=0;attempt<50;attempt++){
+    let p;if(globalMix)p=genGlobalMix();
+    else{let gen;if(mix)gen=pick(cS.tops).gen;else if(cT)gen=cT.gen;if(!gen)return;p=gen()}
+    const key=p.question+p.answer;const count=seenQs[key]||0;
+    if(count===0){best=p;break}
+    if(count<bestCount){best=p;bestCount=count}
+  }
+  if(best){prob=best;const bk=best.question+best.answer;seenQs[bk]=(seenQs[bk]||0)+1}
+  sel=null;hintOn=false;shpOn=false;usedHelp=false;render();window.scrollTo({top:0,behavior:'smooth'})
+}
+
+function render(){
+  const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
+  const hb=document.getElementById('hb');if(tot>0){hb.style.display='inline-block';hb.textContent=st.ok+'/'+tot+' '+pct+'%'}
+  document.getElementById('sts').innerHTML=
+    '<div class="st"><span class="v" style="color:var(--green)">'+st.ok+'</span><span class="l">верно</span></div>'+
+    '<div class="st"><span class="v" style="color:var(--red)">'+st.err+'</span><span class="l">'+declNum(st.err,'ошибка','ошибки','ошибок')+'</span></div>'+
+    '<div class="st"><span class="v" style="color:var(--accent)">'+pct+'%</span><span class="l">точность</span></div>'+
+    (st.streak>=3?'<div class="st streak"><span class="v" style="color:var(--orange)">🔥'+st.streak+'</span><span class="l">серия</span></div>':'');
+  document.getElementById('qt').textContent=prob.tag;document.getElementById('qt').style.background=prob.bg;document.getElementById('qt').style.color=prob.color;
+  document.getElementById('qb').className=prob.isMath?'qmath':'qtxt';document.getElementById('qb').textContent=prob.question;
+  // Theory
+  let theoryHtml=cT?cT.th:null;
+  if(!theoryHtml&&prob&&prob.tag){for(const s of SUBJ){for(const tp of s.tops){if(tp.nm===prob.tag){theoryHtml=tp.th;break}}if(theoryHtml)break}}
+  let ta='';if(sel===null&&theoryHtml){ta='<button class="shpb" onclick="shpOn=!shpOn;if(shpOn)usedHelp=true;render()">📖 '+(shpOn?'Скрыть шпаргалку':'Шпаргалка')+'</button>';if(shpOn)ta+='<div class="shpbox">'+theoryHtml.replace(/<h3>.*?<\/h3>/g,'')+'</div>'}
+  document.getElementById('shp').innerHTML=ta;
+  // Options
+  let oh='';prob.options.forEach((o,i)=>{
+    const letter='ABCD'[i];let cls='opt';
+    if(sel!==null){if(o===prob.answer)cls+=' correct';else if(o===sel)cls+=' wrong'}
+    oh+='<button class="'+cls+'" '+(sel!==null?'disabled':'')+' onclick="ans('+i+')"><span class="ol">'+letter+'</span><span>'+esc(o)+'</span></button>'});
+  document.getElementById('opts').innerHTML=oh;
+  // Feedback
+  let fb='';if(sel!==null){
+    if(sel===prob.answer){fb='<div class="fb ok">✓ Верно!'+(prob.hint?' <span style="opacity:.7">'+prob.hint+'</span>':'')+'</div>'}
+    else{fb='<div class="fb err">✗ Ответ: '+esc(prob.answer)+(prob.hint?' — '+prob.hint:'')+'</div>'}
+    fb+='<button class="btn btn-p mt12" style="width:100%" onclick="nextQ()">Дальше →</button>'}
+  document.getElementById('fb').innerHTML=fb;
+  document.getElementById('pa').innerHTML=tot>0?'<div class="pgbar"><div class="pgfill" style="width:'+pct+'%"></div></div>':'';
+}
+
+// Journal
+function loadJournal(){try{return JSON.parse(localStorage.getItem(PFX+'journal')||'[]')}catch{return[]}}
+function saveJournal(j){try{localStorage.setItem(PFX+'journal',JSON.stringify(j.slice(-50)))}catch{}}
+function addToJournal(err){const j=loadJournal();j.push(err);saveJournal(j)}
+
+function ans(idx){
+  if(sel!==null)return;sel=prob.options[idx];
+  const ok=sel===prob.answer;
+  if(ok){st.ok++;st.streak++;if(st.streak>st.best)st.best=st.streak;STR.totalOk++;
+    try{navigator.vibrate&&navigator.vibrate(30)}catch{}}
+  else{st.err++;st.streak=0;wrongAnswers.push({q:prob.question,your:sel,correct:prob.answer,hint:prob.hint});
+    addToJournal({q:prob.question,yourAnswer:sel,correct:prob.answer,hint:prob.hint,tag:prob.tag,ts:Date.now()})}
+  STR.totalQs++;saveStreak();
+  // Track topic
+  if(!sesTopics[prob.tag])sesTopics[prob.tag]={ok:0,err:0};
+  sesTopics[prob.tag][ok?'ok':'err']++;
+  // Daily
+  if(cS)addDaily(cS.id,ok?1:0,ok?0:1,!!mixFilter,globalMix&&!mixFilter);
+  // Progress
+  if(cT)addTP(cS.id,cT.id,ok?1:0,ok?0:1);
+  else if(prob.tag){SUBJ.forEach(s=>s.tops.forEach(t=>{if(t.nm===prob.tag)addTP(s.id,t.id,ok?1:0,ok?0:1)}))}
+  checkBadges();
+  const done=dailyDone();if(done)completeDay(done);
+  render()
+}
+
+let mixFilter=null;
+function endSession(){if(ti)clearInterval(ti);globalMix=false;
+  const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
+  const emoji={5:'🌟',4:'👍',3:'😐',2:'📖'};
+  const grade=pct>=90?5:pct>=70?4:pct>=50?3:2;
+  document.getElementById('res-emoji').textContent=emoji[grade];
+  document.getElementById('res-title').textContent=pct+'% правильно';
+  document.getElementById('res-score').textContent=st.ok+'/'+tot;
+  document.getElementById('res-detail').textContent=fmt(tv);
+  let th='';Object.entries(sesTopics).sort((a,b)=>(b[1].ok/(b[1].ok+b[1].err))-(a[1].ok/(a[1].ok+a[1].err))).forEach(([tag,d])=>{
+    const p=Math.round(d.ok/(d.ok+d.err)*100);const c=p>=80?'var(--green)':p>=50?'var(--orange)':'var(--red)';
+    th+='<div style="display:flex;align-items:center;gap:6px;padding:4px 0"><span style="width:10px;height:10px;border-radius:50%;background:'+c+'"></span><span style="flex:1;font-size:13px">'+tag+'</span><span style="font-weight:700;color:'+c+'">'+p+'%</span></div>'});
+  document.getElementById('res-topics').innerHTML=th;
+  go('result')
+}
+
+function shareSession(){
+  const tot=st.ok+st.err,pct=tot?Math.round(st.ok/tot*100):0;
+  let txt='🌱 3 класс — '+getPlayerName()+'\n✅ '+st.ok+'/'+tot+' ('+pct+'%) · '+fmt(tv);
+  Object.entries(sesTopics).forEach(([tag,d])=>{const p=Math.round(d.ok/(d.ok+d.err)*100);txt+='\n'+(p>=80?'🟢':p>=50?'🟡':'🔴')+' '+tag+': '+p+'%'});
+  if(navigator.share)navigator.share({text:txt}).catch(()=>{});
+  else{navigator.clipboard.writeText(txt).then(()=>alert('Скопировано!')).catch(()=>{})}
+}
+
+// ═══ UI ═══
+function refreshMain(){
+  renderPlayerBadge();renderDaily();
+  const c=document.getElementById('subjects');let h='';
+  SUBJ.forEach(s=>{
+    let pctStr='';const tots=s.tops.reduce((a,t)=>{const p=getTP(s.id,t.id);return{ok:a.ok+p.ok,err:a.err+p.err}},{ok:0,err:0});
+    if(tots.ok+tots.err>0){const p=Math.round(tots.ok/(tots.ok+tots.err)*100);pctStr=' · '+p+'%'}
+    h+='<button class="scard" onclick="openSubj(SUBJ.find(x=>x.id===\''+s.id+'\'))"><div class="ic" style="background:'+s.bg+';color:'+s.cl+'">'+s.ic+'</div><div style="flex:1"><div class="nm">'+s.nm+pctStr+'</div></div></button>'});
+  c.innerHTML=h}
+
+function openSubj(s){cS=s;cT=null;mix=false;globalMix=false;
+  document.getElementById('subj-title').textContent=s.ic+' '+s.nm;
+  const c=document.getElementById('topics');let h='';
+  h+='<button class="scard" onclick="cS=SUBJ.find(x=>x.id===\''+s.id+'\');mix=true;globalMix=false;cT=null;document.getElementById(\'hdr\').textContent=\''+s.ic+' '+s.nm.toUpperCase()+'\';startQuiz()"><div class="ic" style="background:'+s.bg+';color:'+s.cl+'">⚡</div><div style="flex:1"><div class="nm">Всё вперемешку</div></div></button>';
+  s.tops.forEach(t=>{
+    const p=getTP(s.id,t.id);let ps='';if(p.ok+p.err>0)ps=' · '+Math.round(p.ok/(p.ok+p.err)*100)+'%';
+    h+='<button class="scard" onclick="cS=SUBJ.find(x=>x.id===\''+s.id+'\');cT=SUBJ.find(x=>x.id===\''+s.id+'\').tops.find(x=>x.id===\''+t.id+'\');mix=false;globalMix=false;curTheory=cT.th;document.getElementById(\'hdr\').textContent=\''+t.nm.toUpperCase()+'\';startQuiz()"><div class="ic" style="background:'+s.bg+';color:'+s.cl+'"><span style=\"width:8px;height:8px;border-radius:50%;background:'+t.dot+'\"></span></div><div style="flex:1"><div class="nm">'+t.nm+ps+'</div></div></button>'});
+  c.innerHTML=h;go('subj')}
+
+function renderDaily(){
+  const dp=document.getElementById('daily-panel');const done=dailyDone();
+  const tot=DAILY.ok+DAILY.err;const pct=tot?Math.round(DAILY.ok/tot*100):0;
+  if(done==='shortcut')dp.innerHTML='<div class="dm" style="border-color:var(--gold);background:#fef9c3"><b>⚡ Рывок!</b> 20/20 без ошибок</div>';
+  else if(done==='done')dp.innerHTML='<div class="dm" style="border-color:var(--green);background:#dcfce7"><b>✅ Норма!</b> '+tot+' задач, '+pct+'%</div>';
+  else dp.innerHTML='<div class="dm"><b>📋 Сегодня:</b> '+tot+'/100 задач'+(tot>0?', '+pct+'%':'')+'</div>'}
+
+function renderPlayerBadge(){
+  const pb=document.getElementById('player-badge');if(!pb)return;
+  const name=getPlayerName();
+  const rank=STR.totalQs>=1000?'🏅 Мастер':STR.totalQs>=500?'🧠 Знаток':STR.totalQs>=100?'📚 Ученик':'🌱 Новичок';
+  pb.innerHTML='<div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#fef9c3,#fff7ed);padding:6px 16px;border-radius:20px;cursor:pointer" onclick="pickName()"><span style="font-size:16px;font-weight:800;color:#1a1a2e">'+name+'</span><span style="font-size:11px;color:#6b6b7e">'+rank+'</span></div>'}
+
+function getPlayerName(){try{return localStorage.getItem(PFX+'player_name')||'Ученик'}catch{return'Ученик'}}
+function setPlayerName(n){try{localStorage.setItem(PFX+'player_name',n)}catch{}}
+
+function pickName(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:28px 20px;max-width:320px;width:100%;text-align:center';
+  box.innerHTML='<div style="font-size:36px;margin-bottom:8px">🌱</div><h3 style="font-family:Unbounded,sans-serif;font-size:16px;margin-bottom:16px">Как тебя зовут?</h3><input id="pn" placeholder="Имя" value="'+(getPlayerName()==='Ученик'?'':getPlayerName())+'" style="width:100%;padding:12px;border:2px solid #e8e6e0;border-radius:10px;font-size:16px;font-family:Golos Text,sans-serif;text-align:center;outline:none" autofocus><button style="width:100%;margin-top:10px;padding:12px;border:none;border-radius:10px;background:#fbbf24;color:#1a1a2e;font-weight:800;font-size:15px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="const v=document.getElementById(\'pn\').value.trim();if(v){setPlayerName(v);this.closest(\'div[style*=fixed]\').remove();refreshMain()}">Начать! →</button>';
+  d.appendChild(box);document.body.appendChild(d);d.onclick=e=>{if(e.target===d&&getPlayerName()!=='Ученик')d.remove()};
+  document.getElementById('pn').focus()}
+
+function showBadges(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:360px;width:100%;max-height:80vh;overflow-y:auto';box.onclick=e=>e.stopPropagation();
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;text-align:center;margin-bottom:16px">🏆 Награды</h3>';
+  BADGES.forEach(b=>{const earned=STR.badges.includes(b.id);
+    h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee;opacity:'+(earned?1:.35)+'"><span style="font-size:24px">'+b.icon+'</span><div><div style="font-weight:700;font-size:13px">'+b.name+'</div><div style="font-size:11px;color:#6b6b7e">'+b.desc+'</div></div>'+(earned?'<span style="margin-left:auto;color:var(--green)">✓</span>':'')+'</div>'});
+  h+='<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  box.innerHTML=h;d.appendChild(box);document.body.appendChild(d)}
+
+function showHallOfFame(){
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:360px;width:100%;text-align:center';box.onclick=e=>e.stopPropagation();
+  const acc=STR.totalQs>0?Math.round(STR.totalOk/STR.totalQs*100):0;
+  box.innerHTML='<div style="font-size:48px;margin-bottom:8px">👑</div><h3 style="font-family:Unbounded,sans-serif;font-size:16px;margin-bottom:12px">'+getPlayerName()+'</h3><div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px"><div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:22px;font-weight:900">'+STR.totalQs+'</div><div style="font-size:11px;color:#6b6b7e">задач</div></div><div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:22px;font-weight:900">'+acc+'%</div><div style="font-size:11px;color:#6b6b7e">точность</div></div><div style="text-align:center"><div style="font-family:Unbounded,sans-serif;font-size:22px;font-weight:900">🔥'+STR.best+'</div><div style="font-size:11px;color:#6b6b7e">рекорд серии</div></div></div><button style="width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  d.appendChild(box);document.body.appendChild(d)}
+
+function showJournal(){
+  const j=loadJournal();
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';d.onclick=()=>d.remove();
+  const box=document.createElement('div');box.style.cssText='background:#fff;border-radius:16px;padding:24px 20px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto';box.onclick=e=>e.stopPropagation();
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;text-align:center;margin-bottom:12px">📊 Слабые места</h3>';
+  if(!j.length){h+='<div style="text-align:center;color:#aaa;padding:30px;font-size:13px">Ошибок пока нет!</div>'}
+  else{const byTag={};j.forEach(e=>{if(!byTag[e.tag])byTag[e.tag]=[];byTag[e.tag].push(e)});
+    Object.entries(byTag).sort((a,b)=>b[1].length-a[1].length).forEach(([tag,errs])=>{
+      const c=errs.length>=5?'#dc2626':errs.length>=3?'#ea580c':'#ca8a04';const bg=errs.length>=5?'#fee2e2':errs.length>=3?'#fff7ed':'#fef9c3';
+      h+='<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:4px;background:'+bg+';border-radius:8px"><span style="font-size:11px;font-weight:700;color:'+c+';flex:1">'+tag+'</span><span style="font-weight:900;font-size:16px;color:'+c+'">'+errs.length+'</span></div>'});
+    j.slice(-8).reverse().forEach(e=>{h+='<div style="padding:6px 0;border-bottom:1px solid #eee;font-size:12px"><div style="font-weight:600">'+esc(e.q)+'</div><div><span style="color:#dc2626">✗ '+esc(e.yourAnswer)+'</span> → <span style="color:#16a34a">✓ '+esc(e.correct)+'</span></div></div>'})}
+  h+='<button style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:8px;background:#1a1a2e;color:#fff;font-weight:700;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  box.innerHTML=h;d.appendChild(box);document.body.appendChild(d)}
+
+// Demo mode
+let demoMode=false;
+if(!localStorage.getItem(PFX+'player_name')){setTimeout(()=>{
+  demoMode=true;globalMix=true;mix=true;cT=null;mixFilter=null;cS=SUBJ[0];
+  document.getElementById('hdr').textContent='ПОПРОБУЙ!';startQuiz()},500)}
+else refreshMain();
+
+const _origNextQ=nextQ;
+const _nextQRef=function(){
+  if(demoMode&&(st.ok+st.err)>=10){
+    if(ti)clearInterval(ti);demoMode=false;globalMix=false;
+    const pct=st.ok>0?Math.round(st.ok/10*100):0;
+    const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+    const box=document.createElement('div');box.style.cssText='background:linear-gradient(135deg,#1a1a2e,#2d2b55);border-radius:20px;padding:28px 24px;max-width:340px;width:100%;text-align:center;color:#fff';
+    box.innerHTML='<div style="font-size:42px;margin-bottom:8px">'+(pct>=80?'🌟':pct>=50?'💪':'📖')+'</div><div style="font-size:48px;font-weight:900;font-family:JetBrains Mono,monospace;margin:12px 0">'+pct+'%</div><div style="font-size:13px;color:#a5b4fc;margin-bottom:20px">'+st.ok+' из 10 верно</div><div style="background:rgba(255,255,255,.08);border-radius:12px;padding:14px;margin-bottom:16px"><div style="font-size:12px;color:#a5b4fc;margin-bottom:8px">Сохрани прогресс — введи имя:</div><input id="demo-name" placeholder="Твоё имя" autofocus style="width:100%;padding:12px;border:none;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;font-size:15px;font-weight:600;text-align:center;outline:none;margin-bottom:8px;font-family:Golos Text,sans-serif"><button style="width:100%;padding:13px;border:none;border-radius:10px;background:#fbbf24;color:#1a1a2e;font-weight:800;cursor:pointer;font-size:15px;font-family:Golos Text,sans-serif" onclick="const v=document.getElementById(\'demo-name\').value.trim();if(v){setPlayerName(v);this.closest(\'div[style*=fixed]\').remove();go(\'main\')}else{document.getElementById(\'demo-name\').focus()}">Начать тренировку →</button></div>';
+    d.appendChild(box);document.body.appendChild(d);go('main');return}
+  _origNextQ()
+};
+nextQ=_nextQRef;
+
+
+function showClassSelect(){
+  const o=document.createElement('div');
+  o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';
+  o.onclick=()=>o.remove();
+  const a=document.createElement('div');
+  a.style.cssText='background:#fff;border-radius:20px;padding:24px 20px;max-width:360px;width:100%;max-height:85vh;overflow-y:auto';
+  a.onclick=e=>e.stopPropagation();
+  const grades=[
+    {g:'3',f:'grade3.html',ic:'🎒',color:'#16a34a',bg:'#dcfce7'},
+    {g:'4',f:'grade4.html',ic:'📐',color:'#2563eb',bg:'#dbeafe'},
+    {g:'5',f:'grade5.html',ic:'🔢',color:'#7c3aed',bg:'#ede9fe'},
+    {g:'6',f:'grade6.html',ic:'🌍',color:'#ea580c',bg:'#fff7ed'},
+    {g:'7',f:'grade7.html',ic:'⚗️',color:'#0d9488',bg:'#ccfbf1'},
+    {g:'8',f:'grade8.html',ic:'⚡',color:'#dc2626',bg:'#fee2e2'},
+    {g:'9',f:'grade9.html',ic:'∫',color:'#ca8a04',bg:'#fef9c3'},
+    {g:'10',f:'index.html',ic:'∑',color:'#1a1a2e',bg:'#e8e6e0'},
+    {g:'11',f:'grade11.html',ic:'🎓',color:'#7c3aed',bg:'#ede9fe'},
+  ];
+  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">📚 Выбери класс</h3>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">';
+  grades.forEach(({g,f,ic,color,bg})=>{
+    const currentFile=window.location.pathname.split('/').pop()||'index.html';
+    const isCurrent=f===currentFile;
+    h+=`<a href="${f}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;background:${bg};border-radius:12px;text-decoration:none;border:${isCurrent?'2.5px solid '+color:'2px solid transparent'};min-height:70px">
+      <span style="font-size:20px;margin-bottom:4px">${ic}</span>
+      <span style="font-size:13px;font-weight:800;color:${color}">${g} класс</span>
+    </a>`;
+  });
+  h+='</div>';
+  h+='<button style="width:100%;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  a.innerHTML=h;o.appendChild(a);document.body.appendChild(o);
+}
+</script>
+</body>
+</html>
