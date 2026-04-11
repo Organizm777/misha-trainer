@@ -892,7 +892,7 @@ function showClassSelect(){
   o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';
   o.onclick=()=>o.remove();
   const a=document.createElement('div');
-  a.style.cssText='background:#fff;border-radius:20px;padding:24px 20px;max-width:360px;width:100%;max-height:85vh;overflow-y:auto';
+  a.style.cssText='background:#fff;border-radius:20px;padding:20px;max-width:360px;width:100%;max-height:85vh;overflow-y:auto';
   a.onclick=e=>e.stopPropagation();
   const grades=[
     {g:'3',f:'grade3.html',ic:'🎒',color:'#16a34a',bg:'#dcfce7'},
@@ -902,14 +902,15 @@ function showClassSelect(){
     {g:'7',f:'grade7.html',ic:'⚗️',color:'#0d9488',bg:'#ccfbf1'},
     {g:'8',f:'grade8.html',ic:'⚡',color:'#dc2626',bg:'#fee2e2'},
     {g:'9',f:'grade9.html',ic:'∫',color:'#ca8a04',bg:'#fef9c3'},
-    {g:'10',f:'index.html',ic:'∑',color:'#1a1a2e',bg:'#e8e6e0'},
+    {g:'10',f:'grade10.html',ic:'∑',color:'#1a1a2e',bg:'#e8e6e0'},
     {g:'11',f:'grade11.html',ic:'🎓',color:'#7c3aed',bg:'#ede9fe'},
   ];
-  let h='<h3 style="font-family:Unbounded,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">📚 Выбери класс</h3>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">';
+  let h='<a href="index.html" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f5f3ee;border-radius:10px;text-decoration:none;color:#1a1a2e;font-weight:700;font-size:13px;margin-bottom:14px">← На главную</a>';
+  h+='<div style="font-family:Unbounded,sans-serif;font-size:13px;font-weight:800;margin-bottom:12px;text-align:center">Выбери класс</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">';
   grades.forEach(({g,f,ic,color,bg})=>{
     const currentFile=window.location.pathname.split('/').pop()||'index.html';
-    const isCurrent=f===currentFile;
+    const isCurrent=f===currentFile||(f==='grade10.html'&&currentFile==='index.html');
     h+=`<a href="${f}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;background:${bg};border-radius:12px;text-decoration:none;border:${isCurrent?'2.5px solid '+color:'2px solid transparent'};min-height:70px">
       <span style="font-size:20px;margin-bottom:4px">${ic}</span>
       <span style="font-size:13px;font-weight:800;color:${color}">${g} класс</span>
@@ -919,7 +920,6 @@ function showClassSelect(){
   h+='<button style="width:100%;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
   a.innerHTML=h;o.appendChild(a);document.body.appendChild(o);
 }
-
 function showRushSetupBanner(){
   // Only show if bin is a placeholder (not a real npoint bin)
   if(!rushBinId||rushBinId.length===20&&!/^[a-f0-9]{20}$/.test(rushBinId)){
