@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark"><meta name="theme-color" content="#1a1a2e">
+<title>Родительская панель</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:#f5f3ee;--card:#fff;--text:#1a1a2e;--muted:#6b6b7e;--border:#e2e0d8;--accent:#2563eb;--green:#16a34a;--red:#dc2626;--orange:#ea580c;--R:16px}
+@media(prefers-color-scheme:dark){:root{--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e}}
+*,::after,::before{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);color:var(--text)}
+body{font-family:'Golos Text',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}
+.w{max-width:640px;margin:0 auto;padding:16px 16px calc(20px + env(safe-area-inset-bottom,0))}
+header{background:var(--text);color:#fff;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0));text-align:center}
+header h1{font-family:'Unbounded',system-ui,sans-serif;font-size:14px;font-weight:800}
+header p{font-size:11px;opacity:.6;margin-top:2px}
+.hero{text-align:center;padding:24px 0 16px}
+.hero-name{font-family:'Unbounded',system-ui,sans-serif;font-size:22px;font-weight:900}
+.hero-rank{font-size:13px;color:var(--muted);margin-top:4px}
+.stats{display:flex;gap:8px;margin:16px 0}
+.stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px 10px;text-align:center}
+.stat-n{font-family:'Unbounded',system-ui,sans-serif;font-size:20px;font-weight:900}
+.stat-l{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.section{margin:20px 0 8px;font-family:'Unbounded',system-ui,sans-serif;font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.grade-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--R);margin-bottom:8px;cursor:pointer;transition:transform .1s;text-decoration:none;color:var(--text)}
+.grade-card:active{transform:scale(.98)}
+.grade-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.grade-info{flex:1;min-width:0}
+.grade-nm{font-size:14px;font-weight:700}
+.grade-sub{font-size:11px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grade-stats{text-align:right;flex-shrink:0}
+.grade-pct{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800}
+.grade-cnt{font-size:10px;color:var(--muted);margin-top:1px}
+.bar{height:4px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;transition:width .6s ease}
+.streak-row{display:flex;gap:8px;margin:12px 0}
+.streak-card{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:12px;text-align:center}
+.streak-val{font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900}
+.streak-lbl{font-size:10px;color:var(--muted);margin-top:2px}
+.weak{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px 16px;margin-bottom:8px}
+.weak-tag{font-size:12px;font-weight:700}
+.weak-cnt{font-size:11px;color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:30px 0;font-size:13px}
+.back{display:inline-block;margin-top:16px;padding:10px 20px;background:var(--text);color:var(--bg);border:none;border-radius:10px;font-family:'Golos Text',sans-serif;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;text-align:center;width:100%}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fu .35s ease both}
+</style></head><body>
+<header>
+<h1>📊 Родительская панель</h1>
+<p>Прогресс по всем классам</p>
+</header>
+<div class="w">
+<div class="hero fade">
+<div class="hero-name" id="name">Ученик</div>
+<div class="hero-rank" id="rank"></div>
+</div>
+
+<div class="stats fade" style="animation-delay:.05s">
+<div class="stat"><div class="stat-n" id="total-q">0</div><div class="stat-l">Задач</div></div>
+<div class="stat"><div class="stat-n" id="total-pct">—</div><div class="stat-l">Точность</div></div>
+<div class="stat"><div class="stat-n" id="total-streak">0</div><div class="stat-l">🔥 Рекорд</div></div>
+<div class="stat"><div class="stat-n" id="total-days">0</div><div class="stat-l">Дней</div></div>
+</div>
+
+<div class="section">Классы</div>
+<div id="grades"></div>
+
+<div class="section">Слабые темы</div>
+<div id="weak"></div>
+
+<a href="index.html" class="back">← К тренажёру</a>
+</div>
+
+<script>
+const GRADES = [
+  {n:1, nm:'1 класс', ic:'🌱', color:'#f59e0b', bg:'#fef3c7', pfx:'m1_', file:'grade1.html'},
+  {n:2, nm:'2 класс', ic:'🌿', color:'#f97316', bg:'#fff7ed', pfx:'m2_', file:'grade2.html'},
+  {n:3, nm:'3 класс', ic:'🎒', color:'#16a34a', bg:'#dcfce7', pfx:'m3_', file:'grade3.html'},
+  {n:4, nm:'4 класс', ic:'📘', color:'#2563eb', bg:'#dbeafe', pfx:'m4_', file:'grade4.html'},
+  {n:5, nm:'5 класс', ic:'📗', color:'#0d9488', bg:'#ccfbf1', pfx:'m5_', file:'grade5.html'},
+  {n:6, nm:'6 класс', ic:'📙', color:'#ea580c', bg:'#fff7ed', pfx:'m6_', file:'grade6.html'},
+  {n:7, nm:'7 класс', ic:'📕', color:'#dc2626', bg:'#fee2e2', pfx:'m7_', file:'grade7.html'},
+  {n:8, nm:'8 класс', ic:'🔬', color:'#7c3aed', bg:'#ede9fe', pfx:'trainer_', sfx:'_8', file:'grade8.html'},
+  {n:9, nm:'9 класс', ic:'🧪', color:'#0d9488', bg:'#ccfbf1', pfx:'trainer_', sfx:'_9', file:'grade9.html'},
+  {n:10, nm:'10 класс', ic:'🎓', color:'#2563eb', bg:'#dbeafe', pfx:'trainer_', sfx:'_10', file:'grade10.html'},
+  {n:11, nm:'11 класс', ic:'🏆', color:'#7c3aed', bg:'#ede9fe', pfx:'trainer_', sfx:'_11', file:'grade11.html'},
+];
+
+function getKey(g, type) {
+  if (g.sfx) return g.pfx + type + g.sfx;
+  return g.pfx + type;
+}
+
+function safeJSON(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch { return fallback; }
+}
+
+function init() {
+  // Player name
+  const name = localStorage.getItem('trainer_player_name') || 'Ученик';
+  document.getElementById('name').textContent = name;
+
+  let totalQs = 0, totalOk = 0, bestStreak = 0, totalDays = 0;
+  const allWeakTopics = {};
+  const gradeData = [];
+
+  GRADES.forEach(g => {
+    const streak = safeJSON(getKey(g, 'streak'), {totalQs:0, totalOk:0, best:0, totalDone:0});
+    const progress = safeJSON(getKey(g, 'progress'), {});
+    const journal = safeJSON(getKey(g, 'journal'), []);
+    const dates = safeJSON(getKey(g, 'dates'), []);
+
+    const qs = streak.totalQs || 0;
+    const ok = streak.totalOk || 0;
+    const pct = qs > 0 ? Math.round(ok / qs * 100) : -1;
+
+    totalQs += qs;
+    totalOk += ok;
+    if ((streak.best || 0) > bestStreak) bestStreak = streak.best;
+    totalDays += dates.length;
+
+    // Collect weak topics from journal
+    journal.forEach(j => {
+      const key = (g.nm + ': ' + (j.tag || '?'));
+      allWeakTopics[key] = (allWeakTopics[key] || 0) + 1;
+    });
+
+    gradeData.push({grade: g, qs, ok, pct, dates: dates.length, streak});
+  });
+
+  // Global stats
+  document.getElementById('total-q').textContent = totalQs.toLocaleString();
+  document.getElementById('total-pct').textContent = totalQs > 0 ? Math.round(totalOk / totalQs * 100) + '%' : '—';
+  document.getElementById('total-streak').textContent = bestStreak;
+  document.getElementById('total-days').textContent = totalDays;
+
+  const rank = totalQs >= 5000 ? '🏅 Гроссмейстер' :
+               totalQs >= 2000 ? '🥇 Эксперт' :
+               totalQs >= 1000 ? '🏅 Мастер' :
+               totalQs >= 500 ? '🧠 Знаток' :
+               totalQs >= 100 ? '📚 Ученик' : '🌱 Новичок';
+  document.getElementById('rank').textContent = rank + ' · ' + totalQs + ' задач за всё время';
+
+  // Grade cards
+  const container = document.getElementById('grades');
+  gradeData.forEach((d, i) => {
+    const g = d.grade;
+    const card = document.createElement('a');
+    card.href = g.file;
+    card.className = 'grade-card fade';
+    card.style.animationDelay = (0.1 + i * 0.04) + 's';
+
+    const pctColor = d.pct >= 80 ? 'var(--green)' : d.pct >= 50 ? 'var(--orange)' : d.pct >= 0 ? 'var(--red)' : 'var(--muted)';
+    const barWidth = d.qs > 0 ? Math.min(100, d.pct) : 0;
+
+    card.innerHTML = `
+      <div class="grade-ic" style="background:${g.bg};color:${g.color}">${g.ic}</div>
+      <div class="grade-info">
+        <div class="grade-nm">${g.nm}</div>
+        <div class="grade-sub">${d.qs > 0 ? d.qs + ' задач · ' + d.dates + ' дн.' : 'ещё не начат'}</div>
+        <div class="bar"><div class="bar-fill" style="width:${barWidth}%;background:${pctColor}"></div></div>
+      </div>
+      <div class="grade-stats">
+        <div class="grade-pct" style="color:${pctColor}">${d.pct >= 0 ? d.pct + '%' : '—'}</div>
+        <div class="grade-cnt">${d.qs > 0 ? '🔥' + (d.streak.best || 0) : ''}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Weak topics
+  const weakContainer = document.getElementById('weak');
+  const sorted = Object.entries(allWeakTopics).sort((a, b) => b[1] - a[1]);
+  if (sorted.length === 0) {
+    weakContainer.innerHTML = '<div class="empty">Ошибок пока нет — отлично!</div>';
+  } else {
+    sorted.slice(0, 10).forEach(([topic, count]) => {
+      const color = count >= 5 ? 'var(--red)' : count >= 3 ? 'var(--orange)' : 'var(--muted)';
+      const div = document.createElement('div');
+      div.className = 'weak';
+      div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="weak-tag">${topic}</span>
+        <span class="weak-cnt" style="color:${color};font-weight:800">${count} ош.</span>
+      </div>`;
+      weakContainer.appendChild(div);
+    });
+  }
+}
+
+init();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+</script>
+</body></html>

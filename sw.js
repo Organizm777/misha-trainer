@@ -14,7 +14,8 @@ const ASSETS = [
   './grade10.html',
   './grade11.html',
   './diagnostic.html',
-  './tests.html'
+  './tests.html',
+  './dashboard.html'
 ];
 
 const FONT_URLS = [
