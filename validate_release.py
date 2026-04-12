@@ -180,6 +180,18 @@ def check_curriculum_guards() -> list[str]:
 
     return errors
 
+
+
+def check_browser_e2e() -> list[str]:
+    script = ROOT / "browser_e2e_smoke.py"
+    if not script.exists():
+        return ["browser_e2e_smoke.py is missing"]
+    proc = subprocess.run(['python', str(script)], capture_output=True, text=True, cwd=ROOT)
+    if proc.returncode == 0:
+        report = ROOT / "BROWSER_E2E_REPORT.md"
+        return [] if report.exists() else ["BROWSER_E2E_REPORT.md is missing"]
+    return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
+
 def main() -> int:
     errors = []
     errors.extend(check_js_files())
@@ -188,6 +200,7 @@ def main() -> int:
     errors.extend(check_legacy_links())
     errors.extend(check_runtime_smoke())
     errors.extend(check_flow_smoke())
+    errors.extend(check_browser_e2e())
     errors.extend(check_curriculum_audit())
     errors.extend(check_topic_coverage_audit())
     errors.extend(check_curriculum_guards())
@@ -200,7 +213,7 @@ def main() -> int:
             print(error)
         return 1
 
-    print('OK: syntax, SW assets, legacy links, runtime + flow smoke, curriculum + coverage audit and content guards passed')
+    print('OK: syntax, SW assets, legacy links, runtime + flow + browser E2E smoke, curriculum + coverage audit and content guards passed')
     return 0
 
 
