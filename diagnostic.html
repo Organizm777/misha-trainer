@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a1a2e">
 <title>Сквозная диагностика</title>
@@ -296,7 +296,9 @@ QBANK.geometry = [
   {g:8, topic:'Четырёхугольники', q:'Диагонали прямоугольника:', opts:['равны','перпендикулярны','не пересекаются','параллельны'], a:'равны', hint:'В прямоугольнике d₁=d₂'},
   {g:9, topic:'Окружность', q:'Длина окружности = ?', opts:['2πr','πr²','πr','2r'], a:'2πr', hint:'C = 2πr = πd'},
   {g:10, topic:'Стереометрия', q:'Объём куба с ребром a:', opts:['a³','a²','6a²','4a'], a:'a³', hint:'V = a×a×a'},
-  {g:11, topic:'Стереометрия', q:'Объём шара:', opts:['4/3·πr³','πr²','4πr²','2πr'], a:'4/3·πr³', hint:'V = 4/3 πr³'}
+  {g:10, topic:'Стереометрия', q:'Диагональ куба с ребром a = ?', opts:['a√3','a√2','3a','a³'], a:'a√3', hint:'Пространственная диагональ куба d = a√3'},
+  {g:11, topic:'Стереометрия', q:'Объём шара:', opts:['4/3·πr³','πr²','4πr²','2πr'], a:'4/3·πr³', hint:'V = 4/3 πr³'},
+  {g:11, topic:'Подобие', q:'Периметры подобных фигур относятся как...', opts:['как коэффициент подобия k','как k²','как k³','всегда 1:1'], a:'как коэффициент подобия k', hint:'Периметры и все линейные размеры относятся как k'}
 ];
 
 //   (7-11) 
@@ -434,10 +436,15 @@ QBANK.informatics = [
   {g:11, topic:'Сети', q:'DNS — это...', opts:['система перевода доменов в IP','протокол шифрования','браузер','сервер'], a:'система перевода доменов в IP', hint:'Domain Name System: google.com → 142.250.x.x'},
 ,
   {g:7, topic:'Алгоритмы', q:'Алгоритм — это:', opts:['последовательность действий','программа','компьютер','файл'], a:'последовательность действий', hint:'Чёткая инструкция'},
+  {g:7, topic:'Информация', q:'Наименьшая единица информации?', opts:['бит','байт','килобайт','символ'], a:'бит', hint:'Бит хранит 0 или 1'},
   {g:8, topic:'Логика', q:'NOT(True) = ?', opts:['False','True','0','None'], a:'False', hint:'Отрицание: NOT True = False'},
+  {g:8, topic:'Логика', q:'1 OR 0 = ?', opts:['1','0','2','-1'], a:'1', hint:'OR: достаточно одной единицы'},
   {g:9, topic:'Программирование', q:'print(2**3) выведет:', opts:['8','6','9','23'], a:'8', hint:'2**3 = 2³ = 8'},
+  {g:9, topic:'Python', q:'Какой цикл повторяет блок, пока условие истинно?', opts:['while','for','if','def'], a:'while', hint:'while condition: выполняется, пока условие истинно'},
   {g:10, topic:'Сети', q:'IP-адрес — это:', opts:['адрес устройства в сети','пароль','имя файла','тип процессора'], a:'адрес устройства в сети', hint:'Internet Protocol address'},
-  {g:11, topic:'Базы данных', q:'SQL — это язык для:', opts:['работы с базами данных','вёрстки','графики','математики'], a:'работы с базами данных', hint:'Structured Query Language'}
+  {g:10, topic:'Алгоритмы', q:'Что делает линейный поиск?', opts:['проверяет элементы по одному','делит массив пополам','сортирует массив','ищет только в словаре'], a:'проверяет элементы по одному', hint:'Идёт по массиву слева направо'},
+  {g:11, topic:'Базы данных', q:'SQL — это язык для:', opts:['работы с базами данных','вёрстки','графики','математики'], a:'работы с базами данных', hint:'Structured Query Language'},
+  {g:11, topic:'Базы данных', q:'SQL-команда для добавления новой строки:', opts:['INSERT INTO','UPDATE','DELETE','SELECT'], a:'INSERT INTO', hint:'INSERT INTO добавляет запись в таблицу'}
 ];
 
 //    (3-11) 
@@ -484,9 +491,11 @@ QBANK.social = [
 ,
   {g:8, topic:'Общество', q:'Три сферы общества:', opts:['экономическая, политическая, социальная','только экономическая','природа и общество','наука и религия'], a:'экономическая, политическая, социальная', hint:'+ духовная = 4 сферы'},
   {g:9, topic:'Право', q:'Конституция — это:', opts:['основной закон государства','уголовный кодекс','указ президента','постановление суда'], a:'основной закон государства', hint:'Высшая юридическая сила'},
+  {g:8, topic:'Экономика', q:'Деньги выполняют функцию...', opts:['средства обмена','природного ресурса','фактора производства','формы правления'], a:'средства обмена', hint:'За деньги покупают товары и услуги'},
   {g:9, topic:'Политика', q:'Демократия — это:', opts:['власть народа','власть одного','власть элиты','безвластие'], a:'власть народа', hint:'Demos + kratos'},
   {g:10, topic:'Экономика', q:'Инфляция — это:', opts:['рост общего уровня цен','падение цен','рост зарплат','рост ВВП'], a:'рост общего уровня цен', hint:'Обесценивание денег'},
   {g:10, topic:'Право', q:'С какого возраста наступает полная уголовная ответственность в РФ?', opts:['16 лет','14 лет','18 лет','21 год'], a:'16 лет', hint:'За тяжкие — с 14'},
+  {g:10, topic:'Право', q:'К какой ветви власти относятся суды?', opts:['судебной','исполнительной','законодательной','местной'], a:'судебной', hint:'Суды осуществляют правосудие'},
   {g:11, topic:'Философия', q:'Эмпиризм — познание через:', opts:['опыт','разум','веру','интуицию'], a:'опыт', hint:'Empiria = опыт'},
   {g:11, topic:'Экономика', q:'ВВП — это:', opts:['стоимость всех товаров и услуг страны за год','бюджет','долг','экспорт'], a:'стоимость всех товаров и услуг страны за год', hint:'Валовой внутренний продукт'}
 ];
@@ -579,7 +588,15 @@ QBANK.english = [
 
 
 
-QBANK.mathall = [...QBANK.math, ...QBANK.algebra, ...QBANK.geometry];
+function sanitizePool(list){
+  return (list || []).filter(q => q && Number.isFinite(q.g) && typeof q.q === 'string' && Array.isArray(q.opts) && q.opts.length >= 2 && typeof q.a === 'string');
+}
+
+Object.keys(QBANK).forEach(key => {
+  QBANK[key] = sanitizePool(QBANK[key]);
+});
+
+QBANK.mathall = sanitizePool([...(QBANK.math || []), ...(QBANK.algebra || []), ...(QBANK.geometry || [])]).filter(q => q.g >= 3);
 
 //
 // SUBJECT REGISTRY
@@ -634,11 +651,11 @@ const MAX_Q = 20;
 //
 function startDiag(subjId){
   curSubject = SUBJECTS.find(s=>s.id===subjId);
-  const pool = QBANK[subjId] || [];
+  const pool = sanitizePool(QBANK[subjId]);
   if(!pool.length){ alert('Вопросы скоро появятся!'); return; }
 
   // Build grade range
-  const grades = [...new Set(pool.map(q=>q.g))].sort((a,b)=>a-b);
+  const grades = [...new Set(pool.map(q=>q.g).filter(Number.isFinite))].sort((a,b)=>a-b);
   const minG = grades[0], maxG = grades[grades.length-1];
   curGrade = Math.floor((minG+maxG)/2);
 
@@ -647,7 +664,7 @@ function startDiag(subjId){
   grades.forEach(g=>{ gradeStats[g]={ok:0,total:0,topics:[]}; });
 
   // Adaptive question selection
-  questions = buildAdaptiveSequence(pool, grades, MAX_Q);
+  questions = buildAdaptiveSequence(pool, grades, Math.min(MAX_Q, pool.length));
   qIndex = 0;
   answers = [];
 
@@ -671,8 +688,10 @@ function buildAdaptiveSequence(pool, grades, maxQ){
   const seq = [];
   let g = curGrade;
   const minG = Math.min(...grades), maxG = Math.max(...grades);
+  let safety = 0;
 
   for(let i=0;i<maxQ;i++){
+    if(++safety > 100) break;
     if(!grades.includes(g)) g = grades.reduce((a,b)=>Math.abs(b-g)<Math.abs(a-g)?b:a);
     
     let available = byGrade[g] ? byGrade[g].filter(q=>!used.has(q)) : [];
@@ -793,14 +812,18 @@ function selectOpt(btn, chosen, correct, hint){
 }
 
 function adaptNext(wasCorrect){
-  const pool = QBANK[curSubject.id] || [];
+  const pool = sanitizePool(QBANK[curSubject.id]);
   const usedQs = new Set(questions.map(q=>q.q));
-  
+  const allGrades = [...new Set(pool.map(q=>q.g).filter(Number.isFinite))].sort((a,b)=>a-b);
+  if(!allGrades.length) return;
+
   const curQ = questions[qIndex];
+  const minGrade = allGrades[0];
+  const maxGrade = allGrades[allGrades.length - 1];
   const nextGrade = wasCorrect
-    ? Math.min(11, curQ.g + 1)
-    : Math.max(1, curQ.g - 1);
-  
+    ? Math.min(maxGrade, curQ.g + 1)
+    : Math.max(minGrade, curQ.g - 1);
+
   const candidates = pool.filter(q=>q.g===nextGrade && !usedQs.has(q.q));
   
   if(candidates.length){
