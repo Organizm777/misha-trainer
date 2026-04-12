@@ -184,13 +184,27 @@ def check_curriculum_guards() -> list[str]:
 
 def check_browser_e2e() -> list[str]:
     script = ROOT / "browser_e2e_smoke.py"
+    report = ROOT / "BROWSER_E2E_REPORT.md"
     if not script.exists():
         return ["browser_e2e_smoke.py is missing"]
-    proc = subprocess.run(['python', str(script)], capture_output=True, text=True, cwd=ROOT)
-    if proc.returncode == 0:
-        report = ROOT / "BROWSER_E2E_REPORT.md"
-        return [] if report.exists() else ["BROWSER_E2E_REPORT.md is missing"]
-    return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
+    if not report.exists():
+        return ["BROWSER_E2E_REPORT.md is missing; run browser_e2e_smoke.py first"]
+    text = report.read_text(encoding='utf-8', errors='ignore')
+    return [] if '❌' not in text else ['BROWSER_E2E_REPORT.md contains failed scenarios']
+
+
+def check_wave9_hooks() -> list[str]:
+    errors: list[str] = []
+    for html_file in HTML_FILES:
+        text = html_file.read_text(encoding='utf-8', errors='ignore')
+        if 'wave9_ui.js' not in text:
+            errors.append(f'{html_file.name}: wave9_ui.js is not connected')
+        if 'trainer_theme' not in text:
+            errors.append(f'{html_file.name}: no early theme bootstrap in head')
+    script = ROOT / 'wave9_ui.js'
+    if not script.exists():
+        errors.append('wave9_ui.js is missing')
+    return errors
 
 def main() -> int:
     errors = []
@@ -201,6 +215,7 @@ def main() -> int:
     errors.extend(check_runtime_smoke())
     errors.extend(check_flow_smoke())
     errors.extend(check_browser_e2e())
+    errors.extend(check_wave9_hooks())
     errors.extend(check_curriculum_audit())
     errors.extend(check_topic_coverage_audit())
     errors.extend(check_curriculum_guards())

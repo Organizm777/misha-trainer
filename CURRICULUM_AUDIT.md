@@ -1,200 +1,206 @@
-# Аудит структуры классов и предметной сетки
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
 
-## Сводка по классам
+const noop = () => {};
+function mkEl() {
+  return {
+    style: {},
+    classList: { add: noop, remove: noop, contains: () => false },
+    appendChild: noop,
+    remove: noop,
+    setAttribute: noop,
+    focus: noop,
+    scrollIntoView: noop,
+    innerHTML: '',
+    textContent: '',
+    value: '',
+    onclick: null,
+    querySelector: () => mkEl(),
+    querySelectorAll: () => [],
+    addEventListener: noop,
+  };
+}
+function baseContext() {
+  const document = {
+    getElementById: () => mkEl(),
+    querySelector: () => mkEl(),
+    querySelectorAll: () => [],
+    body: { appendChild: noop },
+    createElement: () => mkEl(),
+    addEventListener: noop,
+    removeEventListener: noop,
+  };
+  const ctx = {
+    console,
+    Math,
+    Date,
+    JSON,
+    Array,
+    Object,
+    String,
+    Number,
+    Boolean,
+    Promise,
+    Set,
+    Map,
+    window: {},
+    document,
+    navigator: {
+      serviceWorker: { register: () => Promise.resolve() },
+      clipboard: { writeText: () => Promise.resolve() },
+      share: () => Promise.resolve(),
+      vibrate: noop,
+    },
+    localStorage: { getItem: () => null, setItem: noop, removeItem: noop },
+    alert: noop,
+    confirm: () => false,
+    setTimeout: noop,
+    clearTimeout: noop,
+    setInterval: () => 0,
+    clearInterval: noop,
+    fetch: () => Promise.resolve({ json: async () => ({}) }),
+  };
+  ctx.global = ctx;
+  vm.createContext(ctx);
+  return ctx;
+}
+function runHtml(file) {
+  const html = fs.readFileSync(file, 'utf8');
+  const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
+  const ctx = baseContext();
+  for (const s of scripts) vm.runInContext(s, ctx, { timeout: 5000 });
+  return ctx;
+}
+function getGlobal(ctx, name) {
+  try { return vm.runInContext(name, ctx, { timeout: 1000 }); }
+  catch { return ctx[name] || ctx.window?.[name]; }
+}
+function mdTable(headers, rows) {
+  let out = `| ${headers.join(' | ')} |\n`;
+  out += `| ${headers.map(() => '---').join(' | ')} |\n`;
+  rows.forEach(row => { out += `| ${row.join(' | ')} |\n`; });
+  return out + '\n';
+}
 
-| Класс | Предметов | Тем | Тем со шпаргалкой | Без шпаргалки |
-| --- | --- | --- | --- | --- |
-| 1 | 3 | 13 | 13 | 0 |
-| 2 | 3 | 12 | 12 | 0 |
-| 3 | 3 | 11 | 11 | 0 |
-| 4 | 3 | 11 | 11 | 0 |
-| 5 | 5 | 16 | 16 | 0 |
-| 6 | 5 | 16 | 16 | 0 |
-| 7 | 5 | 16 | 16 | 0 |
-| 8 | 7 | 26 | 26 | 0 |
-| 9 | 7 | 26 | 26 | 0 |
-| 10 | 15 | 60 | 60 | 0 |
-| 11 | 7 | 26 | 26 | 0 |
+const gradeFiles = Array.from({ length: 11 }, (_, i) => `grade${i + 1}_v2.html`);
+const gradeRows = [];
+const subjectTopicMesh = new Map();
+const subjectNameMesh = new Map();
+const subjectNameById = new Map();
+const thinBlocks = [];
 
-## Предметы по классам
+for (const file of gradeFiles) {
+  const ctx = runHtml(file);
+  const subj = getGlobal(ctx, 'SUBJ');
+  if (!Array.isArray(subj)) throw new Error(`${file}: SUBJ not found`);
+  let topics = 0;
+  let theory = 0;
+  const missingTheory = [];
+  const subjectList = [];
+  subj.forEach(s => {
+    const topicCount = Array.isArray(s.tops) ? s.tops.length : 0;
+    subjectList.push(`${s.nm} (${topicCount})`);
+    if (!subjectNameMesh.has(s.nm)) subjectNameMesh.set(s.nm, {});
+    subjectNameMesh.get(s.nm)[file] = topicCount;
+    subjectNameById.set(s.id, s.nm);
+    if (topicCount < 3 && !s.locked) thinBlocks.push({ file, subject: s.nm, topicCount });
+    s.tops.forEach(t => {
+      topics++;
+      if (t.th) theory++; else missingTheory.push(`${s.id}/${t.id}`);
+      const key = `${s.id}/${t.id}`;
+      if (!subjectTopicMesh.has(key)) subjectTopicMesh.set(key, []);
+      subjectTopicMesh.get(key).push(path.basename(file, '.html'));
+    });
+  });
+  gradeRows.push({
+    file,
+    grade: file.replace('_v2.html', '').replace('grade', ''),
+    subjects: subj.length,
+    topics,
+    theory,
+    missingTheory,
+    subjectList,
+  });
+}
 
-### 1 класс
+const dctx = runHtml('diagnostic.html');
+const qbank = getGlobal(dctx, 'QBANK');
+if (!qbank || typeof qbank !== 'object') throw new Error('diagnostic.html: QBANK not found');
+const diagRows = Object.keys(qbank)
+  .filter(k => Array.isArray(qbank[k]))
+  .sort()
+  .map(k => ({ subject: k, count: qbank[k].filter(Boolean).length }));
 
-- Математика (6)
-- Русский язык (4)
-- Окружающий мир (3)
+const repeatedMesh = [...subjectTopicMesh.entries()]
+  .filter(([, files]) => files.length > 1)
+  .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
 
-### 2 класс
+const subjectNames = [...subjectNameMesh.keys()].sort((a, b) => a.localeCompare(b, 'ru'));
+const meshRows = subjectNames.map(name => {
+  const cells = [name];
+  for (const file of gradeFiles) {
+    const count = subjectNameMesh.get(name)[file];
+    cells.push(count ? String(count) : '—');
+  }
+  return cells;
+});
 
-- Математика (6)
-- Русский язык (3)
-- Окружающий мир (3)
+const coverage = {
+  grades: gradeRows,
+  diagnostics: diagRows,
+  repeatedTopicIds: repeatedMesh.map(([key, files]) => ({ key, files })),
+  subjectMesh: subjectNames.map(name => ({
+    subject: name,
+    byGrade: Object.fromEntries(gradeFiles.map(file => [file, subjectNameMesh.get(name)[file] || 0])),
+  })),
+  thinBlocks,
+};
+fs.writeFileSync('CURRICULUM_MESH.json', JSON.stringify(coverage, null, 2), 'utf8');
 
-### 3 класс
+let md = '# Аудит структуры классов и предметной сетки\n\n';
+md += '## Сводка по классам\n\n';
+md += mdTable(
+  ['Класс', 'Предметов', 'Тем', 'Тем со шпаргалкой', 'Без шпаргалки'],
+  gradeRows.map(r => [r.grade, r.subjects, r.topics, r.theory, r.missingTheory.length])
+);
 
-- Математика (4)
-- Русский язык (3)
-- Окружающий мир (4)
+md += '## Предметы по классам\n\n';
+for (const row of gradeRows) {
+  md += `### ${row.grade} класс\n\n`;
+  md += row.subjectList.map(s => `- ${s}`).join('\n') + '\n\n';
+}
 
-### 4 класс
+md += '## Сетка предметов 1–11\n\n';
+md += 'В ячейке — количество тем в этом предмете у соответствующего класса.\n\n';
+md += mdTable(['Предмет', ...gradeRows.map(r => r.grade)], meshRows);
 
-- Математика (4)
-- Русский язык (4)
-- Окружающий мир (3)
+md += '## Диагностика\n\n';
+md += mdTable(['Банк', 'Вопросов'], diagRows.map(r => [r.subject, r.count]));
 
-### 5 класс
+md += '## Повторяющиеся subject/topic между классами\n\n';
+md += 'Это не обязательно ошибка, но список полезен для контроля межклассной сетки и хранения прогресса.\n\n';
+md += mdTable(
+  ['Пара', 'Где встречается'],
+  repeatedMesh.slice(0, 60).map(([key, files]) => [key, files.join(', ')])
+);
 
-- Математика (4)
-- Русский язык (3)
-- История (3)
-- Биология (3)
-- География (3)
+md += '## Потенциально тонкие блоки\n\n';
+if (!thinBlocks.length) {
+  md += 'Тонких блоков не найдено.\n\n';
+} else {
+  md += mdTable(['Класс', 'Предмет', 'Тем'], thinBlocks.map(x => [x.file.replace('grade', '').replace('_v2.html', ''), x.subject, x.topicCount]));
+}
 
-### 6 класс
+md += '## Итоги\n\n';
+const high = gradeRows.filter(r => Number(r.grade) >= 8);
+const highMissing = high.reduce((sum, r) => sum + r.missingTheory.length, 0);
+const minDiag = Math.min(...diagRows.filter(r => r.subject !== 'mathall').map(r => r.count));
+const maxDiag = diagRows.reduce((a, b) => a.count > b.count ? a : b);
+md += `- В 8–11 классах: ${high.reduce((s, r) => s + r.topics, 0)} тем, без шпаргалок: ${highMissing}.\n`;
+md += `- В диагностике минимум usable-вопросов после санации банков: ${minDiag}.\n`;
+md += `- Самый большой банк диагностики: ${maxDiag.subject} (${maxDiag.count}).\n`;
+md += `- Машинный JSON-слепок для дальнейших сравнений сохранён в CURRICULUM_MESH.json.\n`;
 
-- Математика (4)
-- Русский язык (3)
-- История (3)
-- Биология (3)
-- География (3)
-
-### 7 класс
-
-- Алгебра (4)
-- Геометрия (3)
-- Физика (3)
-- Русский язык (3)
-- История (3)
-
-### 8 класс
-
-- Алгебра (4)
-- Геометрия (4)
-- Физика (4)
-- Русский язык (4)
-- История (3)
-- Обществознание (3)
-- Информатика (4)
-
-### 9 класс
-
-- Алгебра (4)
-- Геометрия (4)
-- Физика (4)
-- Русский язык (4)
-- История (3)
-- Обществознание (3)
-- Информатика (4)
-
-### 10 класс
-
-- Алгебра (4)
-- Геометрия (4)
-- Вероятность (3)
-- Русский язык (6)
-- Обществознание (4)
-- Информатика (5)
-- Физика (4)
-- История (4)
-- Биология (4)
-- Химия (3)
-- Английский (4)
-- География (3)
-- Литература (4)
-- История искусств (4)
-- Олимпиада (4)
-
-### 11 класс
-
-- Алгебра и начала анализа (4)
-- Геометрия (4)
-- Физика (4)
-- Русский язык (4)
-- История (3)
-- Обществознание (3)
-- Информатика (4)
-
-## Сетка предметов 1–11
-
-В ячейке — количество тем в этом предмете у соответствующего класса.
-
-| Предмет | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Алгебра | — | — | — | — | — | — | 4 | 4 | 4 | 4 | — |
-| Алгебра и начала анализа | — | — | — | — | — | — | — | — | — | — | 4 |
-| Английский | — | — | — | — | — | — | — | — | — | 4 | — |
-| Биология | — | — | — | — | 3 | 3 | — | — | — | 4 | — |
-| Вероятность | — | — | — | — | — | — | — | — | — | 3 | — |
-| География | — | — | — | — | 3 | 3 | — | — | — | 3 | — |
-| Геометрия | — | — | — | — | — | — | 3 | 4 | 4 | 4 | 4 |
-| Информатика | — | — | — | — | — | — | — | 4 | 4 | 5 | 4 |
-| История | — | — | — | — | 3 | 3 | 3 | 3 | 3 | 4 | 3 |
-| История искусств | — | — | — | — | — | — | — | — | — | 4 | — |
-| Литература | — | — | — | — | — | — | — | — | — | 4 | — |
-| Математика | 6 | 6 | 4 | 4 | 4 | 4 | — | — | — | — | — |
-| Обществознание | — | — | — | — | — | — | — | 3 | 3 | 4 | 3 |
-| Окружающий мир | 3 | 3 | 4 | 3 | — | — | — | — | — | — | — |
-| Олимпиада | — | — | — | — | — | — | — | — | — | 4 | — |
-| Русский язык | 4 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 4 | 6 | 4 |
-| Физика | — | — | — | — | — | — | 3 | 4 | 4 | 4 | 4 |
-| Химия | — | — | — | — | — | — | — | — | — | 3 | — |
-
-## Диагностика
-
-| Банк | Вопросов |
-| --- | --- |
-| algebra | 30 |
-| biology | 30 |
-| english | 30 |
-| geography | 30 |
-| geometry | 30 |
-| history | 30 |
-| informatics | 30 |
-| literature | 30 |
-| math | 41 |
-| mathall | 84 |
-| physics | 30 |
-| russian | 51 |
-| social | 30 |
-
-## Повторяющиеся subject/topic между классами
-
-Это не обязательно ошибка, но список полезен для контроля межклассной сетки и хранения прогресса.
-
-| Пара | Где встречается |
-| --- | --- |
-| inf/algo | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| inf/logic | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| inf/numsys | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| rus/nn | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| rus/orth | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| soc/econ | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| soc/law | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| inf/encode | grade8_v2, grade9_v2, grade10_v2 |
-| rus/punct | grade8_v2, grade10_v2, grade11_v2 |
-| soc/human | grade8_v2, grade9_v2, grade10_v2 |
-| alg/ineq | grade8_v2, grade10_v2 |
-| alg/pow | grade7_v2, grade10_v2 |
-| bio/cell | grade5_v2, grade10_v2 |
-| geo/angles | grade7_v2, grade11_v2 |
-| geo/quad | grade8_v2, grade10_v2 |
-| geo/tri | grade7_v2, grade10_v2 |
-| his/rus20 | grade9_v2, grade10_v2 |
-| his/ussr | grade9_v2, grade10_v2 |
-| math/div | grade3_v2, grade6_v2 |
-| math/frac | grade4_v2, grade5_v2 |
-| math/mult | grade2_v2, grade3_v2 |
-| math/tasks | grade2_v2, grade3_v2 |
-| phy/dyn | grade9_v2, grade10_v2 |
-| phy/kin | grade9_v2, grade10_v2 |
-
-## Потенциально тонкие блоки
-
-Тонких блоков не найдено.
-
-## Итоги
-
-- В 8–11 классах: 138 тем, без шпаргалок: 0.
-- В диагностике минимум usable-вопросов после санации банков: 30.
-- Самый большой банк диагностики: mathall (84).
-- Машинный JSON-слепок для дальнейших сравнений сохранён в CURRICULUM_MESH.json.
+fs.writeFileSync('CURRICULUM_AUDIT.md', md, 'utf8');
+console.log('Wrote CURRICULUM_AUDIT.md and CURRICULUM_MESH.json');
