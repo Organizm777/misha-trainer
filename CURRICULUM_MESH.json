@@ -30,13 +30,13 @@
       "file": "grade3_v2.html",
       "grade": "3",
       "subjects": 3,
-      "topics": 9,
-      "theory": 9,
+      "topics": 11,
+      "theory": 11,
       "missingTheory": [],
       "subjectList": [
         "Математика (4)",
         "Русский язык (3)",
-        "Окружающий мир (2)"
+        "Окружающий мир (4)"
       ]
     },
     {
@@ -56,60 +56,60 @@
       "file": "grade5_v2.html",
       "grade": "5",
       "subjects": 5,
-      "topics": 14,
-      "theory": 14,
+      "topics": 16,
+      "theory": 16,
       "missingTheory": [],
       "subjectList": [
         "Математика (4)",
         "Русский язык (3)",
         "История (3)",
-        "Биология (2)",
-        "География (2)"
+        "Биология (3)",
+        "География (3)"
       ]
     },
     {
       "file": "grade6_v2.html",
       "grade": "6",
       "subjects": 5,
-      "topics": 14,
-      "theory": 14,
+      "topics": 16,
+      "theory": 16,
       "missingTheory": [],
       "subjectList": [
         "Математика (4)",
         "Русский язык (3)",
         "История (3)",
-        "Биология (2)",
-        "География (2)"
+        "Биология (3)",
+        "География (3)"
       ]
     },
     {
       "file": "grade7_v2.html",
       "grade": "7",
       "subjects": 5,
-      "topics": 12,
-      "theory": 12,
+      "topics": 16,
+      "theory": 16,
       "missingTheory": [],
       "subjectList": [
         "Алгебра (4)",
-        "Геометрия (2)",
-        "Физика (2)",
-        "Русский язык (2)",
-        "История (2)"
+        "Геометрия (3)",
+        "Физика (3)",
+        "Русский язык (3)",
+        "История (3)"
       ]
     },
     {
       "file": "grade8_v2.html",
       "grade": "8",
       "subjects": 7,
-      "topics": 25,
-      "theory": 25,
+      "topics": 26,
+      "theory": 26,
       "missingTheory": [],
       "subjectList": [
         "Алгебра (4)",
         "Геометрия (4)",
         "Физика (4)",
         "Русский язык (4)",
-        "История (2)",
+        "История (3)",
         "Обществознание (3)",
         "Информатика (4)"
       ]
@@ -135,8 +135,8 @@
       "file": "grade10_v2.html",
       "grade": "10",
       "subjects": 15,
-      "topics": 58,
-      "theory": 58,
+      "topics": 60,
+      "theory": 60,
       "missingTheory": [],
       "subjectList": [
         "Алгебра (4)",
@@ -149,7 +149,7 @@
         "История (4)",
         "Биология (4)",
         "Химия (3)",
-        "Английский (2)",
+        "Английский (4)",
         "География (3)",
         "Литература (4)",
         "История искусств (4)",
@@ -338,6 +338,13 @@
       ]
     },
     {
+      "key": "geo/angles",
+      "files": [
+        "grade7_v2",
+        "grade11_v2"
+      ]
+    },
+    {
       "key": "geo/quad",
       "files": [
         "grade8_v2",
@@ -453,7 +460,7 @@
         "grade7_v2.html": 0,
         "grade8_v2.html": 0,
         "grade9_v2.html": 0,
-        "grade10_v2.html": 2,
+        "grade10_v2.html": 4,
         "grade11_v2.html": 0
       }
     },
@@ -464,8 +471,8 @@
         "grade2_v2.html": 0,
         "grade3_v2.html": 0,
         "grade4_v2.html": 0,
-        "grade5_v2.html": 2,
-        "grade6_v2.html": 2,
+        "grade5_v2.html": 3,
+        "grade6_v2.html": 3,
         "grade7_v2.html": 0,
         "grade8_v2.html": 0,
         "grade9_v2.html": 0,
@@ -496,8 +503,8 @@
         "grade2_v2.html": 0,
         "grade3_v2.html": 0,
         "grade4_v2.html": 0,
-        "grade5_v2.html": 2,
-        "grade6_v2.html": 2,
+        "grade5_v2.html": 3,
+        "grade6_v2.html": 3,
         "grade7_v2.html": 0,
         "grade8_v2.html": 0,
         "grade9_v2.html": 0,
@@ -514,7 +521,7 @@
         "grade4_v2.html": 0,
         "grade5_v2.html": 0,
         "grade6_v2.html": 0,
-        "grade7_v2.html": 2,
+        "grade7_v2.html": 3,
         "grade8_v2.html": 4,
         "grade9_v2.html": 4,
         "grade10_v2.html": 4,
@@ -546,8 +553,8 @@
         "grade4_v2.html": 0,
         "grade5_v2.html": 3,
         "grade6_v2.html": 3,
-        "grade7_v2.html": 2,
-        "grade8_v2.html": 2,
+        "grade7_v2.html": 3,
+        "grade8_v2.html": 3,
         "grade9_v2.html": 3,
         "grade10_v2.html": 4,
         "grade11_v2.html": 3
@@ -622,7 +629,7 @@
       "byGrade": {
         "grade1_v2.html": 3,
         "grade2_v2.html": 3,
-        "grade3_v2.html": 2,
+        "grade3_v2.html": 4,
         "grade4_v2.html": 3,
         "grade5_v2.html": 0,
         "grade6_v2.html": 0,
@@ -658,7 +665,7 @@
         "grade4_v2.html": 4,
         "grade5_v2.html": 3,
         "grade6_v2.html": 3,
-        "grade7_v2.html": 2,
+        "grade7_v2.html": 3,
         "grade8_v2.html": 4,
         "grade9_v2.html": 4,
         "grade10_v2.html": 6,
@@ -674,7 +681,7 @@
         "grade4_v2.html": 0,
         "grade5_v2.html": 0,
         "grade6_v2.html": 0,
-        "grade7_v2.html": 2,
+        "grade7_v2.html": 3,
         "grade8_v2.html": 4,
         "grade9_v2.html": 4,
         "grade10_v2.html": 4,
@@ -698,61 +705,5 @@
       }
     }
   ],
-  "thinBlocks": [
-    {
-      "file": "grade3_v2.html",
-      "subject": "Окружающий мир",
-      "topicCount": 2
-    },
-    {
-      "file": "grade5_v2.html",
-      "subject": "Биология",
-      "topicCount": 2
-    },
-    {
-      "file": "grade5_v2.html",
-      "subject": "География",
-      "topicCount": 2
-    },
-    {
-      "file": "grade6_v2.html",
-      "subject": "Биология",
-      "topicCount": 2
-    },
-    {
-      "file": "grade6_v2.html",
-      "subject": "География",
-      "topicCount": 2
-    },
-    {
-      "file": "grade7_v2.html",
-      "subject": "Геометрия",
-      "topicCount": 2
-    },
-    {
-      "file": "grade7_v2.html",
-      "subject": "Физика",
-      "topicCount": 2
-    },
-    {
-      "file": "grade7_v2.html",
-      "subject": "Русский язык",
-      "topicCount": 2
-    },
-    {
-      "file": "grade7_v2.html",
-      "subject": "История",
-      "topicCount": 2
-    },
-    {
-      "file": "grade8_v2.html",
-      "subject": "История",
-      "topicCount": 2
-    },
-    {
-      "file": "grade10_v2.html",
-      "subject": "Английский",
-      "topicCount": 2
-    }
-  ]
+  "thinBlocks": []
 }

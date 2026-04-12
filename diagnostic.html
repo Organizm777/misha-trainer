@@ -626,6 +626,8 @@ let qIndex = 0;
 let curGrade = 5;      // adaptive current grade
 let gradeStats = {};   // {grade: {ok:N, total:N, topics:[]}}
 let answers = [];      // {q, grade, topic, correct}
+let correctStreak = 0;
+let wrongStreak = 0;
 const MAX_Q = 20;
 
 //
@@ -667,6 +669,8 @@ function startDiag(subjId){
   questions = buildAdaptiveSequence(pool, grades, Math.min(MAX_Q, pool.length));
   qIndex = 0;
   answers = [];
+  correctStreak = 0;
+  wrongStreak = 0;
 
   // UI
   document.getElementById('quiz-subj-name').textContent = curSubject.name;
@@ -714,8 +718,8 @@ function buildAdaptiveSequence(pool, grades, maxQ){
     used.add(q);
     seq.push(q);
 
-    // Spread across grades: zigzag up/down from current
-    if(i%2===0) g = Math.min(g+1, maxG);
+    // Default fill with mild upward bias; real adjustment happens after each answer
+    if(i < Math.ceil(maxQ*0.6)) g = Math.min(g+1, maxG);
     else g = Math.max(g-1, minG);
   }
 
@@ -806,6 +810,7 @@ function selectOpt(btn, chosen, correct, hint){
   answers.push({qi:qIndex, grade:q.g, topic:q.topic, correct:isOk});
 
   // Adaptive: adjust next question grade
+  if(isOk){ correctStreak++; wrongStreak = 0; } else { wrongStreak++; correctStreak = 0; }
   adaptNext(isOk);
 
   document.getElementById('next-btn').className='next-btn show';
@@ -820,9 +825,11 @@ function adaptNext(wasCorrect){
   const curQ = questions[qIndex];
   const minGrade = allGrades[0];
   const maxGrade = allGrades[allGrades.length - 1];
+  const jumpUp = wasCorrect ? (correctStreak >= 2 || qIndex < 2 ? 2 : 1) : 0;
+  const jumpDown = wasCorrect ? 0 : (wrongStreak >= 2 ? 2 : 1);
   const nextGrade = wasCorrect
-    ? Math.min(maxGrade, curQ.g + 1)
-    : Math.max(minGrade, curQ.g - 1);
+    ? Math.min(maxGrade, curQ.g + jumpUp)
+    : Math.max(minGrade, curQ.g - jumpDown);
 
   const candidates = pool.filter(q=>q.g===nextGrade && !usedQs.has(q.q));
   
