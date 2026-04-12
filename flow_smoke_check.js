@@ -44,7 +44,7 @@ function createSandbox(pageFile) {
     'sg','player-badge','daily-meter','hdr','hb','sh','tl','tc','tmr','sts','qt','qb','qcd','opts','fba','ha','pa',
     'res-emoji','res-title','res-score','res-detail','res-topics','prog-content','s-play','s-main','s-subj','s-theory',
     's-result','privacy-row','main-search-slot','topic-search-slot','shp-area',
-    'quiz-subj-name','quiz-subj-sub','q-prog','qbar-fill','grade-pill','q-topic','q-txt','hint-box','next-btn',
+    'quiz-subj-name','quiz-subj-sub','q-prog','qbar-fill','grade-pill','q-topic','q-txt','hint-box','next-btn','skip-btn',
     'adapt-strip','res-subj-name','grade-map','res-sub','weak-list','grid','mobile-menu',
     's-home','s-quiz','s-result','s-select'
   ];
@@ -201,6 +201,18 @@ function runGradeFlow(pageFile) {
   if (!daily) errors.push('daily not saved');
   if (!streak) errors.push('streak not saved');
 
+  try {
+    storage['trainer_dates_' + grade] = JSON.stringify({ test: '15 мая' });
+    storage['trainer_journal_' + grade] = JSON.stringify([{ tag: 'Тема' }]);
+    storage['trainer_rush_best_' + grade] = JSON.stringify({ 3: 7, 5: 9 });
+    vm.runInContext('resetProgress()', sandbox);
+    if (storage['trainer_dates_' + grade] != null) errors.push('dates not cleared by reset');
+    if (storage['trainer_journal_' + grade] != null) errors.push('journal not cleared by reset');
+    if (storage['trainer_rush_best_' + grade] != null) errors.push('rush best not cleared by reset');
+  } catch (err) {
+    errors.push('resetFlow:' + String(err));
+  }
+
   return errors;
 }
 
@@ -215,9 +227,11 @@ function runDiagnosticFlow(pageFile) {
       const btn = document.createElement('button');
       selectOpt(btn, window._curAnswer, window._curAnswer, window._curHint);
       nextQ();
+      const afterAnswer = qIndex;
+      skipQ();
     `, sandbox);
     const idx = vm.runInContext('qIndex', sandbox);
-    if (idx < 1) errors.push('diagnostic did not advance after answer');
+    if (idx < 2) errors.push('diagnostic did not advance after answer + skip');
   } catch (err) {
     errors.push(String(err));
   }

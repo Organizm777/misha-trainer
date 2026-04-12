@@ -72,7 +72,7 @@ header p{font-size:11px;opacity:.6;margin-top:2px}
 <div class="stat"><div class="stat-n" id="total-q">0</div><div class="stat-l">Задач</div></div>
 <div class="stat"><div class="stat-n" id="total-pct">—</div><div class="stat-l">Точность</div></div>
 <div class="stat"><div class="stat-n" id="total-streak">0</div><div class="stat-l">🔥 Рекорд</div></div>
-<div class="stat"><div class="stat-n" id="total-days">0</div><div class="stat-l">Дней</div></div>
+<div class="stat"><div class="stat-n" id="total-days">0</div><div class="stat-l">Активных дней</div></div>
 </div>
 
 <div class="section">Классы</div>
@@ -220,7 +220,7 @@ function buildDashboardReport(state) {
     `🔢 Всего задач: ${state.totalQs}`,
     `🎯 Точность: ${state.totalPct}`,
     `🔥 Рекорд серии: ${state.bestStreak}`,
-    `📆 Дней с нормой: ${state.totalDays}`,
+    `📆 Активных дней: ${state.totalDays}`,
   ];
   if (state.last7Total) lines.push(`🗓 За 7 дней: ${state.last7Total} задач`);
   lines.push('━━━━━━━━━━━━━━━', 'По классам:');
@@ -266,6 +266,7 @@ function init() {
   let totalOk = 0;
   let bestStreak = 0;
   let totalDays = 0;
+  const activeDaySet = new Set();
   const allWeakTopics = {};
   const gradeData = [];
   const activityMap = {};
@@ -281,6 +282,7 @@ function init() {
       activityMap[date].total += Number(row.total || 0);
       activityMap[date].ok += Number(row.ok || 0);
       activityMap[date].err += Number(row.err || 0);
+      if (Number(row.total || 0) > 0) activeDaySet.add(date);
     });
 
     const qs = streak.totalQs || 0;
@@ -291,7 +293,6 @@ function init() {
 
     totalQs += qs;
     totalOk += ok;
-    totalDays += doneDays;
     if ((streak.best || 0) > bestStreak) bestStreak = streak.best;
 
     (Array.isArray(journal) ? journal : []).forEach(j => {
@@ -302,6 +303,7 @@ function init() {
     gradeData.push({grade: g, qs, ok, pct, doneDays, plannedDates, streak});
   });
 
+  totalDays = activeDaySet.size;
   const totalPctText = totalQs > 0 ? Math.round(totalOk / totalQs * 100) + '%' : '—';
   document.getElementById('total-q').textContent = totalQs.toLocaleString();
   document.getElementById('total-pct').textContent = totalPctText;

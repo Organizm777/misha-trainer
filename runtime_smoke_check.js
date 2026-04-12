@@ -35,7 +35,7 @@ function makeContext(pageFile) {
     'sg','player-badge','daily-meter','hdr','hb','sh','tl','tc','tmr','sts','qt','qb','qcd','opts','fba','ha','pa',
     'res-emoji','res-title','res-score','res-detail','res-topics','prog-content','s-play','s-main','s-subj','s-theory',
     's-result','s-select','privacy-row','grid','quiz-subj-name','quiz-subj-sub','q-prog','qbar-fill','grade-pill',
-    'q-topic','q-txt','hint-box','next-btn','adapt-strip','res-subj-name','grade-map','res-sub','weak-list','main-search-slot','topic-search-slot'
+    'q-topic','q-txt','hint-box','next-btn','skip-btn','adapt-strip','res-subj-name','grade-map','res-sub','weak-list','main-search-slot','topic-search-slot'
   ].forEach(id => elements.set(id, makeElement(id)));
 
   elements.get('s-play').classList.contains = () => false;

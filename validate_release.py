@@ -163,8 +163,8 @@ def check_curriculum_guards() -> list[str]:
             errors.append(f"{grade.get('file')}: missing theory for {', '.join(missing)}")
 
     for bank in mesh.get('diagnostics') or []:
-        if int(bank.get('count') or 0) < 20:
-            errors.append(f"diagnostic bank too small: {bank.get('subject')} -> {bank.get('count')}")
+        if bank.get('subject') != 'mathall' and int(bank.get('count') or 0) < 30:
+            errors.append(f"diagnostic bank too small (<30): {bank.get('subject')} -> {bank.get('count')}")
 
     # Index card counts should match audited topic counts.
     index_html = (ROOT / 'index.html').read_text(encoding='utf-8', errors='ignore')

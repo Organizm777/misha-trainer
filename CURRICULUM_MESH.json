@@ -177,35 +177,35 @@
   "diagnostics": [
     {
       "subject": "algebra",
-      "count": 20
+      "count": 30
     },
     {
       "subject": "biology",
-      "count": 29
+      "count": 30
     },
     {
       "subject": "english",
-      "count": 21
+      "count": 30
     },
     {
       "subject": "geography",
-      "count": 21
+      "count": 30
     },
     {
       "subject": "geometry",
-      "count": 21
+      "count": 30
     },
     {
       "subject": "history",
-      "count": 28
+      "count": 30
     },
     {
       "subject": "informatics",
-      "count": 20
+      "count": 30
     },
     {
       "subject": "literature",
-      "count": 20
+      "count": 30
     },
     {
       "subject": "math",
@@ -213,11 +213,11 @@
     },
     {
       "subject": "mathall",
-      "count": 65
+      "count": 84
     },
     {
       "subject": "physics",
-      "count": 22
+      "count": 30
     },
     {
       "subject": "russian",
@@ -225,7 +225,7 @@
     },
     {
       "subject": "social",
-      "count": 21
+      "count": 30
     }
   ],
   "repeatedTopicIds": [

@@ -143,19 +143,19 @@
 
 | Банк | Вопросов |
 | --- | --- |
-| algebra | 20 |
-| biology | 29 |
-| english | 21 |
-| geography | 21 |
-| geometry | 21 |
-| history | 28 |
-| informatics | 20 |
-| literature | 20 |
+| algebra | 30 |
+| biology | 30 |
+| english | 30 |
+| geography | 30 |
+| geometry | 30 |
+| history | 30 |
+| informatics | 30 |
+| literature | 30 |
 | math | 41 |
-| mathall | 65 |
-| physics | 22 |
+| mathall | 84 |
+| physics | 30 |
 | russian | 51 |
-| social | 21 |
+| social | 30 |
 
 ## Повторяющиеся subject/topic между классами
 
@@ -195,6 +195,6 @@
 ## Итоги
 
 - В 8–11 классах: 138 тем, без шпаргалок: 0.
-- В диагностике минимум usable-вопросов после санации банков: 20.
-- Самый большой банк диагностики: mathall (65).
+- В диагностике минимум usable-вопросов после санации банков: 30.
+- Самый большой банк диагностики: mathall (84).
 - Машинный JSON-слепок для дальнейших сравнений сохранён в CURRICULUM_MESH.json.
