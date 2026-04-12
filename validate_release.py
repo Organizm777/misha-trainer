@@ -82,6 +82,52 @@ def check_runtime_smoke() -> list[str]:
     return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
 
 
+
+
+def check_flow_smoke() -> list[str]:
+    smoke = ROOT / 'flow_smoke_check.js'
+    if not smoke.exists():
+        return ['flow_smoke_check.js is missing']
+    proc = subprocess.run(['node', str(smoke)], capture_output=True, text=True, cwd=ROOT)
+    if proc.returncode == 0:
+        return []
+    return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
+
+
+def check_topic_coverage_audit() -> list[str]:
+    script = ROOT / 'topic_coverage_audit.js'
+    if not script.exists():
+        return ['topic_coverage_audit.js is missing']
+    proc = subprocess.run(['node', str(script)], capture_output=True, text=True, cwd=ROOT)
+    if proc.returncode == 0:
+        expected = [ROOT / 'TOPIC_COVERAGE_AUDIT.md', ROOT / 'TOPIC_COVERAGE.json']
+        missing = [str(p.name) for p in expected if not p.exists()]
+        return [f'missing coverage artifact: {name}' for name in missing]
+    return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
+
+
+def check_topic_coverage_guards() -> list[str]:
+    payload = ROOT / 'TOPIC_COVERAGE.json'
+    if not payload.exists():
+        return ['TOPIC_COVERAGE.json is missing']
+    try:
+        import json
+        data = json.loads(payload.read_text(encoding='utf-8'))
+    except Exception as exc:
+        return [f'failed to read TOPIC_COVERAGE.json: {exc}']
+
+    errors: list[str] = []
+    for row in data.get('rows') or []:
+        if int(row.get('errors') or 0) > 0:
+            errors.append(f"coverage sampler errors in grade {row.get('grade')} {row.get('subject')} / {row.get('topic')}")
+
+    boosted = data.get('boosted') or []
+    weak_boosted = [row for row in boosted if int(row.get('uniq') or 0) < 10]
+    if weak_boosted:
+        preview = ', '.join(f"{r.get('grade')}:{r.get('subject')} / {r.get('topic')}={r.get('uniq')}" for r in weak_boosted[:8])
+        errors.append(f'boosted topics still too shallow (<10): {preview}')
+
+    return errors
 def check_curriculum_audit() -> list[str]:
     script = ROOT / 'curriculum_audit.js'
     if not script.exists():
@@ -141,8 +187,11 @@ def main() -> int:
     errors.extend(check_sw_assets())
     errors.extend(check_legacy_links())
     errors.extend(check_runtime_smoke())
+    errors.extend(check_flow_smoke())
     errors.extend(check_curriculum_audit())
+    errors.extend(check_topic_coverage_audit())
     errors.extend(check_curriculum_guards())
+    errors.extend(check_topic_coverage_guards())
 
     if errors:
         print('FAIL')
@@ -151,7 +200,7 @@ def main() -> int:
             print(error)
         return 1
 
-    print('OK: syntax, SW assets, legacy links, runtime smoke, curriculum audit and content guards passed')
+    print('OK: syntax, SW assets, legacy links, runtime + flow smoke, curriculum + coverage audit and content guards passed')
     return 0
 
 

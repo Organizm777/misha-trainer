@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-v4';
+const CACHE_NAME = 'trainer-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -7,6 +7,7 @@ const ASSETS = [
   './dashboard.html',
   './engine10.js',
   './engine10.css',
+  './wave6_boosters.js',
   './grade1_v2.html',
   './grade2_v2.html',
   './grade3_v2.html',
