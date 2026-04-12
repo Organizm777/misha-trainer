@@ -239,6 +239,30 @@ async def run_grade_flow(page, grade: int) -> list[ScenarioResult]:
             results.append(ScenarioResult(f'{file_name}: genMeasure variety', uniq >= 7, f'unique={uniq}'))
         except Exception as exc:
             results.append(ScenarioResult(f'{file_name}: genMeasure variety', False, str(exc)))
+    if grade in (8, 9):
+        try:
+            payload = await page.evaluate(
+                """
+                (() => {
+                  const eng = SUBJ.find(s => s.id === 'eng');
+                  if(!eng) return { ok:false, topics:[], q:'' };
+                  openSubj('eng');
+                  cT = eng.tops[0];
+                  curTheory = cT.th;
+                  mix = false; globalMix = false; rushMode = false; diagMode = false;
+                  startQuiz();
+                  return { ok:true, topics: eng.tops.map(t => t.id) };
+                })()
+                """
+            )
+            topics = payload.get('topics') or []
+            qtext = await page.locator('#qb').inner_text()
+            ok = payload.get('ok') and len(topics) >= 8 and bool(qtext.strip())
+            details = f"topics={len(topics)}; first={topics[0] if topics else '-'}; q={qtext[:40]}"
+            results.append(ScenarioResult(f'{file_name}: english vertical', ok, details))
+        except Exception as exc:
+            results.append(ScenarioResult(f'{file_name}: english vertical', False, str(exc)))
+
     if grade == 10:
         try:
             topics = await page.evaluate("SUBJ.find(s=>s.id==='eng').tops.map(t=>t.id)")
@@ -259,13 +283,14 @@ async def run_grade_flow(page, grade: int) -> list[ScenarioResult]:
                   curTheory = cT.th;
                   mix = false; globalMix = false; rushMode = false; diagMode = false;
                   startQuiz();
-                  return { ok:true, topics: eng.tops.map(t => t.id), q: (window.prob && prob.question) || '' };
+                  return { ok:true, topics: eng.tops.map(t => t.id) };
                 })()
                 """
             )
             topics = payload.get('topics') or []
-            ok = payload.get('ok') and len(topics) >= 12
-            details = f"topics={len(topics)}; first={topics[0] if topics else '-'}; q={(payload.get('q') or '')[:40]}"
+            qtext = await page.locator('#qb').inner_text()
+            ok = payload.get('ok') and len(topics) >= 12 and bool(qtext.strip())
+            details = f"topics={len(topics)}; first={topics[0] if topics else '-'}; q={qtext[:40]}"
             results.append(ScenarioResult(f'{file_name}: english vertical', ok, details))
         except Exception as exc:
             results.append(ScenarioResult(f'{file_name}: english vertical', False, str(exc)))
@@ -301,7 +326,7 @@ async def main() -> int:
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True, executable_path='/usr/bin/chromium')
         context = await browser.new_context(ignore_https_errors=True)
-        for grade in (1, 2, 5, 10, 11):
+        for grade in (1, 2, 5, 8, 9, 10, 11):
             page = await context.new_page()
             results.extend(await run_grade_flow(page, grade))
             await page.close()

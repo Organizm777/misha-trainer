@@ -251,12 +251,27 @@ def check_wave12_hooks() -> list[str]:
     if not grade11.exists():
         return ['grade11_v2.html is missing']
     text = grade11.read_text(encoding='utf-8', errors='ignore')
-    if 'wave12_english.js' not in text:
-        errors.append('grade11_v2.html: wave12_english.js is not connected')
-    if not (ROOT / 'wave12_english.js').exists():
-        errors.append('wave12_english.js is missing')
+    if 'wave12_english.js' not in text and 'wave12_boosters.js' not in text:
+        errors.append('grade11_v2.html: wave12 English layer is not connected')
+    if not (ROOT / 'wave12_english.js').exists() and not (ROOT / 'wave12_boosters.js').exists():
+        errors.append('wave12 English layer is missing')
     return errors
 
+
+
+def check_wave13_hooks() -> list[str]:
+    errors: list[str] = []
+    for grade_name in ('grade8_v2.html', 'grade9_v2.html'):
+        html_file = ROOT / grade_name
+        if not html_file.exists():
+            errors.append(f'{grade_name} is missing')
+            continue
+        text = html_file.read_text(encoding='utf-8', errors='ignore')
+        if 'wave13_english.js' not in text:
+            errors.append(f'{grade_name}: wave13_english.js is not connected')
+    if not (ROOT / 'wave13_english.js').exists():
+        errors.append('wave13_english.js is missing')
+    return errors
 
 def check_english_vertical_audit() -> list[str]:
     script = ROOT / 'english_vertical_audit.js'
@@ -284,8 +299,14 @@ def check_english_vertical_guards() -> list[str]:
     errors: list[str] = []
     grade10 = rows.get('10')
     grade11 = rows.get('11')
-    if not grade10 or int(grade10.get('currentTopics') or 0) < 4:
-        errors.append('english vertical regression: grade 10 has fewer than 4 topics')
+    grade8 = rows.get('8')
+    grade9 = rows.get('9')
+    if not grade8 or int(grade8.get('currentTopics') or 0) < 8:
+        errors.append('english vertical regression: grade 8 has fewer than 8 topics')
+    if not grade9 or int(grade9.get('currentTopics') or 0) < 8:
+        errors.append('english vertical regression: grade 9 has fewer than 8 topics')
+    if not grade10 or int(grade10.get('currentTopics') or 0) < 6:
+        errors.append('english vertical regression: grade 10 has fewer than 6 topics')
     if not grade11 or int(grade11.get('currentTopics') or 0) < 12:
         errors.append('english vertical regression: grade 11 has fewer than 12 topics')
     return errors
@@ -303,6 +324,7 @@ def main() -> int:
     errors.extend(check_wave10_hooks())
     errors.extend(check_wave11_hooks())
     errors.extend(check_wave12_hooks())
+    errors.extend(check_wave13_hooks())
     errors.extend(check_curriculum_audit())
     errors.extend(check_english_vertical_audit())
     errors.extend(check_topic_coverage_audit())
@@ -317,7 +339,7 @@ def main() -> int:
             print(error)
         return 1
 
-    print('OK: syntax, SW assets, legacy links, runtime + flow + browser E2E smoke, curriculum + coverage + English vertical audit, wave 9/10/11/12 hooks and content guards passed')
+    print('OK: syntax, SW assets, legacy links, runtime + flow + browser E2E smoke, curriculum + coverage + English vertical audit, wave 9/10/11/12/13 hooks and content guards passed')
     return 0
 
 
