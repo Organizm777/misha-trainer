@@ -82,6 +82,18 @@ def check_runtime_smoke() -> list[str]:
     return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
 
 
+def check_curriculum_audit() -> list[str]:
+    script = ROOT / 'curriculum_audit.js'
+    if not script.exists():
+        return ['curriculum_audit.js is missing']
+    proc = subprocess.run(['node', str(script)], capture_output=True, text=True, cwd=ROOT)
+    if proc.returncode == 0:
+        expected = [ROOT / 'CURRICULUM_AUDIT.md', ROOT / 'CURRICULUM_MESH.json']
+        missing = [str(p.name) for p in expected if not p.exists()]
+        return [f'missing audit artifact: {name}' for name in missing]
+    return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
+
+
 def main() -> int:
     errors = []
     errors.extend(check_js_files())
@@ -89,6 +101,7 @@ def main() -> int:
     errors.extend(check_sw_assets())
     errors.extend(check_legacy_links())
     errors.extend(check_runtime_smoke())
+    errors.extend(check_curriculum_audit())
 
     if errors:
         print('FAIL')
@@ -97,7 +110,7 @@ def main() -> int:
             print(error)
         return 1
 
-    print('OK: syntax, SW assets, legacy links and runtime smoke checks passed')
+    print('OK: syntax, SW assets, legacy links, runtime smoke and curriculum audit checks passed')
     return 0
 
 

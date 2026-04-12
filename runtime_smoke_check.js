@@ -35,7 +35,7 @@ function makeContext(pageFile) {
     'sg','player-badge','daily-meter','hdr','hb','sh','tl','tc','tmr','sts','qt','qb','qcd','opts','fba','ha','pa',
     'res-emoji','res-title','res-score','res-detail','res-topics','prog-content','s-play','s-main','s-subj','s-theory',
     's-result','s-select','privacy-row','grid','quiz-subj-name','quiz-subj-sub','q-prog','qbar-fill','grade-pill',
-    'q-topic','q-txt','hint-box','next-btn','adapt-strip','res-subj-name','grade-map','res-sub','weak-list'
+    'q-topic','q-txt','hint-box','next-btn','adapt-strip','res-subj-name','grade-map','res-sub','weak-list','main-search-slot','topic-search-slot'
   ].forEach(id => elements.set(id, makeElement(id)));
 
   elements.get('s-play').classList.contains = () => false;
@@ -178,11 +178,21 @@ function runPage(pageFile) {
     errors.push('initGrid:' + String(err));
   }
 
+  try {
+    if (sandbox.SUBJ && sandbox.SUBJ.length && sandbox.openSubj) {
+      vm.runInContext('openSubj(SUBJ[0].id)', sandbox);
+    }
+  } catch (err) {
+    errors.push('openSubj:' + String(err));
+  }
+
   return {
     errors,
     subjCount: sandbox.SUBJ ? sandbox.SUBJ.length : null,
     sgChildren: elements.get('sg').children.length,
     heroText: heroText.textContent,
+    mainSearchHtml: elements.get('main-search-slot').innerHTML,
+    topicSearchHtml: elements.get('topic-search-slot').innerHTML,
   };
 }
 
@@ -204,6 +214,12 @@ for (const page of pages) {
   }
   if (/^grade\d+_v2\.html$/.test(page) && report.sgChildren === 0) {
     failures.push(`${page}: subject grid is empty after init`);
+  }
+  if (/^grade\d+_v2\.html$/.test(page) && !report.mainSearchHtml) {
+    failures.push(`${page}: main search UI is missing`);
+  }
+  if (/^grade\d+_v2\.html$/.test(page) && !report.topicSearchHtml) {
+    failures.push(`${page}: topic search UI is missing`);
   }
 }
 
