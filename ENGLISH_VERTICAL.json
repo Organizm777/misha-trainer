@@ -1,0 +1,85 @@
+{
+  "rows": [
+    {
+      "grade": "1",
+      "currentTopics": 0,
+      "targetTopics": 0,
+      "gap": 0,
+      "status": "ready"
+    },
+    {
+      "grade": "2",
+      "currentTopics": 0,
+      "targetTopics": 2,
+      "gap": 2,
+      "status": "missing"
+    },
+    {
+      "grade": "3",
+      "currentTopics": 0,
+      "targetTopics": 2,
+      "gap": 2,
+      "status": "missing"
+    },
+    {
+      "grade": "4",
+      "currentTopics": 0,
+      "targetTopics": 2,
+      "gap": 2,
+      "status": "missing"
+    },
+    {
+      "grade": "5",
+      "currentTopics": 0,
+      "targetTopics": 4,
+      "gap": 4,
+      "status": "missing"
+    },
+    {
+      "grade": "6",
+      "currentTopics": 0,
+      "targetTopics": 4,
+      "gap": 4,
+      "status": "missing"
+    },
+    {
+      "grade": "7",
+      "currentTopics": 0,
+      "targetTopics": 6,
+      "gap": 6,
+      "status": "missing"
+    },
+    {
+      "grade": "8",
+      "currentTopics": 0,
+      "targetTopics": 8,
+      "gap": 8,
+      "status": "missing"
+    },
+    {
+      "grade": "9",
+      "currentTopics": 0,
+      "targetTopics": 8,
+      "gap": 8,
+      "status": "missing"
+    },
+    {
+      "grade": "10",
+      "currentTopics": 6,
+      "targetTopics": 4,
+      "gap": 0,
+      "status": "ready"
+    },
+    {
+      "grade": "11",
+      "currentTopics": 12,
+      "targetTopics": 12,
+      "gap": 0,
+      "status": "ready"
+    }
+  ],
+  "totalCurrent": 18,
+  "totalTarget": 52,
+  "coveredGrades": 2,
+  "readyGrades": 2
+}

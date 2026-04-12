@@ -1,200 +1,710 @@
-# Аудит структуры классов и предметной сетки
-
-## Сводка по классам
-
-| Класс | Предметов | Тем | Тем со шпаргалкой | Без шпаргалки |
-| --- | --- | --- | --- | --- |
-| 1 | 3 | 13 | 13 | 0 |
-| 2 | 3 | 12 | 12 | 0 |
-| 3 | 3 | 11 | 11 | 0 |
-| 4 | 3 | 11 | 11 | 0 |
-| 5 | 5 | 16 | 16 | 0 |
-| 6 | 5 | 16 | 16 | 0 |
-| 7 | 5 | 16 | 16 | 0 |
-| 8 | 7 | 26 | 26 | 0 |
-| 9 | 7 | 26 | 26 | 0 |
-| 10 | 15 | 60 | 60 | 0 |
-| 11 | 7 | 26 | 26 | 0 |
-
-## Предметы по классам
-
-### 1 класс
-
-- Математика (6)
-- Русский язык (4)
-- Окружающий мир (3)
-
-### 2 класс
-
-- Математика (6)
-- Русский язык (3)
-- Окружающий мир (3)
-
-### 3 класс
-
-- Математика (4)
-- Русский язык (3)
-- Окружающий мир (4)
-
-### 4 класс
-
-- Математика (4)
-- Русский язык (4)
-- Окружающий мир (3)
-
-### 5 класс
-
-- Математика (4)
-- Русский язык (3)
-- История (3)
-- Биология (3)
-- География (3)
-
-### 6 класс
-
-- Математика (4)
-- Русский язык (3)
-- История (3)
-- Биология (3)
-- География (3)
-
-### 7 класс
-
-- Алгебра (4)
-- Геометрия (3)
-- Физика (3)
-- Русский язык (3)
-- История (3)
-
-### 8 класс
-
-- Алгебра (4)
-- Геометрия (4)
-- Физика (4)
-- Русский язык (4)
-- История (3)
-- Обществознание (3)
-- Информатика (4)
-
-### 9 класс
-
-- Алгебра (4)
-- Геометрия (4)
-- Физика (4)
-- Русский язык (4)
-- История (3)
-- Обществознание (3)
-- Информатика (4)
-
-### 10 класс
-
-- Алгебра (4)
-- Геометрия (4)
-- Вероятность (3)
-- Русский язык (6)
-- Обществознание (4)
-- Информатика (5)
-- Физика (4)
-- История (4)
-- Биология (4)
-- Химия (3)
-- Английский (4)
-- География (3)
-- Литература (4)
-- История искусств (4)
-- Олимпиада (4)
-
-### 11 класс
-
-- Алгебра и начала анализа (4)
-- Геометрия (4)
-- Физика (4)
-- Русский язык (4)
-- История (3)
-- Обществознание (3)
-- Информатика (4)
-
-## Сетка предметов 1–11
-
-В ячейке — количество тем в этом предмете у соответствующего класса.
-
-| Предмет | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Алгебра | — | — | — | — | — | — | 4 | 4 | 4 | 4 | — |
-| Алгебра и начала анализа | — | — | — | — | — | — | — | — | — | — | 4 |
-| Английский | — | — | — | — | — | — | — | — | — | 4 | — |
-| Биология | — | — | — | — | 3 | 3 | — | — | — | 4 | — |
-| Вероятность | — | — | — | — | — | — | — | — | — | 3 | — |
-| География | — | — | — | — | 3 | 3 | — | — | — | 3 | — |
-| Геометрия | — | — | — | — | — | — | 3 | 4 | 4 | 4 | 4 |
-| Информатика | — | — | — | — | — | — | — | 4 | 4 | 5 | 4 |
-| История | — | — | — | — | 3 | 3 | 3 | 3 | 3 | 4 | 3 |
-| История искусств | — | — | — | — | — | — | — | — | — | 4 | — |
-| Литература | — | — | — | — | — | — | — | — | — | 4 | — |
-| Математика | 6 | 6 | 4 | 4 | 4 | 4 | — | — | — | — | — |
-| Обществознание | — | — | — | — | — | — | — | 3 | 3 | 4 | 3 |
-| Окружающий мир | 3 | 3 | 4 | 3 | — | — | — | — | — | — | — |
-| Олимпиада | — | — | — | — | — | — | — | — | — | 4 | — |
-| Русский язык | 4 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 4 | 6 | 4 |
-| Физика | — | — | — | — | — | — | 3 | 4 | 4 | 4 | 4 |
-| Химия | — | — | — | — | — | — | — | — | — | 3 | — |
-
-## Диагностика
-
-| Банк | Вопросов |
-| --- | --- |
-| algebra | 30 |
-| biology | 30 |
-| english | 30 |
-| geography | 30 |
-| geometry | 30 |
-| history | 30 |
-| informatics | 30 |
-| literature | 30 |
-| math | 41 |
-| mathall | 84 |
-| physics | 30 |
-| russian | 51 |
-| social | 30 |
-
-## Повторяющиеся subject/topic между классами
-
-Это не обязательно ошибка, но список полезен для контроля межклассной сетки и хранения прогресса.
-
-| Пара | Где встречается |
-| --- | --- |
-| inf/algo | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| inf/logic | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| inf/numsys | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| rus/nn | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| rus/orth | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| soc/econ | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| soc/law | grade8_v2, grade9_v2, grade10_v2, grade11_v2 |
-| inf/encode | grade8_v2, grade9_v2, grade10_v2 |
-| rus/punct | grade8_v2, grade10_v2, grade11_v2 |
-| soc/human | grade8_v2, grade9_v2, grade10_v2 |
-| alg/ineq | grade8_v2, grade10_v2 |
-| alg/pow | grade7_v2, grade10_v2 |
-| bio/cell | grade5_v2, grade10_v2 |
-| geo/angles | grade7_v2, grade11_v2 |
-| geo/quad | grade8_v2, grade10_v2 |
-| geo/tri | grade7_v2, grade10_v2 |
-| his/rus20 | grade9_v2, grade10_v2 |
-| his/ussr | grade9_v2, grade10_v2 |
-| math/div | grade3_v2, grade6_v2 |
-| math/frac | grade4_v2, grade5_v2 |
-| math/mult | grade2_v2, grade3_v2 |
-| math/tasks | grade2_v2, grade3_v2 |
-| phy/dyn | grade9_v2, grade10_v2 |
-| phy/kin | grade9_v2, grade10_v2 |
-
-## Потенциально тонкие блоки
-
-Тонких блоков не найдено.
-
-## Итоги
-
-- В 8–11 классах: 138 тем, без шпаргалок: 0.
-- В диагностике минимум usable-вопросов после санации банков: 30.
-- Самый большой банк диагностики: mathall (84).
-- Машинный JSON-слепок для дальнейших сравнений сохранён в CURRICULUM_MESH.json.
+{
+  "grades": [
+    {
+      "file": "grade1_v2.html",
+      "grade": "1",
+      "subjects": 3,
+      "topics": 13,
+      "theory": 13,
+      "missingTheory": [],
+      "subjectList": [
+        "Математика (6)",
+        "Русский язык (4)",
+        "Окружающий мир (3)"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": "2",
+      "subjects": 3,
+      "topics": 12,
+      "theory": 12,
+      "missingTheory": [],
+      "subjectList": [
+        "Математика (6)",
+        "Русский язык (3)",
+        "Окружающий мир (3)"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": "3",
+      "subjects": 3,
+      "topics": 11,
+      "theory": 11,
+      "missingTheory": [],
+      "subjectList": [
+        "Математика (4)",
+        "Русский язык (3)",
+        "Окружающий мир (4)"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": "4",
+      "subjects": 3,
+      "topics": 11,
+      "theory": 11,
+      "missingTheory": [],
+      "subjectList": [
+        "Математика (4)",
+        "Русский язык (4)",
+        "Окружающий мир (3)"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": "5",
+      "subjects": 5,
+      "topics": 16,
+      "theory": 16,
+      "missingTheory": [],
+      "subjectList": [
+        "Математика (4)",
+        "Русский язык (3)",
+        "История (3)",
+        "Биология (3)",
+        "География (3)"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": "6",
+      "subjects": 5,
+      "topics": 16,
+      "theory": 16,
+      "missingTheory": [],
+      "subjectList": [
+        "Математика (4)",
+        "Русский язык (3)",
+        "История (3)",
+        "Биология (3)",
+        "География (3)"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": "7",
+      "subjects": 5,
+      "topics": 16,
+      "theory": 16,
+      "missingTheory": [],
+      "subjectList": [
+        "Алгебра (4)",
+        "Геометрия (3)",
+        "Физика (3)",
+        "Русский язык (3)",
+        "История (3)"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": "8",
+      "subjects": 7,
+      "topics": 26,
+      "theory": 26,
+      "missingTheory": [],
+      "subjectList": [
+        "Алгебра (4)",
+        "Геометрия (4)",
+        "Физика (4)",
+        "Русский язык (4)",
+        "История (3)",
+        "Обществознание (3)",
+        "Информатика (4)"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": "9",
+      "subjects": 7,
+      "topics": 26,
+      "theory": 26,
+      "missingTheory": [],
+      "subjectList": [
+        "Алгебра (4)",
+        "Геометрия (4)",
+        "Физика (4)",
+        "Русский язык (4)",
+        "История (3)",
+        "Обществознание (3)",
+        "Информатика (4)"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": "10",
+      "subjects": 15,
+      "topics": 62,
+      "theory": 62,
+      "missingTheory": [],
+      "subjectList": [
+        "Алгебра (4)",
+        "Геометрия (4)",
+        "Вероятность (3)",
+        "Русский язык (6)",
+        "Обществознание (4)",
+        "Информатика (5)",
+        "Физика (4)",
+        "История (4)",
+        "Биология (4)",
+        "Химия (3)",
+        "Английский (6)",
+        "География (3)",
+        "Литература (4)",
+        "История искусств (4)",
+        "Олимпиада (4)"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": "11",
+      "subjects": 8,
+      "topics": 38,
+      "theory": 38,
+      "missingTheory": [],
+      "subjectList": [
+        "Алгебра и начала анализа (4)",
+        "Геометрия (4)",
+        "Физика (4)",
+        "Русский язык (4)",
+        "История (3)",
+        "Обществознание (3)",
+        "Информатика (4)",
+        "Английский (12)"
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "subject": "algebra",
+      "count": 30
+    },
+    {
+      "subject": "biology",
+      "count": 30
+    },
+    {
+      "subject": "english",
+      "count": 30
+    },
+    {
+      "subject": "geography",
+      "count": 30
+    },
+    {
+      "subject": "geometry",
+      "count": 30
+    },
+    {
+      "subject": "history",
+      "count": 30
+    },
+    {
+      "subject": "informatics",
+      "count": 30
+    },
+    {
+      "subject": "literature",
+      "count": 30
+    },
+    {
+      "subject": "math",
+      "count": 41
+    },
+    {
+      "subject": "mathall",
+      "count": 84
+    },
+    {
+      "subject": "physics",
+      "count": 30
+    },
+    {
+      "subject": "russian",
+      "count": 51
+    },
+    {
+      "subject": "social",
+      "count": 30
+    }
+  ],
+  "repeatedTopicIds": [
+    {
+      "key": "inf/algo",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "inf/logic",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "inf/numsys",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "rus/nn",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "rus/orth",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "soc/econ",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "soc/law",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "inf/encode",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "rus/punct",
+      "files": [
+        "grade8_v2",
+        "grade10_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "soc/human",
+      "files": [
+        "grade8_v2",
+        "grade9_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "alg/ineq",
+      "files": [
+        "grade8_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "alg/pow",
+      "files": [
+        "grade7_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "bio/cell",
+      "files": [
+        "grade5_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "geo/angles",
+      "files": [
+        "grade7_v2",
+        "grade11_v2"
+      ]
+    },
+    {
+      "key": "geo/quad",
+      "files": [
+        "grade8_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "geo/tri",
+      "files": [
+        "grade7_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "his/rus20",
+      "files": [
+        "grade9_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "his/ussr",
+      "files": [
+        "grade9_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "math/div",
+      "files": [
+        "grade3_v2",
+        "grade6_v2"
+      ]
+    },
+    {
+      "key": "math/frac",
+      "files": [
+        "grade4_v2",
+        "grade5_v2"
+      ]
+    },
+    {
+      "key": "math/mult",
+      "files": [
+        "grade2_v2",
+        "grade3_v2"
+      ]
+    },
+    {
+      "key": "math/tasks",
+      "files": [
+        "grade2_v2",
+        "grade3_v2"
+      ]
+    },
+    {
+      "key": "phy/dyn",
+      "files": [
+        "grade9_v2",
+        "grade10_v2"
+      ]
+    },
+    {
+      "key": "phy/kin",
+      "files": [
+        "grade9_v2",
+        "grade10_v2"
+      ]
+    }
+  ],
+  "subjectMesh": [
+    {
+      "subject": "Алгебра",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 4,
+        "grade8_v2.html": 4,
+        "grade9_v2.html": 4,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Алгебра и начала анализа",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 0,
+        "grade11_v2.html": 4
+      }
+    },
+    {
+      "subject": "Английский",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 6,
+        "grade11_v2.html": 12
+      }
+    },
+    {
+      "subject": "Биология",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 3,
+        "grade6_v2.html": 3,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Вероятность",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 3,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "География",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 3,
+        "grade6_v2.html": 3,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 3,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Геометрия",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 3,
+        "grade8_v2.html": 4,
+        "grade9_v2.html": 4,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 4
+      }
+    },
+    {
+      "subject": "Информатика",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 4,
+        "grade9_v2.html": 4,
+        "grade10_v2.html": 5,
+        "grade11_v2.html": 4
+      }
+    },
+    {
+      "subject": "История",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 3,
+        "grade6_v2.html": 3,
+        "grade7_v2.html": 3,
+        "grade8_v2.html": 3,
+        "grade9_v2.html": 3,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 3
+      }
+    },
+    {
+      "subject": "История искусств",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Литература",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Математика",
+      "byGrade": {
+        "grade1_v2.html": 6,
+        "grade2_v2.html": 6,
+        "grade3_v2.html": 4,
+        "grade4_v2.html": 4,
+        "grade5_v2.html": 4,
+        "grade6_v2.html": 4,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 0,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Обществознание",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 3,
+        "grade9_v2.html": 3,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 3
+      }
+    },
+    {
+      "subject": "Окружающий мир",
+      "byGrade": {
+        "grade1_v2.html": 3,
+        "grade2_v2.html": 3,
+        "grade3_v2.html": 4,
+        "grade4_v2.html": 3,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 0,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Олимпиада",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 0
+      }
+    },
+    {
+      "subject": "Русский язык",
+      "byGrade": {
+        "grade1_v2.html": 4,
+        "grade2_v2.html": 3,
+        "grade3_v2.html": 3,
+        "grade4_v2.html": 4,
+        "grade5_v2.html": 3,
+        "grade6_v2.html": 3,
+        "grade7_v2.html": 3,
+        "grade8_v2.html": 4,
+        "grade9_v2.html": 4,
+        "grade10_v2.html": 6,
+        "grade11_v2.html": 4
+      }
+    },
+    {
+      "subject": "Физика",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 3,
+        "grade8_v2.html": 4,
+        "grade9_v2.html": 4,
+        "grade10_v2.html": 4,
+        "grade11_v2.html": 4
+      }
+    },
+    {
+      "subject": "Химия",
+      "byGrade": {
+        "grade1_v2.html": 0,
+        "grade2_v2.html": 0,
+        "grade3_v2.html": 0,
+        "grade4_v2.html": 0,
+        "grade5_v2.html": 0,
+        "grade6_v2.html": 0,
+        "grade7_v2.html": 0,
+        "grade8_v2.html": 0,
+        "grade9_v2.html": 0,
+        "grade10_v2.html": 3,
+        "grade11_v2.html": 0
+      }
+    }
+  ],
+  "thinBlocks": []
+}

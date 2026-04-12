@@ -134,6 +134,11 @@ def check_topic_coverage_guards() -> list[str]:
         preview = ', '.join(f"{r.get('grade')}:{r.get('subject')} / {r.get('topic')}={r.get('uniq')}" for r in weak_priority[:8])
         errors.append(f'priority weak topics still below 10 unique questions: {preview}')
 
+    below_ten = [row for row in data.get('rows') or [] if int(row.get('uniq') or 0) < 10]
+    if below_ten:
+        preview = ', '.join(f"{r.get('grade')}:{r.get('subject')} / {r.get('topic')}={r.get('uniq')}" for r in below_ten[:8])
+        errors.append(f'topic coverage regression: below 10 unique questions remain: {preview}')
+
     return errors
 def check_curriculum_audit() -> list[str]:
     script = ROOT / 'curriculum_audit.js'
@@ -227,6 +232,64 @@ def check_wave10_hooks() -> list[str]:
         errors.append('wave10_boosters.js is missing')
     return errors
 
+def check_wave11_hooks() -> list[str]:
+    errors: list[str] = []
+    for html_file in HTML_FILES:
+        if not html_file.name.startswith('grade'):
+            continue
+        text = html_file.read_text(encoding='utf-8', errors='ignore')
+        if 'wave11_boosters.js' not in text:
+            errors.append(f'{html_file.name}: wave11_boosters.js is not connected')
+    if not (ROOT / 'wave11_boosters.js').exists():
+        errors.append('wave11_boosters.js is missing')
+    return errors
+
+
+def check_wave12_hooks() -> list[str]:
+    errors: list[str] = []
+    grade11 = ROOT / 'grade11_v2.html'
+    if not grade11.exists():
+        return ['grade11_v2.html is missing']
+    text = grade11.read_text(encoding='utf-8', errors='ignore')
+    if 'wave12_english.js' not in text:
+        errors.append('grade11_v2.html: wave12_english.js is not connected')
+    if not (ROOT / 'wave12_english.js').exists():
+        errors.append('wave12_english.js is missing')
+    return errors
+
+
+def check_english_vertical_audit() -> list[str]:
+    script = ROOT / 'english_vertical_audit.js'
+    if not script.exists():
+        return ['english_vertical_audit.js is missing']
+    proc = subprocess.run(['node', str(script)], capture_output=True, text=True, cwd=ROOT)
+    if proc.returncode == 0:
+        expected = [ROOT / 'ENGLISH_VERTICAL_AUDIT.md', ROOT / 'ENGLISH_VERTICAL.json']
+        missing = [str(p.name) for p in expected if not p.exists()]
+        return [f'missing English audit artifact: {name}' for name in missing]
+    return [line for line in proc.stdout.splitlines() + proc.stderr.splitlines() if line.strip()]
+
+
+def check_english_vertical_guards() -> list[str]:
+    payload = ROOT / 'ENGLISH_VERTICAL.json'
+    if not payload.exists():
+        return ['ENGLISH_VERTICAL.json is missing']
+    try:
+        import json
+        data = json.loads(payload.read_text(encoding='utf-8'))
+    except Exception as exc:
+        return [f'failed to read ENGLISH_VERTICAL.json: {exc}']
+
+    rows = {str(r.get('grade')): r for r in data.get('rows') or []}
+    errors: list[str] = []
+    grade10 = rows.get('10')
+    grade11 = rows.get('11')
+    if not grade10 or int(grade10.get('currentTopics') or 0) < 4:
+        errors.append('english vertical regression: grade 10 has fewer than 4 topics')
+    if not grade11 or int(grade11.get('currentTopics') or 0) < 12:
+        errors.append('english vertical regression: grade 11 has fewer than 12 topics')
+    return errors
+
 def main() -> int:
     errors = []
     errors.extend(check_js_files())
@@ -238,10 +301,14 @@ def main() -> int:
     errors.extend(check_browser_e2e())
     errors.extend(check_wave9_hooks())
     errors.extend(check_wave10_hooks())
+    errors.extend(check_wave11_hooks())
+    errors.extend(check_wave12_hooks())
     errors.extend(check_curriculum_audit())
+    errors.extend(check_english_vertical_audit())
     errors.extend(check_topic_coverage_audit())
     errors.extend(check_curriculum_guards())
     errors.extend(check_topic_coverage_guards())
+    errors.extend(check_english_vertical_guards())
 
     if errors:
         print('FAIL')
@@ -250,7 +317,7 @@ def main() -> int:
             print(error)
         return 1
 
-    print('OK: syntax, SW assets, legacy links, runtime + flow + browser E2E smoke, curriculum + coverage audit and content guards passed')
+    print('OK: syntax, SW assets, legacy links, runtime + flow + browser E2E smoke, curriculum + coverage + English vertical audit, wave 9/10/11/12 hooks and content guards passed')
     return 0
 
 

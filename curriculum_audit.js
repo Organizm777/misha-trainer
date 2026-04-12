@@ -1,312 +1,253 @@
-from __future__ import annotations
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
 
-import asyncio
-import json
-import re
-from dataclasses import dataclass, asdict
-from pathlib import Path
-from typing import Iterable
-
-from playwright.async_api import async_playwright
-
-ROOT = Path(__file__).resolve().parent
-LOCAL_SCRIPT_RE = re.compile(r'<script\s+src="([^"]+)"\s*></script>', re.I)
-LOCAL_STYLE_RE = re.compile(r'<link\s+rel="stylesheet"\s+href="([^"]+)"\s*/?>', re.I)
-INLINE_SCRIPT_RE = re.compile(r'<script>([\s\S]*?)</script>', re.I)
-FONT_LINK_RE = re.compile(r'<link[^>]+fonts\.googleapis\.com[^>]*>', re.I)
-MANIFEST_DATA_RE = re.compile(r'<link\s+rel="manifest"[^>]*>', re.I)
-
-PRELUDE = """
-<script>
-var __STORE = {};
-var __LS = {
-  getItem:function(k){return Object.prototype.hasOwnProperty.call(__STORE,k)?__STORE[k]:null;},
-  setItem:function(k,v){__STORE[k]=String(v);},
-  removeItem:function(k){delete __STORE[k];},
-  clear:function(){for(var k in __STORE) delete __STORE[k];}
-};
-window.__STORE = __STORE;
-window.__LS = __LS;
-window.alert = function(){};
-window.confirm = function(){ return true; };
-window.fetch = async function(url, opts){
+const noop = () => {};
+function mkEl() {
   return {
-    ok:true,
-    status:200,
-    text: async function(){ return JSON.stringify({players:{},records:[]}); },
-    json: async function(){ return {players:{},records:[]}; }
+    style: {},
+    classList: { add: noop, remove: noop, contains: () => false },
+    appendChild: noop,
+    remove: noop,
+    setAttribute: noop,
+    focus: noop,
+    scrollIntoView: noop,
+    innerHTML: '',
+    textContent: '',
+    value: '',
+    onclick: null,
+    querySelector: () => mkEl(),
+    querySelectorAll: () => [],
+    addEventListener: noop,
   };
+}
+function baseContext(fileName='') {
+  const document = {
+    getElementById: () => mkEl(),
+    querySelector: () => mkEl(),
+    querySelectorAll: () => [],
+    body: { appendChild: noop },
+    createElement: () => mkEl(),
+    addEventListener: noop,
+    removeEventListener: noop,
+    documentElement: { style: { setProperty: noop } },
+  };
+  const storage = Object.create(null);
+  const navigator = {
+    serviceWorker: { register: () => Promise.resolve() },
+    clipboard: { writeText: () => Promise.resolve() },
+    share: () => Promise.resolve(),
+    vibrate: noop,
+    userAgent: 'node',
+  };
+  const window = {
+    document,
+    navigator,
+    location: { pathname: '/' + path.basename(fileName) },
+    innerHeight: 800,
+    scrollTo: noop,
+    addEventListener: noop,
+    removeEventListener: noop,
+    setTimeout,
+    clearTimeout,
+    setInterval: () => 0,
+    clearInterval: noop,
+    AudioContext: function AudioContext(){
+      return {
+        state: 'running',
+        resume(){ return Promise.resolve(); },
+        createOscillator(){ return { connect: noop, type:'', frequency:{ value:0 }, start: noop, stop: noop }; },
+        createGain(){ return { connect: noop, gain:{ value:0, exponentialRampToValueAtTime: noop } }; },
+        destination: {},
+        currentTime: 0,
+      };
+    },
+    webkitAudioContext: null,
+  };
+  const ctx = {
+    console,
+    Math,
+    Date,
+    JSON,
+    Array,
+    Object,
+    String,
+    Number,
+    Boolean,
+    Promise,
+    Set,
+    Map,
+    RegExp,
+    window,
+    document,
+    navigator,
+    localStorage: {
+      getItem(key){ return Object.prototype.hasOwnProperty.call(storage,key) ? storage[key] : null; },
+      setItem(key,value){ storage[key] = String(value); },
+      removeItem(key){ delete storage[key]; },
+    },
+    alert: noop,
+    confirm: () => false,
+    setTimeout,
+    clearTimeout,
+    setInterval: () => 0,
+    clearInterval: noop,
+    fetch: () => Promise.resolve({ json: async () => ({}) }),
+  };
+  window.window = window;
+  window.localStorage = ctx.localStorage;
+  ctx.global = ctx;
+  ctx.globalThis = ctx;
+  vm.createContext(ctx);
+  return ctx;
+}
+function extractScripts(html) {
+  const re = /<script(?:\s+src="([^"]+)")?[^>]*>([\s\S]*?)<\/script>/gi;
+  const out = [];
+  let match;
+  while ((match = re.exec(html))) out.push({ src: match[1], code: match[2] || '' });
+  return out;
+}
+function runHtml(file) {
+  const html = fs.readFileSync(file, 'utf8');
+  const scripts = extractScripts(html);
+  const ctx = baseContext(file);
+  const baseDir = path.dirname(file);
+  for (const script of scripts) {
+    const code = script.src ? fs.readFileSync(path.join(baseDir, script.src), 'utf8') : script.code;
+    vm.runInContext(code, ctx, { timeout: 5000, filename: script.src || file });
+  }
+  return ctx;
+}
+function getGlobal(ctx, name) {
+  try { return vm.runInContext(name, ctx, { timeout: 1000 }); }
+  catch { return ctx[name] || ctx.window?.[name]; }
+}
+function mdTable(headers, rows) {
+  let out = `| ${headers.join(' | ')} |\n`;
+  out += `| ${headers.map(() => '---').join(' | ')} |\n`;
+  rows.forEach(row => { out += `| ${row.join(' | ')} |\n`; });
+  return out + '\n';
+}
+
+const gradeFiles = Array.from({ length: 11 }, (_, i) => `grade${i + 1}_v2.html`);
+const gradeRows = [];
+const subjectTopicMesh = new Map();
+const subjectNameMesh = new Map();
+const subjectNameById = new Map();
+const thinBlocks = [];
+
+for (const file of gradeFiles) {
+  const ctx = runHtml(file);
+  const subj = getGlobal(ctx, 'SUBJ');
+  if (!Array.isArray(subj)) throw new Error(`${file}: SUBJ not found`);
+  let topics = 0;
+  let theory = 0;
+  const missingTheory = [];
+  const subjectList = [];
+  subj.forEach(s => {
+    const topicCount = Array.isArray(s.tops) ? s.tops.length : 0;
+    subjectList.push(`${s.nm} (${topicCount})`);
+    if (!subjectNameMesh.has(s.nm)) subjectNameMesh.set(s.nm, {});
+    subjectNameMesh.get(s.nm)[file] = topicCount;
+    subjectNameById.set(s.id, s.nm);
+    if (topicCount < 3 && !s.locked) thinBlocks.push({ file, subject: s.nm, topicCount });
+    s.tops.forEach(t => {
+      topics++;
+      if (t.th) theory++; else missingTheory.push(`${s.id}/${t.id}`);
+      const key = `${s.id}/${t.id}`;
+      if (!subjectTopicMesh.has(key)) subjectTopicMesh.set(key, []);
+      subjectTopicMesh.get(key).push(path.basename(file, '.html'));
+    });
+  });
+  gradeRows.push({
+    file,
+    grade: file.replace('_v2.html', '').replace('grade', ''),
+    subjects: subj.length,
+    topics,
+    theory,
+    missingTheory,
+    subjectList,
+  });
+}
+
+const dctx = runHtml('diagnostic.html');
+const qbank = getGlobal(dctx, 'QBANK');
+if (!qbank || typeof qbank !== 'object') throw new Error('diagnostic.html: QBANK not found');
+const diagRows = Object.keys(qbank)
+  .filter(k => Array.isArray(qbank[k]))
+  .sort()
+  .map(k => ({ subject: k, count: qbank[k].filter(Boolean).length }));
+
+const repeatedMesh = [...subjectTopicMesh.entries()]
+  .filter(([, files]) => files.length > 1)
+  .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+
+const subjectNames = [...subjectNameMesh.keys()].sort((a, b) => a.localeCompare(b, 'ru'));
+const meshRows = subjectNames.map(name => {
+  const cells = [name];
+  for (const file of gradeFiles) {
+    const count = subjectNameMesh.get(name)[file];
+    cells.push(count ? String(count) : '—');
+  }
+  return cells;
+});
+
+const coverage = {
+  grades: gradeRows,
+  diagnostics: diagRows,
+  repeatedTopicIds: repeatedMesh.map(([key, files]) => ({ key, files })),
+  subjectMesh: subjectNames.map(name => ({
+    subject: name,
+    byGrade: Object.fromEntries(gradeFiles.map(file => [file, subjectNameMesh.get(name)[file] || 0])),
+  })),
+  thinBlocks,
 };
-try{ navigator.vibrate = function(){}; }catch(e){}
-try{ navigator.clipboard = { writeText: async function(){} }; }catch(e){}
-try{ navigator.share = null; }catch(e){}
-try{ navigator.serviceWorker = { register: function(){ return Promise.resolve(); } }; }catch(e){}
-</script>
-""".strip()
+fs.writeFileSync('CURRICULUM_MESH.json', JSON.stringify(coverage, null, 2), 'utf8');
 
+let md = '# Аудит структуры классов и предметной сетки\n\n';
+md += '## Сводка по классам\n\n';
+md += mdTable(
+  ['Класс', 'Предметов', 'Тем', 'Тем со шпаргалкой', 'Без шпаргалки'],
+  gradeRows.map(r => [r.grade, r.subjects, r.topics, r.theory, r.missingTheory.length])
+);
 
-@dataclass
-class ScenarioResult:
-    scenario: str
-    ok: bool
-    details: str
+md += '## Предметы по классам\n\n';
+for (const row of gradeRows) {
+  md += `### ${row.grade} класс\n\n`;
+  md += row.subjectList.map(s => `- ${s}`).join('\n') + '\n\n';
+}
 
+md += '## Сетка предметов 1–11\n\n';
+md += 'В ячейке — количество тем в этом предмете у соответствующего класса.\n\n';
+md += mdTable(['Предмет', ...gradeRows.map(r => r.grade)], meshRows);
 
-def _inline_assets(html: str, page_file: Path) -> str:
-    def replace_style(match: re.Match[str]) -> str:
-        href = match.group(1)
-        if href.startswith('http://') or href.startswith('https://'):
-            return ''
-        path = (page_file.parent / href).resolve()
-        if not path.exists():
-            return ''
-        return f'<style>{path.read_text(encoding="utf-8")}</style>'
+md += '## Диагностика\n\n';
+md += mdTable(['Банк', 'Вопросов'], diagRows.map(r => [r.subject, r.count]));
 
-    def replace_script(match: re.Match[str]) -> str:
-        src = match.group(1)
-        if src.startswith('http://') or src.startswith('https://'):
-            return ''
-        path = (page_file.parent / src).resolve()
-        if not path.exists():
-            return ''
-        code = path.read_text(encoding='utf-8')
-        code = re.sub(r'\blocalStorage\b', '__LS', code)
-        return f'<script>{code}</script>'
+md += '## Повторяющиеся subject/topic между классами\n\n';
+md += 'Это не обязательно ошибка, но список полезен для контроля межклассной сетки и хранения прогресса.\n\n';
+md += mdTable(
+  ['Пара', 'Где встречается'],
+  repeatedMesh.slice(0, 60).map(([key, files]) => [key, files.join(', ')])
+);
 
-    html = FONT_LINK_RE.sub('', html)
-    html = MANIFEST_DATA_RE.sub('', html)
-    html = LOCAL_STYLE_RE.sub(replace_style, html)
-    html = LOCAL_SCRIPT_RE.sub(replace_script, html)
-    html = INLINE_SCRIPT_RE.sub(lambda m: f'<script>{re.sub(r"\\blocalStorage\\b", "__LS", m.group(1))}</script>', html)
-    html = html.replace('<head>', '<head>' + PRELUDE, 1)
-    return html
+md += '## Потенциально тонкие блоки\n\n';
+if (!thinBlocks.length) {
+  md += 'Тонких блоков не найдено.\n\n';
+} else {
+  md += mdTable(['Класс', 'Предмет', 'Тем'], thinBlocks.map(x => [x.file.replace('grade', '').replace('_v2.html', ''), x.subject, x.topicCount]));
+}
 
+md += '## Итоги\n\n';
+const high = gradeRows.filter(r => Number(r.grade) >= 8);
+const highMissing = high.reduce((sum, r) => sum + r.missingTheory.length, 0);
+const minDiag = Math.min(...diagRows.filter(r => r.subject !== 'mathall').map(r => r.count));
+const maxDiag = diagRows.reduce((a, b) => a.count > b.count ? a : b);
+md += `- В 8–11 классах: ${high.reduce((s, r) => s + r.topics, 0)} тем, без шпаргалок: ${highMissing}.\n`;
+md += `- В диагностике минимум usable-вопросов после санации банков: ${minDiag}.\n`;
+md += `- Самый большой банк диагностики: ${maxDiag.subject} (${maxDiag.count}).\n`;
+md += `- Машинный JSON-слепок для дальнейших сравнений сохранён в CURRICULUM_MESH.json.\n`;
 
-async def load_page(page, file_name: str) -> None:
-    html_path = ROOT / file_name
-    html = html_path.read_text(encoding='utf-8')
-    html = _inline_assets(html, html_path)
-    await page.set_content(html, wait_until='load')
-    await page.wait_for_timeout(50)
-
-
-async def run_grade_flow(page, grade: int) -> list[ScenarioResult]:
-    file_name = f'grade{grade}_v2.html'
-    await load_page(page, file_name)
-    results: list[ScenarioResult] = []
-
-    # theme shell
-    try:
-        btn_count = await page.locator('[data-theme-cycle]').count()
-        await page.locator('[data-theme-cycle]').click()
-        pref = await page.evaluate('__LS.getItem("trainer_theme")')
-        results.append(ScenarioResult(f'{file_name}: theme toggle', btn_count > 0 and pref == 'light', f'buttons={btn_count}, pref={pref}'))
-    except Exception as exc:
-        results.append(ScenarioResult(f'{file_name}: theme toggle', False, str(exc)))
-
-    # registration + quiz flow
-    try:
-        await page.evaluate("registerPlayer('Тест', null)")
-        await page.evaluate("refreshMain && refreshMain()")
-        count = await page.locator('#sg .scard').count()
-        ok = count > 0
-        details = f'{count} subject cards'
-        if ok:
-            await page.evaluate(
-                """
-                (() => {
-                  const subj = SUBJ.find(s => !s.locked) || SUBJ[0];
-                  openSubj(subj.id);
-                  cT = cS.tops[0];
-                  curTheory = cT.th;
-                  mix = false; globalMix = false; rushMode = false; diagMode = false;
-                  startQuiz();
-                })()
-                """
-            )
-            question = await page.locator('#qb').inner_text()
-            ok = bool(question.strip())
-            details += '; question rendered' if ok else '; question empty'
-            if ok:
-                await page.evaluate(
-                    """
-                    (() => {
-                      const idx = prob.options.indexOf(prob.answer);
-                      ans(idx);
-                      endSession();
-                    })()
-                    """
-                )
-                keys = await page.evaluate("Object.keys(window.__STORE)")
-                needed = {f'trainer_progress_{grade}', f'trainer_daily_{grade}', f'trainer_streak_{grade}'}
-                ok = needed.issubset(set(keys))
-                details += f'; storage keys={len(keys)}'
-        results.append(ScenarioResult(f'{file_name}: quiz flow', ok, details))
-    except Exception as exc:
-        results.append(ScenarioResult(f'{file_name}: quiz flow', False, str(exc)))
-
-    # back navigation inside SPA
-    try:
-        await page.evaluate(
-            """
-            (() => {
-              const subj = SUBJ.find(s => !s.locked) || SUBJ[0];
-              openSubj(subj.id);
-            })()
-            """
-        )
-        await page.wait_for_timeout(80)
-        topic_count = await page.locator('#tl .tbtn').count()
-        await page.go_back()
-        await page.wait_for_timeout(120)
-        subject_count = await page.locator('#sg .scard').count()
-        ok = topic_count > 0 and subject_count > 0
-        details = f'topics={topic_count}, subjects_after_back={subject_count}'
-        results.append(ScenarioResult(f'{file_name}: browser back', ok, details))
-    except Exception as exc:
-        results.append(ScenarioResult(f'{file_name}: browser back', False, str(exc)))
-
-    # backup export/import flow
-    # backup export/import flow
-    try:
-        await page.evaluate(
-            """
-            (() => {
-              window.__backupCode = encodeTransferPayload(getBackupSnapshot());
-              const before = STR.totalQs || 0;
-              resetProgress();
-              window.__afterReset = STR.totalQs || 0;
-              applyBackupSnapshot(parseTransferPayload(window.__backupCode));
-              window.__afterImport = STR.totalQs || 0;
-            })()
-            """
-        )
-        after_reset = await page.evaluate('window.__afterReset')
-        after_import = await page.evaluate('window.__afterImport')
-        ok = after_reset == 0 and after_import > 0
-        details = f'after_reset={after_reset}, after_import={after_import}'
-        results.append(ScenarioResult(f'{file_name}: backup export/import', ok, details))
-    except Exception as exc:
-        results.append(ScenarioResult(f'{file_name}: backup export/import', False, str(exc)))
-
-    # targeted checks
-    try:
-        await page.evaluate(
-            """
-            (() => {
-              const subj = SUBJ.find(s => !s.locked) || SUBJ[0];
-              openSubj(subj.id);
-              cT = cS.tops[0];
-              curTheory = cT.th;
-              mix = false; globalMix = false; rushMode = false; diagMode = false;
-              startQuiz();
-              window.dispatchEvent(new PopStateEvent('popstate', { state: { trainerApp: true, screen: 'subj' } }));
-            })()
-            """
-        )
-        await page.wait_for_timeout(120)
-        screen_id = await page.evaluate("document.querySelector('.scr.on') && document.querySelector('.scr.on').id")
-        ok = screen_id in {'s-result', 's-subj', 's-main'}
-        results.append(ScenarioResult(f'{file_name}: back during session', ok, f'screen={screen_id}'))
-    except Exception as exc:
-        results.append(ScenarioResult(f'{file_name}: back during session', False, str(exc)))
-
-    if grade == 1:
-        try:
-            uniq = await page.evaluate(
-                """
-                (() => {
-                  const s = new Set();
-                  for(let i=0;i<80;i++) s.add(genCount().question);
-                  return s.size;
-                })()
-                """
-            )
-            results.append(ScenarioResult(f'{file_name}: genCount variety', uniq >= 12, f'unique={uniq}'))
-        except Exception as exc:
-            results.append(ScenarioResult(f'{file_name}: genCount variety', False, str(exc)))
-    if grade == 2:
-        try:
-            uniq = await page.evaluate(
-                """
-                (() => {
-                  const s = new Set();
-                  for(let i=0;i<80;i++) s.add(genMeasure().question);
-                  return s.size;
-                })()
-                """
-            )
-            results.append(ScenarioResult(f'{file_name}: genMeasure variety', uniq >= 7, f'unique={uniq}'))
-        except Exception as exc:
-            results.append(ScenarioResult(f'{file_name}: genMeasure variety', False, str(exc)))
-    if grade == 10:
-        try:
-            topics = await page.evaluate("SUBJ.find(s=>s.id==='eng').tops.map(t=>t.id)")
-            ok = 'phrasal' in topics and 'essay' in topics
-            results.append(ScenarioResult(f'{file_name}: english extensions', ok, ','.join(topics)))
-        except Exception as exc:
-            results.append(ScenarioResult(f'{file_name}: english extensions', False, str(exc)))
-
-    return results
-
-
-async def run_diagnostic_flow(page) -> ScenarioResult:
-    try:
-        await load_page(page, 'diagnostic.html')
-        await page.evaluate(
-            """
-            (() => {
-              startDiag('mathall');
-              const first = questions.length;
-              const btn = document.createElement('button');
-              selectOpt(btn, window._curAnswer, window._curAnswer, window._curHint);
-              nextQ();
-              skipQ();
-              window.__diagState = { len: first, qIndex, grade: questions[qIndex] ? questions[qIndex].g : null };
-            })()
-            """
-        )
-        state = await page.evaluate('window.__diagState')
-        ok = int(state['len']) >= 20 and int(state['qIndex']) >= 2
-        return ScenarioResult('diagnostic.html: adaptive flow', ok, json.dumps(state, ensure_ascii=False))
-    except Exception as exc:
-        return ScenarioResult('diagnostic.html: adaptive flow', False, str(exc))
-
-
-async def main() -> int:
-    results: list[ScenarioResult] = []
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True, executable_path='/usr/bin/chromium')
-        context = await browser.new_context(ignore_https_errors=True)
-        for grade in (1, 2, 5, 10):
-            page = await context.new_page()
-            results.extend(await run_grade_flow(page, grade))
-            await page.close()
-        page = await context.new_page()
-        results.append(await run_diagnostic_flow(page))
-        await page.close()
-        await browser.close()
-
-    md_lines = ['# Browser E2E smoke', '', '| Scenario | Status | Details |', '|---|---|---|']
-    failed = False
-    for row in results:
-        status = '✅' if row.ok else '❌'
-        failed = failed or (not row.ok)
-        details = row.details.replace('|', '\\|').replace('\n', ' ')
-        md_lines.append(f'| {row.scenario} | {status} | {details} |')
-    (ROOT / 'BROWSER_E2E_REPORT.md').write_text('\n'.join(md_lines) + '\n', encoding='utf-8')
-
-    if failed:
-        print('BROWSER_E2E_FAIL')
-        for row in results:
-            print(('OK   ' if row.ok else 'FAIL ') + row.scenario + ' :: ' + row.details)
-        return 1
-
-    print('BROWSER_E2E_OK')
-    for row in results:
-        print('OK   ' + row.scenario + ' :: ' + row.details)
-    return 0
-
-
-if __name__ == '__main__':
-    raise SystemExit(asyncio.run(main()))
+fs.writeFileSync('CURRICULUM_AUDIT.md', md, 'utf8');
+console.log('Wrote CURRICULUM_AUDIT.md and CURRICULUM_MESH.json');
