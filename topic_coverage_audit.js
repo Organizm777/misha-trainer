@@ -166,8 +166,9 @@ for (const file of GRADE_FILES) {
         uniq: uniq.size,
         samples: SAMPLES,
         errors,
-        boosted: !!topic._wave6Boosted,
-        extraCount: topic._wave6ExtraCount || 0,
+        boosted: !!(topic._coverageBoosted || topic._wave6Boosted),
+        extraCount: topic._coverageExtraCount || topic._wave6ExtraCount || 0,
+        sources: topic._coverageSources || (topic._wave6Boosted ? ['wave6'] : []),
       });
     });
   });
@@ -199,14 +200,14 @@ let md = '# Аудит вариативности генераторов по т
 md += `Проверка: каждая тема была сэмплирована **${SAMPLES}** раз. В таблицах ниже — число уникальных формулировок вопроса (по полю \`question\`). Это приближённая метрика: она не считает разные варианты ответов и разные числа внутри одного и того же шаблона.\n\n`;
 md += '## Сводка по классам\n\n';
 md += mdTable(
-  ['Класс', 'Тем', 'Средняя вариативность', 'Минимум', 'Усилено в wave 6'],
+  ['Класс', 'Тем', 'Средняя вариативность', 'Минимум', 'Усилено patch-слоями'],
   gradeSummary.map(r => [r.grade, r.topics, r.avg, r.min, r.boosted])
 );
 
-md += '## Усиленные темы wave 6\n\n';
+md += '## Усиленные темы patch-слоями\n\n';
 md += mdTable(
-  ['Класс', 'Предмет', 'Тема', 'Уникальных вопросов', 'Добавлено extra'],
-  boosted.map(r => [r.grade, r.subject, r.topic, r.uniq, r.extraCount])
+  ['Класс', 'Предмет', 'Тема', 'Уникальных вопросов', 'Добавлено extra', 'Источник'],
+  boosted.map(r => [r.grade, r.subject, r.topic, r.uniq, r.extraCount, (r.sources||[]).join(', ') || 'patch'])
 );
 
 md += '## Самые слабые темы по вариативности\n\n';
@@ -219,7 +220,7 @@ const belowTen = rows.filter(r => r.uniq < 10);
 md += '## Итоги\n\n';
 md += `- Всего тем проверено: **${rows.length}**.\n`;
 md += `- Тем с вариативностью ниже 10 уникальных формулировок: **${belowTen.length}**.\n`;
-md += `- Усилено в wave 6: **${boosted.length}** тем.\n`;
+md += `- Усилено patch-слоями: **${boosted.length}** тем.\n`;
 md += `- Машинный слепок сохранён в **TOPIC_COVERAGE.json**.\n`;
 
 fs.writeFileSync(path.join(ROOT, 'TOPIC_COVERAGE_AUDIT.md'), md, 'utf8');

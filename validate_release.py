@@ -127,6 +127,13 @@ def check_topic_coverage_guards() -> list[str]:
         preview = ', '.join(f"{r.get('grade')}:{r.get('subject')} / {r.get('topic')}={r.get('uniq')}" for r in weak_boosted[:8])
         errors.append(f'boosted topics still too shallow (<10): {preview}')
 
+    priority = {(1,'rus','jishi'),(1,'rus','syllable'),(2,'rus','bezud'),(2,'rus','pair'),(2,'world','animals'),(5,'bio','cell'),(5,'bio','plant'),(5,'geo5','earth'),(5,'geo5','map'),(5,'his','egypt'),(5,'his','greece'),(5,'his','rome'),(6,'bio','anim'),(6,'bio','class'),(6,'geo6','litho'),(6,'geo6','hydro'),(6,'his','med'),(6,'his','byz'),(6,'his','rmed'),(6,'rus','adj'),(6,'rus','num'),(7,'geo','par'),(7,'rus','adv'),(7,'alg','func'),(9,'his','ussr'),(9,'his','world20'),(9,'rus','ssp'),(11,'geo','angles'),(11,'rus','orth')}
+    priority_rows = [row for row in data.get('rows') or [] if (int(row.get('grade') or 0), str(row.get('subjectId')), str(row.get('topicId'))) in priority]
+    weak_priority = [row for row in priority_rows if int(row.get('uniq') or 0) < 10]
+    if weak_priority:
+        preview = ', '.join(f"{r.get('grade')}:{r.get('subject')} / {r.get('topic')}={r.get('uniq')}" for r in weak_priority[:8])
+        errors.append(f'priority weak topics still below 10 unique questions: {preview}')
+
     return errors
 def check_curriculum_audit() -> list[str]:
     script = ROOT / 'curriculum_audit.js'
@@ -206,6 +213,20 @@ def check_wave9_hooks() -> list[str]:
         errors.append('wave9_ui.js is missing')
     return errors
 
+
+
+def check_wave10_hooks() -> list[str]:
+    errors: list[str] = []
+    for html_file in HTML_FILES:
+        if not html_file.name.startswith('grade'):
+            continue
+        text = html_file.read_text(encoding='utf-8', errors='ignore')
+        if 'wave10_boosters.js' not in text:
+            errors.append(f'{html_file.name}: wave10_boosters.js is not connected')
+    if not (ROOT / 'wave10_boosters.js').exists():
+        errors.append('wave10_boosters.js is missing')
+    return errors
+
 def main() -> int:
     errors = []
     errors.extend(check_js_files())
@@ -216,6 +237,7 @@ def main() -> int:
     errors.extend(check_flow_smoke())
     errors.extend(check_browser_e2e())
     errors.extend(check_wave9_hooks())
+    errors.extend(check_wave10_hooks())
     errors.extend(check_curriculum_audit())
     errors.extend(check_topic_coverage_audit())
     errors.extend(check_curriculum_guards())
