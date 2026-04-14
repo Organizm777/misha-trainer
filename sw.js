@@ -1,30 +1,25 @@
-const CACHE_NAME = 'trainer-v20';
+const CACHE_NAME = 'trainer-v38';
+const STATIC_CACHE = CACHE_NAME + '-static';
+const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
   './',
   './index.html',
   './diagnostic.html',
   './tests.html',
   './dashboard.html',
-  './engine10.js',
-  './engine10.css',
-  './wave6_boosters.js',
-  './wave8_boosters.js',
-  './wave10_boosters.js',
-  './wave11_boosters.js',
-  './wave12_english.js',
-  './wave13_english.js',
-  './wave14_english.js',
-  './wave15_english.js',
-  './wave16_theory.js',
-  './wave17_english_diag.js',
-  './wave17_english_infra.js',
-  './wave18_cleanup.js',
-  './wave19_mesh_8911.js',
-  './wave20_mesh_567primary.js',
-  './wave21_progress.js',
-  './wave22_dashboard.js',
-  './wave23_accessibility.js',
-  './wave9_ui.js',
+  './assets/js/wave35_plans.js',
+  './assets/js/engine10.js',
+  './assets/js/bundle_boosters.js',
+  './assets/js/bundle_dashboard_tools.js',
+  './assets/js/bundle_diagnostic_tools.js',
+  './assets/js/bundle_exam.js',
+  './assets/js/bundle_grade_after.js',
+  './assets/js/bundle_grade_content.js',
+  './assets/js/bundle_sharing.js',
+  './assets/js/bundle_shell.js',
+  './assets/js/bundle_subject_expansion.js',
+  './assets/css/engine10.css',
+  './manifest.webmanifest',
   './grade1_v2.html',
   './grade2_v2.html',
   './grade3_v2.html',
@@ -35,60 +30,33 @@ const ASSETS = [
   './grade8_v2.html',
   './grade9_v2.html',
   './grade10_v2.html',
-  './grade11_v2.html'
+  './grade11_v2.html',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/apple-touch-icon.png',
 ];
-
-self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    for (const url of ASSETS) {
-      try {
-        await cache.add(url);
-      } catch (err) {
-        console.warn('SW precache skipped:', url, err);
-      }
-    }
-    await self.skipWaiting();
-  })());
-});
-
-self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)));
-    await self.clients.claim();
-  })());
-});
-
+function isCacheable(request, response){ return request.method === 'GET' && response && (response.ok || response.type === 'opaque'); }
+async function precache(){ const cache = await caches.open(STATIC_CACHE); for (const url of ASSETS){ try{ await cache.add(url); }catch(err){ console.warn('SW precache skipped:', url, err); } } }
+async function staleWhileRevalidate(request, cacheName){ const cache = await caches.open(cacheName); const cached = await cache.match(request); const networkPromise = fetch(request).then(response => { if(isCacheable(request, response)) cache.put(request, response.clone()); return response; }).catch(() => null); if(cached) return { response: cached, revalidate: networkPromise }; const fresh = await networkPromise; return { response: fresh, revalidate: Promise.resolve(fresh) }; }
+self.addEventListener('install', event => { event.waitUntil((async () => { await precache(); await self.skipWaiting(); })()); });
+self.addEventListener('activate', event => { event.waitUntil((async () => { const keys = await caches.keys(); await Promise.all(keys.filter(key => ![STATIC_CACHE, RUNTIME_CACHE].includes(key)).map(key => caches.delete(key))); await self.clients.claim(); })()); });
+self.addEventListener('message', event => { if(event && event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting(); });
 self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-
-  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) {
-    event.respondWith(
-      caches.match(event.request).then(cached => {
-        if (cached) return cached;
-        return fetch(event.request).then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        });
-      })
-    );
-    return;
-  }
-
-  if (url.origin === self.location.origin) {
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
-
-  event.respondWith(fetch(event.request));
+  const request = event.request;
+  if(request.method !== 'GET') return;
+  const url = new URL(request.url);
+  const isFont = url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com');
+  const isSameOrigin = url.origin === self.location.origin;
+  if(!isFont && !isSameOrigin) return;
+  const cacheName = isSameOrigin ? STATIC_CACHE : RUNTIME_CACHE;
+  event.respondWith((async () => {
+    const result = await staleWhileRevalidate(request, cacheName);
+    if(result.revalidate) event.waitUntil(result.revalidate.then(() => undefined).catch(() => undefined));
+    if(result.response) return result.response;
+    if(request.mode === 'navigate'){
+      const fallback = await caches.match('./index.html');
+      if(fallback) return fallback;
+    }
+    return fetch(request);
+  })());
 });
