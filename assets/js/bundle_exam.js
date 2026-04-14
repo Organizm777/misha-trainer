@@ -559,7 +559,7 @@
             '<div class="wave30-pack-head"><div class="wave30-pack-name">' + esc(pack.label) + '</div><span class="wave30-pack-badge">' + esc(pack.grades) + '</span></div>' +
             '<div class="wave30-pack-meta">' + esc(pack.summary) + '<br>' + pack.maxQ + ' заданий · ' + fmtTime(pack.timeLimit) + '</div>' +
             '<div class="wave30-pack-last">' + (latest ? ('Последний: <b style="color:' + esc(colorForPct(latest.pct)) + '">' + esc(String(latest.rawPoints) + '/' + String(latest.maxPoints)) + '</b> · ' + esc(latest.bandLabel) + ' · ' + esc(fmtDate(latest.ts))) : 'Пока без попыток') + '</div>' +
-            '<button class="wave30-pack-btn" style="background:' + esc(pack.accent) + '" onclick="wave30Exam.startPack(\'' + pack.id + '\')">▶ Старт pack</button>' +
+            '<button class="wave30-pack-btn" style="background:' + esc(pack.accent) + '" onclick="wave30Exam.startPack(\'' + pack.id + '\')">▶ Начать тест</button>' +
           '</div>';
         }).join('') + '</div></div>';
     }).join('');
