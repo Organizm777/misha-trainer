@@ -3003,15 +3003,9 @@
   function syncLegacyInstallButton(){
     var btn = document.getElementById && document.getElementById(LEGACY_INSTALL_ID);
     if (!btn) return;
-    var shouldShow = !!state.installPrompt && compactInstallUi() && !standalone() && !installDismissed();
-    btn.hidden = !shouldShow;
-    if (!shouldShow) {
-      btn.style.display = 'none';
-      btn.setAttribute('aria-hidden', 'true');
-    } else {
-      btn.style.removeProperty('display');
-      btn.removeAttribute('aria-hidden');
-    }
+    btn.hidden = true;
+    btn.style.display = 'none';
+    btn.setAttribute('aria-hidden', 'true');
   }
   function wrapToast(){
     if (state.toastWrapped || typeof window.showToast !== 'function') return;
@@ -3028,7 +3022,7 @@
     var style = document.createElement('style');
     style.id = SETTINGS_STYLE_ID;
     style.textContent = '\n#' + LEGACY_THEME_BTN_ID + '{display:none!important;pointer-events:none!important}' +
-      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:0 8px;border:1px solid rgba(26,26,46,.08);border-radius:999px;background:rgba(255,255,255,.62);color:#1a1a2e;box-shadow:0 4px 12px rgba(0,0,0,.08);font:700 10px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px);opacity:.92}' +
+      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:32px;min-height:32px;padding:0 7px;border:1px solid rgba(26,26,46,.06);border-radius:999px;background:rgba(255,255,255,.52);color:#1a1a2e;box-shadow:0 2px 8px rgba(0,0,0,.06);font:700 10px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px);opacity:.84}' +
       '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.78);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
       '\n#' + SETTINGS_MODAL_ID + '{position:fixed;inset:0;z-index:14000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.56)}' +
       '\n#' + SETTINGS_MODAL_ID + ' [data-settings-card]{width:min(100%,560px);max-height:88vh;overflow:auto;background:var(--card,#fff);color:var(--text,#111827);border:1px solid var(--border,#d7d3cc);border-radius:20px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.26)}' +
@@ -3043,8 +3037,8 @@
       '\n.wave40-settings-row{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;margin-top:8px}' +
       '\n.wave40-settings-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
       '\n.wave40-pill{padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--accent,#2563eb);font-size:11px;font-weight:800}' +
-      '\n@media (min-width:1024px){#' + SETTINGS_BTN_ID + '{min-width:34px;min-height:34px;padding:0 7px;background:rgba(255,255,255,.54);box-shadow:0 2px 8px rgba(0,0,0,.06)}}' +
-      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:34px;min-height:34px;padding:0 7px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
+      '\n@media (min-width:1024px){#' + SETTINGS_BTN_ID + '{min-width:30px;min-height:30px;padding:0 6px;background:rgba(255,255,255,.46);box-shadow:0 2px 6px rgba(0,0,0,.05)}}' +
+      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:32px;min-height:32px;padding:0 7px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
       '\n@media print{#' + SETTINGS_BTN_ID + ',#' + SETTINGS_MODAL_ID + ',#' + LEGACY_INSTALL_ID + '{display:none!important}}';
     (document.head || document.documentElement).appendChild(style);
   }
