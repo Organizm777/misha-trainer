@@ -2143,8 +2143,9 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       .wave24-install-btn[hidden]{display:none!important}
       .wave24-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9997;display:flex;gap:8px;align-items:stretch;box-sizing:border-box;height:var(--wave24-nav-total-h);min-height:var(--wave24-nav-total-h);max-height:var(--wave24-nav-total-h);padding:0 max(12px, env(safe-area-inset-right,0px)) var(--wave24-nav-safe-b) max(12px, env(safe-area-inset-left,0px));margin:0;background:rgba(245,243,238,.96);backdrop-filter:blur(14px);border-top:1px solid var(--border,#e2e0d8);box-shadow:0 -8px 28px rgba(0,0,0,.08)}
       html[data-theme="dark"] .wave24-bottom-nav{background:rgba(20,20,32,.96)}
-      .wave24-bottom-nav a,.wave24-bottom-nav button{flex:1;min-width:0;height:var(--wave24-nav-base-h);min-height:var(--wave24-nav-base-h);max-height:var(--wave24-nav-base-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 6px;border:none;border-radius:14px;background:transparent;color:var(--muted,#6b6a74);font:700 11px/1.1 'Golos Text',system-ui,sans-serif;text-decoration:none;cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
-      .wave24-bottom-nav .wave24-ic{font-size:18px;line-height:1}
+      .wave24-bottom-nav a,.wave24-bottom-nav button{flex:1;min-width:0;align-self:stretch;height:100%;min-height:100%;margin:0;display:grid;grid-template-rows:24px 10px;align-content:center;justify-items:center;row-gap:2px;padding:0;border:none;border-radius:14px;background:transparent;color:var(--muted,#6b6a74);font:700 10px/1 'Golos Text',system-ui,sans-serif;text-decoration:none;cursor:pointer;-webkit-appearance:none;touch-action:manipulation;box-sizing:border-box;overflow:hidden}
+      .wave24-bottom-nav .wave24-ic{font-size:20px;line-height:1;height:24px;width:24px;display:flex;align-items:center;justify-content:center}
+      .wave24-bottom-nav .wave24-tx{font-size:10px;line-height:1;height:10px;display:block;white-space:nowrap}
       .wave24-bottom-nav .is-active{background:var(--abg,#dbeafe);color:var(--accent,#2563eb)}
       .wave24-bottom-nav .is-quiet{opacity:.75}
       .wave24-mobile-tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--wave24-nav-total-h) + 12px);z-index:9996;background:var(--card,#fff);color:var(--muted,#6b6a74);border:1px solid var(--border,#e2e0d8);border-radius:999px;padding:8px 12px;font:600 11px/1.2 'Golos Text',system-ui,sans-serif;box-shadow:0 10px 24px rgba(0,0,0,.08);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
@@ -2173,9 +2174,6 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
         body.wave24-mobile-shell{padding-bottom:env(safe-area-inset-bottom,0) !important;}
       }
       @media (orientation: landscape) and (max-height: 560px){
-        .wave24-bottom-nav{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0));}
-        .wave24-bottom-nav a,.wave24-bottom-nav button{padding:6px 6px;font-size:10px}
-        .wave24-bottom-nav .wave24-ic{font-size:16px}
         .wave24-install-btn{bottom:calc(var(--wave24-nav-total-h) + 12px);padding:8px 12px}
       }
     `;
