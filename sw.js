@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-v34';
+const CACHE_NAME = 'trainer-v36';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [

@@ -2033,3 +2033,865 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scheduleBoot, { once:true });
   else scheduleBoot();
 })();
+/* --- wave39_gamification.js --- */
+(function(){
+  if (typeof window === 'undefined') return;
+  if (window.wave39Debug) return;
+
+  var VERSION = 'wave39';
+  var STYLE_ID = 'wave39-style';
+  var STATE_KEY = 'trainer_gamify_v2';
+  var LOG_KEY = 'trainer_gamify_log_v2';
+  var MISSION_DAY_KEY = 'trainer_gamify_missions_v2';
+  var gradeAttempt = null;
+  var diagAttempt = null;
+
+  function num(v){ return Number(v || 0) || 0; }
+  function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function jparse(raw, fallback){ try { return raw ? JSON.parse(raw) : fallback; } catch(_) { return fallback; } }
+  function jget(key, fallback){ try { return jparse(localStorage.getItem(key), fallback); } catch(_) { return fallback; } }
+  function jset(key, value){ try { localStorage.setItem(key, JSON.stringify(value)); } catch(_) {} }
+  function todayIso(){ return new Date().toISOString().slice(0, 10); }
+  function safeDate(d){ return String(d || '').slice(0, 10); }
+  function clone(v){ return JSON.parse(JSON.stringify(v)); }
+  function dayTs(iso){ return new Date(String(iso || '').slice(0,10) + 'T00:00:00').getTime(); }
+  function diffDays(a, b){ return Math.round((dayTs(safeDate(a)) - dayTs(safeDate(b))) / 86400000); }
+  function decl(n, one, few, many){
+    if (typeof window.declNum === 'function') return window.declNum(n, one, few, many);
+    var a = Math.abs(n) % 100;
+    var b = a % 10;
+    if (a > 10 && a < 20) return many;
+    if (b > 1 && b < 5) return few;
+    if (b === 1) return one;
+    return many;
+  }
+  function pct(ok, total){ return total > 0 ? Math.round(ok / total * 100) : 0; }
+  function activeProfileName(){
+    try {
+      if (window.wave35Debug && typeof window.wave35Debug.activeProfile === 'function') {
+        var p = window.wave35Debug.activeProfile();
+        if (p && p.name) return String(p.name);
+      }
+    } catch(_) {}
+    try { return localStorage.getItem('trainer_player_name') || 'Ученик'; } catch(_) { return 'Ученик'; }
+  }
+  function activeProfileId(){
+    try {
+      if (window.wave35Debug && typeof window.wave35Debug.activeProfileId === 'function') return String(window.wave35Debug.activeProfileId() || 'p1');
+    } catch(_) {}
+    return 'p1';
+  }
+  function isGradePage(){ return typeof window.GRADE_NUM !== 'undefined' && !!document.getElementById('s-play'); }
+  function isDashboardPage(){ return !!document.getElementById('grades') && !!document.getElementById('activity'); }
+  function isDiagnosticPage(){ return !!document.getElementById('s-select') && !!document.getElementById('s-quiz'); }
+  function uniqPush(arr, value){ if (value == null) return; value = String(value); if (arr.indexOf(value) === -1) arr.push(value); }
+
+  function defaultState(){
+    return {
+      version: VERSION,
+      xp: 0,
+      answers: 0,
+      correct: 0,
+      sessions: 0,
+      diagnostics: 0,
+      comboBest: 0,
+      badgesSeen: 0,
+      lastAward: null
+    };
+  }
+  function defaultDay(date){
+    return {
+      date: safeDate(date || todayIso()),
+      xp: 0,
+      answers: 0,
+      correct: 0,
+      sessions: 0,
+      diagnostics: 0,
+      highAcc: 0,
+      maxCombo: 0,
+      subjects: []
+    };
+  }
+  function loadState(){
+    var state = jget(STATE_KEY, null);
+    if (!state || typeof state !== 'object') state = defaultState();
+    state.version = VERSION;
+    state.xp = num(state.xp);
+    state.answers = num(state.answers);
+    state.correct = num(state.correct);
+    state.sessions = num(state.sessions);
+    state.diagnostics = num(state.diagnostics);
+    state.comboBest = num(state.comboBest);
+    state.badgesSeen = num(state.badgesSeen);
+    state.lastAward = state.lastAward && typeof state.lastAward === 'object' ? state.lastAward : null;
+    return state;
+  }
+  function saveState(state){ jset(STATE_KEY, state); return state; }
+  function loadLog(){
+    var log = jget(LOG_KEY, []);
+    if (!Array.isArray(log)) log = [];
+    log = log.filter(function(row){ return row && typeof row === 'object' && row.date; }).map(function(row){
+      row = clone(row);
+      row.date = safeDate(row.date);
+      row.xp = num(row.xp);
+      row.answers = num(row.answers);
+      row.correct = num(row.correct);
+      row.sessions = num(row.sessions);
+      row.diagnostics = num(row.diagnostics);
+      row.highAcc = num(row.highAcc);
+      row.maxCombo = num(row.maxCombo);
+      row.subjects = Array.isArray(row.subjects) ? row.subjects.map(function(s){ return String(s || ''); }).filter(Boolean) : [];
+      return row;
+    }).sort(function(a, b){ return a.date.localeCompare(b.date); }).slice(-180);
+    return log;
+  }
+  function saveLog(log){ jset(LOG_KEY, (log || []).slice(-180)); }
+  function getOrMakeDay(log, date){
+    date = safeDate(date || todayIso());
+    for (var i = 0; i < log.length; i++) if (log[i].date === date) return log[i];
+    var row = defaultDay(date);
+    log.push(row);
+    log.sort(function(a, b){ return a.date.localeCompare(b.date); });
+    while (log.length > 180) log.shift();
+    return row;
+  }
+
+  function levelInfo(xp){
+    xp = num(xp);
+    var level = 1;
+    var floor = 0;
+    var step = 100;
+    while (xp >= floor + step) {
+      floor += step;
+      level += 1;
+      step = 100 + (level - 1) * 20;
+    }
+    return {
+      level: level,
+      floor: floor,
+      next: floor + step,
+      span: step,
+      progress: xp - floor,
+      remain: floor + step - xp
+    };
+  }
+  function levelTitle(level){
+    level = num(level);
+    if (level >= 12) return 'Эксперт';
+    if (level >= 9) return 'Мастер';
+    if (level >= 7) return 'Практик';
+    if (level >= 5) return 'Исследователь';
+    if (level >= 3) return 'Следопыт';
+    return 'Новичок';
+  }
+  function profileTone(level){
+    if (level >= 12) return '👑';
+    if (level >= 9) return '🏆';
+    if (level >= 7) return '🧠';
+    if (level >= 5) return '🚀';
+    if (level >= 3) return '⭐';
+    return '🌱';
+  }
+  function streakInfo(log){
+    var dates = log.filter(function(row){ return num(row.answers) > 0 || num(row.xp) > 0; }).map(function(row){ return safeDate(row.date); }).sort();
+    if (!dates.length) return { current:0, best:0, last:'' };
+    var best = 1;
+    var run = 1;
+    for (var i = 1; i < dates.length; i++) {
+      var d = diffDays(dates[i], dates[i - 1]);
+      if (d === 1) run += 1;
+      else if (d !== 0) run = 1;
+      if (run > best) best = run;
+    }
+    var current = 1;
+    for (var j = dates.length - 1; j > 0; j--) {
+      var dd = diffDays(dates[j], dates[j - 1]);
+      if (dd === 1) current += 1;
+      else if (dd !== 0) break;
+    }
+    var last = dates[dates.length - 1];
+    var gap = diffDays(todayIso(), last);
+    if (gap > 1) current = 0;
+    return { current: current, best: best, last: last };
+  }
+  function badgeCount(){
+    var seen = {};
+    for (var g = 1; g <= 11; g++) {
+      var raw = jget('trainer_streak_' + g, null);
+      var rows = raw && Array.isArray(raw.badges) ? raw.badges : [];
+      rows.forEach(function(id){ seen[String(id)] = 1; });
+    }
+    return Object.keys(seen).length;
+  }
+  function subjectMix(log){
+    var seen = {};
+    log.forEach(function(row){ (row.subjects || []).forEach(function(s){ seen[s] = 1; }); });
+    return Object.keys(seen).length;
+  }
+  function recentXp(log, days){
+    days = num(days) || 7;
+    var start = new Date(dayTs(todayIso()) - (days - 1) * 86400000).toISOString().slice(0,10);
+    return log.filter(function(row){ return row.date >= start; }).reduce(function(sum, row){ return sum + num(row.xp); }, 0);
+  }
+
+  function loadMissionState(){
+    var row = jget(MISSION_DAY_KEY, null);
+    if (!row || typeof row !== 'object' || row.date !== todayIso()) row = { date: todayIso(), rewarded: [] };
+    if (!Array.isArray(row.rewarded)) row.rewarded = [];
+    return row;
+  }
+  function saveMissionState(row){ jset(MISSION_DAY_KEY, row); }
+  function currentMissions(day){
+    day = day || defaultDay(todayIso());
+    return [
+      { id:'warmup', title:'Разминка', label:'10 ответов сегодня', cur: Math.min(num(day.answers), 10), need: 10, reward: 25, done: num(day.answers) >= 10 },
+      { id:'tempo', title:'Темп', label:'2 сессии за день', cur: Math.min(num(day.sessions) + num(day.diagnostics), 2), need: 2, reward: 30, done: (num(day.sessions) + num(day.diagnostics)) >= 2 },
+      { id:'precision', title:'Точность', label:'хотя бы одна попытка 80%+', cur: num(day.highAcc) ? 1 : 0, need: 1, reward: 35, done: !!num(day.highAcc) }
+    ];
+  }
+  function missionRewards(day){
+    var missionState = loadMissionState();
+    var missions = currentMissions(day);
+    var completed = [];
+    var bonus = 0;
+    missions.forEach(function(m){
+      if (m.done && missionState.rewarded.indexOf(m.id) === -1) {
+        missionState.rewarded.push(m.id);
+        bonus += m.reward;
+        completed.push(m);
+      }
+    });
+    saveMissionState(missionState);
+    return { bonus: bonus, completed: completed, missions: missions };
+  }
+
+  function estimateGradeXp(payload){
+    var base = num(payload.total) * 2 + num(payload.ok) + Math.min(12, num(payload.combo) * 2);
+    if (num(payload.pct) >= 70) base += 6;
+    if (num(payload.pct) >= 85) base += 8;
+    if (num(payload.pct) >= 100) base += 12;
+    if (payload.review) base += 5;
+    if (payload.subject === 'Микс') base += 4;
+    return Math.round(base);
+  }
+  function estimateDiagXp(payload){
+    var base = num(payload.total) * 3 + num(payload.ok) * 2;
+    if (num(payload.pct) >= 70) base += 10;
+    if (num(payload.pct) >= 85) base += 12;
+    if (num(payload.pct) >= 100) base += 18;
+    if (payload.mode === 'exam') base += 8;
+    return Math.round(base);
+  }
+  function computeXp(payload){
+    return payload && payload.source === 'diagnostic' ? estimateDiagXp(payload) : estimateGradeXp(payload || {});
+  }
+
+  function applyAward(payload){
+    if (!payload || !num(payload.total)) return null;
+    var state = loadState();
+    var log = loadLog();
+    var day = getOrMakeDay(log, todayIso());
+    var before = levelInfo(state.xp);
+    var baseXp = computeXp(payload);
+
+    state.xp += baseXp;
+    state.answers += num(payload.total);
+    state.correct += num(payload.ok);
+    state.sessions += payload.source === 'diagnostic' ? 0 : 1;
+    state.diagnostics += payload.source === 'diagnostic' ? 1 : 0;
+    state.comboBest = Math.max(state.comboBest, num(payload.combo));
+    state.badgesSeen = Math.max(state.badgesSeen, badgeCount());
+
+    day.xp += baseXp;
+    day.answers += num(payload.total);
+    day.correct += num(payload.ok);
+    day.sessions += payload.source === 'diagnostic' ? 0 : 1;
+    day.diagnostics += payload.source === 'diagnostic' ? 1 : 0;
+    if (num(payload.pct) >= 80) day.highAcc = 1;
+    day.maxCombo = Math.max(day.maxCombo, num(payload.combo));
+    uniqPush(day.subjects, payload.subject || 'Тренировка');
+
+    var mission = missionRewards(day);
+    if (mission.bonus) {
+      state.xp += mission.bonus;
+      day.xp += mission.bonus;
+    }
+
+    saveLog(log);
+    var after = levelInfo(state.xp);
+    var streak = streakInfo(log);
+    state.lastAward = {
+      ts: Date.now(),
+      source: payload.source,
+      subject: payload.subject,
+      total: num(payload.total),
+      ok: num(payload.ok),
+      pct: num(payload.pct),
+      combo: num(payload.combo),
+      baseXp: baseXp,
+      missionXp: mission.bonus,
+      xpGain: baseXp + mission.bonus,
+      beforeLevel: before.level,
+      afterLevel: after.level,
+      levelUp: after.level > before.level,
+      missions: mission.completed.map(function(m){ return m.title; }),
+      streak: streak.current
+    };
+    saveState(state);
+    return {
+      payload: clone(payload),
+      state: state,
+      before: before,
+      after: after,
+      day: clone(day),
+      streak: streak,
+      missions: mission.missions,
+      completedMissions: mission.completed,
+      baseXp: baseXp,
+      missionXp: mission.bonus,
+      xpGain: baseXp + mission.bonus,
+      levelUp: after.level > before.level,
+      badges: state.badgesSeen
+    };
+  }
+
+  function loadSnapshot(){
+    var state = loadState();
+    var log = loadLog();
+    var today = getOrMakeDay(log, todayIso());
+    var level = levelInfo(state.xp);
+    var streak = streakInfo(log);
+    var badges = badgeCount();
+    if (badges > state.badgesSeen) { state.badgesSeen = badges; saveState(state); }
+    return {
+      profile: activeProfileName(),
+      profileId: activeProfileId(),
+      state: state,
+      log: log,
+      today: clone(today),
+      level: level,
+      streak: streak,
+      badges: badges,
+      missions: currentMissions(today),
+      mixSubjects: subjectMix(log),
+      xp7: recentXp(log, 7),
+      xp30: recentXp(log, 30)
+    };
+  }
+
+  function ensureStyles(){
+    if (document.getElementById(STYLE_ID)) return;
+    var style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = ''
+      + '.wave39-wrap{margin-top:12px}'
+      + '.wave39-card{border:1px solid var(--border);background:var(--card);border-radius:18px;padding:14px 14px 12px;box-shadow:0 12px 30px rgba(15,23,42,.06)}'
+      + '.wave39-card.dark{background:linear-gradient(135deg,#0f172a,#172554);color:#fff;border-color:rgba(255,255,255,.12)}'
+      + '.wave39-kicker{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--muted);margin-bottom:6px}'
+      + '.wave39-card.dark .wave39-kicker{color:rgba(255,255,255,.68)}'
+      + '.wave39-title{font-size:16px;font-weight:900;line-height:1.25}'
+      + '.wave39-card.dark .wave39-title{color:#fff}'
+      + '.wave39-sub{margin-top:4px;font-size:12px;line-height:1.55;color:var(--muted)}'
+      + '.wave39-card.dark .wave39-sub{color:rgba(255,255,255,.82)}'
+      + '.wave39-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}'
+      + '.wave39-stat{border:1px solid var(--border);border-radius:14px;padding:12px;background:var(--bg);text-align:center}'
+      + '.wave39-card.dark .wave39-stat{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.10)}'
+      + '.wave39-stat .v{font-size:22px;font-weight:900;font-family:JetBrains Mono,monospace;line-height:1.1}'
+      + '.wave39-stat .l{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35}'
+      + '.wave39-card.dark .wave39-stat .l{color:rgba(255,255,255,.78)}'
+      + '.wave39-progress{margin-top:10px}'
+      + '.wave39-bar{height:10px;border-radius:999px;background:rgba(148,163,184,.22);overflow:hidden}'
+      + '.wave39-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#22c55e,#60a5fa,#a78bfa)}'
+      + '.wave39-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;font-size:11px;color:var(--muted)}'
+      + '.wave39-card.dark .wave39-meta{color:rgba(255,255,255,.82)}'
+      + '.wave39-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}'
+      + '.wave39-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:var(--abg);color:var(--accent);font-size:11px;font-weight:800}'
+      + '.wave39-card.dark .wave39-pill{background:rgba(255,255,255,.12);color:#fff}'
+      + '.wave39-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}'
+      + '.wave39-chip{border:1px solid var(--border);border-radius:14px;background:var(--card);padding:10px 12px;display:flex;flex-direction:column;gap:3px;cursor:pointer}'
+      + '.wave39-chip b{font-size:13px;line-height:1.2}'
+      + '.wave39-chip span{font-size:11px;color:var(--muted);line-height:1.35}'
+      + '.wave39-quests{display:grid;gap:8px;margin-top:12px}'
+      + '.wave39-quest{border:1px solid var(--border);border-radius:14px;padding:10px 12px;background:var(--bg)}'
+      + '.wave39-quest .t{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:800}'
+      + '.wave39-quest .s{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}'
+      + '.wave39-quest .r{font-size:11px;font-weight:800;color:#16a34a}'
+      + '.wave39-quest.done{border-color:rgba(34,197,94,.28);background:rgba(34,197,94,.08)}'
+      + '.wave39-inline{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}'
+      + '.wave39-note{margin-top:8px;font-size:12px;line-height:1.55;color:var(--muted)}'
+      + '.wave39-card.dark .wave39-note{color:rgba(255,255,255,.82)}'
+      + '.wave39-live{margin-top:8px;padding:8px 10px;border:1px solid var(--border);border-radius:12px;background:var(--card);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}'
+      + '.wave39-live .sub{font-size:11px;color:var(--muted);font-weight:600}'
+      + '.wave39-toast{position:fixed;right:14px;bottom:14px;z-index:99998;max-width:320px;background:#0f172a;color:#fff;border-radius:16px;padding:14px 14px 12px;box-shadow:0 18px 40px rgba(15,23,42,.28);border:1px solid rgba(255,255,255,.08)}'
+      + '.wave39-toast .h{font-weight:900;font-size:14px;display:flex;align-items:center;gap:8px}'
+      + '.wave39-toast .b{font-size:12px;line-height:1.55;color:rgba(255,255,255,.84);margin-top:6px}'
+      + '.wave39-toast .x{margin-top:8px;font-size:11px;color:#93c5fd;font-weight:800}'
+      + '.wave39-mini-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;align-items:end;margin-top:10px;height:48px}'
+      + '.wave39-mini-bars span{display:block;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#60a5fa,#2563eb);min-height:8px}'
+      + '.wave39-mini-bars small{display:block;text-align:center;font-size:9px;color:var(--muted);margin-top:4px}'
+      + '@media (max-width:720px){.wave39-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wave39-strip{grid-template-columns:1fr}.wave39-live{display:block}.wave39-live .sub{display:block;margin-top:4px}}';
+    document.head.appendChild(style);
+  }
+
+  function progressHtml(info){
+    var pctFill = info.level.span > 0 ? Math.max(0, Math.min(100, Math.round(info.level.progress / info.level.span * 100))) : 0;
+    return '<div class="wave39-progress"><div class="wave39-bar"><div class="wave39-fill" style="width:' + pctFill + '%"></div></div><div class="wave39-meta"><span>' + info.level.progress + ' XP в уровне</span><span>до следующего: ' + info.level.remain + ' XP</span></div></div>';
+  }
+  function missionListHtml(missions){
+    return '<div class="wave39-quests">' + missions.map(function(m){
+      var fill = m.need > 0 ? Math.round(m.cur / m.need * 100) : 0;
+      if (fill > 100) fill = 100;
+      return '<div class="wave39-quest' + (m.done ? ' done' : '') + '"><div class="t"><span>' + esc(m.title) + '</span><span class="r">+' + m.reward + ' XP</span></div><div class="s">' + esc(m.label) + ' · ' + m.cur + '/' + m.need + '</div><div class="wave39-bar" style="margin-top:8px;height:8px"><div class="wave39-fill" style="width:' + fill + '%"></div></div></div>';
+    }).join('') + '</div>';
+  }
+  function miniBarsHtml(log){
+    var out = [];
+    for (var i = 6; i >= 0; i--) {
+      var date = new Date(dayTs(todayIso()) - i * 86400000).toISOString().slice(0,10);
+      var row = null;
+      for (var j = 0; j < log.length; j++) if (log[j].date === date) { row = log[j]; break; }
+      out.push({ date: date, xp: row ? num(row.xp) : 0 });
+    }
+    var maxXp = Math.max.apply(null, out.map(function(r){ return r.xp; }).concat([1]));
+    return '<div class="wave39-mini-bars">' + out.map(function(r){
+      var h = Math.max(8, Math.round(r.xp / maxXp * 44));
+      var label = r.date.slice(8);
+      return '<div><span style="height:' + h + 'px"></span><small>' + label + '</small></div>';
+    }).join('') + '</div>';
+  }
+
+  function profileStripHtml(info){
+    return '<div class="wave39-strip">'
+      + '<button type="button" class="wave39-chip" id="wave39-chip-level"><b>' + profileTone(info.level.level) + ' Уровень ' + info.level.level + ' · ' + esc(levelTitle(info.level.level)) + '</b><span>' + esc(info.profile) + ' · всего ' + info.state.xp + ' XP</span></button>'
+      + '<button type="button" class="wave39-chip" id="wave39-chip-badges"><b>🏅 Награды: ' + info.badges + '</b><span>открыто достижений по этому профилю</span></button>'
+      + '<button type="button" class="wave39-chip" id="wave39-chip-missions"><b>🎯 Миссии: ' + info.missions.filter(function(m){ return m.done; }).length + '/3</b><span>сегодняшние задания и бонусный XP</span></button>'
+      + '</div>';
+  }
+  function mainCardHtml(info){
+    return '<div class="wave39-card dark">'
+      + '<div class="wave39-kicker">Gamification 2.0</div>'
+      + '<div class="wave39-title">' + profileTone(info.level.level) + ' ' + esc(levelTitle(info.level.level)) + ' · уровень ' + info.level.level + '</div>'
+      + '<div class="wave39-sub">Профиль <b>' + esc(info.profile) + '</b>. XP растёт от обычных тренировок, диагностики, серий без ошибок и выполненных миссий.</div>'
+      + '<div class="wave39-grid">'
+        + '<div class="wave39-stat"><div class="v">' + info.state.xp + '</div><div class="l">всего XP</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.streak.current + '</div><div class="l">серия дней</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.state.comboBest + '</div><div class="l">лучший combo</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.badges + '</div><div class="l">награды</div></div>'
+      + '</div>'
+      + progressHtml(info)
+      + '<div class="wave39-inline">'
+        + '<span class="wave39-pill">⚡ 7 дней: ' + info.xp7 + ' XP</span>'
+        + '<span class="wave39-pill">🧠 предметов затронуто: ' + info.mixSubjects + '</span>'
+        + '<span class="wave39-pill">📊 точность: ' + pct(info.state.correct, info.state.answers) + '%</span>'
+      + '</div>'
+      + missionListHtml(info.missions)
+      + '</div>';
+  }
+  function progressCardHtml(info){
+    return '<div class="wave39-card">'
+      + '<div class="wave39-kicker">Richer profile</div>'
+      + '<div class="wave39-title">🏆 Профиль прогресса</div>'
+      + '<div class="wave39-sub">Уровень растёт не только от количества задач, но и от качества: серии, точности, миссий и диагностики.</div>'
+      + '<div class="wave39-grid">'
+        + '<div class="wave39-stat"><div class="v">' + info.level.level + '</div><div class="l">текущий уровень</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.state.answers + '</div><div class="l">всего ответов</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.state.sessions + '</div><div class="l">тренировочных сессий</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.state.diagnostics + '</div><div class="l">диагностик</div></div>'
+      + '</div>'
+      + progressHtml(info)
+      + '<div class="wave39-note">Лучший combo: <b>' + info.state.comboBest + '</b>. Лучшая серия по дням: <b>' + info.streak.best + '</b>. За 30 дней набрано <b>' + info.xp30 + ' XP</b>.</div>'
+      + miniBarsHtml(info.log)
+      + '</div>';
+  }
+  function dashboardCardHtml(info){
+    return '<div class="wave39-card">'
+      + '<div class="wave39-kicker">Gamification 2.0</div>'
+      + '<div class="wave39-title">' + profileTone(info.level.level) + ' Профиль: ' + esc(info.profile) + '</div>'
+      + '<div class="wave39-sub">Глобальный прогресс по активному профилю: XP, уровни, ежедневная серия и миссии на сегодня.</div>'
+      + '<div class="wave39-grid">'
+        + '<div class="wave39-stat"><div class="v">' + info.level.level + '</div><div class="l">уровень</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.state.xp + '</div><div class="l">накоплено XP</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.streak.current + '</div><div class="l">серия дней</div></div>'
+        + '<div class="wave39-stat"><div class="v">' + info.badges + '</div><div class="l">награды</div></div>'
+      + '</div>'
+      + progressHtml(info)
+      + missionListHtml(info.missions)
+      + '<div class="wave39-note">За последние 7 дней: <b>' + info.xp7 + ' XP</b>. Активных предметов за всё время: <b>' + info.mixSubjects + '</b>.</div>'
+      + '</div>';
+  }
+  function diagnosticCardHtml(info){
+    return '<div class="wave39-card">'
+      + '<div class="wave39-kicker">Gamification 2.0</div>'
+      + '<div class="wave39-title">🎮 XP и миссии</div>'
+      + '<div class="wave39-sub">Диагностика теперь тоже приносит XP. За сильные попытки идёт больший прирост, а выполненные миссии дают бонус.</div>'
+      + '<div class="wave39-inline">'
+        + '<span class="wave39-pill">уровень ' + info.level.level + '</span>'
+        + '<span class="wave39-pill">сегодня: ' + info.today.xp + ' XP</span>'
+        + '<span class="wave39-pill">серия: ' + info.streak.current + ' ' + decl(info.streak.current, 'день', 'дня', 'дней') + '</span>'
+      + '</div>'
+      + missionListHtml(info.missions)
+      + '</div>';
+  }
+  function liveBadgeHtml(info, previewXp){
+    return '<div class="wave39-live"><div>⭐ Потенциал: <b>+' + previewXp + ' XP</b> · 🔥 combo <b>' + num(window.st && window.st.streak) + '</b></div><div class="sub">Уровень ' + info.level.level + ' · ' + esc(levelTitle(info.level.level)) + ' · до следующего уровня ' + info.level.remain + ' XP</div></div>';
+  }
+
+  function ensureHost(id, anchor, position){
+    var host = document.getElementById(id);
+    if (host) return host;
+    host = document.createElement('div');
+    host.id = id;
+    host.className = 'wave39-wrap';
+    if (!anchor || !anchor.parentNode) return null;
+    if (position === 'before') anchor.parentNode.insertBefore(host, anchor);
+    else if (position === 'inside-top') anchor.insertBefore(host, anchor.firstChild);
+    else anchor.parentNode.insertBefore(host, anchor.nextSibling);
+    return host;
+  }
+  function wireProfileButtons(root){
+    if (!root) return;
+    var levelBtn = root.querySelector('#wave39-chip-level');
+    var badgesBtn = root.querySelector('#wave39-chip-badges');
+    var missionsBtn = root.querySelector('#wave39-chip-missions');
+    levelBtn && levelBtn.addEventListener('click', function(){
+      try { if (window.wave35Debug && typeof window.wave35Debug.showProfilesModal === 'function') window.wave35Debug.showProfilesModal(); }
+      catch(_) {}
+    });
+    badgesBtn && badgesBtn.addEventListener('click', function(){ try { if (typeof window.showBadges === 'function') window.showBadges(); } catch(_) {} });
+    missionsBtn && missionsBtn.addEventListener('click', function(){
+      try {
+        var prog = document.getElementById('s-prog');
+        if (prog && typeof window.go === 'function') { window.go('prog'); if (typeof window.renderProg === 'function') setTimeout(window.renderProg, 30); }
+      } catch(_) {}
+    });
+  }
+
+  function renderGradeProfile(){
+    if (!isGradePage()) return;
+    ensureStyles();
+    var badge = document.getElementById('player-badge');
+    if (!badge) return;
+    var host = badge.querySelector('#wave39-profile-strip');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'wave39-profile-strip';
+      host.className = 'wave39-wrap';
+      badge.appendChild(host);
+    }
+    host.innerHTML = profileStripHtml(loadSnapshot());
+    wireProfileButtons(host);
+  }
+  function renderGradeMain(){
+    if (!isGradePage()) return;
+    ensureStyles();
+    var anchor = document.getElementById('wave35-main-card') || document.getElementById('daily-meter') || document.getElementById('main-search-slot');
+    if (!anchor) return;
+    var host = ensureHost('wave39-main-card', anchor, 'after');
+    if (!host) return;
+    host.innerHTML = mainCardHtml(loadSnapshot());
+  }
+  function renderGradeProgress(){
+    if (!isGradePage()) return;
+    ensureStyles();
+    var box = document.getElementById('prog-content');
+    if (!box) return;
+    var anchor = document.getElementById('wave37-grade-progress') || document.getElementById('wave35-progress-card') || box.firstChild || box;
+    var host = document.getElementById('wave39-progress-card');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'wave39-progress-card';
+      host.className = 'wave39-wrap';
+      box.insertBefore(host, anchor && anchor.parentNode === box ? anchor.nextSibling : box.firstChild);
+    }
+    host.innerHTML = progressCardHtml(loadSnapshot());
+  }
+  function renderLiveBadge(){
+    if (!isGradePage() || !document.getElementById('s-play')) return;
+    if (typeof window.st === 'undefined' || typeof window.prob === 'undefined' || !window.prob) return;
+    ensureStyles();
+    var pa = document.getElementById('pa') || document.getElementById('sts');
+    if (!pa) return;
+    var live = document.getElementById('wave39-live-badge');
+    if (!live) {
+      live = document.createElement('div');
+      live.id = 'wave39-live-badge';
+      live.className = 'wave39-wrap';
+      pa.insertAdjacentElement('afterbegin', live);
+    }
+    var total = num(window.st.ok) + num(window.st.err);
+    if (!total && document.getElementById('s-play').style.display === 'none') { live.innerHTML = ''; return; }
+    var preview = estimateGradeXp({ total: total, ok: num(window.st.ok), pct: pct(num(window.st.ok), total), combo: num(window.st.best), subject: currentGradeSubject() });
+    live.innerHTML = liveBadgeHtml(loadSnapshot(), preview);
+  }
+  function renderGradeResult(summary){
+    if (!isGradePage() || !summary) return;
+    ensureStyles();
+    var root = document.getElementById('res-topics');
+    if (!root) return;
+    var old = document.getElementById('wave39-grade-result');
+    if (old) old.remove();
+    var block = document.createElement('div');
+    block.id = 'wave39-grade-result';
+    block.className = 'wave39-wrap';
+    block.innerHTML = '<div class="wave39-card"><div class="wave39-kicker">Session XP</div><div class="wave39-title">⭐ +' + summary.xpGain + ' XP за сессию</div><div class="wave39-sub">' + esc(summary.payload.subject || 'Тренировка') + ' · ' + summary.payload.ok + '/' + summary.payload.total + ' · ' + summary.payload.pct + '% · combo ' + summary.payload.combo + '</div><div class="wave39-inline"><span class="wave39-pill">база: +' + summary.baseXp + ' XP</span>' + (summary.missionXp ? '<span class="wave39-pill">миссии: +' + summary.missionXp + ' XP</span>' : '') + (summary.levelUp ? '<span class="wave39-pill">⬆️ уровень ' + summary.after.level + '</span>' : '<span class="wave39-pill">уровень ' + summary.after.level + '</span>') + '</div>' + (summary.completedMissions.length ? '<div class="wave39-note">Выполнены миссии: ' + summary.completedMissions.map(function(m){ return esc(m.title); }).join(' · ') + '.</div>' : '<div class="wave39-note">До следующего уровня осталось ' + summary.after.remain + ' XP.</div>') + '</div>';
+    root.insertAdjacentElement('afterbegin', block);
+  }
+  function renderDashboard(){
+    if (!isDashboardPage()) return;
+    ensureStyles();
+    var anchor = document.getElementById('wave35-dashboard-root') || document.getElementById('grades');
+    if (!anchor) return;
+    var host = ensureHost('wave39-dashboard-root', anchor, 'before');
+    if (!host) return;
+    host.innerHTML = dashboardCardHtml(loadSnapshot());
+  }
+  function renderDiagnosticHub(){
+    if (!isDiagnosticPage()) return;
+    ensureStyles();
+    var grid = document.getElementById('subj-grid') || document.querySelector('.subj-grid');
+    if (!grid) return;
+    var host = ensureHost('wave39-diagnostic-root', grid, 'before');
+    if (!host) return;
+    host.innerHTML = diagnosticCardHtml(loadSnapshot());
+  }
+  function renderDiagnosticResult(summary){
+    if (!isDiagnosticPage() || !summary) return;
+    ensureStyles();
+    var anchor = document.getElementById('strong-block') || document.getElementById('gaps-block');
+    if (!anchor || !anchor.parentNode) return;
+    var old = document.getElementById('wave39-diagnostic-result');
+    if (old) old.remove();
+    var host = document.createElement('div');
+    host.id = 'wave39-diagnostic-result';
+    host.className = 'wave39-wrap';
+    host.innerHTML = '<div class="wave39-card"><div class="wave39-kicker">Diagnostic XP</div><div class="wave39-title">📝 +' + summary.xpGain + ' XP за диагностику</div><div class="wave39-sub">' + esc(summary.payload.subject || 'Диагностика') + ' · ' + summary.payload.ok + '/' + summary.payload.total + ' · ' + summary.payload.pct + '%</div><div class="wave39-inline"><span class="wave39-pill">база: +' + summary.baseXp + ' XP</span>' + (summary.missionXp ? '<span class="wave39-pill">миссии: +' + summary.missionXp + ' XP</span>' : '') + (summary.levelUp ? '<span class="wave39-pill">⬆️ уровень ' + summary.after.level + '</span>' : '<span class="wave39-pill">уровень ' + summary.after.level + '</span>') + '</div>' + '<div class="wave39-note">Серия дней: ' + summary.streak.current + '. До следующего уровня осталось ' + summary.after.remain + ' XP.</div></div>';
+    anchor.parentNode.insertBefore(host, anchor.nextSibling);
+  }
+
+  function showToast(summary){
+    if (!summary) return;
+    var old = document.getElementById('wave39-toast');
+    if (old) old.remove();
+    var div = document.createElement('div');
+    div.id = 'wave39-toast';
+    div.className = 'wave39-toast';
+    div.innerHTML = '<div class="h">' + (summary.levelUp ? '⬆️ Новый уровень!' : '⭐ XP начислен') + '</div><div class="b">+' + summary.xpGain + ' XP · уровень ' + summary.after.level + ' · ' + esc(levelTitle(summary.after.level)) + (summary.completedMissions.length ? '<br>Миссии: ' + summary.completedMissions.map(function(m){ return esc(m.title); }).join(' · ') : '') + '</div><div class="x">До следующего уровня: ' + summary.after.remain + ' XP</div>';
+    document.body.appendChild(div);
+    setTimeout(function(){ if (div && div.parentNode) div.remove(); }, 4800);
+  }
+
+  function currentGradeSubject(){
+    try {
+      if (window.cS && window.cS.nm) return String(window.cS.nm);
+      if (window.globalMix) return 'Микс';
+    } catch(_) {}
+    return 'Тренировка';
+  }
+  function currentDiagMode(){
+    try { return window.wave25Diag && typeof window.wave25Diag.getModeId === 'function' ? String(window.wave25Diag.getModeId() || 'full') : 'full'; }
+    catch(_) { return 'full'; }
+  }
+  function gradePayload(){
+    if (typeof window.st === 'undefined') return null;
+    var total = num(window.st.ok) + num(window.st.err);
+    if (!total) return null;
+    var isReview = false;
+    try { isReview = !!window.reviewMode; } catch(_) {}
+    return {
+      source: 'grade',
+      subject: currentGradeSubject(),
+      total: total,
+      ok: num(window.st.ok),
+      pct: pct(num(window.st.ok), total),
+      combo: num(window.st.best),
+      review: isReview
+    };
+  }
+  function diagPayload(){
+    var r = window._diagResult;
+    if (!r || !r.subj) return null;
+    return {
+      source: 'diagnostic',
+      subject: r.subj.name || 'Диагностика',
+      total: num(r.totalQ),
+      ok: num(r.totalOk),
+      pct: num(r.pct),
+      combo: 0,
+      mode: currentDiagMode()
+    };
+  }
+
+  function patchDashboardReport(){
+    if (!isDashboardPage() || window.__wave39DashReportPatched || typeof window.buildDashboardReport !== 'function') return;
+    var original = window.buildDashboardReport;
+    window.buildDashboardReport = function(state){
+      var text = original.apply(this, arguments);
+      var info = loadSnapshot();
+      text += '\n━━━━━━━━━━━━━━━\nGamification 2.0:';
+      text += '\nПрофиль: ' + info.profile;
+      text += '\nУровень: ' + info.level.level + ' (' + levelTitle(info.level.level) + ')';
+      text += '\nXP: ' + info.state.xp + ' · серия дней: ' + info.streak.current;
+      text += '\nМиссии сегодня: ' + info.missions.filter(function(m){ return m.done; }).length + '/3';
+      return text;
+    };
+    window.__wave39DashReportPatched = true;
+  }
+
+  function refreshGradeUi(){ renderGradeProfile(); renderGradeMain(); renderGradeProgress(); renderLiveBadge(); }
+  function refreshDashboardUi(){ patchDashboardReport(); renderDashboard(); }
+  function refreshDiagnosticUi(){ renderDiagnosticHub(); }
+  function refreshAll(){ if (isGradePage()) refreshGradeUi(); if (isDashboardPage()) refreshDashboardUi(); if (isDiagnosticPage()) refreshDiagnosticUi(); }
+
+  function installGrade(){
+    if (!isGradePage()) return true;
+    if (window.__wave39GradeInstalled) return true;
+    if (typeof window.startQuiz !== 'function' || typeof window.endSession !== 'function' || typeof window.render !== 'function') return false;
+    ensureStyles();
+    window.__wave39GradeInstalled = true;
+
+    var original = {
+      startQuiz: window.startQuiz,
+      endSession: window.endSession,
+      render: window.render,
+      renderProg: typeof window.renderProg === 'function' ? window.renderProg : null,
+      refreshMain: typeof window.refreshMain === 'function' ? window.refreshMain : null,
+      renderPlayerBadge: typeof window.renderPlayerBadge === 'function' ? window.renderPlayerBadge : null
+    };
+
+    window.startQuiz = function(){
+      gradeAttempt = { ts: Date.now(), awarded: false, subject: currentGradeSubject() };
+      return original.startQuiz.apply(this, arguments);
+    };
+    window.endSession = function(){
+      var payload = gradePayload();
+      var summary = null;
+      if (payload) {
+        gradeAttempt = gradeAttempt || { ts: Date.now(), awarded: false, subject: currentGradeSubject() };
+        if (!gradeAttempt.awarded) {
+          summary = applyAward(payload);
+          gradeAttempt.awarded = true;
+        }
+      }
+      var out = original.endSession.apply(this, arguments);
+      if (summary) {
+        setTimeout(function(){ renderGradeResult(summary); showToast(summary); refreshGradeUi(); }, 80);
+      } else {
+        setTimeout(refreshGradeUi, 80);
+      }
+      return out;
+    };
+    window.render = function(){
+      var out = original.render.apply(this, arguments);
+      try { renderLiveBadge(); } catch(_) {}
+      return out;
+    };
+    if (original.renderProg) {
+      window.renderProg = function(){
+        var out = original.renderProg.apply(this, arguments);
+        try { renderGradeProgress(); } catch(_) {}
+        return out;
+      };
+    }
+    if (original.refreshMain) {
+      window.refreshMain = function(){
+        var out = original.refreshMain.apply(this, arguments);
+        try { renderGradeMain(); } catch(_) {}
+        return out;
+      };
+    }
+    if (original.renderPlayerBadge) {
+      window.renderPlayerBadge = function(){
+        var out = original.renderPlayerBadge.apply(this, arguments);
+        try { renderGradeProfile(); } catch(_) {}
+        return out;
+      };
+    }
+
+    setTimeout(refreshGradeUi, 120);
+    return true;
+  }
+
+  function installDiagnostic(){
+    if (!isDiagnosticPage()) return true;
+    if (window.__wave39DiagnosticInstalled) return true;
+    if (typeof window.startDiag !== 'function' || typeof window.showResult !== 'function') return false;
+    ensureStyles();
+    window.__wave39DiagnosticInstalled = true;
+
+    var original = {
+      startDiag: window.startDiag,
+      showResult: window.showResult
+    };
+
+    window.startDiag = function(){
+      diagAttempt = { ts: Date.now(), awarded: false };
+      return original.startDiag.apply(this, arguments);
+    };
+    window.showResult = function(){
+      var payload = diagPayload();
+      var summary = null;
+      if (payload) {
+        diagAttempt = diagAttempt || { ts: Date.now(), awarded: false };
+        if (!diagAttempt.awarded) {
+          summary = applyAward(payload);
+          diagAttempt.awarded = true;
+        }
+      }
+      var out = original.showResult.apply(this, arguments);
+      if (summary) {
+        setTimeout(function(){ renderDiagnosticResult(summary); showToast(summary); refreshDiagnosticUi(); }, 80);
+      } else {
+        setTimeout(refreshDiagnosticUi, 80);
+      }
+      return out;
+    };
+    setTimeout(refreshDiagnosticUi, 120);
+    return true;
+  }
+
+  function installDashboard(){
+    if (!isDashboardPage()) return true;
+    if (window.__wave39DashboardInstalled) return true;
+    ensureStyles();
+    window.__wave39DashboardInstalled = true;
+    patchDashboardReport();
+    setTimeout(refreshDashboardUi, 80);
+    window.addEventListener('dashboard-state-ready', function(){ try { refreshDashboardUi(); } catch(_) {} });
+    return true;
+  }
+
+  function tryBoot(){
+    var a = installGrade();
+    var b = installDiagnostic();
+    var c = installDashboard();
+    return a && b && c;
+  }
+  function schedule(){
+    if (tryBoot()) return;
+    var ticks = 0;
+    var id = setInterval(function(){
+      ticks += 1;
+      if (tryBoot() || ticks > 180) clearInterval(id);
+    }, 120);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule, { once:true });
+  else schedule();
+
+  window.wave39Debug = {
+    version: VERSION,
+    loadState: loadState,
+    loadLog: loadLog,
+    loadSnapshot: loadSnapshot,
+    levelInfo: levelInfo,
+    levelTitle: levelTitle,
+    streakInfo: streakInfo,
+    currentMissions: currentMissions,
+    computeXp: computeXp,
+    applyAward: applyAward,
+    badgeCount: badgeCount,
+    refreshAll: refreshAll,
+    estimateGradeXp: estimateGradeXp,
+    estimateDiagXp: estimateDiagXp
+  };
+})();

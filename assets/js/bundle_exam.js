@@ -93,7 +93,10 @@
       q: row.q,
       opts: (row.opts || []).slice(),
       a: row.a,
-      hint: row.hint || 'Разбор — после результата.'
+      hint: row.hint || 'Разбор — после результата.',
+      sourceTag: row.sourceTag || row.wave38Source || '',
+      bankSource: row.bankSource || '',
+      __wave38: row.__wave38 || null
     };
     if (meta) {
       Object.keys(meta).forEach(function(key){ out[key] = meta[key]; });
