@@ -1320,3 +1320,346 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   window.__wave27Platform={version:VERSION,updateVisible:function(){return !!bannerNode()},hideUpdateBanner:hideUpdateBanner,showMockUpdateBanner:function(){return showUpdateBanner({waiting:{postMessage:function(){}}},{mock:true})},manifestHref:function(){var el=document.querySelector('link[rel="manifest"]');return el&&el.getAttribute('href')},hasAppleTouchIcon:function(){return !!document.querySelector('link[rel="apple-touch-icon"]')},preconnectCount:function(){return document.querySelectorAll('link[rel="preconnect"]').length},cspPresent:function(){return !!document.querySelector('meta[http-equiv="Content-Security-Policy"]')},timerCounts:function(){return window.__wave27Timers?window.__wave27Timers.counts():{timeouts:0,intervals:0}}};
 })();
 
+
+;
+/* --- wave40_settings_shell.js --- */
+(function(){
+  if (typeof window === 'undefined' || window.__wave40SettingsShell) return;
+  window.__wave40SettingsShell = true;
+
+  var THEME_KEY = 'trainer_theme';
+  var SETTINGS_BTN_ID = 'trainer-settings-btn';
+  var SETTINGS_MODAL_ID = 'trainer-settings-modal';
+  var SETTINGS_STYLE_ID = 'wave40-settings-style';
+  var LEGACY_THEME_BTN_ID = 'trainer-theme-btn';
+  var LEGACY_INSTALL_ID = 'wave24-install-btn';
+  var INSTALL_DISMISS_KEY = 'trainer_install_dismiss_until_v1';
+  var META_COLORS = { light:'#1a1a2e', dark:'#0e0e1a' };
+  var state = { installPrompt:null, toastWrapped:false, observer:null };
+
+  function storage(){
+    try { return window.localStorage; } catch(_) { return null; }
+  }
+  function now(){ return Date.now(); }
+  function setStore(key, value){ try { var s = storage(); s && s.setItem(key, value); } catch(_) {} }
+  function getStore(key){ try { var s = storage(); return s ? s.getItem(key) : null; } catch(_) { return null; } }
+  function getThemePref(){
+    var value = getStore(THEME_KEY) || 'system';
+    return /^(light|dark|system)$/.test(value) ? value : 'system';
+  }
+  function effectiveTheme(pref){
+    if (pref === 'light' || pref === 'dark') return pref;
+    try {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } catch(_) {
+      return 'light';
+    }
+  }
+  function applyTheme(pref, silent){
+    var value = pref || getThemePref();
+    var root = document.documentElement || null;
+    if (root) {
+      if (value === 'system') {
+        if (root.removeAttribute) root.removeAttribute('data-theme');
+      } else if (root.setAttribute) {
+        root.setAttribute('data-theme', value);
+      }
+    }
+    var meta = document.querySelector && document.querySelector('meta[name="theme-color"]');
+    var eff = effectiveTheme(value);
+    if (meta && meta.setAttribute) meta.setAttribute('content', META_COLORS[eff] || META_COLORS.light);
+    refreshThemeButtons();
+    if (!silent && typeof window.showToast === 'function') {
+      window.showToast('Тема: ' + (value === 'system' ? 'как в системе' : value === 'dark' ? 'тёмная' : 'светлая'), 'info', 1600);
+    }
+  }
+  function setThemePref(pref, silent){
+    setStore(THEME_KEY, pref);
+    applyTheme(pref, silent === true);
+  }
+  function themeMeta(){
+    var pref = getThemePref();
+    return {
+      pref: pref,
+      icon: pref === 'light' ? '☀️' : pref === 'dark' ? '🌙' : '🖥️',
+      label: pref === 'light' ? 'Светлая' : pref === 'dark' ? 'Тёмная' : 'Системная'
+    };
+  }
+  function standalone(){
+    try {
+      return !!(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || !!window.navigator.standalone;
+    } catch(_) {
+      return false;
+    }
+  }
+  function installDismissed(){
+    var raw = +(getStore(INSTALL_DISMISS_KEY) || 0);
+    return raw > now();
+  }
+  function dismissInstall(days){
+    var ttl = (typeof days === 'number' ? days : 7) * 86400000;
+    setStore(INSTALL_DISMISS_KEY, String(now() + ttl));
+    syncLegacyInstallButton();
+    refreshModal();
+    if (typeof window.showToast === 'function') window.showToast('Подсказка установки скрыта на 7 дней', 'info', 1800);
+  }
+  function clearInstallDismiss(){
+    try { var s = storage(); s && s.removeItem(INSTALL_DISMISS_KEY); } catch(_) {}
+    syncLegacyInstallButton();
+    refreshModal();
+  }
+  function hideLegacyThemeButton(){
+    var btn = document.getElementById && document.getElementById(LEGACY_THEME_BTN_ID);
+    if (btn) {
+      btn.hidden = true;
+      btn.setAttribute('aria-hidden', 'true');
+      btn.style.display = 'none';
+      btn.style.pointerEvents = 'none';
+    }
+  }
+  function syncLegacyInstallButton(){
+    var btn = document.getElementById && document.getElementById(LEGACY_INSTALL_ID);
+    if (!btn) return;
+    var shouldShow = !!state.installPrompt && !standalone() && !installDismissed();
+    btn.hidden = !shouldShow;
+    if (!shouldShow) {
+      btn.style.display = 'none';
+      btn.setAttribute('aria-hidden', 'true');
+    } else {
+      btn.style.removeProperty('display');
+      btn.removeAttribute('aria-hidden');
+    }
+  }
+  function wrapToast(){
+    if (state.toastWrapped || typeof window.showToast !== 'function') return;
+    var nativeToast = window.showToast;
+    window.showToast = function(message, type, ms){
+      var text = String(message == null ? '' : message);
+      if (/Можно установить на главный экран/i.test(text) && installDismissed()) return;
+      return nativeToast.call(this, message, type, ms);
+    };
+    state.toastWrapped = true;
+  }
+  function ensureStyles(){
+    if (document.getElementById(SETTINGS_STYLE_ID)) return;
+    var style = document.createElement('style');
+    style.id = SETTINGS_STYLE_ID;
+    style.textContent = '\n#' + LEGACY_THEME_BTN_ID + '{display:none!important;pointer-events:none!important}' +
+      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 12px;border:none;border-radius:999px;background:rgba(255,255,255,.92);color:#1a1a2e;box-shadow:0 10px 24px rgba(0,0,0,.18);font:800 12px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(10px)}' +
+      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.94);color:#e8e6e0;border:1px solid rgba(255,255,255,.08)}' +
+      '\n#' + SETTINGS_MODAL_ID + '{position:fixed;inset:0;z-index:14000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.56)}' +
+      '\n#' + SETTINGS_MODAL_ID + ' [data-settings-card]{width:min(100%,560px);max-height:88vh;overflow:auto;background:var(--card,#fff);color:var(--text,#111827);border:1px solid var(--border,#d7d3cc);border-radius:20px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.26)}' +
+      '\n.wave40-settings-section{background:rgba(37,99,235,.06);border-radius:14px;padding:12px 12px;margin-top:12px}' +
+      '\n.wave40-settings-title{display:flex;align-items:center;gap:8px;font:800 13px/1.2 "Unbounded",system-ui,sans-serif;margin:0 0 8px}' +
+      '\n.wave40-settings-note{font-size:12px;line-height:1.55;color:var(--muted,#6b7280)}' +
+      '\n.wave40-theme-grid,.wave40-action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}' +
+      '\n.wave40-theme-btn,.wave40-action-btn{border:none;border-radius:12px;padding:10px 10px;background:var(--card,#fff);color:var(--text,#111827);font:700 12px/1.35 "Golos Text",system-ui,sans-serif;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(26,26,46,.08)}' +
+      '\n.wave40-theme-btn.active{box-shadow:inset 0 0 0 2px var(--accent,#2563eb);background:rgba(37,99,235,.10);color:var(--accent,#2563eb)}' +
+      '\n.wave40-action-btn.primary{background:var(--text,#1a1a2e);color:var(--bg,#fff);box-shadow:none}' +
+      '\n.wave40-action-btn.warn{background:rgba(234,88,12,.12);color:#c2410c;box-shadow:none}' +
+      '\n.wave40-settings-row{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;margin-top:8px}' +
+      '\n.wave40-settings-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
+      '\n.wave40-pill{padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--accent,#2563eb);font-size:11px;font-weight:800}' +
+      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:40px;min-height:40px;padding:0 10px;font-size:11px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
+      '\n@media print{#' + SETTINGS_BTN_ID + ',#' + SETTINGS_MODAL_ID + ',#' + LEGACY_INSTALL_ID + '{display:none!important}}';
+    (document.head || document.documentElement).appendChild(style);
+  }
+  function ensureButton(){
+    if (!document.body) return null;
+    var btn = document.getElementById(SETTINGS_BTN_ID);
+    if (btn) return btn;
+    btn = document.createElement('button');
+    btn.id = SETTINGS_BTN_ID;
+    btn.type = 'button';
+    btn.textContent = '⚙️';
+    btn.setAttribute('aria-label', 'Настройки');
+    btn.setAttribute('title', 'Настройки');
+    btn.setAttribute('aria-haspopup', 'dialog');
+    btn.addEventListener('click', openSettings);
+    document.body.appendChild(btn);
+    return btn;
+  }
+  function refreshButton(){
+    var btn = document.getElementById(SETTINGS_BTN_ID);
+    if (!btn) return;
+    var meta = themeMeta();
+    btn.textContent = '⚙️';
+    btn.title = 'Настройки · тема: ' + meta.label;
+    btn.setAttribute('aria-label', 'Настройки. Тема: ' + meta.label + '.');
+  }
+  function quickActions(){
+    var actions = [];
+    if (typeof window.showBackupModal === 'function') actions.push({ text:'💾 Резервная копия', fn:function(){ closeSettings(); window.showBackupModal(); } });
+    if (typeof window.showClassSelect === 'function') actions.push({ text:'🏫 Выбрать класс', fn:function(){ closeSettings(); window.showClassSelect(); } });
+    if (typeof window.generateReport === 'function') actions.push({ text:'📊 Отчёт', fn:function(){ closeSettings(); window.generateReport(); } });
+    if (typeof window.showAbout === 'function') actions.push({ text:'ℹ️ О проекте', fn:function(){ closeSettings(); window.showAbout(); } });
+    return actions;
+  }
+  function installState(){
+    return {
+      available: !!state.installPrompt,
+      dismissed: installDismissed(),
+      standalone: standalone()
+    };
+  }
+  function actionButton(text, cls, id){
+    return '<button type="button" class="wave40-action-btn ' + (cls || '') + '"' + (id ? ' data-action="' + id + '"' : '') + '>' + text + '</button>';
+  }
+  function themeButton(pref, icon, label){
+    var active = getThemePref() === pref ? ' active' : '';
+    return '<button type="button" class="wave40-theme-btn' + active + '" data-theme-pref="' + pref + '"><div style="font-size:18px;margin-bottom:4px">' + icon + '</div><div>' + label + '</div></button>';
+  }
+  function renderBody(){
+    var info = installState();
+    var actions = quickActions();
+    var html = '';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><h3 id="wave40-settings-title" style="margin:0;font:800 16px/1.2 Unbounded,system-ui,sans-serif">⚙️ Настройки</h3><div class="wave40-settings-note" style="margin-top:6px">Тема теперь живёт здесь, а не отдельной плавающей кнопкой.</div></div><button type="button" class="wave40-action-btn" data-action="close" style="min-width:44px">✕</button></div>';
+    html += '<div class="wave40-settings-section"><div class="wave40-settings-title">🎨 Оформление</div><div class="wave40-settings-note">Выберите, как тренажёр выглядит на этом устройстве.</div><div class="wave40-theme-grid">' +
+      themeButton('system', '🖥️', 'Системная') + themeButton('light', '☀️', 'Светлая') + themeButton('dark', '🌙', 'Тёмная') +
+      '</div></div>';
+    html += '<div class="wave40-settings-section"><div class="wave40-settings-title">📲 Приложение</div>';
+    if (info.standalone) {
+      html += '<div class="wave40-settings-note">Приложение уже установлено на устройство. Можно запускать его как обычное приложение.</div>';
+    } else if (info.available) {
+      html += '<div class="wave40-settings-note">Браузер разрешил установку. Теперь управляем этим из настроек: без навязчивого постоянного prompt.</div>';
+      html += '<div class="wave40-action-grid">' + actionButton('⬇ Установить', 'primary', 'install') + actionButton(info.dismissed ? '🔔 Вернуть prompt' : '🙈 Скрыть на 7 дней', info.dismissed ? '' : 'warn', info.dismissed ? 'install-undismiss' : 'install-dismiss') + '</div>';
+    } else {
+      html += '<div class="wave40-settings-note">Подсказка установки появится, когда браузер разрешит установку PWA. До этого здесь ничего нажимать не нужно.</div>';
+    }
+    html += '<div class="wave40-settings-pills"><span class="wave40-pill">' + (navigator.onLine === false ? 'Офлайн' : 'Онлайн') + '</span><span class="wave40-pill">PWA shell</span></div></div>';
+    if (actions.length) {
+      html += '<div class="wave40-settings-section"><div class="wave40-settings-title">🚀 Быстрые действия</div><div class="wave40-action-grid">';
+      actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
+      html += '</div></div>';
+    }
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 40</div></div>';
+    return html;
+  }
+  function refreshThemeButtons(){
+    var modal = document.getElementById(SETTINGS_MODAL_ID);
+    if (!modal) { refreshButton(); return; }
+    Array.prototype.slice.call(modal.querySelectorAll('[data-theme-pref]')).forEach(function(btn){
+      var pref = btn.getAttribute('data-theme-pref');
+      if (pref === getThemePref()) btn.classList.add('active'); else btn.classList.remove('active');
+    });
+    var row = modal.querySelector('[data-settings-body]');
+    if (row) row.innerHTML = renderBody();
+    refreshButton();
+  }
+  function refreshModal(){
+    var modal = document.getElementById(SETTINGS_MODAL_ID);
+    if (!modal) { refreshButton(); return; }
+    var body = modal.querySelector('[data-settings-body]');
+    if (body) body.innerHTML = renderBody();
+    refreshButton();
+  }
+  async function promptInstall(){
+    if (state.installPrompt && typeof state.installPrompt.prompt === 'function') {
+      try {
+        await state.installPrompt.prompt();
+        if (state.installPrompt.userChoice) await state.installPrompt.userChoice;
+        state.installPrompt = null;
+        syncLegacyInstallButton();
+        refreshModal();
+        return true;
+      } catch(_) {}
+    }
+    var legacy = document.getElementById(LEGACY_INSTALL_ID);
+    if (legacy && !legacy.hidden && typeof legacy.click === 'function') {
+      legacy.click();
+      return true;
+    }
+    return false;
+  }
+  function closeSettings(){
+    var modal = document.getElementById(SETTINGS_MODAL_ID);
+    if (modal) modal.remove();
+  }
+  function openSettings(){
+    ensureStyles();
+    ensureButton();
+    hideLegacyThemeButton();
+    wrapToast();
+    closeSettings();
+    var modal = document.createElement('div');
+    modal.id = SETTINGS_MODAL_ID;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'wave40-settings-title');
+    modal.innerHTML = '<div data-settings-card><div data-settings-body>' + renderBody() + '</div></div>';
+    modal.addEventListener('click', function(ev){ if (ev.target === modal) closeSettings(); });
+    modal.addEventListener('keydown', function(ev){ if (ev.key === 'Escape') closeSettings(); });
+    modal.addEventListener('click', function(ev){
+      var target = ev.target;
+      if (!target || !target.closest) return;
+      var themeBtn = target.closest('[data-theme-pref]');
+      if (themeBtn) { setThemePref(themeBtn.getAttribute('data-theme-pref'), false); refreshModal(); return; }
+      var actionBtn = target.closest('[data-action]');
+      if (actionBtn) {
+        var action = actionBtn.getAttribute('data-action');
+        if (action === 'close') { closeSettings(); return; }
+        if (action === 'install') { promptInstall(); return; }
+        if (action === 'install-dismiss') { dismissInstall(7); return; }
+        if (action === 'install-undismiss') { clearInstallDismiss(); return; }
+      }
+      var quick = target.closest('[data-quick-action]');
+      if (quick) {
+        var idx = +(quick.getAttribute('data-quick-action') || -1);
+        var actions = quickActions();
+        if (actions[idx] && typeof actions[idx].fn === 'function') actions[idx].fn();
+      }
+    });
+    (document.body || document.documentElement).appendChild(modal);
+    var focusTarget = modal.querySelector('[data-theme-pref], [data-action="close"]');
+    if (focusTarget && focusTarget.focus) setTimeout(function(){ try { focusTarget.focus(); } catch(_) {} }, 20);
+  }
+  function bindInstallEvents(){
+    window.addEventListener('beforeinstallprompt', function(event){
+      try { event.preventDefault(); } catch(_) {}
+      state.installPrompt = event;
+      syncLegacyInstallButton();
+      refreshModal();
+    }, true);
+    window.addEventListener('appinstalled', function(){
+      state.installPrompt = null;
+      clearInstallDismiss();
+      syncLegacyInstallButton();
+      refreshModal();
+    });
+  }
+  function bindThemeWatch(){
+    try {
+      var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+      if (mq && mq.addEventListener) {
+        mq.addEventListener('change', function(){ if (getThemePref() === 'system') applyTheme('system', true); refreshButton(); });
+      }
+    } catch(_) {}
+  }
+  function watchDom(){
+    if (state.observer || typeof MutationObserver !== 'function') return;
+    state.observer = new MutationObserver(function(){
+      wrapToast();
+      hideLegacyThemeButton();
+      syncLegacyInstallButton();
+      refreshButton();
+    });
+    state.observer.observe(document.documentElement || document.body, { childList:true, subtree:true, attributes:false });
+  }
+  function init(){
+    ensureStyles();
+    ensureButton();
+    wrapToast();
+    hideLegacyThemeButton();
+    applyTheme(getThemePref(), true);
+    syncLegacyInstallButton();
+    bindThemeWatch();
+    watchDom();
+    refreshButton();
+  }
+
+  ensureStyles();
+  window.showSettings = openSettings;
+  bindInstallEvents();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
+  else init();
+})();

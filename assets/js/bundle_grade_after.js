@@ -5,7 +5,7 @@
   if (gradeNum < 2 || gradeNum > 11) return;
   if (typeof SUBJ === 'undefined' || !Array.isArray(SUBJ)) return;
 
-  var TARGETS = {2:2,3:2,4:2,5:4,6:4,7:6,8:8,9:8,10:6,11:12};
+  var TARGETS = {2:2,3:2,4:2,5:4,6:4,7:6,8:8,9:8,10:12,11:12};
   var STAGES = [
     {id:'starter', label:'Starter', title:'Старт', hint:'Первые слова и уверенность в базовых фразах.'},
     {id:'A1', label:'A1', title:'A1', hint:'Буквы, простые слова, короткие фразы и very basic grammar.'},

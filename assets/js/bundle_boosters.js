@@ -360,37 +360,182 @@
   }
 
   if(String(window.GRADE_NUM||'') === '10'){
-    function ensureTh(key, html){ if(typeof ENG_TH !== 'undefined') ENG_TH[key] = html; }
-    function bank(arr, tag, color, bg){ const e=pick(arr); return mkQ(e.q, e.a, shuffle([e.a, ...e.o]).slice(0,4), e.h, tag, color, bg); }
-    ensureTh('phrasal', '<h3>Фразовые глаголы</h3><div class="fm">give up = сдаваться / бросать<br>turn on = включать<br>look for = искать<br>find out = выяснять<br>put off = откладывать</div><p>Смотри на смысл целиком: phrasal verb часто нельзя переводить по отдельным словам.</p>');
-    ensureTh('essay', '<h3>Написание эссе</h3><div class="fm">1) Вступление: обозначь тему и позицию<br>2) Аргумент 1 + пример<br>3) Аргумент 2 + пример<br>4) Короткий вывод</div><p>Следи за логикой: firstly, moreover, however, in conclusion.</p>');
-    function genPhrasal10(){
-      return bank([
-        {q:'Choose the phrasal verb: I had to ____ smoking for my health.',a:'give up',o:['give in','give away','give over'],h:'give up = бросить привычку.'},
-        {q:'Choose the phrasal verb: Please ____ the light before you leave.',a:'turn off',o:['turn up','turn into','turn over'],h:'turn off = выключить.'},
-        {q:'Choose the phrasal verb: We are ____ a new flat in the city centre.',a:'looking for',o:['looking after','looking up','looking through'],h:'look for = искать.'},
-        {q:'Choose the phrasal verb: I want to ____ more about this university.',a:'find out',o:['find over','find up','find after'],h:'find out = выяснить.'},
-        {q:'Choose the phrasal verb: Don’t ____ the meeting till Friday.',a:'put off',o:['put out','put on','put away'],h:'put off = откладывать.'},
-        {q:'Choose the phrasal verb: Could you ____ the TV? It is too quiet.',a:'turn up',o:['turn off','turn down','turn back'],h:'turn up = сделать громче.'},
-        {q:'Choose the phrasal verb: Who will ____ the dog when we are away?',a:'look after',o:['look for','look into','look over'],h:'look after = заботиться.'},
-        {q:'Choose the phrasal verb: The plane will ____ at 6 p.m.',a:'take off',o:['take away','take after','take over'],h:'take off = взлетать.'}
-      ], 'Фразовые глаголы', '#0d9488', '#ccfbf1');
+    var ENG_COLOR = '#2563eb';
+    var ENG_BG = '#dbeafe';
+    var DOTS = ['#2563eb','#7c3aed','#0d9488','#ea580c','#16a34a','#dc2626','#ca8a04','#9333ea','#0f766e','#be123c','#1d4ed8','#c2410c'];
+    window.ENG_TH = window.ENG_TH || {};
+    function bank(arr, tag, color, bg){ var e = pick(arr); return mkQ(e.q, e.a, [e.a].concat(e.o || []), e.h || '', tag, color, bg); }
+    function putTheory(key, html){ ENG_TH[key] = html; }
+
+    putTheory('mixed_tenses', `<h3>Mixed Tenses</h3><p lang="en"><b>Present Perfect</b> links past and present, <b>Past Simple</b> is for a finished past moment, and <b>Future forms</b> depend on meaning: plan, prediction, arrangement or result by a deadline.</p><div class="fm" lang="en">I have finished. · I finished it yesterday. · By next week, I will have completed the task.</div>`);
+    putTheory('relative_clauses', `<h3>Relative Clauses</h3><p lang="en"><b>who</b> = people, <b>which</b> = things, <b>where</b> = places, <b>whose</b> = possession. In defining clauses we usually do not use commas.</p><div class="fm" lang="en">The girl who won the prize is my friend. · The book which I bought is useful. · The city where I was born is small.</div>`);
+    putTheory('comparatives10', `<h3>Comparatives &amp; Superlatives</h3><p lang="en">Short adjectives usually take <b>-er / -est</b>. Longer adjectives use <b>more / the most</b>. Watch irregular forms: <b>good → better → the best</b>.</p><div class="fm" lang="en">faster · more interesting · the most useful · better</div>`);
+    putTheory('prepositions10', `<h3>Prepositions</h3><p lang="en">Many school mistakes come from fixed combinations: <b>good at</b>, <b>interested in</b>, <b>afraid of</b>, <b>arrive at / in</b>, <b>depend on</b>.</p><div class="fm" lang="en">at school · in the city · on Monday · interested in science</div>`);
+    putTheory('articles10', `<h3>Articles</h3><p lang="en"><b>a/an</b> introduces one thing from a group, <b>the</b> points to something specific, and <b>zero article</b> is common with general plural nouns, uncountables and some set phrases.</p><div class="fm" lang="en">a teacher · the teacher from our school · go to school · drink water</div>`);
+    putTheory('vocab_b2', `<h3>Vocabulary B1–B2</h3><p lang="en">At this level, focus on school, travel, media, technology and study words that often appear in exams. The safest strategy is to learn words in context, not as isolated translations.</p><div class="fm" lang="en">achievement · environment · reliable · schedule · revise · landmark</div>`);
+    putTheory('phrasal10', `<h3>Phrasal Verbs</h3><p lang="en">Learn phrasal verbs as whole units. Many of them cannot be guessed word by word.</p><div class="fm" lang="en">give up = stop · look after = take care of · put off = postpone · run out of = have no more</div>`);
+    putTheory('wordform10', `<h3>Word Formation</h3><p lang="en">Check what part of speech you need: noun, adjective, adverb or negative form. Typical endings are <b>-tion</b>, <b>-ment</b>, <b>-ness</b>, <b>-ly</b>, <b>-ful</b>, <b>-less</b>.</p><div class="fm" lang="en">decide → decision · care → careful · quick → quickly · possible → impossible</div>`);
+    putTheory('confusing10', `<h3>Confusing Words</h3><p lang="en">English often tests pairs that look similar but mean different things: <b>borrow / lend</b>, <b>say / tell</b>, <b>make / do</b>, <b>lose / loose</b>.</p><div class="fm" lang="en">Can you lend me a pen? · I borrowed it yesterday.</div>`);
+    putTheory('spelling_b2', `<h3>Spelling B2</h3><p lang="en">High-frequency exam words often fail because of one missing letter. Train whole word shapes, not only sounds.</p><div class="fm" lang="en">necessary · environment · comfortable · successful · opportunity</div>`);
+    putTheory('question_tags10', `<h3>Question Tags</h3><p lang="en">A positive statement usually takes a negative tag, and a negative statement takes a positive tag. With <b>I am</b> the tag is <b>aren’t I?</b>.</p><div class="fm" lang="en">She is ready, isn’t she? · They don’t know, do they?</div>`);
+    putTheory('quantifiers10', `<h3>Quantifiers</h3><p lang="en"><b>many / few</b> go with countable nouns, <b>much / little</b> with uncountable nouns, and <b>a lot of</b> works with both.</p><div class="fm" lang="en">many books · much time · a few ideas · a little water</div>`);
+
+    var BANKS = {
+      mixed_tenses: [
+        {q:'Choose the correct form: By the end of the month, she ___ the report.', a:'will have finished', o:['finishes','will finish','has finished'], h:'A completed action before a future deadline → Future Perfect.'},
+        {q:'Choose the correct form: I ___ this museum twice, so I know the way around.', a:'have visited', o:['visited','had visited','visit'], h:'Life experience until now → Present Perfect.'},
+        {q:'Choose the correct form: We ___ the match last Saturday.', a:'watched', o:['have watched','had watched','watch'], h:'A finished time in the past → Past Simple.'},
+        {q:'Choose the correct form: Don’t call at six — I ___ my tutor then.', a:'will be meeting', o:['meet','am meeting','will meet'], h:'An action in progress at a future moment → Future Continuous.'},
+        {q:'Choose the correct form: She looked tired because she ___ all night.', a:'had been studying', o:['was studying','has studied','studied'], h:'A longer earlier action before a past result → Past Perfect Continuous.'},
+        {q:'Choose the correct form: He usually ___ to school by bus, but today he is walking.', a:'goes', o:['is going','has gone','go'], h:'Usually → Present Simple.'},
+        {q:'Choose the correct form: I can’t go out now — I ___ my homework yet.', a:'haven’t finished', o:['didn’t finish','hadn’t finished','don’t finish'], h:'Yet + unfinished result now → Present Perfect.'},
+        {q:'Choose the correct form: When we arrived, the film ___.', a:'had already started', o:['has already started','already started','was already starting'], h:'The film started before we arrived → Past Perfect.'}
+      ],
+      relative_clauses: [
+        {q:'Choose the correct word: The woman ___ lives next door is a doctor.', a:'who', o:['which','where','whose'], h:'People → who.'},
+        {q:'Choose the correct word: This is the phone ___ I bought yesterday.', a:'which', o:['who','where','whose'], h:'Things → which.'},
+        {q:'Choose the correct word: That is the town ___ my grandparents were born.', a:'where', o:['who','which','whose'], h:'Places → where.'},
+        {q:'Choose the correct word: The student ___ project won the prize is in my class.', a:'whose', o:['who','which','where'], h:'Possession → whose.'},
+        {q:'Choose the correct option: My cousin, ___ lives in Kazan, is visiting us.', a:'who', o:['that','where','whose'], h:'A non-defining clause about a person still uses who.'},
+        {q:'Choose the correct option: The book ___ you recommended was excellent.', a:'which', o:['who','whose','where'], h:'A thing → which.'},
+        {q:'Choose the correct option: The café ___ we met was really quiet.', a:'where', o:['which','who','whose'], h:'A place → where.'},
+        {q:'Choose the correct option: The boy ___ mother is a pilot wants to travel a lot.', a:'whose', o:['who','which','where'], h:'Mother belongs to the boy → whose.'}
+      ],
+      comparatives10: [
+        {q:'Choose the correct form: This task is ___ than the previous one.', a:'easier', o:['more easy','easyer','the easiest'], h:'Easy → easier.'},
+        {q:'Choose the correct form: Physics is ___ for me than chemistry.', a:'more interesting', o:['interestinger','most interesting','interesting'], h:'A longer adjective → more interesting.'},
+        {q:'Choose the correct form: Mount Elbrus is ___ mountain in Europe.', a:'the highest', o:['higher','the most high','high'], h:'A superlative with the → the highest.'},
+        {q:'Choose the correct form: My sister is ___ at languages than I am.', a:'better', o:['more good','the best','gooder'], h:'Good → better.'},
+        {q:'Choose the correct form: This is ___ film I have seen this year.', a:'the most exciting', o:['more exciting','the exciting','exciting'], h:'The most + long adjective.'},
+        {q:'Choose the correct form: A bike is usually ___ than a car.', a:'cheaper', o:['more cheap','the cheapest','cheapest'], h:'Cheap → cheaper.'},
+        {q:'Choose the correct form: Today is ___ than yesterday.', a:'warmer', o:['more warm','the warmest','warm'], h:'Warm → warmer.'},
+        {q:'Choose the correct form: This exercise is not as ___ as the last one.', a:'difficult', o:['more difficult','the most difficult','difficulty'], h:'As ... as uses the base adjective.'}
+      ],
+      prepositions10: [
+        {q:'Choose the correct preposition: She is good ___ maths.', a:'at', o:['in','on','for'], h:'Good at a subject.'},
+        {q:'Choose the correct preposition: We arrived ___ the station at 7 p.m.', a:'at', o:['in','on','to'], h:'Arrive at a point.'},
+        {q:'Choose the correct preposition: My parents are interested ___ art.', a:'in', o:['at','on','for'], h:'Interested in.'},
+        {q:'Choose the correct preposition: The lesson starts ___ Monday morning.', a:'on', o:['in','at','for'], h:'Days → on.'},
+        {q:'Choose the correct preposition: He was afraid ___ making a mistake.', a:'of', o:['for','to','at'], h:'Afraid of.'},
+        {q:'Choose the correct preposition: We stayed ___ a small hotel near the river.', a:'in', o:['on','at','to'], h:'In a hotel / in a building.'},
+        {q:'Choose the correct preposition: The result depends ___ your effort.', a:'on', o:['in','at','for'], h:'Depend on.'},
+        {q:'Choose the correct preposition: I usually study ___ the evening.', a:'in', o:['on','at','for'], h:'In the evening.'}
+      ],
+      articles10: [
+        {q:'Choose the correct article: I saw ___ interesting film yesterday.', a:'an', o:['a','the','—'], h:'Interesting starts with a vowel sound.'},
+        {q:'Choose the correct article: ___ film we saw yesterday was amazing.', a:'The', o:['A','An','—'], h:'Now the film is specific.'},
+        {q:'Choose the correct option: She goes to ___ school by bus.', a:'—', o:['a','an','the'], h:'Go to school = zero article.'},
+        {q:'Choose the correct article: ___ Volga is the longest river in Europe.', a:'The', o:['A','An','—'], h:'Rivers normally take the.'},
+        {q:'Choose the correct option: My father is ___ engineer.', a:'an', o:['a','the','—'], h:'Engineer starts with a vowel sound.'},
+        {q:'Choose the correct option: We need ___ information before we decide.', a:'—', o:['a','an','the'], h:'Information is uncountable here.'},
+        {q:'Choose the correct article: Can you open ___ window, please?', a:'the', o:['a','an','—'], h:'A specific window in the room.'},
+        {q:'Choose the correct option: ___ life in this city is expensive.', a:'—', o:['A','An','The'], h:'General meaning with an abstract noun.'}
+      ],
+      vocab_b2: [
+        {q:'Choose the correct word: We need to ___ for the exam, not just read once.', a:'revise', o:['borrow','cancel','repair'], h:'Revise = study again before an exam.'},
+        {q:'Choose the correct word: The school trip was a real ___ because we learned a lot.', a:'achievement', o:['traffic','receipt','surface'], h:'Achievement = something successfully done.'},
+        {q:'Choose the correct word: We should protect the ___ from pollution.', a:'environment', o:['festival','wardrobe','schedule'], h:'Pollution harms the environment.'},
+        {q:'Choose the correct word: The train leaves according to the official ___.', a:'schedule', o:['medicine','landmark','engine'], h:'A schedule tells you times.'},
+        {q:'Choose the correct word: She is very ___ — you can trust her promises.', a:'reliable', o:['wooden','outside','nervous'], h:'Reliable = trustworthy.'},
+        {q:'Choose the correct word: During the tour we visited several famous ___.', a:'landmarks', o:['bandages','engines','recipes'], h:'Landmarks = famous places.'},
+        {q:'Choose the correct word: We had to ___ a room before our trip.', a:'book', o:['grow','paint','borrow'], h:'You book a room or a ticket.'},
+        {q:'Choose the correct word: Her final answer was completely ___.', a:'accurate', o:['borrowed','shallow','weekly'], h:'Accurate = exact and correct.'}
+      ],
+      phrasal10: [
+        {q:'Choose the phrasal verb: Please ___ the light before you leave.', a:'turn off', o:['turn up','turn over','turn into'], h:'Turn off = switch off.'},
+        {q:'Choose the phrasal verb: I had to ___ junk food during the school term.', a:'give up', o:['give in','give away','give over'], h:'Give up = stop doing something.'},
+        {q:'Choose the phrasal verb: We are ___ a new flat near the centre.', a:'looking for', o:['looking after','looking up','looking through'], h:'Look for = search.'},
+        {q:'Choose the phrasal verb: I want to ___ more about the course.', a:'find out', o:['find over','find up','find after'], h:'Find out = discover information.'},
+        {q:'Choose the phrasal verb: Don’t ___ the meeting until next week.', a:'put off', o:['put away','put on','put out'], h:'Put off = postpone.'},
+        {q:'Choose the phrasal verb: She will ___ her little brother tonight.', a:'look after', o:['look for','look into','look over'], h:'Look after = take care of.'},
+        {q:'Choose the phrasal verb: We have ___ milk, so buy some on your way home.', a:'run out of', o:['run into','run over','run after'], h:'Run out of = have no more left.'},
+        {q:'Choose the phrasal verb: The plane will ___ at six in the evening.', a:'take off', o:['take after','take over','take away'], h:'Take off = leave the ground.'}
+      ],
+      wordform10: [
+        {q:'Complete the sentence: Her ___ was impressive. (DECIDE)', a:'decision', o:['decide','decisive','deciding'], h:'A noun is needed.'},
+        {q:'Complete the sentence: This task is ___ easy. (REAL)', a:'really', o:['real','reality','realise'], h:'An adverb is needed before the adjective.'},
+        {q:'Complete the sentence: He is a very ___ player. (SUCCESS)', a:'successful', o:['success','successfully','unsuccess'], h:'An adjective is needed before a noun.'},
+        {q:'Complete the sentence: She answered the question ___. (CONFIDENT)', a:'confidently', o:['confidence','confident','unconfident'], h:'An adverb describes answered.'},
+        {q:'Complete the sentence: We need more ___ information. (DETAIL)', a:'detailed', o:['detail','detailing','detailly'], h:'An adjective fits before information.'},
+        {q:'Complete the sentence: Thank you for your ___. (KIND)', a:'kindness', o:['kindly','kind','unkind'], h:'A noun is needed after your.'},
+        {q:'Complete the sentence: The storm caused serious ___. (DESTROY)', a:'destruction', o:['destructive','destroyed','destroyer'], h:'A noun fits after caused.'},
+        {q:'Complete the sentence: The result was quite ___. (EXPECT)', a:'unexpected', o:['expect','expectation','unexpectedly'], h:'An adjective is needed after was.'}
+      ],
+      confusing10: [
+        {q:'Choose the correct word: Could you ___ me your notes for one day?', a:'lend', o:['borrow','loose','effect'], h:'Lend = give something temporarily.'},
+        {q:'Choose the correct word: May I ___ your charger for an hour?', a:'borrow', o:['lend','lose','raise'], h:'Borrow = take from someone for a time.'},
+        {q:'Choose the correct word: The medicine had a strong ___ on him.', a:'effect', o:['affect','advise','practice'], h:'Effect is a noun here.'},
+        {q:'Choose the correct word: Can you ___ me what to do next?', a:'tell', o:['say','effect','loose'], h:'Tell someone something.'},
+        {q:'Choose the correct word: Don’t ___ your keys again.', a:'lose', o:['loose','rise','lay'], h:'Lose = misplace.'},
+        {q:'Choose the correct word: We need to ___ a decision today.', a:'make', o:['do','say','tell'], h:'Make a decision is the fixed collocation.'},
+        {q:'Choose the correct word: The company wants to ___ production next year.', a:'increase', o:['improvely','discuss about','explain me'], h:'Increase is the natural verb here.'},
+        {q:'Choose the correct word: She gave me some useful ___.', a:'advice', o:['advise','advises','advised'], h:'Advice is the noun.'}
+      ],
+      spelling_b2: [
+        {q:'Choose the correct spelling.', a:'necessary', o:['neccessary','necesary','necessaryy'], h:'Necessary has one c and two s letters.'},
+        {q:'Choose the correct spelling.', a:'environment', o:['enviroment','envirenment','environmant'], h:'Environment with n + m.'},
+        {q:'Choose the correct spelling.', a:'comfortable', o:['comftable','comfortible','comforrtable'], h:'Comfortable.'},
+        {q:'Choose the correct spelling.', a:'successful', o:['succesful','successfull','succesfull'], h:'Successful with double c and double s.'},
+        {q:'Choose the correct spelling.', a:'opportunity', o:['oppurtunity','opprotunity','opportunityy'], h:'Opportunity.'},
+        {q:'Choose the correct spelling.', a:'government', o:['goverment','governmant','governement'], h:'Government.'},
+        {q:'Choose the correct spelling.', a:'knowledge', o:['knowlege','knoledge','knowledgee'], h:'Knowledge keeps the d.'},
+        {q:'Choose the correct spelling.', a:'independent', o:['independant','indipendent','independentt'], h:'Independent.'}
+      ],
+      question_tags10: [
+        {q:'Choose the correct tag: She is your sister, ___?', a:'isn’t she', o:['is she','doesn’t she','aren’t she'], h:'Positive statement → negative tag.'},
+        {q:'Choose the correct tag: They don’t like coffee, ___?', a:'do they', o:['don’t they','aren’t they','did they'], h:'Negative statement → positive tag.'},
+        {q:'Choose the correct tag: You can swim, ___?', a:'can’t you', o:['can you','do you','aren’t you'], h:'Use the same auxiliary.'},
+        {q:'Choose the correct tag: He went home early, ___?', a:'didn’t he', o:['did he','hasn’t he','wasn’t he'], h:'Past Simple → did.'},
+        {q:'Choose the correct tag: We are late, ___?', a:'aren’t we', o:['are we','don’t we','weren’t we'], h:'Positive be-verb → negative tag.'},
+        {q:'Choose the correct tag: I am next, ___?', a:'aren’t I', o:['am I not','isn’t I','am not I'], h:'Special form: aren’t I?'},
+        {q:'Choose the correct tag: She has finished, ___?', a:'hasn’t she', o:['doesn’t she','didn’t she','isn’t she'], h:'Present Perfect → has.'},
+        {q:'Choose the correct tag: Let’s start now, ___?', a:'shall we', o:['will we','do we','aren’t we'], h:'Let’s ... → shall we?' }
+      ],
+      quantifiers10: [
+        {q:'Choose the correct word: There are ___ books on the shelf.', a:'many', o:['much','little','a little'], h:'Books are countable.'},
+        {q:'Choose the correct word: We do not have ___ time left.', a:'much', o:['many','a few','several'], h:'Time is uncountable.'},
+        {q:'Choose the correct word: Only ___ students understood the task, so we explained it again.', a:'a few', o:['a little','much','less'], h:'Students are countable.'},
+        {q:'Choose the correct word: Add ___ sugar to your tea if you want.', a:'a little', o:['a few','many','fewer'], h:'Sugar is uncountable.'},
+        {q:'Choose the correct word: There was too ___ noise to concentrate.', a:'much', o:['many','a few','few'], h:'Noise is uncountable.'},
+        {q:'Choose the correct word: We invited ___ friends to the party.', a:'a lot of', o:['much','little','less'], h:'A lot of works with countables and uncountables.'},
+        {q:'Choose the correct word: There are very ___ buses after midnight.', a:'few', o:['little','much','a little'], h:'Few = almost not enough countables.'},
+        {q:'Choose the correct word: We have ___ homework today, so I can rest.', a:'little', o:['few','many','a few'], h:'Homework is uncountable.'}
+      ]
+    };
+
+    function makeTopic(id, name, bankKey, dot){
+      return { id:id, nm:name, gen:function(){ return bank(BANKS[bankKey], name, ENG_COLOR, ENG_BG); }, th:ENG_TH[bankKey], dot:dot };
     }
-    function genEssay10(){
-      return bank([
-        {q:'What should come first in an opinion essay?',a:'an introduction with your position',o:['a list of random ideas','only examples','a conclusion'],h:'Сначала вводим тему и позицию.'},
-        {q:'Which linker is best to add a second argument?',a:'Moreover,',o:['However,','In conclusion,','On the one hand,'],h:'Moreover = к тому же.'},
-        {q:'What should the final paragraph do?',a:'summarise your ideas',o:['add a new main argument','retell the topic word for word','ask several questions'],h:'Вывод подводит итог, а не вводит новую мысль.'},
-        {q:'Which phrase is best for the opposite view?',a:'However, some people think ...',o:['Firstly,', 'For example,', 'In conclusion,'],h:'However помогает показать контраст.'},
-        {q:'A strong body paragraph should contain:',a:'one clear idea and an example',o:['many unrelated ideas','only one short sentence','a title only'],h:'Один абзац = одна мысль + пояснение.'},
-        {q:'Choose the best ending phrase:',a:'In conclusion,',o:['Firstly,','For instance,','As a result of that question'],h:'Вывод удобно начинать с In conclusion.'},
-        {q:'What style is best for an exam essay?',a:'neutral and clear',o:['very informal','full of slang','like a text message'],h:'Экзаменационное эссе должно быть нейтральным.'},
-        {q:'What helps connect ideas in an essay?',a:'linking words',o:['emoji','very long quotes','random abbreviations'],h:'Linkers делают текст логичным.'}
-      ], 'Написание эссе', '#2563eb', '#dbeafe');
+
+    var topics = [
+      makeTopic('mixed_tenses', 'Mixed Tenses', 'mixed_tenses', DOTS[0]),
+      makeTopic('relative_clauses', 'Relative Clauses', 'relative_clauses', DOTS[1]),
+      makeTopic('comparatives', 'Comparatives & Superlatives', 'comparatives10', DOTS[2]),
+      makeTopic('prepositions', 'Prepositions', 'prepositions10', DOTS[3]),
+      makeTopic('articles10', 'Articles', 'articles10', DOTS[4]),
+      makeTopic('vocab_b2', 'Vocabulary B1-B2', 'vocab_b2', DOTS[5]),
+      makeTopic('phrasal10', 'Phrasal Verbs', 'phrasal10', DOTS[6]),
+      makeTopic('wordform10', 'Word Formation', 'wordform10', DOTS[7]),
+      makeTopic('confusing10', 'Confusing Words', 'confusing10', DOTS[8]),
+      makeTopic('spelling_b2', 'Spelling B2', 'spelling_b2', DOTS[9]),
+      makeTopic('question_tags', 'Question Tags', 'question_tags10', DOTS[10]),
+      makeTopic('quantifiers', 'Quantifiers', 'quantifiers10', DOTS[11])
+    ];
+
+    var eng = (SUBJ||[]).find(function(s){ return s.id === 'eng'; });
+    if(eng){
+      eng.nm = 'Английский';
+      eng.ic = '🇬🇧';
+      eng.cl = ENG_COLOR;
+      eng.bg = ENG_BG;
+      eng.tops = topics;
     }
-    const eng = (SUBJ||[]).find(s => s.id === 'eng');
-    if(eng && !eng.tops.find(t => t.id === 'phrasal')) eng.tops.push({id:'phrasal', nm:'Фразовые глаголы', gen:genPhrasal10, th:(ENG_TH&&ENG_TH.phrasal)||'', dot:'#0d9488'});
-    if(eng && !eng.tops.find(t => t.id === 'essay')) eng.tops.push({id:'essay', nm:'Написание эссе', gen:genEssay10, th:(ENG_TH&&ENG_TH.essay)||'', dot:'#2563eb'});
+
+    window.__wave40English10 = {
+      topicCount: topics.length,
+      topics: topics.map(function(t){ return t.id; }),
+      banks: Object.keys(BANKS).reduce(function(acc, key){ acc[key] = BANKS[key].length; return acc; }, {})
+    };
   }
 })();
 
