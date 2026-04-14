@@ -1439,7 +1439,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   function syncLegacyInstallButton(){
     var btn = document.getElementById && document.getElementById(LEGACY_INSTALL_ID);
     if (!btn) return;
-    var shouldShow = !!state.installPrompt && compactInstallUi() && !standalone() && !installDismissed();
+    var shouldShow = !!state.installPrompt && (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches) && !standalone() && !installDismissed();
     btn.hidden = !shouldShow;
     if (!shouldShow) {
       btn.style.display = 'none';
@@ -1516,10 +1516,10 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
   function installState(){
     return {
-      available: !!state.installPrompt && compactInstallUi(),
+      available: !!state.installPrompt && (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches),
       dismissed: installDismissed(),
       standalone: standalone(),
-      compact: compactInstallUi()
+      compact: (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches)
     };
   }
   function actionButton(text, cls, id){
