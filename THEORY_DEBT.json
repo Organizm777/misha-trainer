@@ -1,0 +1,488 @@
+{
+  "totalTargets": 48,
+  "ok": 48,
+  "weak": 0,
+  "missing": 0,
+  "rows": [
+    {
+      "grade": 5,
+      "subjectId": "math",
+      "topicId": "dec",
+      "subject": "Математика",
+      "topic": "Десятичные дроби",
+      "length": 471,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "math",
+      "topicId": "frac",
+      "subject": "Математика",
+      "topic": "Обыкновенные дроби",
+      "length": 540,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "math",
+      "topicId": "pct",
+      "subject": "Математика",
+      "topic": "Проценты",
+      "length": 374,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "math",
+      "topicId": "geo",
+      "subject": "Математика",
+      "topic": "Геометрия",
+      "length": 511,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "rus",
+      "topicId": "syn",
+      "subject": "Русский язык",
+      "topic": "Синтаксис",
+      "length": 458,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "rus",
+      "topicId": "phon",
+      "subject": "Русский язык",
+      "topic": "Фонетика",
+      "length": 418,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "rus",
+      "topicId": "morph",
+      "subject": "Русский язык",
+      "topic": "Морфология",
+      "length": 535,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "his",
+      "topicId": "egypt",
+      "subject": "История",
+      "topic": "Древний Египет",
+      "length": 459,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "his",
+      "topicId": "greece",
+      "subject": "История",
+      "topic": "Древняя Греция",
+      "length": 474,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "his",
+      "topicId": "rome",
+      "subject": "История",
+      "topic": "Древний Рим",
+      "length": 445,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "bio",
+      "topicId": "cell",
+      "subject": "Биология",
+      "topic": "Клетка",
+      "length": 475,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "bio",
+      "topicId": "plant",
+      "subject": "Биология",
+      "topic": "Растения",
+      "length": 499,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "bio",
+      "topicId": "human",
+      "subject": "Биология",
+      "topic": "Человек и здоровье",
+      "length": 475,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "geo5",
+      "topicId": "earth",
+      "subject": "География",
+      "topic": "Земля",
+      "length": 518,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "geo5",
+      "topicId": "map",
+      "subject": "География",
+      "topic": "Карта",
+      "length": 485,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 5,
+      "subjectId": "geo5",
+      "topicId": "zones",
+      "subject": "География",
+      "topic": "Природные зоны",
+      "length": 479,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "math",
+      "topicId": "neg",
+      "subject": "Математика",
+      "topic": "Отрицательные числа",
+      "length": 466,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "math",
+      "topicId": "div",
+      "subject": "Математика",
+      "topic": "Делимость",
+      "length": 505,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "math",
+      "topicId": "rat",
+      "subject": "Математика",
+      "topic": "Пропорции",
+      "length": 444,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "math",
+      "topicId": "coord",
+      "subject": "Математика",
+      "topic": "Координаты",
+      "length": 431,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "rus",
+      "topicId": "pron",
+      "subject": "Русский язык",
+      "topic": "Местоимения",
+      "length": 480,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "rus",
+      "topicId": "num",
+      "subject": "Русский язык",
+      "topic": "Числительные",
+      "length": 401,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "rus",
+      "topicId": "adj",
+      "subject": "Русский язык",
+      "topic": "Прилагательные",
+      "length": 445,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "his",
+      "topicId": "med",
+      "subject": "История",
+      "topic": "Средние века",
+      "length": 454,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "his",
+      "topicId": "byz",
+      "subject": "История",
+      "topic": "Византия и ислам",
+      "length": 543,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "his",
+      "topicId": "rmed",
+      "subject": "История",
+      "topic": "Русь",
+      "length": 458,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "bio",
+      "topicId": "anim",
+      "subject": "Биология",
+      "topic": "Животные",
+      "length": 461,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "bio",
+      "topicId": "class",
+      "subject": "Биология",
+      "topic": "Классификация",
+      "length": 485,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "bio",
+      "topicId": "plants",
+      "subject": "Биология",
+      "topic": "Растения и их органы",
+      "length": 505,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "geo6",
+      "topicId": "litho",
+      "subject": "География",
+      "topic": "Литосфера",
+      "length": 470,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "geo6",
+      "topicId": "hydro",
+      "subject": "География",
+      "topic": "Гидросфера",
+      "length": 424,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 6,
+      "subjectId": "geo6",
+      "topicId": "atm",
+      "subject": "География",
+      "topic": "Атмосфера и погода",
+      "length": 447,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "alg",
+      "topicId": "lin",
+      "subject": "Алгебра",
+      "topic": "Линейные уравнения",
+      "length": 335,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "alg",
+      "topicId": "pow",
+      "subject": "Алгебра",
+      "topic": "Степени",
+      "length": 369,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "alg",
+      "topicId": "poly",
+      "subject": "Алгебра",
+      "topic": "Многочлены",
+      "length": 383,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "alg",
+      "topicId": "func",
+      "subject": "Алгебра",
+      "topic": "Функции",
+      "length": 429,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "geo",
+      "topicId": "tri",
+      "subject": "Геометрия",
+      "topic": "Треугольники",
+      "length": 428,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "geo",
+      "topicId": "par",
+      "subject": "Геометрия",
+      "topic": "Параллельные прямые",
+      "length": 481,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "geo",
+      "topicId": "angles",
+      "subject": "Геометрия",
+      "topic": "Углы и признаки равенства",
+      "length": 538,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "phy",
+      "topicId": "mech",
+      "subject": "Физика",
+      "topic": "Механика",
+      "length": 438,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "phy",
+      "topicId": "work",
+      "subject": "Физика",
+      "topic": "Работа и энергия",
+      "length": 382,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "phy",
+      "topicId": "press",
+      "subject": "Физика",
+      "topic": "Давление",
+      "length": 382,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "rus",
+      "topicId": "part",
+      "subject": "Русский язык",
+      "topic": "Причастие и деепричастие",
+      "length": 510,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "rus",
+      "topicId": "adv",
+      "subject": "Русский язык",
+      "topic": "Наречие",
+      "length": 414,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "rus",
+      "topicId": "not",
+      "subject": "Русский язык",
+      "topic": "НЕ с частями речи",
+      "length": 456,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "his",
+      "topicId": "nt",
+      "subject": "История",
+      "topic": "Новое время",
+      "length": 426,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "his",
+      "topicId": "r17",
+      "subject": "История",
+      "topic": "Россия XVII—XVIII",
+      "length": 418,
+      "score": 5,
+      "status": "ok"
+    },
+    {
+      "grade": 7,
+      "subjectId": "his",
+      "topicId": "peter",
+      "subject": "История",
+      "topic": "Пётр I и реформы",
+      "length": 444,
+      "score": 5,
+      "status": "ok"
+    }
+  ]
+}

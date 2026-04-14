@@ -1,0 +1,8538 @@
+{
+  "samples": 120,
+  "rows": [
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "body",
+      "topic": "Тело человека",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "letters",
+      "topic": "Буквы и звуки",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "plants",
+      "topic": "Растения",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "bezud",
+      "topic": "Безударные гласные",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "state",
+      "topic": "Государство",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "conj",
+      "topic": "Спряжение",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "wparts",
+      "topic": "Состав слова",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "spell",
+      "topic": "Правописание",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "greece",
+      "topic": "Древняя Греция",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "syn",
+      "topic": "Синтаксис",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "phon",
+      "topic": "Фонетика",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "morph",
+      "topic": "Морфология",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "poly",
+      "topic": "Многочлены",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "tri",
+      "topic": "Треугольники",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "world19",
+      "topic": "Мир в XIX в.",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "punct",
+      "topic": "Пунктуация",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo",
+      "topic": "Алгоритмы",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "vocab",
+      "topic": "Словарные слова",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "logic",
+      "topic": "Логика",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "ussr2",
+      "topic": "СССР после 1945",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "punct",
+      "topic": "Пунктуация",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "emwave",
+      "topic": "ЭМ волны и колебания",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "quantum",
+      "topic": "Квантовая и ядерная физика",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "pair",
+      "topic": "Парные согласные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "cell",
+      "topic": "Клетка",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "plant",
+      "topic": "Растения",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "earth",
+      "topic": "Земля",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "map",
+      "topic": "Карта",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "egypt",
+      "topic": "Древний Египет",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rome",
+      "topic": "Древний Рим",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "anim",
+      "topic": "Животные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "class",
+      "topic": "Классификация",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "litho",
+      "topic": "Литосфера",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "hydro",
+      "topic": "Гидросфера",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "med",
+      "topic": "Средние века",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "byz",
+      "topic": "Византия и ислам",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rmed",
+      "topic": "Русь",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "num",
+      "topic": "Числительные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "adj",
+      "topic": "Прилагательные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "par",
+      "topic": "Параллельные прямые",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "adv",
+      "topic": "Наречие",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "sys",
+      "topic": "Системы уравнений",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "ussr",
+      "topic": "СССР 1920–30-е",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "world20",
+      "topic": "Мир в XX в.",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "ssp",
+      "topic": "ССП и БСП",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "angles",
+      "topic": "Углы и перпендикулярность",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "orth",
+      "topic": "Орфография",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "jishi",
+      "topic": "ЖИ-ШИ, ЧА-ЩА",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 6,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "capital",
+      "topic": "Заглавная буква",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "measure",
+      "topic": "Единицы измерения",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "country",
+      "topic": "Родная страна",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "transfer",
+      "topic": "Перенос слов",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "zones",
+      "topic": "Природные зоны",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "be5",
+      "topic": "To Be & Have Got",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "ps5",
+      "topic": "Present Simple Basics",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "vocab5",
+      "topic": "Basic Vocabulary",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "phon5",
+      "topic": "Alphabet & Phonics",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "be6",
+      "topic": "To Be & Have Got",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "ps6",
+      "topic": "Present Simple Basics",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "vocab6",
+      "topic": "Basic Vocabulary",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "phon6",
+      "topic": "Alphabet & Reading Patterns",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "plants",
+      "topic": "Растения и их органы",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "atm",
+      "topic": "Атмосфера и погода",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "pres7",
+      "topic": "Present Simple & Continuous",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "past7",
+      "topic": "Past Simple",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "modal7",
+      "topic": "Can / Could / Must",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "there7",
+      "topic": "There is / There are",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "vocab7",
+      "topic": "Vocabulary A1–A2",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "spell7",
+      "topic": "Spelling A1–A2",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "nt",
+      "topic": "Новое время",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "r17",
+      "topic": "Россия XVII—XVIII",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "present8",
+      "topic": "Present Tenses",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "past8",
+      "topic": "Past Simple",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "future8",
+      "topic": "Future Forms",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "compare8",
+      "topic": "Comparisons",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "articles8",
+      "topic": "Articles a/an/the",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "preps8",
+      "topic": "Prepositions of Time & Place",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "vocab8",
+      "topic": "Vocabulary A2",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "spelling8",
+      "topic": "Spelling A2",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "quad",
+      "topic": "Четырёхугольники",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rus19",
+      "topic": "Россия XIX в.",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "synt",
+      "topic": "Синтаксис",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "pps9",
+      "topic": "Present Perfect vs Past Simple",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "pastmix9",
+      "topic": "Past Tenses Mix",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "cond9",
+      "topic": "Conditionals 0–2",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "passive9",
+      "topic": "Passive Voice Basics",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "modals9",
+      "topic": "Modal Basics",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "wordform9",
+      "topic": "Word Formation ОГЭ",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "vocab9",
+      "topic": "Vocabulary A2–B1",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "spelling9",
+      "topic": "Spelling B1",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "orth",
+      "topic": "ПРЕ-/ПРИ-",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "reported",
+      "topic": "Reported Speech",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "passive_adv",
+      "topic": "Advanced Passive",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "modals_adv",
+      "topic": "Modal Verbs",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "articles",
+      "topic": "Articles & Zero Article",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "gerund_inf",
+      "topic": "Gerund vs Infinitive",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "confusing",
+      "topic": "Confusing Words",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "connectors",
+      "topic": "Linking Words & Essay",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo",
+      "topic": "Алгоритмы и Python",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "nn",
+      "topic": "Н и НН",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "optics",
+      "topic": "Волновая оптика",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "shapes",
+      "topic": "Фигуры",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "nature",
+      "topic": "Живая природа",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "syllable",
+      "topic": "Слоги",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "weather",
+      "topic": "Погода и климат",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "map",
+      "topic": "Карта и стороны света",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "human",
+      "topic": "Человек и здоровье",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "zones",
+      "topic": "Природные зоны",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "pron",
+      "topic": "Местоимения",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "angles",
+      "topic": "Углы и признаки равенства",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "peter",
+      "topic": "Пётр I и реформы",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "part",
+      "topic": "Причастие и деепричастие",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "not",
+      "topic": "НЕ с частями речи",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "work",
+      "topic": "Работа и энергия",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "press",
+      "topic": "Давление",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo",
+      "topic": "Алгоритмы",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "reforms19",
+      "topic": "Реформы и общество XIX в.",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "human",
+      "topic": "Человек и общество",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "econ",
+      "topic": "Экономика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "law",
+      "topic": "Право",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "opt",
+      "topic": "Оптика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "mag",
+      "topic": "Электромагнетизм",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo",
+      "topic": "Алгоритмы",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rus20",
+      "topic": "Россия нач. XX в.",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "human",
+      "topic": "Человек и общество",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "econ",
+      "topic": "Экономика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "law",
+      "topic": "Право",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "spp",
+      "topic": "СПП",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "wordform",
+      "topic": "Словообразование",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "reading",
+      "topic": "Чтение и смысл",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "phrasal",
+      "topic": "Фразовые глаголы",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "essay",
+      "topic": "Написание эссе",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "db",
+      "topic": "БД и сети",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "russia90",
+      "topic": "Россия 1990–2000-е",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "world21",
+      "topic": "Мир во 2-й пол. XX–XXI в.",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "politic",
+      "topic": "Политология",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "econ",
+      "topic": "Экономика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "law",
+      "topic": "Право",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "compose10",
+      "topic": "Состав числа 10",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "seasons",
+      "topic": "Времена года",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "sincos",
+      "topic": "Теоремы sin/cos",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "logic",
+      "topic": "Логика",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "nn",
+      "topic": "Н и НН",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "tenses_adv",
+      "topic": "Advanced Tenses",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "conditionals",
+      "topic": "Conditionals",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "phrasal_ext",
+      "topic": "Phrasal Verbs",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "wordform11",
+      "topic": "Word Formation",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "collocations",
+      "topic": "Collocations",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "style",
+      "topic": "Средства выразительности",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "fairy1",
+      "topic": "Сказки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "poem1",
+      "topic": "Стихи",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "riddle1",
+      "topic": "Загадки и потешки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "safe1",
+      "topic": "Безопасность",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "family1",
+      "topic": "Семья и школа",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "nature2",
+      "topic": "Рассказы о природе",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "folk2",
+      "topic": "Народные сказки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "poem2",
+      "topic": "Стихи о детстве",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "animals",
+      "topic": "Животные",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 10,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "water2",
+      "topic": "Вода и её свойства",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "transport2",
+      "topic": "Транспорт и профессии",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "byliny3",
+      "topic": "Былины",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "children3",
+      "topic": "Рассказы о детях",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "fable3",
+      "topic": "Басни",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "body",
+      "topic": "Организм человека",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "eco3",
+      "topic": "Экология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "cities3",
+      "topic": "Города России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "parts",
+      "topic": "Части речи",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "classic4",
+      "topic": "Классика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "foreign4",
+      "topic": "Зарубежная литература",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "poetry4",
+      "topic": "Поэзия о Родине",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "hist",
+      "topic": "История России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "eco4",
+      "topic": "Экология и охрана природы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "human4",
+      "topic": "Человек и здоровье",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "cases",
+      "topic": "Падежи",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "folk5",
+      "topic": "Сказки и басни",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "push5",
+      "topic": "Пушкин и Лермонтов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "terms5",
+      "topic": "Литературные термины",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "oldrus6",
+      "topic": "Древнерусская литература",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "push6",
+      "topic": "Пушкин и Лермонтов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "turg6",
+      "topic": "Тургенев и Некрасов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "pow",
+      "topic": "Степени",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "zool7",
+      "topic": "Зоология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "class7",
+      "topic": "Классификация животных",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "evo7",
+      "topic": "Эволюция животных",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "cont7",
+      "topic": "Материки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "ocean7",
+      "topic": "Океаны",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "pop7",
+      "topic": "Население мира",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo7",
+      "topic": "Алгоритмы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "data7",
+      "topic": "Данные и кодирование",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "net7",
+      "topic": "Компьютерные сети",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "gog7",
+      "topic": "Гоголь и Тургенев",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "tol7",
+      "topic": "Толстой и Чехов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "verse7",
+      "topic": "Стихосложение",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "anat",
+      "topic": "Анатомия человека",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "blood",
+      "topic": "Кровь и дыхание",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "nerv",
+      "topic": "Нервная система",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "russia8",
+      "topic": "Россия: положение и рельеф",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "climate8",
+      "topic": "Климат и природные зоны",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "water8",
+      "topic": "Внутренние воды России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "logic",
+      "topic": "Логика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "lit18",
+      "topic": "Литература XVIII–XIX вв.",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "pushkin8",
+      "topic": "Пушкин",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "lermontov8",
+      "topic": "Лермонтов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "orth",
+      "topic": "ПРЕ-/ПРИ-",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "atom",
+      "topic": "Атом и вещество",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "classes",
+      "topic": "Классы веществ",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "react",
+      "topic": "Химические реакции",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "genetics",
+      "topic": "Генетика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "evolution",
+      "topic": "Эволюция",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "ecology",
+      "topic": "Экология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "pop9",
+      "topic": "Население России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "econ9",
+      "topic": "Хозяйство России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "regions9",
+      "topic": "Экономические районы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "slovo9",
+      "topic": "«Слово о полку Игореве»",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "gribo9",
+      "topic": "Грибоедов и «Горе от ума»",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "authors9",
+      "topic": "Пушкин, Лермонтов, Гоголь",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "metals",
+      "topic": "Металлы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "nonmet",
+      "topic": "Неметаллы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "org",
+      "topic": "Органические вещества",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "cell11",
+      "topic": "Клетка и молекулярная биология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "gen11",
+      "topic": "Генетика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "eco11",
+      "topic": "Эволюция и экология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "prob",
+      "subject": "Вероятность и статистика",
+      "topicId": "rand11",
+      "topic": "Случайные величины",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "prob",
+      "subject": "Вероятность и статистика",
+      "topicId": "stat11",
+      "topic": "Статистика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "prob",
+      "subject": "Вероятность и статистика",
+      "topicId": "comb11",
+      "topic": "Комбинаторика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "regions11",
+      "topic": "Страны и регионы мира",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "worldecon11",
+      "topic": "Мировое хозяйство",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "global11",
+      "topic": "Глобальные проблемы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "silver11",
+      "topic": "Серебряный век",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "prose11",
+      "topic": "Проза XX века",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "poetry11",
+      "topic": "Поэзия XX века",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "genchem",
+      "topic": "Общая химия",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "ovr",
+      "topic": "ОВР, электролиз, гидролиз",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "org11",
+      "topic": "Органическая химия",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "alg",
+      "subject": "Алгебра и начала анализа",
+      "topicId": "integ",
+      "topic": "Интеграл",
+      "uniq": 16,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "alg",
+      "subject": "Алгебра и начала анализа",
+      "topicId": "trieq",
+      "topic": "Тригонометрические уравнения",
+      "uniq": 16,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "letters2",
+      "topic": "Буквы и звуки",
+      "uniq": 17,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "words2",
+      "topic": "Первые слова",
+      "uniq": 17,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "phrases3",
+      "topic": "Простые фразы",
+      "uniq": 17,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "numcol3",
+      "topic": "Числа и цвета",
+      "uniq": 17,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "be4",
+      "topic": "To be & have got",
+      "uniq": 17,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "speak4",
+      "topic": "Простые предложения",
+      "uniq": 17,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "mult",
+      "topic": "Таблица умножения",
+      "uniq": 19,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "alg",
+      "subject": "Алгебра и начала анализа",
+      "topicId": "logexp",
+      "topic": "Логарифмы и экспонента",
+      "uniq": 19,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "nature",
+      "topic": "Природа",
+      "uniq": 20,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "frac",
+      "topic": "Дроби и выражения",
+      "uniq": 20,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "alg",
+      "subject": "Алгебра и начала анализа",
+      "topicId": "deriv",
+      "topic": "Производная",
+      "uniq": 20,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "elfield",
+      "topic": "Электростатика",
+      "uniq": 22,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "nn",
+      "topic": "Н и НН",
+      "uniq": 23,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "trig9",
+      "topic": "Тригонометрия",
+      "uniq": 23,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "numsys",
+      "topic": "Системы счисления",
+      "uniq": 23,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "clock",
+      "topic": "Время и часы",
+      "uniq": 24,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "pct",
+      "topic": "Проценты",
+      "uniq": 25,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "cons",
+      "topic": "Парные согласные",
+      "uniq": 26,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "sim",
+      "topic": "Подобие треугольников",
+      "uniq": 26,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "waves",
+      "topic": "Колебания и волны",
+      "uniq": 26,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "accent",
+      "topic": "Ударения",
+      "uniq": 29,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "vowel",
+      "topic": "Безударные гласные",
+      "uniq": 30,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "pyth",
+      "topic": "Теорема Пифагора",
+      "uniq": 30,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "numsys",
+      "topic": "Системы счисления",
+      "uniq": 32,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "qeq",
+      "topic": "Квадратные уравнения",
+      "uniq": 33,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "func",
+      "topic": "Функции",
+      "uniq": 34,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 10,
+      "sources": [
+        "wave10-func"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "numsys",
+      "topic": "Системы счисления",
+      "uniq": 35,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "sqrt",
+      "topic": "Квадратные корни",
+      "uniq": 36,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "prob",
+      "subject": "Вероятность",
+      "topicId": "comb",
+      "topic": "Комбинаторика",
+      "uniq": 36,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "pow",
+      "topic": "Степени и корни",
+      "uniq": 37,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "circle9",
+      "topic": "Окружность",
+      "uniq": 38,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "mech",
+      "topic": "Механика",
+      "uniq": 42,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "encode",
+      "topic": "Кодирование",
+      "uniq": 43,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "kin",
+      "topic": "Кинематика",
+      "uniq": 45,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "art",
+      "subject": "История искусств",
+      "topicId": "russian",
+      "topic": "Русское искусство",
+      "uniq": 45,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "reactions",
+      "topic": "Реакции",
+      "uniq": 45,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "cell",
+      "topic": "Клетка",
+      "uniq": 46,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "tri",
+      "topic": "Треугольники",
+      "uniq": 46,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "art",
+      "subject": "История искусств",
+      "topicId": "east",
+      "topic": "Древний Восток",
+      "uniq": 46,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "art",
+      "subject": "История искусств",
+      "topicId": "europe",
+      "topic": "Европа",
+      "uniq": 46,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "ecology",
+      "topic": "Экология",
+      "uniq": 47,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "art",
+      "subject": "История искусств",
+      "topicId": "modern",
+      "topic": "XIX-XX век",
+      "uniq": 47,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "count",
+      "topic": "Счёт до 20",
+      "uniq": 48,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "genetics",
+      "topic": "Генетика",
+      "uniq": 48,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "evolution",
+      "topic": "Эволюция",
+      "uniq": 48,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "verse",
+      "topic": "Стихосложение",
+      "uniq": 48,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "law",
+      "topic": "Право",
+      "uniq": 48,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "mult",
+      "topic": "Умножение",
+      "uniq": 49,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "coord",
+      "topic": "Координаты",
+      "uniq": 49,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "dyn",
+      "topic": "Динамика",
+      "uniq": 49,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "population",
+      "topic": "Население",
+      "uniq": 49,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "resources",
+      "topic": "Ресурсы",
+      "uniq": 49,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "cold",
+      "topic": "Холодная война",
+      "uniq": 49,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "earth",
+      "topic": "Земля и карта",
+      "uniq": 50,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "human",
+      "topic": "Человек и общество",
+      "uniq": 50,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "econ",
+      "topic": "Экономика",
+      "uniq": 50,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "grammar",
+      "topic": "Грамматика",
+      "uniq": 51,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "quad",
+      "topic": "Четырёхугольники",
+      "uniq": 51,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "punct",
+      "topic": "Пунктуация",
+      "uniq": 51,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "atom",
+      "topic": "Строение атома",
+      "uniq": 51,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "speed",
+      "topic": "Скорость",
+      "uniq": 52,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "ww2",
+      "topic": "Вторая мировая",
+      "uniq": 52,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "terms",
+      "topic": "Термины",
+      "uniq": 52,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "neni",
+      "topic": "НЕ и НИ",
+      "uniq": 52,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "organic",
+      "topic": "Органика",
+      "uniq": 52,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "poly",
+      "topic": "Многогранники",
+      "uniq": 52,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "coord3",
+      "topic": "Координаты в пространстве",
+      "uniq": 52,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "quad",
+      "topic": "Квадратичная функция",
+      "uniq": 53,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "logic",
+      "topic": "Логика",
+      "uniq": 53,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "ussr",
+      "topic": "СССР",
+      "uniq": 53,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "heroes",
+      "topic": "Герои",
+      "uniq": 53,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rus20",
+      "topic": "Россия нач. XX в.",
+      "uniq": 54,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "orth",
+      "topic": "ПРЕ-/ПРИ-",
+      "uniq": 54,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "pol",
+      "topic": "Политика",
+      "uniq": 56,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "ineq",
+      "topic": "Неравенства",
+      "uniq": 57,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "impulse",
+      "topic": "Импульс и энергия",
+      "uniq": 57,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "trig",
+      "topic": "Тригонометрия",
+      "uniq": 57,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "tenses",
+      "topic": "Времена",
+      "uniq": 57,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "circ",
+      "topic": "Окружность",
+      "uniq": 57,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "works",
+      "topic": "Произведения",
+      "uniq": 57,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "rotat",
+      "topic": "Тела вращения",
+      "uniq": 57,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "dec",
+      "topic": "Десятичные дроби",
+      "uniq": 58,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "geo",
+      "topic": "Геометрия",
+      "uniq": 59,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "sub",
+      "topic": "Вычитание",
+      "uniq": 60,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "nn",
+      "topic": "Н и НН",
+      "uniq": 60,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "rat",
+      "topic": "Пропорции",
+      "uniq": 64,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "elec",
+      "topic": "Электричество",
+      "uniq": 64,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "encode",
+      "topic": "Кодирование",
+      "uniq": 64,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "eq",
+      "topic": "Уравнения",
+      "uniq": 64,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "encode",
+      "topic": "Кодирование",
+      "uniq": 64,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "add",
+      "topic": "Сложение",
+      "uniq": 65,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "frac",
+      "topic": "Дроби",
+      "uniq": 65,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "heat",
+      "topic": "Тепловые явления",
+      "uniq": 65,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "area",
+      "topic": "Площади",
+      "uniq": 66,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "python",
+      "topic": "Python",
+      "uniq": 68,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "div",
+      "topic": "Делимость",
+      "uniq": 72,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "area",
+      "topic": "Площадь и периметр",
+      "uniq": 73,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "prob",
+      "subject": "Вероятность",
+      "topicId": "classic",
+      "topic": "Классическая P",
+      "uniq": 75,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "vec",
+      "topic": "Векторы",
+      "uniq": 76,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "tasks",
+      "topic": "Задачи",
+      "uniq": 83,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "frac",
+      "topic": "Обыкновенные дроби",
+      "uniq": 83,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "prog",
+      "topic": "Прогрессии",
+      "uniq": 83,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "div",
+      "topic": "Деление",
+      "uniq": 86,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "oly",
+      "subject": "Олимпиада",
+      "topicId": "deep",
+      "topic": "Углублённые",
+      "uniq": 88,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "coord",
+      "topic": "Метод координат",
+      "uniq": 89,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "kin",
+      "topic": "Кинематика",
+      "uniq": 91,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "stereo",
+      "topic": "Стереометрия",
+      "uniq": 92,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "mol",
+      "topic": "Молекул. физика",
+      "uniq": 92,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "energy",
+      "topic": "Энергия и импульс",
+      "uniq": 94,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "oly",
+      "subject": "Олимпиада",
+      "topicId": "cross",
+      "topic": "Межпредметные",
+      "uniq": 95,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "lin",
+      "topic": "Линейные уравнения",
+      "uniq": 97,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "ineq",
+      "topic": "Неравенства",
+      "uniq": 97,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "dyn",
+      "topic": "Динамика",
+      "uniq": 97,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "tasks",
+      "topic": "Задачи",
+      "uniq": 98,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "oly",
+      "subject": "Олимпиада",
+      "topicId": "traps",
+      "topic": "Ловушки",
+      "uniq": 98,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "numsys",
+      "topic": "Системы счисления",
+      "uniq": 99,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "neg",
+      "topic": "Отрицательные числа",
+      "uniq": 101,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "oly",
+      "subject": "Олимпиада",
+      "topicId": "logic",
+      "topic": "Логика и смекалка",
+      "uniq": 103,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "bignum",
+      "topic": "Многозначные числа",
+      "uniq": 105,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "order",
+      "topic": "Порядок действий",
+      "uniq": 108,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "compare",
+      "topic": "Сравнение чисел",
+      "uniq": 110,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "sub100",
+      "topic": "Вычитание до 100",
+      "uniq": 112,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "add100",
+      "topic": "Сложение до 100",
+      "uniq": 115,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "prob",
+      "subject": "Вероятность",
+      "topicId": "stats",
+      "topic": "Статистика",
+      "uniq": 119,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    }
+  ],
+  "boosted": [
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "riddle1",
+      "topic": "Загадки и потешки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "fairy1",
+      "topic": "Сказки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "poem1",
+      "topic": "Стихи",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "compose10",
+      "topic": "Состав числа 10",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "shapes",
+      "topic": "Фигуры",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "safe1",
+      "topic": "Безопасность",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "seasons",
+      "topic": "Времена года",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "nature",
+      "topic": "Живая природа",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "family1",
+      "topic": "Семья и школа",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "jishi",
+      "topic": "ЖИ-ШИ, ЧА-ЩА",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 6,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "capital",
+      "topic": "Заглавная буква",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "syllable",
+      "topic": "Слоги",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "folk2",
+      "topic": "Народные сказки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "nature2",
+      "topic": "Рассказы о природе",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "poem2",
+      "topic": "Стихи о детстве",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "math",
+      "subject": "Математика",
+      "topicId": "measure",
+      "topic": "Единицы измерения",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "water2",
+      "topic": "Вода и её свойства",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "animals",
+      "topic": "Животные",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 10,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "country",
+      "topic": "Родная страна",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "transport2",
+      "topic": "Транспорт и профессии",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "bezud",
+      "topic": "Безударные гласные",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "pair",
+      "topic": "Парные согласные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "transfer",
+      "topic": "Перенос слов",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "fable3",
+      "topic": "Басни",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "byliny3",
+      "topic": "Былины",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "children3",
+      "topic": "Рассказы о детях",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "cities3",
+      "topic": "Города России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "map",
+      "topic": "Карта и стороны света",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "weather",
+      "topic": "Погода и климат",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade3_v2.html",
+      "grade": 3,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "eco3",
+      "topic": "Экология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "foreign4",
+      "topic": "Зарубежная литература",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "classic4",
+      "topic": "Классика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "read",
+      "subject": "Литературное чтение",
+      "topicId": "poetry4",
+      "topic": "Поэзия о Родине",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "human4",
+      "topic": "Человек и здоровье",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "eco4",
+      "topic": "Экология и охрана природы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "cell",
+      "topic": "Клетка",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "plant",
+      "topic": "Растения",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "human",
+      "topic": "Человек и здоровье",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "earth",
+      "topic": "Земля",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "map",
+      "topic": "Карта",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "zones",
+      "topic": "Природные зоны",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "egypt",
+      "topic": "Древний Египет",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rome",
+      "topic": "Древний Рим",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "greece",
+      "topic": "Древняя Греция",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "terms5",
+      "topic": "Литературные термины",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "push5",
+      "topic": "Пушкин и Лермонтов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "folk5",
+      "topic": "Сказки и басни",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "anim",
+      "topic": "Животные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "class",
+      "topic": "Классификация",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "plants",
+      "topic": "Растения и их органы",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "atm",
+      "topic": "Атмосфера и погода",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "hydro",
+      "topic": "Гидросфера",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "litho",
+      "topic": "Литосфера",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "byz",
+      "topic": "Византия и ислам",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rmed",
+      "topic": "Русь",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "med",
+      "topic": "Средние века",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "oldrus6",
+      "topic": "Древнерусская литература",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "push6",
+      "topic": "Пушкин и Лермонтов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "turg6",
+      "topic": "Тургенев и Некрасов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "pron",
+      "topic": "Местоимения",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "adj",
+      "topic": "Прилагательные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "num",
+      "topic": "Числительные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "func",
+      "topic": "Функции",
+      "uniq": 34,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 10,
+      "sources": [
+        "wave10-func"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "zool7",
+      "topic": "Зоология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "class7",
+      "topic": "Классификация животных",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "evo7",
+      "topic": "Эволюция животных",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "cont7",
+      "topic": "Материки",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "pop7",
+      "topic": "Население мира",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "ocean7",
+      "topic": "Океаны",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "par",
+      "topic": "Параллельные прямые",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "angles",
+      "topic": "Углы и признаки равенства",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo7",
+      "topic": "Алгоритмы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "data7",
+      "topic": "Данные и кодирование",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "net7",
+      "topic": "Компьютерные сети",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "nt",
+      "topic": "Новое время",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "peter",
+      "topic": "Пётр I и реформы",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "r17",
+      "topic": "Россия XVII—XVIII",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "gog7",
+      "topic": "Гоголь и Тургенев",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "verse7",
+      "topic": "Стихосложение",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "tol7",
+      "topic": "Толстой и Чехов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave20"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "adv",
+      "topic": "Наречие",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "not",
+      "topic": "НЕ с частями речи",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "part",
+      "topic": "Причастие и деепричастие",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "press",
+      "topic": "Давление",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "work",
+      "topic": "Работа и энергия",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "anat",
+      "topic": "Анатомия человека",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "blood",
+      "topic": "Кровь и дыхание",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "nerv",
+      "topic": "Нервная система",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "water8",
+      "topic": "Внутренние воды России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "climate8",
+      "topic": "Климат и природные зоны",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "russia8",
+      "topic": "Россия: положение и рельеф",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "reforms19",
+      "topic": "Реформы и общество XIX в.",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "lermontov8",
+      "topic": "Лермонтов",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "lit18",
+      "topic": "Литература XVIII–XIX вв.",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "pushkin8",
+      "topic": "Пушкин",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "law",
+      "topic": "Право",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "human",
+      "topic": "Человек и общество",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "econ",
+      "topic": "Экономика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "synt",
+      "topic": "Синтаксис",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "opt",
+      "topic": "Оптика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "mag",
+      "topic": "Электромагнетизм",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "atom",
+      "topic": "Атом и вещество",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "classes",
+      "topic": "Классы веществ",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "react",
+      "topic": "Химические реакции",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "genetics",
+      "topic": "Генетика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "evolution",
+      "topic": "Эволюция",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "ecology",
+      "topic": "Экология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "pop9",
+      "topic": "Население России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "econ9",
+      "topic": "Хозяйство России",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "regions9",
+      "topic": "Экономические районы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "sincos",
+      "topic": "Теоремы sin/cos",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "world20",
+      "topic": "Мир в XX в.",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rus20",
+      "topic": "Россия нач. XX в.",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "ussr",
+      "topic": "СССР 1920–30-е",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "slovo9",
+      "topic": "«Слово о полку Игореве»",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "gribo9",
+      "topic": "Грибоедов и «Горе от ума»",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "authors9",
+      "topic": "Пушкин, Лермонтов, Гоголь",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "law",
+      "topic": "Право",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "human",
+      "topic": "Человек и общество",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "econ",
+      "topic": "Экономика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "spp",
+      "topic": "СПП",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "ssp",
+      "topic": "ССП и БСП",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "metals",
+      "topic": "Металлы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "nonmet",
+      "topic": "Неметаллы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade9_v2.html",
+      "grade": 9,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "org",
+      "topic": "Органические вещества",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "essay",
+      "topic": "Написание эссе",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "wordform",
+      "topic": "Словообразование",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "phrasal",
+      "topic": "Фразовые глаголы",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "eng",
+      "subject": "Английский",
+      "topicId": "reading",
+      "topic": "Чтение и смысл",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo",
+      "topic": "Алгоритмы",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "vocab",
+      "topic": "Словарные слова",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "gen11",
+      "topic": "Генетика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "cell11",
+      "topic": "Клетка и молекулярная биология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "eco11",
+      "topic": "Эволюция и экология",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "prob",
+      "subject": "Вероятность и статистика",
+      "topicId": "comb11",
+      "topic": "Комбинаторика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "prob",
+      "subject": "Вероятность и статистика",
+      "topicId": "rand11",
+      "topic": "Случайные величины",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "prob",
+      "subject": "Вероятность и статистика",
+      "topicId": "stat11",
+      "topic": "Статистика",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "global11",
+      "topic": "Глобальные проблемы",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "worldecon11",
+      "topic": "Мировое хозяйство",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geog",
+      "subject": "География",
+      "topicId": "regions11",
+      "topic": "Страны и регионы мира",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "angles",
+      "topic": "Углы и перпендикулярность",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "db",
+      "topic": "БД и сети",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "world21",
+      "topic": "Мир во 2-й пол. XX–XXI в.",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "russia90",
+      "topic": "Россия 1990–2000-е",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "poetry11",
+      "topic": "Поэзия XX века",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "prose11",
+      "topic": "Проза XX века",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "lit",
+      "subject": "Литература",
+      "topicId": "silver11",
+      "topic": "Серебряный век",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "politic",
+      "topic": "Политология",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "law",
+      "topic": "Право",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "soc",
+      "subject": "Обществознание",
+      "topicId": "econ",
+      "topic": "Экономика",
+      "uniq": 13,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "orth",
+      "topic": "Орфография",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "style",
+      "topic": "Средства выразительности",
+      "uniq": 14,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "optics",
+      "topic": "Волновая оптика",
+      "uniq": 12,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave11"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "genchem",
+      "topic": "Общая химия",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "ovr",
+      "topic": "ОВР, электролиз, гидролиз",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "chem",
+      "subject": "Химия",
+      "topicId": "org11",
+      "topic": "Органическая химия",
+      "uniq": 15,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave19"
+      ]
+    }
+  ],
+  "weakest": [
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "body",
+      "topic": "Тело человека",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade1_v2.html",
+      "grade": 1,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "letters",
+      "topic": "Буквы и звуки",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "world",
+      "subject": "Окружающий мир",
+      "topicId": "plants",
+      "topic": "Растения",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "bezud",
+      "topic": "Безударные гласные",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "okr",
+      "subject": "Окружающий мир",
+      "topicId": "state",
+      "topic": "Государство",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "conj",
+      "topic": "Спряжение",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "wparts",
+      "topic": "Состав слова",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade4_v2.html",
+      "grade": 4,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "spell",
+      "topic": "Правописание",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "greece",
+      "topic": "Древняя Греция",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "syn",
+      "topic": "Синтаксис",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "phon",
+      "topic": "Фонетика",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "morph",
+      "topic": "Морфология",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "alg",
+      "subject": "Алгебра",
+      "topicId": "poly",
+      "topic": "Многочлены",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "tri",
+      "topic": "Треугольники",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "world19",
+      "topic": "Мир в XIX в.",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade8_v2.html",
+      "grade": 8,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "punct",
+      "topic": "Пунктуация",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "algo",
+      "topic": "Алгоритмы",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade10_v2.html",
+      "grade": 10,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "vocab",
+      "topic": "Словарные слова",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 8,
+      "sources": [
+        "wave6"
+      ]
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "inf",
+      "subject": "Информатика",
+      "topicId": "logic",
+      "topic": "Логика",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "ussr2",
+      "topic": "СССР после 1945",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "punct",
+      "topic": "Пунктуация",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "emwave",
+      "topic": "ЭМ волны и колебания",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade11_v2.html",
+      "grade": 11,
+      "subjectId": "phy",
+      "subject": "Физика",
+      "topicId": "quantum",
+      "topic": "Квантовая и ядерная физика",
+      "uniq": 10,
+      "samples": 120,
+      "errors": 0,
+      "boosted": false,
+      "extraCount": 0,
+      "sources": []
+    },
+    {
+      "file": "grade2_v2.html",
+      "grade": 2,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "pair",
+      "topic": "Парные согласные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "cell",
+      "topic": "Клетка",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "plant",
+      "topic": "Растения",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "earth",
+      "topic": "Земля",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "geo5",
+      "subject": "География",
+      "topicId": "map",
+      "topic": "Карта",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "egypt",
+      "topic": "Древний Египет",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade5_v2.html",
+      "grade": 5,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rome",
+      "topic": "Древний Рим",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "anim",
+      "topic": "Животные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "bio",
+      "subject": "Биология",
+      "topicId": "class",
+      "topic": "Классификация",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "litho",
+      "topic": "Литосфера",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "geo6",
+      "subject": "География",
+      "topicId": "hydro",
+      "topic": "Гидросфера",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "med",
+      "topic": "Средние века",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "byz",
+      "topic": "Византия и ислам",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "his",
+      "subject": "История",
+      "topicId": "rmed",
+      "topic": "Русь",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "num",
+      "topic": "Числительные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade6_v2.html",
+      "grade": 6,
+      "subjectId": "rus",
+      "subject": "Русский язык",
+      "topicId": "adj",
+      "topic": "Прилагательные",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 4,
+      "sources": [
+        "wave10"
+      ]
+    },
+    {
+      "file": "grade7_v2.html",
+      "grade": 7,
+      "subjectId": "geo",
+      "subject": "Геометрия",
+      "topicId": "par",
+      "topic": "Параллельные прямые",
+      "uniq": 11,
+      "samples": 120,
+      "errors": 0,
+      "boosted": true,
+      "extraCount": 5,
+      "sources": [
+        "wave10"
+      ]
+    }
+  ],
+  "gradeSummary": [
+    {
+      "grade": 1,
+      "avg": "26.1",
+      "min": 10,
+      "topics": 18,
+      "boosted": 12
+    },
+    {
+      "grade": 2,
+      "avg": "28.6",
+      "min": 10,
+      "topics": 19,
+      "boosted": 11
+    },
+    {
+      "grade": 3,
+      "avg": "32.3",
+      "min": 13,
+      "topics": 18,
+      "boosted": 7
+    },
+    {
+      "grade": 4,
+      "avg": "27.0",
+      "min": 10,
+      "topics": 18,
+      "boosted": 5
+    },
+    {
+      "grade": 5,
+      "avg": "19.6",
+      "min": 10,
+      "topics": 23,
+      "boosted": 12
+    },
+    {
+      "grade": 6,
+      "avg": "22.4",
+      "min": 11,
+      "topics": 23,
+      "boosted": 15
+    },
+    {
+      "grade": 7,
+      "avg": "17.2",
+      "min": 10,
+      "topics": 34,
+      "boosted": 23
+    },
+    {
+      "grade": 8,
+      "avg": "20.6",
+      "min": 10,
+      "topics": 46,
+      "boosted": 19
+    },
+    {
+      "grade": 9,
+      "avg": "23.7",
+      "min": 11,
+      "topics": 46,
+      "boosted": 21
+    },
+    {
+      "grade": 10,
+      "avg": "56.3",
+      "min": 10,
+      "topics": 62,
+      "boosted": 6
+    },
+    {
+      "grade": 11,
+      "avg": "16.2",
+      "min": 10,
+      "topics": 53,
+      "boosted": 25
+    }
+  ]
+}

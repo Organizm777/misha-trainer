@@ -1,0 +1,46 @@
+{
+  "rows": [
+    {
+      "grade": "8",
+      "subjects": 12,
+      "topics": 46,
+      "missing": [],
+      "requiredTopics": {
+        "Химия": 3,
+        "Биология": 3,
+        "География": 3,
+        "Литература": 3
+      },
+      "ok": true
+    },
+    {
+      "grade": "9",
+      "subjects": 12,
+      "topics": 46,
+      "missing": [],
+      "requiredTopics": {
+        "Химия": 3,
+        "Биология": 3,
+        "География": 3,
+        "Литература": 3
+      },
+      "ok": true
+    },
+    {
+      "grade": "11",
+      "subjects": 13,
+      "topics": 53,
+      "missing": [],
+      "requiredTopics": {
+        "Вероятность и статистика": 3,
+        "Химия": 3,
+        "Биология": 3,
+        "География": 3,
+        "Литература": 3
+      },
+      "ok": true
+    }
+  ],
+  "closed": true,
+  "totalAddedSubjects": 13
+}

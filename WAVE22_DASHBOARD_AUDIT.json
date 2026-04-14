@@ -1,0 +1,55 @@
+{
+  "placeholders": [
+    {
+      "id": "wave22-insights",
+      "ok": true
+    },
+    {
+      "id": "wave22-heatmap",
+      "ok": true
+    },
+    {
+      "id": "wave22-radar",
+      "ok": true
+    },
+    {
+      "id": "wave22-trend",
+      "ok": true
+    },
+    {
+      "id": "wave22-subjects",
+      "ok": true
+    }
+  ],
+  "buttons": [
+    {
+      "call": "downloadDashboardReport()",
+      "ok": true
+    },
+    {
+      "call": "downloadDashboardCSV()",
+      "ok": true
+    },
+    {
+      "call": "downloadDashboardPNG()",
+      "ok": true
+    },
+    {
+      "call": "window.print()",
+      "ok": true
+    }
+  ],
+  "hooks": {
+    "dashboardScript": true,
+    "swHook": true,
+    "activity365": true,
+    "stateEvent": true,
+    "csvFn": true,
+    "pngFn": true
+  },
+  "summary": {
+    "placeholdersOk": 5,
+    "buttonsOk": 4,
+    "hooksOk": 6
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "rows": [
+    {
+      "grade": "1",
+      "subjects": 4,
+      "topics": 18,
+      "missing": [],
+      "countProblems": [],
+      "requiredTopics": {
+        "Литературное чтение": 3,
+        "Окружающий мир": 5
+      },
+      "ok": true
+    },
+    {
+      "grade": "2",
+      "subjects": 5,
+      "topics": 19,
+      "missing": [],
+      "countProblems": [],
+      "requiredTopics": {
+        "Литературное чтение": 3,
+        "Окружающий мир": 5
+      },
+      "ok": true
+    },
+    {
+      "grade": "3",
+      "subjects": 5,
+      "topics": 18,
+      "missing": [],
+      "countProblems": [],
+      "requiredTopics": {
+        "Литературное чтение": 3,
+        "Окружающий мир": 6
+      },
+      "ok": true
+    },
+    {
+      "grade": "4",
+      "subjects": 5,
+      "topics": 18,
+      "missing": [],
+      "countProblems": [],
+      "requiredTopics": {
+        "Литературное чтение": 3,
+        "Окружающий мир": 5
+      },
+      "ok": true
+    },
+    {
+      "grade": "5",
+      "subjects": 7,
+      "topics": 23,
+      "missing": [],
+      "countProblems": [],
+      "requiredTopics": {
+        "Литература": 3
+      },
+      "ok": true
+    },
+    {
+      "grade": "6",
+      "subjects": 7,
+      "topics": 23,
+      "missing": [],
+      "countProblems": [],
+      "requiredTopics": {
+        "Литература": 3
+      },
+      "ok": true
+    },
+    {
+      "grade": "7",
+      "subjects": 10,
+      "topics": 34,
+      "missing": [],
+      "countProblems": [],
+      "requiredTopics": {
+        "Литература": 3,
+        "Биология": 3,
+        "География": 3,
+        "Информатика": 3
+      },
+      "ok": true
+    }
+  ],
+  "closed": true,
+  "totalAddedSubjects": 14
+}

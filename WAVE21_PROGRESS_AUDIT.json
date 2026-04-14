@@ -1,0 +1,59 @@
+{
+  "hookedPages": [
+    {
+      "file": "grade1_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade2_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade3_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade4_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade5_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade6_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade7_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade8_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade9_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade10_v2.html",
+      "hooked": true
+    },
+    {
+      "file": "grade11_v2.html",
+      "hooked": true
+    }
+  ],
+  "hookedCount": 11,
+  "totalPages": 11,
+  "features": {
+    "hasResume": true,
+    "hasFavorites": true,
+    "hasContinue": true,
+    "hasRandom": true,
+    "hasRepeatErrors": true,
+    "hasSnapshot": true,
+    "hasProgressBar": true
+  }
+}
