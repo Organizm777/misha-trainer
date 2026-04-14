@@ -2968,6 +2968,13 @@
       return false;
     }
   }
+  function compactInstallUi(){
+    try {
+      return !!(window.matchMedia && window.matchMedia('(max-width: 1023px)').matches);
+    } catch(_) {
+      return false;
+    }
+  }
   function installDismissed(){
     var raw = +(getStore(INSTALL_DISMISS_KEY) || 0);
     return raw > now();
@@ -2996,7 +3003,7 @@
   function syncLegacyInstallButton(){
     var btn = document.getElementById && document.getElementById(LEGACY_INSTALL_ID);
     if (!btn) return;
-    var shouldShow = !!state.installPrompt && (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches) && !standalone() && !installDismissed();
+    var shouldShow = !!state.installPrompt && compactInstallUi() && !standalone() && !installDismissed();
     btn.hidden = !shouldShow;
     if (!shouldShow) {
       btn.style.display = 'none';
@@ -3021,8 +3028,8 @@
     var style = document.createElement('style');
     style.id = SETTINGS_STYLE_ID;
     style.textContent = '\n#' + LEGACY_THEME_BTN_ID + '{display:none!important;pointer-events:none!important}' +
-      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;padding:0 10px;border:1px solid rgba(26,26,46,.08);border-radius:999px;background:rgba(255,255,255,.78);color:#1a1a2e;box-shadow:0 6px 16px rgba(0,0,0,.10);font:800 11px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px)}' +
-      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.84);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
+      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:0 8px;border:1px solid rgba(26,26,46,.08);border-radius:999px;background:rgba(255,255,255,.62);color:#1a1a2e;box-shadow:0 4px 12px rgba(0,0,0,.08);font:700 10px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px);opacity:.92}' +
+      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.78);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
       '\n#' + SETTINGS_MODAL_ID + '{position:fixed;inset:0;z-index:14000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.56)}' +
       '\n#' + SETTINGS_MODAL_ID + ' [data-settings-card]{width:min(100%,560px);max-height:88vh;overflow:auto;background:var(--card,#fff);color:var(--text,#111827);border:1px solid var(--border,#d7d3cc);border-radius:20px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.26)}' +
       '\n.wave40-settings-section{background:rgba(37,99,235,.06);border-radius:14px;padding:12px 12px;margin-top:12px}' +
@@ -3036,7 +3043,8 @@
       '\n.wave40-settings-row{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;margin-top:8px}' +
       '\n.wave40-settings-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
       '\n.wave40-pill{padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--accent,#2563eb);font-size:11px;font-weight:800}' +
-      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:36px;min-height:36px;padding:0 8px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
+      '\n@media (min-width:1024px){#' + SETTINGS_BTN_ID + '{min-width:34px;min-height:34px;padding:0 7px;background:rgba(255,255,255,.54);box-shadow:0 2px 8px rgba(0,0,0,.06)}}' +
+      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:34px;min-height:34px;padding:0 7px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
       '\n@media print{#' + SETTINGS_BTN_ID + ',#' + SETTINGS_MODAL_ID + ',#' + LEGACY_INSTALL_ID + '{display:none!important}}';
     (document.head || document.documentElement).appendChild(style);
   }
@@ -3047,7 +3055,7 @@
     btn = document.createElement('button');
     btn.id = SETTINGS_BTN_ID;
     btn.type = 'button';
-    btn.textContent = '⚙️';
+    btn.textContent = '⚙';
     btn.setAttribute('aria-label', 'Настройки');
     btn.setAttribute('title', 'Настройки');
     btn.setAttribute('aria-haspopup', 'dialog');
@@ -3059,7 +3067,7 @@
     var btn = document.getElementById(SETTINGS_BTN_ID);
     if (!btn) return;
     var meta = themeMeta();
-    btn.textContent = '⚙️';
+    btn.textContent = '⚙';
     btn.title = 'Настройки · тема: ' + meta.label;
     btn.setAttribute('aria-label', 'Настройки. Тема: ' + meta.label + '.');
   }
@@ -3073,10 +3081,10 @@
   }
   function installState(){
     return {
-      available: !!state.installPrompt && (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches),
+      available: !!state.installPrompt && compactInstallUi(),
       dismissed: installDismissed(),
       standalone: standalone(),
-      compact: (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches)
+      compact: compactInstallUi()
     };
   }
   function actionButton(text, cls, id){
@@ -3111,7 +3119,7 @@
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 41</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 43</div></div>';
     return html;
   }
   function refreshThemeButtons(){

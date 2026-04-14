@@ -126,6 +126,51 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
   window.showToast = showToast;
 
+  function runtimeErrorStore(){
+    if(!window.__trainerRuntimeErrors) window.__trainerRuntimeErrors = [];
+    return window.__trainerRuntimeErrors;
+  }
+
+  function normalizeRuntimeMessage(value){
+    if(value == null) return '';
+    if(typeof value === 'string') return value;
+    if(value && typeof value.message === 'string') return value.message;
+    try { return JSON.stringify(value); } catch (_) { return String(value); }
+  }
+
+  function recordRuntimeError(kind, payload){
+    const store = runtimeErrorStore();
+    const entry = {
+      kind: kind || 'error',
+      message: normalizeRuntimeMessage(payload && payload.message ? payload.message : payload),
+      detail: payload || null,
+      page: (window.location && (window.location.pathname || window.location.href)) || '',
+      at: Date.now()
+    };
+    store.push(entry);
+    if(store.length > 50) store.splice(0, store.length - 50);
+    return entry;
+  }
+
+  function bindRuntimeErrorCapture(){
+    if(window.__trainerRuntimeCaptureBound) return;
+    window.__trainerRuntimeCaptureBound = true;
+    window.addEventListener('error', function(event){
+      recordRuntimeError('error', {
+        message: (event && event.message) || (event && event.error && event.error.message) || '',
+        filename: event && event.filename || '',
+        lineno: event && event.lineno || 0,
+        colno: event && event.colno || 0
+      });
+    }, true);
+    window.addEventListener('unhandledrejection', function(event){
+      recordRuntimeError('unhandledrejection', {
+        message: normalizeRuntimeMessage(event && event.reason),
+        reason: normalizeRuntimeMessage(event && event.reason)
+      });
+    }, true);
+  }
+
   function syncThemeButton(){
     const btn = document.getElementById(THEME_BTN_ID);
     if(!btn) return;
@@ -306,8 +351,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     initScreenHistory();
     window.addEventListener('online', function(){ syncConnectivity(false); });
     window.addEventListener('offline', function(){ syncConnectivity(false); });
-    window.addEventListener('error', function(){ showToast('Что-то пошло не так. Попробуй ещё раз.', 'error', 2600); });
-    window.addEventListener('unhandledrejection', function(){ showToast('Не удалось завершить действие.', 'error', 2600); });
+    bindRuntimeErrorCapture();
     try {
       const mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
       if(mq && mq.addEventListener){
@@ -869,28 +913,27 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     const style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = `
-      :root{--wave24-nav-base-h:60px}
+      :root{--wave24-nav-base-h:60px;--wave24-nav-safe-b:env(safe-area-inset-bottom,0px);--wave24-nav-total-h:calc(var(--wave24-nav-base-h) + var(--wave24-nav-safe-b))}
       body{overflow-x:hidden}
-      body.wave24-mobile-shell{padding-bottom:calc(var(--wave24-nav-base-h) + 18px + env(safe-area-inset-bottom,0)) !important;}
+      body.wave24-mobile-shell{padding-bottom:calc(var(--wave24-nav-total-h) + 12px) !important;}
       body.wave24-save-data, body.wave24-save-data button, body.wave24-save-data input, body.wave24-save-data select, body.wave24-save-data textarea{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif !important;}
       body.wave24-mobile-shell header,body.wave24-mobile-shell .header{background:var(--bg,#f5f3ee)!important;color:var(--text,#1a1a2e)!important;border-bottom:1px solid var(--border,#e2e0d8)}
       body.wave24-mobile-shell header h1,body.wave24-mobile-shell header p,body.wave24-mobile-shell .header h1,body.wave24-mobile-shell .header p{color:inherit!important}
       @media (max-width: 1023px){
         html,body{overscroll-behavior-y:contain;scroll-padding-top:calc(72px + env(safe-area-inset-top,0));}
       }
-      .wave24-install-btn{position:fixed;right:12px;bottom:calc(var(--wave24-nav-base-h) + 18px + env(safe-area-inset-bottom,0));z-index:9998;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:none;border-radius:999px;background:var(--text,#1a1a2e);color:#fff;font:700 12px/1.2 'Golos Text',system-ui,sans-serif;box-shadow:0 12px 28px rgba(0,0,0,.22);cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
+      .wave24-install-btn{position:fixed;right:12px;bottom:calc(var(--wave24-nav-total-h) + 12px);z-index:9998;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:none;border-radius:999px;background:var(--text,#1a1a2e);color:#fff;font:700 12px/1.2 'Golos Text',system-ui,sans-serif;box-shadow:0 12px 28px rgba(0,0,0,.22);cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
       .wave24-install-btn:active{transform:scale(.98)}
       .wave24-install-btn[hidden]{display:none!important}
-      .wave24-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9997;display:flex;gap:8px;align-items:stretch;height:calc(var(--wave24-nav-base-h) + env(safe-area-inset-bottom,0));padding:0 12px env(safe-area-inset-bottom,0);background:rgba(245,243,238,.96);backdrop-filter:blur(14px);border-top:1px solid var(--border,#e2e0d8);box-shadow:0 -8px 28px rgba(0,0,0,.08)}
+      .wave24-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9997;display:flex;gap:8px;align-items:stretch;box-sizing:border-box;height:var(--wave24-nav-total-h);min-height:var(--wave24-nav-total-h);max-height:var(--wave24-nav-total-h);padding:0 max(12px, env(safe-area-inset-right,0px)) var(--wave24-nav-safe-b) max(12px, env(safe-area-inset-left,0px));margin:0;background:rgba(245,243,238,.96);backdrop-filter:blur(14px);border-top:1px solid var(--border,#e2e0d8);box-shadow:0 -8px 28px rgba(0,0,0,.08)}
       html[data-theme="dark"] .wave24-bottom-nav{background:rgba(20,20,32,.96)}
-      .wave24-bottom-nav a,.wave24-bottom-nav button{flex:1;min-width:0;align-self:stretch;height:100%;min-height:100%;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0;border:none;border-radius:14px;background:transparent;color:var(--muted,#6b6a74);font:700 10px/1 'Golos Text',system-ui,sans-serif;text-decoration:none;cursor:pointer;-webkit-appearance:none;touch-action:manipulation;box-sizing:border-box;overflow:hidden}
-      .wave24-bottom-nav .wave24-ic{font-size:20px;line-height:1;height:24px;display:flex;align-items:center;justify-content:center}
-      .wave24-bottom-nav .wave24-tx{font-size:10px;line-height:1;white-space:nowrap}
+      .wave24-bottom-nav a,.wave24-bottom-nav button{flex:1;min-width:0;height:var(--wave24-nav-base-h);min-height:var(--wave24-nav-base-h);max-height:var(--wave24-nav-base-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 6px;border:none;border-radius:14px;background:transparent;color:var(--muted,#6b6a74);font:700 11px/1.1 'Golos Text',system-ui,sans-serif;text-decoration:none;cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
+      .wave24-bottom-nav .wave24-ic{font-size:18px;line-height:1}
       .wave24-bottom-nav .is-active{background:var(--abg,#dbeafe);color:var(--accent,#2563eb)}
       .wave24-bottom-nav .is-quiet{opacity:.75}
-      .wave24-mobile-tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--wave24-nav-base-h) + 18px + env(safe-area-inset-bottom,0));z-index:9996;background:var(--card,#fff);color:var(--muted,#6b6a74);border:1px solid var(--border,#e2e0d8);border-radius:999px;padding:8px 12px;font:600 11px/1.2 'Golos Text',system-ui,sans-serif;box-shadow:0 10px 24px rgba(0,0,0,.08);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+      .wave24-mobile-tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--wave24-nav-total-h) + 12px);z-index:9996;background:var(--card,#fff);color:var(--muted,#6b6a74);border:1px solid var(--border,#e2e0d8);border-radius:999px;padding:8px 12px;font:600 11px/1.2 'Golos Text',system-ui,sans-serif;box-shadow:0 10px 24px rgba(0,0,0,.08);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
       .wave24-mobile-tip.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
-      .wave24-has-bottom-nav .w{padding-bottom:calc(22px + env(safe-area-inset-bottom,0));}
+      .wave24-has-bottom-nav .w{padding-bottom:12px;}
       .wave24-has-bottom-nav header,.wave24-has-bottom-nav .header{padding-right:max(16px, env(safe-area-inset-right,0));padding-left:max(16px, env(safe-area-inset-left,0));}
       @media (max-width: 1023px){
         body.wave24-mobile-shell .w{padding-left:max(14px, env(safe-area-inset-left,0));padding-right:max(14px, env(safe-area-inset-right,0));}
@@ -898,7 +941,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
         #wave21-main-actions .btn,#wave22-dashboard-actions .btn{min-height:46px}
       }
       @media (min-width: 768px){
-        body.wave24-mobile-shell{padding-bottom:calc(var(--wave24-nav-base-h) + 24px + env(safe-area-inset-bottom,0)) !important;}
+        body.wave24-mobile-shell{padding-bottom:calc(var(--wave24-nav-total-h) + 12px) !important;}
         body.wave24-mobile-shell .w{max-width:980px !important;}
         #sg,#tl,.subj-grid,.grid,.stats,.subject-stack,#wave22-insights,#wave22-subjects,.wave22-subject-breakdown{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
         .subject-stack>.subject-card,#wave22-insights>.chart-card,#wave22-subjects>.chart-card{margin:0 !important}
@@ -914,7 +957,10 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
         body.wave24-mobile-shell{padding-bottom:env(safe-area-inset-bottom,0) !important;}
       }
       @media (orientation: landscape) and (max-height: 560px){
-        .wave24-install-btn{bottom:calc(74px + env(safe-area-inset-bottom,0));padding:8px 12px}
+        .wave24-bottom-nav{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0));}
+        .wave24-bottom-nav a,.wave24-bottom-nav button{padding:6px 6px;font-size:10px}
+        .wave24-bottom-nav .wave24-ic{font-size:16px}
+        .wave24-install-btn{bottom:calc(var(--wave24-nav-total-h) + 12px);padding:8px 12px}
       }
     `;
     document.head.appendChild(style);
@@ -1437,7 +1483,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   function syncLegacyInstallButton(){
     var btn = document.getElementById && document.getElementById(LEGACY_INSTALL_ID);
     if (!btn) return;
-    var shouldShow = !!state.installPrompt && (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches) && !standalone() && !installDismissed();
+    var shouldShow = !!state.installPrompt && compactInstallUi() && !standalone() && !installDismissed();
     btn.hidden = !shouldShow;
     if (!shouldShow) {
       btn.style.display = 'none';
@@ -1462,8 +1508,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var style = document.createElement('style');
     style.id = SETTINGS_STYLE_ID;
     style.textContent = '\n#' + LEGACY_THEME_BTN_ID + '{display:none!important;pointer-events:none!important}' +
-      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;padding:0 10px;border:1px solid rgba(26,26,46,.08);border-radius:999px;background:rgba(255,255,255,.78);color:#1a1a2e;box-shadow:0 6px 16px rgba(0,0,0,.10);font:800 11px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px)}' +
-      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.84);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
+      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:0 8px;border:1px solid rgba(26,26,46,.08);border-radius:999px;background:rgba(255,255,255,.62);color:#1a1a2e;box-shadow:0 4px 12px rgba(0,0,0,.08);font:700 10px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px);opacity:.92}' +
+      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.78);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
       '\n#' + SETTINGS_MODAL_ID + '{position:fixed;inset:0;z-index:14000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.56)}' +
       '\n#' + SETTINGS_MODAL_ID + ' [data-settings-card]{width:min(100%,560px);max-height:88vh;overflow:auto;background:var(--card,#fff);color:var(--text,#111827);border:1px solid var(--border,#d7d3cc);border-radius:20px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.26)}' +
       '\n.wave40-settings-section{background:rgba(37,99,235,.06);border-radius:14px;padding:12px 12px;margin-top:12px}' +
@@ -1477,7 +1523,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       '\n.wave40-settings-row{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;margin-top:8px}' +
       '\n.wave40-settings-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
       '\n.wave40-pill{padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--accent,#2563eb);font-size:11px;font-weight:800}' +
-      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:36px;min-height:36px;padding:0 8px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
+      '\n@media (min-width:1024px){#' + SETTINGS_BTN_ID + '{min-width:34px;min-height:34px;padding:0 7px;background:rgba(255,255,255,.54);box-shadow:0 2px 8px rgba(0,0,0,.06)}}' +
+      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:34px;min-height:34px;padding:0 7px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
       '\n@media print{#' + SETTINGS_BTN_ID + ',#' + SETTINGS_MODAL_ID + ',#' + LEGACY_INSTALL_ID + '{display:none!important}}';
     (document.head || document.documentElement).appendChild(style);
   }
@@ -1488,7 +1535,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     btn = document.createElement('button');
     btn.id = SETTINGS_BTN_ID;
     btn.type = 'button';
-    btn.textContent = '⚙️';
+    btn.textContent = '⚙';
     btn.setAttribute('aria-label', 'Настройки');
     btn.setAttribute('title', 'Настройки');
     btn.setAttribute('aria-haspopup', 'dialog');
@@ -1500,7 +1547,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var btn = document.getElementById(SETTINGS_BTN_ID);
     if (!btn) return;
     var meta = themeMeta();
-    btn.textContent = '⚙️';
+    btn.textContent = '⚙';
     btn.title = 'Настройки · тема: ' + meta.label;
     btn.setAttribute('aria-label', 'Настройки. Тема: ' + meta.label + '.');
   }
@@ -1514,10 +1561,10 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
   function installState(){
     return {
-      available: !!state.installPrompt && (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches),
+      available: !!state.installPrompt && compactInstallUi(),
       dismissed: installDismissed(),
       standalone: standalone(),
-      compact: (typeof compact === 'function' ? compact() : window.matchMedia('(max-width:1023px)').matches)
+      compact: compactInstallUi()
     };
   }
   function actionButton(text, cls, id){
@@ -1552,7 +1599,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 41</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 43</div></div>';
     return html;
   }
   function refreshThemeButtons(){
