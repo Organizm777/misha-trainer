@@ -1056,6 +1056,13 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     if(type === 'diagnostic') return !!$('#s-quiz.on');
     return false;
   }
+  function compactInstallUi(){
+    try {
+      return !!(window.matchMedia && window.matchMedia('(max-width: 1023px)').matches);
+    } catch(_) {
+      return false;
+    }
+  }
 
   function syncWakeLock(){
     if(shouldWake()) requestWakeLock();
@@ -1151,7 +1158,6 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       event.preventDefault();
       state.installPrompt = event;
       syncInstallChip();
-      if(typeof window.showToast === 'function') window.showToast('Можно установить на главный экран');
     });
     window.addEventListener('appinstalled', () => {
       state.installPrompt = null;
@@ -1433,7 +1439,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   function syncLegacyInstallButton(){
     var btn = document.getElementById && document.getElementById(LEGACY_INSTALL_ID);
     if (!btn) return;
-    var shouldShow = !!state.installPrompt && !standalone() && !installDismissed();
+    var shouldShow = !!state.installPrompt && compactInstallUi() && !standalone() && !installDismissed();
     btn.hidden = !shouldShow;
     if (!shouldShow) {
       btn.style.display = 'none';
@@ -1448,7 +1454,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var nativeToast = window.showToast;
     window.showToast = function(message, type, ms){
       var text = String(message == null ? '' : message);
-      if (/Можно установить на главный экран/i.test(text) && installDismissed()) return;
+      if (/Можно установить на главный экран/i.test(text)) return;
       return nativeToast.call(this, message, type, ms);
     };
     state.toastWrapped = true;
@@ -1458,8 +1464,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var style = document.createElement('style');
     style.id = SETTINGS_STYLE_ID;
     style.textContent = '\n#' + LEGACY_THEME_BTN_ID + '{display:none!important;pointer-events:none!important}' +
-      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 12px;border:none;border-radius:999px;background:rgba(255,255,255,.92);color:#1a1a2e;box-shadow:0 10px 24px rgba(0,0,0,.18);font:800 12px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(10px)}' +
-      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.94);color:#e8e6e0;border:1px solid rgba(255,255,255,.08)}' +
+      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;padding:0 10px;border:1px solid rgba(26,26,46,.08);border-radius:999px;background:rgba(255,255,255,.78);color:#1a1a2e;box-shadow:0 6px 16px rgba(0,0,0,.10);font:800 11px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px)}' +
+      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.84);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
       '\n#' + SETTINGS_MODAL_ID + '{position:fixed;inset:0;z-index:14000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.56)}' +
       '\n#' + SETTINGS_MODAL_ID + ' [data-settings-card]{width:min(100%,560px);max-height:88vh;overflow:auto;background:var(--card,#fff);color:var(--text,#111827);border:1px solid var(--border,#d7d3cc);border-radius:20px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.26)}' +
       '\n.wave40-settings-section{background:rgba(37,99,235,.06);border-radius:14px;padding:12px 12px;margin-top:12px}' +
@@ -1473,7 +1479,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       '\n.wave40-settings-row{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;margin-top:8px}' +
       '\n.wave40-settings-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
       '\n.wave40-pill{padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--accent,#2563eb);font-size:11px;font-weight:800}' +
-      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:40px;min-height:40px;padding:0 10px;font-size:11px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
+      '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:36px;min-height:36px;padding:0 8px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
       '\n@media print{#' + SETTINGS_BTN_ID + ',#' + SETTINGS_MODAL_ID + ',#' + LEGACY_INSTALL_ID + '{display:none!important}}';
     (document.head || document.documentElement).appendChild(style);
   }
@@ -1510,9 +1516,10 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
   function installState(){
     return {
-      available: !!state.installPrompt,
+      available: !!state.installPrompt && compactInstallUi(),
       dismissed: installDismissed(),
-      standalone: standalone()
+      standalone: standalone(),
+      compact: compactInstallUi()
     };
   }
   function actionButton(text, cls, id){
@@ -1533,11 +1540,13 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     html += '<div class="wave40-settings-section"><div class="wave40-settings-title">📲 Приложение</div>';
     if (info.standalone) {
       html += '<div class="wave40-settings-note">Приложение уже установлено на устройство. Можно запускать его как обычное приложение.</div>';
+    } else if (!info.compact) {
+      html += '<div class="wave40-settings-note">На компьютере блок установки скрыт: без плавающих prompt-ов и лишних кнопок. Если браузер всё же поддерживает PWA, используйте его системное меню.</div>';
     } else if (info.available) {
-      html += '<div class="wave40-settings-note">Браузер разрешил установку. Теперь управляем этим из настроек: без навязчивого постоянного prompt.</div>';
+      html += '<div class="wave40-settings-note">Установка остаётся только здесь, в настройках: без автопоказа и без синей навязчивой кнопки.</div>';
       html += '<div class="wave40-action-grid">' + actionButton('⬇ Установить', 'primary', 'install') + actionButton(info.dismissed ? '🔔 Вернуть prompt' : '🙈 Скрыть на 7 дней', info.dismissed ? '' : 'warn', info.dismissed ? 'install-undismiss' : 'install-dismiss') + '</div>';
     } else {
-      html += '<div class="wave40-settings-note">Подсказка установки появится, когда браузер разрешит установку PWA. До этого здесь ничего нажимать не нужно.</div>';
+      html += '<div class="wave40-settings-note">На мобильном устройстве установка появится только когда браузер действительно разрешит PWA-install. До этого интерфейс остаётся чистым и без автоподсказок.</div>';
     }
     html += '<div class="wave40-settings-pills"><span class="wave40-pill">' + (navigator.onLine === false ? 'Офлайн' : 'Онлайн') + '</span><span class="wave40-pill">PWA shell</span></div></div>';
     if (actions.length) {

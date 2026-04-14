@@ -2367,7 +2367,6 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       event.preventDefault();
       state.installPrompt = event;
       syncInstallChip();
-      if(typeof window.showToast === 'function') window.showToast('Можно установить на главный экран');
     });
     window.addEventListener('appinstalled', () => {
       state.installPrompt = null;

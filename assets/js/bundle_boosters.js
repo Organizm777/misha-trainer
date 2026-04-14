@@ -1205,3 +1205,149 @@
   });
 })();
 
+
+;
+/* --- wave42_english_grade10.js --- */
+(function(){
+  if(typeof SUBJ === 'undefined' || !Array.isArray(SUBJ)) return;
+  if(String(window.GRADE_NUM || '') !== '10') return;
+  var eng = SUBJ.find(function(s){ return s.id === 'eng'; });
+  if(!eng) return;
+  var ENG_COLOR = '#2563eb';
+  var ENG_BG = '#dbeafe';
+  var DOTS = ['#2563eb','#7c3aed','#0d9488','#ea580c','#16a34a','#dc2626','#ca8a04','#9333ea','#0f766e','#be123c','#1d4ed8','#c2410c','#1f6feb','#0f766e','#9f1239','#7c2d12','#334155','#15803d','#6d28d9'];
+  window.ENG_TH = window.ENG_TH || {};
+  function bank(arr, tag, color, bg){ var e = pick(arr); return mkQ(e.q, e.a, shuffle([e.a].concat(e.o || [])), e.h || '', tag, color, bg); }
+  function putTheory(key, html){ ENG_TH[key] = html; }
+  function existingById(){
+    return (eng.tops || []).reduce(function(acc, topic){ acc[topic.id] = topic; return acc; }, {});
+  }
+  function reuseOrTopic(oldMap, id, name, thKey, dot, items){
+    var old = oldMap[id];
+    if(old){
+      old.nm = name;
+      old.dot = dot || old.dot;
+      if(ENG_TH[thKey]) old.th = ENG_TH[thKey];
+      return old;
+    }
+    return { id:id, nm:name, gen:function(){ return bank(items, name, ENG_COLOR, ENG_BG); }, th:ENG_TH[thKey] || '', dot:dot };
+  }
+  function newTopic(id, name, thKey, dot, items){
+    return { id:id, nm:name, gen:function(){ return bank(items, name, ENG_COLOR, ENG_BG); }, th:ENG_TH[thKey] || '', dot:dot };
+  }
+
+  putTheory('reading_strategies', `<h3>Reading Strategies</h3><p lang="en">Read the question first, then scan the text for key ideas, synonyms and paraphrases. In exam tasks the correct answer often repeats the meaning, not the exact words.</p><div class="fm" lang="en">question → keywords → paragraph → meaning check</div>`);
+  putTheory('essay_writing', `<h3>Essay Writing</h3><p lang="en">A short opinion essay needs a clear structure: introduction, 2–3 arguments, a counterpoint if needed, and a conclusion. Keep the tone neutral and use linkers to organise the logic.</p><div class="fm" lang="en">Introduction → arguments → example → conclusion</div>`);
+  putTheory('academic_vocab', `<h3>Academic Vocabulary</h3><p lang="en">Academic vocabulary appears in reports, essays and exam reading tasks. Learn the words in context and pay attention to natural collocations.</p><div class="fm" lang="en">analysis · evidence · issue · approach · significant · outcome</div>`);
+  putTheory('collocations10', `<h3>Collocations</h3><p lang="en">Many strong answers depend on word partnership, not on a single word. Learn common combinations as ready-made chunks.</p><div class="fm" lang="en">make progress · do research · take responsibility · heavy traffic · strong argument</div>`);
+  putTheory('confusing_verbs', `<h3>Confusing Verbs</h3><p lang="en">Some verbs look similar but have different grammar or meaning: <b>rise / raise</b>, <b>lie / lay</b>, <b>say / tell</b>, <b>borrow / lend</b>.</p><div class="fm" lang="en">Prices rise. · We raise prices. · Lie on the sofa. · Lay the book down.</div>`);
+  putTheory('british_american', `<h3>British vs American English</h3><p lang="en">Exams usually accept both variants, but the spelling and vocabulary should stay consistent inside one answer.</p><div class="fm" lang="en">colour / color · favourite / favorite · flat / apartment · holiday / vacation</div>`);
+  putTheory('idioms_fixed', `<h3>Idioms &amp; Fixed Expressions</h3><p lang="en">Idioms are best learned as complete expressions. In exams they often appear in reading and vocabulary tasks.</p><div class="fm" lang="en">once in a blue moon · under the weather · in the long run · by heart</div>`);
+
+  var NEW_BANKS = {
+    reading_strategies: [
+      {q:'A text says: “The school library closes at 5 p.m., but the reading room stays open until 7.” Which place stays open longer?', a:'the reading room', o:['the school library','the canteen','the hall'], h:'Compare the two opening times.'},
+      {q:'A text says: “Emma took the later train because the earlier one was cancelled.” Why did Emma travel later?', a:'The earlier train was cancelled.', o:['She overslept.','She missed her ticket.','She wanted a longer trip.'], h:'The reason is stated directly.'},
+      {q:'What is the best reading strategy in multiple-choice tasks?', a:'match ideas and paraphrases, not only exact words', o:['translate every word first','choose the longest answer','ignore the question'], h:'Exam writers often paraphrase the key idea.'},
+      {q:'A sentence says: “Despite the rain, the match continued.” What happened?', a:'It rained, but the match did not stop.', o:['The match was cancelled at once.','It was sunny all day.','The players went home before the match.'], h:'Despite introduces contrast.'},
+      {q:'If a question asks for the writer’s main idea, you should first look for:', a:'the sentence or detail repeated in different words', o:['the shortest sentence','the first number in the text','unknown vocabulary only'], h:'The main idea is usually supported by several details.'},
+      {q:'A text says: “Students can submit the form online or bring it to the office in person.” Which option is possible?', a:'both online submission and in-person delivery', o:['only online submission','only postal delivery','phone call instead of the form'], h:'Both options are named in the text.'},
+      {q:'What should you do before looking at the answer options in a reading task?', a:'predict the likely answer from the text or question', o:['choose option C by default','translate the title into Russian','ignore keywords'], h:'Prediction protects you from distractors.'},
+      {q:'A text says: “Leo used to live in Sochi, but he now studies in Kazan.” Where does Leo live now?', a:'in Kazan', o:['in Sochi','in Moscow','the text does not say'], h:'Focus on the word now.'}
+    ],
+    essay_writing: [
+      {q:'Which opening is best for an opinion essay?', a:'Nowadays, many people believe that ...', o:['Dear Tom,','See you soon!','Happy birthday to you!'], h:'An essay needs a neutral formal opening.'},
+      {q:'Which linker adds one more argument?', a:'Moreover', o:['However','As a result of this?','Yesterday'], h:'Moreover adds a new supporting point.'},
+      {q:'Which phrase is suitable for the conclusion?', a:'In conclusion, I believe that ...', o:['What a pity!','Can you help me?','How old are you?'], h:'A conclusion sums up the opinion.'},
+      {q:'What is the safest structure for a short exam essay?', a:'introduction → arguments → conclusion', o:['example → title → goodbye','questions only','random ideas without paragraphs'], h:'A clear structure improves coherence.'},
+      {q:'Which phrase helps present an opposite point?', a:'On the other hand', o:['For instance yesterday','At seven o’clock','In my free time'], h:'This linker introduces contrast.'},
+      {q:'What should each body paragraph contain?', a:'one clear idea with support or an example', o:['as many unrelated facts as possible','only one-word answers','a greeting and a signature'], h:'Each paragraph should do one job well.'},
+      {q:'Which tone is best for a school essay?', a:'clear, calm and reasonably formal', o:['aggressive and slangy','too casual and chatty','completely poetic'], h:'Exam essays are not private chats.'},
+      {q:'What is the purpose of a concluding sentence?', a:'to restate the main position clearly', o:['to add a brand-new argument only','to apologise for the essay','to ask the examiner a question'], h:'The conclusion closes the logic of the text.'}
+    ],
+    academic_vocab: [
+      {q:'Choose the best word: The report was based on strong ___ from the survey.', a:'evidence', o:['weather','shelf','ticket'], h:'Evidence supports a claim or conclusion.'},
+      {q:'Choose the best word: Climate change is a global ___.', a:'issue', o:['corner','blanket','receipt'], h:'An issue is an important problem or topic.'},
+      {q:'Choose the best word: The researchers used a new ___ to solve the problem.', a:'approach', o:['kettle','forest','neighbour'], h:'Approach = method or way of dealing with something.'},
+      {q:'Choose the best word: The difference in scores was statistically ___.', a:'significant', o:['wooden','favourite','sleepy'], h:'Significant = important enough to matter.'},
+      {q:'Choose the best word: The main ___ of the project was improved attendance.', a:'outcome', o:['surface','pocket','bridge'], h:'Outcome = result.'},
+      {q:'Choose the best word: We need a careful ___ of the data before we decide.', a:'analysis', o:['holiday','pencil','traffic'], h:'Analysis means detailed examination.'},
+      {q:'Choose the best word: The article explains the social ___ of online learning.', a:'impact', o:['stair','notebook','umbrella'], h:'Impact = effect or influence.'},
+      {q:'Choose the best word: The speaker supported her argument with a clear ___.', a:'example', o:['engine','uniform','furniture'], h:'An example helps prove a point.'}
+    ],
+    collocations10: [
+      {q:'Choose the natural collocation: ___ progress', a:'make', o:['do','take','keep'], h:'Make progress.'},
+      {q:'Choose the natural collocation: ___ research', a:'do', o:['make','catch','raise'], h:'Do research.'},
+      {q:'Choose the natural collocation: ___ responsibility', a:'take', o:['make','do','bring'], h:'Take responsibility.'},
+      {q:'Choose the natural collocation: ___ traffic', a:'heavy', o:['strong','hard','bigly'], h:'Heavy traffic is the standard phrase.'},
+      {q:'Choose the natural collocation: ___ a decision', a:'make', o:['do','say','reach up'], h:'Make a decision.'},
+      {q:'Choose the natural collocation: ___ attention', a:'pay', o:['do','put','bring'], h:'Pay attention.'},
+      {q:'Choose the natural collocation: ___ an exam', a:'take', o:['do a take','carry','reach'], h:'Students take an exam.'},
+      {q:'Choose the natural collocation: ___ an opportunity', a:'miss', o:['lose out of','write','climb'], h:'Miss an opportunity.'}
+    ],
+    confusing_verbs: [
+      {q:'Choose the correct verb: Prices usually ___ before holidays.', a:'rise', o:['raise','lay','borrow'], h:'Prices rise by themselves.'},
+      {q:'Choose the correct verb: The company plans to ___ wages next year.', a:'raise', o:['rise','lie','lend'], h:'You raise something actively.'},
+      {q:'Choose the correct verb: Please ___ the book on the desk.', a:'lay', o:['lie','rise','borrow'], h:'Lay something down.'},
+      {q:'Choose the correct verb: I need to ___ down for a few minutes.', a:'lie', o:['lay','raise','lend'], h:'Lie down = rest in a horizontal position.'},
+      {q:'Choose the correct verb: Could you ___ me your notes for one evening?', a:'lend', o:['borrow','say','rise'], h:'Lend = give temporarily.'},
+      {q:'Choose the correct verb: Can I ___ your charger?', a:'borrow', o:['lend','tell','raise'], h:'Borrow = take temporarily.'},
+      {q:'Choose the correct verb: She didn’t ___ me where she was going.', a:'tell', o:['say','lay','rise'], h:'Tell someone something.'},
+      {q:'Choose the correct verb: He ___ that he was too tired to come.', a:'said', o:['told','layed','raised'], h:'Say without a direct object person.'}
+    ],
+    british_american: [
+      {q:'Choose the British spelling.', a:'colour', o:['color','culor','colur'], h:'British English keeps the u.'},
+      {q:'Choose the American word.', a:'apartment', o:['flat','lift','holiday'], h:'Apartment is American English.'},
+      {q:'Choose the British word.', a:'petrol', o:['gas','truck','candy'], h:'Petrol is British English.'},
+      {q:'Choose the American spelling.', a:'favorite', o:['favourite','favourit','favoryte'], h:'American English often drops the u.'},
+      {q:'Choose the British word.', a:'queue', o:['line','movie theater','mailbox'], h:'Queue is the British form.'},
+      {q:'Choose the American word.', a:'vacation', o:['holiday','autumn','trainers'], h:'Vacation is American English.'},
+      {q:'Choose the British word.', a:'lorry', o:['truck','subway','cookie'], h:'Lorry = truck in British English.'},
+      {q:'Which advice is best in exam writing?', a:'keep one variant consistent in the whole answer', o:['mix British and American randomly','change spelling in every paragraph','ignore consistency'], h:'Consistency looks cleaner and safer.'}
+    ],
+    idioms_fixed: [
+      {q:'Choose the best meaning: once in a blue moon', a:'very rarely', o:['very loudly','right now','with a blue object'], h:'This idiom means not often.'},
+      {q:'Choose the best meaning: under the weather', a:'feeling slightly ill', o:['standing outside','watching the sky','travelling by plane'], h:'Under the weather = unwell.'},
+      {q:'Choose the best meaning: learn by heart', a:'memorise completely', o:['study medicine','read quickly','follow your feelings'], h:'By heart = from memory.'},
+      {q:'Choose the best meaning: in the long run', a:'over a longer period of time', o:['during a race','for one minute','without moving'], h:'It refers to future long-term effect.'},
+      {q:'Choose the best meaning: break the ice', a:'start a conversation more easily', o:['damage winter sports equipment','freeze the room','stop talking'], h:'It helps people feel less awkward.'},
+      {q:'Choose the best meaning: keep an eye on', a:'watch carefully', o:['close your eyes','draw an eye','forget about'], h:'Keep an eye on = monitor.'},
+      {q:'Choose the best meaning: on time', a:'not late', o:['very fast','after a delay','in a different timezone'], h:'On time = at the planned time.'},
+      {q:'Choose the best meaning: a piece of cake', a:'very easy', o:['very sweet','quite expensive','full of calories'], h:'It means something simple to do.'}
+    ]
+  };
+
+  var oldMap = existingById();
+  var topics = [
+    reuseOrTopic(oldMap, 'mixed_tenses', 'Mixed Tenses', 'mixed_tenses', DOTS[0]),
+    reuseOrTopic(oldMap, 'relative_clauses', 'Relative Clauses', 'relative_clauses', DOTS[1]),
+    reuseOrTopic(oldMap, 'comparatives', 'Comparatives & Superlatives', 'comparatives10', DOTS[2]),
+    reuseOrTopic(oldMap, 'prepositions', 'Prepositions', 'prepositions10', DOTS[3]),
+    reuseOrTopic(oldMap, 'articles10', 'Articles', 'articles10', DOTS[4]),
+    reuseOrTopic(oldMap, 'vocab_b2', 'Vocabulary B1-B2', 'vocab_b2', DOTS[5]),
+    reuseOrTopic(oldMap, 'phrasal10', 'Phrasal Verbs', 'phrasal10', DOTS[6]),
+    reuseOrTopic(oldMap, 'wordform10', 'Word Formation', 'wordform10', DOTS[7]),
+    reuseOrTopic(oldMap, 'confusing10', 'Confusing Words', 'confusing10', DOTS[8]),
+    reuseOrTopic(oldMap, 'spelling_b2', 'Spelling B2', 'spelling_b2', DOTS[9]),
+    reuseOrTopic(oldMap, 'question_tags', 'Question Tags', 'question_tags10', DOTS[10]),
+    reuseOrTopic(oldMap, 'quantifiers', 'Quantifiers', 'quantifiers10', DOTS[11]),
+    newTopic('reading_strategies', 'Reading Strategies', 'reading_strategies', DOTS[12], NEW_BANKS.reading_strategies),
+    newTopic('essay_writing', 'Essay Writing', 'essay_writing', DOTS[13], NEW_BANKS.essay_writing),
+    newTopic('academic_vocab', 'Academic Vocabulary', 'academic_vocab', DOTS[14], NEW_BANKS.academic_vocab),
+    newTopic('collocations10', 'Collocations', 'collocations10', DOTS[15], NEW_BANKS.collocations10),
+    newTopic('confusing_verbs', 'Confusing Verbs', 'confusing_verbs', DOTS[16], NEW_BANKS.confusing_verbs),
+    newTopic('british_american', 'British vs American English', 'british_american', DOTS[17], NEW_BANKS.british_american),
+    newTopic('idioms_fixed', 'Idioms & Fixed Expressions', 'idioms_fixed', DOTS[18], NEW_BANKS.idioms_fixed)
+  ];
+
+  eng.nm = 'Английский';
+  eng.ic = '🇬🇧';
+  eng.cl = ENG_COLOR;
+  eng.bg = ENG_BG;
+  eng.tops = topics;
+  window.__wave42English10 = {
+    topicCount: topics.length,
+    names: topics.map(function(t){ return t.nm; }),
+    ids: topics.map(function(t){ return t.id; })
+  };
+})();
