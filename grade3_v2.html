@@ -1,454 +1,56 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#1a1a2e"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://api.npoint.io; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' blob:; connect-src 'self' https://api.npoint.io https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/icon-512.png"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script>try{var t=localStorage.getItem("trainer_theme")||"system";if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}</script><script src="./assets/js/wave35_plans.js"></script><title>Родительская панель</title>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{color-scheme:light dark;--bg:#f5f3ee;--card:#fff;--text:#1a1a2e;--muted:#6b6b7e;--border:#e2e0d8;--accent:#2563eb;--green:#16a34a;--red:#dc2626;--orange:#ea580c;--R:16px}
-@media(prefers-color-scheme:dark){:root{--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e}}
-*,::after,::before{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg);color:var(--text)}
-body{font-family:'Golos Text',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}
-.w{max-width:640px;margin:0 auto;padding:16px 16px calc(20px + env(safe-area-inset-bottom,0))}
-header{background:var(--text);color:#fff;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0));text-align:center}
-header h1{font-family:'Unbounded',system-ui,sans-serif;font-size:14px;font-weight:800}
-header p{font-size:11px;opacity:.6;margin-top:2px}
-.hero{text-align:center;padding:24px 0 16px}
-.hero-name{font-family:'Unbounded',system-ui,sans-serif;font-size:22px;font-weight:900}
-.hero-rank{font-size:13px;color:var(--muted);margin-top:4px}
-.stats{display:flex;gap:8px;margin:16px 0}
-.stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px 10px;text-align:center}
-.stat-n{font-family:'Unbounded',system-ui,sans-serif;font-size:20px;font-weight:900}
-.stat-l{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
-.section{margin:20px 0 8px;font-family:'Unbounded',system-ui,sans-serif;font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.grade-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--R);margin-bottom:8px;cursor:pointer;transition:transform .1s;text-decoration:none;color:var(--text)}
-.grade-card:active{transform:scale(.98)}
-.grade-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
-.grade-info{flex:1;min-width:0}
-.grade-nm{font-size:14px;font-weight:700}
-.grade-sub{font-size:11px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.grade-stats{text-align:right;flex-shrink:0}
-.grade-pct{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800}
-.grade-cnt{font-size:10px;color:var(--muted);margin-top:1px}
-.bar{height:4px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden}
-.bar-fill{height:100%;border-radius:2px;transition:width .6s ease}
-.streak-row{display:flex;gap:8px;margin:12px 0}
-.streak-card{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:12px;text-align:center}
-.streak-val{font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900}
-.streak-lbl{font-size:10px;color:var(--muted);margin-top:2px}
-.weak{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px 16px;margin-bottom:8px}
-.weak-tag{font-size:12px;font-weight:700}
-.weak-cnt{font-size:11px;color:var(--muted)}
-.empty{text-align:center;color:var(--muted);padding:30px 0;font-size:13px}
-.activity-card{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px 14px 12px;margin-bottom:8px}
-.activity-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:10px}
-.activity-title{font-size:12px;font-weight:700}
-.activity-sub{font-size:10px;color:var(--muted);margin-top:2px}
-.activity-meta{text-align:right;font-size:11px;color:var(--muted)}
-.activity-meta b{color:var(--text)}
-.activity-bars{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:6px;align-items:end;height:124px;margin-bottom:8px}
-.activity-col{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
-.activity-bar{width:100%;border-radius:8px 8px 4px 4px;min-height:6px;background:var(--border);transition:height .4s ease,background .3s ease;box-shadow:inset 0 -1px 0 rgba(255,255,255,.12)}
-.activity-lbl{font-size:9px;color:var(--muted);line-height:1;text-align:center;white-space:nowrap}
-.activity-val{font-size:9px;font-weight:700;color:var(--muted);line-height:1}
-.dash-actions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
-.dash-btn{flex:1 1 calc(50% - 4px);min-width:140px;padding:12px;border:none;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Golos Text',sans-serif;font-weight:700;font-size:13px;cursor:pointer}
-.dash-btn-dark{background:var(--text);color:var(--bg);border-color:var(--text)}
-.back{display:inline-block;margin-top:16px;padding:10px 20px;background:var(--text);color:var(--bg);border:none;border-radius:10px;font-family:'Golos Text',sans-serif;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;text-align:center;width:100%}
-.analytics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px}
-.analytics-card{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px}
-.analytics-k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
-.analytics-v{font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900;margin-top:6px}
-.analytics-sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35}
-.analytics-note{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:12px 14px;font-size:12px;line-height:1.45;color:var(--text);margin-bottom:8px}
-.analytics-note b{font-weight:800}
-.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px 14px 12px;margin-bottom:8px}
-.chart-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:10px}
-.chart-title{font-size:12px;font-weight:700}
-.chart-sub{font-size:10px;color:var(--muted);margin-top:2px}
-.chart-meta{font-size:11px;color:var(--muted);text-align:right}
-.chart-meta b{color:var(--text)}
-.chart-svg{display:block;width:100%;height:auto;overflow:visible}
-.chart-empty{padding:28px 10px;text-align:center;color:var(--muted);font-size:12px}
-.legend-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.legend-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:10px;color:var(--muted)}
-.legend-dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex-shrink:0}
-.heat-wrap{overflow-x:auto;padding-bottom:2px}
-.heat-cols{display:flex;gap:4px;align-items:flex-start;min-width:320px}
-.heat-week{display:flex;flex-direction:column;gap:4px;flex:1 1 0;min-width:0}
-.heat-cell{aspect-ratio:1/1;border-radius:4px;background:var(--border);border:1px solid rgba(255,255,255,.06);min-height:10px}
-.heat-legend{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;font-size:10px;color:var(--muted)}
-.heat-legend-scale{display:flex;gap:4px;align-items:center}
-.heat-legend-scale span{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid rgba(255,255,255,.08)}
-.month-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.month-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:10px;color:var(--muted)}
-.subject-stack{display:flex;flex-direction:column;gap:8px}
-.subject-card{background:var(--card);border:1px solid var(--border);border-radius:var(--R);padding:14px}
-.subject-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.subject-name{font-size:13px;font-weight:800}
-.subject-pct{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800}
-.subject-meta{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
-.subject-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:10px}
-.subject-fill{height:100%;border-radius:999px}
-.subject-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.subject-chip{display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:10px;color:var(--muted)}
-.subject-mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
-.subject-mini div{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:8px;text-align:center}
-.subject-mini b{display:block;font-size:13px;font-family:'Unbounded',system-ui,sans-serif}
-.subject-mini span{display:block;font-size:9px;color:var(--muted);margin-top:2px}
-@media (max-width:560px){.analytics-grid{grid-template-columns:1fr}.subject-mini{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-btn{flex:1 1 100%}}
-@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.fade{animation:fu .35s ease both}
-@media print{header,.back,.dash-actions{display:none!important}body{background:#fff;color:#111}.w{max-width:none;padding:0}.grade-card,.weak,.activity-card,.stat{break-inside:avoid}}
-</style></head><body>
-<header>
-<h1>📊 Родительская панель</h1>
-<p>Прогресс по всем классам</p>
-</header>
-<div class="w">
-<div class="hero fade">
-<div class="hero-name" id="name">Ученик</div>
-<div class="hero-rank" id="rank"></div>
-</div>
-
-<div class="stats fade" style="animation-delay:.05s">
-<div class="stat"><div class="stat-n" id="total-q">0</div><div class="stat-l">Задач</div></div>
-<div class="stat"><div class="stat-n" id="total-pct">—</div><div class="stat-l">Точность</div></div>
-<div class="stat"><div class="stat-n" id="total-streak">0</div><div class="stat-l">🔥 Рекорд</div></div>
-<div class="stat"><div class="stat-n" id="total-days">0</div><div class="stat-l">Активных дней</div></div>
-</div>
-
-<div class="section">Классы</div>
-<div id="grades"></div>
-
-<div class="section">Активность за 14 дней</div>
-<div id="activity"></div>
-
-<div class="section">Аналитика</div>
-<div id="wave22-insights"></div>
-
-<div class="section">Карта активности</div>
-<div id="wave22-heatmap"></div>
-
-<div class="section">Предметный профиль</div>
-<div id="wave22-radar"></div>
-
-<div class="section">Тренд за 12 недель</div>
-<div id="wave22-trend"></div>
-
-<div class="section">Предметный разбор</div>
-<div id="wave22-subjects"></div>
-
-<div class="dash-actions">
-<button class="dash-btn" onclick="downloadDashboardReport()">📝 TXT-сводка</button>
-<button class="dash-btn" onclick="downloadDashboardCSV()">📥 CSV-экспорт</button>
-<button class="dash-btn" onclick="downloadDashboardPNG()">🖼 PNG-карточка</button>
-<button class="dash-btn dash-btn-dark" onclick="window.print()">🖨 Печать / PDF</button>
-</div>
-
-<div class="section">Слабые темы</div>
-<div id="weak"></div>
-
-<a href="index.html" class="back">← К тренажёру</a>
-</div>
-
-
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#1a1a2e"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://api.npoint.io; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' blob:; connect-src 'self' https://api.npoint.io https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/icon-512.png"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><script>try{var t=localStorage.getItem("trainer_theme")||"system";if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}</script><script src="./assets/js/wave35_plans.js"></script><title>Подготовка к диагностикам</title><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="./assets/css/engine10.css">
+</head><body><header><h1 id="hdr">ПОДГОТОВКА</h1><div class="hbadge" id="hb" style="display:none"></div></header><div id="s-main" class="scr on"><div class="w"><div style="text-align:center;margin-bottom:16px" class="fade"><div style="font-size:28px;margin-bottom:4px">📚</div><h2 style="font-family:Unbounded,system-ui,sans-serif;font-size:18px;font-weight:800">Тренажёр</h2><p style="font-size:12px;color:var(--muted);margin-top:3px">3 класс · 15 предметов · 8000+ задач</p><a href="index.html?choose" style="font-size:11px;color:var(--accent);text-decoration:none;margin-top:4px;display:inline-block">← Другой класс</a><div id="player-badge" style="margin-top:8px"></div></div><div id="main-search-slot"></div><div class="gap8" id="sg"></div><div id="daily-meter"></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-o" style="flex:1" onclick='go("info")'>📖 Справка</button> <button class="btn btn-o" style="flex:1" onclick="showJournal()">📊 Слабые</button> <button class="btn btn-o" style="flex:1" onclick="showBadges()">🏆 Награды</button></div><div style="display:flex;gap:8px;margin-top:6px"><button class="btn btn-o" style="flex:1" onclick="showHallOfFame()">👑 Профиль</button> <button class="btn btn-o" style="flex:1" onclick="showClassSelect()">🏫 Классы</button></div><div style="display:flex;gap:6px;margin-bottom:8px"><button class="btn btn-o" style="flex:1" onclick='go("prog")'>📈 Прогресс</button> <button class="btn btn-o" style="flex:1" onclick="showAbout()">ℹ️ О проекте</button></div><div style="display:flex;gap:8px;margin-bottom:8px"><button class="btn btn-o" style="flex:1;border-color:#16a34a;color:#16a34a" onclick="generateReport()">📊 Отчёт для родителя</button><button class="btn btn-o" style="flex:1;border-color:#2563eb;color:#2563eb" onclick="showBackupModal()">💾 Резервная копия</button></div><div style="text-align:center;margin-top:8px"><button style="font-size:11px;color:#6b6b7e;background:0 0;border:none;cursor:pointer;text-decoration:underline" onclick="showDateEditor()">📅 Указать даты диагностик</button></div></div></div><div id="s-info" class="scr"><div class="w"><div class="icard fade"><h2>📖 Справка</h2><div class="istp"><span class="isn">1</span><div><b>Предмет → тема → теория → тест</b><p>Выбери предмет, потом тему. Сначала прочитай шпаргалку (📖), потом жми «Тренажёр». Во время теста можно открыть шпаргалку и подсказку (💡).</p></div></div><div class="istp"><span class="isn">2</span><div><b>⚡ Всё вперемешку</b><p>Задачи из всех предметов вперемешку. Можно выбрать, какие предметы включить. Тренажёр подстраивается: слабые темы выпадают чаще — чтобы подтянуть то, что хромает.</p></div></div><div class="istp"><span class="isn">3</span><div><b>⚡ Молния</b><p>Режим на скорость: 3 или 5 минут. Три жизни (❤️❤️❤️) — три ошибки и конец. Рекорды сохраняются в общий рейтинг — соревнуйся с друзьями и одноклассниками!</p></div></div><div class="istp"><span class="isn">4</span><div><b>📝 Диагностика</b><p>Зайди в предмет → «Диагностика». 20 задач за 10 минут, без подсказок, оценка от 2 до 5. Как на настоящей контрольной.</p></div></div><div style="background:var(--abg);border-radius:12px;padding:14px 16px;margin:12px 0"><div style="font-family:Unbounded,system-ui,sans-serif;font-size:13px;font-weight:800;margin-bottom:8px">📅 Зачем дневная норма?</div><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px">Знания закрепляются через <b>регулярное повторение</b>. Как в спорте — одна тренировка в неделю не даст результата, а 15–20 минут каждый день дадут. Дневная норма — это минимум, чтобы мозг запоминал.</p><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px"><b>🎯 Рывок:</b> 20 задач подряд без единой ошибки и подсказок. Если реально знаешь материал — справишься за 10 минут и свободен.</p><p style="font-size:12px;color:#374151;line-height:1.6;margin-bottom:8px"><b>📊 Обычная норма:</b> 100 задач с точностью 75%+. Это ~25 минут. Ошибаться можно — главное решать и разбирать ошибки.</p><p style="font-size:12px;color:#374151;line-height:1.6"><b>🔥 Серия дней:</b> каждый день, когда выполнил норму, серия растёт. Не выполнил — обнуляется. Держи серию — это работает.</p></div><div class="istp"><span class="isn">5</span><div><b>🏆 Награды и 👑 Профиль</b><p>Награды за достижения — одноразовые и повторяющиеся — от «Первых шагов» до «Легенды». Профиль — твоя карточка со статистикой по всем предметам. Можно поделиться с друзьями.</p></div></div><div class="istp"><span class="isn">6</span><div><b>🏅 Олимпиада</b><p>Раздел открыт для тестирования. Внутри: задачи на логику, межпредметные, ловушки и углублённые — совсем другой уровень сложности.</p></div></div><div class="istp"><span class="isn">7</span><div><b>☁️ Облако и код</b><p>Код восстановления показывается в профиле. Для надёжности есть и резервная копия: файл или код переноса без облака. Облачное восстановление работает только в классах, где включена синхронизация и отключён приватный режим.</p></div></div><button class="btn btn-d mt12" onclick='go("main")'>← Назад</button></div></div></div><div id="s-prog" class="scr"><div class="w"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><h2 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800">📊 Прогресс</h2><button class="qback" onclick='go("main")'>← Назад</button></div><div id="prog-content"></div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-p" style="flex:1" onclick="shareReport()">📤 Поделиться</button> <button class="btn btn-o" style="flex:1" onclick="resetProgress()">🗑 Сбросить</button></div><button class="btn btn-d mt12" onclick='go("main")'>← Назад</button></div></div><div id="s-subj" class="scr"><div class="w"><div id="sh" class="mb12"></div><div id="topic-search-slot" class="mb8"></div><div class="gap8" id="tl"></div><button class="btn btn-o mt12" onclick='go("main")'>← Все предметы</button></div></div><div id="s-theory" class="scr"><div class="w"><button class="qback mb8" onclick="goSubj()">← Темы</button><div id="tc"></div><button class="btn btn-p mt12" onclick="rushMode=!1,diagMode=!1,startQuiz()">✏️ Начать тренажёр</button></div></div><div id="s-play" class="scr"><div class="w"><div class="qh"><button class="qback" onclick="endSession()">← Завершить</button><span class="qtimer mono" id="tmr">0:00</span></div><div class="sbar" id="sts"></div><div id="shp-area"></div><div class="qcard fade" id="qc"><div class="qtag" id="qt"></div><div id="qb"></div><pre class="qcode" id="qcd" style="display:none"></pre></div><div class="opts" id="opts" role="group" aria-label="Варианты ответа"></div><div id="fba"></div><div id="ha"></div><div id="pa"></div></div></div><div id="s-result" class="scr"><div class="w"><div class="rcard fade" style="text-align:center"><div style="font-size:36px;margin-bottom:8px" id="res-emoji"></div><h3 id="res-title"></h3><div style="font-size:28px;font-weight:800;margin:8px 0" id="res-score"></div><div style="font-size:13px;color:var(--muted);margin-bottom:4px" id="res-detail"></div></div><div id="res-topics"></div><div id="privacy-row" style="display:none;margin-bottom:8px;text-align:center"><button id="privacy-btn" onclick="togglePrivacy()" style="border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Golos Text,sans-serif;width:100%"></button></div><div style="display:flex;gap:8px;margin-top:4px"><button class="btn btn-p" style="flex:1" onclick="shareSession()">📤 Поделиться</button> <button class="btn btn-d" style="flex:1" onclick='globalMix?go("main"):goSubj()'>← Назад</button></div></div></div>
 <script>
-const GRADES = [
-  {n:1, nm:'1 класс', ic:'🌱', color:'#f59e0b', bg:'#fef3c7', file:'grade1_v2.html'},
-  {n:2, nm:'2 класс', ic:'🌿', color:'#f97316', bg:'#fff7ed', file:'grade2_v2.html'},
-  {n:3, nm:'3 класс', ic:'🎒', color:'#16a34a', bg:'#dcfce7', file:'grade3_v2.html'},
-  {n:4, nm:'4 класс', ic:'📘', color:'#2563eb', bg:'#dbeafe', file:'grade4_v2.html'},
-  {n:5, nm:'5 класс', ic:'📗', color:'#0d9488', bg:'#ccfbf1', file:'grade5_v2.html'},
-  {n:6, nm:'6 класс', ic:'📙', color:'#ea580c', bg:'#fff7ed', file:'grade6_v2.html'},
-  {n:7, nm:'7 класс', ic:'📕', color:'#dc2626', bg:'#fee2e2', file:'grade7_v2.html'},
-  {n:8, nm:'8 класс', ic:'🔬', color:'#7c3aed', bg:'#ede9fe', file:'grade8_v2.html'},
-  {n:9, nm:'9 класс', ic:'🧪', color:'#0d9488', bg:'#ccfbf1', file:'grade9_v2.html'},
-  {n:10, nm:'10 класс', ic:'🎓', color:'#2563eb', bg:'#dbeafe', file:'grade10_v2.html'},
-  {n:11, nm:'11 класс', ic:'🏆', color:'#7c3aed', bg:'#ede9fe', file:'grade11_v2.html'},
-];
+window.GRADE_NUM="3";window.GRADE_TITLE="🎒 3 класс";window.RUSH_BIN_ID="";window.DAILY_NORM=40;
+</script>
+<script>
+var MATH_TH={mult:'<h3>Таблица умножения</h3><p>Учи по столбикам! Начни с 2, потом 3, 5, 4, 6, 7, 8, 9.</p>\n<div class="fm">2×2=4  2×3=6  2×4=8  2×5=10\n3×3=9  3×4=12 3×5=15 3×6=18\n4×4=16 4×5=20 4×6=24 5×5=25\n6×6=36 7×7=49 8×8=64 9×9=81</div>\n<p><b>Хитрость:</b> a×b = b×a. Знаешь 3×7=21 → знаешь 7×3=21!</p>',div:'<h3>Деление</h3><p>Деление — обратная операция к умножению.</p>\n<div class="fm">12÷3=4  потому что 3×4=12\n20÷5=4  потому что 5×4=20\nДеление с остатком: 17÷5=3 (ост.2) → 5×3+2=17</div>\n<p><b>На 0 делить нельзя!</b></p>',tasks:'<h3>Задачи</h3><p>Читай внимательно! Найди: что дано, что спросили.</p>\n<div class="fm">Скорость × Время = Расстояние\nЦена × Количество = Стоимость\nБыло − Ушло = Осталось</div>\n<div class="ex">Автобус едет 60 км/ч, 3 часа. Расстояние = 60×3 = 180 км</div>',order:'<h3>Порядок действий</h3>\n<div class="fm">1) Скобки — сначала!\n2) Умножение и деление — слева направо\n3) Сложение и вычитание — в конце</div>\n<div class="ex">2+3×4 = 2+12 = 14 (НЕ 20!)\n(2+3)×4 = 5×4 = 20</div>'},RUS_TH={vowel:'<h3>Безударные гласные</h3><p>Чтобы проверить безударную гласную — подбери проверочное слово, где она под ударением.</p>\n<div class="fm">вОда → вОды ✓\nлЕсной → лЕс ✓\nгОра → гОры ✓</div>\n<p><b>Словарные слова</b> нельзя проверить — их надо запомнить: мОлОко, сОбака, кОрова.</p>',parts:'<h3>Части речи</h3>\n<div class="fm">Существительное — кто? что? (кот, дом, радость)\nПрилагательное — какой? какая? (большой, красивая)\nГлагол — что делать? (бежать, читать, думать)\nНаречие — как? где? когда? (быстро, здесь, вчера)\nПредлог — маленькое слово (в, на, под, за, к, от)</div>',consonant:'<h3>Парные согласные</h3><p>На конце слова или перед глухой — звонкая может оглушиться. Проверь!</p>\n<div class="fm">дуБ → дуБы (слышим Б)\nмороЗ → мороЗы (слышим З)\nсугроБ → сугроБы</div>\n<p>Парные: Б-П, В-Ф, Г-К, Д-Т, Ж-Ш, З-С</p>'},OKR_TH={nature:'<h3>Природа</h3>\n<div class="fm"><b>Живая природа:</b> растения, животные, грибы, бактерии\n<b>Неживая:</b> вода, воздух, камни, Солнце\n<b>Признаки живого:</b> дышит, питается, растёт, размножается</div>\n<p><b>Природные зоны России:</b> тундра → тайга → смешанный лес → степь → пустыня</p>',body:'<h3>Организм человека</h3>\n<div class="fm"><b>Скелет</b> — опора (206 костей)\n<b>Мышцы</b> — движение\n<b>Сердце</b> — качает кровь\n<b>Лёгкие</b> — дыхание\n<b>Желудок</b> — переваривает пищу\n<b>Мозг</b> — управляет всем</div>'};function genMult(){const e=pick(range(2,9)),t=pick(range(2,9)),n=e*t;return mkQ(e+"×"+t+" = ?",""+n,fillW(""+n,[()=>""+(n+e),()=>""+(n-t),()=>""+(n+pick([-3,-1,1,3]))]),"Таблица: "+e+"×"+t+"="+n,"Умножение","#dc2626","#fee2e2",null,!0)}function genDiv(){const e=pick(range(2,9)),t=pick(range(2,9)),n=e*t;return pick([()=>mkQ(n+"÷"+e+" = ?",""+t,fillW(""+t,[()=>""+(t+1),()=>""+(t-1),()=>""+e]),n+"÷"+e+"="+t,"Деление","#2563eb","#dbeafe",null,!0),()=>{const o=pick(range(1,e-1)),a=n+o;return mkQ(a+"÷"+e+" = ? (остаток?)",t+" ост."+o,fillW(t+" ост."+o,[()=>t+1+" ост."+(o-1||1),()=>t+" ост."+(o+1),()=>t-1+" ост."+(e-o)]),a+"="+e+"×"+t+"+"+o,"Деление","#2563eb","#dbeafe",null,!0)}])()}function genTasks(){return pick([()=>{const e=pick([40,50,60,80]),t=pick([2,3,4,5]),n=e*t;return mkQ("Машина едет "+e+" км/ч, "+t+" часа. Расстояние?",n+" км",fillW(n+" км",[()=>n+e+" км",()=>n-e+" км",()=>e+" км"]),"S=V×T","Задачи","#16a34a","#dcfce7")},()=>{const e=pick([5,8,10,12,15]),t=pick([3,4,5,6,7]),n=e*t;return mkQ("Тетрадь стоит "+e+" руб. Купили "+t+" шт. Сколько заплатили?",n+" руб.",fillW(n+" руб.",[()=>n+e+" руб.",()=>n-t+" руб.",()=>e+t+" руб."]),"Цена×Кол-во","Задачи","#16a34a","#dcfce7")},()=>{const e=pick(range(20,80)),t=pick(range(10,e-1));return mkQ("Было "+e+" яблок, съели "+t+". Осталось?",""+(e-t),fillW(""+(e-t),[()=>""+(e+t),()=>""+(e-t+1),()=>""+(e-t-1)]),"Было−Съели=Осталось","Задачи","#16a34a","#dcfce7",null,!0)},()=>{const e=pick(range(10,50)),t=pick(range(10,50));return mkQ(e+" + "+t+" = ?",""+(e+t),fillW(""+(e+t),[()=>""+(e+t+1),()=>""+(e+t-1),()=>""+(e+t+10)]),"Сложение","Задачи","#16a34a","#dcfce7",null,!0)},()=>{const e=pick([2,3,4,5]),t=pick([10,15,20,25]),n=pick([3,5,8,10]);return mkQ(e+" друга собрали по "+t+" грибов и отдали "+n+". Сколько осталось?",""+(e*t-n),fillW(""+(e*t-n),[()=>""+e*t,()=>""+(e*t+n),()=>""+(e+t-n)]),"По действиям","Задачи","#16a34a","#dcfce7",null,!0)}])()}function genOrder(){return pick([()=>{const e=pick(range(1,5)),t=pick(range(2,5)),n=pick(range(2,9)),o=e+t*n;return mkQ(e+"+"+t+"×"+n+" = ?",""+o,fillW(""+o,[()=>""+(e+t)*n,()=>""+(o+1),()=>""+(o-t)]),"Сначала ×, потом +","Порядок действий","#7c3aed","#ede9fe",null,!0)},()=>{const e=pick(range(2,6)),t=pick(range(1,4)),n=pick(range(2,5)),o=(e+t)*n;return mkQ("("+e+"+"+t+")×"+n+" = ?",""+o,fillW(""+o,[()=>""+(e+t*n),()=>""+(o+n),()=>""+(o-e)]),"Скобки первые!","Порядок действий","#7c3aed","#ede9fe",null,!0)},()=>{const e=pick(range(10,30)),t=pick(range(2,5)),n=pick(range(1,4)),o=e-t*n;return mkQ(e+"-"+t+"×"+n+" = ?",""+o,fillW(""+o,[()=>""+(e-t)*n,()=>""+(o+1),()=>""+(e-t)]),"Сначала ×","Порядок действий","#7c3aed","#ede9fe",null,!0)}])()}function genVowel(){const e=pick([{q:"в_да",a:"о",w:"и",h:"вОды"},{q:"л_сной",a:"е",w:"и",h:"лЕс"},{q:"г_ра",a:"о",w:"а",h:"гОры"},{q:"з_мля",a:"е",w:"и",h:"зЕмли"},{q:"тр_ва",a:"а",w:"о",h:"трАвы"},{q:"ст_на",a:"е",w:"и",h:"стЕны"},{q:"цв_ток",a:"е",w:"и",h:"цвЕт"},{q:"гн_здо",a:"е",w:"и",h:"гнЁзда"},{q:"х_лодный",a:"о",w:"а",h:"хОлод"},{q:"б_жать",a:"е",w:"и",h:"бЕг"},{q:"п_сать",a:"и",w:"е",h:"пИшет"},{q:"з_лёный",a:"е",w:"и",h:"зЕлень"},{q:"д_ревья",a:"е",w:"и",h:"дЕрево"},{q:"м_ряк",a:"о",w:"а",h:"мОре"},{q:"г_лова",a:"о",w:"а",h:"гОловы"},{q:"к_рмить",a:"о",w:"а",h:"кОрм"},{q:"с_довник",a:"а",w:"о",h:"сАд"},{q:"л_нивый",a:"е",w:"и",h:"лЕнь"},{q:"н_чной",a:"о",w:"а",h:"нОчь"},{q:"п_левой",a:"о",w:"а",h:"пОле"},{q:"р_ка",a:"е",w:"и",h:"рЕки"},{q:"с_сна",a:"о",w:"а",h:"сОсны"},{q:"гр_зовой",a:"о",w:"а",h:"грОзы"},{q:"кр_чать",a:"и",w:"е",h:"крИк"},{q:"т_жёлый",a:"я",w:"е",h:"тЯжесть"},{q:"д_машний",a:"о",w:"а",h:"дОм"},{q:"м_стерская",a:"а",w:"о",h:"мАстер"},{q:"п_стух",a:"а",w:"о",h:"пАс"},{q:"в_ренье",a:"а",w:"о",h:"вАрит"},{q:"п_чтальон",a:"о",w:"а",h:"пОчта"}]);return mkQ("Вставь букву: "+e.q,e.a,[e.a,e.w],"Проверочное: "+e.h,"Безударные гласные","#ea580c","#fff7ed")}function genParts(){const e=pick([{q:"Кот, дом, радость — это:",a:"существительные",o:["существительные","прилагательные","глаголы","наречия"],h:"Кто? Что?"},{q:"Большой, красивая, синий — это:",a:"прилагательные",o:["прилагательные","существительные","глаголы","предлоги"],h:"Какой? Какая?"},{q:"Бежать, читать, думать — это:",a:"глаголы",o:["глаголы","существительные","прилагательные","наречия"],h:"Что делать?"},{q:"Быстро, громко, весело — это:",a:"наречия",o:["наречия","прилагательные","глаголы","существительные"],h:"Как?"},{q:"В, на, под, за — это:",a:"предлоги",o:["предлоги","союзы","наречия","частицы"],h:"Маленькие слова"},{q:"Слово «солнце» — это:",a:"существительное",o:["существительное","прилагательное","глагол","наречие"],h:"Что? — солнце"},{q:"Слово «бегает» — это:",a:"глагол",o:["глагол","существительное","прилагательное","наречие"],h:"Что делает?"},{q:"Слово «красивый» — это:",a:"прилагательное",o:["прилагательное","существительное","глагол","наречие"],h:"Какой?"},{q:"Слово «быстро» — это:",a:"наречие",o:["наречие","прилагательное","глагол","существительное"],h:"Как?"},{q:"Слово «и» — это:",a:"союз",o:["союз","предлог","наречие","частица"],h:"Соединяет слова"},{q:"Слово «не» — это:",a:"частица",o:["частица","предлог","союз","наречие"],h:"Отрицание"},{q:"Существительное отвечает на вопрос:",a:"кто? что?",o:["кто? что?","какой?","что делать?","как?"],h:"Предмет"},{q:"Глагол отвечает на вопрос:",a:"что делать?",o:["что делать?","кто? что?","какой?","где?"],h:"Действие"},{q:"Прилагательное отвечает на вопрос:",a:"какой? какая?",o:["какой? какая?","кто?","что делать?","как?"],h:"Признак предмета"},{q:"Сколько частей речи в предложении «Кот быстро бежит»?",a:"3",o:["3","2","4","1"],h:"Кот(сущ.) быстро(нар.) бежит(гл.)"}]);return mkQ(e.q,e.a,shuffle([...e.o]),e.h,"Части речи","#0d9488","#ccfbf1")}function genConsonant(){const e=pick([{q:"ду_",a:"б",w:"п",h:"дуБы"},{q:"моро_",a:"з",w:"с",h:"мороЗы"},{q:"сугро_",a:"б",w:"п",h:"сугроБы"},{q:"горо_",a:"д",w:"т",h:"гороДа"},{q:"гла_",a:"з",w:"с",h:"глаЗа"},{q:"зу_",a:"б",w:"п",h:"зуБы"},{q:"обе_",a:"д",w:"т",h:"обеДы"},{q:"медве_ь",a:"д",w:"т",h:"медвеДи"},{q:"ло_ка",a:"д",w:"т",h:"лоДочка"},{q:"кни_ка",a:"ж",w:"ш",h:"книЖечка"},{q:"доро_ка",a:"ж",w:"ш",h:"дороЖенька"},{q:"ска_ка",a:"з",w:"с",h:"скаЗать"},{q:"про_ьба",a:"с",w:"з",h:"проСить"},{q:"бере_ка",a:"з",w:"с",h:"береЗа"},{q:"шу_ка",a:"б",w:"п",h:"шуБа"},{q:"тру_ка",a:"б",w:"п",h:"труБа"},{q:"руба_ка",a:"ш",w:"ж",h:"рубаШечка"},{q:"варе_ка",a:"ж",w:"ш",h:"вареЖечка"},{q:"кру_ка",a:"ж",w:"ш",h:"круЖечка"},{q:"гри_",a:"б",w:"п",h:"гриБы"},{q:"хле_",a:"б",w:"п",h:"хлеБа"},{q:"ро_кий",a:"б",w:"п",h:"роБеть"},{q:"у_кий",a:"з",w:"с",h:"уЗок"},{q:"ре_кий",a:"д",w:"т",h:"реДеть"},{q:"сла_кий",a:"д",w:"т",h:"слаДок"},{q:"моро_ко",a:"з",w:"с",h:"мороЗить"}]);return mkQ("Вставь букву: "+e.q,e.a,[e.a,e.w],"Проверочное: "+e.h,"Парные согласные","#ca8a04","#fef9c3")}function genNature(){const e=pick([{q:"Что относится к живой природе?",a:"растения и животные",o:["растения и животные","камни и вода","воздух и солнце","облака и дождь"],h:"Живое дышит, растёт, питается"},{q:"Что относится к неживой природе?",a:"вода, воздух, камни",o:["вода, воздух, камни","деревья и цветы","птицы и рыбы","грибы и бактерии"],h:"Неживое не растёт и не дышит"},{q:"Сколько материков на Земле?",a:"6",o:["6","5","7","4"],h:"Евразия, Африка, Сев.Америка, Юж.Америка, Австралия, Антарктида"},{q:"Самый большой материк:",a:"Евразия",o:["Евразия","Африка","Сев.Америка","Антарктида"],h:"Европа + Азия"},{q:"Сколько океанов на Земле?",a:"4",o:["4","3","5","6"],h:"Тихий, Атлантический, Индийский, Северный Ледовитый"},{q:"Самый большой океан:",a:"Тихий",o:["Тихий","Атлантический","Индийский","Ледовитый"],h:"Занимает треть поверхности Земли"},{q:"Тундра — это зона с:",a:"мхами и лишайниками, холодно",o:["мхами и лишайниками, холодно","лиственными лесами","песком и жарой","высокими горами"],h:"Вечная мерзлота"},{q:"Тайга — это зона с:",a:"хвойными лесами",o:["хвойными лесами","лиственными лесами","степными травами","пустынными песками"],h:"Ель, сосна, кедр"},{q:"Степь — это зона с:",a:"травами, мало деревьев",o:["травами, мало деревьев","густыми лесами","вечным снегом","болотами"],h:"Ковыль, суслики"},{q:"Земля вращается вокруг:",a:"Солнца",o:["Солнца","Луны","Марса","звёзд"],h:"1 оборот = 1 год"},{q:"Луна — это:",a:"спутник Земли",o:["спутник Земли","планета","звезда","астероид"],h:"Вращается вокруг Земли"},{q:"Воздух состоит в основном из:",a:"азота и кислорода",o:["азота и кислорода","только кислорода","углекислого газа","водорода"],h:"78% азот, 21% кислород"},{q:"Вода замерзает при:",a:"0°C",o:["0°C","100°C","-10°C","50°C"],h:"Лёд"},{q:"Вода кипит при:",a:"100°C",o:["100°C","0°C","50°C","200°C"],h:"Пар"},{q:"Компас показывает на:",a:"север",o:["север","юг","восток","запад"],h:"Стрелка → север"},{q:"Грибы — это:",a:"отдельное царство (не растения!)",o:["отдельное царство (не растения!)","растения","животные","бактерии"],h:"Ни растения, ни животные"},{q:"Кто впадает в зимнюю спячку?",a:"медведь и ёж",o:["медведь и ёж","волк и лиса","заяц и белка","ворона и воробей"],h:"Спят до весны"},{q:"Перелётные птицы:",a:"ласточки, журавли, скворцы",o:["ласточки, журавли, скворцы","воробьи и вороны","голуби и синицы","совы и дятлы"],h:"Улетают на юг зимой"},{q:"Зимующие птицы:",a:"воробьи, синицы, вороны",o:["воробьи, синицы, вороны","ласточки и журавли","скворцы и аисты","кукушки и соловьи"],h:"Остаются зимой"},{q:"Лиственные деревья зимой:",a:"сбрасывают листья",o:["сбрасывают листья","остаются зелёными","цветут","растут быстрее"],h:"Берёза, дуб, клён"}]);return mkQ(e.q,e.a,shuffle([...e.o]),e.h,"Природа","#16a34a","#dcfce7")}function genBody(){const e=pick([{q:"Сколько костей у взрослого человека?",a:"206",o:["206","100","300","150"],h:"У ребёнка больше — потом срастаются"},{q:"Сердце — это:",a:"мышца, которая качает кровь",o:["мышца, которая качает кровь","кость","орган дыхания","часть мозга"],h:"Бьётся ~100 000 раз в день"},{q:"Лёгкие нужны для:",a:"дыхания",o:["дыхания","пищеварения","движения","мышления"],h:"Вдох — кислород, выдох — CO₂"},{q:"Желудок нужен для:",a:"переваривания пищи",o:["переваривания пищи","дыхания","движения","мышления"],h:"Кислота расщепляет еду"},{q:"Мозг находится в:",a:"черепе",o:["черепе","груди","животе","спине"],h:"Защищён костями черепа"},{q:"Сколько зубов у взрослого?",a:"32",o:["32","20","28","40"],h:"У ребёнка — 20 молочных"},{q:"Кровь переносит:",a:"кислород и питательные вещества",o:["кислород и питательные вещества","только воду","только воздух","только еду"],h:"По сосудам"},{q:"Самая большая кость:",a:"бедренная",o:["бедренная","плечевая","позвонок","ребро"],h:"В ноге"},{q:"Кожа — это:",a:"самый большой орган",o:["самый большой орган","кость","мышца","сосуд"],h:"~2 м², защищает тело"},{q:"Пульс — это:",a:"удары сердца в минуту",o:["удары сердца в минуту","давление","температура","дыхание"],h:"Норма: 60-100 ударов"},{q:"Позвоночник состоит из:",a:"позвонков",o:["позвонков","рёбер","мышц","нервов"],h:"33-34 позвонка"},{q:"Зрачок находится в:",a:"глазу",o:["глазу","ухе","носу","рту"],h:"Пропускает свет"},{q:"Витамин C содержится в:",a:"лимонах, апельсинах, капусте",o:["лимонах, апельсинах, капусте","мясе и рыбе","хлебе и каше","масле и сыре"],h:"Защищает от простуды"},{q:"Сколько органов чувств у человека?",a:"5",o:["5","3","7","4"],h:"Зрение, слух, обоняние, вкус, осязание"},{q:"Ухо — орган:",a:"слуха",o:["слуха","зрения","вкуса","обоняния"],h:"Слышим звуки"}]);return mkQ(e.q,e.a,shuffle([...e.o]),e.h,"Организм","#dc2626","#fee2e2")}var SUBJ=[{id:"math",nm:"Математика",ic:"🔢",date:"",cl:"#2563eb",bg:"#dbeafe",tops:[{id:"mult",nm:"Умножение",gen:genMult,th:MATH_TH.mult,dot:"#dc2626"},{id:"div",nm:"Деление",gen:genDiv,th:MATH_TH.div,dot:"#2563eb"},{id:"tasks",nm:"Задачи",gen:genTasks,th:MATH_TH.tasks,dot:"#16a34a"},{id:"order",nm:"Порядок действий",gen:genOrder,th:MATH_TH.order,dot:"#7c3aed"}]},{id:"rus",nm:"Русский язык",ic:"📝",date:"",cl:"#ea580c",bg:"#fff7ed",tops:[{id:"vowel",nm:"Безударные гласные",gen:genVowel,th:RUS_TH.vowel,dot:"#ea580c"},{id:"parts",nm:"Части речи",gen:genParts,th:RUS_TH.parts,dot:"#0d9488"},{id:"cons",nm:"Парные согласные",gen:genConsonant,th:RUS_TH.consonant,dot:"#ca8a04"}]},{id:"okr",nm:"Окружающий мир",ic:"🌍",date:"",cl:"#16a34a",bg:"#dcfce7",tops:[{id:"nature",nm:"Природа",gen:genNature,th:OKR_TH.nature,dot:"#16a34a"},{id:"body",nm:"Организм человека",gen:genBody,th:OKR_TH.body,dot:"#dc2626"}]}];
 
-function getKey(type, gradeNum) {
-  return `trainer_${type}_${gradeNum}`;
-}
-
-function safeJSON(key, fallback) {
-  try {
-    const v = localStorage.getItem(key);
-    return v ? JSON.parse(v) : fallback;
-  } catch {
-    return fallback;
+</script>
+<script>
+(function(){
+  function bankQ(arr, tag, color, bg){ const e = pick(arr); return mkQ(e.q, e.a, shuffle([...e.o]), e.h, tag, color, bg); }
+  OKR_TH.weather = `<h3>Погода и климат</h3><div class="fm"><b>Погода</b> — какая сейчас температура, облачность, ветер, осадки.<br><b>Климат</b> — какая погода бывает в этой местности много лет подряд.<br>Термометр измеряет температуру, флюгер показывает направление ветра.</div><p>Зимой холоднее, летом теплее. Осадки бывают в виде дождя, снега и града.</p>`;
+  OKR_TH.map = `<h3>Карта и стороны света</h3><div class="fm">Север — сверху на карте<br>Юг — снизу<br>Запад — слева<br>Восток — справа</div><p>Компас помогает определить стороны света. Солнце встаёт на востоке, а садится на западе.</p>`;
+  function genWeather3(){
+    return bankQ([
+      {q:'Что показывает термометр?', a:'температуру', o:['температуру','скорость ветра','влажность почвы','время'], h:'Термометр нужен для температуры воздуха и воды.'},
+      {q:'Дождь, снег и град — это:', a:'осадки', o:['осадки','ветер','облачность','туман'], h:'То, что падает из облаков.'},
+      {q:'Сильное движение воздуха — это:', a:'ветер', o:['ветер','туман','мороз','климат'], h:'Ветер бывает слабым и сильным.'},
+      {q:'Погода зимой чаще всего:', a:'холоднее, чем летом', o:['холоднее, чем летом','такая же, как летом','всегда жаркая','без осадков'], h:'Зимой температура обычно ниже.'},
+      {q:'Климат — это:', a:'погода, которая повторяется много лет', o:['погода, которая повторяется много лет','погода только на один день','только ветер','только температура'], h:'Климат изучают долгое время.'},
+      {q:'Что бывает после сильного дождя и солнца?', a:'радуга', o:['радуга','снегопад','метель','ледоход'], h:'Разноцветная дуга на небе.'},
+      {q:'Туман — это когда:', a:'воздух наполнен мельчайшими каплями воды', o:['воздух наполнен мельчайшими каплями воды','идёт сильный снег','дует ветер','гремит гром'], h:'Из-за тумана далеко не видно.'},
+      {q:'Какой прибор помогает узнать погоду на улице?', a:'термометр', o:['термометр','линейка','компас','глобус'], h:'Им измеряют температуру.'}
+    ], 'Погода и климат', '#2563eb', '#dbeafe');
   }
-}
-
-function readGradeJSON(gradeNum, type, fallback) {
-  const currentKey = getKey(type, gradeNum);
-  const current = safeJSON(currentKey, '__missing__');
-  if (current !== '__missing__') return current;
-  if (gradeNum <= 7) return safeJSON(`m${gradeNum}_${type}`, fallback);
-  return fallback;
-}
-
-function getLastDays(count) {
-  const days = [];
-  const base = new Date();
-  for (let i = count - 1; i >= 0; i--) {
-    const d = new Date(base);
-    d.setDate(base.getDate() - i);
-    days.push(d.toISOString().slice(0, 10));
+  function genMap3(){
+    return bankQ([
+      {q:'Компас показывает на:', a:'север', o:['север','юг','восток','запад'], h:'Северный конец стрелки обычно выделен.'},
+      {q:'Солнце утром появляется на:', a:'востоке', o:['востоке','западе','севере','юге'], h:'Встаёт на востоке, садится на западе.'},
+      {q:'На обычной карте север находится:', a:'сверху', o:['сверху','снизу','слева','справа'], h:'Так принято на большинстве карт.'},
+      {q:'Если ты повернулся лицом на север, то восток будет:', a:'справа', o:['справа','слева','сзади','внизу'], h:'Север впереди — восток справа.'},
+      {q:'Если идти к закату, ты идёшь на:', a:'запад', o:['запад','восток','север','юг'], h:'Закат бывает на западе.'},
+      {q:'Как называется уменьшенное изображение Земли на плоскости?', a:'карта', o:['карта','компас','глобус','атлас'], h:'Плоское изображение местности.'},
+      {q:'Глобус — это модель:', a:'Земли', o:['Земли','Солнца','Луны','России'], h:'Шар, похожий на нашу планету.'},
+      {q:'Если стрелка компаса указывает вверх на карте, это направление:', a:'север', o:['север','юг','запад','восток'], h:'Север на карте обычно сверху.'}
+    ], 'Карта и стороны света', '#0d9488', '#ccfbf1');
   }
-  return days;
-}
-
-function mergeActivityForGrade(gradeNum) {
-  const hist = readGradeJSON(gradeNum, 'activity', []);
-  const daily = readGradeJSON(gradeNum, 'daily', null);
-  const map = {};
-  if (Array.isArray(hist)) {
-    hist.forEach(row => {
-      if (!row || !row.date) return;
-      map[row.date] = {
-        total: Number(row.total || (Number(row.ok || 0) + Number(row.err || 0))) || 0,
-        ok: Number(row.ok || 0) || 0,
-        err: Number(row.err || 0) || 0,
-      };
-    });
+  const okr = SUBJ.find(s => s.id === 'okr');
+  if(okr){
+    if(!okr.tops.find(t => t.id === 'weather')) okr.tops.push({id:'weather', nm:'Погода и климат', gen:genWeather3, th:OKR_TH.weather, dot:'#2563eb'});
+    if(!okr.tops.find(t => t.id === 'map')) okr.tops.push({id:'map', nm:'Карта и стороны света', gen:genMap3, th:OKR_TH.map, dot:'#0d9488'});
   }
-  if (daily && daily.date) {
-    map[daily.date] = {
-      total: Number(daily.ok || 0) + Number(daily.err || 0),
-      ok: Number(daily.ok || 0),
-      err: Number(daily.err || 0),
-    };
-  }
-  return map;
-}
-
-function renderActivity(activityMap) {
-  const el = document.getElementById('activity');
-  const days = getLastDays(14);
-  const rows = days.map(date => ({ date, ...(activityMap[date] || { total: 0, ok: 0, err: 0 }) }));
-  const max = Math.max(10, ...rows.map(r => r.total || 0));
-  const total7 = rows.slice(-7).reduce((sum, r) => sum + (r.total || 0), 0);
-  const activeDays = rows.filter(r => (r.total || 0) > 0).length;
-  const bestDay = rows.reduce((best, r) => (r.total || 0) > (best.total || 0) ? r : best, { total: 0, date: '' });
-
-  if (rows.every(r => !r.total)) {
-    el.innerHTML = '<div class="empty">Пока мало истории занятий. После новых сессий здесь появится живая лента активности.</div>';
-    return;
-  }
-
-  const bars = rows.map(r => {
-    const pct = r.total ? Math.round((r.ok || 0) / r.total * 100) : 0;
-    const h = r.total ? Math.max(12, Math.round(r.total / max * 100)) : 6;
-    const color = !r.total ? 'var(--border)' : pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--orange)' : 'var(--accent)';
-    const lbl = new Date(r.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }).replace(' ', ' ');
-    const val = r.total ? r.total : '·';
-    const title = `${lbl}: ${r.total} задач${r.total ? `, ${pct}% точность` : ''}`;
-    return `
-      <div class="activity-col" title="${title}">
-        <div class="activity-val">${val}</div>
-        <div class="activity-bar" style="height:${h}px;background:${color}"></div>
-        <div class="activity-lbl">${new Date(r.date).toLocaleDateString('ru-RU', { day: 'numeric' })}</div>
-      </div>`;
-  }).join('');
-
-  const bestLabel = bestDay.total ? new Date(bestDay.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }) : '—';
-  el.innerHTML = `
-    <div class="activity-card fade">
-      <div class="activity-head">
-        <div>
-          <div class="activity-title">Последние две недели</div>
-          <div class="activity-sub">Каждый столбик — все задачи за день по всем классам</div>
-        </div>
-        <div class="activity-meta">
-          7 дней: <b>${total7}</b><br>
-          Активных дней: <b>${activeDays}</b>
-        </div>
-      </div>
-      <div class="activity-bars">${bars}</div>
-      <div class="activity-meta">Лучший день: <b>${bestLabel}</b>${bestDay.total ? ` · ${bestDay.total} задач` : ''}</div>
-    </div>`;
-}
-
-function buildDashboardReport(state) {
-  const today = new Date().toLocaleDateString('ru-RU');
-  const lines = [
-    `📊 Родительская панель — ${state.name}`,
-    `📅 ${today}`,
-    '━━━━━━━━━━━━━━━',
-    `🔢 Всего задач: ${state.totalQs}`,
-    `🎯 Точность: ${state.totalPct}`,
-    `🔥 Рекорд серии: ${state.bestStreak}`,
-    `📆 Активных дней: ${state.totalDays}`,
-  ];
-  if (state.last7Total) lines.push(`🗓 За 7 дней: ${state.last7Total} задач`);
-  if (state.analytics) {
-    lines.push(`📆 За 30 дней: ${state.analytics.last30Total} задач, ${state.analytics.last30Active} активных дней`);
-    lines.push(`🧠 Тем начато: ${state.analytics.subjectSummary.topicsStarted}, сильных: ${state.analytics.subjectSummary.strongTopics}`);
-    if (state.analytics.subjectSummary.best) lines.push(`🏅 Лучший предмет: ${state.analytics.subjectSummary.best.label} (${state.analytics.subjectSummary.best.acc}%)`);
-    if (state.analytics.subjectSummary.weakest) lines.push(`🎯 Зона роста: ${state.analytics.subjectSummary.weakest.label} (${state.analytics.subjectSummary.weakest.acc}%)`);
-  }
-  lines.push('━━━━━━━━━━━━━━━', 'По классам:');
-  state.gradeData.forEach(d => {
-    const line = d.qs > 0
-      ? `${d.grade.ic} ${d.grade.nm}: ${d.pct}% · ${d.qs} задач · ${d.doneDays} дн.`
-      : `${d.grade.ic} ${d.grade.nm}: ещё не начат`;
-    lines.push(line);
-  });
-  if (state.weak.length) {
-    lines.push('━━━━━━━━━━━━━━━', 'Слабые темы:');
-    state.weak.slice(0, 8).forEach(([topic, count]) => {
-      lines.push(`• ${topic}: ${count} ош.`);
-    });
-  }
-  return lines.join('\n');
-}
-
-function downloadTextFile(filename, text) {
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 500);
-}
-
-function downloadDashboardReport() {
-  if (!window._dashboardState) return;
-  const today = new Date().toISOString().slice(0, 10);
-  const text = buildDashboardReport(window._dashboardState);
-  downloadTextFile(`roditelskaya-panel_${today}.txt`, text);
-}
-
-function init() {
-  const name = localStorage.getItem('trainer_player_name') || 'Ученик';
-  document.getElementById('name').textContent = name;
-
-  let totalQs = 0;
-  let totalOk = 0;
-  let bestStreak = 0;
-  let totalDays = 0;
-  const activeDaySet = new Set();
-  const allWeakTopics = {};
-  const gradeData = [];
-  const activityMap = {};
-
-  GRADES.forEach(g => {
-    const streak = readGradeJSON(g.n, 'streak', {totalQs:0, totalOk:0, best:0, totalDone:0});
-    const journal = readGradeJSON(g.n, 'journal', []);
-    const progress = readGradeJSON(g.n, 'progress', {});
-    const datesMap = readGradeJSON(g.n, 'dates', {});
-    const activity = mergeActivityForGrade(g.n);
-
-    Object.entries(activity).forEach(([date, row]) => {
-      if (!activityMap[date]) activityMap[date] = { total: 0, ok: 0, err: 0 };
-      activityMap[date].total += Number(row.total || 0);
-      activityMap[date].ok += Number(row.ok || 0);
-      activityMap[date].err += Number(row.err || 0);
-      if (Number(row.total || 0) > 0) activeDaySet.add(date);
-    });
-
-    const qs = streak.totalQs || 0;
-    const ok = streak.totalOk || 0;
-    const pct = qs > 0 ? Math.round(ok / qs * 100) : -1;
-    const doneDays = streak.totalDone || 0;
-    const plannedDates = datesMap && typeof datesMap === 'object' ? Object.keys(datesMap).length : 0;
-
-    totalQs += qs;
-    totalOk += ok;
-    if ((streak.best || 0) > bestStreak) bestStreak = streak.best;
-
-    (Array.isArray(journal) ? journal : []).forEach(j => {
-      const key = `${g.nm}: ${j.tag || '?'}`;
-      allWeakTopics[key] = (allWeakTopics[key] || 0) + 1;
-    });
-
-    gradeData.push({grade: g, qs, ok, pct, doneDays, plannedDates, streak, progress, journal, activity});
-  });
-
-  totalDays = activeDaySet.size;
-  const totalPctText = totalQs > 0 ? Math.round(totalOk / totalQs * 100) + '%' : '—';
-  document.getElementById('total-q').textContent = totalQs.toLocaleString();
-  document.getElementById('total-pct').textContent = totalPctText;
-  document.getElementById('total-streak').textContent = bestStreak;
-  document.getElementById('total-days').textContent = totalDays;
-
-  const rank = totalQs >= 5000 ? '🏅 Гроссмейстер' :
-               totalQs >= 2000 ? '🥇 Эксперт' :
-               totalQs >= 1000 ? '🏅 Мастер' :
-               totalQs >= 500 ? '🧠 Знаток' :
-               totalQs >= 100 ? '📚 Ученик' : '🌱 Новичок';
-  document.getElementById('rank').textContent = rank + ' · ' + totalQs + ' задач за всё время';
-
-  const container = document.getElementById('grades');
-  gradeData.forEach((d, i) => {
-    const g = d.grade;
-    const card = document.createElement('a');
-    card.href = g.file;
-    card.className = 'grade-card fade';
-    card.style.animationDelay = (0.1 + i * 0.04) + 's';
-
-    const pctColor = d.pct >= 80 ? 'var(--green)' : d.pct >= 50 ? 'var(--orange)' : d.pct >= 0 ? 'var(--red)' : 'var(--muted)';
-    const barWidth = d.qs > 0 ? Math.min(100, d.pct) : 0;
-    const subline = d.qs > 0
-      ? `${d.qs} задач · ${d.doneDays} дн.${d.plannedDates ? ` · ${d.plannedDates} дат` : ''}`
-      : 'ещё не начат';
-
-    card.innerHTML = `
-      <div class="grade-ic" style="background:${g.bg};color:${g.color}">${g.ic}</div>
-      <div class="grade-info">
-        <div class="grade-nm">${g.nm}</div>
-        <div class="grade-sub">${subline}</div>
-        <div class="bar"><div class="bar-fill" style="width:${barWidth}%;background:${pctColor}"></div></div>
-      </div>
-      <div class="grade-stats">
-        <div class="grade-pct" style="color:${pctColor}">${d.pct >= 0 ? d.pct + '%' : '—'}</div>
-        <div class="grade-cnt">${d.qs > 0 ? '🔥' + (d.streak.best || 0) : ''}</div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-
-  const weakContainer = document.getElementById('weak');
-  const sortedWeak = Object.entries(allWeakTopics).sort((a, b) => b[1] - a[1]);
-  if (sortedWeak.length === 0) {
-    weakContainer.innerHTML = '<div class="empty">Ошибок пока нет — отлично!</div>';
-  } else {
-    sortedWeak.slice(0, 10).forEach(([topic, count]) => {
-      const color = count >= 5 ? 'var(--red)' : count >= 3 ? 'var(--orange)' : 'var(--muted)';
-      const div = document.createElement('div');
-      div.className = 'weak';
-      div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="weak-tag">${topic}</span>
-        <span class="weak-cnt" style="color:${color};font-weight:800">${count} ош.</span>
-      </div>`;
-      weakContainer.appendChild(div);
-    });
-  }
-
-  renderActivity(activityMap);
-  const last7Total = getLastDays(7).reduce((sum, date) => sum + Number((activityMap[date] || {}).total || 0), 0);
-  window._dashboardState = {
-    name,
-    totalQs,
-    totalPct: totalPctText,
-    bestStreak,
-    totalDays,
-    last7Total,
-    gradeData,
-    weak: sortedWeak,
-    activityMap,
-    generatedAt: Date.now(),
-  };
-  try{ window.dispatchEvent(new CustomEvent('dashboard-state-ready', { detail: window._dashboardState })); }catch(e){}
-}
-
-
-init();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+})();
 </script>
 
-<script src="./assets/js/bundle_shell.js"></script><script src="./assets/js/bundle_dashboard_tools.js"></script><script src="./assets/js/bundle_sharing.js"></script><script src="./assets/js/bundle_exam.js"></script></body></html>
+
+
+
+
+
+
+
+
+
+<script src="./assets/js/bundle_boosters.js"></script><script src="./assets/js/bundle_grade_content.js"></script><script src="./assets/js/bundle_subject_expansion.js"></script><script src="./assets/js/engine10.js"></script><script src="./assets/js/bundle_grade_after.js"></script><script src="./assets/js/bundle_sharing.js"></script></body></html>
