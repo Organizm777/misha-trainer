@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://api.npoint.io; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' blob:; connect-src 'self' https://api.npoint.io https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/icon-512.png"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>try{var t=localStorage.getItem("trainer_theme")||"system";if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}</script><title>Тесты — Портрет ученика</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:light dark;--bg:#f5f3ee;--card:#fff;--text:#1a1a2e;--muted:#6b6b7e;--accent:#2563eb;--green:#16a34a;--red:#dc2626;--orange:#ea580c;--gold:#fbbf24}
+html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.w{max-width:520px;margin:0 auto;padding:16px}.scr{display:none}.scr.active{display:block}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Golos Text',sans-serif;transition:all .15s;width:100%}
+.btn:active{transform:scale(.97)}.btn-p{background:var(--accent);color:#fff}.btn-d{background:var(--text);color:#fff}.btn-o{background:transparent;border:1.5px solid #ddd;color:var(--text)}
+.mono{font-family:'JetBrains Mono',monospace}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 0;margin-bottom:8px;border-bottom:1px solid #eee}
+.hdr-title{font-family:'Unbounded',system-ui,sans-serif;font-size:12px;font-weight:800;color:var(--muted)}
+.hdr-timer{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--accent)}
+.hdr-timer.warn{color:var(--red);animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.5}}
+.pgbar{height:4px;background:#e8e6e0;border-radius:2px;overflow:hidden;margin-bottom:6px}
+.pgfill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.pgtext{text-align:center;font-size:11px;color:var(--muted);margin-bottom:14px}
+.qcard{background:var(--card);border-radius:16px;padding:20px;margin-bottom:12px;border:1.5px solid #eee}
+.qtxt{font-size:15px;font-weight:600;line-height:1.6}
+.matrix{display:inline-grid;gap:3px;margin:12px 0;background:#ddd;padding:3px;border-radius:8px}
+.mcell{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:3px;font-size:20px;font-weight:700}
+.mcell.empty{background:#fef3c7;border:2px dashed var(--gold)}.mcell.empty::after{content:'?';color:var(--gold);font-size:16px}
+.digit-display{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:900;text-align:center;letter-spacing:12px;padding:24px;background:var(--card);border-radius:12px;border:1.5px solid #eee;margin:12px 0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}.opts.single{grid-template-columns:1fr}
+.opt{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:var(--card);border:1.5px solid #e8e6e0;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;transition:all .1s;text-align:center;min-height:52px}
+.opt:hover{border-color:var(--accent);background:#f8faff}.opt.selected{border-color:var(--accent);background:#eff6ff}
+.rcard{background:var(--card);border-radius:20px;padding:28px 20px;text-align:center;border:1.5px solid #eee}
+.iq-num{font-family:'Unbounded',system-ui,sans-serif;font-size:72px;font-weight:900;line-height:1}
+.iq-label{font-size:13px;color:var(--muted);margin-top:4px}
+.iq-range{display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;margin:12px 0}
+.bd-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.bd-bar{flex:1;height:6px;background:#e8e6e0;border-radius:3px;overflow:hidden}.bd-fill{height:100%;border-radius:3px}
+.bell{display:flex;align-items:flex-end;justify-content:center;gap:2px;height:60px;margin:12px 0}
+.bell-bar{border-radius:3px 3px 0 0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.bell-bar.you{outline:2px solid var(--accent);outline-offset:2px;position:relative}
+.bell-bar.you::after{content:'▼';position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--accent)}
+.disclaimer{margin-top:16px;padding:12px;background:#fef9c3;border-radius:10px;font-size:11px;color:#92400e;line-height:1.5}
+
+.tcard{display:flex;align-items:center;gap:14px;padding:16px;background:var(--card);border:1.5px solid #eee;border-radius:14px;margin-bottom:8px;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--text)}
+.tcard:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.tcard .tic{font-size:28px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:12px;flex-shrink:0}
+.tcard .tnm{font-family:'Unbounded',system-ui,sans-serif;font-size:13px;font-weight:800}
+.tcard .tdesc{font-size:11px;color:var(--muted);margin-top:2px}
+.tcard .tdone{font-size:10px;color:var(--green);font-weight:700;margin-top:3px}
+.tcard .arrow{margin-left:auto;color:#ccc;font-size:16px}
+/* Likert scale */
+.likert{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.likert-opt{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border:1.5px solid #e8e6e0;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;transition:all .1s}
+.likert-opt:hover{border-color:var(--accent)}.likert-opt.selected{border-color:var(--accent);background:#eff6ff;font-weight:700}
+.likert-dot{width:20px;height:20px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.likert-opt.selected .likert-dot{border-color:var(--accent);background:var(--accent)}
+.likert-opt.selected .likert-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
+/* Radar chart placeholder */
+.radar-placeholder{width:200px;height:200px;margin:16px auto;border-radius:50%;border:2px solid #eee;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e}html,body{background:#141420!important;color:#e8e6e0!important}.card{background:var(--card)!important;border-color:var(--border)!important;color:var(--text)!important}.card .cn,.card .cl{color:var(--text)!important}.card .cs{color:var(--muted)!important}header,footer{background:#0e0e1a!important}a{color:var(--text)}.sub{color:var(--muted)!important}.stat-l{color:var(--muted)!important}.foot-text{color:#9a9aae!important}}</style>
+</head>
+<body>
+<div id="app">
+
+<!-- MENU -->
+<div id="s-menu" class="scr active"><div class="w">
+<div style="text-align:center;margin-bottom:20px;padding-top:16px">
+<div style="font-size:42px;margin-bottom:8px">🧠</div>
+<h1 style="font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900">Тесты</h1>
+<p style="color:var(--muted);font-size:12px;margin-top:4px">Портрет ученика: мышление, стиль, характер</p>
+</div>
+
+<div onclick="launchIQ()" class="tcard">
+<div class="tic" style="background:#eff6ff">🧠</div>
+<div><div class="tnm">Логическое мышление</div><div class="tdesc">60 заданий · 40 мин · матрицы, ряды, память</div><div class="tdone" id="iq-done"></div></div>
+<div class="arrow">→</div></div>
+
+<div onclick="launchStyle()" class="tcard">
+<div class="tic" style="background:#f0fdf4">📚</div>
+<div><div class="tnm">Стиль восприятия</div><div class="tdesc">20 вопросов · 5 мин · визуал / аудиал / кинестетик</div><div class="tdone" id="style-done"></div></div>
+<div class="arrow">→</div></div>
+
+<div onclick="launchTemp()" class="tcard">
+<div class="tic" style="background:#fff7ed">🎭</div>
+<div><div class="tnm">Темперамент</div><div class="tdesc">20 вопросов · 5 мин · холерик / сангвиник / флегматик / меланхолик</div><div class="tdone" id="temp-done"></div></div>
+<div class="arrow">→</div></div>
+
+<div onclick="launchMotiv()" class="tcard">
+<div class="tic" style="background:#fef3c7">💪</div>
+<div><div class="tnm">Мотивация к учёбе</div><div class="tdesc">15 вопросов · 3 мин · внутренняя / внешняя</div><div class="tdone" id="motiv-done"></div></div>
+<div class="arrow">→</div></div>
+
+<div onclick="launchHolland()" class="tcard">
+<div class="tic" style="background:#ede9fe">🧭</div>
+<div><div class="tnm">Профориентация (Голланд)</div><div class="tdesc">30 вопросов · 7 мин · 6 типов личности</div><div class="tdone" id="holland-done"></div></div>
+<div class="arrow">→</div></div>
+
+<div onclick="launchPsychKnow()" class="tcard">
+<div class="tic" style="background:#fce7f3">🔬</div>
+<div><div class="tnm">Психология: теория vs практика</div><div class="tdesc">30 вопросов · 10 мин · два балла</div><div class="tdone" id="psychknow-done"></div></div>
+<div class="arrow">→</div></div>
+
+<div onclick="launchAnxiety()" class="tcard">
+<div class="tic" style="background:#fee2e2">😰</div>
+<div><div class="tnm">Тревожность</div><div class="tdesc">15 вопросов · 3 мин · уровень стресса</div><div class="tdone" id="anxiety-done"></div></div>
+<div class="arrow">→</div></div>
+
+
+<div id="portrait-cta" style="margin:16px 0;opacity:.4;transition:opacity .3s">
+  <button onclick="showPortrait()" style="width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#1a1a2e,#2d2b55);color:#fff;font-family:'Golos Text',sans-serif;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+    <span style="font-size:20px">🪞</span> Портрет ученика
+  </button>
+  <div id="portrait-hint" style="text-align:center;font-size:11px;color:var(--muted);margin-top:6px">Пройди хотя бы 3 теста, чтобы открыть</div>
+</div>
+<a href="index.html" style="display:block;text-align:center;margin-top:8px;font-size:13px;color:var(--accent);text-decoration:none">← Назад к тренажёру</a>
+</div></div>
+
+<!-- LOGIC SCREENS (reuse) -->
+<div id="s-intro" class="scr"><div class="w">
+<div style="text-align:center;padding-top:20px">
+<div style="font-size:42px;margin-bottom:8px">🧠</div>
+<h1 style="font-family:'Unbounded',system-ui,sans-serif;font-size:18px;font-weight:900;margin-bottom:6px">Логическое мышление</h1><p style="font-size:11px;color:var(--muted);margin-top:4px">Оценка логического мышления. Не является клиническим тестом IQ.</p>
+</div>
+<div style="background:var(--card);border-radius:16px;padding:18px;border:1.5px solid #eee;margin-bottom:12px">
+<div style="font-size:13px;line-height:2">
+<b>Часть 1.</b> Матрицы и паттерны — 20 заданий<br>
+<b>Часть 2.</b> Числовые последовательности — 12<br>
+<b>Часть 3.</b> Вербальные аналогии — 10<br>
+<b>Часть 4.</b> Пространственное мышление — 10<br>
+<b>Часть 5.</b> Рабочая память — 8
+</div>
+<div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;font-size:13px;color:var(--muted)"><b>60 заданий · 40 минут</b></div>
+</div>
+<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px;margin-bottom:12px;font-size:12px;color:#166534;line-height:1.6">
+✅ Без калькулятора · ✅ Пропускайте, если не знаете · ✅ Тишина</div>
+<div style="margin-bottom:12px">
+<label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Возраст:</label>
+<select id="age-select" style="width:100%;padding:12px;border:1.5px solid #e8e6e0;border-radius:10px;font-size:15px;font-family:'Golos Text',sans-serif;background:var(--card)">
+<option value="10">8–11 лет</option><option value="14" selected>12–15 лет</option><option value="17">16–17 лет</option><option value="25">18+</option>
+</select></div>
+<button class="btn btn-p" onclick="startIQ()" style="font-size:16px">▶ Начать</button> <button class="btn btn-o" onclick="showClassSelect()" style="margin-top:8px">🏫 Другой класс</button>
+<button class="btn btn-o" onclick="go('menu')" style="margin-top:8px">← Назад</button>
+</div></div>
+
+<div id="s-quiz" class="scr"><div class="w">
+<div class="hdr"><span class="hdr-title" id="q-cat"></span><span class="hdr-timer" id="q-timer">40:00</span></div>
+<div class="pgbar"><div class="pgfill" id="q-pgfill"></div></div>
+<div class="pgtext" id="q-pgtext"></div>
+<div class="qcard" id="q-card"></div>
+<div class="opts" id="q-opts"></div>
+<button class="btn btn-o" onclick="skipQ()">Пропустить →</button>
+</div></div>
+
+<div id="s-result" class="scr"><div class="w">
+<div class="rcard" id="r-card"></div>
+<div style="display:flex;gap:8px;margin-top:16px">
+<button class="btn btn-p" style="flex:1" onclick="shareResult()">📤 Отправить</button>
+<button class="btn btn-d" style="flex:1" onclick="go('menu');refreshMenu()">← К тестам</button>
+</div></div></div>
+
+<!-- STYLE / TEMPERAMENT quiz -->
+<div id="s-psych" class="scr"><div class="w">
+<div class="hdr"><span class="hdr-title" id="p-title"></span><span class="hdr-timer" id="p-progress"></span></div>
+<div class="pgbar"><div class="pgfill" id="p-pgfill"></div></div>
+<div class="qcard"><div class="qtxt" id="p-question"></div></div>
+<div class="likert" id="p-opts"></div>
+</div></div>
+
+<div id="s-presult" class="scr"><div class="w">
+<div class="rcard" id="pr-card"></div>
+<div style="display:flex;gap:8px;margin-top:16px">
+<button class="btn btn-p" style="flex:1" onclick="sharePsych()">📤 Отправить</button>
+<button class="btn btn-d" style="flex:1" onclick="go('menu');refreshMenu()">← К тестам</button>
+</div></div></div>
+
+</div>
+<script>
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+function pick(a){return a[0|Math.random()*a.length]}
+function range(a,b){const r=[];for(let i=a;i<=b;i++)r.push(i);return r}
+function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active'));document.getElementById('s-'+id).classList.add('active')}
+
+// ═══════════════════════════════════════
+// LOGIC TEST (same as before)
+// ═══════════════════════════════════════
+const ALL=[],PN=['Матрицы и паттерны','Числовые последовательности','Вербальные аналогии','Пространственное мышление','Рабочая память'];
+function MX(g,a,w,h,d){ALL.push({part:0,diff:d,render(){let s='<div class="qtxt" style="margin-bottom:8px">Какой элемент заменит <b style="color:var(--gold)">?</b></div><div class="matrix" style="grid-template-columns:repeat(3,48px);grid-template-rows:repeat(3,48px)">';g.forEach(c=>{s+=c==='?'?'<div class="mcell empty"></div>':'<div class="mcell">'+c+'</div>'});return s+'</div>'},answer:a,opts:shuffle([a,...w]),hint:h})}
+function SQ(s,a,h,d){const w=[];const dl=[-3,-2,-1,1,2,3,5,-5,10];while(w.length<3){const v=a+pick(dl);if(v!==a&&!w.includes(v)&&v>0)w.push(v)}ALL.push({part:1,diff:d,render(){return'<div class="qtxt">Продолжите ряд:</div><div class="mono" style="font-size:20px;text-align:center;padding:16px;letter-spacing:4px">'+s.join('  ')+'  <b style="color:var(--gold)">?</b></div>'},answer:''+a,opts:shuffle([''+a,...w.map(v=>''+v)]),hint:h})}
+function AN(q,a,w,h,d){ALL.push({part:2,diff:d,render(){return'<div class="qtxt">'+q+'</div>'},answer:a,opts:shuffle([a,...w]),hint:h})}
+function SP(q,a,w,h,d){ALL.push({part:3,diff:d,render(){return'<div class="qtxt">'+q+'</div>'},answer:a,opts:shuffle([a,...w]),hint:h})}
+function MM(len,dir,d){const seq=[];for(let i=0;i<len;i++)seq.push(pick(range(1,9)));const fwd=seq.join(''),bwd=[...seq].reverse().join(''),ans=dir==='f'?fwd:bwd,lbl=dir==='f'?'Повторите числа в том же порядке':'Повторите числа в <b>ОБРАТНОМ</b> порядке';const wr=new Set();while(wr.size<3){const s=shuffle([...seq]).join('');if(s!==ans)wr.add(s);const s2=seq.map(x=>x===pick(seq)?pick(range(1,9)):x).join('');if(s2!==ans)wr.add(s2)}ALL.push({part:4,diff:d,render(){return'<div class="qtxt" style="margin-bottom:6px">'+lbl+':</div><div class="digit-display">'+seq.join(' ')+'</div><div style="font-size:11px;color:var(--muted);text-align:center">Запомните и выберите</div>'},answer:ans,opts:shuffle([ans,...[...wr].slice(0,3)]),hint:dir==='f'?'Прямой':'Обратный'})}
+
+// Matrices (20)
+MX(['▲','▲','▲','●','●','●','■','■','?'],'■',['●','▲','◆'],'Строка=фигура',1);MX(['1','2','3','4','5','6','7','8','?'],'9',['0','10','7'],'1-9',1);MX(['●','○','●','○','●','○','●','○','?'],'●',['○','◐','■'],'●○',1);MX(['→','→','→','↓','↓','↓','←','←','?'],'←',['↑','→','↓'],'Строка=направление',1);MX(['A','B','C','D','E','F','G','H','?'],'I',['J','K','G'],'Алфавит',1);
+MX(['1','2','3','2','3','4','3','4','?'],'5',['6','4','3'],'Строка+1',2);MX(['▲','■','●','■','●','▲','●','▲','?'],'■',['●','▲','◆'],'Цикл',2);MX(['2','4','6','3','6','9','4','8','?'],'12',['10','14','16'],'n×1,n×2,n×3',2);MX(['○','○','●','○','●','●','●','●','?'],'●',['○','◐','◑'],'●:1,2,3',2);MX(['★','☆','★','☆','★','☆','★','☆','?'],'★',['☆','●','○'],'★☆',2);
+MX(['A','C','E','B','D','F','C','E','?'],'G',['H','F','D'],'Через одну',3);MX(['10','20','30','20','30','40','30','40','?'],'50',['60','45','35'],'+10,+10',2);MX(['2','4','8','3','9','27','4','16','?'],'64',['32','48','56'],'n,n²,n³',3);MX(['12','6','3','8','4','2','20','10','?'],'5',['4','15','8'],'÷2',3);MX(['♠','♥','♦','♥','♦','♣','♦','♣','?'],'♠',['♥','♦','♣'],'Масти',3);
+MX(['100','50','25','80','40','20','60','30','?'],'15',['10','20','12'],'÷2,−20',3);MX(['F','E','D','I','H','G','L','K','?'],'J',['I','M','H'],'Обратно',3);MX(['1','1','2','1','2','3','2','3','?'],'5',['4','6','3'],'Сумма',3);MX(['3','5','7','5','7','9','7','9','?'],'11',['10','13','8'],'Нечётные+2',3);MX(['81','27','9','64','16','4','49','7','?'],'1',['7','49','0'],'÷3,÷3',3);
+// Sequences (12)
+SQ([2,4,6,8,10],12,'+2',1);SQ([5,10,15,20,25],30,'+5',1);SQ([3,6,12,24,48],96,'×2',1);SQ([1,4,9,16,25],36,'n²',2);SQ([1,1,2,3,5,8,13],21,'Фибоначчи',2);SQ([2,6,18,54,162],486,'×3',2);SQ([1,3,7,15,31],63,'×2+1',2);SQ([100,81,64,49,36],25,'n²↓',3);SQ([1,4,27,256,3125],46656,'n^n',3);SQ([2,3,5,7,11,13,17],19,'Простые',3);SQ([0,1,1,2,3,5,8,13],21,'Фиб(0)',2);SQ([1,2,4,7,11,16,22],29,'+1+2+3',3);
+// Analogies (10)
+AN('Птица : гнездо = пчела : ?','улей',['мёд','цветок','рой'],'Дом',1);AN('Утро : вечер = начало : ?','конец',['середина','день','завтра'],'Антоним',1);AN('Палец : рука = ветка : ?','дерево',['лист','лес','корень'],'Часть→целое',1);AN('Глаз : видеть = нос : ?','обонять',['дышать','слышать','трогать'],'Функция',2);AN('Горячий : ожог = острый : ?','порез',['укол','падение','перелом'],'Травма',2);AN('Автор : роман = композитор : ?','симфония',['картина','здание','фильм'],'Творение',2);AN('Вода : жажда = еда : ?','голод',['аппетит','обед','кухня'],'Утоляет',2);AN('Километр : расстояние = килограмм : ?','масса',['вес','объём','скорость'],'Величина',3);AN('Квадрат : куб = круг : ?','шар',['цилиндр','конус','овал'],'2D→3D',3);AN('Электричество : провод = вода : ?','труба',['кран','река','стакан'],'Передаёт',3);
+// Spatial (10)
+SP('Сколько граней у куба?','6',['4','8','12'],'',1);SP('Куб 3×3×3: кубиков?','27',['9','18','26'],'3³',1);SP('Развёртка куба — квадратов?','6',['4','8','5'],'',1);SP('Тень от шара:','круг',['квадрат','овал','точка'],'',2);SP('Тень от конуса сбоку:','треугольник',['круг','квадрат','овал'],'',2);SP('Куб 3×3×3, покрашен. С 3 гранями:','8',['6','12','4'],'Углы',3);SP('Куб 3×3×3, покрашен. С 2 гранями:','12',['8','6','24'],'Рёбра',3);SP('Куб 3×3×3, покрашен. С 0 граней:','1',['0','8','6'],'Центр',3);SP('Осей симметрии у квадрата:','4',['2','8','1'],'',3);SP('Лист пополам дважды, отрезать угол — дырок:','4',['2','1','8'],'4 слоя',3);
+// Memory (8)
+MM(4,'f',1);MM(5,'f',1);MM(5,'f',2);MM(6,'f',2);MM(4,'b',2);MM(5,'b',3);MM(6,'b',3);MM(7,'b',3);
+
+const iqQ=[];for(let p=0;p<5;p++)iqQ.push(...ALL.filter(q=>q.part===p).sort((a,b)=>a.diff-b.diff));
+let iqCur=0,iqAns=[],iqTimer=null,iqTime=40*60,iqAge=14;
+
+function launchIQ(){go('intro')}
+function startIQ(){iqAge=+document.getElementById('age-select').value;iqCur=0;iqAns=new Array(iqQ.length).fill(null);iqTime=40*60;go('quiz');iqTimer=setInterval(iqTick,1000);iqRender()}
+function iqTick(){iqTime--;const m=0|iqTime/60,s=iqTime%60;const e=document.getElementById('q-timer');e.textContent=m+':'+(''+s).padStart(2,'0');e.className='hdr-timer'+(iqTime<=120?' warn':'');if(iqTime<=0){clearInterval(iqTimer);iqFinish()}}
+function iqRender(){if(iqCur>=iqQ.length){iqFinish();return}const q=iqQ[iqCur];document.getElementById('q-cat').textContent='Часть '+(q.part+1)+'. '+PN[q.part];document.getElementById('q-pgfill').style.width=Math.round(iqCur/iqQ.length*100)+'%';document.getElementById('q-pgtext').textContent=(iqCur+1)+'/'+iqQ.length+' · '+'⬤'.repeat(q.diff)+'○'.repeat(3-q.diff);document.getElementById('q-card').innerHTML=q.render();const oe=document.getElementById('q-opts');oe.className='opts'+(q.part===4?' single':'');oe.innerHTML=q.opts.map((o,i)=>'<button class="opt" onclick="iqSel('+i+')">'+o+'</button>').join('')}
+function iqSel(i){iqAns[iqCur]=iqQ[iqCur].opts[i];document.querySelectorAll('.opt')[i].classList.add('selected');setTimeout(()=>{iqCur++;iqRender()},350)}
+function skipQ(){if(document.getElementById('s-quiz').classList.contains('active')){iqAns[iqCur]=null;iqCur++;iqRender()}}
+
+function iqFinish(){
+if(iqTimer)clearInterval(iqTimer);const el=40*60-iqTime;
+const ps=[];for(let p=0;p<5;p++){const idx=iqQ.map((q,i)=>q.part===p?i:-1).filter(i=>i>=0);let ok=0;idx.forEach(i=>{if(iqAns[i]===iqQ[i].answer)ok++});ps.push({ok,total:idx.length,pct:Math.round(ok/idx.length*100)})}
+const tOk=ps.reduce((s,p)=>s+p.ok,0),tQ=iqQ.length,rawPct=Math.round(tOk/tQ*100);
+const z=(rawPct-50)/16;let iq=Math.round(100+z*15);
+if(iqAge<=11)iq+=12;else if(iqAge<=15)iq+=5;else if(iqAge<=17)iq+=2;
+iq=Math.max(70,Math.min(145,iq));const pctl=iqPctl(iq);
+let cls,bg,cc;if(iq>=130){cls='Очень высокий';bg='#dcfce7';cc='#166534'}else if(iq>=120){cls='Высокий';bg='#dbeafe';cc='#1e40af'}else if(iq>=110){cls='Выше среднего';bg='#eff6ff';cc='#2563eb'}else if(iq>=90){cls='Средний';bg='#f5f3ee';cc='#6b6b7e'}else if(iq>=80){cls='Ниже среднего';bg='#fff7ed';cc='#c2410c'}else{cls='Низкий';bg='#fee2e2';cc='#dc2626'}
+const sn=['Матрицы','Числ.ряды','Аналогии','Простр.','Память'];
+let h='<div style="font-size:36px;margin-bottom:4px">🧠</div><div class="iq-num" style="color:'+cc+'">'+iq+'</div><div class="iq-label">Оценка логического мышления</div><div class="iq-range" style="background:'+bg+';color:'+cc+'">'+cls+' · '+pctl+'-й перцентиль</div><div style="font-size:12px;color:var(--muted)">'+tOk+'/'+tQ+' ('+rawPct+'%) · '+fmtT(el)+'</div>';
+h+='<div style="margin-top:16px;font-size:11px;color:var(--muted);font-weight:600;text-align:left">Распределение:</div><div class="bell">';
+[{l:'<85',h:15,r:[0,84],c:'#fee2e2'},{l:'85-99',h:40,r:[85,99],c:'#fff7ed'},{l:'100-114',h:55,r:[100,114],c:'#f0fdf4'},{l:'115-129',h:35,r:[115,129],c:'#dbeafe'},{l:'130+',h:12,r:[130,200],c:'#ede9fe'}].forEach(b=>{const you=iq>=b.r[0]&&iq<=b.r[1];h+='<div class="bell-bar'+(you?' you':'')+'" style="height:'+b.h+'px;background:'+b.c+'"><span style="font-size:9px;color:var(--muted);margin-bottom:2px">'+b.l+'</span></div>'});h+='</div>';
+h+='<div style="margin-top:12px;text-align:left;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:4px">По разделам:</div>';
+ps.forEach((p,i)=>{const c=p.pct>=80?'var(--green)':p.pct>=50?'var(--orange)':'var(--red)';h+='<div class="bd-row"><span style="width:80px;font-weight:600;font-size:12px">'+sn[i]+'</span><div class="bd-bar"><div class="bd-fill" style="width:'+p.pct+'%;background:'+c+'"></div></div><span class="mono" style="width:40px;text-align:right;font-size:12px;font-weight:700;color:'+c+'">'+p.ok+'/'+p.total+'</span></div>'});
+const sorted=[...ps.map((p,i)=>({...p,name:sn[i]}))].sort((a,b)=>b.pct-a.pct);
+h+='<div style="margin-top:14px;display:flex;gap:8px"><div style="flex:1;background:#f0fdf4;border-radius:10px;padding:10px;font-size:12px"><div style="font-weight:700;color:var(--green);margin-bottom:4px">💪 Сила</div>'+sorted[0].name+'</div><div style="flex:1;background:#fff7ed;border-radius:10px;padding:10px;font-size:12px"><div style="font-weight:700;color:var(--orange);margin-bottom:4px">📌 Развивать</div>'+sorted[sorted.length-1].name+'</div></div>';
+h+='<div class="disclaimer">⚠️ Скрининговая оценка. Не заменяет профессиональную диагностику. По структуре матриц Равена и субтестов Векслера.</div>';
+document.getElementById('r-card').innerHTML=h;
+try{const r=JSON.parse(localStorage.getItem('iq_results')||'[]');r.push({date:new Date().toISOString(),iq,percentile:pctl,correct:tOk,total:tQ,pct:rawPct,age:iqAge,parts:ps.map((p,i)=>({name:sn[i],...p}))});localStorage.setItem('iq_results',JSON.stringify(r.slice(-10)))}catch{}
+lastResult={type:'iq',iq,pctl,tOk,tQ,rawPct,parts:ps,sn};go('result')}
+
+function iqPctl(iq){const z=(iq-100)/15;const t=1/(1+.2316419*Math.abs(z));const d=.3989423*Math.exp(-z*z/2);const p=d*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return Math.round(z>0?(1-p)*100:p*100)}
+function fmtT(s){return(0|s/60)+' мин '+s%60+' сек'}
+
+// ═══════════════════════════════════════
+// LEARNING STYLE TEST
+// ═══════════════════════════════════════
+const STYLE_Q=[
+{q:'Когда учу новое, мне легче всего:',o:[{t:'Прочитать и посмотреть схему',s:'v'},{t:'Послушать объяснение',s:'a'},{t:'Попробовать сделать самому',s:'k'}]},
+{q:'Я лучше запоминаю:',o:[{t:'То, что видел (картинки, таблицы)',s:'v'},{t:'То, что слышал (рассказ, лекция)',s:'a'},{t:'То, что делал руками',s:'k'}]},
+{q:'Когда скучно на уроке, я:',o:[{t:'Рисую в тетради',s:'v'},{t:'Разговариваю с соседом',s:'a'},{t:'Верчу что-то в руках, двигаюсь',s:'k'}]},
+{q:'Дорогу к новому месту я запоминаю по:',o:[{t:'Карте или ориентирам (вижу дом, поворот)',s:'v'},{t:'Названиям улиц (проговариваю)',s:'a'},{t:'Ощущениям (поворот налево, потом прямо)',s:'k'}]},
+{q:'Мне проще понять задачу, если:',o:[{t:'Нарисовать схему',s:'v'},{t:'Кто-то объяснит вслух',s:'a'},{t:'Разобрать конкретный пример',s:'k'}]},
+{q:'В свободное время я предпочитаю:',o:[{t:'Смотреть видео, листать картинки',s:'v'},{t:'Слушать музыку или подкасты',s:'a'},{t:'Заниматься спортом или мастерить',s:'k'}]},
+{q:'Когда злюсь, я:',o:[{t:'Представляю ситуацию мысленно',s:'v'},{t:'Говорю об этом (жалуюсь, обсуждаю)',s:'a'},{t:'Хожу туда-сюда, сжимаю кулаки',s:'k'}]},
+{q:'Новый телефон я освою быстрее, если:',o:[{t:'Посмотрю видеоинструкцию',s:'v'},{t:'Кто-то расскажет по шагам',s:'a'},{t:'Просто начну тыкать и разберусь',s:'k'}]},
+{q:'На контрольной я чаще:',o:[{t:'Вижу ответ «картинкой» в голове',s:'v'},{t:'Проговариваю решение про себя',s:'a'},{t:'Пишу и считаю, чтобы «нащупать» ответ',s:'k'}]},
+{q:'Мне мешает сосредоточиться:',o:[{t:'Беспорядок на столе, мелькание',s:'v'},{t:'Шум и разговоры',s:'a'},{t:'Неудобное кресло, духота',s:'k'}]},
+{q:'При чтении книги я:',o:[{t:'Представляю картинки и сцены',s:'v'},{t:'Как будто слышу голоса героев',s:'a'},{t:'Чувствую, будто сам там нахожусь',s:'k'}]},
+{q:'Если покупаю вещь, для меня важнее:',o:[{t:'Как она выглядит',s:'v'},{t:'Что о ней говорят',s:'a'},{t:'Как она ощущается (на ощупь, удобство)',s:'k'}]},
+{q:'Чтобы выучить стихотворение, я:',o:[{t:'Перечитываю много раз',s:'v'},{t:'Читаю вслух или слушаю',s:'a'},{t:'Хожу по комнате и повторяю с жестами',s:'k'}]},
+{q:'Учитель объясняет лучше, если:',o:[{t:'Рисует на доске, показывает слайды',s:'v'},{t:'Рассказывает интересно и эмоционально',s:'a'},{t:'Даёт попробовать, эксперимент',s:'k'}]},
+{q:'Мне легче общаться:',o:[{t:'В переписке (вижу текст)',s:'v'},{t:'По телефону или голосом',s:'a'},{t:'Лично, вживую',s:'k'}]},
+{q:'Когда вспоминаю отпуск, я думаю о:',o:[{t:'Пейзажах, фотографиях',s:'v'},{t:'Звуках (море, музыка)',s:'a'},{t:'Ощущениях (тепло, вкус еды)',s:'k'}]},
+{q:'Конспект я веду:',o:[{t:'С цветными пометками, схемами',s:'v'},{t:'Записываю главные мысли словами',s:'a'},{t:'Почти не пишу, запоминаю по ходу',s:'k'}]},
+{q:'Мне нравятся игры:',o:[{t:'С красивой графикой',s:'v'},{t:'С озвучкой и музыкой',s:'a'},{t:'С активным управлением (экшн, спорт)',s:'k'}]},
+{q:'Когда объясняю другу, я:',o:[{t:'Рисую на бумаге или показываю на экране',s:'v'},{t:'Рассказываю подробно словами',s:'a'},{t:'Показываю на примере, руками',s:'k'}]},
+{q:'Лучше всего учусь:',o:[{t:'Один, с книгой или экраном',s:'v'},{t:'В группе, обсуждая',s:'a'},{t:'На практике, пробуя',s:'k'}]},
+];
+
+let styleCur=0,styleAns=[];
+function launchStyle(){styleCur=0;styleAns=[];go('psych');renderPsych('style')}
+
+// ═══════════════════════════════════════
+// TEMPERAMENT TEST (Eysenck-based)
+// ═══════════════════════════════════════
+const TEMP_Q=[
+{q:'Ты легко заводишь новые знакомства?',d:'e'},
+{q:'Тебе нравятся шумные компании?',d:'e'},
+{q:'Ты часто действуешь не подумав?',d:'e'},
+{q:'Тебе легко выступать перед классом?',d:'e'},
+{q:'Ты быстро переключаешься с одного дела на другое?',d:'e'},
+{q:'Тебе скучно сидеть на одном месте?',d:'e'},
+{q:'Ты любишь организовывать других?',d:'e'},
+{q:'Тебе нравится быть в центре внимания?',d:'e'},
+{q:'Ты часто первый начинаешь разговор?',d:'e'},
+{q:'Ты предпочитаешь действовать, а не планировать?',d:'e'},
+{q:'Ты часто волнуешься перед контрольной?',d:'n'},
+{q:'Тебя легко обидеть?',d:'n'},
+{q:'Ты часто чувствуешь себя уставшим без причины?',d:'n'},
+{q:'Ты долго переживаешь из-за ошибок?',d:'n'},
+{q:'Тебе трудно заснуть, когда думаешь о проблемах?',d:'n'},
+{q:'Ты часто сомневаешься в своих решениях?',d:'n'},
+{q:'Твоё настроение часто меняется?',d:'n'},
+{q:'Ты чувствуешь себя неловко в новой обстановке?',d:'n'},
+{q:'Ты склонен видеть в ситуациях плохое?',d:'n'},
+{q:'Ты часто чувствуешь тревогу?',d:'n'},
+];
+
+let tempCur=0,tempAns=[];
+function launchTemp(){tempCur=0;tempAns=[];go('psych');renderPsych('temp')}
+
+// ═══════════════════════════════════════
+// UNIFIED PSYCH RENDERER
+// ═══════════════════════════════════════
+let psychMode='';
+function renderPsych(mode){
+  psychMode=mode;
+  const qs=mode==='style'?STYLE_Q:TEMP_Q;
+  const cur=mode==='style'?styleCur:tempCur;
+  const title=mode==='style'?'📚 Стиль восприятия':'🎭 Темперамент';
+
+  if(cur>=qs.length){finishPsych(mode);return}
+
+  document.getElementById('p-title').textContent=title;
+  document.getElementById('p-progress').textContent=(cur+1)+'/'+qs.length;
+  document.getElementById('p-pgfill').style.width=Math.round(cur/qs.length*100)+'%';
+
+  const q=qs[cur];
+  document.getElementById('p-question').textContent=mode==='style'?q.q:q.q;
+
+  const optsEl=document.getElementById('p-opts');
+  if(mode==='style'){
+    optsEl.innerHTML=q.o.map((o,i)=>{return'<div class="likert-opt" onclick="psychSelStyle('+i+')"><div class="likert-dot"></div>'+o.t+'</div>'}).join('');
+  } else {
+    optsEl.innerHTML=['Да, точно','Скорее да','Скорее нет','Нет'].map((lbl,i)=>'<div class="likert-opt" onclick="psychSel('+i+')"><div class="likert-dot"></div>'+lbl+'</div>').join('');
+  }
+}
+
+function psychSelStyle(idx){const q=STYLE_Q[styleCur];psychSel(q.o[idx].s)}
+function psychSel(val){
+  if(psychMode==='style'){
+    styleAns.push(val);
+    document.querySelectorAll('.likert-opt').forEach(o=>{if(o.textContent.trim()!=='')o.style.pointerEvents='none'});
+    const clicked=event.currentTarget;clicked.classList.add('selected');
+    setTimeout(()=>{styleCur++;renderPsych('style')},300);
+  } else {
+    tempAns.push(+val);
+    event.currentTarget.classList.add('selected');
+    setTimeout(()=>{tempCur++;renderPsych('temp')},300);
+  }
+}
+
+function finishPsych(mode){
+  if(mode==='style'){
+    const counts={v:0,a:0,k:0};
+    styleAns.forEach(s=>counts[s]++);
+    const total=styleAns.length;
+    const pv=Math.round(counts.v/total*100),pa=Math.round(counts.a/total*100),pk=Math.round(counts.k/total*100);
+    const dominant=pv>=pa&&pv>=pk?'v':pa>=pk?'a':'k';
+    const names={v:'Визуальный стиль 👁',a:'Слуховой стиль 👂',k:'Практический стиль ✋'};
+    const descs={
+      v:'Вы лучше всего воспринимаете информацию через зрение: схемы, таблицы, картинки, цветные пометки. Используйте майнд-карты, выделяйте маркером, смотрите обучающие видео.',
+      a:'Вы лучше всего воспринимаете информацию на слух: лекции, обсуждения, аудиокниги. Читайте вслух, обсуждайте материал с друзьями, записывайте голосовые заметки.',
+      k:'Вы лучше всего воспринимаете информацию через действие: практика, эксперименты, движение. Делайте модели, пишите от руки, ходите во время заучивания.'
+    };
+    const colors={v:'#2563eb',a:'#16a34a',k:'#ea580c'};
+    let h='<div style="font-size:36px;margin-bottom:4px">📚</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900;color:'+colors[dominant]+'">'+names[dominant]+'</div>';
+    h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">Ваш преобладающий стиль обучения</div>';
+    // Bars
+    [{k:'v',n:'👁 Визуальный стиль',p:pv},{k:'a',n:'👂 Слуховой стиль',p:pa},{k:'k',n:'✋ Практический стиль',p:pk}].forEach(b=>{
+      h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">'+b.n+'</span><div class="bd-bar"><div class="bd-fill" style="width:'+b.p+'%;background:'+colors[b.k]+'"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700;color:'+colors[b.k]+'">'+b.p+'%</span></div>';
+    });
+    h+='<div style="margin-top:14px;text-align:left;background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6"><b>💡 Рекомендации:</b><br>'+descs[dominant]+'</div>';
+    h+='<div class="disclaimer">Результат показывает предпочтительный канал восприятия. Большинство людей используют все три, но один обычно доминирует.</div>';
+    document.getElementById('pr-card').innerHTML=h;
+    lastResult={type:'style',dominant:names[dominant],pv,pa,pk};
+    try{localStorage.setItem('style_result',JSON.stringify({date:new Date().toISOString(),dominant,pv,pa,pk}))}catch{}
+  } else {
+    // Temperament
+    const eScore=TEMP_Q.slice(0,10).reduce((s,_,i)=>{const v=tempAns[i];return s+(v<=1?1:0)},0);
+    const nScore=TEMP_Q.slice(10).reduce((s,_,i)=>{const v=tempAns[10+i];return s+(v<=1?1:0)},0);
+    const extro=eScore>=5;const neuro=nScore>=5;
+    let type,emoji,desc;
+    if(extro&&!neuro){type='Сангвиник';emoji='😊';desc='Активный, общительный, оптимистичный. Легко адаптируется, но может быть поверхностным. Лучший режим: разнообразие задач, работа в группе, частая смена деятельности.'}
+    else if(extro&&neuro){type='Холерик';emoji='🔥';desc='Энергичный, вспыльчивый, целеустремлённый. Быстро загорается, но может быстро остыть. Лучший режим: соревнования, дедлайны, лидерские задачи.'}
+    else if(!extro&&!neuro){type='Флегматик';emoji='🧊';desc='Спокойный, уравновешенный, настойчивый. Работает медленно, но надёжно. Лучший режим: планомерная работа, чёткий график, минимум отвлечений.'}
+    else{type='Меланхолик';emoji='🌧';desc='Чувствительный, вдумчивый, перфекционист. Глубоко переживает, склонен к тревоге. Лучший режим: тихая обстановка, индивидуальный темп, поддержка.'}
+
+    let h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900">'+type+'</div>';
+    h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">Ваш тип темперамента</div>';
+    // Axes
+    h+='<div style="margin:16px 0">';
+    h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">Экстраверсия</span><div class="bd-bar"><div class="bd-fill" style="width:'+eScore*10+'%;background:var(--accent)"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700">'+eScore+'/10</span></div>';
+    h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">Нейротизм</span><div class="bd-bar"><div class="bd-fill" style="width:'+nScore*10+'%;background:var(--orange)"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700">'+nScore+'/10</span></div>';
+    h+='</div>';
+    // Grid
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;text-align:center;margin:12px 0">';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(type==='Меланхолик'?'#dbeafe':'#f8f7f4')+'"><b>Меланхолик</b><br>интроверт+нейротик</div>';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(type==='Холерик'?'#fee2e2':'#f8f7f4')+'"><b>Холерик</b><br>экстраверт+нейротик</div>';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(type==='Флегматик'?'#f0fdf4':'#f8f7f4')+'"><b>Флегматик</b><br>интроверт+стабильный</div>';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(type==='Сангвиник'?'#fef9c3':'#f8f7f4')+'"><b>Сангвиник</b><br>экстраверт+стабильный</div>';
+    h+='</div>';
+    h+='<div style="text-align:left;background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6"><b>💡 Рекомендации:</b><br>'+desc+'</div>';
+    h+='<div class="disclaimer">Тип темперамента — врождённая особенность нервной системы. Нет «хороших» или «плохих» типов. Адаптировано по методике Айзенка.</div>';
+    document.getElementById('pr-card').innerHTML=h;
+    lastResult={type:'temp',tempType:type,eScore,nScore};
+    try{localStorage.setItem('temp_result',JSON.stringify({date:new Date().toISOString(),type,eScore,nScore}))}catch{}
+  }
+  go('presult');
+}
+
+// ═══ SHARE ═══
+let lastResult=null;
+function shareResult(){
+  if(!lastResult)return;
+  let t='';
+  if(lastResult.type==='iq'){
+    const l=lastResult;t='🧠 Тест логического мышления\nБалл: '+l.iq+' ('+l.pctl+'-й перцентиль)\n'+l.tOk+'/'+l.tQ+' ('+l.rawPct+'%)\n';
+    l.parts.forEach((p,i)=>{t+=(p.pct>=80?'🟢':p.pct>=50?'🟡':'🔴')+' '+l.sn[i]+': '+p.ok+'/'+p.total+'\n'});
+  }
+  t+='\nhttps://organizm777.github.io/misha-trainer/tests.html';
+  if(navigator.share)navigator.share({text:t}).catch(()=>{});else navigator.clipboard.writeText(t).then(()=>alert('Скопировано!')).catch(()=>{});
+}
+function sharePsych(){
+  let t='';
+  if(lastResult&&lastResult.type==='style'){t='📚 Стиль восприятия\nРезультат: '+lastResult.dominant+'\n👁 Визуальный стиль: '+lastResult.pv+'%\n👂 Слуховой стиль: '+lastResult.pa+'%\n✋ Практический стиль: '+lastResult.pk+'%'}
+  else if(lastResult&&lastResult.type==='temp'){t='🎭 Темперамент: '+lastResult.tempType+'\nЭкстраверсия: '+lastResult.eScore+'/10\nНейротизм: '+lastResult.nScore+'/10'}
+  t+='\nhttps://organizm777.github.io/misha-trainer/tests.html';
+  if(navigator.share)navigator.share({text:t}).catch(()=>{});else navigator.clipboard.writeText(t).then(()=>alert('Скопировано!')).catch(()=>{});
+}
+
+// ═══ MENU REFRESH ═══
+function refreshMenu(){
+  try{const r=JSON.parse(localStorage.getItem('iq_results')||'[]');if(r.length){const l=r[r.length-1];document.getElementById('iq-done').textContent='✓ Логика: '+l.iq+' ('+l.pct+'%)'}}catch{}
+  try{const s=JSON.parse(localStorage.getItem('style_result')||'null');if(s)document.getElementById('style-done').textContent='✓ '+{v:'Визуальный стиль',a:'Слуховой стиль',k:'Практический стиль'}[s.dominant]}catch{}
+  try{const t=JSON.parse(localStorage.getItem('temp_result')||'null');if(t)document.getElementById('temp-done').textContent='✓ '+t.type}catch{}
+;if(typeof updatePortraitCTA==="function")updatePortraitCTA()}
+refreshMenu();
+
+// Update portrait CTA state
+(function updatePortraitCTA(){
+  const done = typeof countDoneTests==="function" ? countDoneTests() : 0;
+  const cta = document.getElementById('portrait-cta');
+  const hint = document.getElementById('portrait-hint');
+  if(!cta) return;
+  if(done >= 3){
+    cta.style.opacity='1';
+    cta.querySelector('button').style.pointerEvents='auto';
+    if(hint) hint.textContent = done >= 7 ? '✓ Все тесты пройдены — полный портрет!' : `✓ ${done} из 7 тестов — портрет уже доступен`;
+  } else {
+    cta.style.opacity='.4';
+    cta.querySelector('button').style.pointerEvents='none';
+  }
+})();
+</script>
+<script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.querySelector('div[style*="z-index:9999"]');if(m)m.remove()}});if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script><script>
+// ═══ MOTIVATION TEST ═══
+const MOTIV_Q=[
+{q:'Я учусь, потому что мне интересно узнавать новое',d:'i'},
+{q:'Мне важны хорошие оценки, чтобы родители были довольны',d:'e'},
+{q:'Я стараюсь разобраться в теме, даже если это не задавали',d:'i'},
+{q:'Я учусь, чтобы поступить в хороший вуз',d:'e'},
+{q:'Мне нравится решать сложные задачи — это как головоломка',d:'i'},
+{q:'Я стараюсь, потому что не хочу быть хуже других',d:'e'},
+{q:'Я читаю дополнительные книги по предметам, которые мне нравятся',d:'i'},
+{q:'Похвала учителя или родителей мотивирует меня больше всего',d:'e'},
+{q:'Мне важно понять «почему», а не просто запомнить',d:'i'},
+{q:'Если бы не экзамены, я бы не учил многие предметы',d:'e'},
+{q:'Я занимаюсь предметом, даже когда знаю, что контрольной не будет',d:'i'},
+{q:'Мне важно, что обо мне думают одноклассники',d:'e'},
+{q:'Я получаю удовольствие, когда наконец понимаю сложную тему',d:'i'},
+{q:'Главное для меня — получить аттестат и забыть',d:'e'},
+{q:'Я бы хотел изучать некоторые предметы глубже, чем дают в школе',d:'i'},
+];
+function launchMotiv(){psychMode2='motiv';pCur2=0;pAns2=[];go('psych');renderPsych2()}
+
+// ═══ ANXIETY TEST ═══
+const ANXIETY_Q=[
+{q:'Перед контрольной я сильно волнуюсь'},
+{q:'Мне трудно заснуть, если завтра важный день'},
+{q:'Я часто думаю: «а вдруг я не справлюсь?»'},
+{q:'Когда вызывают к доске, у меня потеют ладони'},
+{q:'Я переживаю из-за оценок больше, чем мои друзья'},
+{q:'Мне трудно сосредоточиться, когда я нервничаю'},
+{q:'Я часто проверяю, правильно ли я всё сделал'},
+{q:'Плохая оценка портит мне настроение на весь день'},
+{q:'Я боюсь ошибиться на глазах у других'},
+{q:'Перед экзаменом у меня болит живот или голова'},
+{q:'Я избегаю ситуаций, где могу выглядеть глупо'},
+{q:'Мне сложно попросить помощь у учителя'},
+{q:'Я часто сравниваю себя с другими и чувствую себя хуже'},
+{q:'Неожиданная самостоятельная — это кошмар'},
+{q:'Я переживаю даже из-за мелких ошибок'},
+];
+function launchAnxiety(){psychMode2='anxiety';pCur2=0;pAns2=[];go('psych');renderPsych2()}
+
+// ═══ HOLLAND / RIASEC ═══
+const HOLLAND_Q=[
+{q:'Мне нравится работать руками, мастерить, чинить',d:'R'},
+{q:'Я люблю проводить эксперименты и исследования',d:'I'},
+{q:'Мне нравится рисовать, музицировать, придумывать',d:'A'},
+{q:'Я люблю помогать людям, объяснять, учить',d:'S'},
+{q:'Мне нравится организовывать и руководить',d:'E'},
+{q:'Я люблю работать с таблицами, числами, файлами',d:'C'},
+{q:'Мне интересна техника, механизмы, компьютеры',d:'R'},
+{q:'Я люблю анализировать данные и искать закономерности',d:'I'},
+{q:'Мне нравится придумывать необычные решения',d:'A'},
+{q:'Я хорошо чувствую настроение других людей',d:'S'},
+{q:'Мне нравится убеждать людей и вести переговоры',d:'E'},
+{q:'Я аккуратен и люблю порядок в документах',d:'C'},
+{q:'Я предпочитаю работать на воздухе, а не в офисе',d:'R'},
+{q:'Мне нравится читать научные статьи и книги',d:'I'},
+{q:'Я люблю писать рассказы, стихи или вести блог',d:'A'},
+{q:'Мне важно, чтобы моя работа помогала другим',d:'S'},
+{q:'Я люблю соревноваться и побеждать',d:'E'},
+{q:'Мне нравится следовать чёткому плану и инструкции',d:'C'},
+{q:'Мне нравится собирать и разбирать вещи',d:'R'},
+{q:'Я люблю решать логические головоломки',d:'I'},
+{q:'Мне нравится фотографировать, снимать видео',d:'A'},
+{q:'Я легко нахожу общий язык с новыми людьми',d:'S'},
+{q:'Я хочу открыть свой бизнес',d:'E'},
+{q:'Мне нравится работа, где всё предсказуемо и стабильно',d:'C'},
+{q:'Я люблю спорт и физическую активность',d:'R'},
+{q:'Мне интересно, как устроен мир вокруг',d:'I'},
+{q:'Мне нравится выступать на сцене',d:'A'},
+{q:'Я хочу работать с детьми или в медицине',d:'S'},
+{q:'Мне нравится управлять проектами',d:'E'},
+{q:'Я внимателен к деталям и редко ошибаюсь',d:'C'},
+];
+function launchHolland(){psychMode2='holland';pCur2=0;pAns2=[];go('psych');renderPsych2()}
+
+// ═══ PSYCHOLOGY: THEORY vs PRACTICE ═══
+const PSYCH_KNOW=[
+// THEORY (t) — textbook knowledge
+{q:'Кто основал психоанализ?',o:['Фрейд','Юнг','Павлов','Скиннер'],a:'Фрейд',d:'t',h:'Зигмунд Фрейд, начало XX века'},
+{q:'Иерархия потребностей Маслоу: что на вершине?',o:['самореализация','безопасность','уважение','любовь'],a:'самореализация',d:'t',h:'Пирамида Маслоу'},
+{q:'Условный рефлекс открыл:',o:['Павлов','Фрейд','Выготский','Скиннер'],a:'Павлов',d:'t',h:'Собака Павлова, слюноотделение'},
+{q:'Стадии развития по Пиаже — сколько?',o:['4','3','5','6'],a:'4',d:'t',h:'Сенсомоторная, дооперациональная, конкретных операций, формальных'},
+{q:'Что изучает когнитивная психология?',o:['мышление, память, восприятие','бессознательное','поведение','группы'],a:'мышление, память, восприятие',d:'t',h:'Познавательные процессы'},
+{q:'Зона ближайшего развития — термин:',o:['Выготского','Пиаже','Фрейда','Юнга'],a:'Выготского',d:'t',h:'То, что ребёнок может с помощью взрослого'},
+{q:'Бихевиоризм изучает:',o:['наблюдаемое поведение','сны','бессознательное','архетипы'],a:'наблюдаемое поведение',d:'t',h:'Уотсон, Скиннер — стимул-реакция'},
+{q:'Архетипы — понятие из теории:',o:['Юнга','Фрейда','Адлера','Маслоу'],a:'Юнга',d:'t',h:'Коллективное бессознательное'},
+{q:'Эффект ореола — это:',o:['общее впечатление влияет на оценку деталей','забывание','мотивация','страх'],a:'общее впечатление влияет на оценку деталей',d:'t',h:'Красивого считают умным'},
+{q:'Когнитивный диссонанс — это:',o:['дискомфорт от противоречивых убеждений','забывание','страх','радость'],a:'дискомфорт от противоречивых убеждений',d:'t',h:'Фестингер, 1957'},
+{q:'Стокгольмский синдром — это:',o:['привязанность жертвы к агрессору','страх толпы','боязнь высоты','любовь к порядку'],a:'привязанность жертвы к агрессору',d:'t',h:'Заложники сочувствуют захватчикам'},
+{q:'Эффект Даннинга-Крюгера:',o:['некомпетентные переоценивают себя','компетентные переоценивают','все оценивают точно','никто не оценивает'],a:'некомпетентные переоценивают себя',d:'t',h:'А компетентные — недооценивают'},
+{q:'Пять стадий горя по Кюблер-Росс:',o:['отрицание, гнев, торг, депрессия, принятие','страх, гнев, грусть, радость, покой','шок, боль, адаптация, рост, мудрость','паника, ступор, слёзы, покой, забвение'],a:'отрицание, гнев, торг, депрессия, принятие',d:'t',h:'Модель принятия утраты'},
+{q:'Краткосрочная память удерживает ? элементов:',o:['7±2','3±1','12±3','20±5'],a:'7±2',d:'t',h:'Магическое число Миллера'},
+{q:'Эксперимент Милгрэма показал:',o:['люди подчиняются авторитету даже причиняя боль','все добрые','никто не подчиняется','дети агрессивнее'],a:'люди подчиняются авторитету даже причиняя боль',d:'t',h:'Подчинение авторитету, 1963'},
+// PRACTICE (p) — emotional intelligence, real situations
+{q:'Друг получил двойку и злится. Лучшая реакция:',o:['выслушать и посочувствовать','сказать «сам виноват»','дать совет сразу','отвлечь шуткой'],a:'выслушать и посочувствовать',d:'p',h:'Сначала эмпатия, потом советы'},
+{q:'Одноклассник всё время перебивает. Что эффективнее:',o:['сказать спокойно: «дай мне договорить»','накричать','молча терпеть','пожаловаться учителю'],a:'сказать спокойно: «дай мне договорить»',d:'p',h:'Я-высказывание, без агрессии'},
+{q:'Ты видишь, что тихий одноклассник сидит один на перемене. Что это может значить:',o:['может, ему плохо, стоит подойти','ему всё равно','он просто странный','не моё дело'],a:'может, ему плохо, стоит подойти',d:'p',h:'Внимательность к другим'},
+{q:'Перед экзаменом очень волнуешься. Что поможет:',o:['глубокое дыхание и подготовка','кофе и энергетики','не думать об этом','заболеть и не идти'],a:'глубокое дыхание и подготовка',d:'p',h:'Саморегуляция'},
+{q:'Друг просит списать. Лучший ответ:',o:['предложить объяснить тему вместо списывания','дать списать','отказать грубо','проигнорировать'],a:'предложить объяснить тему вместо списывания',d:'p',h:'Помощь, а не медвежья услуга'},
+{q:'Тебя критикуют несправедливо. Что делать:',o:['спокойно объяснить свою позицию','ответить тем же','заплакать','промолчать и затаить обиду'],a:'спокойно объяснить свою позицию',d:'p',h:'Ассертивность'},
+{q:'В группе один человек не работает. Что эффективнее:',o:['поговорить с ним и дать посильную задачу','пожаловаться','сделать за него','исключить'],a:'поговорить с ним и дать посильную задачу',d:'p',h:'Вовлечение, а не наказание'},
+{q:'Друг хвастается, а тебе завидно. Что здоровее:',o:['порадоваться за друга, а свои чувства осознать','обесценить его успех','перестать общаться','тоже начать хвастаться'],a:'порадоваться за друга, а свои чувства осознать',d:'p',h:'Осознание эмоций'},
+{q:'Новенький в классе ни с кем не общается. Что поможет:',o:['пригласить в свою компанию','подождать, пока сам подойдёт','игнорировать','обсуждать за спиной'],a:'пригласить в свою компанию',d:'p',h:'Инициатива в коммуникации'},
+{q:'Ты ошибся при всех. Что лучше:',o:['признать ошибку спокойно','отрицать','обвинить других','расплакаться'],a:'признать ошибку спокойно',d:'p',h:'Здоровое отношение к ошибкам'},
+{q:'Мама устала после работы. Что покажет эмпатию:',o:['предложить помочь, не дожидаясь просьбы','ничего не делать','попросить купить телефон','пожаловаться на свои проблемы'],a:'предложить помочь, не дожидаясь просьбы',d:'p',h:'Проактивная забота'},
+{q:'Два друга поссорились и просят тебя выбрать сторону:',o:['выслушать обоих, не принимая сторону','выбрать того, кто популярнее','перестать общаться с обоими','рассказать всем о ссоре'],a:'выслушать обоих, не принимая сторону',d:'p',h:'Нейтральность и медиация'},
+{q:'Ты заметил, что друг стал грустным и замкнутым. Что делать:',o:['мягко спросить, всё ли в порядке','не лезть','высмеять','сказать «не грусти»'],a:'мягко спросить, всё ли в порядке',d:'p',h:'Бережное внимание'},
+{q:'Учитель поставил несправедливую оценку. Как лучше:',o:['подойти после урока и спокойно обсудить','устроить скандал на уроке','молча обидеться','написать жалобу директору'],a:'подойти после урока и спокойно обсудить',d:'p',h:'Конструктивный диалог'},
+{q:'Тебе кажется, что тебя никто не понимает. Это значит:',o:['стоит попробовать выразить чувства словами','никто не поймёт никогда','нужно стать другим','все против тебя'],a:'стоит попробовать выразить чувства словами',d:'p',h:'Коммуникация — ключ'},
+];
+function launchPsychKnow(){psychMode2='psychknow';pCur2=0;pAns2=[];go('psych');renderPsych2()}
+
+// ═══ UNIFIED ENGINE v2 (for Likert + multiple choice) ═══
+let psychMode2='',pCur2=0,pAns2=[];
+
+function renderPsych2(){
+  const mode=psychMode2;
+  let qs,title;
+  if(mode==='motiv'){qs=MOTIV_Q;title='💪 Мотивация'}
+  else if(mode==='anxiety'){qs=ANXIETY_Q;title='😰 Тревожность'}
+  else if(mode==='holland'){qs=HOLLAND_Q;title='🧭 Профориентация'}
+  else if(mode==='psychknow'){qs=PSYCH_KNOW;title='🔬 Психология'}
+  else return;
+
+  if(pCur2>=qs.length){finishPsych2(mode);return}
+
+  document.getElementById('p-title').textContent=title;
+  document.getElementById('p-progress').textContent=(pCur2+1)+'/'+qs.length;
+  document.getElementById('p-pgfill').style.width=Math.round(pCur2/qs.length*100)+'%';
+
+  const q=qs[pCur2];
+  document.getElementById('p-question').textContent=q.q;
+  const oe=document.getElementById('p-opts');
+
+  if(mode==='psychknow'){
+    // Multiple choice
+    oe.innerHTML=q.o.map((o,i)=>'<div class="likert-opt" onclick="pSel2('+i+')"><div class="likert-dot"></div>'+o+'</div>').join('');
+  } else if(mode==='holland'){
+    oe.innerHTML=['Да, точно','Скорее да','Скорее нет','Нет'].map((l,i)=>'<div class="likert-opt" onclick="pSel2('+i+')"><div class="likert-dot"></div>'+l+'</div>').join('');
+  } else {
+    // Likert 4-point
+    oe.innerHTML=['Да, это про меня','Скорее да','Скорее нет','Нет, не про меня'].map((l,i)=>'<div class="likert-opt" onclick="pSel2('+i+')"><div class="likert-dot"></div>'+l+'</div>').join('');
+  }
+}
+
+function pSel2(val){
+  pAns2.push(val);
+  if(event&&event.currentTarget)event.currentTarget.classList.add('selected');
+  setTimeout(()=>{pCur2++;renderPsych2()},300);
+}
+
+function finishPsych2(mode){
+  let h='';
+  if(mode==='motiv'){
+    let iScore=0,eScore=0;
+    MOTIV_Q.forEach((q,i)=>{const v=pAns2[i];const pts=v<=1?1:0;if(q.d==='i')iScore+=pts;else eScore+=pts});
+    const iPct=Math.round(iScore/MOTIV_Q.filter(q=>q.d==='i').length*100);
+    const ePct=Math.round(eScore/MOTIV_Q.filter(q=>q.d==='e').length*100);
+    const dominant=iPct>ePct?'Внутренняя':'Внешняя';
+    const emoji=iPct>ePct?'🌟':'🏆';
+    h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900">'+dominant+' мотивация</div>';
+    h+='<div style="font-size:12px;color:var(--muted);margin:8px 0 16px">Что движет вашим учеником</div>';
+    h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">🌟 Внутренняя</span><div class="bd-bar"><div class="bd-fill" style="width:'+iPct+'%;background:var(--green)"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700">'+iPct+'%</span></div>';
+    h+='<div class="bd-row"><span style="width:100px;font-weight:600;font-size:12px">🏆 Внешняя</span><div class="bd-bar"><div class="bd-fill" style="width:'+ePct+'%;background:var(--orange)"></div></div><span class="mono" style="width:35px;text-align:right;font-size:12px;font-weight:700">'+ePct+'%</span></div>';
+    const tip=iPct>ePct?'Ученик мотивирован интересом. Давайте сложные задачи, поощряйте любознательность, не давите оценками.':'Ученик мотивирован внешними факторами (оценки, одобрение). Используйте систему наград, но постепенно развивайте интерес к содержанию.';
+    h+='<div style="margin-top:14px;background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6;text-align:left"><b>💡 Рекомендации:</b><br>'+tip+'</div>';
+    try{localStorage.setItem('motiv_result',JSON.stringify({date:new Date().toISOString(),dominant,iPct,ePct}))}catch{}
+  }
+  else if(mode==='anxiety'){
+    let score=0;
+    ANXIETY_Q.forEach((_,i)=>{if(pAns2[i]<=1)score++});
+    const pct=Math.round(score/ANXIETY_Q.length*100);
+    let level,color,emoji,tip;
+    if(pct>=70){level='Высокая';color='var(--red)';emoji='😰';tip='Рекомендуется консультация психолога. Дома: поддержка, снижение давления по оценкам, дыхательные техники, физическая активность.'}
+    else if(pct>=40){level='Средняя';color='var(--orange)';emoji='😐';tip='Умеренное волнение — это нормально. Помогите ребёнку с планированием, учите не катастрофизировать. Режим сна и спорт.'}
+    else{level='Низкая';color='var(--green)';emoji='😊';tip='Ребёнок спокойно относится к учёбе. Следите, чтобы это не перешло в безразличие — умеренное волнение полезно.'}
+    h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:20px;font-weight:900;color:'+color+'">'+level+' тревожность</div>';
+    h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">'+score+'/'+ANXIETY_Q.length+' признаков ('+pct+'%)</div>';
+    h+='<div style="margin:12px 0;height:12px;background:#e8e6e0;border-radius:6px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+color+';border-radius:6px"></div></div>';
+    h+='<div style="background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6;text-align:left"><b>💡 Рекомендации:</b><br>'+tip+'</div>';
+    try{localStorage.setItem('anxiety_result',JSON.stringify({date:new Date().toISOString(),level,pct}))}catch{}
+  }
+  else if(mode==='holland'){
+    const scores={R:0,I:0,A:0,S:0,E:0,C:0};
+    HOLLAND_Q.forEach((q,i)=>{if(pAns2[i]<=1)scores[q.d]++});
+    const names={R:'Реалистический',I:'Исследовательский',A:'Артистический',S:'Социальный',E:'Предприимчивый',C:'Конвенциональный'};
+    const icons={R:'🔧',I:'🔬',A:'🎨',S:'🤝',E:'💼',C:'📋'};
+    const careers={R:'инженер, механик, программист, строитель',I:'учёный, аналитик, врач, исследователь',A:'дизайнер, музыкант, писатель, режиссёр',S:'учитель, психолог, врач, соцработник',E:'менеджер, предприниматель, юрист, политик',C:'бухгалтер, администратор, логист, архивист'};
+    const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+    const top3=sorted.slice(0,3);
+    h='<div style="font-size:36px;margin-bottom:4px">'+icons[top3[0][0]]+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:18px;font-weight:900">'+names[top3[0][0]]+'</div>';
+    h+='<div style="font-size:12px;color:var(--muted);margin:8px 0">Ваш ведущий тип по Голланду</div>';
+    sorted.forEach(([k,v])=>{const mx=Math.max(...Object.values(scores))||1;const pct=Math.round(v/5*100);
+      h+='<div class="bd-row"><span style="width:32px;font-size:16px">'+icons[k]+'</span><span style="width:60px;font-weight:600;font-size:11px">'+names[k].slice(0,6)+'</span><div class="bd-bar"><div class="bd-fill" style="width:'+pct+'%;background:var(--accent)"></div></div><span class="mono" style="width:25px;text-align:right;font-size:12px;font-weight:700">'+v+'</span></div>'});
+    h+='<div style="margin-top:14px;background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6;text-align:left"><b>💡 Топ-3 направления:</b><br>';
+    top3.forEach(([k])=>{h+='<b>'+icons[k]+' '+names[k]+':</b> '+careers[k]+'<br>'});
+    h+='</div>';
+    try{localStorage.setItem('holland_result',JSON.stringify({date:new Date().toISOString(),top:names[top3[0][0]],scores}))}catch{}
+  }
+  else if(mode==='psychknow'){
+    let theory=0,practice=0,tTotal=0,pTotal=0;
+    PSYCH_KNOW.forEach((q,i)=>{
+      if(q.d==='t'){tTotal++;if(q.o[pAns2[i]]===q.a)theory++}
+      else{pTotal++;if(q.o[pAns2[i]]===q.a)practice++}
+    });
+    const tPct=Math.round(theory/tTotal*100),pPct=Math.round(practice/pTotal*100);
+    let profile,emoji;
+    if(tPct>=60&&pPct>=60){profile='Психолог-универсал';emoji='🌟'}
+    else if(tPct>=60){profile='Теоретик';emoji='📖'}
+    else if(pPct>=60){profile='Практик-интуит';emoji='💡'}
+    else{profile='Начинающий';emoji='🌱'}
+    h='<div style="font-size:36px;margin-bottom:4px">'+emoji+'</div>';
+    h+='<div style="font-family:Unbounded,system-ui,sans-serif;font-size:18px;font-weight:900">'+profile+'</div>';
+    h+='<div style="font-size:12px;color:var(--muted);margin:8px 0 16px">Два измерения: знания и понимание людей</div>';
+    h+='<div class="bd-row"><span style="width:80px;font-weight:600;font-size:12px">📖 Теория</span><div class="bd-bar"><div class="bd-fill" style="width:'+tPct+'%;background:var(--accent)"></div></div><span class="mono" style="width:50px;text-align:right;font-size:12px;font-weight:700">'+theory+'/'+tTotal+'</span></div>';
+    h+='<div class="bd-row"><span style="width:80px;font-weight:600;font-size:12px">💡 Практика</span><div class="bd-bar"><div class="bd-fill" style="width:'+pPct+'%;background:var(--green)"></div></div><span class="mono" style="width:50px;text-align:right;font-size:12px;font-weight:700">'+practice+'/'+pTotal+'</span></div>';
+    // Quadrant
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;text-align:center;margin:16px 0">';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(profile==='Теоретик'?'#dbeafe':'#f8f7f4')+'"><b>📖 Теоретик</b><br>знает термины,<br>но сложно с людьми</div>';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(profile==='Психолог-универсал'?'#dcfce7':'#f8f7f4')+'"><b>🌟 Универсал</b><br>знает и понимает<br>людей</div>';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(profile==='Начинающий'?'#fef9c3':'#f8f7f4')+'"><b>🌱 Начинающий</b><br>пока мало<br>опыта и знаний</div>';
+    h+='<div style="padding:10px;border-radius:8px;background:'+(profile==='Практик-интуит'?'#f0fdf4':'#f8f7f4')+'"><b>💡 Практик</b><br>чувствует людей,<br>но не знает теорию</div>';
+    h+='</div>';
+    const tip=profile==='Практик-интуит'?'У вас сильная интуиция и эмпатия. Подтяните теорию — читайте Канемана, Чалдини, Гоулмана. Теория поможет осознать то, что вы уже чувствуете.':
+      profile==='Теоретик'?'Вы хорошо знаете психологию как науку. Практикуйте активное слушание, наблюдайте за людьми, пробуйте применять знания в реальных ситуациях.':
+      profile==='Психолог-универсал'?'Отлично! Вы и знаете теорию, и понимаете людей. Продолжайте развиваться — попробуйте медиацию конфликтов или наставничество.':
+      'Всё впереди! Начните с книг: Дэниел Гоулман «Эмоциональный интеллект», Роберт Чалдини «Влияние». Наблюдайте за людьми и своими эмоциями.';
+    h+='<div style="background:#f8f7f4;border-radius:12px;padding:14px;font-size:13px;line-height:1.6;text-align:left"><b>💡 Рекомендации:</b><br>'+tip+'</div>';
+    try{localStorage.setItem('psychknow_result',JSON.stringify({date:new Date().toISOString(),profile,tPct,pPct,theory,practice}))}catch{}
+  }
+
+  h+='<div class="disclaimer">Результаты носят ознакомительный характер и не являются клинической диагностикой.</div>';
+  document.getElementById('pr-card').innerHTML=h;
+  go('presult');
+}
+
+// Update refreshMenu
+const _origRefresh=refreshMenu;
+refreshMenu=function(){
+  _origRefresh();
+  try{const m=JSON.parse(localStorage.getItem('motiv_result')||'null');if(m)document.getElementById('motiv-done').textContent='✓ '+m.dominant}catch{}
+  try{const a=JSON.parse(localStorage.getItem('anxiety_result')||'null');if(a)document.getElementById('anxiety-done').textContent='✓ '+a.level}catch{}
+  try{const h=JSON.parse(localStorage.getItem('holland_result')||'null');if(h)document.getElementById('holland-done').textContent='✓ '+h.top}catch{}
+  try{const p=JSON.parse(localStorage.getItem('psychknow_result')||'null');if(p)document.getElementById('psychknow-done').textContent='✓ '+p.profile}catch{}
+};
+refreshMenu();
+
+function showClassSelect(){
+  const o=document.createElement('div');
+  o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto';
+  o.onclick=()=>o.remove();
+  const a=document.createElement('div');
+  a.style.cssText='background:#fff;border-radius:20px;padding:24px 20px;max-width:360px;width:100%;max-height:85vh;overflow-y:auto';
+  a.onclick=e=>e.stopPropagation();
+  const grades=[
+    {g:'1',f:'grade1_v2.html',ic:'🌱',color:'#f59e0b',bg:'#fef3c7'},
+    {g:'2',f:'grade2_v2.html',ic:'🌿',color:'#f97316',bg:'#fff7ed'},
+    {g:'3',f:'grade3_v2.html',ic:'🎒',color:'#16a34a',bg:'#dcfce7'},
+    {g:'4',f:'grade4_v2.html',ic:'📐',color:'#2563eb',bg:'#dbeafe'},
+    {g:'5',f:'grade5_v2.html',ic:'🔢',color:'#7c3aed',bg:'#ede9fe'},
+    {g:'6',f:'grade6_v2.html',ic:'🌍',color:'#ea580c',bg:'#fff7ed'},
+    {g:'7',f:'grade7_v2.html',ic:'⚗️',color:'#0d9488',bg:'#ccfbf1'},
+    {g:'8',f:'grade8_v2.html',ic:'⚡',color:'#dc2626',bg:'#fee2e2'},
+    {g:'9',f:'grade9_v2.html',ic:'∫',color:'#ca8a04',bg:'#fef9c3'},
+    {g:'10',f:'grade10_v2.html',ic:'∑',color:'#1a1a2e',bg:'#e8e6e0'},
+    {g:'11',f:'grade11_v2.html',ic:'🎓',color:'#7c3aed',bg:'#ede9fe'},
+  ];
+  let h='<h3 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;text-align:center">📚 Выбери класс</h3>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">';
+  grades.forEach(({g,f,ic,color,bg})=>{
+    const currentFile=window.location.pathname.split('/').pop()||'index.html';
+    const isCurrent=f===currentFile;
+    h+=`<a href="${f}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;background:${bg};border-radius:12px;text-decoration:none;border:${isCurrent?'2.5px solid '+color:'2px solid transparent'};min-height:70px">
+      <span style="font-size:20px;margin-bottom:4px">${ic}</span>
+      <span style="font-size:13px;font-weight:800;color:${color}">${g} класс</span>
+    </a>`;
+  });
+  h+='</div>';
+  h+='<button style="width:100%;padding:10px;border:none;border-radius:10px;background:#1a1a2e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+  a.innerHTML=h;o.appendChild(a);document.body.appendChild(o);
+}
+
+function countDoneTests(){
+  const keys=['iq_results','style_result','temp_result','motiv_result','anxiety_result','holland_result','psychknow_result'];
+  return keys.filter(k=>{try{const v=localStorage.getItem(k);return v&&v!=='[]'&&v!=='null'}catch{return false}}).length;
+}
+
+function showPortrait(){
+  // Read all results
+  let iq=null,style=null,temp=null,motiv=null,anxiety=null,holland=null,psych=null;
+  try{const r=JSON.parse(localStorage.getItem('iq_results')||'[]');if(r.length)iq=r[r.length-1]}catch{}
+  try{style=JSON.parse(localStorage.getItem('style_result')||'null')}catch{}
+  try{temp=JSON.parse(localStorage.getItem('temp_result')||'null')}catch{}
+  try{motiv=JSON.parse(localStorage.getItem('motiv_result')||'null')}catch{}
+  try{anxiety=JSON.parse(localStorage.getItem('anxiety_result')||'null')}catch{}
+  try{holland=JSON.parse(localStorage.getItem('holland_result')||'null')}catch{}
+  try{psych=JSON.parse(localStorage.getItem('psychknow_result')||'null')}catch{}
+
+  const done=[iq,style,temp,motiv,anxiety,holland,psych].filter(Boolean).length;
+
+  // ── Helpers ──────────────────────────────────────
+  const styleNames={v:'Визуальный стиль',a:'Слуховой стиль',k:'Практический стиль'};
+  const styleEmoji={v:'👁',a:'👂',k:'✋'};
+  const styleDesc={v:'лучше воспринимает информацию визуально — схемы, графики, цвет',a:'лучше воспринимает на слух — объяснения, подкасты, проговаривание',k:'учится через действие — практика, эксперимент, движение'};
+  const hollandNames={R:'Реалистический',I:'Исследовательский',A:'Артистический',S:'Социальный',E:'Предприимчивый',C:'Конвенциональный'};
+  const hollandEmoji={R:'🔧',I:'🔬',A:'🎨',S:'🤝',E:'💼',C:'📋'};
+  const hollandCareers={
+    R:'инженер, программист, архитектор, механик',
+    I:'учёный, аналитик, врач, исследователь',
+    A:'дизайнер, режиссёр, писатель, музыкант',
+    S:'психолог, учитель, врач, соцработник',
+    E:'предприниматель, менеджер, юрист, маркетолог',
+    C:'бухгалтер, аналитик данных, логист, администратор'
+  };
+
+  // Holland top-2
+  let holTop2=[];
+  if(holland&&holland.scores){
+    holTop2=Object.entries(holland.scores).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>k);
+  }
+
+  // Temperament label
+  const tempLabel=temp?temp.type:'';
+  const tempEmoji={
+    'Холерик':'⚡','Сангвиник':'☀️','Флегматик':'🏔','Меланхолик':'🌙',
+    'Экстраверт':'🌟','Интроверт':'💎'
+  };
+
+  // ── Generate insights ────────────────────────────
+  const insights=[];
+
+  // Logic insight
+  if(iq){
+    const pct=iq.pct||iq.pctl||50;
+    if(pct>=80) insights.push({icon:'🏆',text:`<b>Высокие когнитивные способности</b> — балл ${iq.iq}, лучше ${pct}% сверстников. Мозг хорошо справляется с абстрактным мышлением и анализом. Не бойся брать сложные задачи — они тебе по силам.`});
+    else if(pct>=50) insights.push({icon:'💡',text:`<b>Хороший потенциал</b> — балл ${iq.iq}, лучше ${pct}% сверстников. Особенно сильны там, где работала внимательность и последовательность. Регулярная практика заметно поднимает результат.`});
+    else insights.push({icon:'🌱',text:`<b>балл ${iq.iq}</b> — есть куда расти. Это рабочий показатель, а не приговор: логику и память развивают тренировкой. Кроссворды, шахматы, задачники — вполне работают.`});
+  }
+
+  // Style + study tip
+  if(style){
+    const d=style.dominant;
+    const tips={
+      v:'Делай конспекты с цветами и схемами, рисуй mind-maps, смотри видеоуроки. При запоминании — представляй визуально.',
+      a:'Проговаривай материал вслух, слушай подкасты и лекции. Объясни тему другу — и сам запомнишь лучше.',
+      k:'Учи через практику: делай, пробуй, экспериментируй. Перемещайся при зубрёжке, пиши от руки — двигательная память работает.'
+    };
+    insights.push({icon:styleEmoji[d],text:`<b>${styleNames[d]} по стилю обучения</b> — ${styleDesc[d]}. <br>💬 ${tips[d]}`});
+  }
+
+  // Motivation insight (combined with anxiety)
+  if(motiv){
+    const isInternal=motiv.dominant==='Внутренняя'||motiv.iPct>motiv.ePct;
+    if(isInternal){
+      insights.push({icon:'🔥',text:`<b>Внутренняя мотивация ${motiv.iPct||''}%</b> — учишься ради интереса, а не оценок. Это самый устойчивый ресурс. Выбирай предметы, которые зажигают, ищи связь между школой и реальной жизнью.`});
+    } else {
+      const anxHigh=anxiety&&anxiety.pct>=50;
+      insights.push({icon:'🏅',text:`<b>Внешняя мотивация ${motiv.ePct||''}%</b> — тебя двигают оценки и одобрение. Это работает, но быстро истощает.${anxHigh?' Плюс высокая тревожность — риск выгорания.'  :''} Попробуй найти хотя бы один предмет, который интересен сам по себе.`});
+    }
+  }
+
+  // Anxiety insight (standalone if notable)
+  if(anxiety){
+    if(anxiety.level==='Высокая'){
+      insights.push({icon:'😤',text:`<b>Высокая тревожность (${anxiety.pct}%)</b> — экзамены и оценки вызывают сильный стресс. Это мешает показать реальный уровень. Помогают: дыхательные техники, подготовка заранее, разговор с родителями. Не молчи.`});
+    } else if(anxiety.level==='Средняя'){
+      insights.push({icon:'😌',text:`<b>Умеренная тревожность (${anxiety.pct}%)</b> — лёгкое волнение перед контрольной есть, но не мешает. Это нормально и даже полезно: небольшой стресс мобилизует. Главное — не доводить до зубрёжки ночью.`});
+    }
+  }
+
+  // Holland career insight
+  if(holTop2.length){
+    const t1=holTop2[0],t2=holTop2[1]||holTop2[0];
+    const code=t1+(t2!==t1?t2:'');
+    insights.push({icon:hollandEmoji[t1],text:`<b>Профтип ${code} — ${hollandNames[t1]}${t2!==t1?' + '+hollandNames[t2]:''}</b>. Тебе подойдут профессии: ${hollandCareers[t1]}${t2!==t1?', '+hollandCareers[t2]:''}.`});
+  }
+
+  // Psych knowledge insight
+  if(psych){
+    const both=psych.tPct>=60&&psych.pPct>=60;
+    const theoryWin=psych.tPct>psych.pPct;
+    if(both) insights.push({icon:'🌟',text:`<b>Психология: профиль «${psych.profile}»</b> — и теорию знаешь, и людей чувствуешь. Редкое сочетание. Это большой ресурс в командной работе и любой профессии с людьми.`});
+    else if(theoryWin) insights.push({icon:'📖',text:`<b>Психология: профиль «${psych.profile}»</b> — хорошая теоретическая база. Попробуй применять знания в жизни: наблюдай за собой и другими, это делает психологию живой.`});
+    else insights.push({icon:'💡',text:`<b>Психология: профиль «${psych.profile}»</b> — сильная интуиция в общении. Подтяни теорию — она объяснит то, что ты уже чувствуешь.`});
+  }
+
+  // Cross-synthesis (only if enough data)
+  if(style&&temp&&motiv){
+    const isV=style.dominant==='v';
+    const highInt=motiv.iPct>60||motiv.dominant==='Внутренняя';
+    const isSang=tempLabel.includes('Сангвиник')||tempLabel.includes('Холерик');
+    if(isV&&highInt) insights.push({icon:'✨',text:`<b>Твоя сильная комбинация:</b> визуальное мышление + внутренняя мотивация. Такие люди хорошо работают над сложными проектами — видят целое и не теряют интерес. Ищи задачи с видимым результатом.`});
+    else if(!highInt&&anxiety&&anxiety.pct>=50) insights.push({icon:'⚠️',text:`<b>Зона внимания:</b> внешняя мотивация + тревожность — риск выгорания при неудачах. Важно сформировать "подушку" — хотя бы 1-2 предмета, в которых ты уверен и который нравится независимо от оценок.`});
+  }
+
+  // ── Build badges ─────────────────────────────────
+  const badges=[];
+  if(style) badges.push({icon:styleEmoji[style.dominant],label:styleNames[style.dominant],bg:'#dbeafe',color:'#1e40af'});
+  if(temp) badges.push({icon:tempEmoji[tempLabel]||'🎭',label:tempLabel,bg:'#fff7ed',color:'#9a3412'});
+  if(holland&&holTop2.length) badges.push({icon:hollandEmoji[holTop2[0]],label:hollandNames[holTop2[0]].split(' ')[0],bg:'#ede9fe',color:'#5b21b6'});
+  if(psych) badges.push({icon:psych.tPct>=60&&psych.pPct>=60?'🌟':psych.tPct>psych.pPct?'📖':'💡',label:psych.profile,bg:'#dcfce7',color:'#166534'});
+  if(motiv) badges.push({icon:motiv.dominant==='Внутренняя'||motiv.iPct>motiv.ePct?'🔥':'🏅',label:(motiv.dominant==='Внутренняя'||motiv.iPct>motiv.ePct?'Внутренняя':'Внешняя')+' мотивация',bg:'#fef9c3',color:'#92400e'});
+
+  // ── Build profile bars ───────────────────────────
+  const bars=[];
+  if(iq) bars.push({label:'Когнитивный индекс',val:'Балл: '+iq.iq,pct:Math.min(100,Math.max(0,Math.round((iq.iq-60)/90*100))),color:'#2563eb'});
+  if(motiv) bars.push({label:'Внутренняя мотивация',val:(motiv.iPct||0)+'%',pct:motiv.iPct||0,color:'#16a34a'});
+  if(anxiety) bars.push({label:'Тревожность',val:anxiety.pct+'%',pct:anxiety.pct,color:anxiety.pct>=70?'#dc2626':anxiety.pct>=40?'#ea580c':'#16a34a'});
+
+  // ── Render overlay ───────────────────────────────
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(15,14,23,.75);z-index:9999;overflow-y:auto;padding:16px;display:flex;justify-content:center;-webkit-overflow-scrolling:touch';
+  
+  const now=new Date().toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
+
+  let html=`
+  <div style="background:#f5f3ee;border-radius:20px;max-width:480px;width:100%;overflow:hidden;margin:auto">
+
+    <!-- Header -->
+    <div style="background:#1a1a2e;color:#fff;padding:20px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#4ade80,#2563eb);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0">🧠</div>
+        <div>
+          <div style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:900;margin-bottom:2px">Портрет ученика</div>
+          <div style="font-size:11px;opacity:.5">${now} · ${done} из 7 тестов</div>
+        </div>
+        <button onclick="this.closest('[style*=position]').remove()" style="margin-left:auto;background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">×</button>
+      </div>
+      <!-- Bars -->
+      ${bars.map(b=>`
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span style="font-size:11px;opacity:.6;font-weight:600">${b.label}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700">${b.val}</span>
+        </div>
+        <div style="height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden">
+          <div style="width:${b.pct}%;height:100%;background:${b.color};border-radius:3px;transition:width .6s"></div>
+        </div>
+      </div>`).join('')}
+    </div>
+
+    <!-- Badges -->
+    ${badges.length?`
+    <div style="padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid #e2e0d8">
+      ${badges.map(b=>`<span style="background:${b.bg};color:${b.color};font-size:11px;font-weight:700;padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:4px">${b.icon} ${b.label}</span>`).join('')}
+    </div>`:''}
+
+    <!-- Insights -->
+    <div style="padding:16px">
+      <div style="font-family:Unbounded,system-ui,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Ключевые выводы</div>
+      ${insights.slice(0,5).map(ins=>`
+      <div style="display:flex;gap:12px;margin-bottom:12px;padding:12px;background:#fff;border-radius:12px;border:1px solid #e2e0d8">
+        <span style="font-size:20px;flex-shrink:0;margin-top:1px">${ins.icon}</span>
+        <div style="font-size:13px;line-height:1.55;color:#1a1a2e">${ins.text}</div>
+      </div>`).join('')}
+    </div>
+
+    <!-- Holland careers if available -->
+    ${holTop2.length?`
+    <div style="padding:0 16px 16px">
+      <div style="font-family:Unbounded,system-ui,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Направления для профессии</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${holTop2.map(k=>`
+        <div style="background:#fff;border-radius:10px;padding:12px;border:1px solid #e2e0d8">
+          <div style="font-size:18px;margin-bottom:4px">${hollandEmoji[k]}</div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:3px">${hollandNames[k]}</div>
+          <div style="font-size:11px;color:#6b6a74;line-height:1.4">${hollandCareers[k]}</div>
+        </div>`).join('')}
+      </div>
+    </div>`:''}
+
+    <!-- Disclaimer + share -->
+    <div style="padding:0 16px 16px">
+      <div style="font-size:10px;color:#9b9aad;text-align:center;margin-bottom:12px;line-height:1.5">Результаты носят ознакомительный характер и не являются клинической диагностикой.</div>
+      <button onclick="sharePortrait()" style="width:100%;padding:13px;border:none;border-radius:12px;background:#1a1a2e;color:#fff;font-family:'Golos Text',sans-serif;font-weight:700;font-size:14px;cursor:pointer">📤 Отправить родителям</button>
+      ${done<7?`<div style="text-align:center;margin-top:10px;font-size:12px;color:#6b6a74">Пройди все ${7-done} оставшихся тестов — портрет станет полнее</div>`:''}
+    </div>
+  </div>`;
+
+  overlay.innerHTML=html;
+  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
+  document.body.appendChild(overlay);
+  
+  // Store for share
+  window._portraitData={iq,style,temp,motiv,anxiety,holland,psych,insights,badges,holTop2,done};
+}
+
+function sharePortrait(){
+  const d=window._portraitData||{};
+  const now=new Date().toLocaleDateString('ru',{day:'numeric',month:'long'});
+  let text=`🧠 Портрет ученика — ${now}\n(${d.done||'?'} из 7 тестов пройдено)\n\n`;
+  
+  if(d.iq) text+=`📊 Балл: ${d.iq.iq} (лучше ${d.iq.pct||d.iq.pctl}% сверстников)\n`;
+  if(d.style) text+=`👁 Стиль восприятия: ${({v:'Визуальный стиль',a:'Слуховой стиль',k:'Практический стиль'})[d.style.dominant]||d.style.dominant}\n`;
+  if(d.temp) text+=`🎭 Темперамент: ${d.temp.type}\n`;
+  if(d.motiv) text+=`💪 Мотивация: ${d.motiv.dominant==='Внутренняя'||d.motiv.iPct>d.motiv.ePct?'Внутренняя ('+d.motiv.iPct+'%)':'Внешняя ('+d.motiv.ePct+'%)'}\n`;
+  if(d.anxiety) text+=`😌 Тревожность: ${d.anxiety.level} (${d.anxiety.pct}%)\n`;
+  if(d.holland) text+=`🧭 Профтип: ${d.holland.top}\n`;
+  if(d.psych) text+=`🔬 Психология: ${d.psych.profile}\n`;
+  
+  if(d.insights&&d.insights.length){
+    text+='\n💡 Главные выводы:\n';
+    d.insights.slice(0,3).forEach(ins=>{
+      text+='• '+ins.text.replace(/<[^>]+>/g,'').trim()+'\n';
+    });
+  }
+  
+  if(navigator.share){
+    navigator.share({title:'Портрет ученика',text}).catch(()=>fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text){
+  navigator.clipboard&&navigator.clipboard.writeText(text)
+    .then(()=>alert('✅ Скопировано! Вставь в сообщение.'))
+    .catch(()=>prompt('Скопируй текст:',text));
+}
+
+</script>
+<script src="./assets/js/bundle_shell.js"></script></body>
