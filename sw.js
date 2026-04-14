@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-v41';
+const CACHE_NAME = 'trainer-v42';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -8,17 +8,17 @@ const ASSETS = [
   './tests.html',
   './spec_subjects.html',
   './dashboard.html',
-  './assets/js/wave35_plans.js?v=44',
+  './assets/js/wave35_plans.js?v=45',
   './assets/js/engine10.js',
   './assets/js/bundle_boosters.js?v=42',
   './assets/js/bundle_dashboard_tools.js',
   './assets/js/bundle_diagnostic_tools.js',
   './assets/js/bundle_exam.js?v=44',
-  './assets/js/bundle_grade_after.js?v=44',
+  './assets/js/bundle_grade_after.js?v=45',
   './assets/js/bundle_grade_content.js',
   './assets/js/bundle_sharing.js',
-  './assets/js/bundle_special_subjects.js?v=44',
-  './assets/js/bundle_shell.js?v=44',
+  './assets/js/bundle_special_subjects.js?v=45',
+  './assets/js/bundle_shell.js?v=45',
   './assets/js/bundle_subject_expansion.js',
   './assets/css/engine10.css',
   './manifest.webmanifest',

@@ -3113,7 +3113,7 @@
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 43</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 45</div></div>';
     return html;
   }
   function refreshThemeButtons(){

@@ -220,14 +220,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
 
   function mountThemeButton(){
-    if(document.getElementById(THEME_BTN_ID)) return;
-    const btn = document.createElement('button');
-    btn.id = THEME_BTN_ID;
-    btn.type = 'button';
-    btn.setAttribute('data-theme-cycle', '1');
-    btn.addEventListener('click', cycleTheme);
-    (document.body || document.documentElement).appendChild(btn);
-    syncThemeButton();
+    const btn = document.getElementById(THEME_BTN_ID);
+    if(btn && btn.remove) btn.remove();
   }
 
   function updateOfflinePill(show){
@@ -253,11 +247,22 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     window.__wave9AlertPatched = true;
     const nativeAlert = typeof window.alert === 'function' ? window.alert.bind(window) : function(){};
     window.__nativeAlert = nativeAlert;
+    let lastToastKey = '';
+    let lastToastAt = 0;
     window.alert = function(msg){
-      const text = String(msg == null ? '' : msg);
-      if(text && text.length <= 96 && !/[\n\r]/.test(text)){
-        const kind = /ошиб|невер|не удалось|не найден|нельзя/i.test(text) ? 'error' : /оффлайн|вниман/i.test(text) ? 'warn' : 'info';
-        showToast(text, kind, 2400);
+      const text = String(msg == null ? '' : msg).trim();
+      if(!window.__trainerUserAlerts) window.__trainerUserAlerts = [];
+      window.__trainerUserAlerts.push({ message:text, at:Date.now(), page:(window.location && (window.location.pathname || window.location.href)) || '' });
+      if(window.__trainerUserAlerts.length > 50) window.__trainerUserAlerts.splice(0, window.__trainerUserAlerts.length - 50);
+      if(text && text.length <= 120 && !/[\n\r]/.test(text)){
+        const genericRetry = /что-?то пошло не так|попробуй ещё раз/i.test(text);
+        const kind = /оффлайн|вниман/i.test(text) ? 'warn' : genericRetry ? 'warn' : /ошиб|невер|не удалось|не найден|нельзя/i.test(text) ? 'warn' : /✅|восстановлено|успех/i.test(text) ? 'success' : 'info';
+        const normalized = text.replace(/^⚠️\s*/, '').replace(/^❌\s*/, '').replace(/^✅\s*/, '').trim();
+        const key = kind + '|' + normalized;
+        if(Date.now() - lastToastAt < 1600 && lastToastKey === key) return;
+        lastToastKey = key;
+        lastToastAt = Date.now();
+        showToast(normalized, kind, kind === 'info' ? 1800 : 2200);
         return;
       }
       return nativeAlert(text);
@@ -1604,7 +1609,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 43</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 45</div></div>';
     return html;
   }
   function refreshThemeButtons(){
