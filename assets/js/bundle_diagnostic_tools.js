@@ -489,6 +489,13 @@
     }).join('');
   }
 
+  function setDiagShellState(mode){
+    try {
+      if (!document.body) return;
+      document.body.setAttribute('data-trainer-screen', mode === 'immersive' ? 'immersive' : 'browse');
+    } catch(_) {}
+  }
+
   function patchStart(){
     if (window.__wave25DiagPatchedStart || typeof window.startDiag !== 'function') return;
     var original = window.startDiag;
@@ -514,6 +521,7 @@
       if (typeof window.renderQ === 'function') window.renderQ();
       startTimer();
       renderHistorySummary();
+      setDiagShellState('immersive');
     };
     window.__wave25DiagPatchedStart = true;
   }
@@ -529,6 +537,7 @@
       var skip = document.getElementById('skip-btn');
       var mode = getMode();
       if (skip) skip.style.display = mode.allowSkip ? 'block' : 'none';
+      setDiagShellState('immersive');
       return out;
     };
     window.__wave25DiagPatchedRender = true;
@@ -567,6 +576,8 @@
     var original = window.go;
     window.go = function(id){
       if (id !== 'quiz') stopTimer();
+      if (id === 'select' || id === 'res') setDiagShellState('browse');
+      else if (id === 'quiz') setDiagShellState('immersive');
       return original.apply(this, arguments);
     };
     window.__wave25DiagPatchedGo = true;
@@ -587,6 +598,7 @@
           try { window.dispatchEvent(new CustomEvent('wave25-diagnostic-saved', { detail: state.entry })); } catch(_) {}
         }
       } catch(_) {}
+      setDiagShellState('browse');
       return out;
     };
     window.__wave25DiagPatchedResult = true;
@@ -601,6 +613,7 @@
     patchGo();
     patchShowResult();
     updateTimerUi();
+    setDiagShellState('browse');
   }
 
   window.wave25Diag = {

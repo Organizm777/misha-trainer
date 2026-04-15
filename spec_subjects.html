@@ -36,6 +36,17 @@ h1 em{font-style:normal;color:var(--muted)}
 .spec-stat-l{margin-top:6px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
 .spec-resume{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;width:100%;padding:14px 16px;border:none;border-radius:14px;background:rgba(37,99,235,.08);color:var(--ink);font:700 13px/1.45 'Golos Text',system-ui,sans-serif;text-align:left;cursor:pointer}
 .spec-resume span{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+.spec-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:14px 0 12px;position:sticky;top:calc(8px + env(safe-area-inset-top,0));z-index:4;padding:8px 0;background:linear-gradient(180deg,var(--bg) 78%,rgba(245,243,238,0));backdrop-filter:saturate(1.02)}/* wave51_spec_toolbar */
+.spec-search-wrap{display:flex;align-items:center;gap:8px;min-width:min(100%,420px);padding:0 12px;border:1.5px solid var(--border);border-radius:14px;background:var(--card)}
+.spec-search-wrap span{font-size:14px;color:var(--muted)}
+.spec-search{flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--ink);font:600 13px/1.2 'Golos Text',system-ui,sans-serif;padding:12px 0}
+.spec-search-wrap:focus-within{border-color:rgba(37,99,235,.45);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.spec-clear{flex:0 0 auto;border:none;background:transparent;color:var(--muted);font:700 13px/1 'Golos Text',system-ui,sans-serif;cursor:pointer;padding:0 0 0 4px}
+.spec-clear:hover{color:var(--ink)}
+.spec-search-wrap[data-has-clear="1"]{box-shadow:0 0 0 2px rgba(37,99,235,.05)}
+.spec-tools-meta{font-size:11px;line-height:1.4;color:var(--muted);font-weight:700;letter-spacing:.2px}
+.spec-subject-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.spec-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.08);color:var(--ink);font-size:11px;font-weight:700}
 .spec-section-title{margin:18px 0 12px;font-family:'Unbounded',system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted)}
 .spec-grid,.spec-topic-list,.spec-review-list{display:grid;gap:10px}
 .spec-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
@@ -106,7 +117,7 @@ h1 em{font-style:normal;color:var(--muted)}
   <div id="spec-root" aria-live="polite"></div>
 </div>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script>
-<script src="./assets/js/bundle_special_subjects.js?v=45"></script>
-<script src="./assets/js/bundle_shell.js?v=45"></script>
+<script src="./assets/js/bundle_special_subjects.js?v=51"></script>
+<script src="./assets/js/bundle_shell.js?v=48"></script>
 </body>
 </html>

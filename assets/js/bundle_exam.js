@@ -179,6 +179,23 @@
     if (value >= 45) return 'var(--orange)';
     return 'var(--red)';
   }
+  function hexToRgba(hex, alpha){
+    try {
+      var raw = String(hex || '').replace('#','').trim();
+      if (raw.length === 3) raw = raw.split('').map(function(ch){ return ch + ch; }).join('');
+      if (raw.length !== 6) return 'rgba(37,99,235,' + alpha + ')';
+      var r = parseInt(raw.slice(0,2), 16);
+      var g = parseInt(raw.slice(2,4), 16);
+      var b = parseInt(raw.slice(4,6), 16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+    } catch(_) { return 'rgba(37,99,235,' + alpha + ')'; }
+  }
+  function setDiagShellState(mode){
+    try {
+      if (!document.body) return;
+      document.body.setAttribute('data-trainer-screen', mode === 'immersive' ? 'immersive' : 'browse');
+    } catch(_) {}
+  }
 
   var CURATED = {
     oge_math: [
@@ -524,7 +541,7 @@
     var style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = '' +
-      '.wave30-pack-host{margin:14px 0 18px}.wave30-pack-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin-bottom:10px}.wave30-pack-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.wave30-pack-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px 14px 12px}.wave30-pack-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.wave30-pack-name{font-size:12px;font-weight:800;line-height:1.35}.wave30-pack-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:10px;font-weight:700;color:var(--muted)}.wave30-pack-meta{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.45}.wave30-pack-last{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.4}.wave30-pack-btn{margin-top:10px;width:100%;padding:10px 12px;border:none;border-radius:10px;background:var(--ink,var(--text));color:var(--bg,#fff);font-size:12px;font-weight:700;cursor:pointer}' +
+      '.wave30-pack-host{margin:14px 0 18px}.wave30-pack-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin-bottom:10px}.wave30-pack-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.wave30-pack-card{background:var(--card);border:1.25px solid var(--border);border-radius:14px;padding:13px 13px 11px}.wave30-pack-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.wave30-pack-name{font-size:12px;font-weight:800;line-height:1.35}.wave30-pack-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:10px;font-weight:700;color:var(--muted)}.wave30-pack-meta{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.45}.wave30-pack-last{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.4}.wave30-pack-btn{margin-top:10px;width:100%;padding:9px 11px;border:1.25px solid var(--pack-accent,var(--ink,var(--text)));border-radius:11px;background:var(--pack-bg,rgba(37,99,235,.06));color:var(--pack-accent,var(--ink,var(--text)));font-size:11.5px;font-weight:800;cursor:pointer;box-shadow:none;letter-spacing:.01em}' +
       '.wave30-quiz-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.wave30-quiz-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-size:10px;font-weight:700;color:var(--muted)}.wave30-quiz-chip b{color:var(--text)}' +
       '.wave30-exam-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}.wave30-exam-stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 8px;text-align:center}.wave30-exam-stat b{display:block;font-family:Unbounded,system-ui,sans-serif;font-size:16px}.wave30-exam-stat span{display:block;font-size:10px;color:var(--muted);margin-top:4px}.wave30-sec-list{display:flex;flex-direction:column;gap:8px}.wave30-sec-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--border)}.wave30-sec-row:first-child{border-top:none;padding-top:0}.wave30-sec-name{font-size:12px;font-weight:700}.wave30-sec-meta{font-size:10px;color:var(--muted);margin-top:3px}.wave30-sec-score{font-family:JetBrains Mono,monospace;font-size:13px;font-weight:800}.wave30-sec-band{margin-top:10px;font-size:12px;line-height:1.45;color:var(--text)}' +
       '.wave30-dash-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px}.wave30-dash-card{background:var(--card);border:1px solid var(--border);border-radius:var(--R,16px);padding:14px}.wave30-dash-k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}.wave30-dash-v{font-family:Unbounded,system-ui,sans-serif;font-size:17px;font-weight:900;margin-top:6px}.wave30-dash-sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}.wave30-dash-list{display:flex;flex-direction:column;gap:8px}.wave30-dash-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--R,16px)}.wave30-dash-name{font-size:13px;font-weight:800}.wave30-dash-meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.45}.wave30-dash-score{font-family:JetBrains Mono,monospace;font-size:14px;font-weight:800}.wave30-dash-link{display:inline-flex;align-items:center;gap:6px;padding:7px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:10px;color:var(--muted);text-decoration:none;margin-top:8px}' +
@@ -550,6 +567,7 @@
     }
     var groups = { 'ОГЭ': [], 'ЕГЭ': [] };
     Object.keys(EXAM_PACKS).forEach(function(id){ groups[EXAM_PACKS[id].exam].push(EXAM_PACKS[id]); });
+    setDiagShellState('browse');
     host.innerHTML = ['ОГЭ', 'ЕГЭ'].map(function(group){
       return '<div style="margin-top:12px">' +
         '<div class="wave30-pack-title">' + group + ' · exam packs</div>' +
@@ -559,7 +577,7 @@
             '<div class="wave30-pack-head"><div class="wave30-pack-name">' + esc(pack.label) + '</div><span class="wave30-pack-badge">' + esc(pack.grades) + '</span></div>' +
             '<div class="wave30-pack-meta">' + esc(pack.summary) + '<br>' + pack.maxQ + ' заданий · ' + fmtTime(pack.timeLimit) + '</div>' +
             '<div class="wave30-pack-last">' + (latest ? ('Последний: <b style="color:' + esc(colorForPct(latest.pct)) + '">' + esc(String(latest.rawPoints) + '/' + String(latest.maxPoints)) + '</b> · ' + esc(latest.bandLabel) + ' · ' + esc(fmtDate(latest.ts))) : 'Пока без попыток') + '</div>' +
-            '<button class="wave30-pack-btn" style="background:' + esc(pack.accent) + '" onclick="wave30Exam.startPack(\'' + pack.id + '\')">▶ Начать тест</button>' +
+            '<button class="wave30-pack-btn" style="--pack-accent:' + esc(pack.accent) + ';--pack-bg:' + esc(hexToRgba(pack.accent, 0.10)) + '" onclick="wave30Exam.startPack(\'' + pack.id + '\')">▶ Начать тест</button>' +
           '</div>';
         }).join('') + '</div></div>';
     }).join('');
@@ -734,6 +752,7 @@
     window.__wave30LastExamResult = null;
     try { if (window.wave25Diag && typeof wave25Diag.setMode === 'function') wave25Diag.setMode('exam'); } catch(_) {}
     setHashParam(EXAM_HASH_KEY, packId);
+    setDiagShellState('immersive');
     window.startDiag(EXAM_PACKS[packId].subjectId);
     return true;
   }
@@ -831,6 +850,7 @@
         setHashParam(EXAM_HASH_KEY, '');
         var holder = document.getElementById('wave30-quiz-meta');
         if (holder) holder.innerHTML = '';
+        setDiagShellState('browse');
       }
       return original.apply(this, arguments);
     };
@@ -857,7 +877,7 @@
     return document.getElementById('wave30-exam-dashboard');
   }
 
-  function renderDashboardExam(){
+  function renderDashboardExam(){ try { document.body && document.body.setAttribute('data-trainer-screen','browse'); } catch(_) {}
     if (!isDashboardPage()) return;
     var root = ensureDashboardRoot();
     if (!root) return;
@@ -968,6 +988,7 @@
   function initDiagnostic(){
     renderPackHub();
     setTimeout(renderPackHub, 40);
+    setDiagShellState('browse');
     if (diagBooted) return;
     diagBooted = true;
     patchStart();

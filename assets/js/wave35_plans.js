@@ -3022,7 +3022,7 @@
     var style = document.createElement('style');
     style.id = SETTINGS_STYLE_ID;
     style.textContent = '\n#' + LEGACY_THEME_BTN_ID + '{display:none!important;pointer-events:none!important}' +
-      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:32px;min-height:32px;padding:0 7px;border:1px solid rgba(26,26,46,.06);border-radius:999px;background:rgba(255,255,255,.52);color:#1a1a2e;box-shadow:0 2px 8px rgba(0,0,0,.06);font:700 10px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px);opacity:.84}' +
+      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:32px;min-height:32px;padding:0 7px;border:1px solid rgba(26,26,46,.06);border-radius:999px;background:rgba(255,255,255,.52);color:#1a1a2e;box-shadow:0 2px 8px rgba(0,0,0,.06);font:700 10px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px);opacity:.84;transition:opacity .18s ease,transform .18s ease,box-shadow .18s ease,background .18s ease}' +
       '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.78);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
       '\n#' + SETTINGS_MODAL_ID + '{position:fixed;inset:0;z-index:14000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.56)}' +
       '\n#' + SETTINGS_MODAL_ID + ' [data-settings-card]{width:min(100%,560px);max-height:88vh;overflow:auto;background:var(--card,#fff);color:var(--text,#111827);border:1px solid var(--border,#d7d3cc);border-radius:20px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.26)}' +
@@ -3037,7 +3037,7 @@
       '\n.wave40-settings-row{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;margin-top:8px}' +
       '\n.wave40-settings-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}' +
       '\n.wave40-pill{padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.10);color:var(--accent,#2563eb);font-size:11px;font-weight:800}' +
-      '\n@media (min-width:1024px){#' + SETTINGS_BTN_ID + '{min-width:30px;min-height:30px;padding:0 6px;background:rgba(255,255,255,.46);box-shadow:0 2px 6px rgba(0,0,0,.05)}}' +
+      '\n#' + SETTINGS_BTN_ID + ':focus-visible{outline:2px solid rgba(37,99,235,.35);outline-offset:2px}' +'\nbody[data-trainer-screen="immersive"] #' + SETTINGS_BTN_ID + '{opacity:.14;transform:scale(.88)}' +'\nbody[data-trainer-screen="immersive"] #' + SETTINGS_BTN_ID + ':hover,body[data-trainer-screen="immersive"] #' + SETTINGS_BTN_ID + ':focus-visible{opacity:.92;transform:scale(1)}' +'\n@media (min-width:1024px){#' + SETTINGS_BTN_ID + '{min-width:28px;min-height:28px;padding:0 5px;background:rgba(255,255,255,.34);box-shadow:0 1px 4px rgba(0,0,0,.035);opacity:.64}#' + SETTINGS_BTN_ID + ':hover{opacity:1;transform:translateY(-1px)}}' +
       '\n@media (max-width:520px){#' + SETTINGS_BTN_ID + '{min-width:32px;min-height:32px;padding:0 7px;font-size:10px}.wave40-theme-grid,.wave40-action-grid{grid-template-columns:1fr}.wave40-settings-row{flex-direction:column;align-items:flex-start}}' +
       '\n@media print{#' + SETTINGS_BTN_ID + ',#' + SETTINGS_MODAL_ID + ',#' + LEGACY_INSTALL_ID + '{display:none!important}}';
     (document.head || document.documentElement).appendChild(style);
@@ -3113,7 +3113,7 @@
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 45</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 47</div></div>';
     return html;
   }
   function refreshThemeButtons(){
