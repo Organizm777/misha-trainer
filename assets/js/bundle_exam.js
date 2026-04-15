@@ -570,7 +570,7 @@
     setDiagShellState('browse');
     host.innerHTML = ['ОГЭ', 'ЕГЭ'].map(function(group){
       return '<div style="margin-top:12px">' +
-        '<div class="wave30-pack-title">' + group + ' · exam packs</div>' +
+        '<div class="wave30-pack-title">' + group + ' · ЭКЗАМЕНЫ</div>' +
         '<div class="wave30-pack-grid">' + groups[group].map(function(pack){
           var latest = history[pack.id];
           return '<div class="wave30-pack-card" style="--ink:' + esc(pack.accent) + '">' +
@@ -611,7 +611,7 @@
     }
     holder.innerHTML = '' +
       '<span class="wave30-quiz-chip"><b>' + esc(pack.exam) + '</b> ' + esc(pack.label.replace(pack.exam + ' · ', '').replace('ЕГЭ база · ', '').replace('ЕГЭ профиль · ', '')) + '</span>' +
-      '<span class="wave30-quiz-chip"><b>Task</b> ' + esc(String(q.taskNo)) + '/' + esc(String(pack.maxQ)) + '</span>' +
+      '<span class="wave30-quiz-chip"><b>Задание</b> ' + esc(String(q.taskNo)) + '/' + esc(String(pack.maxQ)) + '</span>' +
       '<span class="wave30-quiz-chip"><b>' + esc(q.section) + '</b> · ' + esc(String(q.points)) + ' б.</span>';
   }
 
@@ -690,7 +690,7 @@
       '<div class="wave30-exam-grid">' +
         '<div class="wave30-exam-stat"><b>' + esc(String(result.rawPoints) + '/' + String(result.maxPoints)) + '</b><span>сырые баллы</span></div>' +
         '<div class="wave30-exam-stat"><b>' + esc(result.bandLabel) + '</b><span>ориентир</span></div>' +
-        '<div class="wave30-exam-stat"><b>' + (result.score100 == null ? esc(String(result.pct) + '%') : esc(String(result.score100))) + '</b><span>' + (result.score100 == null ? 'точность pack-а' : 'model score / 100') + '</span></div>' +
+        '<div class="wave30-exam-stat"><b>' + (result.score100 == null ? esc(String(result.pct) + '%') : esc(String(result.score100))) + '</b><span>' + (result.score100 == null ? 'точность варианта' : 'модельные баллы / 100') + '</span></div>' +
       '</div>' +
       '<div class="wave30-sec-list">' + result.sections.map(function(row){
         var rowPct = pct(row.raw, row.max);
@@ -708,7 +708,7 @@
     var lines = [];
     lines.push('🧪 ' + result.packLabel);
     lines.push('Сырые баллы: ' + result.rawPoints + '/' + result.maxPoints + ' (' + result.pct + '%)');
-    if (result.score100 != null) lines.push('Model score: ' + result.score100 + ' / 100');
+    if (result.score100 != null) lines.push('Модельные баллы: ' + result.score100 + ' / 100');
     lines.push('Ориентир: ' + result.bandLabel + ' — ' + result.bandNote);
     if (result.weakSections.length) lines.push('Повторить: ' + result.weakSections.slice(0, 3).join(', '));
     return lines.join('\n');
@@ -866,7 +866,7 @@
       var title = document.createElement('div');
       title.className = 'section';
       title.id = 'wave30-exam-title';
-      title.textContent = 'Экзаменные pack-и';
+      title.textContent = 'ЭКЗАМЕНЫ';
       anchor.parentNode.insertBefore(title, anchor);
     }
     if (!document.getElementById('wave30-exam-dashboard')) {
@@ -883,7 +883,7 @@
     if (!root) return;
     var history = loadHistory();
     if (!history.length) {
-      root.innerHTML = '<div class="wave30-dash-card"><div class="wave30-dash-sub">Экзаменные попытки пока не запускались. Открой «Сквозную диагностику» и выбери любой ОГЭ/ЕГЭ pack — здесь появится exam-readiness по сырым баллам и разделам.</div></div>';
+      root.innerHTML = '<div class="wave30-dash-card"><div class="wave30-dash-sub">Экзаменные попытки пока не запускались. Открой «Сквозную диагностику» и выбери любой ОГЭ/ЕГЭ вариант — здесь появится ориентир по сырым баллам и разделам.</div></div>';
       return;
     }
     var latest = lastByPack(history);
@@ -895,14 +895,14 @@
     root.innerHTML = '' +
       '<div class="wave30-dash-grid">' +
         '<div class="wave30-dash-card"><div class="wave30-dash-k">Попытки</div><div class="wave30-dash-v">' + attempts + '</div><div class="wave30-dash-sub">в exam-history</div></div>' +
-        '<div class="wave30-dash-card"><div class="wave30-dash-k">Порог / зачёт</div><div class="wave30-dash-v">' + passed + '/' + rows.length + '</div><div class="wave30-dash-sub">по последним попыткам pack-ов</div></div>' +
-        '<div class="wave30-dash-card"><div class="wave30-dash-k">Лучший pack</div><div class="wave30-dash-v">' + esc(best.bandLabel) + '</div><div class="wave30-dash-sub">' + esc(best.packLabel) + '</div></div>' +
+        '<div class="wave30-dash-card"><div class="wave30-dash-k">Порог / зачёт</div><div class="wave30-dash-v">' + passed + '/' + rows.length + '</div><div class="wave30-dash-sub">по последним попыткам</div></div>' +
+        '<div class="wave30-dash-card"><div class="wave30-dash-k">Лучший вариант</div><div class="wave30-dash-v">' + esc(best.bandLabel) + '</div><div class="wave30-dash-sub">' + esc(best.packLabel) + '</div></div>' +
       '</div>' +
-      '<div class="wave30-dash-card" style="margin-bottom:8px"><div class="wave30-dash-sub"><b>Сильный pack:</b> ' + esc(best.packLabel) + ' · ' + esc(String(best.rawPoints) + '/' + String(best.maxPoints)) + (best.score100 != null ? (' · ' + esc(String(best.score100)) + '/100') : '') + '<br><b>Зона роста:</b> ' + esc(weakest.packLabel) + ' · ' + esc(weakest.weakSections && weakest.weakSections.length ? weakest.weakSections.slice(0,2).join(', ') : weakest.bandLabel) + '</div></div>' +
+      '<div class="wave30-dash-card" style="margin-bottom:8px"><div class="wave30-dash-sub"><b>Сильный вариант:</b> ' + esc(best.packLabel) + ' · ' + esc(String(best.rawPoints) + '/' + String(best.maxPoints)) + (best.score100 != null ? (' · ' + esc(String(best.score100)) + '/100') : '') + '<br><b>Зона роста:</b> ' + esc(weakest.packLabel) + ' · ' + esc(weakest.weakSections && weakest.weakSections.length ? weakest.weakSections.slice(0,2).join(', ') : weakest.bandLabel) + '</div></div>' +
       '<div class="wave30-dash-list">' + rows.slice(0, 6).map(function(row){
         var scoreText = row.score100 != null ? (row.score100 + '/100') : (row.rawPoints + '/' + row.maxPoints);
         return '<div class="wave30-dash-row">' +
-          '<div><div class="wave30-dash-name">' + esc(row.packLabel) + '</div><div class="wave30-dash-meta">' + esc(fmtDate(row.ts)) + ' · ' + esc(row.bandLabel) + (row.weakSections && row.weakSections.length ? (' · повторить: ' + esc(row.weakSections.slice(0, 2).join(', '))) : '') + '<br><a class="wave30-dash-link" href="diagnostic.html#exam=' + encodeURIComponent(row.packId) + '">▶ Повторить pack</a></div></div>' +
+          '<div><div class="wave30-dash-name">' + esc(row.packLabel) + '</div><div class="wave30-dash-meta">' + esc(fmtDate(row.ts)) + ' · ' + esc(row.bandLabel) + (row.weakSections && row.weakSections.length ? (' · повторить: ' + esc(row.weakSections.slice(0, 2).join(', '))) : '') + '<br><a class="wave30-dash-link" href="diagnostic.html#exam=' + encodeURIComponent(row.packId) + '">▶ Повторить вариант</a></div></div>' +
           '<div class="wave30-dash-score" style="color:' + esc(colorForPct(row.score100 != null ? row.score100 : row.pct)) + '">' + esc(scoreText) + '</div>' +
         '</div>';
       }).join('') + '</div>';
@@ -931,9 +931,9 @@
       var rows = Object.keys(latest).map(function(key){ return latest[key]; }).sort(function(a, b){ return toNum(b.ts) - toNum(a.ts); });
       if (!rows.length) return text;
       var best = rows.slice().sort(function(a, b){ return toNum(b.score100 != null ? b.score100 : b.pct) - toNum(a.score100 != null ? a.score100 : a.pct); })[0];
-      text += '\n━━━━━━━━━━━━━━━\nExam packs:';
-      text += '\nПоследний pack: ' + rows[0].packLabel + ' · ' + rows[0].bandLabel + ' · ' + rows[0].rawPoints + '/' + rows[0].maxPoints;
-      text += '\nЛучший pack: ' + best.packLabel + ' · ' + (best.score100 != null ? (best.score100 + '/100') : (best.rawPoints + '/' + best.maxPoints));
+      text += '\n━━━━━━━━━━━━━━━\nЭкзамены:';
+      text += '\nПоследний вариант: ' + rows[0].packLabel + ' · ' + rows[0].bandLabel + ' · ' + rows[0].rawPoints + '/' + rows[0].maxPoints;
+      text += '\nЛучший вариант: ' + best.packLabel + ' · ' + (best.score100 != null ? (best.score100 + '/100') : (best.rawPoints + '/' + best.maxPoints));
       if (rows[0].weakSections && rows[0].weakSections.length) text += '\nПовторить: ' + rows[0].weakSections.slice(0, 3).join(', ');
       return text;
     };

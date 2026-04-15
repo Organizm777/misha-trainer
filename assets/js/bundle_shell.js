@@ -935,7 +935,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       .wave24-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9997;display:flex;gap:8px;align-items:stretch;box-sizing:border-box;height:var(--wave24-nav-total-h);min-height:var(--wave24-nav-total-h);max-height:var(--wave24-nav-total-h);padding:0 max(12px, env(safe-area-inset-right,0px)) var(--wave24-nav-safe-b) max(12px, env(safe-area-inset-left,0px));margin:0;background:rgba(245,243,238,.96);backdrop-filter:blur(14px);border-top:1px solid var(--border,#e2e0d8);box-shadow:0 -8px 28px rgba(0,0,0,.08)}
       html[data-theme="dark"] .wave24-bottom-nav{background:rgba(20,20,32,.96)}
       .wave24-bottom-nav a,.wave24-bottom-nav button{flex:1;min-width:0;height:var(--wave24-nav-base-h);min-height:var(--wave24-nav-base-h);max-height:var(--wave24-nav-base-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 6px;border:none;border-radius:14px;background:transparent;color:var(--muted,#6b6a74);font:700 11px/1.1 'Golos Text',system-ui,sans-serif;text-decoration:none;cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
-      .wave24-bottom-nav .wave24-ic{display:flex;align-items:center;justify-content:center;width:24px;height:24px;min-height:24px;flex:0 0 24px;font-size:18px;line-height:1}
+      .wave24-bottom-nav .wave24-ic{display:block;width:24px;height:24px;min-height:24px;flex:0 0 24px;line-height:24px;text-align:center;overflow:hidden}.wave24-bottom-nav .wave24-ic svg{display:block;width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
       .wave24-bottom-nav .is-active{background:var(--abg,#dbeafe);color:var(--accent,#2563eb)}
       .wave24-bottom-nav .is-quiet{opacity:.75}
       .wave24-mobile-tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--wave24-nav-total-h) + 12px);z-index:9996;background:var(--card,#fff);color:var(--muted,#6b6a74);border:1px solid var(--border,#e2e0d8);border-radius:999px;padding:8px 12px;font:600 11px/1.2 'Golos Text',system-ui,sans-serif;box-shadow:0 10px 24px rgba(0,0,0,.08);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
@@ -967,7 +967,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       @media (orientation: landscape) and (max-height: 560px){
         .wave24-bottom-nav{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0));}
         .wave24-bottom-nav a,.wave24-bottom-nav button{padding:6px 6px;font-size:10px}
-        .wave24-bottom-nav .wave24-ic{width:22px;height:22px;min-height:22px;flex:0 0 22px;font-size:16px}
+        .wave24-bottom-nav .wave24-ic{width:22px;height:22px;min-height:22px;flex:0 0 22px}.wave24-bottom-nav .wave24-ic svg{width:22px;height:22px}
         .wave24-install-btn{bottom:calc(var(--wave24-nav-total-h) + 12px);padding:8px 12px}
       }
     `;
@@ -984,49 +984,71 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     }
   }
 
+  function iconSvg(name){
+    switch(name){
+      case 'home':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>';
+      case 'diagnostic':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"></rect><path d="M8 7h8"></path><path d="M8 11h8"></path><path d="M8 15h5"></path></svg>';
+      case 'tests':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6"></path><path d="M10 3v5.3l-4.5 7.4A4 4 0 0 0 8.9 22h6.2a4 4 0 0 0 3.4-6.3L14 8.3V3"></path></svg>';
+      case 'spec':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="11" rx="2"></rect><path d="M9 7V5a3 3 0 0 1 6 0v2"></path><path d="M4 11h16"></path></svg>';
+      case 'panel':
+      case 'progress':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V10"></path><path d="M12 19V5"></path><path d="M19 19v-8"></path><path d="M3 21h18"></path></svg>';
+      case 'profile':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 20a8 8 0 0 1 16 0"></path></svg>';
+      case 'classes':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5"></rect><rect x="14" y="4" width="6" height="6" rx="1.5"></rect><rect x="4" y="14" width="6" height="6" rx="1.5"></rect><rect x="14" y="14" width="6" height="6" rx="1.5"></rect></svg>';
+      default:
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle></svg>';
+    }
+  }
+
   function navItems(){
     switch(pageType()){
       case 'grade':
         return [
-          { key:'home', icon:'🏠', label:'Главная', action:()=>window.go && window.go('main') },
-          { key:'progress', icon:'📈', label:'Прогресс', action:()=>window.go && window.go('prog') },
-          { key:'profile', icon:'👤', label:'Профиль', action:()=>window.showHallOfFame && window.showHallOfFame() },
-          { key:'classes', icon:'🏫', label:'Классы', action:()=>window.showClassSelect && window.showClassSelect() },
+          { key:'home', icon:'home', label:'Главная', action:()=>window.go && window.go('main') },
+          { key:'progress', icon:'progress', label:'Прогресс', action:()=>window.go && window.go('prog') },
+          { key:'profile', icon:'profile', label:'Профиль', action:()=>window.showHallOfFame && window.showHallOfFame() },
+          { key:'classes', icon:'classes', label:'Классы', action:()=>window.showClassSelect && window.showClassSelect() },
         ];
       case 'dashboard':
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
       case 'diagnostic':
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
       case 'tests':
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
       case 'spec':
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'spec', icon:'💼', label:'Спец', href:'spec_subjects.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'spec', icon:'spec', label:'Спец', href:'spec_subjects.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
       default:
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
     }
   }
@@ -1037,7 +1059,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     node.dataset.key = item.key;
     if(item.href) node.href = item.href;
     else node.type = 'button';
-    node.innerHTML = `<span class="wave24-ic" aria-hidden="true">${item.icon}</span><span class="wave24-tx">${item.label}</span>`;
+    node.innerHTML = `<span class="wave24-ic" aria-hidden="true">${iconSvg(item.icon)}</span><span class="wave24-tx">${item.label}</span>`;
     if(item.action) node.addEventListener('click', item.action);
     return node;
   }
@@ -1409,6 +1431,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
 
   var THEME_KEY = 'trainer_theme';
   var SETTINGS_BTN_ID = 'trainer-settings-btn';
+  var SETTINGS_HOST_ID = 'trainer-settings-host';
   var SETTINGS_MODAL_ID = 'trainer-settings-modal';
   var SETTINGS_STYLE_ID = 'wave40-settings-style';
   var LEGACY_THEME_BTN_ID = 'trainer-theme-btn';
@@ -1519,8 +1542,12 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var style = document.createElement('style');
     style.id = SETTINGS_STYLE_ID;
     style.textContent = '\n#' + LEGACY_THEME_BTN_ID + '{display:none!important;pointer-events:none!important}' +
-      '\n#' + SETTINGS_BTN_ID + '{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12001;display:inline-flex;align-items:center;justify-content:center;min-width:32px;min-height:32px;padding:0 7px;border:1px solid rgba(26,26,46,.06);border-radius:999px;background:rgba(255,255,255,.52);color:#1a1a2e;box-shadow:0 2px 8px rgba(0,0,0,.06);font:700 10px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(8px);opacity:.84;transition:opacity .18s ease,transform .18s ease,box-shadow .18s ease,background .18s ease}' +
-      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:rgba(30,30,46,.78);color:#e8e6e0;border:1px solid rgba(255,255,255,.10)}' +
+      '\n#' + SETTINGS_HOST_ID + '{display:flex;justify-content:flex-end;gap:8px;max-width:960px;margin:calc(12px + env(safe-area-inset-top,0)) auto 0;padding:0 max(14px, env(safe-area-inset-right,0)) 0 max(14px, env(safe-area-inset-left,0))}' +
+      '\n#' + SETTINGS_HOST_ID + '.is-inline{max-width:none;margin:0;padding:0;display:block}' +
+      '\n#' + SETTINGS_BTN_ID + '{position:static;z-index:auto;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border:1px solid rgba(26,26,46,.08);border-radius:14px;background:var(--card,#fff);color:var(--text,#1a1a2e);box-shadow:none;font:700 12px/1 "Golos Text",system-ui,sans-serif;cursor:pointer;opacity:1;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,color .18s ease}' +
+      '\n#' + SETTINGS_BTN_ID + ':hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.05)}' +
+      '\n#' + SETTINGS_HOST_ID + '.is-inline #' + SETTINGS_BTN_ID + '{width:100%;min-height:44px;padding:12px 14px;border-radius:12px}' +
+      '\nhtml[data-theme="dark"] #' + SETTINGS_BTN_ID + '{background:var(--card,#1e1e2e);color:var(--text,#e8e6e0);border:1px solid rgba(255,255,255,.10)}' +
       '\n#' + SETTINGS_MODAL_ID + '{position:fixed;inset:0;z-index:14000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.56)}' +
       '\n#' + SETTINGS_MODAL_ID + ' [data-settings-card]{width:min(100%,560px);max-height:88vh;overflow:auto;background:var(--card,#fff);color:var(--text,#111827);border:1px solid var(--border,#d7d3cc);border-radius:20px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.26)}' +
       '\n.wave40-settings-section{background:rgba(37,99,235,.06);border-radius:14px;padding:12px 12px;margin-top:12px}' +
@@ -1539,26 +1566,42 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       '\n@media print{#' + SETTINGS_BTN_ID + ',#' + SETTINGS_MODAL_ID + ',#' + LEGACY_INSTALL_ID + '{display:none!important}}';
     (document.head || document.documentElement).appendChild(style);
   }
+  function ensureHost(){
+    var host = document.getElementById(SETTINGS_HOST_ID);
+    if (host) return host;
+    host = document.createElement('div');
+    host.id = SETTINGS_HOST_ID;
+    var specNav = document.querySelector('.spec-quick-nav');
+    if (specNav) { host.className = 'spec-quick-link is-inline'; specNav.appendChild(host); return host; }
+    var quickLinks = document.querySelector('.quick-links');
+    if (quickLinks) { host.className = 'quick-link is-inline'; quickLinks.appendChild(host); return host; }
+    var shell = document.querySelector('.w, .spec-wrap, #app, main');
+    if (shell && shell.firstChild) shell.insertBefore(host, shell.firstChild);
+    else (document.body || document.documentElement).appendChild(host);
+    return host;
+  }
   function ensureButton(){
     if (!document.body) return null;
     var btn = document.getElementById(SETTINGS_BTN_ID);
     if (btn) return btn;
+    var host = ensureHost();
+    if (!host) return null;
     btn = document.createElement('button');
     btn.id = SETTINGS_BTN_ID;
     btn.type = 'button';
-    btn.textContent = '⚙';
+    btn.textContent = 'Настройки';
     btn.setAttribute('aria-label', 'Настройки');
     btn.setAttribute('title', 'Настройки');
     btn.setAttribute('aria-haspopup', 'dialog');
     btn.addEventListener('click', openSettings);
-    document.body.appendChild(btn);
+    host.appendChild(btn);
     return btn;
   }
   function refreshButton(){
     var btn = document.getElementById(SETTINGS_BTN_ID);
     if (!btn) return;
     var meta = themeMeta();
-    btn.textContent = '⚙';
+    btn.textContent = 'Настройки';
     btn.title = 'Настройки · тема: ' + meta.label;
     btn.setAttribute('aria-label', 'Настройки. Тема: ' + meta.label + '.');
   }
@@ -1610,7 +1653,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 47</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 50</div></div>';
     return html;
   }
   function refreshThemeButtons(){

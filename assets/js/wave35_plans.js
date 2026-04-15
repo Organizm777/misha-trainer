@@ -3043,27 +3043,13 @@
     (document.head || document.documentElement).appendChild(style);
   }
   function ensureButton(){
-    if (!document.body) return null;
     var btn = document.getElementById(SETTINGS_BTN_ID);
-    if (btn) return btn;
-    btn = document.createElement('button');
-    btn.id = SETTINGS_BTN_ID;
-    btn.type = 'button';
-    btn.textContent = '⚙';
-    btn.setAttribute('aria-label', 'Настройки');
-    btn.setAttribute('title', 'Настройки');
-    btn.setAttribute('aria-haspopup', 'dialog');
-    btn.addEventListener('click', openSettings);
-    document.body.appendChild(btn);
-    return btn;
+    if (btn && btn.remove) btn.remove();
+    return null;
   }
   function refreshButton(){
     var btn = document.getElementById(SETTINGS_BTN_ID);
-    if (!btn) return;
-    var meta = themeMeta();
-    btn.textContent = '⚙';
-    btn.title = 'Настройки · тема: ' + meta.label;
-    btn.setAttribute('aria-label', 'Настройки. Тема: ' + meta.label + '.');
+    if (btn && btn.remove) btn.remove();
   }
   function quickActions(){
     var actions = [];
@@ -3113,7 +3099,7 @@
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 47</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 48</div></div>';
     return html;
   }
   function refreshThemeButtons(){

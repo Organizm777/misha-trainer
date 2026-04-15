@@ -25,6 +25,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'
 body{overflow-x:hidden}
 .spec-wrap{max-width:860px;margin:0 auto;padding:0 18px 36px}
 .spec-screen{padding:calc(24px + env(safe-area-inset-top,0)) 0 0}
+.spec-hero{display:grid;gap:14px;margin-bottom:10px}
 .spec-pill{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:#fff;border-radius:999px;padding:5px 12px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.3px}
 .spec-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block}
 h1{font-family:'Unbounded',system-ui,sans-serif;font-size:clamp(30px,6vw,46px);line-height:1.02;letter-spacing:-1.4px;margin:18px 0 12px}
@@ -49,7 +50,7 @@ h1 em{font-style:normal;color:var(--muted)}
 .spec-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.08);color:var(--ink);font-size:11px;font-weight:700}
 .spec-section-title{margin:18px 0 12px;font-family:'Unbounded',system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted)}
 .spec-grid,.spec-topic-list,.spec-review-list{display:grid;gap:10px}
-.spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.spec-grid{grid-template-columns:1fr}
 .spec-card,.spec-topic-card{display:flex;align-items:center;gap:14px;width:100%;padding:18px 16px;border:1.5px solid var(--border);border-radius:18px;background:var(--card);color:var(--ink);text-align:left;cursor:pointer;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
 .spec-card:hover,.spec-topic-card:hover,.spec-back:hover,.spec-btn:hover,.spec-next:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.05)}
 .spec-card:active,.spec-topic-card:active,.spec-back:active,.spec-btn:active,.spec-next:active,.spec-opt:active{transform:scale(.99)}
@@ -131,13 +132,17 @@ body[data-trainer-screen="immersive"] .spec-quick-nav{display:none}
   .spec-card-arrow{margin-left:0;align-self:flex-end}
   .spec-card-ic{width:52px;height:52px;font-size:26px}
   .spec-quick-nav{grid-template-columns:1fr 1fr}
-  .spec-stats{grid-template-columns:1fr 1fr}
   .spec-quiz-head{flex-direction:column}
   .spec-qtext{font-size:16px}
 }
+@media (max-width: 640px){
+  .spec-stats{display:flex;gap:8px;margin:14px 0 10px}
+  .spec-stat{flex:1;padding:12px 10px;text-align:center}
+  .spec-stat-n{font-size:18px}
+  .spec-stat-l{font-size:10px;letter-spacing:.4px}
+}
 @media (max-width: 480px){
   .spec-quick-nav{grid-template-columns:1fr}
-  .spec-stats{grid-template-columns:1fr}
   .spec-actions-row{flex-direction:column}
   .spec-weak-card{flex-direction:column;align-items:flex-start}
   .spec-card,.spec-topic-card,.spec-qcard,.spec-result,.spec-review-card,.spec-history,.spec-subject-head{padding:16px 14px}
@@ -148,13 +153,13 @@ body[data-trainer-screen="immersive"] .spec-quick-nav{display:none}
 <div class="spec-wrap">
   <nav class="spec-quick-nav" aria-label="Быстрые переходы">
     <a class="spec-quick-link" href="./diagnostic.html">📍 Диагностика</a>
-    <a class="spec-quick-link" href="./dashboard.html">📊 Dashboard</a>
-    <a class="spec-quick-link" href="./tests.html">🧪 Тесты</a>
+    <a class="spec-quick-link" href="./dashboard.html">📊 Панель</a>
+    <a class="spec-quick-link" href="./tests.html">🧪 Тесты личности</a>
   </nav>
   <div id="spec-root" aria-live="polite"></div>
 </div>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script>
-<script src="./assets/js/bundle_special_subjects.js?v=54"></script>
-<script src="./assets/js/bundle_shell.js?v=49"></script>
+<script src="./assets/js/bundle_special_subjects.js?v=55"></script>
+<script src="./assets/js/bundle_shell.js?v=50"></script>
 </body>
 </html>

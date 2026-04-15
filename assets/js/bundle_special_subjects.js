@@ -1,17 +1,17 @@
-/* wave54_special_subjects.js */
+/* wave55_special_subjects.js */
 (function(){
-  if (typeof window === 'undefined' || window.__wave54SpecialSubjects) return;
-  window.__wave54SpecialSubjects = true;
+  if (typeof window === 'undefined' || window.__wave55SpecialSubjects) return;
+  window.__wave55SpecialSubjects = true;
 
-  const VERSION = 'wave54';
-  const DATA_VERSION = '54';
+  const VERSION = 'wave55';
+  const DATA_VERSION = '55';
   const SESSION_SIZE = 20;
   const DIAG_SESSION_SIZE = 50;
   const PROGRESS_KEY = 'trainer_spec_progress_v1';
   const HISTORY_KEY = 'trainer_spec_history_v1';
   const LAST_TOPIC_KEY = 'trainer_spec_last_topic_v1';
   const DIAG_HISTORY_KEY = 'trainer_spec_diag_history_v1';
-  const SPEC_MANIFEST = {"version":"wave54","subjects":6,"topics":52,"totalQuestions":3078,"counts":{"diplomacy":540,"construction":614,"procurement":540,"management":544,"gkh":540,"psychology":300}};
+  const SPEC_MANIFEST = {"version":"wave55","subjects":6,"topics":52,"totalQuestions":3078,"counts":{"diplomacy":540,"construction":614,"procurement":540,"management":544,"gkh":540,"psychology":300}};
   const SPEC_SUBJECTS = [{"id":"diplomacy","nm":"Международные отношения","icon":"🌍","desc":"Протокол, право, переговоры, аналитика","cl":"#1e40af","bg":"#dbeafe","tops":[{"id":"protocol","nm":"Дипломатический протокол и переписка","questionCount":60},{"id":"correspondence","nm":"Дипломатическая переписка","questionCount":60},{"id":"english_diplomacy","nm":"English for Diplomacy","questionCount":60},{"id":"conflict_peacekeeping","nm":"Конфликтология и миротворчество","questionCount":60},{"id":"economic_diplomacy","nm":"Экономическая дипломатия","questionCount":60},{"id":"info_policy","nm":"Информационная политика и публичная дипломатия","questionCount":60},{"id":"vienna_conventions","nm":"Венские конвенции: дипломатическое и консульское право","questionCount":60},{"id":"mid_minstroy","nm":"МИД и Минстрой: структура","questionCount":60},{"id":"analytics_notes","nm":"Аналитические записки и деловая переписка","questionCount":60}],"questionCount":540},{"id":"construction","nm":"Строительство","icon":"🏗","desc":"ГрК РФ, планировка территории, ввод","cl":"#b45309","bg":"#fef3c7","tops":[{"id":"grk","nm":"Градостроительный кодекс РФ","questionCount":60},{"id":"planning","nm":"Планировка территории и ГИСОГД","questionCount":14},{"id":"project_docs","nm":"Проектная документация","questionCount":60},{"id":"materials","nm":"Строительные материалы и конструкции","questionCount":60},{"id":"engineering_systems","nm":"Инженерные системы зданий","questionCount":60},{"id":"estimate_business","nm":"Сметное дело","questionCount":60},{"id":"safety_construction","nm":"Охрана труда в строительстве","questionCount":60},{"id":"control_supervision","nm":"Строительный контроль и надзор","questionCount":60},{"id":"bim_tech","nm":"BIM-технологии и ЦИМ","questionCount":60},{"id":"commissioning","nm":"Ввод в эксплуатацию","questionCount":60},{"id":"reconstruction_caprepair","nm":"Реконструкция и капремонт","questionCount":60}],"questionCount":614},{"id":"procurement","nm":"Закупки","icon":"📋","desc":"44‑ФЗ, процедуры, практика","cl":"#059669","bg":"#d1fae5","tops":[{"id":"fz44_basics","nm":"44‑ФЗ: основы и способы определения поставщика","questionCount":60},{"id":"planning_nmck","nm":"44-ФЗ: Планирование и НМЦК","questionCount":60},{"id":"contract_44fz","nm":"44-ФЗ: Контракт — заключение и исполнение","questionCount":60},{"id":"control_appeal","nm":"44-ФЗ: Контроль и обжалование","questionCount":60},{"id":"fz223_basics","nm":"223-ФЗ: основы","questionCount":60},{"id":"fz223_procedures_contract","nm":"223-ФЗ: процедуры и договор","questionCount":60},{"id":"goz_275fz","nm":"ГОЗ (275-ФЗ)","questionCount":60},{"id":"mixed_regime","nm":"Смешанный режим: 44/223/275","questionCount":60},{"id":"eis_etp","nm":"ЕИС и электронные площадки","questionCount":60}],"questionCount":540},{"id":"management","nm":"Управление","icon":"📊","desc":"Стратегия, проекты, люди, финансы, кейсы","cl":"#7c3aed","bg":"#ede9fe","tops":[{"id":"strategy","nm":"Стратегическое управление и принятие решений","questionCount":64},{"id":"project_mgmt","nm":"Управление проектами","questionCount":60},{"id":"decision_tools","nm":"Принятие решений и управленческие инструменты","questionCount":60},{"id":"efficiency_kpi","nm":"Эффективность и KPI","questionCount":60},{"id":"digital_transformation","nm":"Цифровая трансформация","questionCount":60},{"id":"people_mgmt","nm":"Управление людьми","questionCount":60},{"id":"financial_mgmt","nm":"Финансовый менеджмент","questionCount":60},{"id":"risk_management","nm":"Управление рисками","questionCount":60},{"id":"business_cases","nm":"Бизнес-кейсы и управленческие решения","questionCount":60}],"questionCount":544},{"id":"gkh","nm":"ЖКХ","icon":"🏢","desc":"ЖК РФ, управление МКД, собрания","cl":"#dc2626","bg":"#fee2e2","tops":[{"id":"mkd","nm":"ЖКХ: управление многоквартирным домом","questionCount":60},{"id":"owners_meeting","nm":"Общее собрание собственников","questionCount":60},{"id":"utilities_tariffs","nm":"ЖКУ и тарифы (ПП 354)","questionCount":60},{"id":"capital_repair","nm":"Капитальный ремонт","questionCount":60},{"id":"common_property","nm":"Содержание общего имущества","questionCount":60},{"id":"licensing_uk","nm":"Лицензирование УК","questionCount":60},{"id":"gis_housing","nm":"ГИС ЖКХ","questionCount":60},{"id":"energy_efficiency_meters","nm":"Энергоэффективность и приборы учёта","questionCount":60},{"id":"debtors","nm":"Работа с должниками","questionCount":60}],"questionCount":540},{"id":"psychology","nm":"Психология","icon":"🧠","desc":"EQ, стресс, мышление, прикладные навыки","cl":"#db2777","bg":"#fce7f3","tops":[{"id":"emotional_intelligence","nm":"Эмоциональный интеллект","questionCount":60},{"id":"stress_management","nm":"Стресс-менеджмент","questionCount":60},{"id":"cognitive_biases","nm":"Когнитивные искажения","questionCount":60},{"id":"conflictology","nm":"Конфликтология","questionCount":60},{"id":"personality","nm":"Психология личности","questionCount":60}],"questionCount":300}];
   const SUBJECT_DATA_PATHS = SPEC_SUBJECTS.reduce((acc, subject) => {
     acc[subject.id] = './assets/data/spec_subjects/' + subject.id + '.json?v=' + DATA_VERSION;
@@ -331,17 +331,17 @@
     const cards = filteredSubjects();
     root.innerHTML = '' +
       '<section class="spec-screen spec-menu">' +
-        '<header class="spec-hero">' +
+        '<div class="spec-hero">' +
           '<div class="spec-pill"><span class="spec-dot"></span>Профессиональные тесты</div>' +
           '<h1>Спецпредметы<br><em>диагностика и тренировки по делу</em></h1>' +
-          '<p class="spec-sub">Приоритетный realignment-pass: отдельные 50-вопросные диагностики по каждому спецпредмету, тихий subject-UI без протекания фильтра и lazy loading банков только по клику на направление.</p>' +
+          '<p class="spec-sub">Отдельные тренировки и диагностики по каждому направлению: без перегруженных карточек, с понятной статистикой и быстрым переходом к слабым темам.</p>' +
           '<div class="spec-stats">' +
             '<div class="spec-stat"><div class="spec-stat-n">' + SPEC_MANIFEST.subjects + '</div><div class="spec-stat-l">направлений</div></div>' +
             '<div class="spec-stat"><div class="spec-stat-n">' + SPEC_MANIFEST.topics + '</div><div class="spec-stat-l">тем</div></div>' +
             '<div class="spec-stat"><div class="spec-stat-n">' + SPEC_MANIFEST.totalQuestions + '</div><div class="spec-stat-l">вопросов</div></div>' +
           '</div>' +
           menuSummary() +
-        '</header>' +
+        '</div>' +
         '<div class="spec-tools">' +
           '<label class="spec-search-wrap">' +
             '<span>🔎</span>' +
@@ -356,14 +356,14 @@
           (cards.length ? cards.map((subject) => {
             const summary = subjectSummary(subject);
             const diagHtml = summary.diag
-              ? '<span>diag ' + summary.diag.pct + '%</span>'
-              : '<span>diag 50 вопросов</span>';
+              ? '<span>диагностика ' + summary.diag.pct + '%</span>'
+              : '<span>диагностика 50 вопр.</span>';
             const trainHtml = summary.attempts
-              ? '<strong>best ' + summary.best + '%</strong>'
+              ? '<strong>лучший ' + summary.best + '%</strong>'
               : '<strong>' + subject.questionCount + ' вопр.</strong>';
             return '<button class="spec-card" type="button" style="--spec-accent:' + esc(subject.cl) + ';--spec-accent-bg:' + esc(subject.bg) + '" onclick="window.__specDebug.openSubject(\'' + esc(subject.id) + '\')">' +
               '<div class="spec-card-ic">' + esc(subject.icon) + '</div>' +
-              '<div class="spec-card-main"><div class="spec-card-nm">' + esc(subject.nm) + '</div><div class="spec-card-desc">' + esc(subject.desc) + '</div><div class="spec-card-meta"><span>' + subject.tops.length + ' тем</span>' + trainHtml + '</div><div class="spec-card-meta">' + diagHtml + '<span>lazy load</span></div></div>' +
+              '<div class="spec-card-main"><div class="spec-card-nm">' + esc(subject.nm) + '</div><div class="spec-card-desc">' + esc(subject.desc) + '</div><div class="spec-card-meta"><span>' + subject.tops.length + ' тем</span>' + trainHtml + '</div><div class="spec-card-meta">' + diagHtml + '<span>по всем темам</span></div></div>' +
               '<span class="spec-card-arrow">→</span>' +
               '</button>';
           }).join('') : '<div class="spec-empty">По этому запросу ничего не найдено. Попробуйте часть названия предмета или темы.</div>') +
@@ -387,7 +387,7 @@
           '<div>' +
             '<div class="spec-subject-nm">' + esc(subject.nm) + '</div>' +
             '<div class="spec-subject-desc">' + esc(subject.desc) + '</div>' +
-            '<div class="spec-subject-meta"><span class="spec-chip">' + subject.tops.length + ' тем</span><span class="spec-chip">' + subject.questionCount + ' вопросов</span><span class="spec-chip">диагностика 50 вопросов</span>' + (summary.diag ? '<span class="spec-chip">последняя diag ' + summary.diag.pct + '%</span>' : '') + '</div>' +
+            '<div class="spec-subject-meta"><span class="spec-chip">' + subject.tops.length + ' тем</span><span class="spec-chip">' + subject.questionCount + ' вопросов</span><span class="spec-chip">диагностика 50 вопросов</span>' + (summary.diag ? '<span class="spec-chip">последняя диагностика ' + summary.diag.pct + '%</span>' : '') + '</div>' +
           '</div>' +
         '</div>' +
         '<div class="spec-actions-row">' +

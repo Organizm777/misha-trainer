@@ -2149,7 +2149,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       .wave24-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9997;display:flex;gap:8px;align-items:stretch;box-sizing:border-box;height:var(--wave24-nav-total-h);min-height:var(--wave24-nav-total-h);max-height:var(--wave24-nav-total-h);padding:0 max(12px, env(safe-area-inset-right,0px)) var(--wave24-nav-safe-b) max(12px, env(safe-area-inset-left,0px));margin:0;background:rgba(245,243,238,.96);backdrop-filter:blur(14px);border-top:1px solid var(--border,#e2e0d8);box-shadow:0 -8px 28px rgba(0,0,0,.08)}
       html[data-theme="dark"] .wave24-bottom-nav{background:rgba(20,20,32,.96)}
       .wave24-bottom-nav a,.wave24-bottom-nav button{flex:1;min-width:0;height:var(--wave24-nav-base-h);min-height:var(--wave24-nav-base-h);max-height:var(--wave24-nav-base-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 6px;border:none;border-radius:14px;background:transparent;color:var(--muted,#6b6a74);font:700 11px/1.1 'Golos Text',system-ui,sans-serif;text-decoration:none;cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
-      .wave24-bottom-nav .wave24-ic{display:flex;align-items:center;justify-content:center;width:24px;height:24px;min-height:24px;flex:0 0 24px;font-size:18px;line-height:1}
+      .wave24-bottom-nav .wave24-ic{display:block;width:24px;height:24px;min-height:24px;flex:0 0 24px;line-height:24px;text-align:center;overflow:hidden}.wave24-bottom-nav .wave24-ic svg{display:block;width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
       .wave24-bottom-nav .is-active{background:var(--abg,#dbeafe);color:var(--accent,#2563eb)}
       .wave24-bottom-nav .is-quiet{opacity:.75}
       .wave24-mobile-tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--wave24-nav-total-h) + 12px);z-index:9996;background:var(--card,#fff);color:var(--muted,#6b6a74);border:1px solid var(--border,#e2e0d8);border-radius:999px;padding:8px 12px;font:600 11px/1.2 'Golos Text',system-ui,sans-serif;box-shadow:0 10px 24px rgba(0,0,0,.08);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
@@ -2181,7 +2181,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       @media (orientation: landscape) and (max-height: 560px){
         .wave24-bottom-nav{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0));}
         .wave24-bottom-nav a,.wave24-bottom-nav button{padding:6px 6px;font-size:10px}
-        .wave24-bottom-nav .wave24-ic{width:22px;height:22px;min-height:22px;flex:0 0 22px;font-size:16px}
+        .wave24-bottom-nav .wave24-ic{width:22px;height:22px;min-height:22px;flex:0 0 22px}.wave24-bottom-nav .wave24-ic svg{width:22px;height:22px}
         .wave24-install-btn{bottom:calc(var(--wave24-nav-total-h) + 12px);padding:8px 12px}
       }
     `;
@@ -2198,42 +2198,64 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     }
   }
 
+  function iconSvg(name){
+    switch(name){
+      case 'home':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>';
+      case 'diagnostic':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"></rect><path d="M8 7h8"></path><path d="M8 11h8"></path><path d="M8 15h5"></path></svg>';
+      case 'tests':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6"></path><path d="M10 3v5.3l-4.5 7.4A4 4 0 0 0 8.9 22h6.2a4 4 0 0 0 3.4-6.3L14 8.3V3"></path></svg>';
+      case 'spec':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="11" rx="2"></rect><path d="M9 7V5a3 3 0 0 1 6 0v2"></path><path d="M4 11h16"></path></svg>';
+      case 'panel':
+      case 'progress':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V10"></path><path d="M12 19V5"></path><path d="M19 19v-8"></path><path d="M3 21h18"></path></svg>';
+      case 'profile':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 20a8 8 0 0 1 16 0"></path></svg>';
+      case 'classes':
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5"></rect><rect x="14" y="4" width="6" height="6" rx="1.5"></rect><rect x="4" y="14" width="6" height="6" rx="1.5"></rect><rect x="14" y="14" width="6" height="6" rx="1.5"></rect></svg>';
+      default:
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle></svg>';
+    }
+  }
+
   function navItems(){
     switch(pageType()){
       case 'grade':
         return [
-          { key:'home', icon:'🏠', label:'Главная', action:()=>window.go && window.go('main') },
-          { key:'progress', icon:'📈', label:'Прогресс', action:()=>window.go && window.go('prog') },
-          { key:'profile', icon:'👤', label:'Профиль', action:()=>window.showHallOfFame && window.showHallOfFame() },
-          { key:'classes', icon:'🏫', label:'Классы', action:()=>window.showClassSelect && window.showClassSelect() },
+          { key:'home', icon:'home', label:'Главная', action:()=>window.go && window.go('main') },
+          { key:'progress', icon:'progress', label:'Прогресс', action:()=>window.go && window.go('prog') },
+          { key:'profile', icon:'profile', label:'Профиль', action:()=>window.showHallOfFame && window.showHallOfFame() },
+          { key:'classes', icon:'classes', label:'Классы', action:()=>window.showClassSelect && window.showClassSelect() },
         ];
       case 'dashboard':
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
       case 'diagnostic':
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
       case 'tests':
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
       default:
         return [
-          { key:'home', icon:'🏠', label:'Главная', href:'index.html' },
-          { key:'diagnostic', icon:'📝', label:'Диагностика', href:'diagnostic.html' },
-          { key:'tests', icon:'🧠', label:'Тесты', href:'tests.html' },
-          { key:'dashboard', icon:'📊', label:'Дашборд', href:'dashboard.html' },
+          { key:'home', icon:'home', label:'Главная', href:'index.html' },
+          { key:'diagnostic', icon:'diagnostic', label:'Диагностика', href:'diagnostic.html' },
+          { key:'tests', icon:'tests', label:'Тесты', href:'tests.html' },
+          { key:'dashboard', icon:'panel', label:'Панель', href:'dashboard.html' },
         ];
     }
   }
@@ -2244,7 +2266,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     node.dataset.key = item.key;
     if(item.href) node.href = item.href;
     else node.type = 'button';
-    node.innerHTML = `<span class="wave24-ic" aria-hidden="true">${item.icon}</span><span class="wave24-tx">${item.label}</span>`;
+    node.innerHTML = `<span class="wave24-ic" aria-hidden="true">${iconSvg(item.icon)}</span><span class="wave24-tx">${item.label}</span>`;
     if(item.action) node.addEventListener('click', item.action);
     return node;
   }
