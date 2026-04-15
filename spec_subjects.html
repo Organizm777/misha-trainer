@@ -100,13 +100,20 @@ h1 em{font-style:normal;color:var(--muted)}
 .spec-history-row:last-child{border-bottom:none;padding-bottom:0}
 .spec-history-row span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
 .spec-empty{padding:22px;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);text-align:center;font-size:13px;background:rgba(37,99,235,.04)}
+.spec-quick-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding-top:calc(14px + env(safe-area-inset-top,0));margin-bottom:6px}
+.spec-quick-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:12px 14px;border:1.5px solid var(--border);border-radius:14px;background:var(--card);color:var(--ink);text-decoration:none;font:700 12px/1.25 'Golos Text',system-ui,sans-serif;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+.spec-quick-link:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.05)}
+.spec-quick-link:active{transform:scale(.99)}
+body[data-trainer-screen="immersive"] .spec-quick-nav{display:none}
 @media (max-width: 767px){
   .spec-wrap{padding:0 14px 24px}
+  .spec-quick-nav{grid-template-columns:1fr 1fr}
   .spec-stats{grid-template-columns:1fr 1fr}
   .spec-quiz-head{flex-direction:column}
   .spec-qtext{font-size:16px}
 }
 @media (max-width: 480px){
+  .spec-quick-nav{grid-template-columns:1fr}
   .spec-stats{grid-template-columns:1fr}
   .spec-card,.spec-topic-card,.spec-qcard,.spec-result,.spec-review-card,.spec-history,.spec-subject-head{padding:16px 14px}
 }
@@ -114,10 +121,15 @@ h1 em{font-style:normal;color:var(--muted)}
 </head>
 <body>
 <div class="spec-wrap">
+  <nav class="spec-quick-nav" aria-label="Быстрые переходы">
+    <a class="spec-quick-link" href="./diagnostic.html">📍 Диагностика</a>
+    <a class="spec-quick-link" href="./dashboard.html">📊 Dashboard</a>
+    <a class="spec-quick-link" href="./tests.html">🧪 Тесты</a>
+  </nav>
   <div id="spec-root" aria-live="polite"></div>
 </div>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script>
-<script src="./assets/js/bundle_special_subjects.js?v=51"></script>
+<script src="./assets/js/bundle_special_subjects.js?v=53"></script>
 <script src="./assets/js/bundle_shell.js?v=48"></script>
 </body>
 </html>

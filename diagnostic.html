@@ -83,6 +83,12 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 .share-btn{width:100%;padding:13px;border:none;border-radius:11px;background:var(--ink);color:#fff;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px}
 .again-btn{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:11px;background:var(--card);font-family:'Golos Text',sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink)}
 
+.quick-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 18px}
+.quick-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:12px;border:1.5px solid var(--border);border-radius:12px;background:var(--card);color:var(--ink);text-decoration:none;font-size:12px;font-weight:700;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease}
+.quick-link:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.05)}
+.quick-link:active{transform:scale(.99)}
+@media (max-width:480px){.hdr{margin-bottom:16px}.subj-intro{padding:12px 0 16px}.subj-intro h1{font-size:20px}.quick-links{grid-template-columns:1fr}}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .3s ease both}
 @media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#141420;--card:#1e1e2e;--text:#e8e6e0;--muted:#9a9aae;--border:#2e2e3e}html,body{background:#141420!important;color:#e8e6e0!important}header{background:#0e0e1a!important}.scard{background:var(--card)!important;border-color:var(--border)!important;color:var(--text)!important}.opt{background:var(--card)!important;border-color:var(--border)!important;color:var(--text)!important}.hint-box{background:#2e2010!important;color:#fbbf24!important}.next-btn{background:var(--card)!important;border-color:var(--border)!important;color:var(--text)!important}input{background:#1a1a2a!important;color:#e8e6e0!important;border-color:#3a3a4e!important}}</style>
@@ -104,6 +110,12 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
     <h1>Что будем<br>проверять?</h1>
     <p>Выбери предмет — задачи пойдут от простого к сложному,<br>от 3 до 11 класса. В конце — карта пробелов.</p>
   </div>
+
+  <nav class="quick-links" aria-label="Быстрые переходы диагностики">
+    <a class="quick-link" href="dashboard.html">📊 Панель</a>
+    <a class="quick-link" href="spec_subjects.html">🧭 Спецпредметы</a>
+    <a class="quick-link" href="tests.html">🧪 Тесты</a>
+  </nav>
 
   <div class="subj-grid" id="subj-grid"></div>
 </div>
@@ -152,6 +164,12 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
     <div class="res-title" id="res-title">Анализ готов</div>
     <div class="res-sub" id="res-sub"></div>
   </div>
+
+  <nav class="quick-links" aria-label="Быстрые переходы результатов диагностики">
+    <a class="quick-link" href="dashboard.html">📊 Панель</a>
+    <a class="quick-link" href="spec_subjects.html">🧭 Спецпредметы</a>
+    <a class="quick-link" href="tests.html">🧪 Тесты</a>
+  </nav>
 
   <div class="ins-block">
     <h3>Карта знаний по классам</h3>
