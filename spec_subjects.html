@@ -49,7 +49,7 @@ h1 em{font-style:normal;color:var(--muted)}
 .spec-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.08);color:var(--ink);font-size:11px;font-weight:700}
 .spec-section-title{margin:18px 0 12px;font-family:'Unbounded',system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted)}
 .spec-grid,.spec-topic-list,.spec-review-list{display:grid;gap:10px}
-.spec-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .spec-card,.spec-topic-card{display:flex;align-items:center;gap:14px;width:100%;padding:18px 16px;border:1.5px solid var(--border);border-radius:18px;background:var(--card);color:var(--ink);text-align:left;cursor:pointer;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
 .spec-card:hover,.spec-topic-card:hover,.spec-back:hover,.spec-btn:hover,.spec-next:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.05)}
 .spec-card:active,.spec-topic-card:active,.spec-back:active,.spec-btn:active,.spec-next:active,.spec-opt:active{transform:scale(.99)}
@@ -100,13 +100,36 @@ h1 em{font-style:normal;color:var(--muted)}
 .spec-history-row:last-child{border-bottom:none;padding-bottom:0}
 .spec-history-row span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
 .spec-empty{padding:22px;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);text-align:center;font-size:13px;background:rgba(37,99,235,.04)}
+.spec-actions-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 10px}
+.spec-soft-note{margin-bottom:12px;padding:12px 14px;border:1.5px dashed rgba(37,99,235,.18);border-radius:14px;background:rgba(37,99,235,.05);font-size:12px;line-height:1.55;color:var(--muted)}
+.spec-loading{margin:10px 0;padding:14px 16px;border:1.5px solid var(--border);border-radius:14px;background:rgba(37,99,235,.06);font-size:13px;font-weight:700;line-height:1.5;color:var(--ink)}
+.spec-error{margin:10px 0;border-style:solid;background:rgba(220,38,38,.08);color:var(--red)}
+.spec-quiz-topline{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.spec-timer{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(26,26,46,.06);color:var(--ink);font:700 12px/1 'JetBrains Mono',monospace}
+.spec-qtopic{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;border-radius:999px;background:rgba(37,99,235,.08);color:var(--ink);font:700 11px/1.2 'Golos Text',system-ui,sans-serif}
+.spec-topic-bars{display:grid;gap:10px;text-align:left}
+.spec-topic-bar-row{display:grid;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+.spec-topic-bar-row:last-child{border-bottom:none;padding-bottom:0}
+.spec-topic-bar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted)}
+.spec-topic-bar-head strong{font-size:13px;color:var(--ink)}
+.spec-topic-bar-track{height:10px;background:#e8e6e0;border-radius:999px;overflow:hidden}
+.spec-topic-bar-fill{height:100%;border-radius:999px}
+.spec-weak-card{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 14px;border:1.5px solid var(--border);border-radius:16px;background:var(--card)}
+.spec-history-split{height:1px;background:var(--border);margin:6px 0}
 .spec-quick-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding-top:calc(14px + env(safe-area-inset-top,0));margin-bottom:6px}
 .spec-quick-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:12px 14px;border:1.5px solid var(--border);border-radius:14px;background:var(--card);color:var(--ink);text-decoration:none;font:700 12px/1.25 'Golos Text',system-ui,sans-serif;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
 .spec-quick-link:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.05)}
 .spec-quick-link:active{transform:scale(.99)}
 body[data-trainer-screen="immersive"] .spec-quick-nav{display:none}
+@media (min-width: 768px){
+  .spec-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 @media (max-width: 767px){
   .spec-wrap{padding:0 14px 24px}
+  .spec-card{align-items:flex-start;flex-direction:column;gap:12px;min-height:208px;padding:16px 14px}
+  .spec-card-main{width:100%}
+  .spec-card-arrow{margin-left:0;align-self:flex-end}
+  .spec-card-ic{width:52px;height:52px;font-size:26px}
   .spec-quick-nav{grid-template-columns:1fr 1fr}
   .spec-stats{grid-template-columns:1fr 1fr}
   .spec-quiz-head{flex-direction:column}
@@ -115,6 +138,8 @@ body[data-trainer-screen="immersive"] .spec-quick-nav{display:none}
 @media (max-width: 480px){
   .spec-quick-nav{grid-template-columns:1fr}
   .spec-stats{grid-template-columns:1fr}
+  .spec-actions-row{flex-direction:column}
+  .spec-weak-card{flex-direction:column;align-items:flex-start}
   .spec-card,.spec-topic-card,.spec-qcard,.spec-result,.spec-review-card,.spec-history,.spec-subject-head{padding:16px 14px}
 }
 </style>
@@ -129,7 +154,7 @@ body[data-trainer-screen="immersive"] .spec-quick-nav{display:none}
   <div id="spec-root" aria-live="polite"></div>
 </div>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script>
-<script src="./assets/js/bundle_special_subjects.js?v=53"></script>
-<script src="./assets/js/bundle_shell.js?v=48"></script>
+<script src="./assets/js/bundle_special_subjects.js?v=54"></script>
+<script src="./assets/js/bundle_shell.js?v=49"></script>
 </body>
 </html>

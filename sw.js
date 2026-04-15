@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-v50';
+const CACHE_NAME = 'trainer-v51';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -14,12 +14,18 @@ const ASSETS = [
   './assets/js/bundle_dashboard_tools.js',
   './assets/js/bundle_diagnostic_tools.js?v=48',
   './assets/js/bundle_exam.js?v=48',
-  './assets/js/bundle_grade_after.js?v=45',
+  './assets/js/bundle_grade_after.js?v=46',
   './assets/js/bundle_grade_content.js',
   './assets/js/bundle_sharing.js',
-  './assets/js/bundle_special_subjects.js?v=53',
-  './assets/js/bundle_shell.js?v=48',
+  './assets/js/bundle_special_subjects.js?v=54',
+  './assets/js/bundle_shell.js?v=49',
   './assets/js/bundle_subject_expansion.js',
+  './assets/data/spec_subjects/diplomacy.json?v=54',
+  './assets/data/spec_subjects/construction.json?v=54',
+  './assets/data/spec_subjects/procurement.json?v=54',
+  './assets/data/spec_subjects/management.json?v=54',
+  './assets/data/spec_subjects/gkh.json?v=54',
+  './assets/data/spec_subjects/psychology.json?v=54',
   './assets/css/engine10.css',
   './manifest.webmanifest',
   './grade1_v2.html',
