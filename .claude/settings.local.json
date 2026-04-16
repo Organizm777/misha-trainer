@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node check_spec.js)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}
