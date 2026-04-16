@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-v52';
+const CACHE_NAME = 'trainer-v56';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -19,7 +19,7 @@ const ASSETS = [
   './assets/js/bundle_sharing.js',
   './assets/js/bundle_special_subjects.js?v=55',
   './assets/js/bundle_shell.js?v=50',
-  './assets/js/bundle_subject_expansion.js',
+  './assets/js/bundle_subject_expansion.js?v=59',
   './assets/data/spec_subjects/diplomacy.json?v=55',
   './assets/data/spec_subjects/construction.json?v=55',
   './assets/data/spec_subjects/procurement.json?v=55',
