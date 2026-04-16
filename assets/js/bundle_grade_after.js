@@ -1596,6 +1596,9 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   const BTN_BOUND = 'data-wave23-button-bound';
   const DIALOG_ATTR = 'data-wave23-overlay';
   const INPUT_ATTR = 'data-wave23-input-bound';
+  const ISOLATE_ATTR = 'data-wave23-isolated';
+  const ISOLATE_HIDDEN_ATTR = 'data-wave23-prev-hidden';
+  const ISOLATE_INERT_ATTR = 'data-wave23-prev-inert';
 
   const state = {
     modality: 'pointer',
@@ -1636,6 +1639,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       html{scroll-behavior:smooth}
       @media (prefers-reduced-motion: reduce){
         *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+        .live-dot,.card,.spec-card,.spec-topic-card,.spec-quick-link,.spec-progress-fill,.spec-topic-bar-fill,.wave24-mobile-tip,.wave24-install-btn,.spec-card-arrow,.ca{animation:none!important;transition:none!important;transform:none!important}
+        .wave24-bottom-nav a,.wave24-bottom-nav button,.spec-opt,.spec-btn,.spec-back,.spec-next{transition:none!important;transform:none!important}
       }
       @media (prefers-contrast: more){
         .skip-link{box-shadow:none;border:2px solid currentColor}
@@ -1686,11 +1691,16 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   function visible(el){
     if(!isElement(el)) return false;
     const style = window.getComputedStyle(el);
-    return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetParent !== null;
+    const rects = typeof el.getClientRects === 'function' ? el.getClientRects() : [];
+    return style.display !== 'none' && style.visibility !== 'hidden' && (el.offsetParent !== null || style.position === 'fixed' || style.position === 'sticky' || !!(rects && rects.length));
   }
 
   function readGlobal(name){
-    return name in window ? window[name] : null;
+    try{
+      return window.eval(`typeof ${name} !== \"undefined\" ? ${name} : null`);
+    }catch(_){
+      return null;
+    }
   }
 
   function getFocusable(root){
@@ -1799,10 +1809,59 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     }
   }
 
+  function labelNavigation(nav, fallback){
+    if(!isElement(nav)) return;
+    if(!safeGet(nav, 'role')) safeSet(nav, 'role', 'navigation');
+    if(!safeGet(nav, 'aria-label')) safeSet(nav, 'aria-label', fallback || 'Навигация');
+  }
+
+  function setListChildren(container, itemSelector){
+    if(!isElement(container)) return;
+    safeSet(container, 'role', 'list');
+    const items = itemSelector ? container.querySelectorAll(itemSelector) : container.children;
+    [...items].forEach((item) => {
+      if(isElement(item) && !safeGet(item, 'role')) safeSet(item, 'role', 'listitem');
+    });
+  }
+
+  function clearDialogIsolation(){
+    document.querySelectorAll('[' + ISOLATE_ATTR + '="1"]').forEach((el) => {
+      const prevHidden = safeGet(el, ISOLATE_HIDDEN_ATTR);
+      if(prevHidden === 'null') safeRemove(el, 'aria-hidden');
+      else if(prevHidden !== null) safeSet(el, 'aria-hidden', prevHidden);
+      safeRemove(el, ISOLATE_HIDDEN_ATTR);
+      const prevInert = safeGet(el, ISOLATE_INERT_ATTR);
+      if('inert' in el) el.inert = prevInert === '1';
+      safeRemove(el, ISOLATE_INERT_ATTR);
+      safeRemove(el, ISOLATE_ATTR);
+    });
+  }
+
+  function applyDialogIsolation(){
+    clearDialogIsolation();
+    const dialog = topDialog();
+    if(!dialog || !document.body) return;
+    const overlay = dialog.__wave23Overlay || dialog.closest('[' + DIALOG_ATTR + '="1"]') || dialog;
+    const live = ensureLiveRegion();
+    [...document.body.children].forEach((child) => {
+      if(!isElement(child)) return;
+      if(child === overlay || child === live) return;
+      if(overlay && (overlay.contains(child) || child.contains(overlay))) return;
+      safeSet(child, ISOLATE_ATTR, '1');
+      const prevHidden = safeGet(child, 'aria-hidden');
+      safeSet(child, ISOLATE_HIDDEN_ATTR, prevHidden === null ? 'null' : prevHidden);
+      safeSet(child, 'aria-hidden', 'true');
+      if('inert' in child){
+        safeSet(child, ISOLATE_INERT_ATTR, child.inert ? '1' : '0');
+        child.inert = true;
+      }
+    });
+  }
+
   function setLandmarks(){
     const header = document.querySelector('header');
     if(header) header.setAttribute('role', 'banner');
-    const footer = document.querySelector('footer');
+    const footer = document.querySelector('footer, .foot');
     if(footer) footer.setAttribute('role', 'contentinfo');
 
     let main = document.getElementById(MAIN_ID) || document.querySelector('main');
@@ -1812,8 +1871,27 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     if(main && main !== document.body){
       if(!main.id) main.id = MAIN_ID;
       main.setAttribute('role', 'main');
+      if(!safeGet(main, 'aria-label')) safeSet(main, 'aria-label', 'Основное содержимое');
       main.tabIndex = main.tabIndex || -1;
     }
+
+    const navs = [...document.querySelectorAll('nav')];
+    navs.forEach((nav, idx) => {
+      let label = safeGet(nav, 'aria-label');
+      if(!label){
+        if(nav.id === 'wave24-bottom-nav') label = 'Быстрая мобильная навигация';
+        else if(nav.classList.contains('spec-quick-nav')) label = 'Быстрые переходы по спецпредметам';
+        else if(nav.classList.contains('quick-links')) label = 'Быстрые переходы';
+        else label = idx === 0 ? 'Основная навигация' : ('Навигация ' + (idx + 1));
+      }
+      labelNavigation(nav, label);
+    });
+
+    document.querySelectorAll('.stats,.spec-stats').forEach((list) => setListChildren(list));
+    document.querySelectorAll('.spec-tools').forEach((wrap, idx) => {
+      safeSet(wrap, 'role', 'search');
+      if(!safeGet(wrap, 'aria-label')) safeSet(wrap, 'aria-label', idx ? 'Поиск по темам' : 'Поиск по спецпредметам');
+    });
 
     document.querySelectorAll('.scr').forEach((screen, idx) => {
       if(!safeGet(screen, 'role')) safeSet(screen, 'role', 'region');
@@ -1954,6 +2032,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
 
   function restoreDialogFocus(removed){
     if(!isElement(removed)) return;
+    if(!topDialog()) clearDialogIsolation();
     const prev = removed.__wave23PrevFocus || removed.querySelector('[role="dialog"]')?.__wave23PrevFocus;
     if(isElement(prev) && (!document.contains || document.contains(prev))) {
       setTimeout(() => prev.focus({preventScroll:false}), 20);
@@ -2030,6 +2109,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     updateScreens();
     updateAnswerSemantics();
     decorateDialogs();
+    applyDialogIsolation();
     markEnglishLang();
     const host = document.getElementById('trainer-toast-host');
     if(host){
@@ -2256,14 +2336,44 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     }
   }
 
+  function focusNavItem(node, mode){
+    const nav = node && node.parentElement;
+    if(!nav) return;
+    const items = $$('[data-key]', nav);
+    const idx = items.indexOf(node);
+    if(idx === -1 || !items.length) return;
+    let next = idx;
+    if(mode === 'home') next = 0;
+    else if(mode === 'end') next = items.length - 1;
+    else next = (idx + mode + items.length) % items.length;
+    const target = items[next];
+    if(target && target.focus) target.focus();
+  }
+
   function createNavNode(item){
     const node = item.href ? document.createElement('a') : document.createElement('button');
     node.className = 'wave24-nav-item';
     node.dataset.key = item.key;
     if(item.href) node.href = item.href;
     else node.type = 'button';
+    node.setAttribute('aria-label', item.label);
     node.innerHTML = `<span class="wave24-ic" aria-hidden="true">${iconSvg(item.icon)}</span><span class="wave24-tx">${item.label}</span>`;
     if(item.action) node.addEventListener('click', item.action);
+    node.addEventListener('keydown', (event) => {
+      if(event.key === 'ArrowRight' || event.key === 'ArrowDown'){
+        event.preventDefault();
+        focusNavItem(node, 1);
+      }else if(event.key === 'ArrowLeft' || event.key === 'ArrowUp'){
+        event.preventDefault();
+        focusNavItem(node, -1);
+      }else if(event.key === 'Home'){
+        event.preventDefault();
+        focusNavItem(node, 'home');
+      }else if(event.key === 'End'){
+        event.preventDefault();
+        focusNavItem(node, 'end');
+      }
+    });
     return node;
   }
 
@@ -2306,8 +2416,15 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       } else {
         el.classList.remove('is-quiet');
       }
-      if(el.dataset.key === active) el.setAttribute('aria-current', 'page');
-      else el.removeAttribute('aria-current');
+      const label = ((el.querySelector('.wave24-tx') || {}).textContent || el.textContent || '').replace(/\s+/g, ' ').trim();
+      if(el.dataset.key === active){
+        el.setAttribute('aria-current', 'page');
+        if(label) el.setAttribute('aria-label', label + ', текущая страница');
+      }
+      else {
+        el.removeAttribute('aria-current');
+        if(label) el.setAttribute('aria-label', label);
+      }
     });
   }
 
@@ -2839,8 +2956,6 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   var MAX_JOURNAL = 150;
   var MAX_REVIEW_ITEMS = 240;
   var reviewMode = null;
-
-  window.__clearTrainerKey = function(k){ try { localStorage.removeItem(k); } catch(_) {} };
 
   function nowTs(){ return Date.now(); }
   function dayStart(ts){ var d = new Date(ts || Date.now()); d.setHours(0,0,0,0); return d.getTime(); }
@@ -3394,7 +3509,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       html += '<div style="text-align:center;color:var(--muted);padding:24px 0;font-size:13px">Ошибок пока нет. Решай задачи!</div>';
     }
 
-    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="if(confirm(\'Очистить журнал ошибок и интервальное повторение?\')){__clearTrainerKey(\'' + 'trainer_journal_' + gradeKey() + '\');__clearTrainerKey(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}">Очистить журнал и повторение</button>';
+    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="if(confirm(\'Очистить журнал ошибок и интервальное повторение?\')){localStorage.removeItem(\'' + 'trainer_journal_' + gradeKey() + '\');localStorage.removeItem(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}">Очистить журнал и повторение</button>';
     html += '<button style="margin-top:8px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--text);color:var(--bg);font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
 
     card.innerHTML = html;

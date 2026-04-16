@@ -310,7 +310,7 @@
     const polygon = `<polygon points="${points.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ')}" fill="rgba(37,99,235,.18)" stroke="#2563eb" stroke-width="2"></polygon>`;
     const dots = points.map(p => `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="${p.color}"></circle>`).join('');
 
-    return `<svg class="chart-svg" viewBox="0 0 ${width} ${height}" aria-label="Радар по предметам">${grid}${axes}${polygon}${dots}</svg>`;
+    return `<svg class="chart-svg" role="img" focusable="false" viewBox="0 0 ${width} ${height}" aria-labelledby="wave22-radar-svg-title"><title id="wave22-radar-svg-title">Радар по предметам</title>${grid}${axes}${polygon}${dots}</svg>`;
   }
 
   function renderRadar(state){
@@ -362,7 +362,7 @@
       const x = left + i * step;
       return `<text x="${x.toFixed(1)}" y="${(top + chartH + 16).toFixed(1)}" text-anchor="middle" fill="var(--muted)" font-size="9">${esc(w.label)}</text>`;
     }).join('');
-    return `<svg class="chart-svg" viewBox="0 0 ${width} ${height}" aria-label="Тренд за 12 недель">${grid}${bars}<polyline points="${poly}" fill="none" stroke="#2563eb" stroke-width="2.5"></polyline>${dots}${labels}</svg>`;
+    return `<svg class="chart-svg" role="img" focusable="false" viewBox="0 0 ${width} ${height}" aria-labelledby="wave22-trend-svg-title"><title id="wave22-trend-svg-title">Тренд за 12 недель</title>${grid}${bars}<polyline points="${poly}" fill="none" stroke="#2563eb" stroke-width="2.5"></polyline>${dots}${labels}</svg>`;
   }
 
   function renderTrend(state){

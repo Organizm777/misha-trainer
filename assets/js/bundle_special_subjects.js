@@ -3,7 +3,7 @@
   if (typeof window === 'undefined' || window.__wave55SpecialSubjects) return;
   window.__wave55SpecialSubjects = true;
 
-  const VERSION = 'wave55';
+  const VERSION = 'wave64';
   const DATA_VERSION = '55';
   const SESSION_SIZE = 20;
   const DIAG_SESSION_SIZE = 50;
@@ -63,6 +63,76 @@
     const m = Math.floor((total % 3600) / 60);
     const s = total % 60;
     return h ? String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0') : String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }
+
+  function setAttr(el, name, value){ if (el && typeof el.setAttribute === 'function') el.setAttribute(name, value); }
+  function setAttrIfMissing(el, name, value){ if (el && typeof el.getAttribute === 'function' && !el.getAttribute(name)) el.setAttribute(name, value); }
+
+  function decorateSpecA11y(){
+    const root = byId('spec-root');
+    if (!root) return;
+    root.setAttribute('role', 'region');
+    root.setAttribute('aria-label', state.screen === 'quiz' ? 'Тренировка по спецпредметам' : 'Спецпредметы');
+    root.querySelectorAll('.spec-search').forEach((input) => {
+      const placeholder = String(input.getAttribute('placeholder') || '').toLowerCase();
+      const label = placeholder.includes('внутри предмета') ? 'Поиск тем внутри предмета' : 'Поиск направлений и тем';
+      setAttrIfMissing(input, 'aria-label', label);
+    });
+    root.querySelectorAll('.spec-grid').forEach((el) => { setAttr(el, 'role', 'group'); setAttrIfMissing(el, 'aria-label', 'Направления спецпредметов'); });
+    root.querySelectorAll('.spec-topic-list').forEach((el) => { setAttr(el, 'role', 'group'); setAttrIfMissing(el, 'aria-label', 'Темы предмета'); });
+    root.querySelectorAll('.spec-review-list').forEach((el) => { setAttr(el, 'role', 'group'); setAttrIfMissing(el, 'aria-label', 'Разбор результатов'); });
+    root.querySelectorAll('.spec-card').forEach((btn) => {
+      const name = (btn.querySelector('.spec-card-nm') || {}).textContent || 'Направление';
+      const desc = (btn.querySelector('.spec-card-desc') || {}).textContent || '';
+      const meta = Array.from(btn.querySelectorAll('.spec-card-meta')).map((row) => row.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean).join('. ');
+      setAttr(btn, 'aria-label', [name, desc, meta].filter(Boolean).join('. '));
+    });
+    root.querySelectorAll('.spec-topic-card').forEach((btn) => {
+      const name = (btn.querySelector('.spec-topic-nm') || {}).textContent || 'Тема';
+      const sub = (btn.querySelector('.spec-topic-sub') || {}).textContent || '';
+      const stat = (btn.querySelector('.spec-topic-stat') || {}).textContent || '';
+      setAttr(btn, 'aria-label', [name, sub, stat].join('. ').replace(/\s+/g, ' ').trim());
+    });
+    root.querySelectorAll('.spec-progress').forEach((track) => {
+      const fill = track.querySelector('.spec-progress-fill');
+      const width = fill ? Math.max(0, Math.min(100, Math.round(parseFloat(fill.style.width || '0') || 0))) : 0;
+      setAttr(track, 'role', 'progressbar');
+      setAttr(track, 'aria-valuemin', '0');
+      setAttr(track, 'aria-valuemax', '100');
+      setAttr(track, 'aria-valuenow', String(width));
+      setAttr(track, 'aria-label', 'Прогресс по вопросам');
+    });
+    root.querySelectorAll('.spec-opts').forEach((group) => {
+      setAttr(group, 'role', 'radiogroup');
+      setAttrIfMissing(group, 'aria-label', 'Варианты ответа');
+      Array.from(group.querySelectorAll('.spec-opt')).forEach((opt) => {
+        const checked = opt.classList.contains('is-wrong') || opt.classList.contains('is-correct');
+        setAttr(opt, 'role', 'radio');
+        setAttr(opt, 'aria-checked', checked ? 'true' : 'false');
+      });
+    });
+    root.querySelectorAll('.spec-topic-bar-row').forEach((row) => {
+      const title = (row.querySelector('.spec-topic-bar-head strong') || {}).textContent || 'Тема';
+      const pctText = (row.querySelector('.spec-topic-bar-head span') || {}).textContent || '0%';
+      const pct = Math.max(0, Math.min(100, parseInt(pctText, 10) || 0));
+      const track = row.querySelector('.spec-topic-bar-track');
+      if (track) {
+        setAttr(track, 'role', 'progressbar');
+        setAttr(track, 'aria-valuemin', '0');
+        setAttr(track, 'aria-valuemax', '100');
+        setAttr(track, 'aria-valuenow', String(pct));
+        setAttr(track, 'aria-label', title + ': ' + pct + '%');
+      }
+    });
+    root.querySelectorAll('.spec-weak-card').forEach((card) => {
+      const title = (card.querySelector('.spec-review-q') || {}).textContent || 'Тема';
+      const button = card.querySelector('button');
+      if (button) setAttr(button, 'aria-label', button.textContent.replace(/\s+/g, ' ').trim() + ': ' + title);
+    });
+    root.querySelectorAll('.spec-result-n').forEach((el) => {
+      const value = String(el.textContent || '').trim();
+      setAttr(el, 'aria-label', 'Результат: ' + value);
+    });
   }
 
   const loadedSubjects = Object.create(null);
@@ -606,10 +676,11 @@
       document.body.setAttribute('data-spec-screen', state.screen || 'menu');
       document.body.setAttribute('data-trainer-screen', state.screen === 'quiz' ? 'immersive' : 'browse');
     } catch(_) {}
-    if (state.screen === 'subject') return renderSubject();
-    if (state.screen === 'quiz') return renderQuiz();
-    if (state.screen === 'result') return renderResult();
-    return renderMenu();
+    if (state.screen === 'subject') renderSubject();
+    else if (state.screen === 'quiz') renderQuiz();
+    else if (state.screen === 'result') renderResult();
+    else renderMenu();
+    decorateSpecA11y();
   }
 
   function openMenu(){

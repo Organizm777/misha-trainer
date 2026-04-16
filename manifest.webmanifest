@@ -26,5 +26,11 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "id": "./index.html",
+  "display_override": [
+    "standalone",
+    "browser"
+  ],
+  "prefer_related_applications": false
 }

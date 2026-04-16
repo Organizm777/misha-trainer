@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Тренажёр">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a1a2e"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://api.npoint.io; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' blob:; connect-src 'self' https://api.npoint.io https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/icon-512.png"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script src="./assets/js/safe_storage.js"></script><script>try{var t=localStorage.getItem("trainer_theme")||"system";if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}</script><script src="./assets/js/wave35_plans.js?v=48"></script><title>Сквозная диагностика</title>
+<script>try{var t=localStorage.getItem("trainer_theme")||"system";if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}</script><script defer src="./assets/js/wave35_plans.js?v=48"></script><title>Сквозная диагностика</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Golos+Text:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
@@ -607,7 +607,7 @@ QBANK.english = [
   {g:11, topic:'Лексика', q:'Synonym of "important":', opts:['significant','ordinary','minor','simple'], a:'significant', hint:'Significant = important, meaningful'}
 ];
 
-QBANK.chemistry = [];
+
 
 function sanitizePool(list){
   return (list || []).filter(q => q && Number.isFinite(q.g) && typeof q.q === 'string' && Array.isArray(q.opts) && q.opts.length >= 2 && typeof q.a === 'string');
@@ -735,7 +735,6 @@ const SUBJECTS = [
   {id:'geometry',   name:'Геометрия',      sub:'7–11 классы',    icon:'△',  color:'#ea580c', desc:'Планиметрия, стереометрия'},
   {id:'mathall',    name:'Вся математика', sub:'3–11 классы',    icon:'📐', color:'#0d9488', desc:'Сквозной тест по всем разделам'},
   {id:'physics',    name:'Физика',         sub:'7–11 классы',    icon:'⚡', color:'#dc2626', desc:'Механика, электричество, оптика'},
-  {id:'chemistry',  name:'Химия',          sub:'8–11 классы',    icon:'⚗️', color:'#ea580c', desc:'Строение вещества, реакции, органика'},
   {id:'russian',    name:'Русский язык',   sub:'1–11 классы',    icon:'Аа', color:'#16a34a', desc:'Орфография, пунктуация, синтаксис'},
   {id:'history',    name:'История',        sub:'5–11 классы',    icon:'📜', color:'#ca8a04', desc:'Даты, события, личности'},
   {id:'informatics',name:'Информатика',    sub:'7–11 классы',    icon:'>_', color:'#1a1a2e', desc:'Алгоритмы, системы счисления, Python'},
@@ -1162,5 +1161,5 @@ function copyText(text){
 }
 </script>
 
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script><script src="./assets/js/bundle_shell.js?v=50"></script><script src="./assets/js/bundle_diagnostic_tools.js?v=48"></script><script src="./assets/js/bundle_subject_expansion.js?v=61"></script><script src="./assets/js/bundle_exam.js?v=49"></script></body>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script><script src="./assets/js/bundle_shell.js?v=52"></script><script src="./assets/js/bundle_diagnostic_tools.js?v=48"></script><script src="./assets/js/chunk_subject_expansion_wave31_russian.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave32_math.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave33_science.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave38_content_consolidation.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave56_primary_math.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave57_primary_russian_1_4.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave61_senior_school_10_11.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave63_quality.js?v=65"></script><script src="./assets/js/bundle_gamification_xp.js?v=67"></script><script src="./assets/js/bundle_gamification_meta.js?v=67"></script><script src="./assets/js/bundle_exam.js?v=49"></script><script src="./assets/js/bundle_profile_social.js?v=68"></script></body>
 </html>
