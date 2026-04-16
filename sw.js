@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-v58';
+const CACHE_NAME = 'trainer-v62';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -8,6 +8,7 @@ const ASSETS = [
   './tests.html',
   './spec_subjects.html',
   './dashboard.html',
+  './assets/js/safe_storage.js',
   './assets/js/wave35_plans.js?v=48',
   './assets/js/engine10.js',
   './assets/js/bundle_boosters.js?v=42',

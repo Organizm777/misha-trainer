@@ -2840,6 +2840,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   var MAX_REVIEW_ITEMS = 240;
   var reviewMode = null;
 
+  window.__clearTrainerKey = function(k){ try { localStorage.removeItem(k); } catch(_) {} };
+
   function nowTs(){ return Date.now(); }
   function dayStart(ts){ var d = new Date(ts || Date.now()); d.setHours(0,0,0,0); return d.getTime(); }
   function addDays(ts, days){ var d = new Date(ts); d.setDate(d.getDate() + days); return d.getTime(); }
@@ -3392,7 +3394,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       html += '<div style="text-align:center;color:var(--muted);padding:24px 0;font-size:13px">Ошибок пока нет. Решай задачи!</div>';
     }
 
-    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="if(confirm(\'Очистить журнал ошибок и интервальное повторение?\')){localStorage.removeItem(\'' + 'trainer_journal_' + gradeKey() + '\');localStorage.removeItem(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}">Очистить журнал и повторение</button>';
+    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="if(confirm(\'Очистить журнал ошибок и интервальное повторение?\')){__clearTrainerKey(\'' + 'trainer_journal_' + gradeKey() + '\');__clearTrainerKey(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}">Очистить журнал и повторение</button>';
     html += '<button style="margin-top:8px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--text);color:var(--bg);font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
 
     card.innerHTML = html;
