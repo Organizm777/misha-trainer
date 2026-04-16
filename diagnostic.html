@@ -607,7 +607,7 @@ QBANK.english = [
   {g:11, topic:'Лексика', q:'Synonym of "important":', opts:['significant','ordinary','minor','simple'], a:'significant', hint:'Significant = important, meaningful'}
 ];
 
-
+QBANK.chemistry = [];
 
 function sanitizePool(list){
   return (list || []).filter(q => q && Number.isFinite(q.g) && typeof q.q === 'string' && Array.isArray(q.opts) && q.opts.length >= 2 && typeof q.a === 'string');
@@ -735,6 +735,7 @@ const SUBJECTS = [
   {id:'geometry',   name:'Геометрия',      sub:'7–11 классы',    icon:'△',  color:'#ea580c', desc:'Планиметрия, стереометрия'},
   {id:'mathall',    name:'Вся математика', sub:'3–11 классы',    icon:'📐', color:'#0d9488', desc:'Сквозной тест по всем разделам'},
   {id:'physics',    name:'Физика',         sub:'7–11 классы',    icon:'⚡', color:'#dc2626', desc:'Механика, электричество, оптика'},
+  {id:'chemistry',  name:'Химия',          sub:'8–11 классы',    icon:'⚗️', color:'#ea580c', desc:'Строение вещества, реакции, органика'},
   {id:'russian',    name:'Русский язык',   sub:'1–11 классы',    icon:'Аа', color:'#16a34a', desc:'Орфография, пунктуация, синтаксис'},
   {id:'history',    name:'История',        sub:'5–11 классы',    icon:'📜', color:'#ca8a04', desc:'Даты, события, личности'},
   {id:'informatics',name:'Информатика',    sub:'7–11 классы',    icon:'>_', color:'#1a1a2e', desc:'Алгоритмы, системы счисления, Python'},
@@ -1161,5 +1162,5 @@ function copyText(text){
 }
 </script>
 
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script><script src="./assets/js/bundle_shell.js?v=50"></script><script src="./assets/js/bundle_diagnostic_tools.js?v=48"></script><script src="./assets/js/bundle_subject_expansion.js?v=60"></script><script src="./assets/js/bundle_exam.js?v=49"></script></body>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script><script src="./assets/js/bundle_shell.js?v=50"></script><script src="./assets/js/bundle_diagnostic_tools.js?v=48"></script><script src="./assets/js/bundle_subject_expansion.js?v=61"></script><script src="./assets/js/bundle_exam.js?v=49"></script></body>
 </html>
