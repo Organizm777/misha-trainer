@@ -474,11 +474,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
 
   function readGlobal(name){
-    try{
-      return window.eval(`typeof ${name} !== \"undefined\" ? ${name} : null`);
-    }catch(_){
-      return null;
-    }
+    return name in window ? window[name] : null;
   }
 
   function getFocusable(root){
