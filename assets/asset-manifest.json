@@ -1,0 +1,32 @@
+{
+  "version": "trainer-build-20260417085700",
+  "assets": {
+    "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.db639b7b5f.js",
+    "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.5592be36f3.js",
+    "assets/js/bundle_diagnostic_tools.js": "assets/js/bundle_diagnostic_tools.641a191419.js",
+    "assets/js/bundle_error_tracking.js": "assets/js/bundle_error_tracking.e8a9fb4295.js",
+    "assets/js/bundle_exam.js": "assets/js/bundle_exam.21c1f611f3.js",
+    "assets/js/bundle_gamification_meta.js": "assets/js/bundle_gamification_meta.9853e9e1bb.js",
+    "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
+    "assets/js/bundle_grade_after.js": "assets/js/bundle_grade_after.6837de5f86.js",
+    "assets/js/bundle_grade_content.js": "assets/js/bundle_grade_content.3581ba449e.js",
+    "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.9c586813d8.js",
+    "assets/js/bundle_sharing.js": "assets/js/bundle_sharing.75450d41f8.js",
+    "assets/js/bundle_shell.js": "assets/js/bundle_shell.366a4cb99e.js",
+    "assets/js/bundle_special_subjects.js": "assets/js/bundle_special_subjects.82d8040232.js",
+    "assets/js/chunk_subject_expansion_wave31_russian.js": "assets/js/chunk_subject_expansion_wave31_russian.24fba9b173.js",
+    "assets/js/chunk_subject_expansion_wave32_math.js": "assets/js/chunk_subject_expansion_wave32_math.8957f08038.js",
+    "assets/js/chunk_subject_expansion_wave33_science.js": "assets/js/chunk_subject_expansion_wave33_science.7379e9af46.js",
+    "assets/js/chunk_subject_expansion_wave38_content_consolidation.js": "assets/js/chunk_subject_expansion_wave38_content_consolidation.c6477aad95.js",
+    "assets/js/chunk_subject_expansion_wave56_primary_math.js": "assets/js/chunk_subject_expansion_wave56_primary_math.eaf5b54a60.js",
+    "assets/js/chunk_subject_expansion_wave57_primary_russian_1_4.js": "assets/js/chunk_subject_expansion_wave57_primary_russian_1_4.89e342a7d4.js",
+    "assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.js": "assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.e89d86ed52.js",
+    "assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js": "assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.b5b4b3f802.js",
+    "assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.js": "assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.ecfc9c5b63.js",
+    "assets/js/chunk_subject_expansion_wave61_senior_school_10_11.js": "assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js",
+    "assets/js/chunk_subject_expansion_wave63_quality.js": "assets/js/chunk_subject_expansion_wave63_quality.4becf14504.js",
+    "assets/js/engine10.js": "assets/js/engine10.4ba988e3aa.js",
+    "assets/js/wave35_plans.js": "assets/js/wave35_plans.0490f4f6fa.js",
+    "assets/css/engine10.css": "assets/css/engine10.73ed700043.css"
+  }
+}

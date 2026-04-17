@@ -63,7 +63,6 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <body>
 <div id="app">
 
-<!-- MENU -->
 <div id="s-menu" class="scr active"><div class="w">
 <div style="text-align:center;margin-bottom:20px;padding-top:16px">
 <div style="font-size:42px;margin-bottom:8px">🧠</div>
@@ -106,7 +105,6 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <div><div class="tnm">Тревожность</div><div class="tdesc">15 вопросов · 3 мин · уровень стресса</div><div class="tdone" id="anxiety-done"></div></div>
 <div class="arrow">→</div></div>
 
-
 <div id="portrait-cta" style="margin:16px 0;opacity:.4;transition:opacity .3s">
   <button onclick="showPortrait()" style="width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#1a1a2e,#2d2b55);color:#fff;font-family:'Golos Text',sans-serif;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
     <span style="font-size:20px">🪞</span> Портрет ученика
@@ -116,7 +114,6 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <a href="index.html" style="display:block;text-align:center;margin-top:8px;font-size:13px;color:var(--accent);text-decoration:none">← Назад к тренажёру</a>
 </div></div>
 
-<!-- LOGIC SCREENS (reuse) -->
 <div id="s-intro" class="scr"><div class="w">
 <div style="text-align:center;padding-top:20px">
 <div style="font-size:42px;margin-bottom:8px">🧠</div>
@@ -159,7 +156,6 @@ html{background:var(--bg)}body{font-family:'Golos Text',sans-serif;background:va
 <button class="btn btn-d" style="flex:1" onclick="go('menu');refreshMenu()">← К тестам</button>
 </div></div></div>
 
-<!-- STYLE / TEMPERAMENT quiz -->
 <div id="s-psych" class="scr"><div class="w">
 <div class="hdr"><span class="hdr-title" id="p-title"></span><span class="hdr-timer" id="p-progress"></span></div>
 <div class="pgbar"><div class="pgfill" id="p-pgfill"></div></div>
@@ -859,13 +855,12 @@ function showPortrait(){
   // ── Render overlay ───────────────────────────────
   const overlay=document.createElement('div');
   overlay.style.cssText='position:fixed;inset:0;background:rgba(15,14,23,.75);z-index:9999;overflow-y:auto;padding:16px;display:flex;justify-content:center;-webkit-overflow-scrolling:touch';
-  
+
   const now=new Date().toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
 
   let html=`
   <div style="background:#f5f3ee;border-radius:20px;max-width:480px;width:100%;overflow:hidden;margin:auto">
 
-    <!-- Header -->
     <div style="background:#1a1a2e;color:#fff;padding:20px">
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
         <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#4ade80,#2563eb);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0">🧠</div>
@@ -875,7 +870,7 @@ function showPortrait(){
         </div>
         <button onclick="this.closest('[style*=position]').remove()" style="margin-left:auto;background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">×</button>
       </div>
-      <!-- Bars -->
+
       ${bars.map(b=>`
       <div style="margin-bottom:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
@@ -888,13 +883,11 @@ function showPortrait(){
       </div>`).join('')}
     </div>
 
-    <!-- Badges -->
     ${badges.length?`
     <div style="padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid #e2e0d8">
       ${badges.map(b=>`<span style="background:${b.bg};color:${b.color};font-size:11px;font-weight:700;padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:4px">${b.icon} ${b.label}</span>`).join('')}
     </div>`:''}
 
-    <!-- Insights -->
     <div style="padding:16px">
       <div style="font-family:Unbounded,system-ui,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Ключевые выводы</div>
       ${insights.slice(0,5).map(ins=>`
@@ -904,7 +897,6 @@ function showPortrait(){
       </div>`).join('')}
     </div>
 
-    <!-- Holland careers if available -->
     ${holTop2.length?`
     <div style="padding:0 16px 16px">
       <div style="font-family:Unbounded,system-ui,sans-serif;font-size:10px;font-weight:700;color:#6b6a74;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Направления для профессии</div>
@@ -918,7 +910,6 @@ function showPortrait(){
       </div>
     </div>`:''}
 
-    <!-- Disclaimer + share -->
     <div style="padding:0 16px 16px">
       <div style="font-size:10px;color:#9b9aad;text-align:center;margin-bottom:12px;line-height:1.5">Результаты носят ознакомительный характер и не являются клинической диагностикой.</div>
       <button onclick="sharePortrait()" style="width:100%;padding:13px;border:none;border-radius:12px;background:#1a1a2e;color:#fff;font-family:'Golos Text',sans-serif;font-weight:700;font-size:14px;cursor:pointer">📤 Отправить родителям</button>
@@ -929,7 +920,7 @@ function showPortrait(){
   overlay.innerHTML=html;
   overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
   document.body.appendChild(overlay);
-  
+
   // Store for share
   window._portraitData={iq,style,temp,motiv,anxiety,holland,psych,insights,badges,holTop2,done};
 }
@@ -938,7 +929,7 @@ function sharePortrait(){
   const d=window._portraitData||{};
   const now=new Date().toLocaleDateString('ru',{day:'numeric',month:'long'});
   let text=`🧠 Портрет ученика — ${now}\n(${d.done||'?'} из 7 тестов пройдено)\n\n`;
-  
+
   if(d.iq) text+=`📊 Балл: ${d.iq.iq} (лучше ${d.iq.pct||d.iq.pctl}% сверстников)\n`;
   if(d.style) text+=`👁 Стиль восприятия: ${({v:'Визуальный стиль',a:'Слуховой стиль',k:'Практический стиль'})[d.style.dominant]||d.style.dominant}\n`;
   if(d.temp) text+=`🎭 Темперамент: ${d.temp.type}\n`;
@@ -946,14 +937,14 @@ function sharePortrait(){
   if(d.anxiety) text+=`😌 Тревожность: ${d.anxiety.level} (${d.anxiety.pct}%)\n`;
   if(d.holland) text+=`🧭 Профтип: ${d.holland.top}\n`;
   if(d.psych) text+=`🔬 Психология: ${d.psych.profile}\n`;
-  
+
   if(d.insights&&d.insights.length){
     text+='\n💡 Главные выводы:\n';
     d.insights.slice(0,3).forEach(ins=>{
       text+='• '+ins.text.replace(/<[^>]+>/g,'').trim()+'\n';
     });
   }
-  
+
   if(navigator.share){
     navigator.share({title:'Портрет ученика',text}).catch(()=>fallbackCopy(text));
   } else {
@@ -968,4 +959,4 @@ function fallbackCopy(text){
 }
 
 </script>
-<script src="./assets/js/bundle_shell.js?v=52"></script><script src="./assets/js/bundle_profile_social.js?v=68"></script></body>
+<script src="./assets/js/bundle_shell.366a4cb99e.js"></script><script src="./assets/js/bundle_profile_social.9c586813d8.js"></script><script src="./assets/js/bundle_error_tracking.e8a9fb4295.js"></script></body>

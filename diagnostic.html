@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Тренажёр">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a1a2e"><meta name="color-scheme" content="light dark"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://api.npoint.io; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' blob:; connect-src 'self' https://api.npoint.io https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png"><link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/icon-512.png"><link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script>try{var t=localStorage.getItem("trainer_theme")||"system";if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}</script><script defer src="./assets/js/wave35_plans.js?v=48"></script><title>Сквозная диагностика</title>
+<script>try{var t=localStorage.getItem("trainer_theme")||"system";if(t&&t!=="system")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}</script><script defer src="./assets/js/wave35_plans.0490f4f6fa.js"></script><title>Сквозная диагностика</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Golos+Text:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
@@ -95,7 +95,6 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 </head>
 <body>
 
-<!-- ═══════════ SCREEN: SUBJECT SELECT ═══════════ -->
 <div id="s-select" class="scr on">
 <div class="w">
   <div class="hdr">
@@ -121,7 +120,6 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 </div>
 </div>
 
-<!-- ═══════════ SCREEN: QUIZ ═══════════ -->
 <div id="s-quiz" class="scr">
 <div class="w">
   <div class="hdr">
@@ -148,7 +146,6 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Golos Text',system-
 </div>
 </div>
 
-<!-- ═══════════ SCREEN: RESULTS ═══════════ -->
 <div id="s-result" class="scr">
 <div class="w" style="padding-bottom:32px">
   <div class="hdr">
@@ -214,7 +211,7 @@ function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 
 const QBANK = {};
 
-//   (3-6) 
+//   (3-6)
 QBANK.math = [
   // Grade 1
   {g:1, topic:'Счёт', q:'7 + 5 = ?', opts:['12','11','13','10'], a:'12', hint:'7+5: от 7 считаем 5 вперёд → 12'},
@@ -267,7 +264,7 @@ QBANK.math = [
 
 ];
 
-//   (7-11) 
+//   (7-11)
 QBANK.algebra = [
   // Grade 7
   {g:7, topic:'Линейные уравнения', q:'2x + 5 = 13. Найди x.', opts:['4','3','5','6'], a:'4', hint:'2x = 8, x = 4'},
@@ -296,7 +293,7 @@ QBANK.algebra = [
   {g:11, topic:'Логарифмы', q:'ln e = ?', opts:['1','e','0','1/e'], a:'1', hint:'ln e = logₑe = 1 по определению'},
 ];
 
-//   (7-11) 
+//   (7-11)
 QBANK.geometry = [
   {g:7, topic:'Треугольники', q:'Сумма углов треугольника = ?', opts:['180°','360°','90°','270°'], a:'180°', hint:'Аксиома геометрии'},
   {g:7, topic:'Параллельные прямые', q:'Вертикальные углы...', opts:['равны','смежные','дополнительные','произвольные'], a:'равны', hint:'Вертикальные углы всегда равны'},
@@ -322,7 +319,7 @@ QBANK.geometry = [
   {g:11, topic:'Подобие', q:'Периметры подобных фигур относятся как...', opts:['как коэффициент подобия k','как k²','как k³','всегда 1:1'], a:'как коэффициент подобия k', hint:'Периметры и все линейные размеры относятся как k'}
 ];
 
-//   (7-11) 
+//   (7-11)
 QBANK.physics = [
   {g:7, topic:'Механика', q:'Скорость 60 км/ч, время 2 ч. Путь = ?', opts:['120 км','30 км','62 км','180 км'], a:'120 км', hint:'s = v×t = 60×2 = 120'},
   {g:7, topic:'Давление', q:'Давление P = F/S. Единица измерения?', opts:['Паскаль (Па)','Ньютон (Н)','Джоуль (Дж)','Ватт (Вт)'], a:'Паскаль (Па)', hint:'1 Па = 1 Н/м²'},
@@ -349,7 +346,7 @@ QBANK.physics = [
   {g:11, topic:'Ядерная', q:'Число протонов в ядре = ...', opts:['атомный номер','массовое число','число нейтронов','валентность'], a:'атомный номер', hint:'Z — порядковый номер'}
 ];
 
-//    (3-11) 
+//    (3-11)
 QBANK.russian = [
   // Grade 1
   {g:1, topic:'Буквы и звуки', q:'Сколько гласных в слове «МОЛОКО»?', opts:['3','2','4','1'], a:'3', hint:'О-О-О — три гласных: М-О-Л-О-К-О'},
@@ -410,7 +407,7 @@ QBANK.russian = [
   {g:6, topic:'Местоимение', q:'«Себя» — какое местоимение?', opts:['возвратное','личное','притяжательное','указательное'], a:'возвратное', hint:'Себя — возвратное (нет И.п.)'},
 ];
 
-//   (5-11) 
+//   (5-11)
 QBANK.history = [
   {g:5, topic:'Древний мир', q:'Где находится Египет?', opts:['Северная Африка','Ближний Восток','Южная Азия','Европа'], a:'Северная Африка', hint:'Египет расположен в Северной Африке, вдоль Нила'},
   {g:5, topic:'Древняя Греция', q:'Главный город Древней Греции?', opts:['Афины','Спарта','Коринф','Олимпия'], a:'Афины', hint:'Афины — центр культуры и демократии Древней Греции'},
@@ -443,7 +440,7 @@ QBANK.history = [
   {g:11, topic:'Современность', q:'Конституция РФ принята в:', opts:['1993','1991','1996','2000'], a:'1993', hint:'12 декабря 1993'}
 ];
 
-//   (7-11) 
+//   (7-11)
 QBANK.informatics = [
   {g:7, topic:'Системы счисления', q:'13₁₀ в двоичной?', opts:['1101₂','1010₂','1111₂','1001₂'], a:'1101₂', hint:'13 = 8+4+1 = 1101₂'},
   {g:7, topic:'Алгоритмы', q:'Алгоритм — это...', opts:['конечная последовательность точных инструкций','программа','компьютер','данные'], a:'конечная последовательность точных инструкций', hint:'Конечность, точность, результативность — свойства алгоритма'},
@@ -468,7 +465,7 @@ QBANK.informatics = [
   {g:11, topic:'Базы данных', q:'SQL-команда для добавления новой строки:', opts:['INSERT INTO','UPDATE','DELETE','SELECT'], a:'INSERT INTO', hint:'INSERT INTO добавляет запись в таблицу'}
 ];
 
-//    (3-11) 
+//    (3-11)
 
 // LITERATURE
 QBANK.literature = [
@@ -607,8 +604,6 @@ QBANK.english = [
   {g:11, topic:'Лексика', q:'Synonym of "important":', opts:['significant','ordinary','minor','simple'], a:'significant', hint:'Significant = important, meaningful'}
 ];
 
-
-
 function sanitizePool(list){
   return (list || []).filter(q => q && Number.isFinite(q.g) && typeof q.q === 'string' && Array.isArray(q.opts) && q.opts.length >= 2 && typeof q.a === 'string');
 }
@@ -616,7 +611,6 @@ function sanitizePool(list){
 Object.keys(QBANK).forEach(key => {
   QBANK[key] = sanitizePool(QBANK[key]);
 });
-
 
 QBANK.mathall = sanitizePool([...(QBANK.math || []), ...(QBANK.algebra || []), ...(QBANK.geometry || [])]).filter(q => q.g >= 3);
 
@@ -825,9 +819,9 @@ function buildAdaptiveSequence(pool, grades, maxQ){
   for(let i=0;i<maxQ;i++){
     if(++safety > 100) break;
     if(!grades.includes(g)) g = grades.reduce((a,b)=>Math.abs(b-g)<Math.abs(a-g)?b:a);
-    
+
     let available = byGrade[g] ? byGrade[g].filter(q=>!used.has(q)) : [];
-    
+
     if(!available.length){
       // Exhausted this grade — find nearest grade with questions
       let found = false;
@@ -976,7 +970,7 @@ function adaptNext(wasCorrect){
     : Math.max(minGrade, curQ.g - jumpDown);
 
   const candidates = pool.filter(q=>q.g===nextGrade && !usedQs.has(q.q));
-  
+
   if(candidates.length){
     const pick = candidates[Math.floor(Math.random()*candidates.length)];
     if(qIndex+1 < questions.length){
@@ -1007,12 +1001,12 @@ function showResult(){
   // Compute grade levels
   const gradeList = Object.entries(gradeStats).sort((a,b)=>+a[0]-+b[0]);
   const tested = gradeList.filter(([,s])=>s.total>0);
-  
+
   // Hero
   const totalOk = tested.reduce((s,[,g])=>s+g.ok,0);
   const totalQ  = tested.reduce((s,[,g])=>s+g.total,0);
   const pct = totalQ ? Math.round(totalOk/totalQ*100) : 0;
-  
+
   let emoji, title, sub;
   if(pct>=80){ emoji='🎉'; title='Отлично!'; sub='Глубокое знание предмета. Несколько пробелов — разбери их и будет идеально.'; }
   else if(pct>=60){ emoji='💪'; title='Хороший уровень'; sub='Базу знаешь, но есть пробелы в отдельных классах. Смотри карту ниже.'; }
@@ -1026,15 +1020,15 @@ function showResult(){
   // Grade map
   const map = document.getElementById('grade-map');
   map.innerHTML = '';
-  
+
   // All grades in range
   const allGrades = [...new Set((QBANK[curSubject.id]||[]).map(q=>q.g))].filter(g=>g!==undefined).sort((a,b)=>a-b);
-  
+
   allGrades.forEach(g=>{
     const s = gradeStats[g];
     const row = document.createElement('div');
     row.className = 'grow';
-    
+
     if(!s || s.total===0){
       row.className+=' not-tested';
       row.innerHTML = `<div class="gnum">${g} кл</div>
@@ -1074,7 +1068,7 @@ function showResult(){
   const strong = tested.filter(([,s])=>s.total>0 && s.ok/s.total>=0.75);
   const strongList = document.getElementById('strong-list');
   if(strong.length){
-    
+
   // Training links for weak grades
   const trainDiv = document.getElementById('train-links');
   if(gaps.length && trainDiv){
@@ -1098,12 +1092,12 @@ function showResult(){
   // Recommendations
   const recList = document.getElementById('rec-list');
   const recs = [];
-  
+
   if(gaps.length){
     const worstGrade = gaps.sort((a,b)=>a[1].ok/a[1].total-b[1].ok/b[1].total)[0];
     recs.push(`<div class="ins-row"><span>📌</span><div>Начни с <b>${worstGrade[0]} класса</b> — там самый большой пробел. Открой тренажёр ${worstGrade[0]} класса и проработай слабые темы: ${worstGrade[1].topics.slice(0,3).join(', ') || 'все темы раздела'}.</div></div>`);
   }
-  
+
   if(strong.length && gaps.length){
     const maxStrong = Math.max(...strong.map(([g])=>+g));
     const minGap = Math.min(...gaps.map(([g])=>+g));
@@ -1111,15 +1105,15 @@ function showResult(){
       recs.push(`<div class="ins-row"><span>⚠️</span><div>Обрати внимание: ты знаешь материал <b>${maxStrong} класса</b>, но есть пробел в <b>${minGap} классе</b>. Закрой базу — и старший материал станет крепче.</div></div>`);
     }
   }
-  
+
   if(pct>=75){
     recs.push(`<div class="ins-row"><span>🚀</span><div>Уровень уверенный! Попробуй диагностику по другому предмету или тренажёр следующего класса.</div></div>`);
   }
-  
+
   if(!recs.length){
     recs.push(`<div class="ins-row"><span>📖</span><div>Занимайся по 15 минут в день в тренажёре — через месяц заметишь разницу.</div></div>`);
   }
-  
+
   recList.innerHTML = recs.join('');
 
   // Store for share
@@ -1129,24 +1123,24 @@ function showResult(){
 function shareResult(){
   const r = window._diagResult;
   if(!r) return;
-  
+
   let text = `📊 Диагностика: ${r.subj.name}\n`;
   text += `Итого: ${r.totalOk}/${r.totalQ} (${r.pct}%)\n\n`;
   text += `Карта знаний:\n`;
-  
+
   r.tested.forEach(([g,s])=>{
     const p = Math.round(s.ok/s.total*100);
     const icon = p>=75?'✅':p>=50?'⚠️':'🔴';
     text += `${icon} ${g} класс: ${p}% (${s.ok}/${s.total})\n`;
   });
-  
+
   if(r.gaps.length){
     text += `\n⚠️ Пробелы: ${r.gaps.map(([g])=>g+' кл').join(', ')}\n`;
   }
   if(r.strong.length){
     text += `✅ Знает уверенно: ${r.strong.map(([g])=>g+' кл').join(', ')}\n`;
   }
-  
+
   if(navigator.share){
     navigator.share({title:'Диагностика: '+r.subj.name, text}).catch(()=>copyText(text));
   } else {
@@ -1161,5 +1155,5 @@ function copyText(text){
 }
 </script>
 
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script><script src="./assets/js/bundle_shell.js?v=52"></script><script src="./assets/js/bundle_diagnostic_tools.js?v=48"></script><script src="./assets/js/chunk_subject_expansion_wave31_russian.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave32_math.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave33_science.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave38_content_consolidation.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave56_primary_math.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave57_primary_russian_1_4.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave61_senior_school_10_11.js?v=65"></script><script src="./assets/js/chunk_subject_expansion_wave63_quality.js?v=65"></script><script src="./assets/js/bundle_gamification_xp.js?v=67"></script><script src="./assets/js/bundle_gamification_meta.js?v=67"></script><script src="./assets/js/bundle_exam.js?v=49"></script><script src="./assets/js/bundle_profile_social.js?v=68"></script></body>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}</script><script src="./assets/js/bundle_shell.366a4cb99e.js"></script><script src="./assets/js/bundle_diagnostic_tools.641a191419.js"></script><script src="./assets/js/chunk_subject_expansion_wave31_russian.24fba9b173.js"></script><script src="./assets/js/chunk_subject_expansion_wave32_math.8957f08038.js"></script><script src="./assets/js/chunk_subject_expansion_wave33_science.7379e9af46.js"></script><script src="./assets/js/chunk_subject_expansion_wave38_content_consolidation.c6477aad95.js"></script><script src="./assets/js/chunk_subject_expansion_wave56_primary_math.eaf5b54a60.js"></script><script src="./assets/js/chunk_subject_expansion_wave57_primary_russian_1_4.89e342a7d4.js"></script><script src="./assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.e89d86ed52.js"></script><script src="./assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.b5b4b3f802.js"></script><script src="./assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.ecfc9c5b63.js"></script><script src="./assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js"></script><script src="./assets/js/chunk_subject_expansion_wave63_quality.4becf14504.js"></script><script src="./assets/js/bundle_gamification_xp.907a25e6bd.js"></script><script src="./assets/js/bundle_gamification_meta.9853e9e1bb.js"></script><script src="./assets/js/bundle_exam.21c1f611f3.js"></script><script src="./assets/js/bundle_profile_social.9c586813d8.js"></script><script src="./assets/js/bundle_error_tracking.e8a9fb4295.js"></script></body>
 </html>
