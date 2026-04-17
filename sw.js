@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-20260417085700';
+const CACHE_NAME = 'trainer-build-20260417121127';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [

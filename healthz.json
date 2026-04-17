@@ -1,10 +1,10 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave76",
-  "version": "trainer-build-20260417085700",
-  "build_id": "20260417085700",
-  "generated_at_utc": "2026-04-17T08:57:02Z",
+  "wave": "wave78",
+  "version": "trainer-build-20260417121127",
+  "build_id": "20260417121127",
+  "generated_at_utc": "2026-04-17T12:11:29Z",
   "git_sha": null,
   "hashed_asset_count": 27,
   "pages": [
