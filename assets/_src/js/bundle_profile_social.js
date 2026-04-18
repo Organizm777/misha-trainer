@@ -336,9 +336,9 @@
     var metaState = asObj(input.metaState || loadMetaState());
     var activity = asObj(input.activity || aggregateActivity());
     var avatar = avatarById(profileState.avatarId);
-    var totalAnswers = Math.max(0, toNum(xpSummary.answered));
-    var totalCorrect = Math.max(0, toNum(xpSummary.correct) + toNum(xpSummary.hintCorrect));
-    var totalWrong = Math.max(0, toNum(xpSummary.wrong));
+    var totalAnswers = Math.max(0, toNum(xpSummary.answered) || toNum((window.STR || {}).totalQs));
+    var totalCorrect = Math.max(0, toNum(xpSummary.correct) + toNum(xpSummary.hintCorrect) || toNum((window.STR || {}).totalOk));
+    var totalWrong = Math.max(0, totalAnswers - totalCorrect);
     var accuracyPct = totalAnswers ? Math.round((totalCorrect / totalAnswers) * 100) : 0;
     var favorite = favoriteSubjectFrom(asObj(xpState.subjectStats));
     var rank = asObj(xpSummary.rank);
@@ -641,7 +641,7 @@
       + '<div class="wave68-sub">' + esc(summary.rankIcon + ' ' + summary.rankLabel + ' · уровень ' + summary.level + ' · ' + summary.xp + ' XP') + '</div>'
       + '<div class="wave68-sub">Код профиля: <b>' + esc(summary.publicCode) + '</b>' + (summary.tagline ? ' · ' + esc(summary.tagline) : '') + '</div>'
       + '</div></div>'
-      + '<div class="wave68-chip">' + summary.accuracyPct + '% точность</div>'
+      + '<div class="wave68-chip">' + (summary.totalAnswers === 0 ? '—' : summary.accuracyPct + '%') + ' точность</div>'
       + '</div>'
       + '<div class="wave68-grid">'
       + '<div class="wave68-kpi"><b>' + summary.totalAnswers + '</b><span>решено вопросов</span></div>'

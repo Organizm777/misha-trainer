@@ -1267,18 +1267,6 @@
       return out;
     }
     function chooseKind(question){
-      if (!shouldCustom()) return 'classic';
-      var slot = stableHash((window.GRADE_NUM || '10') + '|' + question.question + '|' + question.answer + '|' + question.tag) % 10;
-      var gradeNum = +(window.GRADE_NUM || 10);
-      if (gradeNum <= 4) {
-        if (slot <= 1) return 'gap';
-        if (slot === 2) return 'multi';
-        return 'classic';
-      }
-      if (slot === 0) return 'gap';
-      if (slot === 1) return 'multi';
-      if (slot === 2) return 'match';
-      if (slot === 3) return 'mistake';
       return 'classic';
     }
     function ensureMeta(question){
@@ -1702,18 +1690,6 @@
       return !!(q && diagModeId() !== 'exam' && Array.isArray(q.opts) && q.opts.length >= 4);
     }
     function chooseDiagKind(q){
-      if (!shouldCustom(q)) return 'classic';
-      var slot = stableHash((curSubject && curSubject.id || 'diag') + '|' + q.q + '|' + q.a + '|' + q.topic) % 10;
-      var gradeNum = +(window.GRADE_NUM || 10);
-      if (gradeNum <= 4) {
-        if (slot <= 1) return 'gap';
-        if (slot === 2) return 'multi';
-        return 'classic';
-      }
-      if (slot === 0) return 'gap';
-      if (slot === 1) return 'multi';
-      if (slot === 2) return 'match';
-      if (slot === 3) return 'mistake';
       return 'classic';
     }
     function ensureDiagMeta(q){
