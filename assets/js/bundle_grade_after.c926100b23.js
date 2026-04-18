@@ -1109,6 +1109,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     if(currentScreenId() !== 's-play' || !prob){ slot.innerHTML = ''; return; }
     const qn = questionNumber();
     const goal = sessionGoal();
+    const overGoal = !!(goal && qn > goal);
     const barWidth = goal ? Math.min(100, Math.round((Math.min(qn, goal) / goal) * 100)) : 0;
     const favBtn = (cS && cT && !globalMix && !mix && !diagMode && !rushMode)
       ? `<button type="button" class="wave21-iconbtn ${isFav(cS.id, cT.id) ? 'alt' : ''}" onclick="wave21ToggleFavorite()">${isFav(cS.id, cT.id) ? '★ В избранном' : '☆ В избранное'}</button>`
@@ -1116,11 +1117,15 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     const restartBtn = (window.__wave21LastSessionErrors && window.__wave21LastSessionErrors.length && currentScreenId()==='s-play' && !rushMode)
       ? `<button type="button" class="wave21-iconbtn good" onclick="wave21RepeatSessionErrors()">🔁 Ошибки</button>`
       : '';
-    const label = goal
-      ? `Вопрос ${Math.max(1, qn)} из ${goal}`
-      : `Вопрос ${Math.max(1, qn)}`;
+    const label = !goal
+      ? `Вопрос ${Math.max(1, qn)}`
+      : overGoal
+        ? `Вопрос ${qn} · сверх нормы (+${qn - goal})`
+        : `Вопрос ${Math.max(1, qn)} из ${goal}`;
     const sub = goal && !diagMode && !rushMode
-      ? `Мини-сессия на ${goal} вопросов. После ${goal}-го вопроса можно завершить и оценить прогресс.`
+      ? (overGoal
+          ? `Мини-сессия пройдена. Нажми «← Завершить», чтобы увидеть итог — или продолжай для бонуса.`
+          : `Мини-сессия на ${goal} вопросов. После ${goal}-го вопроса можно завершить и оценить прогресс.`)
       : (diagMode ? 'Строгий режим без подсказок.' : (rushMode ? 'В режиме Молния количество вопросов не фиксировано.' : ''));
     slot.innerHTML = `
       <div class="wave21-session">
@@ -1134,7 +1139,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
             ${restartBtn}
           </div>
         </div>
-        ${goal ? `<div class="pgbar"><div class="pgfill" style="width:${barWidth}%;background:${diagMode ? 'var(--orange)' : 'var(--accent)'}"></div></div>` : ''}
+        ${goal ? `<div class="pgbar"><div class="pgfill" style="width:${barWidth}%;background:${overGoal ? 'linear-gradient(90deg, #fbbf24, #f59e0b)' : (diagMode ? 'var(--orange)' : 'var(--accent)')}"></div></div>` : ''}
       </div>`;
   }
 
@@ -3732,4 +3737,4 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     return map[kind || 'logic'] ? map[kind || 'logic']() : null;
   };
 })();
-//# sourceMappingURL=bundle_grade_after.6837de5f86.js.map
+//# sourceMappingURL=bundle_grade_after.c926100b23.js.map

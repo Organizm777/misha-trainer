@@ -1279,7 +1279,6 @@
       if (gradeNum <= 4) {
         if (slot <= 1) return 'gap';
         if (slot === 2) return 'multi';
-        if (slot === 3) return 'match';
         return 'classic';
       }
       if (slot === 0) return 'gap';
@@ -3250,4 +3249,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
   else init();
 })();
-//# sourceMappingURL=wave35_plans.0490f4f6fa.js.map
+//# sourceMappingURL=wave35_plans.d07233801c.js.map

@@ -1279,7 +1279,6 @@
       if (gradeNum <= 4) {
         if (slot <= 1) return 'gap';
         if (slot === 2) return 'multi';
-        if (slot === 3) return 'match';
         return 'classic';
       }
       if (slot === 0) return 'gap';

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-20260418060832';
+const CACHE_NAME = 'trainer-build-20260418123209';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -31,7 +31,7 @@ const ASSETS = [
   './assets/js/bundle_exam.21c1f611f3.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
-  './assets/js/bundle_grade_after.6837de5f86.js',
+  './assets/js/bundle_grade_after.c926100b23.js',
   './assets/js/bundle_grade_content.3581ba449e.js',
   './assets/js/bundle_profile_social.9c586813d8.js',
   './assets/js/bundle_sharing.75450d41f8.js',
@@ -48,8 +48,8 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.ecfc9c5b63.js',
   './assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js',
   './assets/js/chunk_subject_expansion_wave63_quality.4becf14504.js',
-  './assets/js/engine10.4ba988e3aa.js',
-  './assets/js/wave35_plans.0490f4f6fa.js',
+  './assets/js/engine10.2ba7960a64.js',
+  './assets/js/wave35_plans.d07233801c.js',
   './assets/css/engine10.73ed700043.css',
   './assets/data/spec_subjects/construction.json',
   './assets/data/spec_subjects/diplomacy.json',
