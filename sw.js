@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-20260418123209';
+const CACHE_NAME = 'trainer-build-20260418135510';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -49,7 +49,7 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js',
   './assets/js/chunk_subject_expansion_wave63_quality.4becf14504.js',
   './assets/js/engine10.2ba7960a64.js',
-  './assets/js/wave35_plans.d07233801c.js',
+  './assets/js/wave35_plans.31790a8c6f.js',
   './assets/css/engine10.73ed700043.css',
   './assets/data/spec_subjects/construction.json',
   './assets/data/spec_subjects/diplomacy.json',

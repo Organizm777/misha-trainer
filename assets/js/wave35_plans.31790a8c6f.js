@@ -1234,13 +1234,7 @@
     document.head.appendChild(style);
   }
 
-  function buildConfidenceHtml(conf, setter){
-    return '<div class="w37-conf">'
-      + '<button class="w37-confbtn' + (conf === 'low' ? ' on' : '') + '" onclick="' + setter + '(\'low\')">🤔<br>Не уверен</button>'
-      + '<button class="w37-confbtn' + (conf === 'mid' ? ' on' : '') + '" onclick="' + setter + '(\'mid\')">👌<br>Нормально</button>'
-      + '<button class="w37-confbtn' + (conf === 'high' ? ' on' : '') + '" onclick="' + setter + '(\'high\')">💪<br>Уверен</button>'
-      + '</div>';
-  }
+  function buildConfidenceHtml(){ return ''; }
 
   function installGrade(){
     if (window.__wave37GradeInstalled) return true;
@@ -1368,8 +1362,7 @@
         if (fba) {
           var note = document.createElement('div');
           note.className = 'w37-inline-note';
-          note.textContent = '🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(sel === prob.answer, meta.confidence || 'mid');
-          fba.appendChild(note);
+
         }
       }
     }
@@ -1385,7 +1378,7 @@
         var ok = meta.evaluation && meta.evaluation.ok;
         html += '<div class="w37-stack"><input class="w37-input" value="' + escHtml(meta.userInput || '') + '" disabled>'
           + '<div class="w37-tags"><span class="w37-tag">Твой ответ: ' + escHtml(meta.userInput || '—') + '</span><span class="w37-tag">Верный ответ: ' + escHtml(prob.answer) + '</span></div></div>';
-        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Верно, но с подсказкой' : '✓ Верно!') : '✗ Верный ответ: ' + escHtml(prob.answer)) + '</div>' + (prob.hint ? '<div class="fbh">💡 ' + escHtml(prob.hint) + '</div>' : '') + '<div class="fbh">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(ok, meta.confidence || 'mid') + '</div><button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
+        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Верно, но с подсказкой' : '✓ Верно!') : '✗ Верный ответ: ' + escHtml(prob.answer)) + '</div>' + (prob.hint ? '<div class="fbh">💡 ' + escHtml(prob.hint) + '</div>' : '') + '<button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
       }
       opts.innerHTML = html;
     }
@@ -1410,7 +1403,7 @@
       if (sel !== null) {
         var ok = meta.evaluation && meta.evaluation.ok;
         var wrongs = meta.items.filter(function(item){ return item !== prob.answer; });
-        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Все ловушки найдены, но с подсказкой' : '✓ Все ловушки найдены') : '✗ Не все ловушки отмечены') + '</div><div class="fbh">Ловушки: ' + escHtml(wrongs.join(' · ')) + '</div><div class="fbh">Верный вариант: ' + escHtml(prob.answer) + '</div><div class="fbh">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(ok, meta.confidence || 'mid') + '</div><button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
+        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Все ловушки найдены, но с подсказкой' : '✓ Все ловушки найдены') : '✗ Не все ловушки отмечены') + '</div><div class="fbh">Ловушки: ' + escHtml(wrongs.join(' · ')) + '</div><div class="fbh">Верный вариант: ' + escHtml(prob.answer) + '</div><button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
       }
     }
     function renderMatch(meta){
@@ -1432,7 +1425,7 @@
       opts.innerHTML = html;
       if (sel !== null) {
         var ok = meta.evaluation && meta.evaluation.ok;
-        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Сопоставление верное, но с подсказкой' : '✓ Всё сопоставлено верно') : '✗ Сопоставление неточное') + '</div><div class="fbh">Верный ответ: ' + escHtml(prob.answer) + ' — остальные варианты были ловушками.</div><div class="fbh">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(ok, meta.confidence || 'mid') + '</div><button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
+        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Сопоставление верное, но с подсказкой' : '✓ Всё сопоставлено верно') : '✗ Сопоставление неточное') + '</div><div class="fbh">Верный ответ: ' + escHtml(prob.answer) + ' — остальные варианты были ловушками.</div><button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
       }
     }
     function renderMistake(meta){
@@ -1452,7 +1445,7 @@
       if (sel !== null) {
         var ok = meta.evaluation && meta.evaluation.ok;
         var wrongLine = meta.lines.filter(function(line){ return line.bad; })[0];
-        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Ошибка найдена, но с подсказкой' : '✓ Ошибка найдена') : '✗ Ошибка была в другой строке') + '</div><div class="fbh">Нужная строка: ' + escHtml(wrongLine ? wrongLine.text : ('Ответ ученика: ' + prob.answer)) + '</div><div class="fbh">Правильный ответ по задаче: ' + escHtml(prob.answer) + '</div><div class="fbh">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(ok, meta.confidence || 'mid') + '</div><button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
+        document.getElementById('fba').innerHTML = '<div class="fb"><div class="fbr" style="color:' + (ok ? (usedHelp ? 'var(--orange)' : 'var(--green)') : 'var(--red)') + '">' + (ok ? (usedHelp ? '✓ Ошибка найдена, но с подсказкой' : '✓ Ошибка найдена') : '✗ Ошибка была в другой строке') + '</div><div class="fbh">Нужная строка: ' + escHtml(wrongLine ? wrongLine.text : ('Ответ ученика: ' + prob.answer)) + '</div><div class="fbh">Правильный ответ по задаче: ' + escHtml(prob.answer) + '</div><button class="btn btn-p" style="width:auto;display:inline-block;padding:10px 24px" onclick="nextQ()">Следующий →</button></div>';
       }
     }
     function renderCustom(meta){
@@ -1711,6 +1704,12 @@
     function chooseDiagKind(q){
       if (!shouldCustom(q)) return 'classic';
       var slot = stableHash((curSubject && curSubject.id || 'diag') + '|' + q.q + '|' + q.a + '|' + q.topic) % 10;
+      var gradeNum = +(window.GRADE_NUM || 10);
+      if (gradeNum <= 4) {
+        if (slot <= 1) return 'gap';
+        if (slot === 2) return 'multi';
+        return 'classic';
+      }
       if (slot === 0) return 'gap';
       if (slot === 1) return 'multi';
       if (slot === 2) return 'match';
@@ -1787,7 +1786,7 @@
       opts.innerHTML = buildConfidenceHtml(meta.confidence || 'mid', 'wave37DiagSetConfidence') + '<div class="w37-stack">' + opts.innerHTML + '</div>';
       if (meta.answered) {
         var hb = document.getElementById('hint-box');
-        if (hb) hb.innerHTML += '<div class="w37-inline-note">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(meta.evaluation && meta.evaluation.ok, meta.confidence || 'mid') + '</div>';
+
       }
     }
     function renderDiagGap(meta, q){
@@ -1804,7 +1803,7 @@
       if (meta.answered) {
         var hb = document.getElementById('hint-box');
         hb.className = 'hint-box show';
-        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Верно.' : '❌ Верный ответ: ' + escHtml(q.a) + (q.hint ? '<br>💡 ' + escHtml(q.hint) : '')) + '<div class="w37-inline-note">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(meta.evaluation && meta.evaluation.ok, meta.confidence || 'mid') + '</div>';
+        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Верно.' : '❌ Верный ответ: ' + escHtml(q.a) + (q.hint ? '<br>💡 ' + escHtml(q.hint) : ''));
       }
     }
     function renderDiagMulti(meta, q){
@@ -1825,7 +1824,7 @@
         var wrongs = meta.items.filter(function(item){ return item !== q.a; });
         var hb = document.getElementById('hint-box');
         hb.className = 'hint-box show';
-        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Ловушки найдены.' : '❌ Нужно было отметить все ловушки.') + '<br>Ловушки: ' + escHtml(wrongs.join(' · ')) + '<br>Верный вариант: ' + escHtml(q.a) + '<div class="w37-inline-note">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(meta.evaluation && meta.evaluation.ok, meta.confidence || 'mid') + '</div>';
+        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Ловушки найдены.' : '❌ Нужно было отметить все ловушки.') + '<br>Ловушки: ' + escHtml(wrongs.join(' · ')) + '<br>Верный вариант: ' + escHtml(q.a);
       }
     }
     function renderDiagMatch(meta, q){
@@ -1843,7 +1842,7 @@
       if (meta.answered) {
         var hb = document.getElementById('hint-box');
         hb.className = 'hint-box show';
-        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Сопоставление верное.' : '❌ Сопоставление не совпало.') + '<br>Верный ответ: ' + escHtml(q.a) + ' · остальные были ловушками.<div class="w37-inline-note">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(meta.evaluation && meta.evaluation.ok, meta.confidence || 'mid') + '</div>';
+        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Сопоставление верное.' : '❌ Сопоставление не совпало.') + '<br>Верный ответ: ' + escHtml(q.a) + ' · остальные были ловушками.';
       }
     }
     function renderDiagMistake(meta, q){
@@ -1864,7 +1863,7 @@
         var wrongLine = meta.lines.filter(function(line){ return line.bad; })[0];
         var hb = document.getElementById('hint-box');
         hb.className = 'hint-box show';
-        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Ошибка найдена.' : '❌ Ошибка была в другой строке.') + '<br>' + escHtml(wrongLine ? wrongLine.text : ('Ответ ученика: ' + q.a)) + '<br>Верный ответ: ' + escHtml(q.a) + '<div class="w37-inline-note">🧠 Уверенность: ' + confLabel(meta.confidence || 'mid') + '. ' + confidenceInsight(meta.evaluation && meta.evaluation.ok, meta.confidence || 'mid') + '</div>';
+        hb.innerHTML = (meta.evaluation && meta.evaluation.ok ? '✅ Ошибка найдена.' : '❌ Ошибка была в другой строке.') + '<br>' + escHtml(wrongLine ? wrongLine.text : ('Ответ ученика: ' + q.a)) + '<br>Верный ответ: ' + escHtml(q.a);
       }
     }
     function renderDiagCurrent(){
@@ -3249,4 +3248,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
   else init();
 })();
-//# sourceMappingURL=wave35_plans.d07233801c.js.map
+//# sourceMappingURL=wave35_plans.31790a8c6f.js.map
