@@ -63,12 +63,12 @@
   }
   function sanitizeOptions(list, answer, question){
     var out = []; var seen = {};
-    (Array.isArray(list) ? list : []).forEach(function(opt){ var value = cleanText(opt); if (!value) return; var key = norm(value); if (seen[key]) { report.duplicateOptionsRemoved += 1; return; } seen[key] = true; out.push(value); });
+    (Array.isArray(list) ? list : []).forEach(function(opt){ var value = cleanText(opt); if (!value) return; var key = value; if (seen[key]) { report.duplicateOptionsRemoved += 1; return; } seen[key] = true; out.push(value); });
     var ans = cleanText(answer);
     if (ans) {
-      var answerKey = norm(ans); var exactIndex = out.indexOf(ans);
-      if (exactIndex === -1 && seen[answerKey]) { var normalizedIndex = out.findIndex(function(item){ return norm(item) === answerKey; }); if (normalizedIndex !== -1) { out[normalizedIndex] = ans; report.answerInjected += 1; } }
-      else if (!seen[answerKey]) { out.unshift(ans); seen[answerKey] = true; report.answerInjected += 1; }
+      var answerKey = norm(ans); var exactIndex = out.indexOf(ans); var normalizedIndex = out.findIndex(function(item){ return norm(item) === answerKey; });
+      if (exactIndex === -1 && normalizedIndex !== -1) { out[normalizedIndex] = ans; report.answerInjected += 1; }
+      else if (exactIndex === -1 && normalizedIndex === -1) { out.unshift(ans); report.answerInjected += 1; }
     }
     if (out.length < 4 && ans) { synthesizeDistractors(ans, cleanText(question), out).forEach(function(next){ if (out.length >= 4) return; out.push(next); report.optionsFilled += 1; }); }
     if (out.length > 4) { var answerText = cleanText(answer); var trimmed = out.slice(0, 4); if (answerText && !trimmed.some(function(item){ return norm(item) === norm(answerText); })) trimmed[trimmed.length - 1] = answerText; out = trimmed; report.optionsTrimmed += 1; }
@@ -132,4 +132,4 @@
   init();
   var retries = 0; (function latePatch(){ var ready = patchMkQ(); if (ready || retries > 12) { window.WAVE63_QUALITY_RUNTIME = snapshot(); return; } retries += 1; setTimeout(latePatch, 50); })();
 })();
-//# sourceMappingURL=chunk_subject_expansion_wave63_quality.4becf14504.js.map
+//# sourceMappingURL=chunk_subject_expansion_wave63_quality.ce03edc00c.js.map
