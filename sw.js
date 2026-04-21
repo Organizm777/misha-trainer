@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave86k-2026-04-21';
+const CACHE_NAME = 'trainer-build-wave86j-2026-04-21';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
