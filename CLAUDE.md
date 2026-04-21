@@ -50,6 +50,12 @@
 
 **Settings-экран читает билд динамически** из `caches.keys()` (fallback — fetch `./sw.js`). Хардкод `BUILD_WAVE`/`BUILD_DATE` в `bundle_shell.js` **убран**. Менять надо только `CACHE_NAME` в `sw.js`.
 
+**Auto-bump правило для ИИ-ассистента:** при любой правке файла из `ASSETS[]` (top-level HTML, `assets/js/*`, `assets/css/*`, `manifest.webmanifest`, `healthz.json`, `assets/data/**`, `assets/icons/*`) **в том же коммите** обновить:
+- `sw.js:1` `CACHE_NAME` — инкремент wave-буквы (`wave86j → wave86k`, на `z` — следующая волна с `a`), дата — сегодняшняя.
+- `healthz.json` — поля `wave`, `version`, `build_id` синхронно.
+
+Не бампить при правках `.claude/`, `CHANGELOG.md`, `CLAUDE.md`, файлов вне `ASSETS[]`. Не спрашивать разрешения — рутина.
+
 Стратегия: stale-while-revalidate. Fonts (Google) — в RUNTIME_CACHE, остальное — STATIC_CACHE. Fallback для `navigate` → `./index.html`.
 
 `updateViaCache:none` в регистрации — SW всегда проверяется свежим.
