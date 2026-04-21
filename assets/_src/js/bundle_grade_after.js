@@ -792,30 +792,50 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
   async function pushRushRecordPatched(name, min, score){
     if(!hasCloudRush() || !getRushPublishMode()) return false;
-    try{
-      const url = 'https://api.npoint.io/' + (window.rushBinId || window.RUSH_BIN_ID);
-      const fetcher = window.fetchWithTimeout ? window.fetchWithTimeout : async function(u, opts){ return fetch(u, opts); };
-      const current = await fetcher(url, null, 5000);
-      const payload = await current.json();
-      payload.records || (payload.records = []);
-      payload.records.push({
-        name: String(name || playerName()).slice(0, 20),
-        min: Number(min) || 0,
-        score: Number(score) || 0,
-        date: (new Date()).toLocaleDateString('ru', { day:'numeric', month:'short' }) + ' ' + (new Date()).toLocaleTimeString('ru', { hour:'2-digit', minute:'2-digit' }),
-        ts: Date.now()
-      });
-      if(payload.records.length > 120) payload.records = payload.records.slice(-120);
-      await fetcher(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) }, 5000);
-      return true;
-    }catch(err){
-      try{
-        const q = safeJSON(localStorage.getItem('rush_queue') || '[]', []);
-        q.push({ name:String(name || playerName()).slice(0,20), min:Number(min)||0, score:Number(score)||0, ts:Date.now(), reason:'cloud' });
-        localStorage.setItem('rush_queue', JSON.stringify(q.slice(-20)));
-      }catch(_){ }
+    const url = 'https://api.npoint.io/' + (window.rushBinId || window.RUSH_BIN_ID);
+    const fetcher = window.fetchWithTimeout ? window.fetchWithTimeout : async function(u, opts){ return fetch(u, opts); };
+    const record = {
+      name: String(name || playerName()).slice(0, 20),
+      min: Number(min) || 0,
+      score: Number(score) || 0,
+      date: (new Date()).toLocaleDateString('ru', { day:'numeric', month:'short' }) + ' ' + (new Date()).toLocaleTimeString('ru', { hour:'2-digit', minute:'2-digit' }),
+      ts: Date.now()
+    };
+    const MAX = 3;
+    const sleep = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+    const hasOurs = function(list){
+      if (!Array.isArray(list)) return false;
+      for (var i = 0; i < list.length; i++) {
+        var r = list[i];
+        if (r && r.ts === record.ts && r.name === record.name) return true;
+      }
       return false;
+    };
+    for (let attempt = 0; attempt < MAX; attempt++) {
+      try {
+        const current = await fetcher(url, null, 5000);
+        if (!current.ok) throw new Error('get-' + current.status);
+        const payload = await current.json();
+        payload.records || (payload.records = []);
+        if (!hasOurs(payload.records)) payload.records.push(record);
+        if (payload.records.length > 120) payload.records = payload.records.slice(-120);
+        const postResp = await fetcher(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) }, 5000);
+        if (!postResp.ok) throw new Error('post-' + postResp.status);
+        const verifyResp = await fetcher(url, null, 5000);
+        if (!verifyResp.ok) throw new Error('verify-' + verifyResp.status);
+        const verify = await verifyResp.json();
+        if (hasOurs(verify && verify.records)) return true;
+      } catch(_){ /* fall through to backoff */ }
+      if (attempt + 1 < MAX) {
+        await sleep(250 * Math.pow(2, attempt) + Math.floor(Math.random() * 250));
+      }
     }
+    try{
+      const q = safeJSON(localStorage.getItem('rush_queue') || '[]', []);
+      q.push({ name: record.name, min: record.min, score: record.score, ts: record.ts, reason: 'cloud' });
+      localStorage.setItem('rush_queue', JSON.stringify(q.slice(-20)));
+    }catch(_){ }
+    return false;
   }
   function patchPrivacyButton(){
     const original = typeof window.renderPrivacyBtn === 'function' ? window.renderPrivacyBtn : null;

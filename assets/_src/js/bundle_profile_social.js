@@ -450,28 +450,17 @@
   function mergeCloudDoc(doc, entry){
     doc = Object.assign({}, asObj(doc));
     var profiles = Array.isArray(doc.profiles) ? doc.profiles.slice() : [];
-    var next = null;
     entry = Object.assign({}, asObj(entry));
+    var updated = false;
     for (var i = 0; i < profiles.length; i++) {
       var row = asObj(profiles[i]);
       if ((entry.code && row.code === entry.code) || (entry.profileId && row.profileId === entry.profileId)) {
-        next = Object.assign({}, row, entry);
-        profiles[i] = next;
-        next = null;
+        profiles[i] = Object.assign({}, row, entry);
+        updated = true;
         break;
       }
     }
-    if (next === null) {
-      var found = false;
-      for (var j = 0; j < profiles.length; j++) {
-        var existing = asObj(profiles[j]);
-        if ((entry.code && existing.code === entry.code) || (entry.profileId && existing.profileId === entry.profileId)) {
-          found = true;
-          break;
-        }
-      }
-      if (!found) profiles.push(entry);
-    }
+    if (!updated) profiles.push(entry);
     doc.profiles = sortProfiles(profiles).slice(0, 100);
     return doc;
   }
@@ -531,17 +520,60 @@
     if (!cloudBinId() || typeof fetch !== 'function') return Promise.resolve({ ok:false, reason:'no-cloud', profiles: localFallbackLeaderboard(summary) });
     var url = 'https://api.npoint.io/' + cloudBinId();
     var entry = leaderboardEntryFromSummary(summary);
-    return fetchWithTimeout(url, null, CONFIG.cloudTimeout).then(function(response){ return response.json(); }).catch(function(){ return {}; }).then(function(doc){
-      var merged = mergeCloudDoc(doc, entry);
-      return fetchWithTimeout(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(merged)
-      }, CONFIG.cloudTimeout).then(function(){
-        updateSelfMeta({ syncCount: loadState().syncCount + 1, lastSyncAt: nowIso(), lastLeaderboard: sortProfiles(merged.profiles).slice(0, CONFIG.maxLeaderboard) });
-        return { ok:true, profiles: sortProfiles(merged.profiles).slice(0, CONFIG.maxLeaderboard) };
+    var MAX_ATTEMPTS = 3;
+    function parseTs(iso){ var t = iso ? Date.parse(iso) : 0; return isFinite(t) ? t : 0; }
+    function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+    function matchesEntry(row){
+      row = asObj(row);
+      return (entry.code && row.code === entry.code) || (entry.profileId && row.profileId === entry.profileId);
+    }
+    function attempt(tryIdx){
+      return new Promise(function(resolve){
+        fetchWithTimeout(url, null, CONFIG.cloudTimeout)
+          .then(function(r){ if (!r.ok) throw new Error('http-' + r.status); return r.json(); })
+          .then(function(doc){
+            var merged = mergeCloudDoc(doc || {}, entry);
+            return fetchWithTimeout(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(merged)
+            }, CONFIG.cloudTimeout).then(function(resp){
+              if (!resp.ok) throw new Error('post-' + resp.status);
+              return merged;
+            });
+          })
+          .then(function(merged){
+            return fetchWithTimeout(url, null, CONFIG.cloudTimeout)
+              .then(function(r){ if (!r.ok) throw new Error('verify-' + r.status); return r.json(); })
+              .then(function(verify){
+                var profiles = (verify && Array.isArray(verify.profiles)) ? verify.profiles : merged.profiles;
+                var ours = null;
+                for (var i = 0; i < profiles.length; i++) {
+                  if (matchesEntry(profiles[i])) { ours = asObj(profiles[i]); break; }
+                }
+                var clobbered = !ours || parseTs(ours.updatedAt) < parseTs(entry.updatedAt);
+                return { clobbered: clobbered, profiles: profiles };
+              });
+          })
+          .then(function(result){
+            if (!result.clobbered) {
+              var rows = sortProfiles(result.profiles).slice(0, CONFIG.maxLeaderboard);
+              updateSelfMeta({ syncCount: (loadState().syncCount || 0) + 1, lastSyncAt: nowIso(), lastLeaderboard: rows });
+              return resolve({ ok:true, profiles: rows });
+            }
+            resolve({ ok:false, reason:'conflict' });
+          })
+          .catch(function(){ resolve({ ok:false, reason:'network' }); });
+      }).then(function(res){
+        if (res.ok) return res;
+        if (tryIdx + 1 < MAX_ATTEMPTS) {
+          var backoff = 250 * Math.pow(2, tryIdx) + Math.floor(Math.random() * 250);
+          return sleep(backoff).then(function(){ return attempt(tryIdx + 1); });
+        }
+        return { ok:false, reason: res.reason, profiles: localFallbackLeaderboard(summary) };
       });
-    }).catch(function(){ return { ok:false, reason:'network', profiles: localFallbackLeaderboard(summary) }; });
+    }
+    return attempt(0);
   }
 
   function recentAchievementsHtml(summary, dark){
