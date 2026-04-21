@@ -210,7 +210,7 @@ function showClassSelect(){
 }
 // === SW + ACCESSIBILITY ===
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.querySelector('div[style*="z-index:9999"]');if(m)m.remove()}});
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{})}
 
 
 // === WAVE 8: BACKUP / TRANSFER ===
