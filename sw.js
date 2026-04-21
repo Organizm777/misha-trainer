@@ -20,7 +20,6 @@ const ASSETS = [
   './grade10_v2.html',
   './grade11_v2.html',
   './manifest.webmanifest',
-  './build-meta.json',
   './healthz.json',
   './CHANGELOG.md',
   './assets/asset-manifest.json',

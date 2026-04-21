@@ -27,7 +27,7 @@
       "purpose": "any maskable"
     }
   ],
-  "id": "./index.html",
+  "id": "/misha-trainer/",
   "display_override": [
     "standalone",
     "browser"
