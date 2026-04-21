@@ -1546,8 +1546,34 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   var SETTINGS_BTN_ID = 'trainer-settings-btn';
   var SETTINGS_HOST_ID = 'trainer-settings-host';
   var SETTINGS_MODAL_ID = 'trainer-settings-modal';
-  var BUILD_WAVE = 'wave86h';
-  var BUILD_DATE = '2026-04-21';
+  var BUILD_INFO = null;
+  var BUILD_PROMISE = null;
+  function loadBuildInfo(){
+    if (BUILD_INFO) return Promise.resolve(BUILD_INFO);
+    if (BUILD_PROMISE) return BUILD_PROMISE;
+    BUILD_PROMISE = (async function(){
+      var info = null;
+      try {
+        if (typeof caches !== 'undefined' && caches.keys) {
+          var keys = await caches.keys();
+          for (var i = 0; i < keys.length; i++) {
+            var m = keys[i].match(/^trainer-build-(.+?)-(\d{4}-\d{2}-\d{2})-static$/);
+            if (m) { info = { wave: m[1], date: m[2] }; break; }
+          }
+        }
+      } catch(_) {}
+      if (!info) {
+        try {
+          var txt = await fetch('./sw.js', { cache: 'no-store' }).then(function(r){ return r.text(); });
+          var mm = txt.match(/CACHE_NAME\s*=\s*['"]trainer-build-(.+?)-(\d{4}-\d{2}-\d{2})['"]/);
+          if (mm) info = { wave: mm[1], date: mm[2] };
+        } catch(_) {}
+      }
+      BUILD_INFO = info || { wave: '?', date: '?' };
+      return BUILD_INFO;
+    })();
+    return BUILD_PROMISE;
+  }
   var SETTINGS_STYLE_ID = 'wave40-settings-style';
   var LEGACY_THEME_BTN_ID = 'trainer-theme-btn';
   var LEGACY_INSTALL_ID = 'wave24-install-btn';
@@ -1773,7 +1799,15 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Build <b>' + BUILD_WAVE + '</b> · ' + BUILD_DATE + '</div></div>';
+    var bi = BUILD_INFO;
+    var buildHtml = bi ? ('Build <b>' + bi.wave + '</b> · ' + bi.date) : 'Build <b>…</b>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note" data-build-info>' + buildHtml + '</div></div>';
+    if (!bi) {
+      loadBuildInfo().then(function(info){
+        var host = document.querySelector('[data-build-info]');
+        if (host) host.innerHTML = 'Build <b>' + info.wave + '</b> · ' + info.date;
+      });
+    }
     return html;
   }
   function refreshThemeButtons(){

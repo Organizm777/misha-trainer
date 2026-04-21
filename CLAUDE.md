@@ -43,9 +43,12 @@
 
 **При каждом изменении статического ассета (JS/CSS/HTML/JSON в `ASSETS[]`) обязательно:**
 
-1. Инкрементировать `CACHE_NAME` в `sw.js:1` (сейчас `trainer-build-wave86h` → следующий `wave86i` или `wave87a` — по договорённости).
+1. Инкрементировать `CACHE_NAME` в `sw.js:1`. Формат строгий: `trainer-build-<wave>-<YYYY-MM-DD>`. Пример: `trainer-build-wave86j-2026-04-21` → следующий `wave86k-<today>` или `wave87a-<today>`. **Формат обязателен** — Settings-экран регекспом достаёт отсюда `<wave>` и `<date>` и показывает юзеру. Если формат нарушен, Settings покажет `?`.
 2. Если добавлен новый файл — добавить его путь в массив `ASSETS` в `sw.js`.
 3. Если у файла сменился хэш — обновить имя в `ASSETS` (строки 26–65).
+4. (Опц., косметика) `healthz.json` — поля `wave`/`version`/`build_id` дублируют то же. UI их не читает, но для ручной проверки и внешнего мониторинга полезно держать в синхроне.
+
+**Settings-экран читает билд динамически** из `caches.keys()` (fallback — fetch `./sw.js`). Хардкод `BUILD_WAVE`/`BUILD_DATE` в `bundle_shell.js` **убран**. Менять надо только `CACHE_NAME` в `sw.js`.
 
 Стратегия: stale-while-revalidate. Fonts (Google) — в RUNTIME_CACHE, остальное — STATIC_CACHE. Fallback для `navigate` → `./index.html`.
 

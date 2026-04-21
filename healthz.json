@@ -1,9 +1,9 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave86h",
-  "version": "trainer-build-wave86h",
-  "build_id": "wave86h",
+  "wave": "wave86j",
+  "version": "trainer-build-wave86j-2026-04-21",
+  "build_id": "wave86j",
   "generated_at_utc": "2026-04-21T00:00:00Z",
   "git_sha": null,
   "hashed_asset_count": 31,
