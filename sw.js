@@ -61,7 +61,26 @@ const ASSETS = [
   './assets/icons/icon-512.png'
 ];
 function isCacheable(request, response){ return request.method === 'GET' && response && (response.ok || response.type === 'opaque'); }
-async function precache(){ const cache = await caches.open(STATIC_CACHE); for (const url of ASSETS){ try{ await cache.add(url); }catch(err){ console.warn('SW precache skipped:', url, err); } } }
+async function precache(){
+  const cache = await caches.open(STATIC_CACHE);
+  const MAX_ATTEMPTS = 3;
+  const BASE_DELAY = 300;
+  const CONCURRENCY = 6;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  async function addWithRetry(url){
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++){
+      try { await cache.add(url); return true; }
+      catch (err) {
+        if (attempt === MAX_ATTEMPTS) { console.warn('SW precache gave up after ' + MAX_ATTEMPTS + ' attempts:', url, err); return false; }
+        await wait(BASE_DELAY * Math.pow(3, attempt - 1));
+      }
+    }
+    return false;
+  }
+  const queue = ASSETS.slice();
+  const workers = Array.from({length: CONCURRENCY}, async () => { while (queue.length) { const url = queue.shift(); if (url) await addWithRetry(url); } });
+  await Promise.all(workers);
+}
 async function staleWhileRevalidate(request, cacheName){ const cache = await caches.open(cacheName); const cached = await cache.match(request); const networkPromise = fetch(request).then(response => { if(isCacheable(request, response)) cache.put(request, response.clone()); return response; }).catch(() => null); if(cached) return { response: cached, revalidate: networkPromise }; const fresh = await networkPromise; return { response: fresh, revalidate: Promise.resolve(fresh) }; }
 self.addEventListener('install', event => { event.waitUntil((async () => { await precache(); await self.skipWaiting(); })()); });
 self.addEventListener('activate', event => { event.waitUntil((async () => { const keys = await caches.keys(); await Promise.all(keys.filter(key => ![STATIC_CACHE, RUNTIME_CACHE].includes(key)).map(key => caches.delete(key))); await self.clients.claim(); })()); });
