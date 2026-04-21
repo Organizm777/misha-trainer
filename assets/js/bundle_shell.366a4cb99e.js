@@ -1546,6 +1546,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   var SETTINGS_BTN_ID = 'trainer-settings-btn';
   var SETTINGS_HOST_ID = 'trainer-settings-host';
   var SETTINGS_MODAL_ID = 'trainer-settings-modal';
+  var BUILD_WAVE = 'wave86g';
+  var BUILD_DATE = '2026-04-21';
   var SETTINGS_STYLE_ID = 'wave40-settings-style';
   var LEGACY_THEME_BTN_ID = 'trainer-theme-btn';
   var LEGACY_INSTALL_ID = 'wave24-install-btn';
@@ -1771,7 +1773,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       actions.forEach(function(item, idx){ html += '<button type="button" class="wave40-action-btn" data-quick-action="' + idx + '">' + item.text + '</button>'; });
       html += '</div></div>';
     }
-    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Wave 50</div></div>';
+    html += '<div class="wave40-settings-row"><div class="wave40-settings-note">Текущая тема: <b>' + themeMeta().label + '</b>.</div><div class="wave40-settings-note">Build <b>' + BUILD_WAVE + '</b> · ' + BUILD_DATE + '</div></div>';
     return html;
   }
   function refreshThemeButtons(){
