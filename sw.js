@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave86e';
+const CACHE_NAME = 'trainer-build-wave86f';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -49,6 +49,9 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave63_quality.ce03edc00c.js',
   './assets/js/engine10.7ca51a035a.js',
   './assets/js/grade10_data.fe39570706.js',
+  './assets/js/grade8_data.7cbce1213a.js',
+  './assets/js/grade9_data.5cebade080.js',
+  './assets/js/grade11_data.11d53fbdce.js',
   './assets/js/wave35_plans.f812119619.js',
   './assets/css/engine10.73ed700043.css',
   './assets/data/spec_subjects/construction.json',
