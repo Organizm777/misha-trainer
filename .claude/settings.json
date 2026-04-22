@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w *)",
+      "Bash(curl -sI http://localhost:* *)",
+      "Bash(curl -s http://localhost:* *)",
+      "Bash(curl -s http://127.0.0.1:* *)"
+    ]
+  }
+}

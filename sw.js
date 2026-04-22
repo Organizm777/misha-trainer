@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave86l-2026-04-21';
+const CACHE_NAME = 'trainer-build-wave87b-2026-04-22';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -30,8 +30,18 @@ const ASSETS = [
   './assets/js/bundle_exam.21c1f611f3.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
-  './assets/js/bundle_grade_after.c926100b23.js',
-  './assets/js/bundle_grade_content.3581ba449e.js',
+  './assets/js/bundle_grade_runtime_wave86z.b50779868b.js',
+  './assets/js/chunk_grade_content_wave12_english_wave86t.61be17ebe4.js',
+  './assets/js/chunk_grade_content_wave13_english_wave86t.4415e1929d.js',
+  './assets/js/chunk_grade_content_wave14_english_wave86t.0138e4338f.js',
+  './assets/js/chunk_grade_content_wave15_english_wave86t.839380b3d8.js',
+  './assets/js/chunk_grade_content_wave16_theory_wave86t.5fef41b501.js',
+  './assets/js/chunk_grade_content_wave19_mesh_8911_wave86t.83ac4ed3ac.js',
+  './assets/js/chunk_grade_content_wave20_mesh_567primary_wave86t.3fee5cde9b.js',
+  './assets/js/chunk_grade_content_wave34_world_wave86t.6314d997cf.js',
+  './assets/js/chunk_grade_content_wave86k_roadmap_gaps_wave86t.bef30c1ab8.js',
+  './assets/js/chunk_grade_content_wave86l_informatics_56_wave86t.a624ae8740.js',
+  './assets/js/chunk_grade_content_wave86l_content_balance_wave86t.0047d86915.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',
   './assets/js/bundle_sharing.75450d41f8.js',
   './assets/js/bundle_shell.366a4cb99e.js',
@@ -46,14 +56,48 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.b5b4b3f802.js',
   './assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.ecfc9c5b63.js',
   './assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js',
+  './assets/js/chunk_subject_expansion_wave86l_grade3_balance.9681242b09.js',
+  './assets/js/chunk_roadmap_wave86q_accessibility_theme.a6ac36dee7.js',
   './assets/js/chunk_subject_expansion_wave63_quality.ce03edc00c.js',
-  './assets/js/engine10.7ca51a035a.js',
-  './assets/js/grade10_data.fe39570706.js',
+  './assets/js/engine10.90815e0ece.js',
+  './assets/js/grade10_data.bfddf3737d.js',
+  './assets/js/chunk_grade10_lazy_wave86s.f4f46e7315.js',
+  './assets/js/grade10_subject_alg_wave86s.cc39201fe2.js',
+  './assets/js/grade10_subject_geo_wave86s.ce2eac1303.js',
+  './assets/js/grade10_subject_prob_wave86s.4043fdfac3.js',
+  './assets/js/grade10_subject_rus_wave86s.6b1ed8a370.js',
+  './assets/js/grade10_subject_soc_wave86s.978ca2b4df.js',
+  './assets/js/grade10_subject_inf_wave86s.cc6cf83ee2.js',
+  './assets/js/grade10_subject_phy_wave86s.34e85c2aa4.js',
+  './assets/js/grade10_subject_his_wave86s.66c453b32f.js',
+  './assets/js/grade10_subject_bio_wave86s.54aed4c3be.js',
+  './assets/js/grade10_subject_chem_wave86s.c9268fccf9.js',
+  './assets/js/grade10_subject_geog_wave86s.e7ef128cc1.js',
+  './assets/js/grade10_subject_lit_wave86s.557c99cd43.js',
+  './assets/js/grade10_subject_art_wave86s.ffd6808253.js',
+  './assets/js/grade10_subject_oly_wave86s.0f27e880e6.js',
   './assets/js/grade8_data.7cbce1213a.js',
-  './assets/js/grade9_data.5cebade080.js',
+  './assets/js/grade9_data.7d10c4283c.js',
   './assets/js/grade11_data.11d53fbdce.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance.507fb9e6fe.js',
+  './assets/js/grade1_data.a728a30cc1.js',
+  './assets/js/grade2_data.1f7b131a74.js',
+  './assets/js/grade3_data.78f22d6f28.js',
+  './assets/js/grade4_data.ae2182085f.js',
+  './assets/js/grade5_data.2b413fd414.js',
+  './assets/js/grade6_data.5b7810f079.js',
+  './assets/js/grade7_data.cf7365a889.js',
   './assets/js/wave35_plans.f812119619.js',
-  './assets/css/engine10.73ed700043.css',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.db3571dfa5.js',
+  './assets/js/inline_dashboard_1_wave86u.309f67a363.js',
+  './assets/js/inline_diagnostic_1_wave86u.dc1605e606.js',
+  './assets/js/inline_diagnostic_2_wave86u.d7f19b85e9.js',
+  './assets/js/inline_index_1_wave86u.d7f19b85e9.js',
+  './assets/js/inline_spec_subjects_1_wave86u.d7f19b85e9.js',
+  './assets/js/inline_tests_1_wave86u.08cb8f7dc8.js',
+  './assets/js/inline_tests_2_wave86u.a5635ca67e.js',
+  './assets/js/inline_tests_3_wave86u.44cd1ed1d0.js',
+  './assets/css/engine10.dac1e147e6.css',
   './assets/data/spec_subjects/construction.json',
   './assets/data/spec_subjects/diplomacy.json',
   './assets/data/spec_subjects/gkh.json',
@@ -62,8 +106,58 @@ const ASSETS = [
   './assets/data/spec_subjects/psychology.json',
   './assets/icons/apple-touch-icon.png',
   './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png'
+  './assets/icons/icon-512.png',
+  './assets/js/chunk_roadmap_wave86x_style_csp_bridge.f696c42cb6.js',
+  './assets/css/wave86x_inline_dashboard.c9d7c4c80c.css',
+  './assets/css/wave86x_inline_diagnostic.0bd1520b48.css',
+  './assets/css/wave86x_inline_grade.79896c8b48.css',
+  './assets/css/wave86x_inline_index.a6acdd750a.css',
+  './assets/css/wave86x_inline_spec_subjects.6e11969130.css',
+  './assets/css/wave86x_inline_tests.45c5256157.css',
+  './assets/css/wave86z_static_style_classes.7a515bc89a.css'
 ];
+const CSP_BRIDGE_ASSETS = [
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.db3571dfa5.js',
+  './assets/js/chunk_roadmap_wave86x_style_csp_bridge.f696c42cb6.js'
+];
+const DIAGNOSTIC_OFFLINE_ASSETS = [
+  './assets/css/wave86x_inline_diagnostic.0bd1520b48.css',
+  './assets/css/wave86z_static_style_classes.7a515bc89a.css',
+  './assets/js/inline_diagnostic_1_wave86u.dc1605e606.js',
+  './assets/js/inline_diagnostic_2_wave86u.d7f19b85e9.js',
+  './assets/js/wave35_plans.f812119619.js',
+  './assets/js/bundle_shell.366a4cb99e.js',
+  './assets/js/bundle_diagnostic_tools.641a191419.js',
+  './assets/js/chunk_roadmap_wave86q_accessibility_theme.a6ac36dee7.js',
+  './assets/js/chunk_subject_expansion_wave31_russian.24fba9b173.js',
+  './assets/js/chunk_subject_expansion_wave32_math.8957f08038.js',
+  './assets/js/chunk_subject_expansion_wave33_science.7379e9af46.js',
+  './assets/js/chunk_subject_expansion_wave38_content_consolidation.c6477aad95.js',
+  './assets/js/chunk_subject_expansion_wave56_primary_math.eaf5b54a60.js',
+  './assets/js/chunk_subject_expansion_wave57_primary_russian_1_4.89e342a7d4.js',
+  './assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.e89d86ed52.js',
+  './assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.b5b4b3f802.js',
+  './assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.ecfc9c5b63.js',
+  './assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js',
+  './assets/js/chunk_subject_expansion_wave63_quality.ce03edc00c.js',
+  './assets/js/bundle_gamification_xp.907a25e6bd.js',
+  './assets/js/bundle_gamification_meta.9853e9e1bb.js',
+  './assets/js/bundle_exam.21c1f611f3.js',
+  './assets/js/bundle_profile_social.6f6ed7e2ff.js',
+  './assets/js/bundle_error_tracking.e8a9fb4295.js',
+  './diagnostic.html'
+];
+const CRITICAL_ASSETS = Array.from(new Set(CSP_BRIDGE_ASSETS.concat(
+  DIAGNOSTIC_OFFLINE_ASSETS,
+  [
+    './.',
+    './index.html',
+    './manifest.webmanifest',
+    './assets/asset-manifest.json',
+    './assets/icons/icon-192.png',
+    './assets/icons/icon-512.png'
+  ]
+)));
 function isCacheable(request, response){ return request.method === 'GET' && response && (response.ok || response.type === 'opaque'); }
 async function precache(){
   const cache = await caches.open(STATIC_CACHE);
@@ -71,18 +165,28 @@ async function precache(){
   const BASE_DELAY = 300;
   const CONCURRENCY = 6;
   const wait = ms => new Promise(r => setTimeout(r, ms));
-  async function addWithRetry(url){
+  async function addWithRetry(url, required){
+    var lastErr = null;
     for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++){
       try { await cache.add(url); return true; }
       catch (err) {
-        if (attempt === MAX_ATTEMPTS) { console.warn('SW precache gave up after ' + MAX_ATTEMPTS + ' attempts:', url, err); return false; }
-        await wait(BASE_DELAY * Math.pow(3, attempt - 1));
+        lastErr = err;
+        if (attempt < MAX_ATTEMPTS) await wait(BASE_DELAY * Math.pow(3, attempt - 1));
       }
     }
+    if (required) throw new Error('SW critical precache failed for ' + url + ': ' + (lastErr && lastErr.message || lastErr));
+    console.warn('SW optional precache gave up after ' + MAX_ATTEMPTS + ' attempts:', url, lastErr);
     return false;
   }
-  const queue = ASSETS.slice();
-  const workers = Array.from({length: CONCURRENCY}, async () => { while (queue.length) { const url = queue.shift(); if (url) await addWithRetry(url); } });
+  for (const url of CRITICAL_ASSETS) await addWithRetry(url, true);
+  const critical = new Set(CRITICAL_ASSETS);
+  const queue = ASSETS.filter(url => !critical.has(url));
+  const workers = Array.from({length: CONCURRENCY}, async () => {
+    while (queue.length) {
+      const url = queue.shift();
+      if (url) await addWithRetry(url, false);
+    }
+  });
   await Promise.all(workers);
 }
 async function staleWhileRevalidate(request, cacheName){ const cache = await caches.open(cacheName); const cached = await cache.match(request); const networkPromise = fetch(request).then(response => { if(isCacheable(request, response)) cache.put(request, response.clone()); return response; }).catch(() => null); if(cached) return { response: cached, revalidate: networkPromise }; const fresh = await networkPromise; return { response: fresh, revalidate: Promise.resolve(fresh) }; }

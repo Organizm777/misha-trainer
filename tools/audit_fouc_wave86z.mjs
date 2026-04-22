@@ -1,0 +1,8 @@
+import fs from 'fs';
+const htmlFiles=fs.readdirSync('.').filter(f=>f.endsWith('.html')).sort();
+const cssFile=fs.readdirSync('assets/css').find(f=>/^wave86z_static_style_classes\.[a-f0-9]{10}\.css$/.test(f));
+let dataStyleAttrs=0,inlineStyleAttrs=0,inlineStyleBlocks=0,unsafeInline=0,generatedClassUses=0; const missingCssLink=[],bridgePositionFailures=[];
+for(const file of htmlFiles){const html=fs.readFileSync(file,'utf8'); dataStyleAttrs+=(html.match(/data-wave86x-style=/g)||[]).length; inlineStyleAttrs+=(html.match(/\sstyle="/g)||[]).length; inlineStyleBlocks+=(html.match(/<style\b/gi)||[]).length; unsafeInline+=(html.match(/unsafe-inline/g)||[]).length; generatedClassUses+=(html.match(/\bw86z_s_[a-f0-9]{8}\b/g)||[]).length; if(cssFile&&!html.includes(`./assets/css/${cssFile}`)) missingCssLink.push(file); const scripts=[...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"[^>]*>/g)].map(m=>m[1]); if(!scripts[0]?.includes('chunk_roadmap_wave86u_csp_bridge')||!scripts[1]?.includes('chunk_roadmap_wave86x_style_csp_bridge')) bridgePositionFailures.push(file);}
+const cssRules=cssFile?(fs.readFileSync(`assets/css/${cssFile}`,'utf8').match(/\.w86z_s_[a-f0-9]{8}\{/g)||[]).length:0;
+const result={ok:!!cssFile&&dataStyleAttrs===0&&inlineStyleAttrs===0&&inlineStyleBlocks===0&&unsafeInline===0&&missingCssLink.length===0&&bridgePositionFailures.length===0,wave:'wave86z',note:'Static proxy for N11: static transitional data-wave86x-style attributes were converted to real CSS classes, leaving the bridge only for runtime legacy markup.',cssFile,dataStyleAttrs,inlineStyleAttrs,inlineStyleBlocks,unsafeInline,generatedClassUses,cssRules,missingCssLink,bridgePositionFailures};
+console.log(JSON.stringify(result,null,2)); if(!result.ok) process.exit(1);
