@@ -2,8 +2,9 @@
   'use strict';
   var VERSION = 'wave86u';
   var DATA_PREFIX = 'data-wave86u-on-';
+  var STATIC_CLICK_ATTR = 'data-wave87e-click';
   var EVENTS = ['click','input','change','keydown','load','error'];
-  var stats = { stripped: 0, executed: 0, blocked: 0, byEvent: {}, lastBlocked: null };
+  var stats = { stripped: 0, executed: 0, staticExecuted: 0, blocked: 0, byEvent: {}, lastBlocked: null, lastStaticBlocked: null };
 
   function bootTheme(){
     try{
@@ -265,9 +266,84 @@
     EVENTS.forEach(function(type){ document.addEventListener(type, handler(type), true); });
   }
 
+  function getStaticTarget(start){
+    for(var el=start; el && el !== document; el = el.parentElement){
+      if(el.nodeType === 1 && el.hasAttribute(STATIC_CLICK_ATTR)) return el;
+    }
+    return null;
+  }
+  function callIfAvailable(name, args){
+    var fn = window && window[name];
+    if(typeof fn !== 'function') throw new Error('Missing static handler: ' + name);
+    return fn.apply(window, args || []);
+  }
+  function runStaticAction(action, el, event){
+    switch(String(action || '')){
+      case 'dashboard-report': return callIfAvailable('downloadDashboardReport');
+      case 'dashboard-csv': return callIfAvailable('downloadDashboardCSV');
+      case 'dashboard-png': return callIfAvailable('downloadDashboardPNG');
+      case 'print': return window.print && window.print();
+      case 'confirm-exit': return callIfAvailable('confirmExit');
+      case 'diag-next': return callIfAvailable('nextQ');
+      case 'diag-skip': return callIfAvailable('skipQ');
+      case 'diag-share': return callIfAvailable('shareResult');
+      case 'go-select': return callIfAvailable('go', ['select']);
+      case 'go-main': return callIfAvailable('go', ['main']);
+      case 'go-info': return callIfAvailable('go', ['info']);
+      case 'go-prog': return callIfAvailable('go', ['prog']);
+      case 'go-subj': return callIfAvailable('goSubj');
+      case 'start-normal-quiz': return callIfAvailable('wave86uStartNormalQuiz');
+      case 'end-session': return callIfAvailable('endSession');
+      case 'share-session': return callIfAvailable('shareSession');
+      case 'back-after-result': return callIfAvailable('wave86uBackAfterResult');
+      case 'toggle-privacy': return callIfAvailable('togglePrivacy');
+      case 'show-journal': return callIfAvailable('showJournal');
+      case 'show-badges': return callIfAvailable('showBadges');
+      case 'show-profile': return callIfAvailable('showHallOfFame');
+      case 'show-class-select': return callIfAvailable('showClassSelect');
+      case 'show-about': return callIfAvailable('showAbout');
+      case 'generate-report': return callIfAvailable('generateReport');
+      case 'show-backup': return callIfAvailable('showBackupModal');
+      case 'show-date-editor': return callIfAvailable('showDateEditor');
+      case 'share-report': return callIfAvailable('shareReport');
+      case 'reset-progress': return callIfAvailable('resetProgress');
+      case 'test-launch-iq': return callIfAvailable('launchIQ');
+      case 'test-launch-style': return callIfAvailable('launchStyle');
+      case 'test-launch-temp': return callIfAvailable('launchTemp');
+      case 'test-launch-motiv': return callIfAvailable('launchMotiv');
+      case 'test-launch-holland': return callIfAvailable('launchHolland');
+      case 'test-launch-psychknow': return callIfAvailable('launchPsychKnow');
+      case 'test-launch-anxiety': return callIfAvailable('launchAnxiety');
+      case 'test-portrait': return callIfAvailable('showPortrait');
+      case 'test-start-iq': return callIfAvailable('startIQ');
+      case 'test-menu': return callIfAvailable('go', ['menu']);
+      case 'test-menu-refresh':
+        callIfAvailable('go', ['menu']);
+        return callIfAvailable('refreshMenu');
+      case 'test-share-psych': return callIfAvailable('sharePsych');
+    }
+    throw new Error('Unknown static action: ' + action);
+  }
+  function installStaticActions(){
+    document.addEventListener('click', function(event){
+      var el = getStaticTarget(event.target);
+      if(!el) return;
+      event.preventDefault();
+      try{
+        runStaticAction(el.getAttribute(STATIC_CLICK_ATTR), el, event);
+        stats.staticExecuted++;
+      }catch(err){
+        stats.blocked++;
+        stats.lastStaticBlocked = el.getAttribute(STATIC_CLICK_ATTR) || '';
+        if(window.console && console.warn) console.warn('[wave87e static actions] handler failed:', err, stats.lastStaticBlocked);
+      }
+    }, true);
+  }
+
   bootTheme();
   installScrubber();
   installDelegates();
+  installStaticActions();
   window.wave86uCspBridge = {
     version: VERSION,
     scan: scan,
@@ -278,11 +354,15 @@
         version: VERSION,
         stripped: stats.stripped,
         executed: stats.executed,
+        staticExecuted: stats.staticExecuted,
         blocked: stats.blocked,
         byEvent: Object.assign({}, stats.byEvent),
         lastBlocked: stats.lastBlocked,
+        lastStaticBlocked: stats.lastStaticBlocked,
         scriptSrcHasUnsafeInline: /script-src[^;]*unsafe-inline/.test(content),
-        inlineHandlerAttrsLeft: document.querySelectorAll(EVENTS.map(function(type){ return '[' + attrName(type) + ']'; }).join(',')).length
+        inlineHandlerAttrsLeft: document.querySelectorAll(EVENTS.map(function(type){ return '[' + attrName(type) + ']'; }).join(',')).length,
+        staticActionAttrs: document.querySelectorAll('[' + STATIC_CLICK_ATTR + ']').length,
+        legacyStaticActionAttrs: document.querySelectorAll('[data-wave86u-on-click],[data-wave86u-on-input],[data-wave86u-on-change],[data-wave86u-on-keydown]').length
       };
     }
   };

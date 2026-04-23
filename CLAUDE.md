@@ -227,8 +227,55 @@ CSP для HTML-страниц теперь использует `style-src 'sel
 - Use `node tools/validate_questions.js` before release to run VM question-bank regression across grade pages and lazy grade10 subject chunks.
 ### wave87a: Literature live banks
 
-The wave86m Literature 5–9 topics are now backed by live-bank rows rather than the generic `facts -> makeGen()` stems. The implementation remains inside `chunk_subject_expansion_wave86m_gap_balance`, preserving the wave86z script-count budget. Validate with `node tools/audit_literature_live_banks_wave87a.mjs`.
+The wave86m Literature 5–9 topics are backed by live-bank rows rather than the generic `facts -> makeGen()` stems. Since wave87d, these rows live in grade-specific `chunk_subject_expansion_wave86m_gap_balance_grade*_wave87d` chunks rather than one monolith. Validate with `node tools/audit_literature_live_banks_wave87a.mjs`.
 
 ### wave87b: OBZH scenario banks
 
-The wave86m ОБЖ 8–11 topics now use scenario-bank rows instead of generic facts. The layer remains inside `chunk_subject_expansion_wave86m_gap_balance`, so grade-page script counts do not regress after wave86z. Validate with `node tools/audit_obzh_live_banks_wave87b.mjs` and then run the full `node tools/validate_questions.js` regression.
+The wave86m ОБЖ 8–11 topics use scenario-bank rows instead of generic facts. Since wave87d, these rows live in grade-specific `chunk_subject_expansion_wave86m_gap_balance_grade*_wave87d` chunks so pages avoid downloading unrelated grade banks. Validate with `node tools/audit_obzh_live_banks_wave87b.mjs` and then run the full `node tools/validate_questions.js` regression.
+
+### wave87c grade10 Olympiad nested split
+
+The grade10 subject `oly` is now a nested lazy subject. `grade10_subject_oly_wave86s.*.js` is intentionally only a small shell that registers the four topics and exposes `window.wave87cOlyLazy`. The heavy question rows live in four topic chunks: `grade10_subject_oly_logic_wave87c.*.js`, `grade10_subject_oly_cross_wave87c.*.js`, `grade10_subject_oly_traps_wave87c.*.js`, and `grade10_subject_oly_deep_wave87c.*.js`.
+
+When changing Olympiad content, update the topic source files under `assets/_src/js/grade10_subject_oly_*_wave87c.js`, rebuild the content hashes, update the shell topic asset map, update `grade10_data`, and keep all topic chunks in `sw.js` and `asset-manifest.json`. The full regression must include `node tools/audit_grade10_oly_split_wave87c.mjs` plus `node tools/validate_questions.js`.
+
+### wave87d wave86m gap-balance grade split
+
+The former monolithic `chunk_subject_expansion_wave86m_gap_balance.*.js` is deprecated and removed from both `assets/_src/js` and `assets/js`. Grade pages 4–11 now reference one matching split chunk: `chunk_subject_expansion_wave86m_gap_balance_grade<grade>_wave87d.*.js`. This keeps the wave86m/A4-A7/A5/A6 injections, wave87a Literature live banks and wave87b ОБЖ scenario banks compatible while reducing each page's initial JS payload.
+
+When editing this layer, update the relevant grade-specific source under `assets/_src/js`, rebuild its content hash, update the matching grade HTML, `asset-manifest.json` and `sw.js`. Validate with `node tools/audit_gap_balance_split_wave87d.mjs`, the Literature/ОБЖ audits and the full `node tools/validate_questions.js` regression.
+
+### wave87e static event actions
+
+Static HTML should not use `data-wave86u-on-*` anymore. wave87e replaced all static `data-wave86u-on-click="..."` attributes with compact `data-wave87e-click="action-id"` tokens. The early CSP bridge installs a delegated `addEventListener('click', ...)` and dispatches only known action ids through a `switch`; it does not parse expression text for static controls.
+
+The legacy wave86u parser stays only for runtime-generated older markup that may still produce inline `onclick`/`oninput` attributes. New static UI must add a real listener or a `data-wave87e-click` action plus an explicit switch case, then run `node tools/audit_static_events_wave87e.mjs`.
+### wave87f senior social live banks
+
+The grade10/grade11 wave86m gap-balance split chunks include senior social-studies scenario banks. Do not add a separate page script for these banks; edit `assets/_src/js/chunk_subject_expansion_wave86m_gap_balance_grade10_wave87d.js` or grade11, rebuild the content hash, and update the matching HTML/SW/manifest references.
+
+Validate with `node tools/audit_senior_social_live_banks_wave87f.mjs`. For heavy grade regression use `GRADE_FILTER=10 SAMPLE_PER_TOPIC=5 node tools/validate_questions.js` and the same for grade 11; full all-grade validation remains available without `GRADE_FILTER`.
+### wave87g grade11 balance live banks
+
+B6 continues in the grade11 split gap-balance chunk. Grade 11 now receives two additional subjects, `art` and `oly`, with 4 live-bank topics each. These banks live inside `assets/_src/js/chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d.js` so no extra page script is added.
+
+The new topics must remain scenario-bank based (`q/a/o/h/ex`) and must not fall back to generic `facts -> makeGen()` stems. Validate with `node tools/audit_grade11_balance_wave87g.mjs`, then run `GRADE_FILTER=11 SAMPLE_PER_TOPIC=5 node tools/validate_questions.js`. When editing, rebuild the grade11 chunk hash and update `grade11_v2.html`, `sw.js`, `asset-manifest.json`, and `healthz.json`.
+
+### wave87h complete split gap live banks
+
+The remaining generic `facts -> makeGen()` topics inside the grade-specific wave86m gap-balance layer are gone. Grade 4 ORKSE, grade 5 ODNKNR and grade 11 Probability/Statistics now use explicit live-bank rows with `q/a/o/h/ex` inside their existing split chunks, so no extra page script is introduced.
+
+Use `node tools/audit_gap_live_banks_wave87h.mjs` to verify three things at once: the wave87h topics expose live-bank flags, the generated questions never fall back to the old generic stems, and no generic topics remain anywhere in the split gap-balance chunk family. When editing this layer, rebuild the content hash for the touched grade-specific chunk and update the matching grade HTML, `sw.js`, `asset-manifest.json`, and `healthz.json`.
+
+### wave87i question repeat guard
+
+`chunk_subject_expansion_wave63_quality.*.js` now does more than option sanitization. It also performs question-bank stem dedupe and a short recent-prompt guard at runtime. Bank rows are normalized by question stem plus answer; exact duplicates are dropped, same-stem/same-answer rows count toward `bankQuestionDeduped`, and same-stem/different-answer rows are treated as conflicts and skipped so broken banks do not leak contradictory prompts into runtime.
+
+For wrapped `topic.gen()` functions the quality pass keeps a short recent queue (2–4 prompts depending on detected live-bank size) and rerolls a few times before accepting a repeat. This is intentionally lightweight: it reduces back-to-back duplicate prompts in short drills and audit runs without adding new page scripts or changing the question data format. Release validation for this layer is `node tools/audit_question_repeat_guard_wave87i.mjs` plus `node tools/validate_questions.js`.
+
+### wave87j grade11 depth parity live banks
+
+wave87j continues B6 inside the existing grade11 split gap-balance chunk. The asset `assets/_src/js/chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d.js` now injects ten additional grade 11 topics across `eng`, `his`, `lit`, `bio`, `inf`, `rus`, and `geog`, all backed by explicit live banks rather than generic `facts -> makeGen()` stems.
+
+Do not add a new page script for this layer. Keep the changes inside the existing grade11 split chunk, rebuild its content hash, update `grade11_v2.html`, `sw.js`, `asset-manifest.json`, and `healthz.json`, then validate with `node tools/audit_grade11_depth_wave87j.mjs` plus `GRADE_FILTER=10,11 SAMPLE_PER_TOPIC=5 node tools/validate_questions.js`.
+

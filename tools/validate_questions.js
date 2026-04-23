@@ -7,7 +7,7 @@ const ROOT = process.cwd();
 const SAMPLE_PER_TOPIC = Number(process.env.SAMPLE_PER_TOPIC || 5);
 const GRADE_PAGES = Array.from({length: 11}, (_, i) => `grade${i + 1}_v2.html`);
 const INCLUDE_RE = /\/assets\/js\/(grade\d+_data\.|bundle_boosters\.|chunk_grade_content_|chunk_subject_expansion_|chunk_grade10_lazy_wave86s\.)/;
-const GRADE10_SUBJECT_RE = /^grade10_subject_.*_wave86s\.[a-f0-9]{10}\.js$/;
+const GRADE10_SUBJECT_RE = /^(grade10_subject_.*_wave86s|grade10_subject_oly_(logic|cross|traps|deep)_wave87c)\.[a-f0-9]{10}\.js$/;
 
 function parseScripts(htmlFile){
   const html = fs.readFileSync(path.join(ROOT, htmlFile), 'utf8');
@@ -124,7 +124,12 @@ function selectedScriptsForGrade(grade){
     const subjectChunks = fs.readdirSync(dir)
       .filter(name => GRADE10_SUBJECT_RE.test(name))
       .map(name => 'assets/js/' + name)
-      .sort();
+      .sort((a, b) => {
+        const at = /grade10_subject_oly_(logic|cross|traps|deep)_wave87c/.test(a);
+        const bt = /grade10_subject_oly_(logic|cross|traps|deep)_wave87c/.test(b);
+        if (at !== bt) return at ? 1 : -1;
+        return a.localeCompare(b);
+      });
     const lazyIndex = scripts.findIndex(s => /chunk_grade10_lazy_wave86s\./.test(s));
     if (lazyIndex >= 0) scripts.splice(lazyIndex + 1, 0, ...subjectChunks);
     else scripts.push(...subjectChunks);
@@ -160,6 +165,17 @@ function validateRow(row){
   if (a && !unique.has(a)) errors.push('answer not included in options');
   return errors;
 }
+function cleanPrompt(v){ return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().toLowerCase().replace(/ё/g, 'е'); }
+function liveBankCount(topic){
+  let max = 0;
+  if (!topic || typeof topic !== 'object') return max;
+  for (const [key, value] of Object.entries(topic)) {
+    if (!/^_wave(86|87).*(LiveBankCount|BankCount)$/.test(key)) continue;
+    const num = Number(value) || 0;
+    if (num > max) max = num;
+  }
+  return max;
+}
 function auditGrade(grade){
   const ctx = makeContext(grade);
   vm.runInContext(HELPERS, ctx, { filename: 'validator-helpers.js', timeout: 1000 });
@@ -171,7 +187,7 @@ function auditGrade(grade){
   }
   const subj = ctx.window.SUBJ || ctx.SUBJ || [];
   const failures = [];
-  let topics = 0, generators = 0, samples = 0, missingGenerators = 0, missingEx = 0;
+  let topics = 0, generators = 0, samples = 0, missingGenerators = 0, missingEx = 0, immediateRepeats = 0, lowDiversityLiveTopics = 0;
   for (const subject of subj) {
     const subjectId = subject && subject.id || '?';
     const subjectName = subject && subject.nm || subjectId;
@@ -182,26 +198,59 @@ function auditGrade(grade){
       const topicName = topic && topic.nm || topicId;
       if (!topic || typeof topic.gen !== 'function') { missingGenerators++; failures.push({ grade, subject: subjectId, topic: topicId, error: 'missing topic.gen' }); continue; }
       generators++;
+      const liveCount = liveBankCount(topic);
+      let prevPrompt = '';
+      const uniqKeys = new Set();
       for (let i = 0; i < SAMPLE_PER_TOPIC; i++) {
         samples++;
         try {
           const row = normalizeQuestion(topic.gen());
           const errs = validateRow(row);
+          const prompt = row ? cleanPrompt(row.question) : '';
           if (row && !String(row.ex || '').trim()) missingEx++;
+          if (prompt) {
+            if (prompt === prevPrompt) immediateRepeats++;
+            prevPrompt = prompt;
+            uniqKeys.add(prompt);
+          }
           if (errs.length) failures.push({ grade, subject: subjectId, subjectName, topic: topicId, topicName, sample: i + 1, errors: errs, question: row && row.question, answer: row && row.answer, options: row && row.options });
         } catch (err) {
           failures.push({ grade, subject: subjectId, subjectName, topic: topicId, topicName, sample: i + 1, error: err && err.message || String(err) });
         }
       }
+      if (liveCount >= 8 && uniqKeys.size < Math.min(4, SAMPLE_PER_TOPIC)) lowDiversityLiveTopics++;
     }
   }
-  return { grade, scripts: scripts.length, loadErrors, subjects: subj.length, topics, generators, missingGenerators, samples, missingEx, failures };
+  const quality = ctx.window.WAVE63_QUALITY_RUNTIME || null;
+  return {
+    grade,
+    scripts: scripts.length,
+    loadErrors,
+    subjects: subj.length,
+    topics,
+    generators,
+    missingGenerators,
+    samples,
+    missingEx,
+    immediateRepeats,
+    lowDiversityLiveTopics,
+    quality: quality ? {
+      repeatAttempts: Number(quality.repeatAttempts || 0),
+      recentRepeatBlocked: Number(quality.recentRepeatBlocked || 0),
+      repeatAccepted: Number(quality.repeatAccepted || 0),
+      bankDeduped: Number(quality.bankDeduped || 0),
+      bankQuestionDeduped: Number(quality.bankQuestionDeduped || 0),
+      bankQuestionConflicts: Number(quality.bankQuestionConflicts || 0)
+    } : null,
+    failures
+  };
 }
-const grades = GRADE_PAGES.map((_, i) => i + 1);
+const gradeFilter = String(process.env.GRADE_FILTER || '').split(',').map(v => Number(v.trim())).filter(v => Number.isInteger(v) && v >= 1 && v <= 11);
+const grades = gradeFilter.length ? gradeFilter : GRADE_PAGES.map((_, i) => i + 1);
 const reports = grades.map(auditGrade);
 const totals = reports.reduce((acc, r) => {
-  acc.scripts += r.scripts; acc.loadErrors += r.loadErrors.length; acc.subjects += r.subjects; acc.topics += r.topics; acc.generators += r.generators; acc.missingGenerators += r.missingGenerators; acc.samples += r.samples; acc.missingEx += r.missingEx; acc.failures += r.failures.length; return acc;
-}, { scripts: 0, loadErrors: 0, subjects: 0, topics: 0, generators: 0, missingGenerators: 0, samples: 0, missingEx: 0, failures: 0 });
+  acc.scripts += r.scripts; acc.loadErrors += r.loadErrors.length; acc.subjects += r.subjects; acc.topics += r.topics; acc.generators += r.generators; acc.missingGenerators += r.missingGenerators; acc.samples += r.samples; acc.missingEx += r.missingEx; acc.immediateRepeats += r.immediateRepeats || 0; acc.lowDiversityLiveTopics += r.lowDiversityLiveTopics || 0; acc.qualityRepeatBlocked += Number(r.quality && r.quality.recentRepeatBlocked || 0); acc.qualityRepeatAccepted += Number(r.quality && r.quality.repeatAccepted || 0); acc.bankQuestionDeduped += Number(r.quality && r.quality.bankQuestionDeduped || 0); acc.bankQuestionConflicts += Number(r.quality && r.quality.bankQuestionConflicts || 0); acc.failures += r.failures.length; return acc;
+}, { scripts: 0, loadErrors: 0, subjects: 0, topics: 0, generators: 0, missingGenerators: 0, samples: 0, missingEx: 0, immediateRepeats: 0, lowDiversityLiveTopics: 0, qualityRepeatBlocked: 0, qualityRepeatAccepted: 0, bankQuestionDeduped: 0, bankQuestionConflicts: 0, failures: 0 });
 const output = { ok: totals.loadErrors === 0 && totals.failures === 0, samplePerTopic: SAMPLE_PER_TOPIC, totals, grades: reports };
 console.log(JSON.stringify(output, null, 2));
-if (!output.ok) process.exit(1);
+process.exit(output.ok ? 0 : 1);

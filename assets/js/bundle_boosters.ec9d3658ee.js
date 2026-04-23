@@ -472,14 +472,14 @@
         {q:'Choose the correct word: She gave me some useful ___.', a:'advice', o:['advise','advises','advised'], h:'Advice is the noun.'}
       ],
       spelling_b2: [
-        {q:'Choose the correct spelling.', a:'necessary', o:['neccessary','necesary','necessaryy'], h:'Necessary has one c and two s letters.'},
-        {q:'Choose the correct spelling.', a:'environment', o:['enviroment','envirenment','environmant'], h:'Environment with n + m.'},
-        {q:'Choose the correct spelling.', a:'comfortable', o:['comftable','comfortible','comforrtable'], h:'Comfortable.'},
-        {q:'Choose the correct spelling.', a:'successful', o:['succesful','successfull','succesfull'], h:'Successful with double c and double s.'},
-        {q:'Choose the correct spelling.', a:'opportunity', o:['oppurtunity','opprotunity','opportunityy'], h:'Opportunity.'},
-        {q:'Choose the correct spelling.', a:'government', o:['goverment','governmant','governement'], h:'Government.'},
-        {q:'Choose the correct spelling.', a:'knowledge', o:['knowlege','knoledge','knowledgee'], h:'Knowledge keeps the d.'},
-        {q:'Choose the correct spelling.', a:'independent', o:['independant','indipendent','independentt'], h:'Independent.'}
+        {q:'Choose the correct spelling for the word meaning «необходимый».', a:'necessary', o:['neccessary','necesary','necessaryy'], h:'Necessary has one c and two s letters.'},
+        {q:'Choose the correct spelling for the word meaning «окружающая среда».', a:'environment', o:['enviroment','envirenment','environmant'], h:'Environment with n + m.'},
+        {q:'Choose the correct spelling for the adjective meaning «удобный».', a:'comfortable', o:['comftable','comfortible','comforrtable'], h:'Comfortable.'},
+        {q:'Choose the correct spelling for the adjective meaning «успешный».', a:'successful', o:['succesful','successfull','succesfull'], h:'Successful with double c and double s.'},
+        {q:'Choose the correct spelling for the noun meaning «возможность».', a:'opportunity', o:['oppurtunity','opprotunity','opportunityy'], h:'Opportunity.'},
+        {q:'Choose the correct spelling for the noun meaning «правительство».', a:'government', o:['goverment','governmant','governement'], h:'Government.'},
+        {q:'Choose the correct spelling for the noun meaning «знание».', a:'knowledge', o:['knowlege','knoledge','knowledgee'], h:'Knowledge keeps the d.'},
+        {q:'Choose the correct spelling for the adjective meaning «независимый».', a:'independent', o:['independant','indipendent','independentt'], h:'Independent.'}
       ],
       question_tags10: [
         {q:'Choose the correct tag: She is your sister, ___?', a:'isn’t she', o:['is she','doesn’t she','aren’t she'], h:'Positive statement → negative tag.'},
@@ -504,7 +504,7 @@
     };
 
     function makeTopic(id, name, bankKey, dot){
-      return { id:id, nm:name, gen:function(){ return bank(BANKS[bankKey], name, ENG_COLOR, ENG_BG); }, th:ENG_TH[bankKey], dot:dot };
+      return { id:id, nm:name, gen:function(){ return bank(BANKS[bankKey], name, ENG_COLOR, ENG_BG); }, th:ENG_TH[bankKey], dot:dot, _wave40BankCount: (BANKS[bankKey] || []).length };
     }
 
     var topics = [
@@ -1228,12 +1228,13 @@
       old.nm = name;
       old.dot = dot || old.dot;
       if(ENG_TH[thKey]) old.th = ENG_TH[thKey];
+      if (items && items.length && !old._wave42BankCount && !old._wave40BankCount) old._wave42BankCount = items.length;
       return old;
     }
-    return { id:id, nm:name, gen:function(){ return bank(items, name, ENG_COLOR, ENG_BG); }, th:ENG_TH[thKey] || '', dot:dot };
+    return { id:id, nm:name, gen:function(){ return bank(items, name, ENG_COLOR, ENG_BG); }, th:ENG_TH[thKey] || '', dot:dot, _wave42BankCount: (items || []).length };
   }
   function newTopic(id, name, thKey, dot, items){
-    return { id:id, nm:name, gen:function(){ return bank(items, name, ENG_COLOR, ENG_BG); }, th:ENG_TH[thKey] || '', dot:dot };
+    return { id:id, nm:name, gen:function(){ return bank(items, name, ENG_COLOR, ENG_BG); }, th:ENG_TH[thKey] || '', dot:dot, _wave42BankCount: (items || []).length };
   }
 
   putTheory('reading_strategies', `<h3>Reading Strategies</h3><p lang="en">Read the question first, then scan the text for key ideas, synonyms and paraphrases. In exam tasks the correct answer often repeats the meaning, not the exact words.</p><div class="fm" lang="en">question → keywords → paragraph → meaning check</div>`);
@@ -1296,13 +1297,13 @@
       {q:'Choose the correct verb: He ___ that he was too tired to come.', a:'said', o:['told','layed','raised'], h:'Say without a direct object person.'}
     ],
     british_american: [
-      {q:'Choose the British spelling.', a:'colour', o:['color','culor','colur'], h:'British English keeps the u.'},
-      {q:'Choose the American word.', a:'apartment', o:['flat','lift','holiday'], h:'Apartment is American English.'},
-      {q:'Choose the British word.', a:'petrol', o:['gas','truck','candy'], h:'Petrol is British English.'},
-      {q:'Choose the American spelling.', a:'favorite', o:['favourite','favourit','favoryte'], h:'American English often drops the u.'},
-      {q:'Choose the British word.', a:'queue', o:['line','movie theater','mailbox'], h:'Queue is the British form.'},
-      {q:'Choose the American word.', a:'vacation', o:['holiday','autumn','trainers'], h:'Vacation is American English.'},
-      {q:'Choose the British word.', a:'lorry', o:['truck','subway','cookie'], h:'Lorry = truck in British English.'},
+      {q:'Choose the British spelling for the word meaning color.', a:'colour', o:['color','culor','colur'], h:'British English keeps the u.'},
+      {q:'Choose the American word for a flat.', a:'apartment', o:['flat','lift','holiday'], h:'Apartment is American English.'},
+      {q:'Choose the British word for gasoline.', a:'petrol', o:['gas','truck','candy'], h:'Petrol is British English.'},
+      {q:'Choose the American spelling of the word favourite.', a:'favorite', o:['favourite','favourit','favoryte'], h:'American English often drops the u.'},
+      {q:'Choose the British word for a line of people.', a:'queue', o:['line','movie theater','mailbox'], h:'Queue is the British form.'},
+      {q:'Choose the American word for holiday.', a:'vacation', o:['holiday','autumn','trainers'], h:'Vacation is American English.'},
+      {q:'Choose the British word for a truck.', a:'lorry', o:['truck','subway','cookie'], h:'Lorry = truck in British English.'},
       {q:'Which advice is best in exam writing?', a:'keep one variant consistent in the whole answer', o:['mix British and American randomly','change spelling in every paragraph','ignore consistency'], h:'Consistency looks cleaner and safer.'}
     ],
     idioms_fixed: [
@@ -1351,4 +1352,3 @@
     ids: topics.map(function(t){ return t.id; })
   };
 })();
-//# sourceMappingURL=bundle_boosters.db639b7b5f.js.map

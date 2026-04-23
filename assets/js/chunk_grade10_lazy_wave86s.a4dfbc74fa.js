@@ -99,9 +99,16 @@
   }
   function hydrateAll(){
     var list = subjects().filter(function(s){ return s && s._wave86sSrc && !s._wave86sLoaded; });
-    if(!list.length) return Promise.resolve([]);
-    showLoading('Подгружаю все предметные банки для сборной/экзамена.');
-    return Promise.all(list.map(function(s){ return hydrateSubject(s.id); }));
+    var base;
+    if(!list.length) base = Promise.resolve([]);
+    else {
+      showLoading('Подгружаю все предметные банки для сборной/экзамена.');
+      base = Promise.all(list.map(function(s){ return hydrateSubject(s.id); }));
+    }
+    return base.then(function(rows){
+      if(window.wave87cOlyLazy && typeof window.wave87cOlyLazy.hydrateAll === 'function') return window.wave87cOlyLazy.hydrateAll().then(function(){ return rows; });
+      return rows;
+    });
   }
   function wrapOpenSubj(){
     var original = window.openSubj;

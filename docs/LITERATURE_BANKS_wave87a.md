@@ -4,7 +4,7 @@ wave87a closes the first B5/N4 content-depth pass from the updated review roadma
 
 ## Scope
 
-The implementation is intentionally small and does not add a new script tag after wave86z consolidation. It is embedded in the existing `chunk_subject_expansion_wave86m_gap_balance` asset and replaces only these Literature topics:
+The implementation is intentionally small and does not add a new script tag after wave86z consolidation. Since wave87d, it lives in the grade-specific `chunk_subject_expansion_wave86m_gap_balance_grade*_wave87d` assets and replaces only these Literature topics:
 
 - Grade 5: `fable5_wave86m`, `landscape5_wave86m`
 - Grade 6: `ballad6_wave86m`, `composition6_wave86m`

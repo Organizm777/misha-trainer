@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
 const root = process.cwd();
-const source = fs.readFileSync(path.join(root, 'assets/_src/js/chunk_subject_expansion_wave86m_gap_balance.js'), 'utf8');
+function sourceFor(grade) {
+  const file = path.join(root, 'assets/_src/js/chunk_subject_expansion_wave86m_gap_balance_grade' + grade + '_wave87d.js');
+  return fs.readFileSync(file, 'utf8');
+}
 const expected = {
   '8': ['home_street8_wave86m', 'chs8_wave86m', 'firstaid8_wave86m'],
   '9': ['personal9_wave86m', 'civildef9_wave86m', 'firstaid9_wave86m'],
@@ -21,7 +24,7 @@ function contextFor(grade) {
 for (const grade of Object.keys(expected)) {
   const ctx = contextFor(grade);
   result.totals.grades += 1;
-  try { vm.runInContext(source, ctx, { filename: 'chunk_subject_expansion_wave86m_gap_balance.js' }); }
+  try { vm.runInContext(sourceFor(grade), ctx, { filename: 'chunk_subject_expansion_wave86m_gap_balance_grade' + grade + '_wave87d.js' }); }
   catch (err) { fail(`grade ${grade}: script failed: ${err?.message || err}`); continue; }
   const obzh = ctx.SUBJ.find(s => s && s.id === 'obzh');
   const gradeOut = { topics: {}, snapshot: ctx.window.wave87bObzhBanks?.auditSnapshot?.() || null };

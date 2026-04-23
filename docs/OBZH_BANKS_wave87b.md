@@ -1,6 +1,6 @@
 # wave87b ОБЖ live scenario banks
 
-wave87b replaces the wave86m ОБЖ `facts -> makeGen()` fallback for grades 8–11 with scenario-bank rows.
+wave87b replaces the wave86m ОБЖ `facts -> makeGen()` fallback for grades 8–11 with scenario-bank rows. Since wave87d, these rows are stored in the grade-specific `chunk_subject_expansion_wave86m_gap_balance_grade*_wave87d` assets rather than the old cross-grade monolith.
 
 ## Coverage
 

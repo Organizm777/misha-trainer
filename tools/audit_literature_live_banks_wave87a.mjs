@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
 const root = process.cwd();
-const source = fs.readFileSync(path.join(root, 'assets/_src/js/chunk_subject_expansion_wave86m_gap_balance.js'), 'utf8');
+function sourceFor(grade) {
+  const file = path.join(root, 'assets/_src/js/chunk_subject_expansion_wave86m_gap_balance_grade' + grade + '_wave87d.js');
+  return fs.readFileSync(file, 'utf8');
+}
 const expected = {
   '5': ['fable5_wave86m', 'landscape5_wave86m'],
   '6': ['ballad6_wave86m', 'composition6_wave86m'],
@@ -33,7 +36,7 @@ for (const grade of Object.keys(expected)) {
   const ctx = contextFor(grade);
   result.totals.grades += 1;
   try {
-    vm.runInContext(source, ctx, { filename: 'chunk_subject_expansion_wave86m_gap_balance.js' });
+    vm.runInContext(sourceFor(grade), ctx, { filename: 'chunk_subject_expansion_wave86m_gap_balance_grade' + grade + '_wave87d.js' });
   } catch (err) {
     fail(`grade ${grade}: script failed: ${err?.message || err}`);
     continue;

@@ -1,3 +1,59 @@
+## wave87j — 2026-04-23
+
+- B6: продолжен pass по глубине 11 класса без новых page-level scripts: в grade11 split gap-balance chunk добавлены 10 live-bank тем для English, History, Literature, Biology, Informatics, Russian и Geography.
+- Content: все новые темы реализованы через явные `q/a/o/h/ex` банки (150 rows total), без fallback на generic `facts -> makeGen()` для этих тем.
+- Balance: fully injected grade 11 доведён до 95 тем и сравнялся с fully injected grade 10.
+- Tooling: добавлены `tools/audit_grade11_depth_wave87j.mjs` и `docs/GRADE11_DEPTH_wave87j.md`; обновлены content-hash, manifest, healthz и SW cache.
+
+## wave87i — 2026-04-23
+
+- B7: `chunk_subject_expansion_wave63_quality` now dedupes question banks more aggressively, blocking duplicate prompts with the same normalized stem and surfacing conflicting same-question/different-answer rows through explicit metrics.
+- Runtime: wrapped topic generators keep a short recent-prompt queue and reroll a few times before accepting a repeat, reducing immediate duplicate questions during short practice bursts without changing page script count.
+- Legacy-tail cleanup: diversified repeated generic stems in Russian OГЭ/ЕГЭ norm topics and English spelling/British-vs-American topics, and made the reroll guard pool-aware for small non-live banks so the global validator now reports zero immediate repeats.
+- Tooling: `tools/validate_questions.js` now reports immediate repeats, low-diversity live topics and the wave87i quality metrics; added `tools/audit_question_repeat_guard_wave87i.mjs` plus `docs/QUESTION_REPEAT_GUARD_wave87i.md`.
+- Build: rebuilt `chunk_subject_expansion_wave63_quality`, updated grade/diagnostic HTML refs, `asset-manifest.json`, `healthz.json` and SW cache name to wave87i.
+
+## wave87h — 2026-04-23
+
+- B5/A4 follow-up: ORKSE 4 and ODNKNR 5 no longer use generic `facts -> makeGen()` stems; the remaining grade4/grade5 split gap-balance topics now emit live-bank `q/a/o/h/ex` rows.
+- B5/B6 follow-up: grade11 Probability/Statistics gap-balance topics (`diagprob11_wave86m`, `samples11_wave86m`) now use live-bank questions instead of generic facts stems.
+- Added 120 explicit questions across 8 remaining split gap-balance topics without adding a new grade-page script tag; all grade4–11 split gap-balance topics are now live-bank backed.
+- Added `tools/audit_gap_live_banks_wave87h.mjs` and `docs/GAP_LIVE_BANKS_wave87h.md`; rebuilt three gap-balance chunk hashes and synchronized HTML/SW/manifest/healthz to wave87h.
+
+## wave87g — 2026-04-22
+
+- B6: 11 класс выровнен ближе к 10-му по предметному составу: добавлены предметы «Искусство» и «Олимпиада».
+- B5: новые темы 11 класса используют живые scenario-bank вопросы с `q/a/o/h/ex`, а не generic `facts -> makeGen()`.
+- Контент: добавлено 8 тем и 120 live-bank вопросов: искусство XX века, русское искусство, дизайн/визуальная коммуникация, театр/кино, логика, межпредметные задачи, исследовательские задания и стратегии решения.
+- Build: пересобран grade11 gap-balance chunk, обновлены content-hash, SW cache name, asset manifest и healthz.
+
+## wave87f — 2026-04-22
+
+- A6/B5/B6: senior-school social studies 10–11 now has scenario live banks instead of generic `facts -> makeGen()` stems for the wave86m social topics.
+- Added two practical social studies topics per senior grade: grade 10 civic participation/media literacy and grade 11 democracy/labour choice.
+- Added 150 explicit social-studies scenario questions across 10 topics without increasing grade-page script count.
+- Added `tools/audit_senior_social_live_banks_wave87f.mjs`; `validate_questions.js` now supports `GRADE_FILTER=10,11` for isolated heavy-grade regressions.
+
+## wave87e — 2026-04-22
+
+- N12: static HTML controls no longer use `data-wave86u-on-click="..."` expression attributes.
+- Added `data-wave87e-click` action ids and a delegated `addEventListener` whitelist inside the early CSP bridge; runtime-generated legacy handlers remain supported by the existing bridge path.
+- Rehashed `chunk_roadmap_wave86u_csp_bridge`, updated all HTML/SW/manifest references, and added `tools/audit_static_events_wave87e.mjs` plus `docs/STATIC_EVENTS_wave87e.md`.
+
+## wave87d — 2026-04-22
+
+- N10/performance follow-up: the former monolithic `chunk_subject_expansion_wave86m_gap_balance.*.js` has been split into grade-specific chunks for grades 4–11.
+- Grade pages now load only their own gap-balance data, preserving script count while reducing max grade JS payload from 1,909,161 bytes to 1,814,611 bytes.
+- Literature live-bank and ОБЖ scenario-bank audits were updated to read the split sources.
+- Added `tools/audit_gap_balance_split_wave87d.mjs` and `docs/GAP_BALANCE_SPLIT_wave87d.md`; bumped SW cache/manifest/healthz to wave87d.
+
+## wave87c — 2026-04-22
+
+- N5: тяжёлый lazy chunk `grade10_subject_oly_wave86s` заменён маленьким shell-файлом и четырьмя topic chunks для Олимпиады 10 класса: logic, cross, traps, deep.
+- Grade10 lazy loader теперь при `hydrateAll()` догружает вложенный `wave87cOlyLazy`, чтобы сборная/Молния/exam не получали fallback-вопросы вместо реальных олимпиадных задач.
+- `validate_questions.js` расширен: регрессия 10 класса загружает и shell, и topic chunks wave87c.
+- Build: обновлены `grade10_data`, `chunk_grade10_lazy_wave86s`, `asset-manifest.json`, `healthz.json` и SW cache name.
+
 ## wave87b — OBZH live banks
 
 - Replaced generic `facts -> makeGen()` output for wave86m ОБЖ topics in grades 8–11 with scenario-bank generated `q/a/o/h/ex` rows.

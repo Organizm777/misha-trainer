@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave87b-2026-04-22';
+const CACHE_NAME = 'trainer-build-wave87j-2026-04-23';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -23,7 +23,7 @@ const ASSETS = [
   './healthz.json',
   './CHANGELOG.md',
   './assets/asset-manifest.json',
-  './assets/js/bundle_boosters.db639b7b5f.js',
+  './assets/js/bundle_boosters.ec9d3658ee.js',
   './assets/js/bundle_dashboard_tools.5592be36f3.js',
   './assets/js/bundle_diagnostic_tools.641a191419.js',
   './assets/js/bundle_error_tracking.e8a9fb4295.js',
@@ -46,7 +46,7 @@ const ASSETS = [
   './assets/js/bundle_sharing.75450d41f8.js',
   './assets/js/bundle_shell.366a4cb99e.js',
   './assets/js/bundle_special_subjects.82d8040232.js',
-  './assets/js/chunk_subject_expansion_wave31_russian.24fba9b173.js',
+  './assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js',
   './assets/js/chunk_subject_expansion_wave32_math.8957f08038.js',
   './assets/js/chunk_subject_expansion_wave33_science.7379e9af46.js',
   './assets/js/chunk_subject_expansion_wave38_content_consolidation.c6477aad95.js',
@@ -58,10 +58,10 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js',
   './assets/js/chunk_subject_expansion_wave86l_grade3_balance.9681242b09.js',
   './assets/js/chunk_roadmap_wave86q_accessibility_theme.a6ac36dee7.js',
-  './assets/js/chunk_subject_expansion_wave63_quality.ce03edc00c.js',
+  './assets/js/chunk_subject_expansion_wave63_quality.b76ab4b336.js',
   './assets/js/engine10.90815e0ece.js',
-  './assets/js/grade10_data.bfddf3737d.js',
-  './assets/js/chunk_grade10_lazy_wave86s.f4f46e7315.js',
+  './assets/js/grade10_data.5f2c838ca3.js',
+  './assets/js/chunk_grade10_lazy_wave86s.a4dfbc74fa.js',
   './assets/js/grade10_subject_alg_wave86s.cc39201fe2.js',
   './assets/js/grade10_subject_geo_wave86s.ce2eac1303.js',
   './assets/js/grade10_subject_prob_wave86s.4043fdfac3.js',
@@ -75,11 +75,22 @@ const ASSETS = [
   './assets/js/grade10_subject_geog_wave86s.e7ef128cc1.js',
   './assets/js/grade10_subject_lit_wave86s.557c99cd43.js',
   './assets/js/grade10_subject_art_wave86s.ffd6808253.js',
-  './assets/js/grade10_subject_oly_wave86s.0f27e880e6.js',
+  './assets/js/grade10_subject_oly_wave86s.f3be6ea642.js',
+  './assets/js/grade10_subject_oly_logic_wave87c.4e7ea0f18b.js',
+  './assets/js/grade10_subject_oly_cross_wave87c.15067e39a4.js',
+  './assets/js/grade10_subject_oly_traps_wave87c.8c8acd7db6.js',
+  './assets/js/grade10_subject_oly_deep_wave87c.8c8ae2c5aa.js',
   './assets/js/grade8_data.7cbce1213a.js',
   './assets/js/grade9_data.7d10c4283c.js',
   './assets/js/grade11_data.11d53fbdce.js',
-  './assets/js/chunk_subject_expansion_wave86m_gap_balance.507fb9e6fe.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade4_wave87d.35837f11a8.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade5_wave87d.f3ed9c450f.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade6_wave87d.0a4973707d.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade7_wave87d.8bf079afdc.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade8_wave87d.b863389469.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade9_wave87d.0cfd6b7a6b.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade10_wave87d.fed9ebd45c.js',
+  './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d.fed5692d21.js',
   './assets/js/grade1_data.a728a30cc1.js',
   './assets/js/grade2_data.1f7b131a74.js',
   './assets/js/grade3_data.78f22d6f28.js',
@@ -88,7 +99,7 @@ const ASSETS = [
   './assets/js/grade6_data.5b7810f079.js',
   './assets/js/grade7_data.cf7365a889.js',
   './assets/js/wave35_plans.f812119619.js',
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.db3571dfa5.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.7f8759c23f.js',
   './assets/js/inline_dashboard_1_wave86u.309f67a363.js',
   './assets/js/inline_diagnostic_1_wave86u.dc1605e606.js',
   './assets/js/inline_diagnostic_2_wave86u.d7f19b85e9.js',
@@ -117,7 +128,7 @@ const ASSETS = [
   './assets/css/wave86z_static_style_classes.7a515bc89a.css'
 ];
 const CSP_BRIDGE_ASSETS = [
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.db3571dfa5.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.7f8759c23f.js',
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.f696c42cb6.js'
 ];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
@@ -129,7 +140,7 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   './assets/js/bundle_shell.366a4cb99e.js',
   './assets/js/bundle_diagnostic_tools.641a191419.js',
   './assets/js/chunk_roadmap_wave86q_accessibility_theme.a6ac36dee7.js',
-  './assets/js/chunk_subject_expansion_wave31_russian.24fba9b173.js',
+  './assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js',
   './assets/js/chunk_subject_expansion_wave32_math.8957f08038.js',
   './assets/js/chunk_subject_expansion_wave33_science.7379e9af46.js',
   './assets/js/chunk_subject_expansion_wave38_content_consolidation.c6477aad95.js',
@@ -139,7 +150,7 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   './assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.b5b4b3f802.js',
   './assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.ecfc9c5b63.js',
   './assets/js/chunk_subject_expansion_wave61_senior_school_10_11.89f9ca6da8.js',
-  './assets/js/chunk_subject_expansion_wave63_quality.ce03edc00c.js',
+  './assets/js/chunk_subject_expansion_wave63_quality.b76ab4b336.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_exam.21c1f611f3.js',

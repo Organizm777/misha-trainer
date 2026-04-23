@@ -1,5 +1,5 @@
 ;(() => {
-  var VERSION = 'wave63-quality-pass';
+  var VERSION = 'wave87i-quality-repeat-guard';
   var report = {
     version: VERSION,
     generatorsWrapped: 0,
@@ -12,11 +12,17 @@
     optionsTrimmed: 0,
     difficultyTagged: 0,
     bankDeduped: 0,
+    bankQuestionDeduped: 0,
+    bankQuestionConflicts: 0,
+    repeatAttempts: 0,
+    recentRepeatBlocked: 0,
+    repeatAccepted: 0,
     issues: [],
     bankStats: {},
     topicStats: {}
   };
-  function pushIssue(code, detail){ if (report.issues.length < 80) report.issues.push({ code: code, detail: detail }); }
+  function expose(){ window.WAVE63_QUALITY_RUNTIME = report; return report; }
+  function pushIssue(code, detail){ if (report.issues.length < 100) report.issues.push({ code: code, detail: detail }); }
   function cleanText(v){ return String(v == null ? '' : v).replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim(); }
   function norm(v){ return cleanText(v).toLowerCase().replace(/ё/g, 'е'); }
   function hasHint(v){ return cleanText(v).length >= 8; }
@@ -93,21 +99,67 @@
     classifyDifficulty(q, meta || {}); syncAliases(q); report.questionSanitized += 1; return q;
   }
   function questionKey(question, answer, tag, grade){ return [grade || 0, norm(tag), norm(question), norm(answer)].join('|'); }
+  function promptKey(question, tag, grade){ return [grade || 0, norm(tag), norm(question)].join('|'); }
+  function liveBankCount(topic){
+    var max = 0;
+    Object.keys(topic || {}).forEach(function(key){
+      if (!/^_wave(86|87).*(?:LiveBankCount|BankCount)$/.test(key)) return;
+      var value = Number(topic[key]) || 0;
+      if (value > max) max = value;
+    });
+    return max;
+  }
+  function poolCountForTopic(topic){
+    var count = liveBankCount(topic);
+    if (count > 0) return count;
+    if (topic && Array.isArray(topic.rows) && topic.rows.length) return topic.rows.length;
+    if (topic && Array.isArray(topic._questionPool) && topic._questionPool.length) return topic._questionPool.length;
+    if (topic && Array.isArray(topic._questionBank) && topic._questionBank.length) return topic._questionBank.length;
+    count = Number(topic && (topic._coverageExtraCount || topic._wave6ExtraCount || topic._wave10BankCount || topic._wave40BankCount || topic._wave42BankCount || topic._wave87gGrade11BalanceBankCount || topic._wave87hValuesLiveBankCount || topic._wave87hProbLiveBankCount)) || 0;
+    return count > 0 ? count : 0;
+  }
+  function recentLimitForTopic(topic){
+    var count = poolCountForTopic(topic);
+    if (count >= 18) return 4;
+    if (count >= 10) return 3;
+    if (count >= 6) return 3;
+    return 2;
+  }
+  function attemptLimitForTopic(topic){
+    var count = poolCountForTopic(topic);
+    if (count >= 18) return 8;
+    if (count >= 10) return 7;
+    if (count >= 6) return 6;
+    if (count >= 4) return 6;
+    return 5;
+  }
   function sanitizeBankRows(){
     if (typeof QBANK === 'undefined' || !QBANK || typeof QBANK !== 'object') return;
     Object.keys(QBANK).forEach(function(bankKey){
       if (!Array.isArray(QBANK[bankKey])) return;
-      var before = QBANK[bankKey].length; var seen = {}; var out = [];
+      var before = QBANK[bankKey].length; var seen = {}; var seenQuestion = {}; var out = [];
       QBANK[bankKey].forEach(function(row){
         if (!row || typeof row !== 'object') return;
         var meta = { grade: Number(row.g || row.grade || row.cls || window.GRADE_NUM || 0) || 0, topicName: cleanText(row.topic || row.tag || bankKey), topicId: cleanText(row.topic || row.tag || bankKey), subjectId: bankKey };
         var normalized = sanitizeQuestion({ question: row.q != null ? row.q : row.question, answer: row.a != null ? row.a : row.answer, options: row.opts != null ? row.opts : (row.options != null ? row.options : row.o), hint: row.h != null ? row.h : row.hint, tag: row.topic != null ? row.topic : (row.tag != null ? row.tag : bankKey), isMath: !!row.isMath, grade: meta.grade }, meta);
         if (!normalized.question || !normalized.answer || !Array.isArray(normalized.options) || normalized.options.length < 2) { pushIssue('bad-bank-row', bankKey + '|' + meta.topicName); return; }
-        var key = questionKey(normalized.question, normalized.answer, normalized.tag, meta.grade); if (seen[key]) { report.bankDeduped += 1; return; } seen[key] = true;
+        var key = questionKey(normalized.question, normalized.answer, normalized.tag, meta.grade);
+        if (seen[key]) { report.bankDeduped += 1; return; }
+        var stemKey = promptKey(normalized.question, normalized.tag, meta.grade);
+        var answerKey = norm(normalized.answer);
+        if (Object.prototype.hasOwnProperty.call(seenQuestion, stemKey)) {
+          if (seenQuestion[stemKey] === answerKey) { report.bankQuestionDeduped += 1; return; }
+          report.bankQuestionConflicts += 1;
+          pushIssue('bank-question-conflict', bankKey + '|' + meta.topicName + '|' + normalized.question.slice(0, 120));
+          return;
+        }
+        seen[key] = true;
+        seenQuestion[stemKey] = answerKey;
         row.q = normalized.question; row.a = normalized.answer; row.opts = normalized.options.slice(); row.h = normalized.hint; row.topic = normalized.tag || bankKey; row.g = meta.grade; row.difficulty = normalized.difficulty; row.diffBucket = normalized.diffBucket; row.diffScore = normalized.diffScore; row.hint = normalized.hint; row.options = normalized.options.slice(); out.push(row); report.bankRowsSanitized += 1;
       });
       QBANK[bankKey] = out; report.bankStats[bankKey] = { before: before, after: out.length };
     });
+    expose();
   }
   function wrapTopics(){
     if (typeof SUBJ === 'undefined' || !Array.isArray(SUBJ)) return;
@@ -116,20 +168,67 @@
       if (!subject || !Array.isArray(subject.tops)) return;
       subject.tops.forEach(function(topic){
         if (!topic || typeof topic.gen !== 'function' || topic.gen.__wave63Wrapped) return;
-        var orig = topic.gen; var topicName = cleanText(topic.nm || topic.name || topic.id || ''); var bucketKey = [subject.id || subject.nm || 'subject', topic.id || topicName].join(':');
-        topic.gen = function(){ var q = orig.apply(this, arguments); var result = sanitizeQuestion(q, { grade: grade, subjectId: subject.id || '', topicId: topic.id || '', topicName: topicName }); var stats = report.topicStats[bucketKey] || (report.topicStats[bucketKey] = { subjectId: subject.id || '', topicId: topic.id || '', topicName: topicName, generated: 0, difficulty: { easy: 0, medium: 0, hard: 0 } }); stats.generated += 1; stats.difficulty[result.difficulty] = (stats.difficulty[result.difficulty] || 0) + 1; return result; };
+        var orig = topic.gen;
+        var topicName = cleanText(topic.nm || topic.name || topic.id || '');
+        var bucketKey = [subject.id || subject.nm || 'subject', topic.id || topicName].join(':');
+        var recent = [];
+        var seenPrompts = {};
+        var recentLimit = recentLimitForTopic(topic);
+        var maxAttempts = attemptLimitForTopic(topic);
+        topic.gen = function(){
+          var meta = { grade: grade, subjectId: subject.id || '', topicId: topic.id || '', topicName: topicName };
+          var attempts = 0;
+          var blocked = 0;
+          var result = null;
+          var resultPrompt = '';
+          while (attempts < maxAttempts) {
+            attempts += 1;
+            result = sanitizeQuestion(orig.apply(this, arguments), meta);
+            if (!result || !result.question) { resultPrompt = ''; break; }
+            resultPrompt = promptKey(result.question, result.tag || topicName, grade);
+            if (recent.indexOf(resultPrompt) === -1) break;
+            blocked += 1;
+          }
+          report.repeatAttempts += Math.max(0, attempts - 1);
+          report.recentRepeatBlocked += blocked;
+          if (resultPrompt && recent.indexOf(resultPrompt) !== -1 && blocked) report.repeatAccepted += 1;
+          if (resultPrompt) {
+            recent.push(resultPrompt);
+            while (recent.length > recentLimit) recent.shift();
+          }
+          var stats = report.topicStats[bucketKey] || (report.topicStats[bucketKey] = {
+            subjectId: subject.id || '',
+            topicId: topic.id || '',
+            topicName: topicName,
+            generated: 0,
+            liveBankCount: liveBankCount(topic),
+            poolCount: poolCountForTopic(topic),
+            uniquePromptCount: 0,
+            recentRepeatBlocked: 0,
+            repeatAccepted: 0,
+            difficulty: { easy: 0, medium: 0, hard: 0 }
+          });
+          stats.generated += 1;
+          stats.recentRepeatBlocked += blocked;
+          if (resultPrompt && !seenPrompts[resultPrompt]) { seenPrompts[resultPrompt] = 1; stats.uniquePromptCount += 1; }
+          if (resultPrompt && recent.indexOf(resultPrompt) !== -1 && blocked) stats.repeatAccepted += 1;
+          if (result && result.difficulty) stats.difficulty[result.difficulty] = (stats.difficulty[result.difficulty] || 0) + 1;
+          expose();
+          return result;
+        };
         topic.gen.__wave63Wrapped = true; topic.gen.__wave63Orig = orig; report.generatorsWrapped += 1;
       });
     });
+    expose();
   }
   function patchMkQ(){
     if (typeof window.mkQ !== 'function' || window.mkQ.__wave63Wrapped) return false;
-    var orig = window.mkQ; var wrapped = function(question, answer, options, hint, tag, color, bg, code, isMath){ var q = orig.apply(this, arguments); q.isMath = !!isMath; return sanitizeQuestion(q, { grade: Number(window.GRADE_NUM || 0) || 0, topicName: cleanText(tag) }); };
-    wrapped.__wave63Wrapped = true; wrapped.__wave63Orig = orig; window.mkQ = wrapped; try { mkQ = wrapped; } catch (_) {} return true;
+    var orig = window.mkQ;
+    var wrapped = function(question, answer, options, hint, tag, color, bg, code, isMath){ var q = orig.apply(this, arguments); q.isMath = !!isMath; return sanitizeQuestion(q, { grade: Number(window.GRADE_NUM || 0) || 0, topicName: cleanText(tag) }); };
+    wrapped.__wave63Wrapped = true; wrapped.__wave63Orig = orig; window.mkQ = wrapped; try { mkQ = wrapped; } catch (_) {} expose(); return true;
   }
   function snapshot(){ try { return JSON.parse(JSON.stringify(report)); } catch (_) { return report; } }
-  function init(){ wrapTopics(); sanitizeBankRows(); patchMkQ(); window.WAVE63_QUALITY_RUNTIME = snapshot(); return report; }
+  function init(){ wrapTopics(); sanitizeBankRows(); patchMkQ(); expose(); window.wave87iQuality = { auditSnapshot: snapshot }; return report; }
   init();
-  var retries = 0; (function latePatch(){ var ready = patchMkQ(); if (ready || retries > 12) { window.WAVE63_QUALITY_RUNTIME = snapshot(); return; } retries += 1; setTimeout(latePatch, 50); })();
+  var retries = 0; (function latePatch(){ var ready = patchMkQ(); if (ready || retries > 12) { expose(); return; } retries += 1; setTimeout(latePatch, 50); })();
 })();
-//# sourceMappingURL=chunk_subject_expansion_wave63_quality.ce03edc00c.js.map
