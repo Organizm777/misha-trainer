@@ -1,0 +1,25 @@
+name: Validate question banks
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Assert no orphan hashed assets
+        run: node tools/cleanup_build_artifacts.mjs --check
+
+      - name: Validate question generators
+        run: node tools/validate_questions.js

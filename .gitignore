@@ -1,0 +1,21 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# local runtime / package noise
+node_modules/
+coverage/
+.nyc_output/
+.lighthouseci/
+
+# local audit outputs
+run-*.json
+*.log
+
+# generated drafts and ad-hoc archives
+tools/generated/
+*.zip

@@ -1,12 +1,12 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave87j",
-  "version": "trainer-build-wave87j-2026-04-23",
-  "build_id": "wave87j",
+  "wave": "wave87l",
+  "version": "trainer-build-wave87l-2026-04-23",
+  "build_id": "wave87l",
   "generated_at_utc": "2026-04-23T00:00:00Z",
   "git_sha": null,
-  "hashed_asset_count": 100,
+  "hashed_asset_count": 94,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -25,5 +25,5 @@
     "grade10_v2.html",
     "grade11_v2.html"
   ],
-  "cache": "trainer-build-wave87j-2026-04-23"
+  "cache": "trainer-build-wave87l-2026-04-23"
 }

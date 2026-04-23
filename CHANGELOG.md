@@ -1,3 +1,17 @@
+## wave87l — 2026-04-23
+
+- B1/B2 follow-up (#9/#10): расширены банки начальной школы без новых page-level scripts — `grade1_data`, `grade2_data`, `grade3_data` заметно выросли и получили 16 новых explicit-topic банков с `q/a/o/h/ex`.
+- B7/#17 partial: выборочно исправлены спорные формулировки в младших классах — нормализованы фразы времени во 2 классе, теория про Байкал больше не утверждает, что это самое большое озеро, а вопрос про океаны в 3 классе использует вариант с 5 океанами.
+- Tooling: добавлены `tools/audit_primary_content_wave87l.mjs`, `tools/rebuild_hashed_assets.mjs` и `docs/PRIMARY_CONTENT_wave87l.md`; обновлены `CLAUDE.md` и `tools/README.md`.
+- Build: пересобраны hashed data-бандлы 1–3 классов, обновлены `grade1_v2.html`, `grade2_v2.html`, `grade3_v2.html`, `asset-manifest.json`, `healthz.json` и SW cache name на wave87l.
+
+## wave87k — 2026-04-23
+
+- A1: удалены 6 orphan hashed JS-ассетов, оставшихся после merge в `bundle_grade_runtime_wave86z`; `asset-manifest.json` сокращён с 100 до 94 live assets.
+- A7/F1: добавлен `tools/cleanup_build_artifacts.mjs` с режимами `--check` и `--apply`; в CI появился новый workflow `.github/workflows/validate-questions.yml`, который валидирует отсутствие orphan assets и запускает `tools/validate_questions.js` на каждый push/PR.
+- D6: режим повторения ошибок стал заметнее на grade-страницах — верхняя кнопка переименована в `🔁 Ошибки`, а main-actions теперь показывают CTA на spaced repetition / журнал, если у ученика уже накоплены ошибки.
+- Docs: обновлены `CLAUDE.md`, `tools/README.md`, добавлен `docs/BUILD_CLEANUP_CI_wave87k.md`; SW cache/healthz/asset-manifest синхронизированы на wave87k.
+
 ## wave87j — 2026-04-23
 
 - B6: продолжен pass по глубине 11 класса без новых page-level scripts: в grade11 split gap-balance chunk добавлены 10 live-bank тем для English, History, Literature, Biology, Informatics, Russian и Geography.

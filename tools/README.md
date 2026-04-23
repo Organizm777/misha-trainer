@@ -15,17 +15,27 @@ ANTHROPIC_API_KEY=... node tools/generate_content_claude.mjs \
 
 Every generated item is validated before writing: four distinct options, answer included in options, non-empty hint and explanation.
 
+## Hash rebuild helper
+
+```bash
+node tools/rebuild_hashed_assets.mjs assets/_src/js/grade1_data.js
+node tools/rebuild_hashed_assets.mjs assets/_src/js/grade2_data.js assets/_src/js/grade3_data.js
+```
+
+- `rebuild_hashed_assets.mjs` recalculates the content hash for one or more source JS/CSS assets under `assets/_src`, writes new built files under `assets/js` or `assets/css`, updates `asset-manifest.json`, rewrites runtime references in HTML/SW, and removes the superseded hashed asset files.
+
 ## Release audits
 
 ```bash
+node tools/cleanup_build_artifacts.mjs --check
 node tools/audit_offline_readiness_wave86y.mjs
 node tools/audit_diagnostic_runtime_wave86y.js
 node tools/validate_questions.js
 ```
 
 - `audit_offline_readiness_wave86y.mjs` checks local HTML dependencies, SW precache coverage, critical CSP bridge placement and diagnostic offline coverage.
+- `cleanup_build_artifacts.mjs` detects hashed assets that survived a merge/rebundle but are no longer referenced by HTML/SW/runtime. It scans only runtime-bearing files and ignores documentation mentions. `--check` is CI-safe, `--apply` removes the orphan files and syncs `asset-manifest.json` + `healthz.json`.
 - `audit_diagnostic_runtime_wave86y.js` executes all `diagnostic.html` scripts in an offline-stub VM.
-- `validate_questions.js` samples topic generators across grade pages and validates question invariants. Use `GRADE_FILTER=10` or `GRADE_FILTER=10,11` for isolated heavy-grade runs.
 - `audit_literature_live_banks_wave87a.mjs` — verifies the wave87a Literature 5–9 live banks and checks that old generic stems are not emitted.
 - `audit_obzh_live_banks_wave87b.mjs` — verifies the wave87b ОБЖ 8–11 scenario banks and checks that old generic stems are not emitted.
 - `audit_grade10_oly_split_wave87c.mjs` — verifies the nested split of grade10 Olympiad shell/topic chunks, SW/manifest coverage and sample generation.
@@ -38,3 +48,4 @@ node tools/validate_questions.js
 
 - `validate_questions.js` samples topic generators across grade pages and validates question invariants. Since wave87i it also reports immediate repeats, low-diversity live topics and quality-pass repeat metrics. Use `GRADE_FILTER=10` or `GRADE_FILTER=10,11` for isolated heavy-grade runs.
 - `audit_question_repeat_guard_wave87i.mjs` — samples rich live-bank topics across grade pages and asserts that the wave87i repeat guard prevents immediate duplicate prompts in short runs.
+- `audit_primary_content_wave87l.mjs` — verifies the wave87l primary-school pass: minimum source sizes for grades 1–3, new topic injections, and removal of the flagged compact fact strings.

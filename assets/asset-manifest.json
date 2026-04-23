@@ -1,5 +1,5 @@
 {
-  "version": "trainer-build-wave87j-2026-04-23",
+  "version": "trainer-build-wave87l-2026-04-23",
   "assets": {
     "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.ec9d3658ee.js",
     "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.5592be36f3.js",
@@ -8,7 +8,6 @@
     "assets/js/bundle_exam.js": "assets/js/bundle_exam.21c1f611f3.js",
     "assets/js/bundle_gamification_meta.js": "assets/js/bundle_gamification_meta.9853e9e1bb.js",
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
-    "assets/js/bundle_grade_after.js": "assets/js/bundle_grade_after.c926100b23.js",
     "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.6f6ed7e2ff.js",
     "assets/js/bundle_sharing.js": "assets/js/bundle_sharing.75450d41f8.js",
     "assets/js/bundle_shell.js": "assets/js/bundle_shell.366a4cb99e.js",
@@ -28,10 +27,9 @@
     "assets/js/wave35_plans.js": "assets/js/wave35_plans.f812119619.js",
     "assets/css/engine10.css": "assets/css/engine10.dac1e147e6.css",
     "assets/js/chunk_subject_expansion_wave86l_grade3_balance.js": "assets/js/chunk_subject_expansion_wave86l_grade3_balance.9681242b09.js",
-    "assets/js/chunk_roadmap_wave86n_progress_tools.js": "assets/js/chunk_roadmap_wave86n_progress_tools.5ea23f6884.js",
-    "assets/js/grade1_data.js": "assets/js/grade1_data.a728a30cc1.js",
-    "assets/js/grade2_data.js": "assets/js/grade2_data.1f7b131a74.js",
-    "assets/js/grade3_data.js": "assets/js/grade3_data.78f22d6f28.js",
+    "assets/js/grade1_data.js": "assets/js/grade1_data.849d4685a8.js",
+    "assets/js/grade2_data.js": "assets/js/grade2_data.f40df3930a.js",
+    "assets/js/grade3_data.js": "assets/js/grade3_data.b9452acec4.js",
     "assets/js/grade4_data.js": "assets/js/grade4_data.ae2182085f.js",
     "assets/js/grade5_data.js": "assets/js/grade5_data.2b413fd414.js",
     "assets/js/grade6_data.js": "assets/js/grade6_data.5b7810f079.js",
@@ -40,10 +38,7 @@
     "assets/js/grade9_data.js": "assets/js/grade9_data.7d10c4283c.js",
     "assets/js/grade10_data.js": "assets/js/grade10_data.5f2c838ca3.js",
     "assets/js/grade11_data.js": "assets/js/grade11_data.11d53fbdce.js",
-    "assets/js/chunk_roadmap_wave86p_exam_challenge.js": "assets/js/chunk_roadmap_wave86p_exam_challenge.81248aa084.js",
-    "assets/js/chunk_roadmap_wave86v_pvp_link_battle.js": "assets/js/chunk_roadmap_wave86v_pvp_link_battle.d35f7278e6.js",
     "assets/js/chunk_roadmap_wave86q_accessibility_theme.js": "assets/js/chunk_roadmap_wave86q_accessibility_theme.a6ac36dee7.js",
-    "assets/js/chunk_roadmap_wave86r_theory_achievements.js": "assets/js/chunk_roadmap_wave86r_theory_achievements.0808ca8686.js",
     "assets/js/chunk_grade10_lazy_wave86s.js": "assets/js/chunk_grade10_lazy_wave86s.a4dfbc74fa.js",
     "assets/js/grade10_subject_alg_wave86s.js": "assets/js/grade10_subject_alg_wave86s.cc39201fe2.js",
     "assets/js/grade10_subject_geo_wave86s.js": "assets/js/grade10_subject_geo_wave86s.ce2eac1303.js",
@@ -79,7 +74,6 @@
     "assets/js/inline_tests_2_wave86u.js": "assets/js/inline_tests_2_wave86u.a5635ca67e.js",
     "assets/js/inline_tests_3_wave86u.js": "assets/js/inline_tests_3_wave86u.44cd1ed1d0.js",
     "assets/js/chunk_roadmap_wave86u_csp_bridge.js": "assets/js/chunk_roadmap_wave86u_csp_bridge.7f8759c23f.js",
-    "assets/js/chunk_roadmap_wave86w_cloud_sync.js": "assets/js/chunk_roadmap_wave86w_cloud_sync.e8c4ea23ca.js",
     "assets/js/chunk_roadmap_wave86x_style_csp_bridge.js": "assets/js/chunk_roadmap_wave86x_style_csp_bridge.f696c42cb6.js",
     "assets/css/wave86x_inline_diagnostic.css": "assets/css/wave86x_inline_diagnostic.0bd1520b48.css",
     "assets/css/wave86x_inline_tests.css": "assets/css/wave86x_inline_tests.45c5256157.css",
@@ -103,5 +97,5 @@
     "assets/js/chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d.js": "assets/js/chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d.fed5692d21.js"
   },
   "generated_at": "2026-04-23T00:00:00Z",
-  "hashed_asset_count": 100
+  "hashed_asset_count": 94
 }

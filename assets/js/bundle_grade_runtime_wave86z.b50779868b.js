@@ -1694,6 +1694,18 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     const lastMeta = last ? findTopicMeta(last.subjId, last.topicId) : null;
     const snapMeta = snap && snap.subjectId && snap.topicId ? findTopicMeta(snap.subjectId, snap.topicId) : null;
     const parts = [];
+    try {
+      const review = typeof getReviewSummary === 'function' ? getReviewSummary() : null;
+      if(review && review.total){
+        const hasDue = review.due > 0;
+        const title = hasDue ? 'Повторить ошибки' : 'Журнал ошибок';
+        const meta = hasDue
+          ? `на сегодня ${review.due} · сложные ${review.sticky} · закреплены ${review.mastered}`
+          : `в журнале ${review.total} · сложные ${review.sticky} · закреплены ${review.mastered}`;
+        const action = hasDue ? 'startDueReview()' : 'showJournal()';
+        parts.push(`<button type="button" class="scard" onclick="${action}"><div class="ic" style="background:var(--obg);color:var(--orange)">🔁</div><div style="flex:1"><div class="nm">${title}</div><div class="dt">${meta}</div></div></button>`);
+      }
+    } catch(e){}
     if(snap && snap.prob){
       const count = ((snap.st && (snap.st.ok + snap.st.err)) || 0);
       const label = snapMeta ? `${snapMeta.subj.nm} → ${snapMeta.topic.nm}` : (snap.sessionMode === 'error-review' ? 'Повтор ошибок' : 'Незавершённая сессия');
@@ -3893,9 +3905,9 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   };
 
   function patchMainJournalButton(){
-    document.querySelectorAll('button[onclick*="showJournal"]').forEach(function(btn){
+    document.querySelectorAll('button[onclick*="showJournal"],button[data-wave87e-click="show-journal"]').forEach(function(btn){
       var txt = (btn.textContent || '').trim();
-      if (txt.indexOf('Слабые') !== -1) btn.textContent = '🔁 Повторение';
+      if (txt.indexOf('Слабые') !== -1 || txt.indexOf('Повторение') !== -1 || txt.indexOf('Ошибки') !== -1) btn.textContent = '🔁 Ошибки';
     });
   }
   patchMainJournalButton();

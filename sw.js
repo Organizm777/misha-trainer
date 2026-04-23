@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave87j-2026-04-23';
+const CACHE_NAME = 'trainer-build-wave87l-2026-04-23';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -91,9 +91,9 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade9_wave87d.0cfd6b7a6b.js',
   './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade10_wave87d.fed9ebd45c.js',
   './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d.fed5692d21.js',
-  './assets/js/grade1_data.a728a30cc1.js',
-  './assets/js/grade2_data.1f7b131a74.js',
-  './assets/js/grade3_data.78f22d6f28.js',
+  './assets/js/grade1_data.849d4685a8.js',
+  './assets/js/grade2_data.f40df3930a.js',
+  './assets/js/grade3_data.b9452acec4.js',
   './assets/js/grade4_data.ae2182085f.js',
   './assets/js/grade5_data.2b413fd414.js',
   './assets/js/grade6_data.5b7810f079.js',
