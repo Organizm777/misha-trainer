@@ -2,7 +2,7 @@
 
 ## Цель
 
-Актуализированное ревью отметило, что HTML теперь зависит от двух CSP bridge-файлов: script bridge для data-wave86u-on-* и style bridge для data-wave86x-style. Если эти файлы не доступны в offline/PWA режиме, часть UI становится неработоспособной.
+Актуализированное ревью отметило, что HTML теперь зависит от двух CSP bridge-файлов: script bridge для data-wave86u-on-* и style bridge для legacy runtime styles. Если эти файлы не доступны в offline/PWA режиме, часть UI становится неработоспособной.
 
 ## Решение
 

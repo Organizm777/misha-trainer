@@ -1,20 +1,66 @@
-name: Lighthouse budget
+name: Lighthouse budget check
 
-on:
+"on":
   pull_request:
   push:
     branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: lighthouse-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lhci:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+
+      - name: Fetch base branch for LHCI ancestry
+        if: github.event_name == 'pull_request'
+        run: git fetch --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Run Lighthouse CI budgets
-        run: npx --yes @lhci/cli autorun --config=.lighthouserc.json
+
+      - name: Resolve Chrome path
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          echo "CHROME_PATH=${CHROME_PATH}" >> "$GITHUB_ENV"
+
+      - name: Static preflight budgets
+        run: |
+          node tools/cleanup_build_artifacts.mjs --check
+          node tools/audit_performance_wave86z.mjs
+          node tools/audit_static_events_wave87e.mjs
+
+      - name: Install Lighthouse CI CLI
+        run: npm install --no-save --no-audit --no-fund @lhci/cli@0.15.1
+
+      - name: LHCI healthcheck
+        run: npx lhci healthcheck --fatal
+
+      - name: Collect Lighthouse runs
+        run: npx lhci collect --config=.lighthouserc.json
+
+      - name: Assert Lighthouse budgets
+        run: npx lhci assert --config=.lighthouserc.json
+
+      - name: Upload Lighthouse artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouseci-${{ github.run_id }}
+          path: .lighthouseci
+          if-no-files-found: warn
+          retention-days: 7

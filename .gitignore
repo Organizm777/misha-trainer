@@ -19,3 +19,6 @@ run-*.json
 # generated drafts and ad-hoc archives
 tools/generated/
 *.zip
+
+# local fact-review sampling
+/_tmp_question_samples*.json

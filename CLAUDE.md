@@ -33,8 +33,11 @@
 
 - `bundle_shell.*.js` — обёртка: header, навигация, хэш-роутинг, wave36_perf (кеш DOM-запросов). Preload с `fetchpriority=high`.
 - `chunk_grade_content_wave*_wave86t.*.js` — split runtime-injection контента по исходным wave-секциям. Grade-страницы подключают только нужные секции; 10 класс после wave86s обходится без общего content-бандла.
-- `bundle_grade_runtime_wave86z.*.js` (~546 KB) — merged runtime bundle grade-страниц. Внутри живут former `bundle_grade_after`, `chunk_roadmap_wave86n/p/r/v/w`, `bundle_gamification_xp`, `bundle_gamification_meta`, `bundle_sharing`, `bundle_profile_social`, `bundle_error_tracking`.
-- Standalone hashed outputs этих модулей больше не должны лежать в live build: в wave87k 6 orphan JS-ассетов удалены, а контроль вынесен в `tools/cleanup_build_artifacts.mjs --check`.
+- `bundle_grade_runtime_core_wave87n.*.js` (~262 KB) — eager core runtime grade-страниц. Внутри: `chunk_roadmap_wave86q_accessibility_theme`, `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `bundle_error_tracking`.
+- `bundle_grade_runtime_features_wave87n.*.js` (~141 KB) — lazy features bundle: `chunk_roadmap_wave86r_theory_achievements`, `chunk_roadmap_wave86p_exam_challenge`, `chunk_roadmap_wave86v_pvp_link_battle`, `bundle_gamification_xp`, `bundle_gamification_meta`.
+- `bundle_grade_runtime_services_wave87n.*.js` (~157 KB) — lazy services bundle: `bundle_sharing`, `bundle_profile_social`, `chunk_roadmap_wave86w_cloud_sync`.
+- `window.wave87nRuntimeSplit` живёт в core bundle: он замеряет `interactive`, пишет perf-сэмплы в `localStorage.trainer_perf_samples_wave87n_<grade>`, на idle/timeout догружает features/services и умеет `hydrateForAction()` для раннего клика по profile/report/backup actions.
+- Старый merged `bundle_grade_runtime_wave86z.*.js` удалён из live build. Standalone hashed outputs контекстных модулей по-прежнему могут существовать для других страниц (например, diagnostic), а контроль orphan build-artifacts остаётся в `tools/cleanup_build_artifacts.mjs --check`.
 - `grade{1..11}_data.*.js` — внешние данные вопросов по классам. С wave86o классы 1–7 вынесены из inline HTML; с wave86s `grade10_data` стал лёгким shell, а тяжёлые банки 10 класса живут в `grade10_subject_*_wave86s.*.js` и подгружаются lazy-loader'ом.
 - `SUBJ` определяется в grade-data файлах **до** `wave35_plans`/content-injection/`engine10`; порядок defer-скриптов важен.
 
@@ -47,9 +50,9 @@
 - `bundle_boosters.*.js`: расширение банков, особенно 10 класс;
 - wave-чанки `chunk_subject_expansion_wave31/32/33/38/56/57/58/59/60/61/63.*.js`: дополнительные темы и предметы, которые добавляются после базового `SUBJ`.
 
-Перед gap-анализом нужно загружать страницу класса в том же порядке, что браузер: grade-data → `wave35_plans` → нужные `chunk_grade_content_wave*_wave86t` → wave-чанки → `engine10` → `bundle_grade_runtime_wave86z`. Иначе аудит снова покажет ложные «пробелы».
+Перед gap-анализом нужно загружать страницу класса в том же порядке, что браузер: grade-data → `wave35_plans` → нужные `chunk_grade_content_wave*_wave86t` → wave-чанки → `engine10` → `bundle_grade_runtime_core_wave87n` (после этого lazy features/services могут догрузиться сами, но на карту предметов они не влияют). Иначе аудит снова покажет ложные «пробелы».
 
-Former standalone runtime-слои `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `chunk_roadmap_wave86p_exam_challenge`, `chunk_roadmap_wave86r_theory_achievements`, `chunk_roadmap_wave86v_pvp_link_battle`, `chunk_roadmap_wave86w_cloud_sync` сейчас логически существуют как внутренние секции `bundle_grade_runtime_wave86z.*.js`. Для content-аудита это по-прежнему non-content UX/runtime code, но браузер больше не должен тянуть их как отдельные hashed assets.
+Former standalone runtime-слои `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `chunk_roadmap_wave86p_exam_challenge`, `chunk_roadmap_wave86r_theory_achievements`, `chunk_roadmap_wave86v_pvp_link_battle`, `chunk_roadmap_wave86w_cloud_sync` теперь распределены между `bundle_grade_runtime_core_wave87n`, `bundle_grade_runtime_features_wave87n` и `bundle_grade_runtime_services_wave87n`. Для content-аудита это по-прежнему non-content UX/runtime code.
 
 ## Service Worker — правила
 
@@ -78,14 +81,14 @@ Former standalone runtime-слои `bundle_grade_after`, `chunk_roadmap_wave86n_
 
 ```
 script-src 'self' blob:;
-style-src 'self' blob: https://fonts.googleapis.com;
-style-src-elem 'self' blob: https://fonts.googleapis.com;
+style-src 'self' https://fonts.googleapis.com;
+style-src-elem 'self' https://fonts.googleapis.com;
 style-src-attr 'none';
 ```
 
 - Inline `<script>` в HTML запрещены и должны выноситься во внешние hashed chunks.
 - Static HTML `on*=` обработчики запрещены; новый код должен использовать `addEventListener`. Transitional runtime-generated markup обслуживает `chunk_roadmap_wave86u_csp_bridge.*.js`.
-- Static HTML inline `style="..."` и `<style>` запрещены; legacy runtime styles обслуживает `chunk_roadmap_wave86x_style_csp_bridge.*.js`, поэтому `blob:` пока остаётся обязательным в `style-src` / `style-src-elem`.
+- Static HTML inline `style="..."` и `<style>` запрещены; public HTML больше не содержит transitional `data-wave86x-style`, а legacy runtime styles funnel'ятся через runtime-only shim `chunk_roadmap_wave86x_style_csp_bridge.*.js` в same-origin CSSOM sheet, поэтому `style-src` / `style-src-elem` больше не требуют `blob:`.
 - **Без `unsafe-eval`** — не использовать `eval()` и `new Function()`.
 - Внешние домены: `fonts.googleapis.com`, `fonts.gstatic.com`, `api.npoint.io`.
 
@@ -96,25 +99,29 @@ style-src-attr 'none';
   - header `position:sticky` с динамически появляющимся `.hbadge`.
   Нужен DevTools CLS-timeline на реальном мобильном viewport для точной диагностики.
 
-## Локальный Lighthouse-запуск
+## Локальный Lighthouse / LHCI запуск
+
+С wave87s CI больше не использует `lhci autorun` и не поднимает `http-server` вручную для статического сайта. Базовая локальная проверка теперь такая же, как в CI:
 
 ```bash
-# 1. Поднять сервер (http-server с no-cache)
-npx --yes http-server -p 8765 -c-1 --silent &
+# 1. Убедиться, что Chromium/Chrome доступен
+export CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
 
-# 2. 3 прогона Lighthouse (headless Chrome)
-for i in 1 2 3; do
-  npx --yes lighthouse http://127.0.0.1:8765/index.html \
-    --only-categories=performance \
-    --chrome-flags="--headless=new --no-sandbox --disable-gpu" \
-    --output=json --output-path=./run-$i.json --quiet
-done
+# 2. Установить LHCI CLI локально (без package.json в репозитории)
+npm install --no-save --no-audit --no-fund @lhci/cli@0.15.1
 
-# 3. Извлечь медиану метрик — см. commit history для готовых node -e сниппетов.
+# 3. Repo preflight
+node tools/cleanup_build_artifacts.mjs --check
+node tools/audit_performance_wave86z.mjs
+node tools/audit_static_events_wave87e.mjs
 
-# 4. Остановить сервер
-taskkill //F //IM node.exe //FI "COMMANDLINE eq *http-server*"
+# 4. LHCI run
+npx lhci healthcheck --fatal
+npx lhci collect --config=.lighthouserc.json
+npx lhci assert --config=.lighthouserc.json
 ```
+
+`.lighthouserc.json` использует `collect.staticDistDir: "./"` и сам поднимает временный localhost для `index.html?choose`, `grade3_v2.html` и `grade10_v2.html`. Для release-аудита инфраструктуры есть `node tools/audit_lighthouse_ci_wave87s.mjs`.
 
 ## Deployment
 
@@ -179,7 +186,7 @@ C4 закрыт как payload split без роста precache-дублей: м
 
 ### wave86u strict script CSP bridge
 
-C5 начинался в wave86u с `script-src`: CSP перестал содержать `'unsafe-inline'` в `script-src` на HTML-страницах. Начиная с wave86x, style-side тоже переведён на strict CSP: inline `<style>` вынесены во внешние hashed CSS assets, static `style="..."` заменены на `data-wave86x-style`, а `style-src` / `style-src-elem` / `style-src-attr` не содержат `'unsafe-inline'`.
+C5 начинался в wave86u с `script-src`: CSP перестал содержать `'unsafe-inline'` в `script-src` на HTML-страницах. Начиная с wave86x, style-side тоже переведён на strict CSP: inline `<style>` вынесены во внешние hashed CSS assets, static HTML очищен от inline `style`, а к wave87p transitional `data-wave86x-style` полностью исчез из public HTML. `style-src` / `style-src-elem` / `style-src-attr` по-прежнему не содержат `'unsafe-inline'`.
 
 `chunk_roadmap_wave86u_csp_bridge.*.js` подключается ранним blocking script в `<head>` всех HTML-страниц. Он делает две вещи: ранний bootstrap `data-theme` вместо прежнего inline `<script>` и compatibility layer для legacy inline handlers. Static HTML `on*=` обработчики переведены в `data-wave86u-on-*`. Runtime-generated legacy markup всё ещё может принести `onclick/oninput/onkeydown/onchange/onload/onerror`; compatibility layer через `MutationObserver` переносит такие атрибуты в `data-wave86u-on-*`, удаляет исходные `on*` атрибуты и обрабатывает события централизованными `addEventListener` listeners.
 
@@ -215,11 +222,13 @@ For Firebase, the chunk writes one Firestore document per `{syncId}-grade-{grade
 
 ### wave86x strict style CSP bridge
 
-`chunk_roadmap_wave86x_style_csp_bridge.*.js` подключается сразу после `chunk_roadmap_wave86u_csp_bridge.*.js` в `<head>` всех HTML-страниц. Его задача — закрыть style-side часть C5 без переписывания всех старых runtime-шаблонов за один проход.
+`chunk_roadmap_wave86x_style_csp_bridge.*.js` подключается сразу после `chunk_roadmap_wave86u_csp_bridge.*.js` в `<head>` всех HTML-страниц. Legacy logical asset name сохранён, но с wave87p это уже runtime-only shim: он больше не читает `data-wave86x-style` и не обслуживает static HTML migration.
 
-Static HTML больше не содержит inline `<style>` и `style="..."`: крупные блоки вынесены в `assets/css/wave86x_inline_*.css`, а бывшие style-атрибуты стали `data-wave86x-style`. Bridge читает эти атрибуты, генерирует безопасные CSS classes в blob stylesheet и удаляет transitional data-атрибут. Runtime-generated legacy markup, который всё ещё создаёт `style="..."` или `<style>...</style>`, также мигрируется через `MutationObserver`.
+Static HTML по-прежнему не содержит inline `<style>` и `style="..."`: крупные блоки вынесены в `assets/css/wave86x_inline_*.css`, а бывшие статические style-атрибуты уже преобразованы в обычные CSS classes (`wave86z_static_style_classes.*.css`). Shim нужен только для legacy runtime-markup, который всё ещё создаёт `style="..."` или `<style>...</style>` строками/DOM API.
 
-CSP для HTML-страниц теперь использует `style-src 'self' blob: https://fonts.googleapis.com`, `style-src-elem 'self' blob: https://fonts.googleapis.com` и `style-src-attr 'none'`. Новая UI-разработка не должна добавлять inline styles в HTML; использовать CSS classes или external CSS. Bridge нужен как compatibility layer для старых строковых шаблонов. Для legacy handlers вида `this.closest('div[style*=fixed]')` bridge ставит `data-wave86x-fixed="1"` на бывшие fixed overlays и патчит `Element.closest()` для обратной совместимости.
+С wave87q shim больше не создаёт blob stylesheet. Вместо этого он находит уже загруженный same-origin `wave86z_static_style_classes.*.css` и переносит runtime styles в этот stylesheet через CSSOM `insertRule(...)`, сохраняя `MutationObserver`-скраббер и compat для legacy `this.closest('div[style*=fixed]')` через `data-wave87p-fixed="1"` + `data-wave86x-fixed="1"`.
+
+CSP для HTML-страниц теперь может быть строже: `style-src 'self' https://fonts.googleapis.com`, `style-src-elem 'self' https://fonts.googleapis.com`, `style-src-attr 'none'`. Новая UI-разработка всё равно не должна добавлять inline styles ни в HTML, ни в runtime-строки; использовать CSS classes или external CSS. Runtime hotspots ещё есть в source, но roadmap `#5` закрывается уже на уровне bridge/CSP. Для release-check использовать `node tools/audit_style_csp_wave87q.mjs`; старый `node tools/audit_runtime_style_shim_wave87p.mjs` остаётся как hotspot-report для дальнейшей чистки.
 
 
 ## wave86y offline/CSP resilience
@@ -251,9 +260,24 @@ When editing this layer, update the relevant grade-specific source under `assets
 
 ### wave87e static event actions
 
-Static HTML should not use `data-wave86u-on-*` anymore. wave87e replaced all static `data-wave86u-on-click="..."` attributes with compact `data-wave87e-click="action-id"` tokens. The early CSP bridge installs a delegated `addEventListener('click', ...)` and dispatches only known action ids through a `switch`; it does not parse expression text for static controls.
+Historical note: wave87e introduced compact static action ids to replace `data-wave86u-on-click="..."` markup. That bridge-based dispatch path is no longer the current pattern, but the audit name is kept for continuity.
 
-The legacy wave86u parser stays only for runtime-generated older markup that may still produce inline `onclick`/`oninput` attributes. New static UI must add a real listener or a `data-wave87e-click` action plus an explicit switch case, then run `node tools/audit_static_events_wave87e.mjs`.
+### wave87r direct static bindings
+
+Static HTML must not use `data-wave86u-on-*` or legacy `data-wave87e-click` anymore. Public pages now keep only passive `data-wave87r-action` markers, and the owning bundles (`bundle_grade_runtime_core_wave87n`, `inline_dashboard_1_wave86u`, `inline_diagnostic_1_wave86u`, `inline_tests_3_wave86u`) attach direct listeners with `addEventListener(...)`.
+
+`chunk_roadmap_wave86u_csp_bridge` still strips and executes legacy runtime-generated inline handlers, but it no longer dispatches static page actions. Grade-runtime direct handlers must continue to call `wave87nRuntimeSplit.hydrateForAction()` before opening lazy features like badges, profile, reports or backup.
+
+When changing static UI controls, bind them in the page/runtime bundle that owns the screen, keep `data-wave87r-action` only as a selector marker if needed, and re-run `node tools/audit_static_events_wave87e.mjs`, `node tools/audit_runtime_split_wave87n.mjs`, `node tools/cleanup_build_artifacts.mjs --check`, and `node tools/validate_questions.js`.
+
+### wave87s Lighthouse CI gate
+
+- Roadmap `#41` is now enforced with an explicit LHCI workflow instead of a bare `autorun`: see `.github/workflows/lighthouse-budget.yml`, `.lighthouserc.json`, `docs/LIGHTHOUSE_CI_wave87s.md`, `tools/audit_lighthouse_ci_wave87s.mjs`.
+- Because this repo is a static GitHub Pages app, the preferred LHCI shape is `collect.staticDistDir: "./"` with explicit localhost URLs, not `startServerCommand: http-server`.
+- Keep PR ancestry fixes in place: `actions/checkout` with `fetch-depth: 20` and the extra `git fetch ... github.base_ref ...` step. Removing them can reintroduce the known LHCI ancestor-hash failure on pull requests.
+- Hard-fail assertions are intentionally limited to more stable facts (`categories:accessibility`, `errors-in-console`, `total-byte-weight`); `categories:performance`, `largest-contentful-paint`, and `cumulative-layout-shift` stay warn-only because the project still has known mobile variance / unresolved CLS hotspots.
+- The workflow should keep uploading `.lighthouseci/` as a GitHub Actions artifact even on failed assertions, so regression triage does not depend on temporary public storage.
+
 ### wave87f senior social live banks
 
 The grade10/grade11 wave86m gap-balance split chunks include senior social-studies scenario banks. Do not add a separate page script for these banks; edit `assets/_src/js/chunk_subject_expansion_wave86m_gap_balance_grade10_wave87d.js` or grade11, rebuild the content hash, and update the matching HTML/SW/manifest references.
@@ -301,3 +325,59 @@ wave87l continues the roadmap pass for primary school data depth. `assets/_src/j
 The release also fixes a few content-level correctness issues in the compact primary banks: Russian half-hour clock phrasing is normalized in grade 2, the Байкал theory string no longer calls it the largest lake, and grade 3 uses the 5-ocean school variant including the Southern Ocean. Preserve these corrections when regenerating or compacting the primary data sources.
 
 Use `node tools/audit_primary_content_wave87l.mjs` for a focused source audit of the wave87l primary layer, then run `GRADE_FILTER=1,2,3 SAMPLE_PER_TOPIC=6 node tools/validate_questions.js` and the full `node tools/validate_questions.js` regression. For local rebuilds of touched source files, `node tools/rebuild_hashed_assets.mjs <assets/_src/...>` updates the built hashed asset, manifest and runtime references without hand-editing HTML/SW links.
+
+### wave87t fact-review pass
+
+Roadmap `#17` now has a deterministic first-pass audit: `node tools/audit_fact_review_wave87t.mjs`. The script samples 50 prompts per grade, then flags three lightweight classes of suspicious content: Latin-only answer labels outside English/Informatics, descriptive/list-like answers to `Как называется ...`, and long decimal outputs in primary-school topics. It also keeps direct source guards for the corrected grade1 phonetics stem, Roman history wording, water-cycle term answer, and the grade11 `source11_wave87j` localization.
+
+The fixed content constraints are now part of project memory: keep the Е/Ё/Ю/Я phonetics question scoped to the beginning of the word; keep Roman Republic wording centered on the Senate and elected magistrates rather than calling the Senate a generic elective organ; keep the grade6 water-cycle prompt answered by the term itself; keep grade11 history-source answer labels localized in Russian; and avoid elementary-speed generators that emit long repeating decimals in the visible answer.
+
+When editing these files (`grade1_data`, `grade4_data`, `grade5_data`, `bundle_boosters`, `chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d`), rebuild the touched hashes and rerun `node tools/audit_fact_review_wave87t.mjs`, then the full `node tools/validate_questions.js`, plus `node tools/cleanup_build_artifacts.mjs --check`.
+
+### wave87m grade10 → 11 transition banks
+
+wave87m starts roadmap item `#19` without widening the page shell: grade 10 now mounts a dedicated transition subject `bridge1011` (`Переход 10→11`) from `assets/_src/js/chunk_grade_content_wave87m_transition_1011.js`. The chunk injects six explicit-bank topics (`math_bridge`, `russian_bridge`, `physics_bridge`, `english_bridge`, `biology_bridge`, `chemistry_bridge`) after the English subject, so the bridge lives inside the existing grade10 runtime flow instead of adding a separate screen or data format.
+
+The same chunk also patches `diagnostic.html` by appending wave87m rows to `QBANK.algebra`, `geometry`, `russian`, `physics`, `english`, `biology`, and `chemistry`, then recomputes `QBANK.mathall`. Keep those rows tagged with `src: 'wave87m'` so focused audits can distinguish them from the older diagnostic pool.
+
+Use `node tools/audit_transition_1011_wave87m.mjs` for the dedicated audit, then run `GRADE_FILTER=10 SAMPLE_PER_TOPIC=4 node tools/validate_questions.js`, the full `node tools/validate_questions.js` regression, and `node tools/cleanup_build_artifacts.mjs --check`. When rebuilding this chunk, update `grade10_v2.html`, `diagnostic.html`, `sw.js`, `asset-manifest.json`, and `healthz.json` together.
+
+### wave87n runtime split / perf notes
+
+`tools/build_runtime_split_wave87n.mjs` — не просто hash-rebuild helper, а orchestration script: он собирает 3 runtime bundles (`core`/`features`/`services`), обновляет grade-page references, вычищает old merged runtime entry из manifest и синхронизирует SW/healthz. При следующей правке этих трёх бандлов лучше использовать именно его, а не ручной `rebuild_hashed_assets.mjs`.
+
+`chunk_roadmap_wave86u_csp_bridge.*.js` начиная с wave87n умеет вызывать `window.wave87nRuntimeSplit.hydrateForAction(action)` перед static click actions. Это важно для кнопок `show-profile`, `show-badges`, `generate-report`, `show-backup`, `share-report`: без этого быстрый первый клик мог открыть базовую engine-версию UI до lazy-патчей.
+
+
+### wave87q style CSP without blob
+
+wave87q закрывает roadmap `#5`: public HTML больше не держит `blob:` в `style-src` / `style-src-elem`. Runtime style shim (`chunk_roadmap_wave86x_style_csp_bridge.*.js`) теперь использует как CSSOM sink уже подключённый `wave86z_static_style_classes.*.css`, поэтому динамические `style=...` и `<style>...</style>` остаются совместимыми со strict CSP без object-URL stylesheet.
+
+Это не значит, что runtime style-tail вычищен из source. `engine10.js`, `bundle_grade_runtime_core_wave87n.js`, `bundle_grade_after.js` и другие файлы по-прежнему эмитят inline-style markup. Но этот хвост больше не блокирует CSP tightening: bridge принимает его, нормализует и вставляет rules в same-origin stylesheet. Проверка релиза для этого слоя: `node tools/audit_style_csp_wave87q.mjs`, затем `node tools/audit_offline_readiness_wave86y.mjs`, `node tools/cleanup_build_artifacts.mjs --check` и общий `node tools/validate_questions.js`.
+
+### wave87v rich formulas + code
+
+Roadmap items `#12` and `#13` now have an initial implementation without any new renderer work. The runtime already knows how to show `prob.code` inside `.qcode` and switch the main prompt to `.qmath` when `isMath` is truthy, so content work should prefer explicit-bank rows that actually use these fields.
+
+Current wave87v coverage:
+- grades 8, 9, 10, 11 now have rich algebra/math topics (`formula*w87v`)
+- grades 8, 9, 10, 11 now have rich physics topics (`calc*w87v`)
+- grades 8, 9, 10, 11 now have code-tracing informatics topics (`code*w87v`)
+- chemistry formulas/calculations now exist across 8–11 via `chemcalc*w87v` (grade10 lazy chunk, grade8/9 + grade11 expansion chunks)
+
+When extending this layer, prefer adding explicit `{q,a,o,h,ex,code,isMath}` rows near the owning subject bundle and re-run `node tools/audit_rich_content_wave87v.mjs`, the targeted `GRADE_FILTER=8,9,10,11 SAMPLE_PER_TOPIC=6 node tools/validate_questions.js`, then the full validator and `node tools/cleanup_build_artifacts.mjs --check`.
+
+### wave87w interactive formats
+
+Roadmap item `#14` now has a first renderer-aware implementation without rewriting `engine10`. Grades 8–11 mount an extra eager runtime patch (`bundle_grade_runtime_interactions_wave87w.*.js`) after `bundle_grade_runtime_core_wave87n.*.js`. The patch wraps `render()`, `nextQ()` and `ans()` only for rows that declare `interactionType`, so normal multiple-choice topics keep their existing behavior.
+
+Supported interactive row fields:
+- `interactionType: 'find-error' | 'sequence' | 'match'`
+- `errorSteps`
+- `sequenceItems` + optional `sequencePool`
+- `matchPairs` + optional `matchOptions`
+
+Content should keep living next to the owning subject bundle: grades 8/9/11 inside `grade*_data.js`, grade 10 inside the existing lazy `grade10_subject_*_wave86s.js` chunks. Because the base validator only checks `question/answer/options`, these rows still need normal `a/o` distractors even when the custom UI ignores the old button layout.
+
+Release check for this layer: `node tools/audit_interaction_formats_wave87w.mjs`, then `GRADE_FILTER=8,9,10,11 SAMPLE_PER_TOPIC=6 node tools/validate_questions.js`, the full `node tools/validate_questions.js`, and `node tools/cleanup_build_artifacts.mjs --check`.
+

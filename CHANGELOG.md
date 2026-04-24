@@ -1,3 +1,67 @@
+## wave87w — 2026-04-24
+
+- B2/B5 roadmap `#14`: added the first non-trivial interaction formats for grades 8–11 without rewriting `engine10`. A new eager runtime patch (`bundle_grade_runtime_interactions_wave87w`) enhances only rows that opt into `interactionType`, while the existing renderer still owns scoring, streaks, explanations and the error journal.
+- Content: rich algebra / physics / informatics topics from wave87v now include `find-error`, `sequence` and `match` rows; grade 10 keeps those rows inside its lazy subject chunks, and grade 11 now gains the previously missing interaction coverage.
+- Runtime behavior: complex interaction types reroll in rush mode so fast sessions stay lightweight; normal mode renders custom UIs for error-step selection, ordered algorithms and pair matching.
+- Validation follow-up: the grade10 English `reading_strategies` booster bank now keeps a tiny recent-row guard, so the seeded validator stays at `0` immediate repeats after the extra wave87w topics changed RNG consumption.
+- Tooling/docs: added `tools/audit_interaction_formats_wave87w.mjs` and `docs/INTERACTION_FORMATS_wave87w.md`; updated `CLAUDE.md`, `tools/README.md`, `healthz.json`, `asset-manifest.json` metadata and SW cache name for wave87w.
+
+## wave87v — 2026-04-24
+
+- B2/B5 roadmap `#12/#13`: added a first rich-content layer for grades 8–11 on top of the existing renderer, without adding new page-level scripts. The runtime already supported `prob.code` and `prob.isMath`, so the pass focuses on actual content rather than a new widget system.
+- Content: new explicit-bank topics now cover formula-heavy math/algebra, physics and chemistry plus code-tracing informatics. Added topic ids include `formula8/9/10/11w87v`, `calc8/9/10/11w87v`, `code8/9/10/11w87v`, `chemcalc8/9/10/11w87v`.
+- Grade integration: grades 8, 9 and 11 are patched directly in their grade data bundles; grade 10 keeps lazy subject loading through the existing `grade10_subject_*_wave86s` chunks; chemistry for grades 8/9 and 11 is injected through the existing science/senior expansion chunks.
+- Tooling/docs: added `tools/audit_rich_content_wave87v.mjs` and `docs/RICH_CONTENT_wave87v.md`; updated `CLAUDE.md`, `tools/README.md`, `healthz.json`, `asset-manifest.json` metadata and SW cache name for wave87v.
+
+## wave87t — 2026-04-24
+
+- B2/#17: completed the next fact-review pass with targeted content fixes across live banks and compact generators. Confirmed fixes include: grade 1 phonetics wording for Е/Ё/Ю/Я only in word-initial position, grade 4 speed generators now staying on clean integer-friendly pairs, refined Roman Republic / Senate wording in grade 5 + booster history, corrected the grade 6 water-cycle term answer, and fully localized the grade 11 history-source bank from English labels into Russian terms.
+- Tooling/docs: added `tools/audit_fact_review_wave87t.mjs` and `docs/FACT_REVIEW_wave87t.md`; the audit samples 50 prompts per grade, checks for Latin-only answer labels outside English/Informatics, descriptive answers to `Как называется ...`, long decimal outputs in primary grades, and keeps targeted guards for the fixed grade4/grade6/grade11 topics. It also syncs the older `tools/audit_grade11_depth_wave87j.mjs` parity assumption with the later wave87m 10→11 bridge, so the historical depth audit no longer fails on the now-expected 6-topic grade10 lead.
+- Build: rebuilt the touched hashed content bundles (`grade1_data`, `grade4_data`, `grade5_data`, `bundle_boosters`, `chunk_subject_expansion_wave86m_gap_balance_grade11_wave87d`) and prepared SW/healthz sync for wave87t.
+
+## wave87s — Lighthouse CI budget gate
+
+- F6/F7: upgraded `.github/workflows/lighthouse-budget.yml` from a minimal `lhci autorun` wrapper to an explicit Lighthouse CI gate for pull requests and manual runs.
+- CI now checks out with deeper git history, fetches the PR base branch for LHCI ancestry, resolves `CHROME_PATH`, runs static preflight audits, installs a pinned `@lhci/cli@0.15.1`, and stores `.lighthouseci` as an Actions artifact.
+- `.lighthouserc.json` now uses `collect.staticDistDir: "./"` for this static app, multi-run collection, explicit Chrome flags, and separates hard-fail budgets (a11y, console errors, byte weight) from warning-only metrics (performance category, LCP, CLS).
+- Added `tools/audit_lighthouse_ci_wave87s.mjs` and `docs/LIGHTHOUSE_CI_wave87s.md`.
+
+## wave87r — 2026-04-24
+
+- A4/#4 closed: static public pages no longer rely on `data-wave87e-click`; the remaining grade/dashboard/diagnostic/tests controls now use direct `addEventListener(...)` bindings in their owning JS bundles, while `data-wave87r-action` stays only as a passive selector marker.
+- CSP bridge cleanup: `chunk_roadmap_wave86u_csp_bridge` no longer dispatches static actions through a central switch. It remains only for legacy runtime-generated inline handlers, so the last static click shim is gone from the critical bridge path.
+- Runtime split compat: grade-page direct actions still go through `hydrateForAction()` before invoking lazy profile/badges/report/backup flows, so wave87n deferred bundles keep the same first-click behavior.
+- Tooling/docs: updated `tools/audit_static_events_wave87e.mjs`, `tools/README.md`, `CLAUDE.md`, added `docs/DIRECT_STATIC_BINDINGS_wave87r.md`, and prepared hashed asset rebuild + SW/healthz sync for the new bridge/runtime/dashboard/diagnostic/tests artifacts.
+
+## wave87q — 2026-04-24
+
+- A5/#5 closed: HTML CSP больше не использует `blob:` в `style-src` / `style-src-elem`; public pages теперь держат `style-src 'self' https://fonts.googleapis.com`, `style-src-elem 'self' https://fonts.googleapis.com`, `style-src-attr 'none'`.
+- Runtime/CSP bridge: `chunk_roadmap_wave86x_style_csp_bridge` больше не создаёт blob stylesheet. Вместо этого shim находит уже подключённый same-origin `wave86z_static_style_classes.*.css` и вносит runtime rules через CSSOM `insertRule(...)`, сохраняя поддержку legacy runtime `style=...`, `<style>...</style>` и fixed-overlay compat markers.
+- Tooling/docs: добавлены `tools/audit_style_csp_wave87q.mjs` и `docs/STYLE_CSP_wave87q.md`; обновлены `CLAUDE.md`, `tools/README.md`, `healthz.json`, `sw.js` и hashed bridge refs.
+- Follow-up: runtime style hotspots всё ещё существуют в source (`engine10.js`, `bundle_grade_runtime_core_wave87n.js`, `bundle_grade_after.js` и др.), но они больше не блокируют roadmap `#5`, потому что funnel идут в same-origin stylesheet вместо blob URL.
+
+## wave87p — 2026-04-23
+
+- A2/#3 partial: `chunk_roadmap_wave86x_style_csp_bridge` оставлен на legacy logical name, но упрощён до runtime-only shim — из него удалена migration-логика для `data-wave86x-style`; public HTML уже не использует этот transitional атрибут.
+- CSP/style guardrails: shim по-прежнему переносит только runtime-created `style="..."` и `<style>...</style>` в blob stylesheet и сохраняет совместимость с legacy `this.closest('div[style*=fixed]')` через `data-wave87p-fixed` + legacy marker `data-wave86x-fixed`.
+- Tooling/docs: добавлены `tools/audit_runtime_style_shim_wave87p.mjs` и `docs/RUNTIME_STYLE_SHIM_wave87p.md`; обновлены `CLAUDE.md`, `tools/README.md` и `docs/OFFLINE_CSP_RESILIENCE_wave86y.md`.
+- Offline follow-up: `sw.js` critical diagnostic precache синхронизирован с текущим `diagnostic.html` и теперь включает `chunk_grade_content_wave87m_transition_1011.*.js`, так что `audit_offline_readiness_wave86y.mjs` снова проходит без пропусков.
+- Audit result: static HTML по-прежнему clean (`data-wave86x-style=0`, inline `style=0`, inline `<style>=0`), но roadmap `#5` ещё открыт — remaining runtime style hotspots сосредоточены в `engine10.js`, `bundle_grade_runtime_wave86z.js`, `bundle_grade_runtime_core_wave87n.js` и `bundle_grade_after.js`, поэтому `blob:` пока остаётся в `style-src`.
+
+## wave87n — 2026-04-23
+
+- C2/N25: `bundle_grade_runtime_wave86z` разрезан на 3 слоя: eager `bundle_grade_runtime_core_wave87n` (~262 KB), lazy `bundle_grade_runtime_features_wave87n` (~141 KB) и lazy `bundle_grade_runtime_services_wave87n` (~157 KB).
+- Grade-страницы теперь грузят только core runtime; features/services догружаются после `interactive`, по idle timeout и по раннему user intent для profile/report/backup actions.
+- Runtime: добавлен `window.wave87nRuntimeSplit` с perf-сэмплами в `localStorage.trainer_perf_samples_wave87n_<grade>` и device-aware deferral для low-end устройств.
+- CSP bridge (`chunk_roadmap_wave86u_csp_bridge`) теперь умеет гидратировать lazy bundles до исполнения static actions, чтобы быстрый первый клик не терял enhanced UI.
+- Tooling: добавлены `tools/build_runtime_split_wave87n.mjs`, `tools/audit_runtime_split_wave87n.mjs` и `docs/RUNTIME_SPLIT_wave87n.md`; обновлены `CLAUDE.md`, `tools/README.md`, `healthz.json`, `asset-manifest.json` и SW cache до wave87n.
+
+## wave87m — 2026-04-23
+
+- B11/#19: для grade 10 добавлен отдельный переходный subject `bridge1011` (`Переход 10→11`) с 6 explicit-bank темами: математика, русский, физика, английский, биология и химия. Блок рассчитан на мост между текущим тренажёром 10 класса и диагностическим входом в 11 класс.
+- Diagnostic alignment: `diagnostic.html` теперь получает дополнительные wave87m rows по `algebra`, `geometry`, `russian`, `physics`, `english`, `biology`, `chemistry`, чтобы сквозная диагностика ловила те же переходные опоры, что и новый grade10 subject.
+- Tooling: добавлены `tools/audit_transition_1011_wave87m.mjs` и `docs/TRANSITION_1011_wave87m.md`; обновлены `CLAUDE.md`, `tools/README.md`, `sw.js`, `healthz.json` и live asset references.
+
 ## wave87l — 2026-04-23
 
 - B1/B2 follow-up (#9/#10): расширены банки начальной школы без новых page-level scripts — `grade1_data`, `grade2_data`, `grade3_data` заметно выросли и получили 16 новых explicit-topic банков с `q/a/o/h/ex`.

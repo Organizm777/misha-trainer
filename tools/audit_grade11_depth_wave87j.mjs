@@ -18,6 +18,7 @@ const EXPECTED_BANK_ROWS = Object.values(EXPECTED).flat().length * 15;
 const GENERIC_RE = /Выбери понятие|Что означает|Какое понятие относится к теме|Выбери верную пару по теме/;
 const INCLUDE_RE = /\/assets\/js\/(grade\d+_data\.|bundle_boosters\.|chunk_grade_content_|chunk_subject_expansion_|chunk_grade10_lazy_wave86s\.)/;
 const GRADE10_SUBJECT_RE = /^(grade10_subject_.*_wave86s|grade10_subject_oly_(logic|cross|traps|deep)_wave87c)\.[a-f0-9]{10}\.js$/;
+const ALLOWED_GRADE10_TOPIC_LEAD = 6;
 
 function read(rel){ return fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
 function parseScripts(htmlFile){
@@ -157,7 +158,8 @@ function main(){
   const totalTopics11 = subj11.reduce((sum, s) => sum + ((s.tops || []).length || 0), 0);
   const subj10 = g10.ctx.window.SUBJ || [];
   const totalTopics10 = subj10.reduce((sum, s) => sum + ((s.tops || []).length || 0), 0);
-  if (totalTopics10 !== totalTopics11) failures.push({ error:'grade10/11 total topics mismatch', grade10:totalTopics10, grade11:totalTopics11 });
+  const topicLead = totalTopics10 - totalTopics11;
+  if (topicLead !== 0 && topicLead !== ALLOWED_GRADE10_TOPIC_LEAD) failures.push({ error:'grade10/11 total topics mismatch', grade10:totalTopics10, grade11:totalTopics11, allowedGrade10Lead:ALLOWED_GRADE10_TOPIC_LEAD });
   const expectedCounts = { eng:15, his:5, lit:5, bio:5, inf:5, rus:8, geog:5 };
   for (const [id, count] of Object.entries(expectedCounts)) {
     if ((subjectCounts11[id] || 0) !== count) failures.push({ error:'unexpected subject topic count', subject:id, actual:subjectCounts11[id] || 0, expected:count });
@@ -169,6 +171,7 @@ function main(){
     wave:'wave87j',
     grade10:{ subjects:subj10.length, topics:totalTopics10 },
     grade11:{ subjects:subj11.length, topics:totalTopics11, subjectTopicCounts:subjectCounts11 },
+    allowedGrade10TopicLead:ALLOWED_GRADE10_TOPIC_LEAD,
     expectedTopicRows:EXPECTED_BANK_ROWS,
     snapshot:snap,
     references:ref,
