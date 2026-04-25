@@ -19,7 +19,7 @@ assert(fs.existsSync(path.join(ROOT, builtRel)), `missing built asset ${builtRel
 
 const runtimeSrc = read('assets/_src/js/bundle_grade_runtime_interactions_wave87w.js');
 assert(runtimeSrc.includes("window.__wave87wInteractiveFormats"), 'runtime source: missing wave87w guard export');
-assert(runtimeSrc.includes("find-error") && runtimeSrc.includes("sequence") && runtimeSrc.includes("match"), 'runtime source: missing interaction type constants');
+assert(runtimeSrc.includes("find-error") && runtimeSrc.includes("sequence") && runtimeSrc.includes("match") && runtimeSrc.includes("multi-select"), 'runtime source: missing interaction type constants');
 assert(runtimeSrc.includes('submitCustomValue') && runtimeSrc.includes('renderInteractiveFeedback'), 'runtime source: missing submit/feedback helpers');
 assert(runtimeSrc.includes('renderFindError') && runtimeSrc.includes('renderSequence') && runtimeSrc.includes('renderMatch'), 'runtime source: missing one of the custom renderers');
 assert(runtimeSrc.includes('root.nextQ = function') && runtimeSrc.includes('root.render = function'), 'runtime source: missing nextQ/render patches');
@@ -103,8 +103,8 @@ assert(counts.perType.sequence >= 5, `expected at least 5 sequence rows, got ${c
 assert(counts.perType.match >= 4, `expected at least 4 match rows, got ${counts.perType.match}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(healthz.wave === 'wave87w', `healthz.json: expected wave87w, got ${healthz.wave}`);
-assert(healthz.build_id === 'wave87w', `healthz.json: expected build_id wave87w, got ${healthz.build_id}`);
+assert(/^(wave87[wxyz]|wave88[abc])$/.test(healthz.wave), `healthz.json: expected wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c, got ${healthz.wave}`);
+assert(/^(wave87[wxyz]|wave88[abc])$/.test(healthz.build_id), `healthz.json: expected build_id wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c, got ${healthz.build_id}`);
 
 console.log(JSON.stringify({
   logical,

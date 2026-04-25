@@ -946,3 +946,51 @@ print(s[0:3])`},
   ensureTopic('phy', { id:'calc9w87v', nm:'Расчёты по формулам', gen:genPhyFormula9, th:PHY_TH_W87V, dot:'#2563eb' });
   ensureTopic('inf', { id:'code9w87v', nm:'Трассировка кода', gen:genInfCode9, th:INF_TH_W87V, dot:'#16a34a' });
 })();
+
+(function(){
+  if (String(window.GRADE_NUM || '') !== '9' || !Array.isArray(window.SUBJ)) return;
+  var SUBJECT_ID = 'rus';
+  var TOPIC_ID = 'cloze9w87x';
+  var COLOR = '#0d9488';
+  var BG = '#ccfbf1';
+  var THEORY = '<h3>Пропуски: сложное предложение</h3><p>В сложном предложении важно определить, какая связь нужна между частями: <b>время, причина, следствие, изъяснение, определение</b>.</p><div class="fm">когда — время\nпотому что — причина\nчто — изъяснение\nкоторый / которую — определение\nчтобы — цель</div><div class="ex">Сначала задай вопрос от главной части к придаточной, затем подставляй союз или союзное слово.</div>';
+  var BANK = [
+    { q:'Вставь союзное слово: Я хорошо помню вечер, ___ мы обсуждали выпускной.', a:'когда', h:'Придаточное относится ко времени.', ex:'Слово «вечер» обозначает время, поэтому подходит союзное слово «когда».' },
+    { q:'Вставь слово: Я понял, ___ нужно ещё раз перепроверить решение.', a:'что', h:'Нужен изъяснительный союз.', ex:'После глагола мысли или понимания обычно используется союз «что».' },
+    { q:'Вставь союз: Мы закрыли окна, ___ поднялся сильный ветер.', a:'потому что', h:'Вторая часть называет причину действия.', ex:'Окна закрыли по причине сильного ветра, значит нужен союз «потому что».' },
+    { q:'Вставь союзное слово: Это книга, ___ я советовал прочитать летом.', a:'которую', h:'Нужно связать придаточное со словом «книга».', ex:'Союзное слово «которую» относится к слову «книга» и служит дополнением в придаточной части.' },
+    { q:'Вставь слово: Мы остановились, ___ спокойно обсудить план поездки.', a:'чтобы', h:'Нужна цель действия.', ex:'Остановка нужна для обсуждения плана, поэтому употребляется союз «чтобы».' },
+    { q:'Вставь слово: Он говорил так тихо, ___ его едва было слышно.', a:'что', h:'Это конструкция следствия: «так..., что...»', ex:'В сочетании «так тихо, что...» вторая часть выражает следствие степени признака.' }
+  ];
+  function pickOne(list){ return list[Math.floor(Math.random() * list.length)]; }
+  function ensureTopic(subjectId, topic){
+    var subject = window.SUBJ.filter(function(item){ return item && item.id === subjectId; })[0];
+    if (!subject) return false;
+    subject.tops = Array.isArray(subject.tops) ? subject.tops : [];
+    var existing = subject.tops.filter(function(item){ return item && item.id === topic.id; })[0];
+    if (!existing) {
+      existing = { id: topic.id };
+      subject.tops.push(existing);
+    }
+    existing.nm = topic.nm || existing.nm || topic.id;
+    existing.dot = topic.dot || existing.dot || subject.cl;
+    existing.th = topic.th || existing.th || '';
+    existing.gen = topic.gen;
+    return true;
+  }
+  function mkInputQuestion(row){
+    var question = typeof mkQ === 'function'
+      ? mkQ(row.q, row.a, [row.a, 'другое слово', 'иная связка', 'другой вариант'], row.h, 'Пропуски: сложное предложение', COLOR, BG, null, false, row.ex)
+      : { question:row.q, answer:row.a, options:[row.a, 'другое слово', 'иная связка', 'другой вариант'], hint:row.h, tag:'Пропуски: сложное предложение', color:COLOR, bg:BG, isMath:false, ex:row.ex };
+    question.inputMode = 'cloze';
+    question.acceptedAnswers = [row.a];
+    return question;
+  }
+  ensureTopic(SUBJECT_ID, {
+    id: TOPIC_ID,
+    nm: 'Пропуски: сложное предложение',
+    gen: function(){ return mkInputQuestion(pickOne(BANK)); },
+    th: THEORY,
+    dot: COLOR
+  });
+})();

@@ -1159,3 +1159,51 @@ else:
   ensureTopic('phy', { id:'calc8w87v', nm:'Формулы и расчёты', gen:genPhyFormula8, th:PHY_TH_W87V, dot:'#2563eb' });
   ensureTopic('inf', { id:'code8w87v', nm:'Чтение кода', gen:genInfCode8, th:INF_TH_W87V, dot:'#16a34a' });
 })();
+
+(function(){
+  if (String(window.GRADE_NUM || '') !== '8' || !Array.isArray(window.SUBJ)) return;
+  var SUBJECT_ID = 'rus';
+  var TOPIC_ID = 'cloze8w87x';
+  var COLOR = '#0d9488';
+  var BG = '#ccfbf1';
+  var THEORY = '<h3>Пропуски: служебные слова и связь частей</h3><p>В заданиях с пропуском смотри на <b>связь между частями предложения</b>: союз, частица или союзное слово должны точно передавать смысл.</p><div class="fm">но — противопоставление\nчто — изъяснение\nкогда — время\nчтобы — цель\nпотому что — причина\nнесмотря на — уступка</div><div class="ex">Сначала определи смысл связи, потом подставляй слово в пропуск.</div>';
+  var BANK = [
+    { q:'Вставь пропущенный союз: Я спешил, ___ всё равно опоздал к звонку.', a:'но', h:'Нужен союз противопоставления.', ex:'Первая часть сообщает об усилии, а вторая — о противоположном результате, поэтому нужен союз «но».' },
+    { q:'Вставь слово: Я перечитал правило, ___ лучше понять тему.', a:'чтобы', h:'Нужен союз цели.', ex:'Действие совершается с определённой целью, поэтому подходит союз «чтобы».' },
+    { q:'Вставь союзное слово: Я помню день, ___ мы впервые поехали в лагерь.', a:'когда', h:'Придаточное относится к слову «день».', ex:'Когда речь идёт о времени и слове «день», обычно нужно союзное слово «когда».' },
+    { q:'Вставь слово: Мы остались дома, ___ на улице начался сильный ливень.', a:'потому что', h:'Нужен союз причины.', ex:'Вторая часть объясняет причину, по которой мы остались дома, поэтому нужен союз «потому что».' },
+    { q:'Вставь слово: ___ на усталость, команда закончила работу вовремя.', a:'несмотря', h:'Нужна уступка: «несмотря на что?».', ex:'Оборот «несмотря на усталость» выражает уступку: трудность была, но действие всё равно произошло.' },
+    { q:'Вставь пропущённое слово: Я уверен, ___ ты справишься с этим заданием.', a:'что', h:'После слова «уверен» обычно идёт изъяснительное придаточное.', ex:'После слов уверенности или мысли часто употребляется союз «что»: «я уверен, что...».' }
+  ];
+  function pickOne(list){ return list[Math.floor(Math.random() * list.length)]; }
+  function ensureTopic(subjectId, topic){
+    var subject = window.SUBJ.filter(function(item){ return item && item.id === subjectId; })[0];
+    if (!subject) return false;
+    subject.tops = Array.isArray(subject.tops) ? subject.tops : [];
+    var existing = subject.tops.filter(function(item){ return item && item.id === topic.id; })[0];
+    if (!existing) {
+      existing = { id: topic.id };
+      subject.tops.push(existing);
+    }
+    existing.nm = topic.nm || existing.nm || topic.id;
+    existing.dot = topic.dot || existing.dot || subject.cl;
+    existing.th = topic.th || existing.th || '';
+    existing.gen = topic.gen;
+    return true;
+  }
+  function mkInputQuestion(row){
+    var question = typeof mkQ === 'function'
+      ? mkQ(row.q, row.a, [row.a, 'другое слово', 'иная связка', 'другой вариант'], row.h, 'Пропуски: служебные слова', COLOR, BG, null, false, row.ex)
+      : { question:row.q, answer:row.a, options:[row.a, 'другое слово', 'иная связка', 'другой вариант'], hint:row.h, tag:'Пропуски: служебные слова', color:COLOR, bg:BG, isMath:false, ex:row.ex };
+    question.inputMode = 'cloze';
+    question.acceptedAnswers = [row.a];
+    return question;
+  }
+  ensureTopic(SUBJECT_ID, {
+    id: TOPIC_ID,
+    nm: 'Пропуски: служебные слова',
+    gen: function(){ return mkInputQuestion(pickOne(BANK)); },
+    th: THEORY,
+    dot: COLOR
+  });
+})();

@@ -1,3 +1,47 @@
+## wave88c — 2026-04-25
+
+- roadmap `#47`: added global keyboard-shortcuts runtime for grade pages
+- new eager asset `bundle_grade_runtime_keyboard_wave88c` extends shortcut coverage beyond answer options:
+  - `1–9` / `0` for subject and topic cards
+  - `Enter` for theory start, result back, and generic interactive submits / next
+  - `Escape` for back / end-session navigation on trainer screens
+- added `aria-keyshortcuts` annotations for subject cards, topic buttons, and key navigation buttons
+- guards: shortcuts ignore editable targets and pause while modal dialogs are open
+- synced `grade1_v2` … `grade11_v2`, `sw.js`, `healthz.json`, `asset-manifest.json`, docs and audit tooling
+
+## wave88b — 2026-04-25
+
+- C8 follow-up (`#28`): extended `bundle_grade_runtime_interactions_wave87w` with a fourth interaction type — `multi-select` — so grades 8–11 can now run questions with 2–3 correct answers out of 6 without rewriting `engine10`. The runtime keeps canonical answer serialization, custom checkbox-like rendering, keyboard shortcuts `1–6` + `Enter`, and routes the final answer back through the existing scoring pipeline.
+- Content: added `chunk_subject_expansion_wave88b_multi_select_banks` with 8 explicit topics / 48 explicit rows across Biology, History, Chemistry, Social Studies, Informatics and Russian. Every row keeps both the new `multiSelect*` metadata and fallback `question/answer/options/hint/ex` fields for validator and non-enhanced modes.
+- Tooling/docs: added `tools/audit_multi_select_wave88b.mjs` and `docs/MULTI_SELECT_wave88b.md`; refreshed the earlier wave87w/wave87x/wave87y/wave87z audits so they accept a wave88b build; synchronized `CLAUDE.md`, `tools/README.md`, `healthz.json`, `asset-manifest.json` metadata and SW cache name for wave88b.
+
+## wave88a — 2026-04-25
+
+- E12 follow-up (`#52`): added a lightweight homepage card `Задание дня` on `index.html` without touching the main grade runtime. A dedicated JS chunk (`chunk_roadmap_wave88a_daily_question`) chooses one curated question per local calendar day, stores the answer in `localStorage`, and shows an immediate explanation plus a CTA into the matching grade page.
+- Styling: the homepage card ships in its own hashed CSS asset (`wave88a_daily_question.css`) so the static index page stays free of inline styles while keeping the existing strict CSP rules.
+- Tooling/docs: added `tools/audit_daily_question_wave88a.mjs` and `docs/DAILY_QUESTION_wave88a.md`, plus synchronized HTML/SW/manifest references as part of the wave88b release train.
+
+## wave87z — 2026-04-25
+
+- B4 follow-up (`#29`): extended the existing free-input runtime with an explicit `text` mode for short open answers. `bundle_grade_runtime_inputs_timing_wave87x` now normalizes Russian/English text, supports fuzzy matching via Levenshtein for long answers, keeps strict-ish behavior for short words, and shows a small “≈ опечатка зачтена” hint when a typo-tolerant match was accepted.
+- Accepted-answer correctness fix: free-input matching now always resolves any allowed variant back to the canonical `question.answer`, which closes a subtle scoring bug for alternate numeric/text forms like `10` vs `10%`, `4` vs `4 А`, and British/American spelling pairs.
+- Content: added `chunk_subject_expansion_wave87z_text_input_banks` with 8 starter short-answer topics for grades 8–11 (Russian + English in every grade, 40 explicit rows total). Grade10 keeps lazy-subject compatibility by patching the shell topics directly without touching `wave86s` loaded flags.
+- Tooling/docs: added `tools/audit_text_input_fuzzy_wave87z.mjs` and `docs/TEXT_INPUT_FUZZY_wave87z.md`; refreshed the older wave87w/wave87x/wave87y audits so they accept a wave87z build; updated `CLAUDE.md`, `tools/README.md`, `healthz.json`, `asset-manifest.json` metadata and SW cache name for wave87z.
+
+## wave87y — 2026-04-25
+
+- B4 follow-up (`#21/#22`): added a dedicated free-input content layer for grades 8–11 through `chunk_subject_expansion_wave87y_free_input_banks`. The new chunk injects 15 explicit numeric-input topics (76 explicit rows total) across algebra, probability, physics and chemistry, so the free-answer renderer from wave87x now has purpose-built banks rather than relying mostly on heuristics.
+- Numeric UX follow-up: `bundle_grade_runtime_inputs_timing_wave87x` now parses simple fractions as real numeric answers (`1/2`, `1/4`, `2/5`, etc.) and upgrades the helper/placeholder text for fraction-friendly tasks. This makes probability inputs accept both fractional and decimal forms cleanly.
+- Grade10 lazy compatibility: the new free-input chunk patches the grade10 `SUBJ` shell directly instead of calling `__wave86sApplyGrade10Subject(...)` too early, so the wave86s lazy subject loader still hydrates the main 10th-grade banks without false "already loaded" state.
+- Tooling/docs: added `tools/audit_free_input_banks_wave87y.mjs` and `docs/FREE_INPUT_BANKS_wave87y.md`; refreshed the older free-input/interactions audits so they still pass on a wave87y build; updated `CLAUDE.md`, `tools/README.md`, `healthz.json`, `asset-manifest.json` metadata and SW cache name for wave87y.
+
+## wave87x — 2026-04-24
+
+- B4/B9 follow-up (`#21/#22/#38/#75`): added `bundle_grade_runtime_inputs_timing_wave87x`, an eager runtime patch that introduces free-text/cloze input plus numeric-answer input without rewriting `engine10`. The patch detects explicit `inputMode` rows and existing `___` cloze prompts, reuses the old scoring path via `ans(idx)`, and keeps hints, streaks, explanations and the error journal intact.
+- Response-time logging: each answered question now records compact timing samples in `localStorage.trainer_response_timing_<grade>` with mode/subject/tag/correct/help metadata; the progress screen gains a new `⏱ Скорость ответа` card with average, median, recent pace, log size and slowest topics.
+- Content: Russian starter cloze topics were added for grades 8, 9 and 11 directly in grade data bundles plus a lazy grade10 topic in `grade10_subject_rus_wave86s`; existing English banks already contain hundreds of `___` prompts, so they automatically benefit from the new renderer.
+- Tooling/docs: added `tools/audit_free_input_timing_wave87x.mjs` and `docs/FREE_INPUT_TIMING_wave87x.md`; updated `healthz.json`, `asset-manifest.json` metadata and SW cache name for wave87x.
+
 ## wave87w — 2026-04-24
 
 - B2/B5 roadmap `#14`: added the first non-trivial interaction formats for grades 8–11 without rewriting `engine10`. A new eager runtime patch (`bundle_grade_runtime_interactions_wave87w`) enhances only rows that opt into `interactionType`, while the existing renderer still owns scoring, streaks, explanations and the error journal.

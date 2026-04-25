@@ -32,6 +32,9 @@
 ## Bundle-архитектура — ключевые факты
 
 - `bundle_shell.*.js` — обёртка: header, навигация, хэш-роутинг, wave36_perf (кеш DOM-запросов). Preload с `fetchpriority=high`.
+- `chunk_roadmap_wave88a_daily_question.*.js` + `wave88a_daily_question.*.css` — самостоятельный homepage-блок «Задание дня» на `index.html`; карточка выбирает один curated вопрос по локальной дате и хранит ответ в `localStorage`.
+- `bundle_grade_runtime_interactions_wave87w.*.js` после wave88b покрывает уже 4 формата: `find-error`, `sequence`, `match`, `multi-select`; grades 1–7 по-прежнему не тянут этот runtime.
+- `chunk_subject_expansion_wave88b_multi_select_banks.*.js` — explicit multi-select банки для 8–11 классов (2 темы на класс, 48 rows total), подключаются только на grade8–11 pages и не вмешиваются в lazy-loader grade10 `wave86s`.
 - `chunk_grade_content_wave*_wave86t.*.js` — split runtime-injection контента по исходным wave-секциям. Grade-страницы подключают только нужные секции; 10 класс после wave86s обходится без общего content-бандла.
 - `bundle_grade_runtime_core_wave87n.*.js` (~262 KB) — eager core runtime grade-страниц. Внутри: `chunk_roadmap_wave86q_accessibility_theme`, `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `bundle_error_tracking`.
 - `bundle_grade_runtime_features_wave87n.*.js` (~141 KB) — lazy features bundle: `chunk_roadmap_wave86r_theory_achievements`, `chunk_roadmap_wave86p_exam_challenge`, `chunk_roadmap_wave86v_pvp_link_battle`, `bundle_gamification_xp`, `bundle_gamification_meta`.
@@ -252,6 +255,15 @@ The grade10 subject `oly` is now a nested lazy subject. `grade10_subject_oly_wav
 
 When changing Olympiad content, update the topic source files under `assets/_src/js/grade10_subject_oly_*_wave87c.js`, rebuild the content hashes, update the shell topic asset map, update `grade10_data`, and keep all topic chunks in `sw.js` and `asset-manifest.json`. The full regression must include `node tools/audit_grade10_oly_split_wave87c.mjs` plus `node tools/validate_questions.js`.
 
+
+### wave87y free-input content banks
+
+`chunk_subject_expansion_wave87y_free_input_banks.*.js` adds explicit numeric-input topics for grades 8–11 on top of the wave87x free-input runtime. It is loaded only by `grade8_v2.html`, `grade9_v2.html`, `grade10_v2.html` and `grade11_v2.html`.
+
+For grade 10 this chunk intentionally patches the existing `SUBJ` shell directly and **must not** call `window.__wave86sApplyGrade10Subject(...)` before the real lazy subject chunk hydrates. That helper sets `_wave86sLoaded` / `loadedMap[subjectId]`, so calling it too early can trick the lazy loader into skipping the main subject bank.
+
+Use `node tools/audit_free_input_banks_wave87y.mjs` together with `node tools/audit_free_input_timing_wave87x.mjs` and the full `node tools/validate_questions.js` regression before release.
+
 ### wave87d wave86m gap-balance grade split
 
 The former monolithic `chunk_subject_expansion_wave86m_gap_balance.*.js` is deprecated and removed from both `assets/_src/js` and `assets/js`. Grade pages 4–11 now reference one matching split chunk: `chunk_subject_expansion_wave86m_gap_balance_grade<grade>_wave87d.*.js`. This keeps the wave86m/A4-A7/A5/A6 injections, wave87a Literature live banks and wave87b ОБЖ scenario banks compatible while reducing each page's initial JS payload.
@@ -381,3 +393,24 @@ Content should keep living next to the owning subject bundle: grades 8/9/11 insi
 
 Release check for this layer: `node tools/audit_interaction_formats_wave87w.mjs`, then `GRADE_FILTER=8,9,10,11 SAMPLE_PER_TOPIC=6 node tools/validate_questions.js`, the full `node tools/validate_questions.js`, and `node tools/cleanup_build_artifacts.mjs --check`.
 
+
+
+### wave87x / wave87z free-input runtime
+
+`bundle_grade_runtime_inputs_timing_wave87x.*.js` now owns three explicit answer-entry modes on grade pages: `numeric`, `cloze` and `text`. `numeric`/`cloze` came from wave87x, while wave87z extends the same logical runtime with short free-text answers plus typo-tolerant matching for long Russian/English responses.
+
+Important implementation detail: accepted variants (`acceptedAnswers`) must always resolve back to the canonical `question.answer`, because the base engine still checks correctness via `sel === answer`. The runtime therefore maps `10`, `10 %`, `organization`, etc. back onto the official answer string before calling `ans(idx)`.
+
+Starter short-answer content for grades 8–11 lives in `chunk_subject_expansion_wave87z_text_input_banks.*.js`. Like wave87y, this chunk patches grade10 subject shells directly and intentionally does **not** flip `wave86s` lazy-loaded flags.
+
+
+### wave88c keyboard shortcuts runtime
+
+- `bundle_grade_runtime_keyboard_wave88c` is an eager grade-page helper for roadmap item `#47`.
+- It must stay additive: do not take ownership of free-input `Enter` handling from `wave87x` or multi-select `Enter` handling from `wave88b`.
+- Scope:
+  - subject/theme selection by digit keys on `s-main` / `s-subj`
+  - `Enter` for theory start, result back, resolved-answer next, and generic interactive submit buttons
+  - `Escape` for screen back / end-session actions
+- Keep the runtime off public utility pages (`index`, `dashboard`, `diagnostic`, `tests`, `spec_subjects`).
+- Preserve `aria-keyshortcuts` annotations and the editable-target / modal-dialog guards.

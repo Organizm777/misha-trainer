@@ -36,6 +36,12 @@ node tools/audit_lighthouse_ci_wave87s.mjs
 node tools/audit_fact_review_wave87t.mjs
 node tools/audit_rich_content_wave87v.mjs
 node tools/audit_interaction_formats_wave87w.mjs
+node tools/audit_free_input_timing_wave87x.mjs
+node tools/audit_free_input_banks_wave87y.mjs
+node tools/audit_text_input_fuzzy_wave87z.mjs
+node tools/audit_daily_question_wave88a.mjs
+node tools/audit_multi_select_wave88b.mjs
+node tools/audit_keyboard_shortcuts_wave88c.mjs
 node tools/validate_questions.js
 ```
 
@@ -63,4 +69,11 @@ node tools/validate_questions.js
 - `audit_lighthouse_ci_wave87s.mjs` — verifies the wave87s Lighthouse CI gate: PR workflow triggers, fetch-depth/base-branch ancestry fix, pinned LHCI CLI install, multi-run staticDistDir collection, preflight audits, and `.lighthouseci` artifact upload.
 
 - `audit_rich_content_wave87v.mjs` — verifies the wave87v rich-content pass: required formula/code topic ids exist across grades 8–11, chemistry rich topics are injected in the expected science chunks, and the source layer contains a minimum number of `code:` and `isMath:true` rows before rebuild.
-- `audit_interaction_formats_wave87w.mjs` — verifies the wave87w interaction layer: the new runtime bundle is present in grades 8–11 and SW precache, grades 1–7 stay clean, and the owning source bundles contain enough `find-error` / `sequence` / `match` rows plus the metadata plumbing that preserves those fields through `bank(...)`.
+- `audit_interaction_formats_wave87w.mjs` — verifies the wave87w interaction layer: the runtime bundle is present in grades 8–11 and SW precache, grades 1–7 stay clean, and the owning source bundles still contain enough `find-error` / `sequence` / `match` rows plus the metadata plumbing that preserves those fields through `bank(...)`. The build-wave guard now also allows wave88a/wave88b because later waves reuse the same logical runtime bundle.
+- `audit_free_input_timing_wave87x.mjs` — verifies the wave87x free-input runtime and timing layer; the build-wave guard now stays open through wave88a/wave88b because later waves reuse the same logical runtime bundle.
+- `audit_free_input_banks_wave87y.mjs` — verifies the wave87y explicit numeric-input content pass: grades 8–11 load the new subject-expansion chunk, pages 1–7 stay clean, the injected topic ids exist after runtime content assembly, and generated rows expose `inputMode: 'numeric'` plus `acceptedAnswers`.
+- `audit_text_input_fuzzy_wave87z.mjs` — verifies the wave87z short-answer pass: the input runtime exposes explicit `text` mode + Levenshtein helpers, accepted variants resolve back to canonical answers, grades 8–11 load the new Russian/English text-bank chunk, and generated rows expose `inputMode: 'text'` with fuzzy-tolerance metadata.
+- `audit_daily_question_wave88a.mjs` — verifies the wave88a homepage daily-question card: the index page references both the new JS chunk and CSS asset, SW precaches them, the source bundle still exposes a deterministic daily picker, and a stubbed VM render inserts the card into the homepage layout.
+- `audit_multi_select_wave88b.mjs` — verifies the wave88b multi-select pass: grades 8–11 load the new explicit banks chunk, generated rows expose six options with 2–3 canonical correct answers, the interactions runtime canonicalizes multi-select answers, and SW/healthz stay synchronized.
+
+- `audit_keyboard_shortcuts_wave88c.mjs` — verifies the wave88c trainer-wide keyboard-shortcuts pass: the new eager runtime is present only on grade pages, SW/manifest/healthz stay synchronized, `aria-keyshortcuts` are annotated, and main/subj/theory/play/result/prog flows respond to digits / Enter / Escape while respecting modal and editable-target guards.

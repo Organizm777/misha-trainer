@@ -1109,3 +1109,51 @@ print(len(a))`},
   ensureTopic('phy', { id:'calc11w87v', nm:'Формулы современной физики', gen:genPhyFormula11, th:PHY_TH_W87V, dot:'#2563eb' });
   ensureTopic('inf', { id:'code11w87v', nm:'Трассировка Python', gen:genInfCode11, th:INF_TH_W87V, dot:'#16a34a' });
 })();
+
+(function(){
+  if (String(window.GRADE_NUM || '') !== '11' || !Array.isArray(window.SUBJ)) return;
+  var SUBJECT_ID = 'rus';
+  var TOPIC_ID = 'cloze11w87x';
+  var COLOR = '#0d9488';
+  var BG = '#ccfbf1';
+  var THEORY = '<h3>Пропуски: синтаксические связи и логика текста</h3><p>В заданиях высокого уровня важно быстро распознавать тип связи: <b>изъяснение, определение, причина, уступка</b> и логические связки внутри текста.</p><div class="fm">что — изъяснение\nкоторый / которая / которое / которые — определение\nпотому что — причина\nнесмотря на — уступка\nоднако — противопоставление</div><div class="ex">Смотри не только на грамматику, но и на смысл: что именно добавляет пропущенное слово к высказыванию.</div>';
+  var BANK = [
+    { q:'Вставь союз: Автор подчёркивает, ___ ответственность начинается с мелочей.', a:'что', h:'После слова «подчёркивает» обычно идёт изъяснение.', ex:'Глагол речи или мысли требует изъяснительного придаточного, поэтому здесь нужен союз «что».' },
+    { q:'Вставь союзное слово: Человек, ___ умеет слушать, понимает собеседника глубже.', a:'который', h:'Придаточное относится к слову «человек».', ex:'Союзное слово «который» связывает придаточную часть с определяемым словом «человек».' },
+    { q:'Вставь слово: Мы пересмотрели план, ___ исходные данные изменились.', a:'потому что', h:'Нужна причина действия.', ex:'Изменение данных объясняет, почему пришлось пересматривать план, поэтому нужен союз «потому что».' },
+    { q:'Вставь слово: ___ на поздний час, обсуждение продолжалось очень оживлённо.', a:'несмотря', h:'Нужен уступительный оборот.', ex:'Оборот «несмотря на поздний час» показывает, что обстоятельство не помешало действию.' },
+    { q:'Вставь слово: Доводы оказались убедительными, ___ спор быстро закончился.', a:'поэтому', h:'Нужно следствие.', ex:'Вторая часть содержит следствие из первой, значит уместно слово «поэтому».' },
+    { q:'Вставь слово: Он долго готовился, ___ выступление получилось уверенным и точным.', a:'поэтому', h:'Нужна причинно-следственная связь.', ex:'Результат уверенного выступления объясняется долгой подготовкой, поэтому используется слово «поэтому».' }
+  ];
+  function pickOne(list){ return list[Math.floor(Math.random() * list.length)]; }
+  function ensureTopic(subjectId, topic){
+    var subject = window.SUBJ.filter(function(item){ return item && item.id === subjectId; })[0];
+    if (!subject) return false;
+    subject.tops = Array.isArray(subject.tops) ? subject.tops : [];
+    var existing = subject.tops.filter(function(item){ return item && item.id === topic.id; })[0];
+    if (!existing) {
+      existing = { id: topic.id };
+      subject.tops.push(existing);
+    }
+    existing.nm = topic.nm || existing.nm || topic.id;
+    existing.dot = topic.dot || existing.dot || subject.cl;
+    existing.th = topic.th || existing.th || '';
+    existing.gen = topic.gen;
+    return true;
+  }
+  function mkInputQuestion(row){
+    var question = typeof mkQ === 'function'
+      ? mkQ(row.q, row.a, [row.a, 'другое слово', 'иная связка', 'другой вариант'], row.h, 'Пропуски: связи текста', COLOR, BG, null, false, row.ex)
+      : { question:row.q, answer:row.a, options:[row.a, 'другое слово', 'иная связка', 'другой вариант'], hint:row.h, tag:'Пропуски: связи текста', color:COLOR, bg:BG, isMath:false, ex:row.ex };
+    question.inputMode = 'cloze';
+    question.acceptedAnswers = [row.a];
+    return question;
+  }
+  ensureTopic(SUBJECT_ID, {
+    id: TOPIC_ID,
+    nm: 'Пропуски: связи текста',
+    gen: function(){ return mkInputQuestion(pickOne(BANK)); },
+    th: THEORY,
+    dot: COLOR
+  });
+})();

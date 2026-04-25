@@ -6,14 +6,15 @@
   var root = window;
   var grade = String(root.GRADE_NUM || root.GRADE_NO || '');
   if (!/^(8|9|10|11)$/.test(grade)) {
-    root.__wave87wInteractiveFormats = { version:'wave87w', active:false, grade:grade };
+    root.__wave87wInteractiveFormats = { version:'wave88b', active:false, grade:grade };
     return;
   }
 
   var TYPES = Object.freeze({
     FIND_ERROR: 'find-error',
     SEQUENCE: 'sequence',
-    MATCH: 'match'
+    MATCH: 'match',
+    MULTI_SELECT: 'multi-select'
   });
 
   function asText(value){
@@ -22,7 +23,7 @@
   function unique(list){
     var out = [];
     (Array.isArray(list) ? list : []).forEach(function(item){
-      var value = asText(item);
+      var value = asText(item).trim();
       if (!value) return;
       if (out.indexOf(value) === -1) out.push(value);
     });
@@ -51,10 +52,21 @@
   }
   function isInteractiveQuestion(question){
     if (!question || typeof question !== 'object') return false;
-    return question.interactionType === TYPES.FIND_ERROR || question.interactionType === TYPES.SEQUENCE || question.interactionType === TYPES.MATCH;
+    return question.interactionType === TYPES.FIND_ERROR ||
+      question.interactionType === TYPES.SEQUENCE ||
+      question.interactionType === TYPES.MATCH ||
+      question.interactionType === TYPES.MULTI_SELECT;
   }
   function isComplexInteractive(question){
-    return !!(question && (question.interactionType === TYPES.SEQUENCE || question.interactionType === TYPES.MATCH));
+    return !!(question && (
+      question.interactionType === TYPES.SEQUENCE ||
+      question.interactionType === TYPES.MATCH ||
+      question.interactionType === TYPES.MULTI_SELECT
+    ));
+  }
+  function isEditableTarget(target){
+    var tag = target && target.tagName ? String(target.tagName).toLowerCase() : '';
+    return tag === 'input' || tag === 'textarea' || tag === 'select' || !!(target && target.isContentEditable);
   }
   function onPlayScreen(){
     var screen = document.getElementById('s-play');
@@ -104,6 +116,113 @@
     }
     return state;
   }
+  function declaredMultiSelectOptions(question){
+    return unique([].concat(
+      Array.isArray(question && question.multiSelectOptions) ? question.multiSelectOptions : [],
+      Array.isArray(question && question.multiSelectItems) ? question.multiSelectItems : [],
+      Array.isArray(question && question.optionLabels) ? question.optionLabels : [],
+      Array.isArray(question && question.optionsRaw) ? question.optionsRaw : []
+    ));
+  }
+  function multiSelectCorrect(question){
+    var direct = unique(question && question.multiSelectAnswers);
+    var base = declaredMultiSelectOptions(question);
+    if (direct.length) return base.length ? base.filter(function(item){ return direct.indexOf(item) !== -1; }) : direct;
+    var parsed = [];
+    var raw = asText(question && question.answer);
+    if (raw) parsed = raw.split('|').map(function(item){ return asText(item).trim(); }).filter(Boolean);
+    parsed = unique(parsed);
+    return base.length ? base.filter(function(item){ return parsed.indexOf(item) !== -1; }) : parsed;
+  }
+  function multiSelectAllOptions(question){
+    return unique([].concat(
+      declaredMultiSelectOptions(question),
+      multiSelectCorrect(question)
+    ));
+  }
+  function multiSelectMin(question){
+    var fallback = multiSelectCorrect(question).length || 2;
+    var value = Number(question && question.multiSelectMin);
+    if (!(value > 0)) value = fallback;
+    var total = multiSelectAllOptions(question).length || value;
+    return Math.max(1, Math.min(total, Math.round(value)));
+  }
+  function multiSelectMax(question){
+    var min = multiSelectMin(question);
+    var fallback = multiSelectCorrect(question).length || min;
+    var value = Number(question && question.multiSelectMax);
+    if (!(value > 0)) value = fallback;
+    var total = multiSelectAllOptions(question).length || value;
+    return Math.max(min, Math.min(total, Math.round(value)));
+  }
+  function selectionFromRaw(question, raw){
+    var values = [];
+    if (Array.isArray(raw)) values = raw;
+    else {
+      var text = asText(raw);
+      if (!text) values = [];
+      else values = text.split('|').map(function(item){ return asText(item).trim(); });
+    }
+    return normalizeMultiSelect(question, values);
+  }
+  function normalizeMultiSelect(question, values){
+    var all = multiSelectAllOptions(question);
+    var picked = unique(values).filter(Boolean);
+    if (!all.length) return picked;
+    return all.filter(function(item){ return picked.indexOf(item) !== -1; });
+  }
+  function serializeMultiSelect(question, values){
+    return normalizeMultiSelect(question, values).join(' | ');
+  }
+  function displayMultiSelect(question, values){
+    return normalizeMultiSelect(question, values).join(', ');
+  }
+  function ensureMultiSelectState(question){
+    var state = ensureState(question);
+    if (!state) return null;
+    state.selected = normalizeMultiSelect(question, state.selected || []);
+    return state;
+  }
+  function optionWord(count){
+    var n = Math.abs(Number(count) || 0) % 100;
+    var d = n % 10;
+    if (n >= 11 && n <= 19) return 'вариантов';
+    if (d === 1) return 'вариант';
+    if (d >= 2 && d <= 4) return 'варианта';
+    return 'вариантов';
+  }
+  function requirementText(question){
+    var min = multiSelectMin(question);
+    var max = multiSelectMax(question);
+    if (min === max) return 'Нужно отметить ровно ' + min + ' ' + optionWord(min) + '.';
+    return 'Нужно отметить от ' + min + ' до ' + max + ' ' + optionWord(max) + '.';
+  }
+  function countText(count){
+    return count + ' ' + optionWord(count);
+  }
+  function toggleMultiSelect(question, value){
+    if (!question || root.sel !== null) return false;
+    var state = ensureMultiSelectState(question);
+    if (!state) return false;
+    var item = asText(value).trim();
+    if (!item) return false;
+    var idx = state.selected.indexOf(item);
+    if (idx !== -1) {
+      state.selected.splice(idx, 1);
+      state.selected = normalizeMultiSelect(question, state.selected);
+      return true;
+    }
+    var max = multiSelectMax(question);
+    if (max && state.selected.length >= max) {
+      toast(max === multiSelectMin(question)
+        ? 'Можно выбрать только ' + countText(max) + '.'
+        : 'Нужно выбрать не больше ' + countText(max) + '.');
+      return false;
+    }
+    state.selected.push(item);
+    state.selected = normalizeMultiSelect(question, state.selected);
+    return true;
+  }
   function findErrorSteps(question){
     return clone(question.errorSteps || question.findErrorSteps || question.steps || []);
   }
@@ -122,6 +241,7 @@
     if (!question) return value;
     if (question.interactionType === TYPES.SEQUENCE) return value || serializeSequence(question.sequenceItems || []);
     if (question.interactionType === TYPES.MATCH) return value || serializePairs(question.matchPairs || [], null);
+    if (question.interactionType === TYPES.MULTI_SELECT) return displayMultiSelect(question, raw ? selectionFromRaw(question, raw) : multiSelectCorrect(question));
     return value;
   }
   function ensureOption(question, value){
@@ -229,6 +349,7 @@
     if (correct) return '✓ Верно!';
     if (type === TYPES.SEQUENCE) return '✗ Порядок шагов получился неверным';
     if (type === TYPES.MATCH) return '✗ Есть ошибки в сопоставлении';
+    if (type === TYPES.MULTI_SELECT) return '✗ Есть ошибки в выборе вариантов';
     return '✗ Неверный шаг';
   }
   function renderInteractiveFeedback(question){
@@ -263,8 +384,11 @@
       appendExplanationBlock(wrap, 'Правильный порядок', displayAnswer(question, question.answer));
       if (!correct) appendExplanationBlock(wrap, 'Ваш порядок', displayAnswer(question, root.sel));
     } else if (question.interactionType === TYPES.MATCH) {
-      var state = ensureMatchState(question);
-      appendMatchRows(wrap, question.matchPairs || [], state && state.selection, !correct);
+      var matchState = ensureMatchState(question);
+      appendMatchRows(wrap, question.matchPairs || [], matchState && matchState.selection, !correct);
+    } else if (question.interactionType === TYPES.MULTI_SELECT) {
+      appendExplanationBlock(wrap, 'Правильный набор', displayAnswer(question, question.answer));
+      if (!correct) appendExplanationBlock(wrap, 'Ваш выбор', displayAnswer(question, root.sel));
     }
 
     appendExplanationBlock(wrap, 'Разбор', question.ex || question.hint || '');
@@ -383,9 +507,7 @@
       });
       select.disabled = root.sel !== null;
       if (root.sel === null) {
-        select.addEventListener('change', function(){
-          state.selection[idx] = asText(select.value);
-        });
+        select.addEventListener('change', function(){ state.selection[idx] = asText(select.value); });
       }
       row.appendChild(select);
       opts.appendChild(row);
@@ -408,18 +530,124 @@
     opts.appendChild(reset);
   }
 
+  function renderMultiSelect(question, opts){
+    var all = multiSelectAllOptions(question);
+    var state = ensureMultiSelectState(question);
+    var min = multiSelectMin(question);
+    var max = multiSelectMax(question);
+    var chosen = root.sel !== null ? selectionFromRaw(question, root.sel) : state.selected;
+    var correct = multiSelectCorrect(question);
+
+    opts.innerHTML = '';
+    opts.appendChild(card('Выбери несколько ответов', requirementText(question) + ' Затем нажми «Проверить».'));
+
+    var summary = card('Текущий выбор', chosen.length
+      ? 'Отмечено: ' + countText(chosen.length) + '. ' + requirementText(question)
+      : 'Пока ничего не отмечено. ' + requirementText(question));
+    if (chosen.length && root.sel === null) {
+      chosen.forEach(function(item){
+        var chip = stepButton('✓', item, 'opt ok');
+        chip.setAttribute('role', 'checkbox');
+        chip.setAttribute('aria-checked', 'true');
+        chip.addEventListener('click', function(){
+          toggleMultiSelect(question, item);
+          if (typeof root.render === 'function') root.render();
+        });
+        summary.appendChild(chip);
+      });
+    } else if (root.sel !== null) {
+      appendExplanationBlock(summary, 'Вы выбрали', displayMultiSelect(question, chosen) || 'ничего');
+    }
+    opts.appendChild(summary);
+
+    var pool = card('Варианты', 'Можно отметить несколько пунктов. Номер на кнопке можно использовать с клавиатуры.');
+    all.forEach(function(item, idx){
+      var selected = chosen.indexOf(item) !== -1;
+      var isCorrect = correct.indexOf(item) !== -1;
+      var className = 'opt';
+      if (root.sel !== null) {
+        className += ' done';
+        if (isCorrect) className += ' ok';
+        else if (selected) className += ' no';
+        else className += ' dim';
+      } else if (selected) {
+        className += ' ok';
+      }
+      var button = stepButton(idx + 1, item, className);
+      button.setAttribute('role', 'checkbox');
+      button.setAttribute('aria-checked', selected ? 'true' : 'false');
+      button.setAttribute('aria-keyshortcuts', String(idx + 1));
+      if (root.sel === null) {
+        button.addEventListener('click', function(){
+          if (toggleMultiSelect(question, item) && typeof root.render === 'function') root.render();
+        });
+      } else {
+        button.disabled = true;
+      }
+      pool.appendChild(button);
+    });
+    opts.appendChild(pool);
+
+    if (root.sel !== null) return;
+
+    var submit = makePrimaryButton('Проверить варианты');
+    submit.addEventListener('click', function(){
+      if (state.selected.length < min || state.selected.length > max) return toast(requirementText(question));
+      submitCustomValue(question, serializeMultiSelect(question, state.selected));
+    });
+    opts.appendChild(submit);
+
+    var reset = makeSecondaryButton('Сбросить выбор');
+    reset.addEventListener('click', function(){
+      state.selected = [];
+      if (typeof root.render === 'function') root.render();
+    });
+    opts.appendChild(reset);
+  }
+
   function enhanceInteractiveQuestion(){
     var question = currentQuestion();
     if (!shouldEnhance(question)) return;
     var opts = document.getElementById('opts');
     if (!opts) return;
     opts.setAttribute('role', 'group');
-    opts.setAttribute('aria-label', 'Интерактивное задание');
+    opts.setAttribute('aria-label', question.interactionType === TYPES.MULTI_SELECT ? 'Множественный выбор' : 'Интерактивное задание');
     if (question.interactionType === TYPES.FIND_ERROR) renderFindError(question, opts);
     else if (question.interactionType === TYPES.SEQUENCE) renderSequence(question, opts);
     else if (question.interactionType === TYPES.MATCH) renderMatch(question, opts);
+    else if (question.interactionType === TYPES.MULTI_SELECT) renderMultiSelect(question, opts);
     renderInteractiveFeedback(question);
   }
+
+  function bindInteractiveKeyboard(){
+    document.addEventListener('keydown', function(event){
+      var question = currentQuestion();
+      if (!shouldEnhance(question) || !question || root.sel !== null) return;
+      if (question.interactionType !== TYPES.MULTI_SELECT) return;
+      if (isEditableTarget(event.target)) return;
+      var key = asText(event.key);
+      if (/^[1-6]$/.test(key)) {
+        var idx = Number(key) - 1;
+        var all = multiSelectAllOptions(question);
+        if (!all[idx]) return;
+        event.preventDefault();
+        event.stopPropagation();
+        if (toggleMultiSelect(question, all[idx]) && typeof root.render === 'function') root.render();
+        return;
+      }
+      if (key === 'Enter' || key === 'NumpadEnter') {
+        var state = ensureMultiSelectState(question);
+        var min = multiSelectMin(question);
+        var max = multiSelectMax(question);
+        event.preventDefault();
+        event.stopPropagation();
+        if (state.selected.length < min || state.selected.length > max) return toast(requirementText(question));
+        submitCustomValue(question, serializeMultiSelect(question, state.selected));
+      }
+    }, true);
+  }
+
+  bindInteractiveKeyboard();
 
   var baseNextQ = typeof root.nextQ === 'function' ? root.nextQ : null;
   if (baseNextQ) {
@@ -430,7 +658,7 @@
         result = baseNextQ.apply(this, arguments);
         tries += 1;
         if (!(root.rushMode && isComplexInteractive(currentQuestion()))) break;
-      } while (tries < 6);
+      } while (tries < 8);
       return result;
     };
   }
@@ -456,13 +684,16 @@
   }
 
   root.__wave87wInteractiveFormats = {
-    version: 'wave87w',
+    version: 'wave88b',
     active: true,
     grade: grade,
     types: Object.keys(TYPES).map(function(key){ return TYPES[key]; }),
     isInteractiveQuestion: isInteractiveQuestion,
     shouldEnhance: shouldEnhance,
     serializeSequence: serializeSequence,
-    serializePairs: serializePairs
+    serializePairs: serializePairs,
+    serializeMultiSelect: serializeMultiSelect,
+    multiSelectOptions: multiSelectAllOptions,
+    multiSelectCorrect: multiSelectCorrect
   };
 })();
