@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave88c-2026-04-25';
+const CACHE_NAME = 'trainer-build-wave88d-2026-04-25';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -34,6 +34,7 @@ const ASSETS = [
   './assets/js/bundle_grade_runtime_interactions_wave87w.7c8cfc6e82.js',
   './assets/js/bundle_grade_runtime_inputs_timing_wave87x.2658f2279c.js',
   './assets/js/bundle_grade_runtime_keyboard_wave88c.07330ffbd7.js',
+  './assets/js/bundle_grade_runtime_breadcrumbs_wave88d.afa65d1306.js',
   './assets/js/bundle_grade_runtime_features_wave87n.eaf8dced2c.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
   './assets/js/chunk_grade_content_wave12_english_wave86t.61be17ebe4.js',
@@ -136,6 +137,7 @@ const ASSETS = [
   './assets/css/wave86x_inline_spec_subjects.6e11969130.css',
   './assets/css/wave86x_inline_tests.45c5256157.css',
   './assets/css/wave86z_static_style_classes.7a515bc89a.css',
+  './assets/css/wave88d_breadcrumbs.8a5c547662.css',
   './assets/css/wave88a_daily_question.28618f024e.css'
 ];
 const CSP_BRIDGE_ASSETS = [

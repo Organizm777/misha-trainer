@@ -1,5 +1,5 @@
 {
-  "version": "trainer-build-wave88c-2026-04-25",
+  "version": "trainer-build-wave88d-2026-04-25",
   "assets": {
     "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.74a6944f66.js",
     "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.5592be36f3.js",
@@ -103,10 +103,12 @@
     "assets/js/chunk_subject_expansion_wave87y_free_input_banks.js": "assets/js/chunk_subject_expansion_wave87y_free_input_banks.4642e27fec.js",
     "assets/js/chunk_subject_expansion_wave87z_text_input_banks.js": "assets/js/chunk_subject_expansion_wave87z_text_input_banks.33066c79a0.js",
     "assets/css/wave88a_daily_question.css": "assets/css/wave88a_daily_question.28618f024e.css",
+    "assets/css/wave88d_breadcrumbs.css": "assets/css/wave88d_breadcrumbs.8a5c547662.css",
     "assets/js/chunk_roadmap_wave88a_daily_question.js": "assets/js/chunk_roadmap_wave88a_daily_question.e88c38de95.js",
     "assets/js/chunk_subject_expansion_wave88b_multi_select_banks.js": "assets/js/chunk_subject_expansion_wave88b_multi_select_banks.37b7a4d920.js",
-    "assets/js/bundle_grade_runtime_keyboard_wave88c.js": "assets/js/bundle_grade_runtime_keyboard_wave88c.07330ffbd7.js"
+    "assets/js/bundle_grade_runtime_keyboard_wave88c.js": "assets/js/bundle_grade_runtime_keyboard_wave88c.07330ffbd7.js",
+    "assets/js/bundle_grade_runtime_breadcrumbs_wave88d.js": "assets/js/bundle_grade_runtime_breadcrumbs_wave88d.afa65d1306.js"
   },
   "generated_at": "2026-04-25T00:00:00Z",
-  "hashed_asset_count": 105
+  "hashed_asset_count": 107
 }

@@ -42,6 +42,7 @@ node tools/audit_text_input_fuzzy_wave87z.mjs
 node tools/audit_daily_question_wave88a.mjs
 node tools/audit_multi_select_wave88b.mjs
 node tools/audit_keyboard_shortcuts_wave88c.mjs
+node tools/audit_breadcrumbs_wave88d.mjs
 node tools/validate_questions.js
 ```
 
@@ -77,3 +78,5 @@ node tools/validate_questions.js
 - `audit_multi_select_wave88b.mjs` — verifies the wave88b multi-select pass: grades 8–11 load the new explicit banks chunk, generated rows expose six options with 2–3 canonical correct answers, the interactions runtime canonicalizes multi-select answers, and SW/healthz stay synchronized.
 
 - `audit_keyboard_shortcuts_wave88c.mjs` — verifies the wave88c trainer-wide keyboard-shortcuts pass: the new eager runtime is present only on grade pages, SW/manifest/healthz stay synchronized, `aria-keyshortcuts` are annotated, and main/subj/theory/play/result/prog flows respond to digits / Enter / Escape while respecting modal and editable-target guards.
+
+- `audit_breadcrumbs_wave88d.mjs` — verifies the wave88d breadcrumb pass: grade pages load the new JS+CSS assets, public utility pages stay clean, SW precaches the assets, the runtime exports `window.__wave88dBreadcrumbs`, and the breadcrumb trail resolves the expected labels for main / subject / theory / play / result / progress / info states.

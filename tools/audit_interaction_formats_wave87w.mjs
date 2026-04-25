@@ -103,8 +103,8 @@ assert(counts.perType.sequence >= 5, `expected at least 5 sequence rows, got ${c
 assert(counts.perType.match >= 4, `expected at least 4 match rows, got ${counts.perType.match}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(/^(wave87[wxyz]|wave88[abc])$/.test(healthz.wave), `healthz.json: expected wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c, got ${healthz.wave}`);
-assert(/^(wave87[wxyz]|wave88[abc])$/.test(healthz.build_id), `healthz.json: expected build_id wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c, got ${healthz.build_id}`);
+assert(/^(wave87[wxyz]|wave88[abcd])$/.test(healthz.wave), `healthz.json: expected wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d, got ${healthz.wave}`);
+assert(/^(wave87[wxyz]|wave88[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d, got ${healthz.build_id}`);
 
 console.log(JSON.stringify({
   logical,

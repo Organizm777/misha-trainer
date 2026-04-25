@@ -1,3 +1,10 @@
+## wave88d — 2026-04-25
+
+- roadmap `#51`: added breadcrumb navigation for grade pages as a separate eager runtime (`bundle_grade_runtime_breadcrumbs_wave88d`) plus a tiny dedicated CSS asset, so `engine10` stays untouched.
+- breadcrumbs now render across `s-main`, `s-subj`, `s-theory`, `s-play`, `s-result`, `s-prog` and `s-info`, covering normal topic sessions, subject/global mix, diagnostics and rush mode with context-aware labels.
+- navigation behavior: `Главная` returns to class selection, intermediate crumbs route back to the class or subject screen, and leaving an active play session through a breadcrumb confirms first and finalizes the session cleanly via `endSession()`.
+- synced `grade1_v2` … `grade11_v2`, `sw.js`, `healthz.json`, `asset-manifest.json`, docs and audit tooling for wave88d.
+
 ## wave88c — 2026-04-25
 
 - roadmap `#47`: added global keyboard-shortcuts runtime for grade pages

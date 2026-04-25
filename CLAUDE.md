@@ -35,6 +35,7 @@
 - `chunk_roadmap_wave88a_daily_question.*.js` + `wave88a_daily_question.*.css` — самостоятельный homepage-блок «Задание дня» на `index.html`; карточка выбирает один curated вопрос по локальной дате и хранит ответ в `localStorage`.
 - `bundle_grade_runtime_interactions_wave87w.*.js` после wave88b покрывает уже 4 формата: `find-error`, `sequence`, `match`, `multi-select`; grades 1–7 по-прежнему не тянут этот runtime.
 - `chunk_subject_expansion_wave88b_multi_select_banks.*.js` — explicit multi-select банки для 8–11 классов (2 темы на класс, 48 rows total), подключаются только на grade8–11 pages и не вмешиваются в lazy-loader grade10 `wave86s`.
+- `bundle_grade_runtime_breadcrumbs_wave88d.*.js` + `wave88d_breadcrumbs.*.css` — breadcrumb-навигация только для grade-страниц; слой аддитивный, не перехватывает основной роутинг `engine10` и не подключается к `index/dashboard/diagnostic/tests/spec_subjects`.
 - `chunk_grade_content_wave*_wave86t.*.js` — split runtime-injection контента по исходным wave-секциям. Grade-страницы подключают только нужные секции; 10 класс после wave86s обходится без общего content-бандла.
 - `bundle_grade_runtime_core_wave87n.*.js` (~262 KB) — eager core runtime grade-страниц. Внутри: `chunk_roadmap_wave86q_accessibility_theme`, `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `bundle_error_tracking`.
 - `bundle_grade_runtime_features_wave87n.*.js` (~141 KB) — lazy features bundle: `chunk_roadmap_wave86r_theory_achievements`, `chunk_roadmap_wave86p_exam_challenge`, `chunk_roadmap_wave86v_pvp_link_battle`, `bundle_gamification_xp`, `bundle_gamification_meta`.
@@ -403,6 +404,14 @@ Important implementation detail: accepted variants (`acceptedAnswers`) must alwa
 
 Starter short-answer content for grades 8–11 lives in `chunk_subject_expansion_wave87z_text_input_banks.*.js`. Like wave87y, this chunk patches grade10 subject shells directly and intentionally does **not** flip `wave86s` lazy-loaded flags.
 
+
+
+### wave88d breadcrumbs runtime
+
+- `bundle_grade_runtime_breadcrumbs_wave88d` closes roadmap item `#51` on grade pages only.
+- It should remain additive: build breadcrumb DOM in `.w` hosts for `s-main`, `s-subj`, `s-theory`, `s-play`, `s-result`, `s-prog`, `s-info`, but do not take ownership of the underlying navigation state from `engine10`.
+- On `s-play`, breadcrumb navigation must confirm before leaving and call `endSession()` so the current run is finalized instead of silently abandoned.
+- Keep public utility pages clean and preserve strict-CSP compatibility (no inline handlers, no templated HTML requirement).
 
 ### wave88c keyboard shortcuts runtime
 
