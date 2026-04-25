@@ -1,3 +1,12 @@
+## wave89a — 2026-04-25
+
+- critical roadmap bugs: `spec_subjects.html` no longer depends on inline `onclick` / `oninput`; `bundle_special_subjects` now renders only `data-spec-*` markers and handles actions through a single delegated listener on `#spec-root`, which restores clicks under the current strict CSP.
+- special-subjects UI hardening: inline `style=` generation was removed from the rendered markup, score/progress accents moved to reusable CSS classes, and the page now exposes `window.__wave89aSpecSubjects` for runtime auditing.
+- English theory fix: `bundle_boosters.js` now declares `var ENG_TH = window.ENG_TH = window.ENG_TH || {};` in both grade-10 English booster sections and exports `window.__wave89aEnglishTheoryCoverage`; the release requires 19/19 English topics in grade 10 to carry theory without fallback stubs.
+- UX cleanup: removed the floating `theme-toggle` FAB from `chunk_roadmap_wave86q_accessibility_theme` and from the rebuilt `bundle_grade_runtime_core_wave87n`, leaving theme switching only in the settings flow / system sync path.
+- theory coverage: fallback theory now renders an explicit `📖 Теория в разработке` stub instead of hiding the theory action, topics patched by the stub are tagged with `__wave89aTheoryFallback`, and `tools/audit_theory_coverage.mjs` verifies post-normalization theory coverage across grades 1–11.
+- release tooling: added `tools/audit_critical_bugfixes_wave89a.mjs`, `tools/sync_release_metadata.mjs`, `docs/CRITICAL_BUGFIXES_wave89a.md`, refreshed older audits for a `wave89a` build, and resynchronized `asset-manifest.json`, `healthz.json`, `sw.js` cache metadata plus hashed asset references.
+
 ## wave88d — 2026-04-25
 
 - roadmap `#51`: added breadcrumb navigation for grade pages as a separate eager runtime (`bundle_grade_runtime_breadcrumbs_wave88d`) plus a tiny dedicated CSS asset, so `engine10` stays untouched.

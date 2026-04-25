@@ -23,6 +23,7 @@ node tools/rebuild_hashed_assets.mjs assets/_src/js/grade2_data.js assets/_src/j
 ```
 
 - `rebuild_hashed_assets.mjs` recalculates the content hash for one or more source JS/CSS assets under `assets/_src`, writes new built files under `assets/js` or `assets/css`, updates `asset-manifest.json`, rewrites runtime references in HTML/SW, and removes the superseded hashed asset files.
+- `sync_release_metadata.mjs --wave wave89a --date 2026-04-25` resynchronizes `asset-manifest.json`, `healthz.json`, and the `sw.js` cache / precache arrays after a rebuild or runtime split.
 
 ## Release audits
 
@@ -43,6 +44,8 @@ node tools/audit_daily_question_wave88a.mjs
 node tools/audit_multi_select_wave88b.mjs
 node tools/audit_keyboard_shortcuts_wave88c.mjs
 node tools/audit_breadcrumbs_wave88d.mjs
+node tools/audit_critical_bugfixes_wave89a.mjs
+node tools/audit_theory_coverage.mjs
 node tools/validate_questions.js
 ```
 

@@ -3,7 +3,7 @@
   if (typeof window === 'undefined' || window.__wave55SpecialSubjects) return;
   window.__wave55SpecialSubjects = true;
 
-  const VERSION = 'wave64';
+  const VERSION = 'wave89a';
   const DATA_VERSION = '55';
   const SESSION_SIZE = 20;
   const DIAG_SESSION_SIZE = 50;
@@ -64,6 +64,16 @@
     const s = total % 60;
     return h ? String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0') : String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
   }
+  function clampPct(value){ return Math.max(0, Math.min(100, Math.round(Number(value) || 0))); }
+  function widthClass(value){ return 'spec-w-' + clampPct(value); }
+  function badgeTone(value){
+    const pctValue = clampPct(value);
+    if (pctValue >= 85) return 'good';
+    if (pctValue >= 65) return 'warn';
+    return 'bad';
+  }
+  function badgeTextClass(value){ return 'spec-score-' + badgeTone(value); }
+  function badgeFillClass(value){ return 'spec-fill-' + badgeTone(value); }
 
   function setAttr(el, name, value){ if (el && typeof el.setAttribute === 'function') el.setAttribute(name, value); }
   function setAttrIfMissing(el, name, value){ if (el && typeof el.getAttribute === 'function' && !el.getAttribute(name)) el.setAttribute(name, value); }
@@ -95,7 +105,7 @@
     });
     root.querySelectorAll('.spec-progress').forEach((track) => {
       const fill = track.querySelector('.spec-progress-fill');
-      const width = fill ? Math.max(0, Math.min(100, Math.round(parseFloat(fill.style.width || '0') || 0))) : 0;
+      const width = fill ? clampPct(fill.getAttribute('data-spec-width') || '0') : 0;
       setAttr(track, 'role', 'progressbar');
       setAttr(track, 'aria-valuemin', '0');
       setAttr(track, 'aria-valuemax', '100');
@@ -369,7 +379,7 @@
     const topic = topicById(last.subjectId, last.topicId);
     if (!subject || !topic) return '';
     const stat = topicProgress(subject.id, topic.id);
-    return '<button class="spec-resume" type="button" onclick="window.__specDebug.resumeLast()">⏯ Продолжить: ' + esc(subject.nm) + ' → ' + esc(topic.nm) + '<span>' + esc((stat.lastPct || 0) + '% в прошлой сессии') + '</span></button>';
+    return '<button class="spec-resume" type="button" data-spec-action="resume-last">⏯ Продолжить: ' + esc(subject.nm) + ' → ' + esc(topic.nm) + '<span>' + esc((stat.lastPct || 0) + '% в прошлой сессии') + '</span></button>';
   }
 
   function historyBlock(){
@@ -377,8 +387,8 @@
     const diagRows = diagHistory.slice(0, 4);
     if (!rows.length && !diagRows.length) return '';
     return '<div class="spec-history"><div class="spec-section-title">Последняя активность</div>' +
-      (rows.length ? rows.map((row) => '<div class="spec-history-row"><div><b>' + esc(row.subjectName) + '</b><span>' + esc(row.topicName) + '</span></div><strong style="color:' + badgeColor(row.pct) + '">' + row.pct + '%</strong></div>').join('') : '') +
-      (diagRows.length ? '<div class="spec-history-split"></div>' + diagRows.map((row) => '<div class="spec-history-row"><div><b>' + esc(row.subjectName) + '</b><span>Диагностика · ' + esc(fmtDuration(row.durationMs || 0)) + '</span></div><strong style="color:' + badgeColor(row.pct) + '">' + row.pct + '%</strong></div>').join('') : '') +
+      (rows.length ? rows.map((row) => '<div class="spec-history-row"><div><b>' + esc(row.subjectName) + '</b><span>' + esc(row.topicName) + '</span></div><strong class="' + badgeTextClass(row.pct) + '">' + row.pct + '%</strong></div>').join('') : '') +
+      (diagRows.length ? '<div class="spec-history-split"></div>' + diagRows.map((row) => '<div class="spec-history-row"><div><b>' + esc(row.subjectName) + '</b><span>Диагностика · ' + esc(fmtDuration(row.durationMs || 0)) + '</span></div><strong class="' + badgeTextClass(row.pct) + '">' + row.pct + '%</strong></div>').join('') : '') +
       '</div>';
   }
 
@@ -415,8 +425,8 @@
         '<div class="spec-tools">' +
           '<label class="spec-search-wrap">' +
             '<span>🔎</span>' +
-            '<input class="spec-search" type="search" placeholder="Найти направление или тему" value="' + esc(state.menuQuery) + '" oninput="window.__specDebug.setMenuQuery(this.value)">' +
-            (state.menuQuery ? '<button class="spec-clear" type="button" onclick="window.__specDebug.setMenuQuery(\'\')" aria-label="Очистить поиск">✕</button>' : '') +
+            '<input class="spec-search" type="search" placeholder="Найти направление или тему" value="' + esc(state.menuQuery) + '" data-spec-input="menu-query">' +
+            (state.menuQuery ? '<button class="spec-clear" type="button" data-spec-action="clear-menu-query" aria-label="Очистить поиск">✕</button>' : '') +
           '</label>' +
           '<div class="spec-tools-meta">Показано ' + cards.length + ' из ' + totalCards + ' направлений · диагностика 50 вопросов внутри каждого</div>' +
         '</div>' +
@@ -431,7 +441,7 @@
             const trainHtml = summary.attempts
               ? '<strong>лучший ' + summary.best + '%</strong>'
               : '<strong>' + subject.questionCount + ' вопр.</strong>';
-            return '<button class="spec-card" type="button" style="--spec-accent:' + esc(subject.cl) + ';--spec-accent-bg:' + esc(subject.bg) + '" onclick="window.__specDebug.openSubject(\'' + esc(subject.id) + '\')">' +
+            return '<button class="spec-card" type="button" data-spec-id="' + esc(subject.id) + '" data-spec-action="open-subject" data-spec-subject="' + esc(subject.id) + '">' +
               '<div class="spec-card-ic">' + esc(subject.icon) + '</div>' +
               '<div class="spec-card-main"><div class="spec-card-nm">' + esc(subject.nm) + '</div><div class="spec-card-desc">' + esc(subject.desc) + '</div><div class="spec-card-meta"><span>' + subject.tops.length + ' тем</span>' + trainHtml + '</div><div class="spec-card-meta">' + diagHtml + '<span>по всем темам</span></div></div>' +
               '<span class="spec-card-arrow">→</span>' +
@@ -451,8 +461,8 @@
     const resumeTopic = latestSubjectResume(subject.id);
     root.innerHTML = '' +
       '<section class="spec-screen">' +
-        '<button class="spec-back" type="button" onclick="window.__specDebug.openMenu()">← Все спецпредметы</button>' +
-        '<div class="spec-subject-head" style="--spec-accent:' + esc(subject.cl) + ';--spec-accent-bg:' + esc(subject.bg) + '">' +
+        '<button class="spec-back" type="button" data-spec-action="open-menu">← Все спецпредметы</button>' +
+        '<div class="spec-subject-head" data-spec-id="' + esc(subject.id) + '">' +
           '<div class="spec-subject-ic">' + esc(subject.icon) + '</div>' +
           '<div>' +
             '<div class="spec-subject-nm">' + esc(subject.nm) + '</div>' +
@@ -461,15 +471,15 @@
           '</div>' +
         '</div>' +
         '<div class="spec-actions-row">' +
-          '<button class="spec-btn primary" type="button" onclick="window.__specDebug.startDiagnostic(\'' + esc(subject.id) + '\')">🧭 Сквозная диагностика · 50 вопросов</button>' +
-          (resumeTopic ? '<button class="spec-btn" type="button" onclick="window.__specDebug.startTopic(\'' + esc(subject.id) + '\',\'' + esc(resumeTopic.id) + '\')">⏯ Вернуться к теме</button>' : '<button class="spec-btn" type="button" onclick="window.__specDebug.preloadSubject(\'' + esc(subject.id) + '\')">⚡ Подгрузить банк</button>') +
+          '<button class="spec-btn primary" type="button" data-spec-action="start-diagnostic" data-spec-subject="' + esc(subject.id) + '">🧭 Сквозная диагностика · 50 вопросов</button>' +
+          (resumeTopic ? '<button class="spec-btn" type="button" data-spec-action="start-topic" data-spec-subject="' + esc(subject.id) + '" data-spec-topic="' + esc(resumeTopic.id) + '">⏯ Вернуться к теме</button>' : '<button class="spec-btn" type="button" data-spec-action="preload-subject" data-spec-subject="' + esc(subject.id) + '">⚡ Подгрузить банк</button>') +
         '</div>' +
         '<div class="spec-soft-note">Диагностика собирает вопросы по всем темам направления, показывает таймер, слабые темы и быстрые переходы в конкретные банки.</div>' +
         '<div class="spec-tools">' +
           '<label class="spec-search-wrap">' +
             '<span>🔎</span>' +
-            '<input class="spec-search" type="search" placeholder="Найти тему внутри предмета" value="' + esc(state.topicQuery) + '" oninput="window.__specDebug.setTopicQuery(this.value)">' +
-            (state.topicQuery ? '<button class="spec-clear" type="button" onclick="window.__specDebug.setTopicQuery(\'\')" aria-label="Очистить поиск темы">✕</button>' : '') +
+            '<input class="spec-search" type="search" placeholder="Найти тему внутри предмета" value="' + esc(state.topicQuery) + '" data-spec-input="topic-query">' +
+            (state.topicQuery ? '<button class="spec-clear" type="button" data-spec-action="clear-topic-query" aria-label="Очистить поиск темы">✕</button>' : '') +
           '</label>' +
           '<div class="spec-tools-meta">Показано ' + topics.length + ' из ' + subject.tops.length + ' тем</div>' +
         '</div>' +
@@ -481,11 +491,11 @@
             const statHtml = stat.attempts
               ? '<div class="spec-topic-stat"><span>попыток: ' + stat.attempts + '</span><span>лучший: ' + stat.best + '%</span></div>'
               : '<div class="spec-topic-stat"><span>без попыток</span><span>' + topic.questionCount + ' вопросов в банке</span></div>';
-            return '<button class="spec-topic-card" type="button" onclick="window.__specDebug.startTopic(\'' + esc(subject.id) + '\',\'' + esc(topic.id) + '\')">' +
+            return '<button class="spec-topic-card" type="button" data-spec-action="start-topic" data-spec-subject="' + esc(subject.id) + '" data-spec-topic="' + esc(topic.id) + '">' +
               '<div><div class="spec-topic-nm">' + esc(topic.nm) + '</div><div class="spec-topic-sub">Мини-сессия: 20 вопросов · база: ' + topic.questionCount + '</div>' + statHtml + '</div>' +
               '<span class="spec-card-arrow">→</span>' +
               '</button>';
-          }).join('') : '<div class="spec-empty">Темы по этому запросу не найдены.</div>') +
+          }).join('') : '<div class="spec-empty">Поиск внутри предмета ничего не нашёл. Попробуйте другое слово.</div>') +
         '</div>' +
       '</section>';
   }
@@ -498,41 +508,41 @@
     if (!subject || !q) return openMenu();
     if (state.mode === 'train' && !topic) return openSubject(state.subjectId);
     const selected = state.answers[state.answers.length - 1] || null;
-    const progressValue = Math.round((state.index / state.queue.length) * 100);
+    const progressValue = clampPct((state.index / state.queue.length) * 100);
     const subLine = state.mode === 'diagnostic'
       ? 'Вопрос ' + (state.index + 1) + ' из ' + state.queue.length + ' · верно: ' + state.ok
       : 'Вопрос ' + (state.index + 1) + ' из ' + state.queue.length + ' · верно: ' + state.ok;
     root.innerHTML = '' +
       '<section class="spec-screen spec-quiz">' +
         '<div class="spec-quiz-head">' +
-          '<button class="spec-back" type="button" onclick="window.__specDebug.confirmExit()">← ' + (state.mode === 'diagnostic' ? 'К предмету' : 'К теме') + '</button>' +
+          '<button class="spec-back" type="button" data-spec-action="confirm-exit">← ' + (state.mode === 'diagnostic' ? 'К предмету' : 'К теме') + '</button>' +
           '<div class="spec-quiz-meta">' +
             '<div class="spec-quiz-topline"><span class="spec-chip">' + (state.mode === 'diagnostic' ? 'Диагностика · 50 вопросов' : 'Тренировка · 20 вопросов') + '</span><span class="spec-timer" id="spec-timer">' + fmtDuration(state.timerNow - state.timerStartedAt) + '</span></div>' +
             '<div class="spec-quiz-title">' + esc(subject.nm) + (state.mode === 'diagnostic' ? ' · диагностика' : ' · ' + esc(topic.nm)) + '</div>' +
             '<div class="spec-quiz-sub">' + esc(subLine) + '</div>' +
           '</div>' +
         '</div>' +
-        '<div class="spec-progress"><div class="spec-progress-fill" style="width:' + progressValue + '%"></div></div>' +
+        '<div class="spec-progress"><div class="spec-progress-fill ' + widthClass(progressValue) + '" data-spec-width="' + progressValue + '"></div></div>' +
         '<article class="spec-qcard">' +
           (state.mode === 'diagnostic' ? '<div class="spec-qtopic">' + esc(q.topicName) + '</div>' : '') +
           '<div class="spec-qtext">' + esc(q.q) + '</div>' +
           '<div class="spec-opts">' +
-            q.o.map((option) => {
+            q.o.map((option, optionIndex) => {
               const isCorrect = option === q.a;
               const isSelected = state.revealed && selected && option === selected.choice;
               const cls = !state.revealed ? 'spec-opt' : isCorrect ? 'spec-opt is-correct' : isSelected ? 'spec-opt is-wrong' : 'spec-opt is-muted';
               const disabled = state.revealed ? 'disabled' : '';
-              return '<button class="' + cls + '" type="button" ' + disabled + ' onclick="window.__specDebug.answer(' + JSON.stringify(option).replace(/"/g,'&quot;') + ')">' + esc(option) + '</button>';
+              return '<button class="' + cls + '" type="button" ' + disabled + ' data-spec-action="answer" data-spec-option-index="' + optionIndex + '">' + esc(option) + '</button>';
             }).join('') +
           '</div>' +
-          (state.revealed ? '<div class="spec-feedback ' + (selected && selected.correct ? 'ok' : 'bad') + '"><strong>' + (selected && selected.correct ? 'Верно.' : 'Неверно.') + '</strong><span>' + esc(q.h || 'Подсказка пока не добавлена.') + '</span></div><button class="spec-next" type="button" onclick="window.__specDebug.nextQuestion()">' + (state.index + 1 >= state.queue.length ? 'К результатам →' : 'Дальше →') + '</button>' : '') +
+          (state.revealed ? '<div class="spec-feedback ' + (selected && selected.correct ? 'ok' : 'bad') + '"><strong>' + (selected && selected.correct ? 'Верно.' : 'Неверно.') + '</strong><span>' + esc(q.h || 'Подсказка пока не добавлена.') + '</span></div><button class="spec-next" type="button" data-spec-action="next-question">' + (state.index + 1 >= state.queue.length ? 'К результатам →' : 'Дальше →') + '</button>' : '') +
         '</article>' +
       '</section>';
   }
 
   function badgeColor(value){
-    if (value >= 85) return 'var(--green,#16a34a)';
-    if (value >= 65) return 'var(--orange,#ea580c)';
+    if (badgeTone(value) === 'good') return 'var(--green,#16a34a)';
+    if (badgeTone(value) === 'warn') return 'var(--orange,#ea580c)';
     return 'var(--red,#dc2626)';
   }
 
@@ -610,9 +620,9 @@
           '<div class="spec-result-n">' + score + '%</div>' +
           '<div class="spec-result-sub">' + state.ok + ' из ' + total + ' верно · ' + esc(subject.nm) + ' / ' + esc(topic.nm) + ' · ' + esc(fmtDuration(state.sessionDurationMs)) + '</div>' +
           '<div class="spec-result-actions">' +
-            '<button class="spec-btn primary" type="button" onclick="window.__specDebug.startTopic(\'' + esc(subject.id) + '\',\'' + esc(topic.id) + '\')">↻ Повторить тему</button>' +
-            '<button class="spec-btn" type="button" onclick="window.__specDebug.openSubject(\'' + esc(subject.id) + '\')">← К темам</button>' +
-            '<button class="spec-btn" type="button" onclick="window.__specDebug.openMenu()">Все предметы</button>' +
+            '<button class="spec-btn primary" type="button" data-spec-action="start-topic" data-spec-subject="' + esc(subject.id) + '" data-spec-topic="' + esc(topic.id) + '">↻ Повторить тему</button>' +
+            '<button class="spec-btn" type="button" data-spec-action="open-subject" data-spec-subject="' + esc(subject.id) + '">← К темам</button>' +
+            '<button class="spec-btn" type="button" data-spec-action="open-menu">Все предметы</button>' +
           '</div>' +
         '</div>' +
         '<div class="spec-section-title">Разбор ошибок</div>' +
@@ -641,22 +651,22 @@
           '<div class="spec-result-n">' + score + '%</div>' +
           '<div class="spec-result-sub">' + state.ok + ' из ' + total + ' верно · диагностика по ' + esc(subject.nm) + ' · ' + esc(fmtDuration(state.sessionDurationMs)) + '</div>' +
           '<div class="spec-result-actions">' +
-            '<button class="spec-btn primary" type="button" onclick="window.__specDebug.startDiagnostic(\'' + esc(subject.id) + '\')">↻ Повторить диагностику</button>' +
-            '<button class="spec-btn" type="button" onclick="window.__specDebug.openSubject(\'' + esc(subject.id) + '\')">← К предмету</button>' +
-            '<button class="spec-btn" type="button" onclick="window.__specDebug.openMenu()">Все предметы</button>' +
+            '<button class="spec-btn primary" type="button" data-spec-action="start-diagnostic" data-spec-subject="' + esc(subject.id) + '">↻ Повторить диагностику</button>' +
+            '<button class="spec-btn" type="button" data-spec-action="open-subject" data-spec-subject="' + esc(subject.id) + '">← К предмету</button>' +
+            '<button class="spec-btn" type="button" data-spec-action="open-menu">Все предметы</button>' +
           '</div>' +
         '</div>' +
         '<div class="spec-section-title">Карта тем</div>' +
         '<div class="spec-result spec-topic-bars">' +
-          (stats.length ? stats.map((item) => '<div class="spec-topic-bar-row"><div class="spec-topic-bar-head"><strong>' + esc(item.topicName) + '</strong><span>' + item.pct + '% · ' + item.ok + '/' + item.total + '</span></div><div class="spec-topic-bar-track"><div class="spec-topic-bar-fill" style="width:' + item.pct + '%;background:' + badgeColor(item.pct) + '"></div></div></div>').join('') : '<div class="spec-empty">Статистика по темам пока не собрана.</div>') +
+          (stats.length ? stats.map((item) => '<div class="spec-topic-bar-row"><div class="spec-topic-bar-head"><strong>' + esc(item.topicName) + '</strong><span>' + item.pct + '% · ' + item.ok + '/' + item.total + '</span></div><div class="spec-topic-bar-track"><div class="spec-topic-bar-fill ' + widthClass(item.pct) + ' ' + badgeFillClass(item.pct) + '"></div></div></div>').join('') : '<div class="spec-empty">Статистика по темам пока не собрана.</div>') +
         '</div>' +
         '<div class="spec-section-title">Слабые темы</div>' +
         '<div class="spec-review-list">' +
-          (stats.length ? stats.slice(0, 5).map((item) => '<div class="spec-weak-card"><div><div class="spec-review-q">' + esc(item.topicName) + '</div><div class="spec-review-line"><span>Точность</span><strong class="bad">' + item.pct + '%</strong></div></div><button class="spec-btn" type="button" onclick="window.__specDebug.startTopic(\'' + esc(subject.id) + '\',\'' + esc(item.topicId) + '\')">Проработать →</button></div>').join('') : '<div class="spec-empty">Слабые темы не определились.</div>') +
+          (stats.length ? stats.slice(0, 5).map((item) => '<div class="spec-weak-card"><div><div class="spec-review-q">' + esc(item.topicName) + '</div><div class="spec-review-line"><span>Точность</span><strong class="' + badgeTextClass(item.pct) + '">' + item.pct + '%</strong></div></div><button class="spec-btn" type="button" data-spec-action="start-topic" data-spec-subject="' + esc(subject.id) + '" data-spec-topic="' + esc(item.topicId) + '">Проработать →</button></div>').join('') : '<div class="spec-empty">Слабые темы не определились.</div>') +
         '</div>' +
         '<div class="spec-section-title">Сильные стороны</div>' +
         '<div class="spec-review-list">' +
-          (strong.length ? strong.map((item) => '<div class="spec-weak-card"><div><div class="spec-review-q">' + esc(item.topicName) + '</div><div class="spec-review-line"><span>Точность</span><strong class="ok">' + item.pct + '%</strong></div></div><button class="spec-btn" type="button" onclick="window.__specDebug.startTopic(\'' + esc(subject.id) + '\',\'' + esc(item.topicId) + '\')">Ещё 20 →</button></div>').join('') : '<div class="spec-empty">Сильные темы появятся после первой диагностики.</div>') +
+          (strong.length ? strong.map((item) => '<div class="spec-weak-card"><div><div class="spec-review-q">' + esc(item.topicName) + '</div><div class="spec-review-line"><span>Точность</span><strong class="' + badgeTextClass(item.pct) + '">' + item.pct + '%</strong></div></div><button class="spec-btn" type="button" data-spec-action="start-topic" data-spec-subject="' + esc(subject.id) + '" data-spec-topic="' + esc(item.topicId) + '">Ещё 20 →</button></div>').join('') : '<div class="spec-empty">Сильные темы появятся после первой диагностики.</div>') +
         '</div>' +
         '<div class="spec-section-title">Ошибки и подсказки</div>' +
         '<div class="spec-review-list">' +
@@ -671,6 +681,7 @@
   }
 
   function render(){
+    initRootDelegation();
     if (!byId('spec-root')) return;
     try {
       document.body.setAttribute('data-spec-screen', state.screen || 'menu');
@@ -845,6 +856,75 @@
     if (window.confirm('Выйти из сессии? Прогресс текущей мини-сессии не сохранится.')) openSubject(state.subjectId);
   }
 
+
+  function preloadSubjectBank(subjectId){
+    setError('');
+    setLoading(true, 'Подгружаю банк…');
+    render();
+    return loadSubject(subjectId).then((subject) => {
+      setLoading(false, '');
+      render();
+      return subject;
+    }).catch((error) => {
+      console.error(error);
+      setLoading(false, '');
+      setError('Подгрузка не удалась.');
+      render();
+      throw error;
+    });
+  }
+
+  function resumeLastTopic(){
+    const last = getLastTopic();
+    if (last && topicById(last.subjectId, last.topicId)) return startTopic(last.subjectId, last.topicId);
+    return false;
+  }
+
+  function handleRootInput(event){
+    const target = event && event.target && typeof event.target.getAttribute === 'function' ? event.target : null;
+    if (!target) return;
+    const inputType = target.getAttribute('data-spec-input') || '';
+    if (inputType === 'menu-query') {
+      state.menuQuery = String(target.value || '');
+      render();
+    } else if (inputType === 'topic-query') {
+      state.topicQuery = String(target.value || '');
+      render();
+    }
+  }
+
+  function handleRootClick(event){
+    const target = event && event.target && typeof event.target.closest === 'function' ? event.target.closest('[data-spec-action]') : null;
+    if (!target) return;
+    const action = String(target.getAttribute('data-spec-action') || '');
+    const subjectId = String(target.getAttribute('data-spec-subject') || '');
+    const topicId = String(target.getAttribute('data-spec-topic') || '');
+    if (event && typeof event.preventDefault === 'function') event.preventDefault();
+    if (action === 'resume-last') resumeLastTopic();
+    else if (action === 'clear-menu-query') { state.menuQuery = ''; render(); }
+    else if (action === 'clear-topic-query') { state.topicQuery = ''; render(); }
+    else if (action === 'open-menu') openMenu();
+    else if (action === 'open-subject' && subjectId) openSubject(subjectId);
+    else if (action === 'start-topic' && subjectId && topicId) startTopic(subjectId, topicId);
+    else if (action === 'start-diagnostic' && subjectId) startDiagnostic(subjectId);
+    else if (action === 'preload-subject' && subjectId) preloadSubjectBank(subjectId);
+    else if (action === 'confirm-exit') confirmExit();
+    else if (action === 'next-question') nextQuestion();
+    else if (action === 'answer') {
+      const index = Number(target.getAttribute('data-spec-option-index'));
+      const q = currentQuestion();
+      if (q && Array.isArray(q.o) && Number.isInteger(index) && index >= 0 && index < q.o.length) answerQuestion(q.o[index]);
+    }
+  }
+
+  function initRootDelegation(){
+    const root = byId('spec-root');
+    if (!root || root.__wave89aDelegation) return;
+    root.__wave89aDelegation = true;
+    root.addEventListener('click', handleRootClick);
+    root.addEventListener('input', handleRootInput);
+  }
+
   function routeFromHash(){
     const raw = String((window.location && window.location.hash) || '').replace(/^#/, '').trim();
     if (!raw) return false;
@@ -885,16 +965,32 @@
     openSubject: openSubject,
     startTopic: startTopic,
     startDiagnostic: startDiagnostic,
-    preloadSubject: function(subjectId){ setError(''); setLoading(true, 'Подгружаю банк…'); render(); return loadSubject(subjectId).then((subject) => { setLoading(false, ''); render(); return subject; }).catch((error) => { console.error(error); setLoading(false, ''); setError('Подгрузка не удалась.'); render(); throw error; }); },
+    preloadSubject: preloadSubjectBank,
     answer: answerQuestion,
     nextQuestion: nextQuestion,
     confirmExit: confirmExit,
-    resumeLast: function(){ const last = getLastTopic(); if (last && topicById(last.subjectId, last.topicId)) return startTopic(last.subjectId, last.topicId); return false; },
+    resumeLast: resumeLastTopic,
     setMenuQuery: function(value){ state.menuQuery = String(value || ''); render(); },
     setTopicQuery: function(value){ state.topicQuery = String(value || ''); render(); },
     loadSubject: loadSubject,
     loadedSubjects: loadedSubjects,
     state: state
+  };
+  window.__wave89aSpecSubjects = {
+    version: 'wave89a',
+    auditSnapshot: function(){
+      const root = byId('spec-root');
+      const html = root ? String(root.innerHTML || '') : '';
+      return {
+        version: 'wave89a',
+        screen: state.screen,
+        delegated: !!(root && root.__wave89aDelegation),
+        hasInlineHandlers: /on(?:click|input|change|keydown)\s*=/.test(html),
+        hasInlineStyles: /style\s*=/.test(html),
+        actionNodes: root ? root.querySelectorAll('[data-spec-action]').length : 0,
+        inputNodes: root ? root.querySelectorAll('[data-spec-input]').length : 0
+      };
+    }
   };
 
   if (typeof window !== 'undefined') {
@@ -903,4 +999,3 @@
 
   if (!routeFromHash()) render();
 })();
-//# sourceMappingURL=bundle_special_subjects.82d8040232.js.map

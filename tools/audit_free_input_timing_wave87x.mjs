@@ -57,8 +57,8 @@ const englishBlankCount = englishSources.reduce((sum, rel) => sum + count(read(r
 assert(englishBlankCount >= 100, `expected at least 100 existing english blank markers, got ${englishBlankCount}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(/^(wave87[xyz]|wave88[abcd])$/.test(healthz.wave), `healthz.json: expected wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d, got ${healthz.wave}`);
-assert(/^(wave87[xyz]|wave88[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d, got ${healthz.build_id}`);
+assert(/^(wave87[xyz]|wave88[abcd]|wave89a)$/.test(healthz.wave), `healthz.json: expected wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.wave}`);
+assert(/^(wave87[xyz]|wave88[abcd]|wave89a)$/.test(healthz.build_id), `healthz.json: expected build_id wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.build_id}`);
 assert(healthz.hashed_asset_count === Object.keys(manifest.assets || {}).length, 'healthz.json: hashed_asset_count mismatch');
 
 const docRel = 'docs/FREE_INPUT_TIMING_wave87x.md';

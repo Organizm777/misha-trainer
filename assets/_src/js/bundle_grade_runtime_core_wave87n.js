@@ -52,15 +52,7 @@
     return normalizeMode(safeGet(THEME_KEY, 'system'));
   }
 
-  function updateToggle(mode){
-    var btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    mode = normalizeMode(mode || currentMode());
-    btn.textContent = icons[mode];
-    btn.setAttribute('aria-label', labels[mode] + '. Нажмите, чтобы переключить тему.');
-    btn.setAttribute('title', labels[mode]);
-    btn.setAttribute('data-mode', mode);
-  }
+  function updateToggle(){ return false; }
 
   function applyTheme(mode){
     mode = normalizeMode(mode);
@@ -69,11 +61,6 @@
     setThemeMeta(mode);
     updateToggle(mode);
     try { document.dispatchEvent(new CustomEvent('trainer:themechange', {detail: {mode: mode}})); } catch (err) {}
-  }
-
-  function nextMode(mode){
-    var i = MODES.indexOf(normalizeMode(mode));
-    return MODES[(i + 1) % MODES.length];
   }
 
   function injectStyles(){
@@ -89,8 +76,7 @@
       'html[data-theme=dark] header{background:#0e0e1a!important}' +
       'html[data-theme=dark] .card,html[data-theme=dark] .extra,html[data-theme=dark] .scard,html[data-theme=dark] .tcard,html[data-theme=dark] .qcard,html[data-theme=dark] .rcard,html[data-theme=dark] .icard,html[data-theme=dark] .opt,html[data-theme=dark] .tbtn,html[data-theme=dark] .fb,html[data-theme=dark] .dm,html[data-theme=dark] .searchbox{background:#1e1e2e!important;color:#e8e6e0!important;border-color:#2e2e3e!important}' +
       'html[data-theme=dark] input,html[data-theme=dark] textarea,html[data-theme=dark] select{background:#1a1a2a!important;color:#e8e6e0!important;border-color:#3a3a4e!important}' +
-      '.theme-toggle{position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0));z-index:10000;width:42px;height:42px;border-radius:999px;border:1.5px solid var(--border,#e2e0d8);background:var(--card,#fff);color:var(--text,#1a1a2e);box-shadow:0 8px 20px rgba(0,0,0,.16);font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif}' +
-      '.theme-toggle:focus-visible,.skip-link:focus-visible,.btn:focus-visible,.card:focus-visible,.scard:focus-visible,.tbtn:focus-visible,.opt:focus-visible,.qback:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--accent,#2563eb)!important;outline-offset:3px!important}' +
+      '.skip-link:focus-visible,.btn:focus-visible,.card:focus-visible,.scard:focus-visible,.tbtn:focus-visible,.opt:focus-visible,.qback:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--accent,#2563eb)!important;outline-offset:3px!important}' +
       '.skip-link{position:fixed;left:12px;top:12px;z-index:10001;transform:translateY(-160%);padding:10px 12px;border-radius:10px;background:var(--text,#1a1a2e);color:var(--bg,#f5f3ee);font-size:13px;font-weight:800;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.18)}' +
       '.skip-link:focus{transform:translateY(0)}' +
       '.wave86q-live{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}' +
@@ -110,21 +96,8 @@
     document.head.appendChild(style);
   }
 
-  function installThemeToggle(){
+  function installThemeSync(){
     applyTheme(currentMode());
-    if (!document.body || document.getElementById('theme-toggle')) return;
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.id = 'theme-toggle';
-    btn.className = 'theme-toggle';
-    btn.addEventListener('click', function(){
-      var mode = nextMode(currentMode());
-      safeSet(THEME_KEY, mode);
-      applyTheme(mode);
-      announce(labels[mode]);
-    });
-    document.body.appendChild(btn);
-    updateToggle(currentMode());
     if (window.matchMedia) {
       var mq = window.matchMedia('(prefers-color-scheme: dark)');
       var sync = function(){ if (currentMode() === 'system') setThemeMeta('system'); };
@@ -337,7 +310,7 @@
 
   function init(){
     injectStyles();
-    installThemeToggle();
+    installThemeSync();
     installA11y();
     installSearch();
     installResultShare();
@@ -348,7 +321,8 @@
       auditSnapshot: function(){
         return {
           wave: WAVE,
-          themeToggle: !!document.getElementById('theme-toggle'),
+          themeToggle: false,
+          fabRemoved: !document.getElementById('theme-toggle'),
           skipLink: !!document.getElementById('skip-link'),
           liveRegion: !!document.getElementById('wave86q-live'),
           indexSearch: !!document.getElementById('wave86q-index-search'),
@@ -4602,7 +4576,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   var PERF_KEY = 'trainer_perf_samples_wave87n_' + String(root.GRADE_NUM || root.GRADE_NO || 'na');
   var manifest = Object.freeze({
     wave: WAVE,
-    features: "./assets/js/bundle_grade_runtime_features_wave87n.eaf8dced2c.js",
+    features: "./assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js",
     services: "./assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js"
   });
   var loaded = { features:false, services:false };
@@ -4869,4 +4843,4 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     }
   };
 })();
-;window.__wave87nGradeRuntimeCoreBundle = Object.freeze({wave:'wave87n', role:'core', lazy:['assets/js/bundle_grade_runtime_features_wave87n.eaf8dced2c.js','assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js'], bundled:["chunk_roadmap_wave86q_accessibility_theme.js","bundle_grade_after.js","chunk_roadmap_wave86n_progress_tools.js","bundle_error_tracking.js"], generatedAt:'2026-04-23T00:00:00Z'});
+;window.__wave87nGradeRuntimeCoreBundle = Object.freeze({wave:'wave87n', role:'core', lazy:['assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js','assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js'], bundled:["chunk_roadmap_wave86q_accessibility_theme.js","bundle_grade_after.js","chunk_roadmap_wave86n_progress_tools.js","bundle_error_tracking.js"], generatedAt:'2026-04-23T00:00:00Z'});

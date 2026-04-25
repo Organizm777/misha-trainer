@@ -423,3 +423,12 @@ Starter short-answer content for grades 8–11 lives in `chunk_subject_expansion
   - `Escape` for screen back / end-session actions
 - Keep the runtime off public utility pages (`index`, `dashboard`, `diagnostic`, `tests`, `spec_subjects`).
 - Preserve `aria-keyshortcuts` annotations and the editable-target / modal-dialog guards.
+
+
+### wave89a critical bugfixes + theory coverage
+
+- `spec_subjects` must stay free of inline `onclick` / `oninput` / `style=` markup. Use `data-spec-action` / `data-spec-input` markers and one delegated listener on `#spec-root`; the page is under strict CSP and cannot rely on inline handlers.
+- The floating theme FAB from `wave86q` is deprecated. Keep theme sync, but do not reintroduce `#theme-toggle` or fixed-position theme buttons; theme switching belongs in settings/system sync only.
+- Grade 10 English booster theory now depends on an explicit `var ENG_TH = window.ENG_TH = window.ENG_TH || {};` declaration. When extending English topics, keep `window.__wave89aEnglishTheoryCoverage` accurate and preserve full coverage for all 19 grade-10 English topics.
+- Missing `topic.th` should degrade to the explicit `📖 Теория в разработке` stub rather than hiding theory affordances. Use `node tools/audit_theory_coverage.mjs` together with `node tools/audit_critical_bugfixes_wave89a.mjs`, the relevant legacy audits, `node tools/validate_questions.js`, and `node tools/cleanup_build_artifacts.mjs --check` before shipping another wave.
+- `tools/sync_release_metadata.mjs --wave <wave> --date <YYYY-MM-DD>` is the preferred way to resync `asset-manifest.json`, `healthz.json` and the SW precache arrays after hashed rebuilds or runtime rebundles.

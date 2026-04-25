@@ -104,22 +104,23 @@
   function makeFallbackTheory(topic, subject){
     var tn = esc(topic && topic.nm || 'Тема');
     var sn = esc(subject && subject.nm || 'предмет');
-    return '<div class="tcard wave86r-generated-theory">' +
-      '<h3>📖 Теория: ' + tn + '</h3>' +
-      '<p><b>' + sn + '</b>, ' + gradeLabel() + '. Сначала выдели, что именно спрашивают, затем вспомни правило, определение или алгоритм из темы.</p>' +
+    return '<div class="tcard wave86r-generated-theory wave89a-theory-stub">' +
+      '<h3>📖 Теория в разработке</h3>' +
+      '<p>Для темы <b>' + tn + '</b> по предмету <b>' + sn + '</b> пока не добавлена отдельная шпаргалка. Тренажёр уже работает, а подробная теория будет расширена в следующих волнах.</p>' +
       '<ul>' +
-        '<li>Найди ключевые слова в условии и отбрось лишнее.</li>' +
-        '<li>Сравни варианты: правильный должен полностью соответствовать вопросу.</li>' +
-        '<li>После ошибки прочитай блок «Разбор» и повтори похожий вопрос.</li>' +
+        '<li>Сначала прочитайте формулировку вопроса и выделите ключевые слова.</li>' +
+        '<li>После ошибки откройте подсказку и разберите правильный ответ шаг за шагом.</li>' +
+        '<li>Повторите тему ещё раз — так проще закрепить правило до появления полной шпаргалки.</li>' +
       '</ul>' +
-      '<div class="ex">Мини-чеклист: условие → правило → вычисление или вывод → проверка ответа.</div>' +
+      '<div class="ex">Статус: временный fallback вместо скрытой кнопки теории.</div>' +
     '</div>';
   }
   function normalizeTopicTheory(){
     getSubjects().forEach(function(subject){
       (subject.tops || []).forEach(function(topic){
         if(!topic) return;
-        if(!topic.th || !stripTags(topic.th)) topic.th = makeFallbackTheory(topic, subject);
+        if(!topic.th || !stripTags(topic.th)) { topic.th = makeFallbackTheory(topic, subject); topic.__wave89aTheoryFallback = true; }
+        else if (topic.__wave89aTheoryFallback) delete topic.__wave89aTheoryFallback;
       });
     });
   }
@@ -312,8 +313,12 @@
         normalizeTopicTheory();
         var subjects = getSubjects();
         var missingTheory = 0;
+        var fallbackTopics = 0;
         subjects.forEach(function(subject){
-          (subject.tops || []).forEach(function(topic){ if(!topic.th || !stripTags(topic.th)) missingTheory++; });
+          (subject.tops || []).forEach(function(topic){
+            if(!topic.th || !stripTags(topic.th)) missingTheory++;
+            if(topic.__wave89aTheoryFallback) fallbackTopics++;
+          });
         });
         var badgeCount = 0;
         try { badgeCount = BADGES.filter(function(b){ return /^w86r_/.test(b.id); }).length; } catch(e) {}
@@ -322,6 +327,7 @@
           subjects: subjects.length,
           topics: progressSummary().topics,
           missingTheory: missingTheory,
+          fallbackTopics: fallbackTopics,
           addedAchievements: badgeCount,
           openSubjPatched: typeof openSubj === 'function' && !!openSubj.__wave86rPatched,
           ansPatched: typeof ans === 'function' && !!ans.__wave86rPatched,

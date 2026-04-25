@@ -279,8 +279,8 @@ document.dispatchKey('3');
 fixture.screens.main.children.pop();
 
 const healthz = readJSON('healthz.json');
-assert(/^wave88[cd]$/.test(healthz.wave), `healthz.json: expected wave88c/wave88d, got ${healthz.wave}`);
-assert(/^wave88[cd]$/.test(healthz.build_id), `healthz.json: expected build_id wave88c/wave88d, got ${healthz.build_id}`);
+assert(/^(wave88[cd]|wave89a)$/.test(healthz.wave), `healthz.json: expected wave88c/wave88d/wave89a, got ${healthz.wave}`);
+assert(/^(wave88[cd]|wave89a)$/.test(healthz.build_id), `healthz.json: expected build_id wave88c/wave88d/wave89a, got ${healthz.build_id}`);
 
 const docRel = 'docs/KEYBOARD_SHORTCUTS_wave88c.md';
 assert(fs.existsSync(path.join(repoRoot, docRel)), `${docRel}: missing`);
