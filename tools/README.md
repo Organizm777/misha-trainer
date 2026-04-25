@@ -23,7 +23,7 @@ node tools/rebuild_hashed_assets.mjs assets/_src/js/grade2_data.js assets/_src/j
 ```
 
 - `rebuild_hashed_assets.mjs` recalculates the content hash for one or more source JS/CSS assets under `assets/_src`, writes new built files under `assets/js` or `assets/css`, updates `asset-manifest.json`, rewrites runtime references in HTML/SW, and removes the superseded hashed asset files.
-- `sync_release_metadata.mjs --wave wave89a --date 2026-04-25` resynchronizes `asset-manifest.json`, `healthz.json`, and the `sw.js` cache / precache arrays after a rebuild or runtime split.
+- `sync_release_metadata.mjs --wave wave89d --date 2026-04-25` resynchronizes `asset-manifest.json`, `healthz.json`, and the `sw.js` cache / precache arrays after a rebuild, cleanup pass, merge pass, or runtime split.
 
 ## Release audits
 
@@ -46,6 +46,9 @@ node tools/audit_keyboard_shortcuts_wave88c.mjs
 node tools/audit_breadcrumbs_wave88d.mjs
 node tools/audit_critical_bugfixes_wave89a.mjs
 node tools/audit_theory_coverage.mjs
+node tools/audit_merge_pass_wave89b.mjs
+node tools/audit_scripts_budget_wave89c.mjs
+node tools/audit_simple_mode_wave89d.mjs
 node tools/validate_questions.js
 ```
 
@@ -83,3 +86,8 @@ node tools/validate_questions.js
 - `audit_keyboard_shortcuts_wave88c.mjs` — verifies the wave88c trainer-wide keyboard-shortcuts pass: the new eager runtime is present only on grade pages, SW/manifest/healthz stay synchronized, `aria-keyshortcuts` are annotated, and main/subj/theory/play/result/prog flows respond to digits / Enter / Escape while respecting modal and editable-target guards.
 
 - `audit_breadcrumbs_wave88d.mjs` — verifies the wave88d breadcrumb pass: grade pages load the new JS+CSS assets, public utility pages stay clean, SW precaches the assets, the runtime exports `window.__wave88dBreadcrumbs`, and the breadcrumb trail resolves the expected labels for main / subject / theory / play / result / progress / info states.
+
+- `audit_merge_pass_wave89b.mjs` — verifies the wave89b merge pass: the merged runtime + senior banks assets exist in the manifest, grades 8–11 drop to 20/18/18/18 scripts, legacy wave87w/wave87x/wave88c/wave88d and wave87y/wave87z/wave88b live assets disappear from HTML/SW/manifest, and the deprecated `_src` runtime file stays removed.
+- `build_scripts_budget_wave89c.mjs` — assembles the merged wave89c source chunk for the remaining grades 7–9 STEM script-budget pass.
+- `audit_scripts_budget_wave89c.mjs` — verifies the wave89c scripts-budget follow-up: every grade page stays at or below 20 external scripts, grades 7–9 load the merged `wave89c_secondary_stem_7_9` asset, and the old wave58/wave59 chunk pair disappears from HTML/SW/manifest.
+- `audit_simple_mode_wave89d.mjs` — verifies the wave89d simple-mode + smart-start UX gate: default-on state, persisted toggle, `.simple-mode` class application, settings-modal hooks, smart-start order (due/sticky/weak/resume/continue/new/mix) in a VM harness, grade-page asset wiring, and SW precache coverage for the rebuilt merged runtime/CSS assets.

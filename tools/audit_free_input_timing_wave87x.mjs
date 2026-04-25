@@ -6,12 +6,21 @@ const ROOT = process.cwd();
 function read(rel){ return fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
 function exists(rel){ return fs.existsSync(path.join(ROOT, rel)); }
 function assert(condition, message){ if (!condition) throw new Error(message); }
+function firstBuilt(manifest, logicals){
+  for (const logical of logicals) {
+    const built = manifest.assets && manifest.assets[logical];
+    if (built) return { logical, built };
+  }
+  return { logical: logicals[0], built: '' };
+}
 function count(raw, pattern){ const match = raw.match(pattern); return match ? match.length : 0; }
 
 const manifest = JSON.parse(read('assets/asset-manifest.json'));
 const logical = 'assets/js/bundle_grade_runtime_inputs_timing_wave87x.js';
-const builtRel = manifest.assets && manifest.assets[logical];
-assert(builtRel, `asset-manifest.json: missing ${logical}`);
+const mergedLogical = 'assets/js/bundle_grade_runtime_extended_wave89b.js';
+const runtimeChoice = firstBuilt(manifest, [logical, mergedLogical]);
+const builtRel = runtimeChoice.built;
+assert(builtRel, `asset-manifest.json: missing ${logical} or ${mergedLogical}`);
 assert(exists(builtRel), `missing built runtime ${builtRel}`);
 
 const runtimeSrc = read('assets/_src/js/bundle_grade_runtime_inputs_timing_wave87x.js');
@@ -57,8 +66,8 @@ const englishBlankCount = englishSources.reduce((sum, rel) => sum + count(read(r
 assert(englishBlankCount >= 100, `expected at least 100 existing english blank markers, got ${englishBlankCount}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(/^(wave87[xyz]|wave88[abcd]|wave89a)$/.test(healthz.wave), `healthz.json: expected wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.wave}`);
-assert(/^(wave87[xyz]|wave88[abcd]|wave89a)$/.test(healthz.build_id), `healthz.json: expected build_id wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.build_id}`);
+assert(/^(wave87[xyz]|wave88[abcd]|wave89[abcd])$/.test(healthz.wave), `healthz.json: expected wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
+assert(/^(wave87[xyz]|wave88[abcd]|wave89[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.build_id}`);
 assert(healthz.hashed_asset_count === Object.keys(manifest.assets || {}).length, 'healthz.json: hashed_asset_count mismatch');
 
 const docRel = 'docs/FREE_INPUT_TIMING_wave87x.md';

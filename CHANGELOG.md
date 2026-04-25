@@ -1,3 +1,27 @@
+## wave89d — 2026-04-25
+
+- roadmap `#36` + `#37`: added **Простой режим** for grade pages, defaulting to ON for fresh installs, and turned the main practice CTA into a smart-start flow. The mode intentionally hides advanced scenarios (PvP, weekly/exam, cloud sync, leaderboards and filtered global mix) while keeping the normal trainer path front-and-center.
+- implementation stays additive: no new eager JS/CSS files were introduced. Instead, the existing merged grade-page runtime `bundle_grade_runtime_extended_wave89b` now carries a `wave89d` simple-mode gate, and the existing `wave88d_breadcrumbs` CSS asset now also styles the settings modal and `.simple-mode` visibility rules.
+- UX adjustments: the former `ℹ️ О проекте` entry now opens `⚙️ Настройки`, where the user can toggle simple mode, open the help screen, or still reach the original about dialog. The main `⚡ Всё вперемешку` affordance is simplified into a direct `▶ Заниматься` flow, and smart-start now routes that CTA through this order: due errors → sticky errors → weak topics → resume session → continue last topic → untouched topic → global mix.
+- runtime guards: simple mode blocks `showMixFilter`, rush/rating entrypoints, weekly/exam actions, leaderboards and cloud sync through wrappers instead of only hiding buttons, so advanced flows stay unavailable even if a stale button or old local UI state survives.
+- tooling/docs: added `tools/audit_simple_mode_wave89d.mjs`, `docs/SIMPLE_MODE_wave89d.md`, refreshed the script-budget / merge-pass audits for a `wave89d` build, extended the wave89d audit with smart-start VM coverage, and wired the audit into CI workflows.
+
+## wave89c — 2026-04-25
+
+- roadmap follow-up (`#72` after `#71`): enforced a hard script-budget ceiling of **20 external scripts per grade page**. The remaining over-budget page (`grade7_v2.html`) now drops from 21 to 20 scripts, while grades 8 and 9 also shrink further because their 7–9 STEM expansion layers were merged.
+- new merged content asset: `assets/_src/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js` combines the former `chunk_subject_expansion_wave58_secondary_math_7_9` and `chunk_subject_expansion_wave59_physics_chemistry_7_9` live chunks into one shared 7–9 STEM payload for algebra/geometry/physics/chemistry.
+- page impact: `grade7_v2.html` `21 → 20`, `grade8_v2.html` `20 → 19`, `grade9_v2.html` `18 → 17`; all grade pages `1–11` now stay at or below the new CI budget.
+- release metadata / SW cleanup: legacy wave58/wave59 built assets were removed from `asset-manifest.json` and from the service-worker precache set, while the new merged wave89c STEM chunk is precached and loaded only where needed.
+- CI/tooling/docs: added `tools/build_scripts_budget_wave89c.mjs`, `tools/audit_scripts_budget_wave89c.mjs`, wired the new budget audit into `.github/workflows/validate-questions.yml` and `.github/workflows/lighthouse-budget.yml`, refreshed legacy audits to accept a `wave89c` build, and documented the pass in `docs/SCRIPTS_BUDGET_wave89c.md`.
+
+## wave89b — 2026-04-25
+
+- tech-debt roadmap `#71`: merged the post-wave87w add-on runtime layers into one live grade-page asset, `bundle_grade_runtime_extended_wave89b`, so the former standalone `bundle_grade_runtime_interactions_wave87w`, `bundle_grade_runtime_inputs_timing_wave87x`, `bundle_grade_runtime_keyboard_wave88c`, and `bundle_grade_runtime_breadcrumbs_wave88d` hashes no longer ship on grade pages.
+- senior content merge: combined `chunk_subject_expansion_wave87y_free_input_banks`, `chunk_subject_expansion_wave87z_text_input_banks`, and `chunk_subject_expansion_wave88b_multi_select_banks` into one senior-only live chunk, `chunk_subject_expansion_wave89b_inputs_interactions_banks`, still limited to grades 8–11.
+- script-count impact on grade pages: grade9/10/11 drop from 23 to 18 scripts, grade8 drops from 25 to 20, and grades 1–7 each lose two eager runtime requests because keyboard/input/breadcrumb layers now travel together.
+- repo cleanup: removed deprecated source `assets/_src/js/bundle_grade_runtime_wave86z.js`; the old split wave87w/wave87x/wave88c/wave88d and wave87y/wave87z/wave88b hashed outputs are now orphan-cleaned from the manifest and SW precache.
+- tooling/docs: added `tools/audit_merge_pass_wave89b.mjs`, `docs/MERGE_PASS_wave89b.md`, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW release metadata for the merged live build.
+
 ## wave89a — 2026-04-25
 
 - critical roadmap bugs: `spec_subjects.html` no longer depends on inline `onclick` / `oninput`; `bundle_special_subjects` now renders only `data-spec-*` markers and handles actions through a single delegated listener on `#spec-root`, which restores clicks under the current strict CSP.

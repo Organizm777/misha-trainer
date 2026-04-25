@@ -41,6 +41,8 @@ jobs:
       - name: Static preflight budgets
         run: |
           node tools/cleanup_build_artifacts.mjs --check
+          node tools/audit_scripts_budget_wave89c.mjs
+          node tools/audit_simple_mode_wave89d.mjs
           node tools/audit_performance_wave86z.mjs
           node tools/audit_static_events_wave87e.mjs
 

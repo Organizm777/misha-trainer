@@ -88,6 +88,12 @@ const CSP_BRIDGE_ASSETS = [
   manifestAsset(manifest, 'assets/js/chunk_roadmap_wave86u_csp_bridge.js'),
   manifestAsset(manifest, 'assets/js/chunk_roadmap_wave86x_style_csp_bridge.js')
 ];
+const diagnosticStemChunks = manifest.assets['assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js']
+  ? [manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js')]
+  : [
+      manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.js'),
+      manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js')
+    ];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
   manifestAsset(manifest, 'assets/css/wave86x_inline_diagnostic.css'),
   manifestAsset(manifest, 'assets/css/wave86z_static_style_classes.css'),
@@ -103,8 +109,7 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave38_content_consolidation.js'),
   manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave56_primary_math.js'),
   manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave57_primary_russian_1_4.js'),
-  manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.js'),
-  manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js'),
+  ...diagnosticStemChunks,
   manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.js'),
   manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave61_senior_school_10_11.js'),
   manifestAsset(manifest, 'assets/js/chunk_grade_content_wave87m_transition_1011.js'),

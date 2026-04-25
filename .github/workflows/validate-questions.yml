@@ -21,5 +21,10 @@ jobs:
       - name: Assert no orphan hashed assets
         run: node tools/cleanup_build_artifacts.mjs --check
 
+      - name: Enforce grade-page scripts budget
+        run: node tools/audit_scripts_budget_wave89c.mjs
+      - name: Enforce simple-mode UX gate
+        run: node tools/audit_simple_mode_wave89d.mjs
+
       - name: Validate question generators
         run: node tools/validate_questions.js

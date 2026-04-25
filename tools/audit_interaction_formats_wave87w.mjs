@@ -5,6 +5,13 @@ import path from 'path';
 const ROOT = process.cwd();
 function read(rel){ return fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
 function assert(condition, message){ if (!condition) throw new Error(message); }
+function firstBuilt(manifest, logicals){
+  for (const logical of logicals) {
+    const built = manifest.assets && manifest.assets[logical];
+    if (built) return { logical, built };
+  }
+  return { logical: logicals[0], built: '' };
+}
 
 function countUses(raw, fnName){
   const all = raw.match(new RegExp(`\\b${fnName}\\(`, 'g')) || [];
@@ -13,8 +20,11 @@ function countUses(raw, fnName){
 
 const manifest = JSON.parse(read('assets/asset-manifest.json'));
 const logical = 'assets/js/bundle_grade_runtime_interactions_wave87w.js';
-const builtRel = manifest.assets && manifest.assets[logical];
-assert(builtRel, `asset-manifest.json: missing ${logical}`);
+const mergedLogical = 'assets/js/bundle_grade_runtime_extended_wave89b.js';
+const runtimeChoice = firstBuilt(manifest, [logical, mergedLogical]);
+const builtRel = runtimeChoice.built;
+const usingMerged = runtimeChoice.logical === mergedLogical;
+assert(builtRel, `asset-manifest.json: missing ${logical} or ${mergedLogical}`);
 assert(fs.existsSync(path.join(ROOT, builtRel)), `missing built asset ${builtRel}`);
 
 const runtimeSrc = read('assets/_src/js/bundle_grade_runtime_interactions_wave87w.js');
@@ -30,6 +40,7 @@ for (let grade = 1; grade <= 11; grade++) {
   const html = read(htmlFile);
   const hasRuntime = html.includes('./' + builtRel);
   if (grade >= 8) assert(hasRuntime, `${htmlFile}: missing ${builtRel}`);
+  else if (usingMerged) assert(hasRuntime, `${htmlFile}: merged runtime should stay present on ${htmlFile}`);
   else assert(!hasRuntime, `${htmlFile}: unexpected ${builtRel}`);
   pageChecks.push({ grade, hasRuntime });
 }
@@ -103,8 +114,8 @@ assert(counts.perType.sequence >= 5, `expected at least 5 sequence rows, got ${c
 assert(counts.perType.match >= 4, `expected at least 4 match rows, got ${counts.perType.match}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(/^(wave87[wxyz]|wave88[abcd]|wave89a)$/.test(healthz.wave), `healthz.json: expected wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.wave}`);
-assert(/^(wave87[wxyz]|wave88[abcd]|wave89a)$/.test(healthz.build_id), `healthz.json: expected build_id wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.build_id}`);
+assert(/^(wave87[wxyz]|wave88[abcd]|wave89[abcd])$/.test(healthz.wave), `healthz.json: expected wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
+assert(/^(wave87[wxyz]|wave88[abcd]|wave89[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave87w/wave87x/wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.build_id}`);
 
 console.log(JSON.stringify({
   logical,

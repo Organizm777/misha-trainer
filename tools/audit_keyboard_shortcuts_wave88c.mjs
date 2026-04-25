@@ -12,6 +12,13 @@ function read(rel){
 function readJSON(rel){
   return JSON.parse(read(rel));
 }
+function firstBuilt(manifest, logicals){
+  for (const logical of logicals) {
+    const built = manifest.assets && manifest.assets[logical];
+    if (built) return { logical, built };
+  }
+  return { logical: logicals[0], built: '' };
+}
 function walk(node, visitor){
   if (!node || node.nodeType !== 1) return;
   visitor(node);
@@ -192,8 +199,9 @@ function buildFixture() {
 }
 
 const manifest = readJSON('assets/asset-manifest.json');
-const builtRel = manifest.assets['assets/js/bundle_grade_runtime_keyboard_wave88c.js'];
-assert(builtRel, 'asset-manifest: missing logical runtime entry');
+const builtChoice = firstBuilt(manifest, ['assets/js/bundle_grade_runtime_keyboard_wave88c.js', 'assets/js/bundle_grade_runtime_extended_wave89b.js']);
+const builtRel = builtChoice.built;
+assert(builtRel, 'asset-manifest: missing keyboard runtime logical entry or merged runtime');
 assert(fs.existsSync(path.join(repoRoot, builtRel)), `built runtime missing: ${builtRel}`);
 
 for (let grade = 1; grade <= 11; grade += 1) {
@@ -279,8 +287,8 @@ document.dispatchKey('3');
 fixture.screens.main.children.pop();
 
 const healthz = readJSON('healthz.json');
-assert(/^(wave88[cd]|wave89a)$/.test(healthz.wave), `healthz.json: expected wave88c/wave88d/wave89a, got ${healthz.wave}`);
-assert(/^(wave88[cd]|wave89a)$/.test(healthz.build_id), `healthz.json: expected build_id wave88c/wave88d/wave89a, got ${healthz.build_id}`);
+assert(/^(wave88[cd]|wave89[abcd])$/.test(healthz.wave), `healthz.json: expected wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
+assert(/^(wave88[cd]|wave89[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.build_id}`);
 
 const docRel = 'docs/KEYBOARD_SHORTCUTS_wave88c.md';
 assert(fs.existsSync(path.join(repoRoot, docRel)), `${docRel}: missing`);

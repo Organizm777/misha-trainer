@@ -28,11 +28,11 @@ for (const [k, rel] of Object.entries(built)) {
   if (rel) assert(exists(rel), `built asset missing for ${k}: ${rel}`);
 }
 
-assert(healthz.wave === 'wave89a', `healthz.wave should be wave89a, got ${healthz.wave}`);
-assert(healthz.build_id === 'wave89a', `healthz.build_id should be wave89a, got ${healthz.build_id}`);
-assert(String(healthz.cache || '').includes('wave89a'), `healthz.cache should reference wave89a, got ${healthz.cache}`);
+assert(/^wave89[abcd]$/.test(healthz.wave), `healthz.wave should be wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
+assert(/^wave89[abcd]$/.test(healthz.build_id), `healthz.build_id should be wave89a/wave89b/wave89c/wave89d, got ${healthz.build_id}`);
+assert(/wave89[abcd]/.test(String(healthz.cache || '')), `healthz.cache should reference wave89a/wave89b/wave89c/wave89d, got ${healthz.cache}`);
 assert(healthz.hashed_asset_count === Object.keys(manifest.assets || {}).length, 'healthz.hashed_asset_count mismatch');
-assert(sw.includes("trainer-build-wave89a-2026-04-25"), 'sw.js: cache name should be bumped to wave89a');
+assert(/trainer-build-wave89[abcd]-2026-04-25/.test(sw), 'sw.js: cache name should be bumped to wave89a/wave89b/wave89c/wave89d');
 
 for (const rel of Object.values(built)) {
   if (!rel) continue;

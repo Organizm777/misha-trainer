@@ -33,15 +33,16 @@
 
 - `bundle_shell.*.js` — обёртка: header, навигация, хэш-роутинг, wave36_perf (кеш DOM-запросов). Preload с `fetchpriority=high`.
 - `chunk_roadmap_wave88a_daily_question.*.js` + `wave88a_daily_question.*.css` — самостоятельный homepage-блок «Задание дня» на `index.html`; карточка выбирает один curated вопрос по локальной дате и хранит ответ в `localStorage`.
-- `bundle_grade_runtime_interactions_wave87w.*.js` после wave88b покрывает уже 4 формата: `find-error`, `sequence`, `match`, `multi-select`; grades 1–7 по-прежнему не тянут этот runtime.
-- `chunk_subject_expansion_wave88b_multi_select_banks.*.js` — explicit multi-select банки для 8–11 классов (2 темы на класс, 48 rows total), подключаются только на grade8–11 pages и не вмешиваются в lazy-loader grade10 `wave86s`.
-- `bundle_grade_runtime_breadcrumbs_wave88d.*.js` + `wave88d_breadcrumbs.*.css` — breadcrumb-навигация только для grade-страниц; слой аддитивный, не перехватывает основной роутинг `engine10` и не подключается к `index/dashboard/diagnostic/tests/spec_subjects`.
+- `bundle_grade_runtime_extended_wave89b.*.js` — merged eager add-on runtime для grade-страниц: внутри живут бывшие слои `bundle_grade_runtime_interactions_wave87w`, `bundle_grade_runtime_inputs_timing_wave87x`, `bundle_grade_runtime_keyboard_wave88c`, `bundle_grade_runtime_breadcrumbs_wave88d`, а с `wave89d` ещё и simple-mode gate. На grades 1–7 интерактивные форматы сами остаются неактивными по guard'ам, но ввод/тайминг, шорткаты, breadcrumbs и упрощённый UX приезжают одним файлом.
+- `chunk_subject_expansion_wave89b_inputs_interactions_banks.*.js` — merged senior-only content chunk для grades 8–11; внутри живут бывшие explicit банки `wave87y` (numeric input), `wave87z` (short text input) и `wave88b` (multi-select).
+- `chunk_subject_expansion_wave89c_secondary_stem_7_9.*.js` — merged 7–9 STEM content chunk для grades 7–9; заменяет пару `wave58_secondary_math_7_9` + `wave59_physics_chemistry_7_9` и нужен в первую очередь для удержания budget `<=20` script-тегов на grade-страницах.
+- `wave88d_breadcrumbs.*.css` — breadcrumb-навигация только для grade-страниц; с `wave89d` тот же tiny-asset ещё и несёт CSS для settings modal/simple-mode, а JS-логика по-прежнему приезжает через `bundle_grade_runtime_extended_wave89b`.
 - `chunk_grade_content_wave*_wave86t.*.js` — split runtime-injection контента по исходным wave-секциям. Grade-страницы подключают только нужные секции; 10 класс после wave86s обходится без общего content-бандла.
 - `bundle_grade_runtime_core_wave87n.*.js` (~262 KB) — eager core runtime grade-страниц. Внутри: `chunk_roadmap_wave86q_accessibility_theme`, `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `bundle_error_tracking`.
 - `bundle_grade_runtime_features_wave87n.*.js` (~141 KB) — lazy features bundle: `chunk_roadmap_wave86r_theory_achievements`, `chunk_roadmap_wave86p_exam_challenge`, `chunk_roadmap_wave86v_pvp_link_battle`, `bundle_gamification_xp`, `bundle_gamification_meta`.
 - `bundle_grade_runtime_services_wave87n.*.js` (~157 KB) — lazy services bundle: `bundle_sharing`, `bundle_profile_social`, `chunk_roadmap_wave86w_cloud_sync`.
 - `window.wave87nRuntimeSplit` живёт в core bundle: он замеряет `interactive`, пишет perf-сэмплы в `localStorage.trainer_perf_samples_wave87n_<grade>`, на idle/timeout догружает features/services и умеет `hydrateForAction()` для раннего клика по profile/report/backup actions.
-- Старый merged `bundle_grade_runtime_wave86z.*.js` удалён из live build. Standalone hashed outputs контекстных модулей по-прежнему могут существовать для других страниц (например, diagnostic), а контроль orphan build-artifacts остаётся в `tools/cleanup_build_artifacts.mjs --check`.
+- Старый merged `bundle_grade_runtime_wave86z.*.js` удалён из live build, а с wave89b удалён и deprecated source `assets/_src/js/bundle_grade_runtime_wave86z.js`. Контроль orphan build-artifacts остаётся в `tools/cleanup_build_artifacts.mjs --check`.
 - `grade{1..11}_data.*.js` — внешние данные вопросов по классам. С wave86o классы 1–7 вынесены из inline HTML; с wave86s `grade10_data` стал лёгким shell, а тяжёлые банки 10 класса живут в `grade10_subject_*_wave86s.*.js` и подгружаются lazy-loader'ом.
 - `SUBJ` определяется в grade-data файлах **до** `wave35_plans`/content-injection/`engine10`; порядок defer-скриптов важен.
 
@@ -432,3 +433,17 @@ Starter short-answer content for grades 8–11 lives in `chunk_subject_expansion
 - Grade 10 English booster theory now depends on an explicit `var ENG_TH = window.ENG_TH = window.ENG_TH || {};` declaration. When extending English topics, keep `window.__wave89aEnglishTheoryCoverage` accurate and preserve full coverage for all 19 grade-10 English topics.
 - Missing `topic.th` should degrade to the explicit `📖 Теория в разработке` stub rather than hiding theory affordances. Use `node tools/audit_theory_coverage.mjs` together with `node tools/audit_critical_bugfixes_wave89a.mjs`, the relevant legacy audits, `node tools/validate_questions.js`, and `node tools/cleanup_build_artifacts.mjs --check` before shipping another wave.
 - `tools/sync_release_metadata.mjs --wave <wave> --date <YYYY-MM-DD>` is the preferred way to resync `asset-manifest.json`, `healthz.json` and the SW precache arrays after hashed rebuilds or runtime rebundles.
+
+### wave89b merge pass + wave89c scripts budget
+
+- `wave89b` merged the post-wave87w add-on runtime into `bundle_grade_runtime_extended_wave89b` and the senior explicit input/interaction banks into `chunk_subject_expansion_wave89b_inputs_interactions_banks`; later waves should keep using these merged live assets instead of resurrecting the old standalone wave87w/wave87x/wave88c/wave88d and wave87y/wave87z/wave88b files.
+- `wave89c` closes the follow-up script-budget gate with `chunk_subject_expansion_wave89c_secondary_stem_7_9`. Grades 7–9 should reference this merged STEM chunk, not the old pair `chunk_subject_expansion_wave58_secondary_math_7_9` + `chunk_subject_expansion_wave59_physics_chemistry_7_9`.
+- Keep every `grade*_v2.html` page at **20 external scripts or fewer**. Enforce this with `node tools/audit_scripts_budget_wave89c.mjs`; CI now runs the same audit inside both `validate-questions` and `lighthouse-budget`.
+
+### wave89d simple mode
+
+- The new roadmap asks for **`#36 Простой режим` with default ON** plus **`#37 ▶ Заниматься` smart-start**; implement both additively on top of the merged wave89b runtime instead of introducing a new eager asset.
+- Persist the toggle in `localStorage` under `trainer_simple_mode_v1`, apply the `simple-mode` class to both `<html>` and `<body>`, and keep the user-facing switch inside a settings modal opened from the former `show-about` entrypoint.
+- In simple mode the app should hide/block PvP, weekly/exam flows, cloud sync, leaderboards and filtered `Сборная`; the primary mixed-practice affordance becomes a direct `▶ Заниматься` path. Smart-start order: due-review → sticky-review → weak-topics → resume-session → continue-last-topic → untouched-topic → global-mix. Keep the guard at the function/API level as well, not just via CSS.
+- Validate with `node tools/audit_simple_mode_wave89d.mjs` in addition to the existing merge-pass, script-budget, theory-coverage and question-validation audits; the wave89d audit now includes VM coverage for both the default-on toggle and the smart-start order.
+- After any rebuild that changes hashed assets, rerun `node tools/sync_release_metadata.mjs --wave <wave> --date <YYYY-MM-DD>` and verify that `sw.js`, `healthz.json`, and `assets/asset-manifest.json` agree on the new budget-safe live assets.

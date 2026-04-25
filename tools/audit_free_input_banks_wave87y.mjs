@@ -15,6 +15,13 @@ const INCLUDE_RE = /\/assets\/js\/(grade\d+_data\.|bundle_boosters\.|chunk_grade
 function read(rel){ return fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
 function exists(rel){ return fs.existsSync(path.join(ROOT, rel)); }
 function assert(condition, message){ if (!condition) throw new Error(message); }
+function firstBuilt(manifest, logicals){
+  for (const logical of logicals) {
+    const built = manifest.assets && manifest.assets[logical];
+    if (built) return { logical, built };
+  }
+  return { logical: logicals[0], built: '' };
+}
 function parseScripts(htmlFile){
   const html = read(htmlFile);
   return [...html.matchAll(/<script[^>]+src="([^"]+)"[^>]*>/g)].map((m) => m[1].replace(/^\.\//, ''));
@@ -125,11 +132,15 @@ function validateGenerated(row, topicId){
 
 const manifest = JSON.parse(read('assets/asset-manifest.json'));
 const runtimeLogical = 'assets/js/bundle_grade_runtime_inputs_timing_wave87x.js';
+const runtimeMergedLogical = 'assets/js/bundle_grade_runtime_extended_wave89b.js';
 const chunkLogical = 'assets/js/chunk_subject_expansion_wave87y_free_input_banks.js';
-const runtimeBuilt = manifest.assets && manifest.assets[runtimeLogical];
-const chunkBuilt = manifest.assets && manifest.assets[chunkLogical];
-assert(runtimeBuilt, `manifest missing ${runtimeLogical}`);
-assert(chunkBuilt, `manifest missing ${chunkLogical}`);
+const chunkMergedLogical = 'assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.js';
+const runtimeChoice = firstBuilt(manifest, [runtimeLogical, runtimeMergedLogical]);
+const chunkChoice = firstBuilt(manifest, [chunkLogical, chunkMergedLogical]);
+const runtimeBuilt = runtimeChoice.built;
+const chunkBuilt = chunkChoice.built;
+assert(runtimeBuilt, `manifest missing ${runtimeLogical} or ${runtimeMergedLogical}`);
+assert(chunkBuilt, `manifest missing ${chunkLogical} or ${chunkMergedLogical}`);
 assert(exists(runtimeBuilt), `missing built runtime ${runtimeBuilt}`);
 assert(exists(chunkBuilt), `missing built chunk ${chunkBuilt}`);
 
@@ -172,8 +183,8 @@ assert(read('sw.js').includes(`'./${runtimeBuilt}'`), `sw.js: missing ${runtimeB
 assert(read('sw.js').includes(`'./${chunkBuilt}'`), `sw.js: missing ${chunkBuilt}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(/^(wave87[yz]|wave88[abcd]|wave89a)$/.test(healthz.wave), `healthz.json: expected wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.wave}`);
-assert(/^(wave87[yz]|wave88[abcd]|wave89a)$/.test(healthz.build_id), `healthz.json: expected build_id wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a, got ${healthz.build_id}`);
+assert(/^(wave87[yz]|wave88[abcd]|wave89[abcd])$/.test(healthz.wave), `healthz.json: expected wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
+assert(/^(wave87[yz]|wave88[abcd]|wave89[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.build_id}`);
 assert(healthz.hashed_asset_count === Object.keys(manifest.assets || {}).length, 'healthz.json: hashed_asset_count mismatch');
 
 const docRel = 'docs/FREE_INPUT_BANKS_wave87y.md';
