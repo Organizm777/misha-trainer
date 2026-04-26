@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave89n-2026-04-26';
+const CACHE_NAME = 'trainer-build-wave89p-2026-04-26';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -33,6 +33,7 @@ const ASSETS = [
   './assets/css/wave86z_static_style_classes.7a515bc89a.css',
   './assets/css/wave88a_daily_question.28618f024e.css',
   './assets/css/wave88d_breadcrumbs.2272304da8.css',
+  './assets/css/wave89p_self_host_fonts.4aa7c3337c.css',
   './assets/js/bundle_boosters.ce945f33ae.js',
   './assets/js/bundle_dashboard_tools.9025bc19a4.js',
   './assets/js/bundle_diagnostic_tools.641a191419.js',
@@ -40,13 +41,13 @@ const ASSETS = [
   './assets/js/bundle_exam.21c1f611f3.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
-  './assets/js/bundle_grade_runtime_core_wave87n.8ab785fad6.js',
+  './assets/js/bundle_grade_runtime_core_wave87n.1bd154a017.js',
   './assets/js/bundle_grade_runtime_extended_wave89b.0455583291.js',
   './assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',
   './assets/js/bundle_sharing.75450d41f8.js',
-  './assets/js/bundle_shell.366a4cb99e.js',
+  './assets/js/bundle_shell.5670562070.js',
   './assets/js/bundle_special_subjects.db82ee1d26.js',
   './assets/js/chunk_grade10_lazy_wave86s.135fbaef2b.js',
   './assets/js/chunk_grade_content_wave12_english_wave86t.61be17ebe4.js',
@@ -124,6 +125,15 @@ const ASSETS = [
   './assets/js/inline_tests_2_wave86u.a5635ca67e.js',
   './assets/js/inline_tests_3_wave86u.bab0f051a9.js',
   './assets/js/wave35_plans.f812119619.js',
+  './assets/fonts/golos-text-cyrillic-ext-wght-normal.woff2',
+  './assets/fonts/golos-text-cyrillic-wght-normal.woff2',
+  './assets/fonts/golos-text-latin-wght-normal.woff2',
+  './assets/fonts/jetbrains-mono-cyrillic-ext-wght-normal.woff2',
+  './assets/fonts/jetbrains-mono-cyrillic-wght-normal.woff2',
+  './assets/fonts/jetbrains-mono-latin-wght-normal.woff2',
+  './assets/fonts/unbounded-cyrillic-ext-wght-normal.woff2',
+  './assets/fonts/unbounded-cyrillic-wght-normal.woff2',
+  './assets/fonts/unbounded-latin-wght-normal.woff2',
   './assets/data/spec_subjects/construction.json',
   './assets/data/spec_subjects/diplomacy.json',
   './assets/data/spec_subjects/gkh.json',
@@ -139,12 +149,13 @@ const CSP_BRIDGE_ASSETS = [
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js'
 ];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
+  './assets/css/wave89p_self_host_fonts.4aa7c3337c.css',
   './assets/css/wave86x_inline_diagnostic.0bd1520b48.css',
   './assets/css/wave86z_static_style_classes.7a515bc89a.css',
   './assets/js/inline_diagnostic_1_wave86u.e10ae7fc14.js',
   './assets/js/inline_diagnostic_2_wave86u.d7f19b85e9.js',
   './assets/js/wave35_plans.f812119619.js',
-  './assets/js/bundle_shell.366a4cb99e.js',
+  './assets/js/bundle_shell.5670562070.js',
   './assets/js/bundle_diagnostic_tools.641a191419.js',
   './assets/js/chunk_roadmap_wave86q_accessibility_theme.0864633c36.js',
   './assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js',
@@ -215,10 +226,9 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   if(request.method !== 'GET') return;
   const url = new URL(request.url);
-  const isFont = url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com');
   const isSameOrigin = url.origin === self.location.origin;
-  if(!isFont && !isSameOrigin) return;
-  const cacheName = isSameOrigin ? STATIC_CACHE : RUNTIME_CACHE;
+  if(!isSameOrigin) return;
+  const cacheName = STATIC_CACHE;
   event.respondWith((async () => {
     const result = await staleWhileRevalidate(request, cacheName);
     if(result.revalidate) event.waitUntil(result.revalidate.then(() => undefined).catch(() => undefined));

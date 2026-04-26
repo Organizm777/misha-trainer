@@ -71,6 +71,10 @@ const iconsDir = path.join(ROOT, 'assets', 'icons');
 const iconFiles = fs.existsSync(iconsDir)
   ? fs.readdirSync(iconsDir).filter(name => /\.(png|svg|webp)$/i.test(name)).sort().map(name => `./assets/icons/${name}`)
   : [];
+const fontsDir = path.join(ROOT, 'assets', 'fonts');
+const fontFiles = fs.existsSync(fontsDir)
+  ? fs.readdirSync(fontsDir).filter(name => /\.(woff2?|ttf|otf)$/i.test(name)).sort().map(name => `./assets/fonts/${name}`)
+  : [];
 const assetFiles = Object.values(manifest.assets || {}).sort().map(relToRoot).map(rel => `./${rel}`);
 
 const ASSETS = [
@@ -81,6 +85,7 @@ const ASSETS = [
   './CHANGELOG.md',
   './assets/asset-manifest.json',
   ...assetFiles,
+  ...fontFiles,
   ...specDataFiles,
   ...iconFiles
 ];
@@ -95,6 +100,7 @@ const diagnosticStemChunks = manifest.assets['assets/js/chunk_subject_expansion_
       manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js')
     ];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
+  manifestAsset(manifest, 'assets/css/wave89p_self_host_fonts.css'),
   manifestAsset(manifest, 'assets/css/wave86x_inline_diagnostic.css'),
   manifestAsset(manifest, 'assets/css/wave86z_static_style_classes.css'),
   manifestAsset(manifest, 'assets/js/inline_diagnostic_1_wave86u.js'),

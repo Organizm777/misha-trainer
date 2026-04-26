@@ -20,6 +20,7 @@ const logical = {
   boosters: 'assets/js/bundle_boosters.js',
   theme: 'assets/js/chunk_roadmap_wave86q_accessibility_theme.js',
   core: 'assets/js/bundle_grade_runtime_core_wave87n.js',
+  shell: 'assets/js/bundle_shell.js',
   css: 'assets/css/wave86x_inline_spec_subjects.css'
 };
 const built = Object.fromEntries(Object.entries(logical).map(([k, rel]) => [k, manifest.assets[rel]]));
@@ -48,7 +49,10 @@ const cssSrc = read('assets/_src/css/wave86x_inline_spec_subjects.css');
 const cssBuilt = built.css ? read(built.css) : '';
 const themeSrc = read('assets/_src/js/chunk_roadmap_wave86q_accessibility_theme.js');
 const themeBuilt = built.theme ? read(built.theme) : '';
+const coreSrc = read('assets/_src/js/bundle_grade_runtime_core_wave87n.js');
 const coreBuilt = built.core ? read(built.core) : '';
+const shellSrc = read('assets/_src/js/bundle_shell.js');
+const shellBuilt = built.shell ? read(built.shell) : '';
 const boostersSrc = read('assets/_src/js/bundle_boosters.js');
 const boostersBuilt = built.boosters ? read(built.boosters) : '';
 
@@ -75,6 +79,17 @@ for (const re of fabCreationPatterns) {
   assert(!re.test(themeSrc), `theme source should no longer contain FAB pattern ${re}`);
   assert(!re.test(themeBuilt), `theme built asset should no longer contain FAB pattern ${re}`);
   assert(!re.test(coreBuilt), `runtime core should no longer contain FAB pattern ${re}`);
+}
+const floatingThemeBtnPatterns = [
+  /#\$\{THEME_BTN_ID\}\{position:fixed/,
+  /#trainer-theme-btn\{position:fixed/,
+  /#trainer-theme-btn\{[^}]*top:calc\(12px/
+];
+for (const re of floatingThemeBtnPatterns) {
+  assert(!re.test(shellSrc), `shell source should not keep floating trainer-theme-btn styles ${re}`);
+  assert(!re.test(shellBuilt), `shell built asset should not keep floating trainer-theme-btn styles ${re}`);
+  assert(!re.test(coreSrc), `runtime core source should not keep floating trainer-theme-btn styles ${re}`);
+  assert(!re.test(coreBuilt), `runtime core built asset should not keep floating trainer-theme-btn styles ${re}`);
 }
 assert(themeSrc.includes('installThemeSync'), 'theme source: missing installThemeSync');
 assert(themeBuilt.includes('installThemeSync'), 'theme built asset: missing installThemeSync');

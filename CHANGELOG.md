@@ -1,3 +1,15 @@
+## wave89p — 2026-04-26
+
+- roadmap Block 0 (`#4–#5`): self-hosted the three shared UI fonts (`Unbounded`, `Golos Text`, `JetBrains Mono`) under `assets/fonts/`, introduced the local stylesheet `wave89p_self_host_fonts`, removed Google Fonts dependencies from every public HTML page and CSP, and narrowed the service-worker runtime fetch path back to same-origin assets only.
+- CI hardening: the existing `tools/audit_theory_coverage.mjs` is now a required gate in both GitHub workflows, and the new `tools/audit_self_host_fonts_wave89p.mjs` prevents regressions by rejecting any return of Google Fonts hosts or missing local font precache entries.
+- release metadata: synchronized SW precache metadata so the new font CSS plus local `assets/fonts/*.woff2` files are cached offline with the `wave89p` release.
+
+## wave89o — 2026-04-26
+
+- roadmap Block 0 (`#1–#3`): closed the three urgent follow-ups from the updated 100-task plan — Lighthouse CI no longer hard-fails on flaky third-party console noise, `diagnostic.html` now loads the merged `wave89c` 7–9 STEM chunk instead of deleted `wave58`/`wave59` assets, and the legacy floating theme FAB is explicitly scrubbed / hidden from both shared shell and grade runtime paths.
+- CI hardening: `tools/audit_scripts_budget_wave89c.mjs` now also verifies `diagnostic.html`, `tools/audit_critical_bugfixes_wave89a.mjs` now rejects fixed-position `trainer-theme-btn` styles in shell/core bundles, and both GitHub workflows run the critical bugfix audit before the heavier checks.
+- release metadata: rebuilt the touched hashed runtime assets (`bundle_shell`, `bundle_grade_runtime_core_wave87n`) and resynchronized SW / health metadata for the wave89o release.
+
 ## wave89n — 2026-04-26
 
 - E48: добавлен guided learning path для тематических запусков: теория → пример → лёгкое → среднее → сложное, поверх существующего `wave21` queue и без нового eager asset.

@@ -1,0 +1,46 @@
+{
+  "wave": "wave89o",
+  "status": "ok",
+  "healthz": {
+    "status": "ok",
+    "app": "trainer3",
+    "wave": "wave89o",
+    "version": "trainer-build-wave89o-2026-04-26",
+    "build_id": "wave89o",
+    "generated_at_utc": "2026-04-26T00:00:00Z",
+    "git_sha": null,
+    "hashed_asset_count": 101,
+    "pages": [
+      "index.html",
+      "dashboard.html",
+      "diagnostic.html",
+      "tests.html",
+      "spec_subjects.html",
+      "grade1_v2.html",
+      "grade2_v2.html",
+      "grade3_v2.html",
+      "grade4_v2.html",
+      "grade5_v2.html",
+      "grade6_v2.html",
+      "grade7_v2.html",
+      "grade8_v2.html",
+      "grade9_v2.html",
+      "grade10_v2.html",
+      "grade11_v2.html"
+    ],
+    "cache": "trainer-build-wave89o-2026-04-26"
+  },
+  "audits": {
+    "critical_bugfixes_wave89a": true,
+    "scripts_budget_wave89c": true,
+    "lighthouse_ci_wave87s": true,
+    "cleanup_build_artifacts": "ok"
+  },
+  "key_outputs": {
+    "bundle_shell": "assets/js/bundle_shell.5670562070.js",
+    "bundle_grade_runtime_core_wave87n": "assets/js/bundle_grade_runtime_core_wave87n.1bd154a017.js",
+    "merged_stem_chunk": "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.ea7e74deee.js",
+    "max_grade_page_scripts": 20,
+    "console_errors_level": "warn"
+  }
+}

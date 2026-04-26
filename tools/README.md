@@ -45,6 +45,7 @@ node tools/audit_multi_select_wave88b.mjs
 node tools/audit_keyboard_shortcuts_wave88c.mjs
 node tools/audit_breadcrumbs_wave88d.mjs
 node tools/audit_critical_bugfixes_wave89a.mjs
+node tools/audit_self_host_fonts_wave89p.mjs
 node tools/audit_theory_coverage.mjs
 node tools/audit_merge_pass_wave89b.mjs
 node tools/audit_scripts_budget_wave89c.mjs
@@ -83,6 +84,7 @@ node tools/validate_questions.js
 - `audit_style_csp_wave87q.mjs` — verifies the wave87q CSP/style follow-up: public HTML no longer carries `blob:` in `style-src` / `style-src-elem`, the rebuilt style bridge no longer uses Blob/object-URL APIs, and every page still mounts `wave86z_static_style_classes.*.css` as the CSSOM sink for runtime styles.
 - `audit_runtime_style_shim_wave87p.mjs` — historical shim audit for the wave87p→wave87q migration: public HTML stays free of `data-wave86x-style`, the legacy logical bridge no longer migrates that attribute, and the script still reports the largest runtime inline-style hotspots for future cleanup passes.
 - `audit_lighthouse_ci_wave87s.mjs` — verifies the wave87s Lighthouse CI gate: PR workflow triggers, fetch-depth/base-branch ancestry fix, pinned LHCI CLI install, multi-run staticDistDir collection, preflight audits, and `.lighthouseci` artifact upload.
+- `audit_self_host_fonts_wave89p.mjs` — verifies the wave89p self-host-font pass: every public page references the local font stylesheet, Google Fonts hosts are gone from HTML/CSP/SW, and the service worker precaches the local `assets/fonts/*` payload.
 
 - `audit_rich_content_wave87v.mjs` — verifies the wave87v rich-content pass: required formula/code topic ids exist across grades 8–11, chemistry rich topics are injected in the expected science chunks, and the source layer contains a minimum number of `code:` and `isMath:true` rows before rebuild.
 - `audit_interaction_formats_wave87w.mjs` — verifies the wave87w interaction layer: the runtime bundle is present in grades 8–11 and SW precache, grades 1–7 stay clean, and the owning source bundles still contain enough `find-error` / `sequence` / `match` rows plus the metadata plumbing that preserves those fields through `bank(...)`. The build-wave guard now also allows wave88a/wave88b because later waves reuse the same logical runtime bundle.

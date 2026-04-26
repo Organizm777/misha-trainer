@@ -19,7 +19,11 @@ jobs:
           node-version: 20
 
       - name: Assert no orphan hashed assets
-        run: node tools/cleanup_build_artifacts.mjs --check
+        run: |
+          node tools/cleanup_build_artifacts.mjs --check
+          node tools/audit_critical_bugfixes_wave89a.mjs
+          node tools/audit_self_host_fonts_wave89p.mjs
+          node tools/audit_theory_coverage.mjs
 
       - name: Enforce grade-page scripts budget
         run: node tools/audit_scripts_budget_wave89c.mjs

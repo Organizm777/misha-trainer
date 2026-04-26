@@ -1,5 +1,5 @@
 {
-  "version": "trainer-build-wave89n-2026-04-26",
+  "version": "trainer-build-wave89p-2026-04-26",
   "assets": {
     "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.ce945f33ae.js",
     "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.9025bc19a4.js",
@@ -10,7 +10,7 @@
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
     "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.6f6ed7e2ff.js",
     "assets/js/bundle_sharing.js": "assets/js/bundle_sharing.75450d41f8.js",
-    "assets/js/bundle_shell.js": "assets/js/bundle_shell.366a4cb99e.js",
+    "assets/js/bundle_shell.js": "assets/js/bundle_shell.5670562070.js",
     "assets/js/bundle_special_subjects.js": "assets/js/bundle_special_subjects.db82ee1d26.js",
     "assets/js/chunk_subject_expansion_wave31_russian.js": "assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js",
     "assets/js/chunk_subject_expansion_wave32_math.js": "assets/js/chunk_subject_expansion_wave32_math.8957f08038.js",
@@ -95,15 +95,16 @@
     "assets/js/chunk_grade_content_wave87m_transition_1011.js": "assets/js/chunk_grade_content_wave87m_transition_1011.fadee67605.js",
     "assets/js/bundle_grade_runtime_features_wave87n.js": "assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js",
     "assets/js/bundle_grade_runtime_services_wave87n.js": "assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js",
-    "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.8ab785fad6.js",
+    "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.1bd154a017.js",
     "assets/css/wave88a_daily_question.css": "assets/css/wave88a_daily_question.28618f024e.css",
     "assets/css/wave88d_breadcrumbs.css": "assets/css/wave88d_breadcrumbs.2272304da8.css",
     "assets/js/chunk_roadmap_wave88a_daily_question.js": "assets/js/chunk_roadmap_wave88a_daily_question.e88c38de95.js",
     "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.0455583291.js",
     "assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.js": "assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js",
-    "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js": "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.ea7e74deee.js"
+    "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js": "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.ea7e74deee.js",
+    "assets/css/wave89p_self_host_fonts.css": "assets/css/wave89p_self_host_fonts.4aa7c3337c.css"
   },
   "generated_at": "2026-04-23T00:00:00Z",
-  "hashed_asset_count": 101,
+  "hashed_asset_count": 102,
   "generated_at_utc": "2026-04-26T00:00:00Z"
 }

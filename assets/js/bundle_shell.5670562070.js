@@ -72,8 +72,7 @@ html[data-theme="dark"] [style*="background:#fff"],html[data-theme="dark"] [styl
 html[data-theme="dark"] [style*="background:#f5f3ee"],html[data-theme="dark"] [style*="background: #f5f3ee"]{background:var(--bg)!important}
 html[data-theme="dark"] [style*="border:#ddd"],html[data-theme="dark"] [style*="border:1px solid #ddd"],html[data-theme="dark"] [style*="border-color:#ddd"]{border-color:var(--border)!important}
 html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="dark"] select{background:#1a1a2a!important;color:#e8e6e0!important;border-color:#3a3a4e!important}
-#${THEME_BTN_ID}{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:12px;z-index:12000;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;min-height:44px;padding:0 12px;border:none;border-radius:999px;background:rgba(255,255,255,.92);color:#1a1a2e;box-shadow:0 10px 24px rgba(0,0,0,.18);font:700 12px/1 'Golos Text',system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(10px)}
-html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8e6e0;border:1px solid rgba(255,255,255,.08)}
+#${THEME_BTN_ID}{display:none!important;pointer-events:none!important}
 #${OFFLINE_ID}{position:fixed;top:calc(62px + env(safe-area-inset-top,0));left:50%;transform:translateX(-50%);z-index:11950;padding:8px 12px;border-radius:999px;background:#1a1a2e;color:#fff;font:700 12px/1 'Golos Text',system-ui,sans-serif;box-shadow:0 10px 24px rgba(0,0,0,.18);display:none}
 #${OFFLINE_ID}.show{display:inline-flex;align-items:center;gap:7px}
 #${OFFLINE_ID} .dot{width:8px;height:8px;border-radius:50%;background:#f59e0b;display:inline-block}
@@ -87,7 +86,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
 .${TOAST_HOST_ID}-icon{font-size:14px;line-height:1}
 @keyframes toastIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes toastOut{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(10px) scale(.98)}}
-@media (max-width:520px){#${THEME_BTN_ID}{min-width:40px;min-height:40px;padding:0 10px;font-size:11px}#${OFFLINE_ID}{top:calc(56px + env(safe-area-inset-top,0));font-size:11px}}
+@media (max-width:520px){#${OFFLINE_ID}{top:calc(56px + env(safe-area-inset-top,0));font-size:11px}}
 `;
     const head = document.head || document.body || document.documentElement;
     if(head && head.appendChild) head.appendChild(style);
@@ -172,14 +171,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
 
   function syncThemeButton(){
-    const btn = document.getElementById(THEME_BTN_ID);
-    if(!btn) return;
-    const pref = getThemePref();
-    const text = pref === 'light' ? '☀️' : pref === 'dark' ? '🌙' : '🖥️';
-    const label = pref === 'light' ? 'Светлая' : pref === 'dark' ? 'Тёмная' : 'Системная';
-    btn.textContent = text;
-    btn.setAttribute('aria-label', `Тема: ${label}. Нажми, чтобы переключить.`);
-    btn.title = `Тема: ${label}`;
+    return null;
   }
 
   function applyTheme(pref, silent){
@@ -220,8 +212,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
 
   function mountThemeButton(){
-    const btn = document.getElementById(THEME_BTN_ID);
-    if(btn && btn.remove) btn.remove();
+    const nodes = document.querySelectorAll('#' + THEME_BTN_ID + ',#theme-toggle,.theme-toggle');
+    nodes.forEach((node) => { if(node && node.remove) node.remove(); });
   }
 
   function updateOfflinePill(show){
@@ -1961,4 +1953,3 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
   else init();
 })();
-//# sourceMappingURL=bundle_shell.366a4cb99e.js.map

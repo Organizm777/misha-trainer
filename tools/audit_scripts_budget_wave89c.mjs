@@ -32,6 +32,11 @@ assert.ok(sw.includes(`./${mergedBuilt}`), 'sw.js should precache the merged 7-9
 assert.ok(!/chunk_subject_expansion_wave58_secondary_math_7_9\.[a-f0-9]{10}\.js/.test(sw), 'sw.js should not precache legacy wave58 chunk');
 assert.ok(!/chunk_subject_expansion_wave59_physics_chemistry_7_9\.[a-f0-9]{10}\.js/.test(sw), 'sw.js should not precache legacy wave59 chunk');
 
+const diagnostic = read('diagnostic.html');
+assert.ok(diagnostic.includes(`./${mergedBuilt}`), 'diagnostic.html should load the merged 7-9 STEM chunk');
+assert.ok(!/chunk_subject_expansion_wave58_secondary_math_7_9\.[a-f0-9]{10}\.js/.test(diagnostic), 'diagnostic.html should not load legacy wave58 chunk');
+assert.ok(!/chunk_subject_expansion_wave59_physics_chemistry_7_9\.[a-f0-9]{10}\.js/.test(diagnostic), 'diagnostic.html should not load legacy wave59 chunk');
+
 const counts = {};
 for (const page of pages) {
   const html = read(page);
