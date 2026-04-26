@@ -18,9 +18,9 @@ const legacyLogical = [
 function read(rel){ return fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
 function scriptCount(html){ return (html.match(/<script\b[^>]*\bsrc=/g) || []).length; }
 
-assert.ok(/^(wave89c|wave89d)$/.test(healthz.wave), `healthz.wave should be wave89c/wave89d, got ${healthz.wave}`);
-assert.ok(/^(wave89c|wave89d)$/.test(String(healthz.build_id || '')), `healthz.build_id should be wave89c/wave89d, got ${healthz.build_id}`);
-assert.ok(/wave89[cd]/.test(String(healthz.cache || '')), `healthz.cache should reference wave89c/wave89d, got ${healthz.cache}`);
+assert.ok(/^wave89[a-z]+$/i.test(String(healthz.wave || '')), `healthz.wave should stay on a wave89* build, got ${healthz.wave}`);
+assert.ok(/^wave89[a-z]+$/i.test(String(healthz.build_id || '')), `healthz.build_id should stay on a wave89* build, got ${healthz.build_id}`);
+assert.ok(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference healthz.build_id, got ${healthz.cache}`);
 assert.equal(healthz.hashed_asset_count, Object.keys(manifest.assets || {}).length, 'healthz.hashed_asset_count mismatch');
 assert.ok(mergedBuilt, `asset-manifest missing ${mergedLogical}`);
 assert.ok(fs.existsSync(path.join(ROOT, mergedBuilt)), `missing built merged asset ${mergedBuilt}`);

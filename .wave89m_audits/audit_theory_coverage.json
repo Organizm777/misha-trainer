@@ -1,0 +1,388 @@
+{
+  "ok": true,
+  "totals": {
+    "beforeMissing": 0,
+    "afterMissing": 0,
+    "fallbackTopics": 0,
+    "topics": 633,
+    "loadErrors": 0
+  },
+  "grades": [
+    {
+      "grade": 1,
+      "before": {
+        "subjects": 4,
+        "topics": 29,
+        "withTheory": 29,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 4,
+        "topics": 29,
+        "withTheory": 29,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 4,
+        "topics": 29,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 2,
+      "before": {
+        "subjects": 5,
+        "topics": 33,
+        "withTheory": 33,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 5,
+        "topics": 33,
+        "withTheory": 33,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 5,
+        "topics": 33,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 3,
+      "before": {
+        "subjects": 5,
+        "topics": 37,
+        "withTheory": 37,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 5,
+        "topics": 37,
+        "withTheory": 37,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 5,
+        "topics": 37,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 4,
+      "before": {
+        "subjects": 6,
+        "topics": 30,
+        "withTheory": 30,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 6,
+        "topics": 30,
+        "withTheory": 30,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 6,
+        "topics": 30,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 5,
+      "before": {
+        "subjects": 10,
+        "topics": 40,
+        "withTheory": 40,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 10,
+        "topics": 40,
+        "withTheory": 40,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 10,
+        "topics": 40,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 6,
+      "before": {
+        "subjects": 9,
+        "topics": 38,
+        "withTheory": 38,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 9,
+        "topics": 38,
+        "withTheory": 38,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 9,
+        "topics": 38,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 7,
+      "before": {
+        "subjects": 12,
+        "topics": 53,
+        "withTheory": 53,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 12,
+        "topics": 53,
+        "withTheory": 53,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 12,
+        "topics": 53,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 8,
+      "before": {
+        "subjects": 14,
+        "topics": 78,
+        "withTheory": 78,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 14,
+        "topics": 78,
+        "withTheory": 78,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 14,
+        "topics": 78,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 9,
+      "before": {
+        "subjects": 13,
+        "topics": 73,
+        "withTheory": 73,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 13,
+        "topics": 73,
+        "withTheory": 73,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 13,
+        "topics": 73,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 10,
+      "before": {
+        "subjects": 17,
+        "topics": 114,
+        "withTheory": 114,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 17,
+        "topics": 114,
+        "withTheory": 114,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 17,
+        "topics": 114,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      },
+      "english10": {
+        "topics": 22,
+        "withTheory": 22,
+        "fallback": 0,
+        "ids": [
+          "mixed_tenses",
+          "relative_clauses",
+          "comparatives",
+          "prepositions",
+          "articles10",
+          "vocab_b2",
+          "phrasal10",
+          "wordform10",
+          "confusing10",
+          "spelling_b2",
+          "question_tags",
+          "quantifiers",
+          "reading_strategies",
+          "essay_writing",
+          "academic_vocab",
+          "collocations10",
+          "confusing_verbs",
+          "british_american",
+          "idioms_fixed",
+          "advgram10w61",
+          "writing10w61",
+          "texteng10w87z"
+        ]
+      },
+      "coverage": {
+        "version": "wave89a",
+        "totalTopics": 19,
+        "withTheory": 19,
+        "fallbackTopics": 0,
+        "ids": [
+          "mixed_tenses",
+          "relative_clauses",
+          "comparatives",
+          "prepositions",
+          "articles10",
+          "vocab_b2",
+          "phrasal10",
+          "wordform10",
+          "confusing10",
+          "spelling_b2",
+          "question_tags",
+          "quantifiers",
+          "reading_strategies",
+          "essay_writing",
+          "academic_vocab",
+          "collocations10",
+          "confusing_verbs",
+          "british_american",
+          "idioms_fixed"
+        ]
+      }
+    },
+    {
+      "grade": 11,
+      "before": {
+        "subjects": 16,
+        "topics": 108,
+        "withTheory": 108,
+        "missing": 0,
+        "fallback": 0
+      },
+      "after": {
+        "subjects": 16,
+        "topics": 108,
+        "withTheory": 108,
+        "missing": 0,
+        "fallback": 0
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 16,
+        "topics": 108,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    }
+  ],
+  "errors": []
+}

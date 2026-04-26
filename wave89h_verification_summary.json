@@ -1,0 +1,104 @@
+{
+  "ok": true,
+  "wave": "wave89h",
+  "date": "2026-04-26",
+  "plan_items": [
+    41
+  ],
+  "plan_item_labels": [
+    "Skeleton loading for lazy chunks"
+  ],
+  "build": {
+    "healthz_wave": "wave89h",
+    "version": "trainer-build-wave89h-2026-04-26",
+    "hashed_asset_count": 101,
+    "rebuilt_assets": {
+      "core": "assets/js/bundle_grade_runtime_core_wave87n.a4893f1c3c.js",
+      "merged_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.1ef34302b9.js",
+      "grade10_lazy": "assets/js/chunk_grade10_lazy_wave86s.364c468abe.js",
+      "shared_css": "assets/css/wave88d_breadcrumbs.1b23be729d.css"
+    }
+  },
+  "implemented": {
+    "shared_overlay": "window.__wave89hLazySkeleton listens to trainer:lazy-start / trainer:lazy-end and shows a debounced shimmer overlay",
+    "core_runtime_events": [
+      "interactive direct-action lazy hydration now emits lazy lifecycle events",
+      "warmup hydration stays silent",
+      "runtime service loader accepts UI metadata for sync/menu flows"
+    ],
+    "grade10_lazy_subjects": [
+      "inline skeleton card in #tl while deferred subject chunk loads",
+      "subject/global hydration emits the same lazy lifecycle events",
+      "global mix / rush / exam / diag wait on skeleton-backed hydration"
+    ],
+    "menu_integration": [
+      "badges/profile/report/share-report/backup/sync menu actions request interactive lazy hydration",
+      "no new eager script tag added"
+    ]
+  },
+  "audits": {
+    "audit_skeleton_loading_wave89h": "ok",
+    "audit_minimal_footer_wave89g": "ok",
+    "audit_hamburger_wave89f": "ok",
+    "audit_onboarding_wave89e": "ok",
+    "audit_simple_mode_wave89d": "ok",
+    "audit_scripts_budget_wave89c": {
+      "ok": true,
+      "max_scripts": 20
+    },
+    "audit_merge_pass_wave89b": {
+      "ok": true,
+      "senior_max_scripts": 19
+    },
+    "audit_keyboard_shortcuts_wave88c": "ok",
+    "audit_breadcrumbs_wave88d": "ok",
+    "audit_interaction_formats_wave87w": {
+      "ok": true,
+      "interactive_rows": 13
+    },
+    "audit_free_input_timing_wave87x": {
+      "ok": true,
+      "english_blank_count": 451
+    },
+    "audit_free_input_banks_wave87y": {
+      "ok": true,
+      "numeric_rows": 76
+    },
+    "audit_text_input_fuzzy_wave87z": {
+      "ok": true,
+      "text_topics": 8
+    },
+    "audit_multi_select_wave88b": {
+      "ok": true,
+      "total_rows": 48
+    },
+    "audit_daily_question_wave88a": {
+      "ok": true,
+      "pool_size": 16
+    },
+    "audit_theory_coverage": {
+      "ok": true,
+      "topics": 633,
+      "fallback_topics": 0
+    },
+    "audit_critical_bugfixes_wave89a": "ok",
+    "audit_performance_wave86z": {
+      "ok": true,
+      "max_grade_js_bytes": 1837584
+    },
+    "audit_runtime_split_wave87n": "ok",
+    "cleanup_build_artifacts": "ok",
+    "validate_questions": {
+      "ok": true,
+      "samples": 3165,
+      "failures": 0,
+      "load_errors": 0,
+      "immediate_repeats": 18
+    }
+  },
+  "notes": [
+    "Script budget remains intact: no grade page exceeds 20 external scripts.",
+    "Shared CSS asset wave88d_breadcrumbs now also carries wave89h skeleton styles.",
+    "The existing non-blocking validator tail remains unchanged: immediateRepeats=18 in older generators outside wave89h scope."
+  ]
+}

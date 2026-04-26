@@ -17,6 +17,8 @@
     repeatAttempts: 0,
     recentRepeatBlocked: 0,
     repeatAccepted: 0,
+    subjectColorGroupsApplied: 0,
+    subjectColorGroups: {},
     issues: [],
     bankStats: {},
     topicStats: {}
@@ -80,12 +82,18 @@
     if (out.length > 4) { var answerText = cleanText(answer); var trimmed = out.slice(0, 4); if (answerText && !trimmed.some(function(item){ return norm(item) === norm(answerText); })) trimmed[trimmed.length - 1] = answerText; out = trimmed; report.optionsTrimmed += 1; }
     return out;
   }
+  function difficultyLevel(bucket){
+    if (bucket === 'hard') return 3;
+    if (bucket === 'medium') return 2;
+    return 1;
+  }
   function classifyDifficulty(q, meta){
     var question = cleanText(q.question || q.q); var answer = cleanText(q.answer || q.a); var tag = cleanText(q.tag || q.topic || (meta && meta.topicName) || ''); var grade = gradeValue(meta, q); var score = 0; var numbers = question.match(/-?\d+(?:[\.,]\d+)?/g) || [];
-    if (question.length >= 90) score += 1; if (numbers.length >= 3) score += 1; if (/√|\^|≤|≥|\/|дроб|процент|скорост|уравнен|функц|координат|вектор|производн|интеграл|логарифм|тригоном|электростат|электромаг|биохим|органик|полит|социолог|право|эконом/i.test(question + ' ' + tag)) score += 1; if (/почему|объясни|сделай вывод|наиболее вероятно|какой вывод|сравни|определи по описанию|выбери утверждение/i.test(question)) score += 1; if (grade >= 9) score += 1; if (grade >= 11) score += 1; if (answer.length >= 24) score += 1;
+    if (question.length >= 90) score += 1; if (numbers.length >= 3) score += 1; if (/√|\^|≤|≥|\/|дроб|процент|скорост|уравнен|функц|координат|вектор|производн|интеграл|логарифм|тригоном|электростат|электромаг|биохим|органик|полит|социолог|право|эконом|grammar|article|modal|conditional/i.test(question + ' ' + tag)) score += 1; if (/почему|объясни|сделай вывод|наиболее вероятно|какой вывод|сравни|определи по описанию|выбери утверждение|justify|explain/i.test(question)) score += 1; if (grade >= 9) score += 1; if (grade >= 11) score += 1; if (answer.length >= 24) score += 1;
     var bucket = score <= 1 ? 'easy' : (score <= 3 ? 'medium' : 'hard');
-    if (q.difficulty !== bucket || q.diffBucket !== bucket) report.difficultyTagged += 1;
-    q.difficulty = bucket; q.diffBucket = bucket; q.diffScore = score; return bucket;
+    var level = difficultyLevel(bucket);
+    if (q.difficulty !== bucket || q.diffBucket !== bucket || Number(q.difficultyLevel) !== level || q.difficultyLabel !== bucket) report.difficultyTagged += 1;
+    q.difficulty = bucket; q.diffBucket = bucket; q.diffScore = score; q.difficultyLevel = level; q.difficultyLabel = bucket; return bucket;
   }
   function syncAliases(q){ if ('q' in q) q.q = q.question; if ('a' in q) q.a = q.answer; if ('opts' in q) q.opts = Array.isArray(q.options) ? q.options.slice() : []; if ('h' in q) q.h = q.hint; if ('topic' in q && !q.tag) q.tag = q.topic; }
   function sanitizeQuestion(raw, meta){
@@ -133,6 +141,61 @@
     if (count >= 4) return 6;
     return 5;
   }
+
+  /* wave89i: subject color groups */
+  var SUBJECT_COLOR_GROUPS = Object.freeze({
+    logic: Object.freeze({ id:'logic', label:'Математика и технологии', cl:'#2563eb', bg:'#dbeafe', dot:'#2563eb' }),
+    nature: Object.freeze({ id:'nature', label:'Естественные науки', cl:'#16a34a', bg:'#dcfce7', dot:'#16a34a' }),
+    language: Object.freeze({ id:'language', label:'Языки и тексты', cl:'#0d9488', bg:'#ccfbf1', dot:'#0d9488' }),
+    society: Object.freeze({ id:'society', label:'История и общество', cl:'#ca8a04', bg:'#fef3c7', dot:'#ca8a04' }),
+    creative: Object.freeze({ id:'creative', label:'Творчество и олимпиада', cl:'#7c3aed', bg:'#ede9fe', dot:'#7c3aed' })
+  });
+  function subjectColorGroupKey(subject){
+    var id = cleanText(subject && subject.id).toLowerCase();
+    if (/^(math|alg|geo|prob|inf)$/.test(id)) return 'logic';
+    if (/^(phy|chem|bio|world|okr|geo5|geo6|geog|obzh)$/.test(id)) return 'nature';
+    if (/^(rus|eng|lit|read)$/.test(id)) return 'language';
+    if (/^(his|soc|orkse|odnknr)$/.test(id)) return 'society';
+    return 'creative';
+  }
+  function subjectColorGroup(subject){
+    var key = subjectColorGroupKey(subject);
+    return SUBJECT_COLOR_GROUPS[key] || SUBJECT_COLOR_GROUPS.creative;
+  }
+  function applySubjectColorGroups(){
+    var list = (typeof SUBJ !== 'undefined' && Array.isArray(SUBJ)) ? SUBJ : (Array.isArray(window.SUBJ) ? window.SUBJ : null);
+    if (!list || !list.length) return null;
+    var usage = {};
+    list.forEach(function(subject){
+      if (!subject || typeof subject !== 'object') return;
+      var group = subjectColorGroup(subject);
+      var key = group.id || subjectColorGroupKey(subject);
+      subject.cl = group.cl;
+      subject.bg = group.bg;
+      subject.dot = group.dot;
+      subject.wave89iColorGroup = key;
+      if (Array.isArray(subject.tops)) {
+        subject.tops.forEach(function(topic){
+          if (!topic || typeof topic !== 'object') return;
+          topic.dot = group.dot;
+          topic.wave89iColorGroup = key;
+        });
+      }
+      usage[key] = (usage[key] || 0) + 1;
+    });
+    report.subjectColorGroupsApplied = list.length;
+    report.subjectColorGroups = usage;
+    window.__wave89iSubjectColorGroups = {
+      version: 'wave89i',
+      active: true,
+      palette: SUBJECT_COLOR_GROUPS,
+      usage: usage,
+      apply: applySubjectColorGroups,
+      groupOf: subjectColorGroupKey
+    };
+    expose();
+    return usage;
+  }
   function sanitizeBankRows(){
     if (typeof QBANK === 'undefined' || !QBANK || typeof QBANK !== 'object') return;
     Object.keys(QBANK).forEach(function(bankKey){
@@ -155,7 +218,7 @@
         }
         seen[key] = true;
         seenQuestion[stemKey] = answerKey;
-        row.q = normalized.question; row.a = normalized.answer; row.opts = normalized.options.slice(); row.h = normalized.hint; row.topic = normalized.tag || bankKey; row.g = meta.grade; row.difficulty = normalized.difficulty; row.diffBucket = normalized.diffBucket; row.diffScore = normalized.diffScore; row.hint = normalized.hint; row.options = normalized.options.slice(); out.push(row); report.bankRowsSanitized += 1;
+        row.q = normalized.question; row.a = normalized.answer; row.opts = normalized.options.slice(); row.h = normalized.hint; row.topic = normalized.tag || bankKey; row.g = meta.grade; row.difficulty = normalized.difficulty; row.diffBucket = normalized.diffBucket; row.diffScore = normalized.diffScore; row.difficultyLevel = normalized.difficultyLevel; row.difficultyLabel = normalized.difficultyLabel; row.hint = normalized.hint; row.options = normalized.options.slice(); out.push(row); report.bankRowsSanitized += 1;
       });
       QBANK[bankKey] = out; report.bankStats[bankKey] = { before: before, after: out.length };
     });
@@ -228,7 +291,7 @@
     wrapped.__wave63Wrapped = true; wrapped.__wave63Orig = orig; window.mkQ = wrapped; try { mkQ = wrapped; } catch (_) {} expose(); return true;
   }
   function snapshot(){ try { return JSON.parse(JSON.stringify(report)); } catch (_) { return report; } }
-  function init(){ wrapTopics(); sanitizeBankRows(); patchMkQ(); expose(); window.wave87iQuality = { auditSnapshot: snapshot }; return report; }
+  function init(){ applySubjectColorGroups(); wrapTopics(); sanitizeBankRows(); patchMkQ(); expose(); window.wave87iQuality = { auditSnapshot: snapshot }; return report; }
   init();
   var retries = 0; (function latePatch(){ var ready = patchMkQ(); if (ready || retries > 12) { expose(); return; } retries += 1; setTimeout(latePatch, 50); })();
 })();

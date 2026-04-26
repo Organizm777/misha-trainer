@@ -33,12 +33,12 @@
 
 - `bundle_shell.*.js` — обёртка: header, навигация, хэш-роутинг, wave36_perf (кеш DOM-запросов). Preload с `fetchpriority=high`.
 - `chunk_roadmap_wave88a_daily_question.*.js` + `wave88a_daily_question.*.css` — самостоятельный homepage-блок «Задание дня» на `index.html`; карточка выбирает один curated вопрос по локальной дате и хранит ответ в `localStorage`.
-- `bundle_grade_runtime_extended_wave89b.*.js` — merged eager add-on runtime для grade-страниц: внутри живут бывшие слои `bundle_grade_runtime_interactions_wave87w`, `bundle_grade_runtime_inputs_timing_wave87x`, `bundle_grade_runtime_keyboard_wave88c`, `bundle_grade_runtime_breadcrumbs_wave88d`, а с `wave89d` ещё и simple-mode gate. На grades 1–7 интерактивные форматы сами остаются неактивными по guard'ам, но ввод/тайминг, шорткаты, breadcrumbs и упрощённый UX приезжают одним файлом.
+- `bundle_grade_runtime_extended_wave89b.*.js` — merged eager add-on runtime для grade-страниц: внутри живут бывшие слои `bundle_grade_runtime_interactions_wave87w`, `bundle_grade_runtime_inputs_timing_wave87x`, `bundle_grade_runtime_keyboard_wave88c`, `bundle_grade_runtime_breadcrumbs_wave88d`, а с `wave89d` ещё и simple-mode gate. С `wave89k` тот же merged-runtime также автоматически включает weak-device adaptive UI (`wave89k-weak-ui` / `wave89k-compact` / `wave89k-reduced-motion`) без нового script tag, а с `wave89m` — adaptive difficulty per topic (`window.__wave89mAdaptiveDifficulty`) поверх уже существующих difficulty/timing данных. На grades 1–7 интерактивные форматы сами остаются неактивными по guard'ам, но ввод/тайминг, шорткаты, breadcrumbs, упрощённый UX, слабоустройственный adaptive layer и adaptive difficulty приезжают одним файлом.
 - `chunk_subject_expansion_wave89b_inputs_interactions_banks.*.js` — merged senior-only content chunk для grades 8–11; внутри живут бывшие explicit банки `wave87y` (numeric input), `wave87z` (short text input) и `wave88b` (multi-select).
 - `chunk_subject_expansion_wave89c_secondary_stem_7_9.*.js` — merged 7–9 STEM content chunk для grades 7–9; заменяет пару `wave58_secondary_math_7_9` + `wave59_physics_chemistry_7_9` и нужен в первую очередь для удержания budget `<=20` script-тегов на grade-страницах.
-- `wave88d_breadcrumbs.*.css` — breadcrumb-навигация только для grade-страниц; с `wave89d` тот же tiny-asset ещё и несёт CSS для settings modal/simple-mode, а JS-логика по-прежнему приезжает через `bundle_grade_runtime_extended_wave89b`.
+- `wave88d_breadcrumbs.*.css` — breadcrumb-навигация только для grade-страниц; с `wave89d` тот же tiny-asset ещё и несёт CSS для settings modal/simple-mode, с `wave89k` — общий адаптивный слой для weak-device UI (16px core text, 48px tap targets, lighter overlays), а с `wave89m` — карточки и summary-UI для adaptive difficulty. JS-логика по-прежнему приезжает через `bundle_grade_runtime_extended_wave89b`.
 - `chunk_grade_content_wave*_wave86t.*.js` — split runtime-injection контента по исходным wave-секциям. Grade-страницы подключают только нужные секции; 10 класс после wave86s обходится без общего content-бандла.
-- `bundle_grade_runtime_core_wave87n.*.js` (~262 KB) — eager core runtime grade-страниц. Внутри: `chunk_roadmap_wave86q_accessibility_theme`, `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `bundle_error_tracking`.
+- `bundle_grade_runtime_core_wave87n.*.js` (~262 KB) — eager core runtime grade-страниц. Внутри: `chunk_roadmap_wave86q_accessibility_theme`, `bundle_grade_after`, `chunk_roadmap_wave86n_progress_tools`, `bundle_error_tracking`. С `wave89l` этот же core также несёт SM-2 review/journal scheduler без нового script tag, поэтому любые правки интервального повторения лучше держать именно здесь, а не в merged add-on runtime.
 - `bundle_grade_runtime_features_wave87n.*.js` (~141 KB) — lazy features bundle: `chunk_roadmap_wave86r_theory_achievements`, `chunk_roadmap_wave86p_exam_challenge`, `chunk_roadmap_wave86v_pvp_link_battle`, `bundle_gamification_xp`, `bundle_gamification_meta`.
 - `bundle_grade_runtime_services_wave87n.*.js` (~157 KB) — lazy services bundle: `bundle_sharing`, `bundle_profile_social`, `chunk_roadmap_wave86w_cloud_sync`.
 - `window.wave87nRuntimeSplit` живёт в core bundle: он замеряет `interactive`, пишет perf-сэмплы в `localStorage.trainer_perf_samples_wave87n_<grade>`, на idle/timeout догружает features/services и умеет `hydrateForAction()` для раннего клика по profile/report/backup actions.
@@ -127,6 +127,42 @@ npx lhci assert --config=.lighthouserc.json
 ```
 
 `.lighthouserc.json` использует `collect.staticDistDir: "./"` и сам поднимает временный localhost для `index.html?choose`, `grade3_v2.html` и `grade10_v2.html`. Для release-аудита инфраструктуры есть `node tools/audit_lighthouse_ci_wave87s.mjs`.
+
+
+### wave89i subject color groups
+
+- `#42` is a **palette-normalization pass**, not a new navigation/runtime layer. Keep it inside an already-loaded pre-engine grade chunk so the first subject render uses grouped colors without adding another eager request.
+- The chosen home is `chunk_subject_expansion_wave63_quality`: it is present on every `grade*_v2.html` page and executes before `engine10.js`, so mutating `SUBJ.cl/bg` and `topic.dot` there recolors main cards, subject headers, topic lists, mix chips and daily-meter chips automatically.
+- The target is exactly **5 stable subject color groups** across the fully assembled runtime subject surface, including injected subjects (`read`, `eng`, `orkse`, `odnknr`, `obzh`, `art`, `oly`, `bridge1011`). Validate with `node tools/audit_subject_color_groups_wave89i.mjs` before shipping another wave.
+
+
+### wave89j parent dashboard
+
+- `#43` belongs to `dashboard.html`, not to grade pages: keep the parent optimization inside the existing dashboard bundles (`inline_dashboard_1_wave86u` + `bundle_dashboard_tools`) and the existing dashboard CSS asset instead of creating another standalone runtime.
+- The compact parent surface is now the default. Preserve the persisted `trainer_dashboard_mode_wave89j_v1` (`parent` vs `full`) and `trainer_dashboard_grade_filter_wave89j_v1` keys, and keep exports aligned with `window.__dashboardActiveState` so TXT/CSV/PNG reflect the currently selected class filter.
+- Advanced analytics blocks are not deleted; they are tagged with `data-wave89j-advanced="1"` and hidden only by CSS in compact mode. Validate with `node tools/audit_parent_dashboard_wave89j.mjs` together with question-validation and cleanup checks before shipping another wave.
+
+### wave89k weak-device adaptive UI
+
+- `#44` stays on grade pages and must not add another eager asset. Reuse the existing `bundle_grade_runtime_extended_wave89b` + `wave88d_breadcrumbs` pair and keep the 20-script budget intact.
+- The adaptive detector now combines coarse pointer, compact viewport, low memory / CPU, Save-Data, and reduced-motion into page-level classes (`wave89k-weak-ui`, `wave89k-coarse`, `wave89k-compact`, `wave89k-reduced-motion`). Preserve those class names because the CSS layer and the audit rely on them.
+- The contract is concrete: core controls should reach **48px+ tap targets**, core copy / inputs should rise to **16px**, and blur-heavy overlays should simplify when weak-device mode is active. Validate with `node tools/audit_weak_device_adaptive_wave89k.mjs` before shipping another wave.
+
+
+### wave89m adaptive difficulty
+
+- The merged grade runtime now owns per-topic adaptive difficulty under `window.__wave89mAdaptiveDifficulty`; do not split it into a new eager asset unless the grade-page script budget is reworked too.
+- Persisted state lives under `trainer_adaptive_difficulty_<grade>` and tracks per-topic accuracy/help/timing summaries plus bucket stats. Keep that key and schema stable because progress/export/debug tooling may read it directly.
+- The contract is explicit: **5 correct answers in a row** raise the current session target by one step, **2 trouble answers** lower it, and **3 slow answers** lower it too. The session shift is combined with the topic base level instead of replacing it.
+- Cold-start should still reuse `wave87x` timing history (`trainer_response_timing_<grade>`) so adaptive difficulty can start from `medium` for strong fast topics. Validate with `node tools/audit_adaptive_difficulty_wave89m.mjs` together with the wave89l/wave89k/script-budget audits before shipping another wave.
+
+### wave89l spaced repetition
+
+- `#45` должен оставаться внутри существующего wave28 review-слоя в `bundle_grade_runtime_core_wave87n`: новый eager asset для интервального повторения не нужен и сломал бы уже выстроенный script budget.
+- Персистентный ключ остаётся прежним: `trainer_review_<grade>`. Но storage contract теперь `{ version: 2, algo: 'sm2', items }`. Для совместимости `step` должен зеркалить `repetitions`, потому что backup/report/sharing слои до сих пор считают mastered-карточки именно по `step >= 3`.
+- Начальная cadence зафиксирована: fresh lapse → 1 день, first confident success → 1 день, second success → 6 дней, дальше рост по `EF`. Подсказка / helped-answer должна делать мягкий reset на быстрый повтор и не разгонять EF.
+- Sticky-карточки не должны становиться вечными. После кластера ошибок они остаются sticky для ordering, но две уверенные правильные карточки подряд должны уметь снять sticky-флаг, сохраняя историю lapses.
+- Validate with `node tools/audit_spaced_repetition_sm2_wave89l.mjs` together with `node tools/audit_weak_device_adaptive_wave89k.mjs`, `node tools/audit_scripts_budget_wave89c.mjs`, `node tools/validate_questions.js`, and `node tools/cleanup_build_artifacts.mjs --check` before shipping another wave.
 
 ## Deployment
 
@@ -447,3 +483,40 @@ Starter short-answer content for grades 8–11 lives in `chunk_subject_expansion
 - In simple mode the app should hide/block PvP, weekly/exam flows, cloud sync, leaderboards and filtered `Сборная`; the primary mixed-practice affordance becomes a direct `▶ Заниматься` path. Smart-start order: due-review → sticky-review → weak-topics → resume-session → continue-last-topic → untouched-topic → global-mix. Keep the guard at the function/API level as well, not just via CSS.
 - Validate with `node tools/audit_simple_mode_wave89d.mjs` in addition to the existing merge-pass, script-budget, theory-coverage and question-validation audits; the wave89d audit now includes VM coverage for both the default-on toggle and the smart-start order.
 - After any rebuild that changes hashed assets, rerun `node tools/sync_release_metadata.mjs --wave <wave> --date <YYYY-MM-DD>` and verify that `sw.js`, `healthz.json`, and `assets/asset-manifest.json` agree on the new budget-safe live assets.
+
+
+### wave89e onboarding
+
+- `#38` now lives inside the existing merged grade-page runtime: do not add another eager script tag just for the tour. Extend `bundle_grade_runtime_extended_wave89b` and the shared `wave88d_breadcrumbs.css` layer instead, so the wave89c 20-script budget stays intact.
+- The onboarding flow is a first-visit **3-step overlay** with persistence under `trainer_onboarding_wave89e_v1`. It should auto-open only for truly fresh learners (no solved progress / journal / snapshot / last-topic state), but remain manually reopenable from `⚙️ Настройки → 👋 Быстрый тур`.
+- Step 2 must open a real topic in `theory` mode via `wave21OpenTopic(..., 'theory')`, not a fake mock card. Keep the flow additive and avoid taking ownership of `engine10` navigation.
+- Validate with `node tools/audit_onboarding_wave89e.mjs` plus the existing simple-mode, script-budget, merge-pass, question-validation, and cleanup audits before shipping another wave.
+
+
+### wave89f hamburger menu
+
+- `#39` now lives inside the existing merged grade-page runtime as well: do not add another eager script tag for secondary navigation. Extend `bundle_grade_runtime_extended_wave89b` and the shared `wave88d_breadcrumbs.css` layer so the wave89c 20-script budget remains intact.
+- The new `☰` trigger belongs in the sticky grade-page header and should collect secondary actions (`profile/rating/backup/sync/export`) in one overlay instead of scattering them across the main surface. Hide relocated legacy buttons via CSS/data-attrs, not inline styles.
+- Menu actions must continue to call the existing underlying APIs (`showHallOfFame`, `showRushRecords`, `generateReport`, `shareReport`, `wave86nProgressTools.exportParentProgress`, `wave86wCloudSync.open`) and should confirm before leaving an active play session.
+- Keep simple mode consistent: rating and sync stay absent/blocked there, even from the menu. Validate with `node tools/audit_hamburger_wave89f.mjs` plus the existing onboarding, simple-mode, scripts-budget, merge-pass, question-validation, and cleanup audits before shipping another wave.
+
+### wave89g minimal footer
+
+- `#40` should stay a **decluttering pass on top of wave89f**, not a new navigation system. Keep the existing `☰` overlay as the secondary-actions surface and reduce the visible main-screen utility block on grade pages to **two quick buttons** only.
+- Do not introduce another eager grade-page asset. Extend `bundle_grade_runtime_extended_wave89b` and the shared `wave88d_breadcrumbs.css` layer so the wave89c 20-script budget remains intact.
+- The compact footer belongs on `#s-main`, directly after `#daily-meter`. Leave `📈 Прогресс` and `⚙️ Настройки` visible there, and move the rest of the old utility affordances (`📖 Справка`, `🔁 Ошибки`, `🏆 Награды`, `📅 Даты диагностик`) behind the hamburger menu instead of deleting them.
+- Hide the old scattered rows additively via data-attributes / shared CSS, not inline styles and not by hand-editing eleven HTML pages. Validate with `node tools/audit_minimal_footer_wave89g.mjs` plus the existing hamburger, onboarding, simple-mode, scripts-budget, question-validation, and cleanup audits before shipping another wave.
+
+
+### wave89h skeleton loading
+
+- `#41` stays an additive UX layer on top of the merged runtime strategy: do not add another eager grade-page asset just for loading states. Reuse `bundle_grade_runtime_core_wave87n`, `bundle_grade_runtime_extended_wave89b`, `chunk_grade10_lazy_wave86s`, and the shared `wave88d_breadcrumbs.css` layer.
+- The event bridge is now `trainer:lazy-start` / `trainer:lazy-end`. Interactive lazy hydration in core runtime should emit these events with stable `detail.id` values, and any new lazy UI should prefer listening to that bridge rather than inventing another overlay system.
+- Grade 10 lazy subject hydration should continue to show an inline skeleton card in `#tl` plus the shared overlay for blocking waits. Validate with `node tools/audit_skeleton_loading_wave89h.mjs` together with the existing footer/hamburger/onboarding/simple-mode/scripts-budget audits before shipping another wave.
+
+### wave89n learning path
+
+- The roadmap now asks for `#48 Learning path`: topical sessions should begin with `theory → worked example → easy → medium → hard` instead of jumping straight into an undifferentiated question stream.
+- Keep it additive inside the merged `bundle_grade_runtime_extended_wave89b` layer; do not introduce a new eager asset or reroute smart-start away from `wave21OpenTopic(..., 'train')`, because `wave89d` audits still depend on that contract.
+- Reuse the existing `wave21` queue so resume/session snapshots continue to work. When the starter queue is exhausted, clear the `learning-path` queue/session-mode and immediately continue into the normal trainer rather than ending the session.
+- Persist topic-level route progress under `trainer_learning_path_<grade>`, render a `🧭 Маршрут темы` card on the theory screen plus a compact status card on play/progress, and keep mix/global mix/rush/diagnostic/review flows untouched.

@@ -98,7 +98,7 @@
       subject.tops.push(existing);
     }
     existing.nm = topic.nm || existing.nm || topic.id;
-    existing.dot = topic.dot || existing.dot || (STYLES[subjectId] && STYLES[subjectId].color) || subject.cl || '#2563eb';
+    existing.dot = (subject && (subject.dot || subject.cl)) || topic.dot || existing.dot || (STYLES[subjectId] && STYLES[subjectId].color) || '#2563eb';
     existing.th = topic.th || existing.th || '';
     existing.gen = topic.gen;
     return true;
@@ -422,7 +422,7 @@
       subject.tops.push(existing);
     }
     existing.nm = topic.nm || existing.nm || topic.id;
-    existing.dot = topic.dot || existing.dot || (STYLES[subjectId] && STYLES[subjectId].color) || subject.cl || '#2563eb';
+    existing.dot = (subject && (subject.dot || subject.cl)) || topic.dot || existing.dot || (STYLES[subjectId] && STYLES[subjectId].color) || '#2563eb';
     existing.th = topic.th || existing.th || '';
     existing.gen = topic.gen;
     return true;
@@ -653,7 +653,7 @@
       subject.tops.push(existing);
     }
     existing.nm = topic.nm || existing.nm || topic.id;
-    existing.dot = topic.dot || existing.dot || (STYLES[subjectId] && STYLES[subjectId].color) || subject.cl || '#2563eb';
+    existing.dot = (subject && (subject.dot || subject.cl)) || topic.dot || existing.dot || (STYLES[subjectId] && STYLES[subjectId].color) || '#2563eb';
     existing.th = topic.th || existing.th || '';
     existing.gen = topic.gen;
     return true;

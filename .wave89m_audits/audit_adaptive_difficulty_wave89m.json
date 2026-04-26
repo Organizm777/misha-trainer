@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "wave": "wave89m",
+  "hashedAssetCount": 101,
+  "runtime": "assets/js/bundle_grade_runtime_extended_wave89b.db3d4b6d00.js",
+  "css": "assets/css/wave88d_breadcrumbs.e660588b87.css",
+  "gradePages": 11,
+  "fastTimingBaseLevel": 1,
+  "slowTimingBaseLevel": 0,
+  "afterStreak": {
+    "shift": 1,
+    "target": "medium",
+    "answers": 5,
+    "reason": "5 верных подряд — повышаем сложность на один шаг"
+  },
+  "mixedQuestion": {
+    "bucket": "medium",
+    "difficultyLevel": 2,
+    "tag": "Средние уравнения"
+  },
+  "afterTrouble": {
+    "shift": 0,
+    "target": "easy",
+    "reason": "серия ошибок или помощь — временно упрощаем на один шаг"
+  },
+  "afterSlowRun": {
+    "shift": -1,
+    "target": "easy",
+    "reason": "ответы идут слишком медленно — снижаем нагрузку на один шаг"
+  },
+  "summary": {
+    "totalTopics": 1,
+    "counts": {
+      "easy": 0,
+      "medium": 1,
+      "hard": 0
+    },
+    "latest": [
+      {
+        "subjectId": "alg",
+        "topicId": "medium",
+        "subjectName": "Алгебра",
+        "topicName": "Средние уравнения",
+        "key": "alg::medium",
+        "asked": 3,
+        "correct": 3,
+        "wrong": 0,
+        "helped": 0,
+        "totalMs": 105000,
+        "lastMs": 35000,
+        "lastTarget": "medium",
+        "lastBucket": "medium",
+        "level": 1,
+        "updatedAt": 1777205105922,
+        "recent": [
+          1,
+          1,
+          1
+        ],
+        "buckets": {
+          "easy": {
+            "asked": 0,
+            "correct": 0,
+            "totalMs": 0
+          },
+          "medium": {
+            "asked": 3,
+            "correct": 3,
+            "totalMs": 105000
+          },
+          "hard": {
+            "asked": 0,
+            "correct": 0,
+            "totalMs": 0
+          }
+        }
+      }
+    ]
+  },
+  "playCard": true,
+  "progressCard": true
+}

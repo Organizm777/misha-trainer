@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "wave": "wave89m",
+  "hashedAssetCount": 101,
+  "gradePages": 11,
+  "builtCorePath": "assets/js/bundle_grade_runtime_core_wave87n.8ab785fad6.js",
+  "intervals": {
+    "firstSuccess": 1,
+    "secondSuccess": 6,
+    "thirdSuccess": 14,
+    "hintedReset": 1
+  },
+  "legacy": {
+    "version": 2,
+    "algo": "sm2",
+    "repetitions": 2,
+    "intervalDays": 7,
+    "ef": 2.5
+  },
+  "sticky": {
+    "lapses": 3,
+    "released": true
+  },
+  "digest": {
+    "total": 1,
+    "due": 0,
+    "upcomingWeek": 0,
+    "sticky": 0,
+    "mastered": 1,
+    "avgEf": 2.48
+  },
+  "reviewSummary": {
+    "total": 1,
+    "due": 1,
+    "sticky": 0,
+    "mastered": 0,
+    "upcomingWeek": 0,
+    "avgEf": 1.5
+  }
+}

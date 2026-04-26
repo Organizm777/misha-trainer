@@ -43,8 +43,8 @@ for (const logical of removedLogicalAssets) {
   assert(!assets[logical], `asset-manifest: legacy logical asset should be removed after merge pass: ${logical}`);
 }
 
-assert(/^wave89[bcd]$/i.test(String(healthz.wave || '')), `healthz.wave should be wave89b/wave89c/wave89d, got ${healthz.wave}`);
-assert(/wave89[bcd]/.test(String(healthz.cache || '')), `healthz.cache should reference wave89b/wave89c/wave89d, got ${healthz.cache}`);
+assert(/^wave89[a-z]+$/i.test(String(healthz.wave || '')), `healthz.wave should stay on a wave89* build, got ${healthz.wave}`);
+assert(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference healthz.build_id, got ${healthz.cache}`);
 
 const legacyBaseRe = /assets\/js\/(bundle_grade_runtime_interactions_wave87w|bundle_grade_runtime_inputs_timing_wave87x|bundle_grade_runtime_keyboard_wave88c|bundle_grade_runtime_breadcrumbs_wave88d|chunk_subject_expansion_wave87y_free_input_banks|chunk_subject_expansion_wave87z_text_input_banks|chunk_subject_expansion_wave88b_multi_select_banks)\.[a-f0-9]{10}\.js/g;
 

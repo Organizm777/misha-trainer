@@ -183,8 +183,8 @@ assert(read('sw.js').includes(`'./${runtimeBuilt}'`), `sw.js: missing ${runtimeB
 assert(read('sw.js').includes(`'./${chunkBuilt}'`), `sw.js: missing ${chunkBuilt}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(/^(wave87[yz]|wave88[abcd]|wave89[abcd])$/.test(healthz.wave), `healthz.json: expected wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
-assert(/^(wave87[yz]|wave88[abcd]|wave89[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave87y/wave87z/wave88a/wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.build_id}`);
+assert(/^(wave87[yz]|wave88[abcd]|wave89[a-z]+)$/i.test(String(healthz.wave || '')), `healthz.json: expected wave87y+ or a later wave89* build, got ${healthz.wave}`);
+assert(/^(wave87[yz]|wave88[abcd]|wave89[a-z]+)$/i.test(String(healthz.build_id || '')), `healthz.json: expected build_id wave87y+ or a later wave89* build, got ${healthz.build_id}`);
 assert(healthz.hashed_asset_count === Object.keys(manifest.assets || {}).length, 'healthz.json: hashed_asset_count mismatch');
 
 const docRel = 'docs/FREE_INPUT_BANKS_wave87y.md';

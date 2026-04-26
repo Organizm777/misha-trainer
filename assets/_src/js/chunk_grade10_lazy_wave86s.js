@@ -4,6 +4,8 @@
   var VERSION = 'wave86s';
   var loadedMap = window.__wave86sGrade10Hydrated = window.__wave86sGrade10Hydrated || {};
   var loadingMap = {};
+  /* wave89h: grade10 lazy subject skeleton */
+  var lazyUiSeq = 0;
   function subjects(){ return Array.isArray(window.SUBJ) ? window.SUBJ : []; }
   function findSubject(id){
     var list = subjects();
@@ -15,6 +17,56 @@
     var subj = subject && subject.nm ? subject.nm : '10 класс';
     if(typeof mkQ === 'function') return mkQ('Данные темы «' + name + '» ещё загружаются. Нажми «Дальше» после открытия темы.', 'Готово', ['Готово','Загружается','Повторить','Открыть тему'], 'Предметный банк грузится отдельным чанком. Открой тему ещё раз — вопросы появятся без перезагрузки страницы.', name, (subject && subject.cl) || '#2563eb', (subject && subject.bg) || '#dbeafe', null, false, 'Lazy-load банка: ' + subj + ' · ' + name + '.');
     return { question:'Данные темы загружаются', answer:'Готово', options:['Готово','Загружается','Повторить','Открыть тему'], hint:'Открой тему ещё раз.', tag:name };
+  }
+
+  function lazyUiId(prefix){
+    lazyUiSeq += 1;
+    return 'wave89h-grade10-' + String(prefix || 'lazy') + '-' + lazyUiSeq;
+  }
+  function emitLazyUi(phase, detail){
+    try {
+      window.dispatchEvent(new CustomEvent('trainer:lazy-' + phase, {
+        detail: Object.assign({
+          wave:'wave89h',
+          phase:phase,
+          ts:Date.now()
+        }, detail || {})
+      }));
+    } catch (_err) {}
+  }
+  function withLazyUi(promise, detail){
+    if(!detail) return Promise.resolve(promise);
+    var payload = Object.assign({}, detail);
+    if(!payload.id) payload.id = lazyUiId(payload.scope || payload.kind || 'subject');
+    emitLazyUi('start', payload);
+    return Promise.resolve(promise).then(function(result){
+      emitLazyUi('end', {
+        id: payload.id,
+        scope: payload.scope || 'subject',
+        kind: payload.kind || 'grade10-subject',
+        action: payload.action || '',
+        status: 'ok'
+      });
+      return result;
+    }, function(err){
+      emitLazyUi('end', {
+        id: payload.id,
+        scope: payload.scope || 'subject',
+        kind: payload.kind || 'grade10-subject',
+        action: payload.action || '',
+        status: 'error',
+        message: err && err.message ? String(err.message) : ''
+      });
+      throw err;
+    });
+  }
+  function escapeHtml(value){
+    return String(value || '').replace(/[&<>"]/g, function(ch){
+      if(ch === '&') return '&amp;';
+      if(ch === '<') return '&lt;';
+      if(ch === '>') return '&gt;';
+      return '&quot;';
+    });
   }
   function ensureTopicGen(subject, topic){
     if(!topic) return;
@@ -37,11 +89,11 @@
       if(!row || !row.id) return;
       var topic = subject.tops.filter(function(t){ return t && t.id === row.id; })[0];
       if(!topic){
-        topic = { id: row.id, nm: row.nm || row.id, dot: row.dot || subject.cl, th: '' };
+        topic = { id: row.id, nm: row.nm || row.id, dot: (subject && (subject.dot || subject.cl)) || row.dot || '#2563eb', th: '' };
         subject.tops.push(topic);
       }
       topic.nm = row.nm || topic.nm;
-      topic.dot = row.dot || topic.dot || subject.cl;
+      topic.dot = (subject && (subject.dot || subject.cl)) || row.dot || topic.dot || '#2563eb';
       topic.th = row.th || topic.th || '';
       topic.__wave86sActualGen = row.gen;
       topic._wave86sLoaded = true;
@@ -77,17 +129,49 @@
       (document.head || document.documentElement).appendChild(script);
     });
   }
-  function showLoading(label){
+  function showLoading(label, title){
     try{
       var tl = document.getElementById('tl');
-      if(tl) tl.innerHTML = '<div class="rcard"><h3>Загружаю банк 10 класса…</h3><div class="rempty">' + (label || 'Предметные данные вынесены в отдельные чанки и подгружаются по запросу.') + '</div></div>';
+      if(!tl) return;
+      var safeTitle = escapeHtml(title || 'Подгружаю банк 10 класса…');
+      var safeLabel = escapeHtml(label || 'Предметные данные вынесены в отдельные чанки и подгружаются по запросу.');
+      tl.innerHTML = '' +
+        '<section class="wave89h-inline-card" data-wave89h-inline-loading="1" aria-live="polite">' +
+          '<div class="wave89h-inline-badge">Загрузка</div>' +
+          '<h3 class="wave89h-inline-title">' + safeTitle + '</h3>' +
+          '<p class="wave89h-inline-copy">' + safeLabel + '</p>' +
+          '<div class="wave89h-inline-skeleton" aria-hidden="true">' +
+            '<span class="wave89h-skeleton-line w88"></span>' +
+            '<span class="wave89h-skeleton-line w76"></span>' +
+            '<span class="wave89h-skeleton-line w64"></span>' +
+          '</div>' +
+        '</section>';
     }catch(_){}
   }
-  function hydrateSubject(id){
+  function subjectUiMeta(subject, mode){
+    var subjectName = subject && subject.nm ? subject.nm : 'Предмет 10 класса';
+    if(mode === 'all') return {
+      scope:'subject',
+      kind:'grade10-all',
+      action:'hydrate-all',
+      title:'Подгружаю банки 10 класса…',
+      label:'Подгружаю все предметные банки для сборной, экзамена или молнии.'
+    };
+    return {
+      scope:'subject',
+      kind:'grade10-subject',
+      action:'hydrate-subject',
+      title:'Подгружаю предмет 10 класса…',
+      label:'Загружаю банк «' + subjectName + '». Тема откроется автоматически.'
+    };
+  }
+  function hydrateSubject(id, opts){
+    opts = opts || {};
     var subject = findSubject(id);
     if(!subject || !subject._wave86sSrc || subject._wave86sLoaded) return Promise.resolve(subject);
-    if(loadingMap[id]) return loadingMap[id];
-    showLoading(subject.nm || id);
+    var ui = opts.skipUi ? null : (opts.ui || subjectUiMeta(subject, 'subject'));
+    if(loadingMap[id]) return ui ? withLazyUi(loadingMap[id], ui) : loadingMap[id];
+    if(!opts.skipInline) showLoading((subject && subject.nm ? subject.nm : id), ui && ui.title);
     loadingMap[id] = inject(subject._wave86sSrc).then(function(){
       if(!subject._wave86sLoaded && loadedMap[id]) subject._wave86sLoaded = true;
       return subject;
@@ -95,20 +179,23 @@
       console.warn('[wave86s] lazy subject failed:', id, err);
       throw err;
     });
-    return loadingMap[id];
+    return ui ? withLazyUi(loadingMap[id], ui) : loadingMap[id];
   }
-  function hydrateAll(){
+  function hydrateAll(opts){
+    opts = opts || {};
     var list = subjects().filter(function(s){ return s && s._wave86sSrc && !s._wave86sLoaded; });
     var base;
+    var ui = opts.skipUi ? null : (opts.ui || subjectUiMeta(null, 'all'));
     if(!list.length) base = Promise.resolve([]);
     else {
-      showLoading('Подгружаю все предметные банки для сборной/экзамена.');
-      base = Promise.all(list.map(function(s){ return hydrateSubject(s.id); }));
+      if(!opts.skipInline) showLoading('Подгружаю все предметные банки для сборной, экзамена или молнии.', ui && ui.title);
+      base = Promise.all(list.map(function(s){ return hydrateSubject(s.id, { skipUi:true, skipInline:true }); }));
     }
-    return base.then(function(rows){
+    var chain = base.then(function(rows){
       if(window.wave87cOlyLazy && typeof window.wave87cOlyLazy.hydrateAll === 'function') return window.wave87cOlyLazy.hydrateAll().then(function(){ return rows; });
       return rows;
     });
+    return ui ? withLazyUi(chain, ui) : chain;
   }
   function wrapOpenSubj(){
     var original = window.openSubj;
@@ -116,7 +203,7 @@
     function wrapped(id, opts){
       var subject = findSubject(id);
       if(subject && subject._wave86sSrc && !subject._wave86sLoaded){
-        hydrateSubject(id).then(function(){ original.call(window, id, opts); }).catch(function(){ original.call(window, id, opts); });
+        hydrateSubject(id, { ui: subjectUiMeta(subject, 'subject') }).then(function(){ original.call(window, id, opts); }).catch(function(){ original.call(window, id, opts); });
         return;
       }
       return original.apply(this, arguments);
@@ -130,13 +217,13 @@
     function wrapped(){
       var args = arguments;
       if(mode === 'all' && hasPending()){
-        hydrateAll().then(function(){ original.apply(window, args); }).catch(function(){ original.apply(window, args); });
+        hydrateAll({ ui: subjectUiMeta(null, 'all') }).then(function(){ original.apply(window, args); }).catch(function(){ original.apply(window, args); });
         return;
       }
       if(mode === 'subject' && window.cS && window.cS.id){
         var s = findSubject(window.cS.id);
         if(s && s._wave86sSrc && !s._wave86sLoaded){
-          hydrateSubject(s.id).then(function(){ original.apply(window, args); }).catch(function(){ original.apply(window, args); });
+          hydrateSubject(s.id, { ui: subjectUiMeta(s, 'subject') }).then(function(){ original.apply(window, args); }).catch(function(){ original.apply(window, args); });
           return;
         }
       }
@@ -157,7 +244,7 @@
     ev.preventDefault();
     ev.stopPropagation();
     if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
-    hydrateAll().then(function(){
+    hydrateAll({ ui: subjectUiMeta(null, 'all') }).then(function(){
       if(!window.wave86pChallenge) return;
       if(action === 'weekly' && typeof window.wave86pChallenge.startWeeklyChallenge === 'function') window.wave86pChallenge.startWeeklyChallenge();
       if(action === 'exam' && typeof window.wave86pChallenge.startExamPicker === 'function') window.wave86pChallenge.startExamPicker();

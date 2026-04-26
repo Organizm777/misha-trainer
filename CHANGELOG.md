@@ -1,3 +1,84 @@
+## wave89n — 2026-04-26
+
+- E48: добавлен guided learning path для тематических запусков: теория → пример → лёгкое → среднее → сложное, поверх существующего `wave21` queue и без нового eager asset.
+- E48: на экране теории появилась карточка `🧭 Маршрут темы` с worked example; на экране тренировки и прогресса добавлена компактная индикация этапов маршрута.
+- E48: после прохождения стартовой лестницы тренировка не завершается, а мягко переходит в обычный режим и продолжает использовать `wave89m` adaptive difficulty.
+- Build: пересобраны merged grade runtime и shared grade CSS, добавлены документация `docs/LEARNING_PATH_wave89n.md` и аудит `tools/audit_learning_path_wave89n.mjs`.
+
+## wave89m — 2026-04-26
+
+- roadmap `#46`: added an **adaptive difficulty** layer on grade pages so the trainer now nudges the next question toward easy / medium / hard buckets per topic instead of always staying purely random inside the current generator.
+- implementation stays additive: no new eager grade-page asset was introduced. The existing merged runtime `bundle_grade_runtime_extended_wave89b` now carries the `wave89m` selector, persists per-grade topic profiles under `trainer_adaptive_difficulty_<grade>`, and exposes `window.__wave89mAdaptiveDifficulty` for audits/debugging.
+- session rules: **5 correct answers in a row** raise the session target by one step, **2 trouble answers** (errors / helped answers) lower it, and **3 slow answers** lower it too. The current session shift is then combined with the per-topic base level to choose the next candidate bucket.
+- timing reuse: the adaptive layer now also consumes the historical `wave87x` answer-timing store so cold-start topics can already begin at `medium` when the learner has recent fast / accurate history on that topic instead of always restarting from `easy`.
+- UI: the play screen now shows a compact `🎚 Адаптивная сложность` card, and the progress screen now summarizes how many topic profiles currently sit in easy / medium / hard buckets.
+- tooling/docs: added `tools/audit_adaptive_difficulty_wave89m.mjs`, `docs/ADAPTIVE_DIFFICULTY_wave89m.md`, wired the audit into both CI workflows, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW release metadata for the wave89m release.
+
+## wave89l — 2026-04-26
+
+- roadmap `#45`: upgraded the grade-page mistake journal / review system from a fixed review ladder to a real **SM-2 spaced-repetition scheduler** so repeated cards now grow by ease factor instead of stalling on hard-coded intervals.
+- implementation stays additive: no new eager grade-page asset was introduced. The existing core runtime `bundle_grade_runtime_core_wave87n` now owns the `wave89l` SM-2 layer, exports `startSpacedReview()` / `getReviewSummary()`, and migrates legacy `trainer_review_<grade>` data to `{ version: 2, algo: 'sm2' }` on load.
+- scheduling behavior: a fresh lapse still goes to 1 day, the first confident success stays at 1 day, the second success moves to 6 days, and later repeats grow by EF; helped answers reset the card to a quick repeat with a gentler grade instead of inflating the schedule.
+- review UX: the daily review card, progress card, result summary and journal are now labelled as **SM-2**, show weekly due counts + average EF, and display a next-interval preview inside the live review session.
+- sticky-card fix: cards with 3+ lapses are still marked as difficult, but they are no longer sticky forever — two confident answers can release them again while keeping lapse history for ordering.
+- tooling/docs: added `tools/audit_spaced_repetition_sm2_wave89l.mjs`, `docs/SPACED_REPETITION_SM2_wave89l.md`, wired the audit into both CI workflows, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW release metadata for the wave89l release.
+
+## wave89k — 2026-04-26
+
+- roadmap `#44`: added an **adaptive weak-device UI layer** on grade pages so the trainer automatically becomes easier to read and tap on compact touch devices and lower-capability hardware.
+- no new eager grade-page asset was introduced. The existing merged runtime `bundle_grade_runtime_extended_wave89b` now detects weak-device signals (coarse pointer, compact viewport, low memory / CPU, Save-Data, reduced-motion) and toggles `wave89k-*` classes on the page, while the shared `wave88d_breadcrumbs` stylesheet now also contains the wave89k readability / tap-target rules.
+- ergonomics pass: core controls now expand to **48px+ tap targets**, core copy / inputs rise to **16px**, subject cards and search controls grow, and the shared overlays (`settings`, onboarding, hamburger, lazy skeleton`) also receive the same larger-tap treatment instead of staying tuned for denser layouts.
+- weak-device polish: blur-heavy overlay surfaces are disabled in wave89k mode, reduced-motion users lose extra animation/transition overhead, and the adaptive layer stays limited to grade pages so dashboard/index/spec/diagnostic remain unchanged.
+- tooling/docs: added `tools/audit_weak_device_adaptive_wave89k.mjs`, `docs/WEAK_DEVICE_ADAPTIVE_wave89k.md`, wired the audit into both CI workflows, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW release metadata for the wave89k release.
+
+## wave89j — 2026-04-26
+
+- roadmap `#43`: added an **optimized parent dashboard mode** on `dashboard.html` so the page now opens in a compact, parent-first summary instead of immediately dropping the user into dense analytics.
+- new parent surface: `dashboard.html` now mounts `#wave89j-parent-toolbar` + `#wave89j-parent-summary`, offers persisted `Коротко / Подробно` modes, and lets the parent filter the dashboard by a single class or all classes.
+- filtered active state: the dashboard now composes a view-level state per selected class and routes hero/stats, activity, weak topics, analytics, and TXT/CSV/PNG exports through `window.__dashboardActiveState`, while class cards themselves stay visible as navigation shortcuts.
+- compact-mode behavior: advanced analytics blocks (`insights`, `heatmap`, `radar`, `trend`, `subject breakdown`) are tagged with `data-wave89j-advanced="1"` and hidden only through dashboard CSS when parent mode is active, so the full analytics surface remains one tap away instead of being removed.
+- tooling/docs: added `tools/audit_parent_dashboard_wave89j.mjs`, `docs/PARENT_DASHBOARD_wave89j.md`, wired the audit into both CI workflows, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW release metadata for the wave89j release.
+
+## wave89i — 2026-04-26
+
+- roadmap `#42`: normalized **subject colors into 5 stable groups** across grade pages so the app no longer feels like every discipline has its own one-off palette. The grouped scheme now keeps subjects visually predictable: math/tech, natural science, languages, humanities, creative/special.
+- implementation stays zero-cost on the network: no new eager grade-page asset was introduced. The existing `chunk_subject_expansion_wave63_quality` chunk now also applies `wave89i` color normalization before `engine10.js`, so the grouped palette is present on the very first render. Follow-up injectors (`wave89b` topic banks and the grade10 lazy helper) now inherit the grouped palette instead of reintroducing one-off topic colors.
+- coverage: the recoloring is data-driven and affects the fully assembled runtime subject surface, not just the base grade-data shells. That means injected subjects such as `read`, `eng`, `orkse`, `odnknr`, `obzh`, `art`, `oly`, and the `bridge1011` transition shell are normalized too.
+- UI effect: the same grouped colors now flow automatically into main subject cards, subject headers, topic dots, mix-entry buttons, and daily-meter subject chips because those surfaces already consume `SUBJ.cl/bg` and `topic.dot`.
+- tooling/docs: added `tools/audit_subject_color_groups_wave89i.mjs`, `docs/SUBJECT_COLOR_GROUPS_wave89i.md`, wired the audit into both CI workflows, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW release metadata for the wave89i release.
+
+## wave89h — 2026-04-26
+
+- roadmap `#41`: added **skeleton loading for lazy chunks** so deferred runtime bundles and grade-10 lazy subject banks now show a compact loading surface instead of switching abruptly from click to content.
+- no new eager grade-page asset was introduced. The existing `bundle_grade_runtime_core_wave87n` now emits `trainer:lazy-start` / `trainer:lazy-end` lifecycle events for interactive lazy hydration, the merged `bundle_grade_runtime_extended_wave89b` now owns the shared `wave89h` overlay controller, and the shared `wave88d_breadcrumbs` stylesheet now also styles the shimmer overlay / inline skeleton cards.
+- grade 10 follow-up: `chunk_grade10_lazy_wave86s` now renders an inline skeleton card in `#tl` while subject chunks are loading and emits the same lazy lifecycle events, so opening a deferred subject or starting global mix / exam / rush no longer feels like a silent stall.
+- menu/runtime integration: `☰` actions that depend on lazy features/services (`Награды`, `Профиль`, `Отчёт`, `Поделиться`, `Резервная копия`, `Синхронизация`) now request interactive hydration, which lets the shared overlay describe what is loading instead of falling back to a blank wait.
+- tooling/docs: added `tools/audit_skeleton_loading_wave89h.mjs`, `docs/SKELETON_LOADING_wave89h.md`, wired the new audit into both CI workflows, refreshed legacy wave89 audits to stay valid on `wave89h`, and resynced `CLAUDE.md`, `tools/README.md`, `healthz.json`, `asset-manifest.json`, and SW release metadata.
+
+## wave89g — 2026-04-25
+
+- roadmap `#40`: simplified the **grade-page main utility footer** down to **2 visible quick actions** — `📈 Прогресс` and `⚙️ Настройки` — while pushing the remaining utility surface behind the existing `☰` menu.
+- implementation stays additive: no new eager JS/CSS files were introduced. The existing merged runtime `bundle_grade_runtime_extended_wave89b` now also carries the `wave89g` footer condensing logic, and the shared `wave88d_breadcrumbs` stylesheet now also contains the compact footer card styles plus the legacy-row hiding rule.
+- UX follow-up to wave89f: the hamburger menu now also exposes `📖 Справка`, `🔁 Ошибки`, `🏆 Награды`, and `📅 Даты диагностик`, so the decluttering pass reduces visible noise without deleting workflows.
+- runtime behavior: the old scattered main-screen utility rows are hidden additively through `data-wave89g-footer-legacy="1"`, the new footer is inserted right after `#daily-meter`, and the two visible buttons call the existing `go('prog')` / `showAbout()` entry points.
+- tooling/docs: added `tools/audit_minimal_footer_wave89g.mjs`, `docs/MINIMAL_FOOTER_wave89g.md`, wired the audit into both CI workflows, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW metadata for the wave89g release.
+
+## wave89f — 2026-04-25
+
+- roadmap `#39`: added a compact **hamburger menu `☰`** on every grade page so secondary actions move out of the primary learning surface. The menu consolidates `profile/rating/backup/sync/export` flows without adding another eager runtime.
+- runtime/UI: the existing merged add-on runtime `bundle_grade_runtime_extended_wave89b` now also carries the `wave89f` menu controller, while the shared `wave88d_breadcrumbs` stylesheet now also styles the trigger, side-sheet overlay, and relocated-action hiding rules.
+- decluttering pass: the old visible `👑 Профиль`, `📊 Отчёт для родителя`, `💾 Резервная копия`, progress-share/export affordances, the main cloud-sync button, and the rush-rating shortcut are now marked as relocated and hidden from the main surface; empty legacy rows collapse automatically.
+- behavior: menu actions confirm before leaving an active play session, keep using the existing APIs (`showHallOfFame`, `showRushRecords`, `generateReport`, `shareReport`, `wave86nProgressTools.exportParentProgress`, `wave86wCloudSync.open`), and remain consistent with simple mode by hiding rating/sync there as well.
+- tooling/docs: added `tools/audit_hamburger_wave89f.mjs`, `docs/HAMBURGER_MENU_wave89f.md`, wired the audit into both CI workflows, refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW metadata for the wave89f release.
+
+## wave89e — 2026-04-25
+
+- roadmap `#38`: added a **3-step onboarding overlay** on grade pages so first-time learners get an explicit happy path through the trainer: choose a subject → read theory → use the smart-start `▶ Заниматься` CTA. The implementation stays additive and continues the simplified UX track from the updated 100-improvements plan.
+- no new eager grade-page asset was introduced. Instead, the existing merged runtime `bundle_grade_runtime_extended_wave89b` now also carries the `wave89e` tour controller, while the shared `wave88d_breadcrumbs` stylesheet now also includes the onboarding overlay / target-highlight layer.
+- first-visit behavior: the tour auto-opens only for fresh learners without meaningful local progress, persists completion under `trainer_onboarding_wave89e_v1`, and opens a real topic in theory mode during step 2 so the user sees the actual `✏️ Начать тренажёр` flow instead of a static mock.
+- manual reopen: the `⚙️ Настройки` modal now includes `👋 Быстрый тур`, while active play/result flows remain protected from accidental tour launches.
+- tooling/docs: added `tools/audit_onboarding_wave89e.mjs`, `docs/ONBOARDING_wave89e.md`, wired the audit into both CI workflows, and refreshed `tools/README.md`, `CLAUDE.md`, `healthz.json`, `asset-manifest.json`, and SW metadata for the wave89e release.
+
 ## wave89d — 2026-04-25
 
 - roadmap `#36` + `#37`: added **Простой режим** for grade pages, defaulting to ON for fresh installs, and turned the main practice CTA into a smart-start flow. The mode intentionally hides advanced scenarios (PvP, weekly/exam, cloud sync, leaderboards and filtered global mix) while keeping the normal trainer path front-and-center.

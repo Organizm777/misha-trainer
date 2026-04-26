@@ -2140,7 +2140,7 @@
   if (typeof window === 'undefined') return;
   window.__wave89bMergedRuntime = {
     version: 'wave89b',
-    components: ['wave87w','wave87x','wave88c','wave88d']
+    components: ['wave87w','wave87x','wave88c','wave88d','wave89d','wave89e','wave89f','wave89g','wave89h','wave89k','wave89m','wave89n']
   };
 })();
 
@@ -2484,6 +2484,16 @@
       scheduleSync();
     }, 20);
   }
+  function openTourFromSettings(){
+    closeSettings();
+    setTimeout(function(){
+      try {
+        if (root.__wave89eOnboarding && typeof root.__wave89eOnboarding.start === 'function') root.__wave89eOnboarding.start({ manual:true, source:'settings' });
+        else if (typeof root.toast === 'function') root.toast('Тур пока не готов.');
+      } catch (_err) {}
+      scheduleSync();
+    }, 20);
+  }
   function buildSettingsOverlay(){
     var overlay = document.createElement('div');
     overlay.id = OVERLAY_ID;
@@ -2539,12 +2549,15 @@
     });
     var infoBtn = settingsButton('📖 Справка');
     infoBtn.addEventListener('click', goInfoFromSettings);
+    var tourBtn = settingsButton('👋 Быстрый тур');
+    tourBtn.addEventListener('click', openTourFromSettings);
     var aboutBtn = settingsButton('ℹ️ О проекте');
     aboutBtn.addEventListener('click', openLegacyAbout);
     var closeBtn = settingsButton('Закрыть');
     closeBtn.addEventListener('click', closeSettings);
     actions.appendChild(toggle);
     actions.appendChild(infoBtn);
+    actions.appendChild(tourBtn);
     actions.appendChild(aboutBtn);
     actions.appendChild(closeBtn);
 
@@ -2707,3 +2720,3155 @@
     }
   };
 })();
+
+
+/* wave89e: onboarding / first-visit tour */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89eOnboarding) return;
+
+  var root = window;
+  var STORAGE_KEY = 'trainer_onboarding_wave89e_v1';
+  var OVERLAY_ID = 'wave89e-tour-overlay';
+  var TARGET_ATTR = 'data-wave89e-tour-target';
+  var BODY_CLASS = 'wave89e-tour-open';
+  var KEYDOWN_BOUND = false;
+  var stepTimer = 0;
+  var state = {
+    open: false,
+    manual: false,
+    stepIndex: 0,
+    highlighted: null,
+    tourTopic: null,
+    stepCount: 3,
+    completed: false,
+    lastReason: ''
+  };
+
+  function safeRead(key, fallback){
+    try {
+      var raw = localStorage.getItem(key);
+      return raw == null ? fallback : raw;
+    } catch (_err) {
+      return fallback;
+    }
+  }
+  function safeReadJson(key, fallback){
+    try {
+      var raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (_err) {
+      return fallback;
+    }
+  }
+  function safeWrite(key, value){
+    try { localStorage.setItem(key, value); } catch (_err) {}
+  }
+  function toast(message){
+    try {
+      if (typeof root.toast === 'function') root.toast(message);
+      else if (typeof root.alert === 'function') root.alert(message);
+    } catch (_err) {}
+  }
+  function gradeKey(){
+    return String(root.GRADE_NUM || root.GRADE_NO || '10');
+  }
+  function totalSolvedOk(){
+    var streak = safeReadJson('trainer_streak_' + gradeKey(), {});
+    return Number(streak && streak.totalOk) || 0;
+  }
+  function hasMeaningfulProgress(){
+    var progress = safeReadJson('trainer_progress_' + gradeKey(), {});
+    if (progress && typeof progress === 'object') {
+      var subjectIds = Object.keys(progress);
+      for (var i = 0; i < subjectIds.length; i += 1) {
+        var subj = progress[subjectIds[i]];
+        if (!subj || typeof subj !== 'object') continue;
+        var topicIds = Object.keys(subj);
+        for (var j = 0; j < topicIds.length; j += 1) {
+          var row = subj[topicIds[j]];
+          if (!row || typeof row !== 'object') continue;
+          if ((Number(row.ok) || 0) + (Number(row.err) || 0) > 0) return true;
+        }
+      }
+    }
+    var journal = safeReadJson('trainer_journal_' + gradeKey(), []);
+    if (Array.isArray(journal) && journal.length) return true;
+    var snap = safeReadJson('trainer_session_snapshot_' + gradeKey(), null);
+    if (snap && typeof snap === 'object' && snap.prob) return true;
+    var last = safeReadJson('trainer_last_topic_' + gradeKey(), null);
+    if (last && typeof last === 'object' && last.subjId && last.topicId) return true;
+    return totalSolvedOk() > 0;
+  }
+  function hasSeenTour(){
+    var value = String(safeRead(STORAGE_KEY, '') || '').trim().toLowerCase();
+    return value === 'done' || value === 'skipped';
+  }
+  function markSeen(kind){
+    safeWrite(STORAGE_KEY, kind === 'skip' ? 'skipped' : 'done');
+  }
+  function activeScreenId(){
+    var screen = document.querySelector('.scr.on');
+    return screen && screen.id ? screen.id : '';
+  }
+  function clearStepTimer(){
+    if (!stepTimer) return;
+    try { (root.clearTimeout || clearTimeout)(stepTimer); } catch (_err) {}
+    stepTimer = 0;
+  }
+  function addBodyClass(enabled){
+    if (!document.body || !document.body.classList) return;
+    document.body.classList[enabled ? 'add' : 'remove'](BODY_CLASS);
+    if (document.documentElement && document.documentElement.classList) {
+      document.documentElement.classList[enabled ? 'add' : 'remove'](BODY_CLASS);
+    }
+  }
+  function clearHighlight(){
+    if (state.highlighted && state.highlighted.removeAttribute) {
+      try { state.highlighted.removeAttribute(TARGET_ATTR); } catch (_err) {}
+    }
+    state.highlighted = null;
+  }
+  function highlightTarget(node){
+    clearHighlight();
+    if (!node) return null;
+    try { node.setAttribute(TARGET_ATTR, '1'); } catch (_err) {}
+    state.highlighted = node;
+    try {
+      if (typeof node.scrollIntoView === 'function') node.scrollIntoView({ block:'center', inline:'nearest', behavior:'smooth' });
+    } catch (_err2) {}
+    return node;
+  }
+  function ensureMain(){
+    try {
+      if (typeof root.go === 'function') root.go('main');
+    } catch (_err) {}
+  }
+  function subjectUnlocked(subject){
+    if (!subject || !subject.locked) return true;
+    return totalSolvedOk() >= (Number(subject.unlockAt) || 0);
+  }
+  function findTourTopic(){
+    if (state.tourTopic) return state.tourTopic;
+    var subjects = Array.isArray(root.SUBJ) ? root.SUBJ : [];
+    for (var i = 0; i < subjects.length; i += 1) {
+      var subj = subjects[i];
+      if (!subjectUnlocked(subj)) continue;
+      var topics = Array.isArray(subj && subj.tops) ? subj.tops : [];
+      for (var j = 0; j < topics.length; j += 1) {
+        var topic = topics[j];
+        if (!topic) continue;
+        state.tourTopic = { subj:subj, topic:topic };
+        return state.tourTopic;
+      }
+    }
+    return null;
+  }
+  function openTheoryStep(){
+    var meta = findTourTopic();
+    if (!meta) {
+      ensureMain();
+      return false;
+    }
+    try {
+      if (typeof root.wave21OpenTopic === 'function') return !!root.wave21OpenTopic(meta.subj.id, meta.topic.id, 'theory');
+    } catch (_err) {}
+    ensureMain();
+    return false;
+  }
+  function currentStep(){
+    var idx = state.stepIndex;
+    var step2Meta = findTourTopic();
+    var topicLabel = step2Meta ? String(step2Meta.subj.nm || step2Meta.subj.id) + ' → ' + String(step2Meta.topic.nm || step2Meta.topic.id) : 'любая тема';
+    var steps = [
+      {
+        id: 'pick-subject',
+        title: '1. Начни с предмета',
+        lead: 'Сначала выбери предмет на главном экране.',
+        body: 'Карточки предметов — это вход в темы и теорию. В простом режиме здесь остаётся только самое нужное: обычный тренажёр без лишних сценариев.',
+        selector: '#sg',
+        prepare: ensureMain,
+        cta: 'Дальше'
+      },
+      {
+        id: 'read-theory',
+        title: '2. Сначала теория, потом тренажёр',
+        lead: 'Перед вопросами открой короткую шпаргалку по теме.',
+        body: 'Я уже показал пример темы: ' + topicLabel + '. Прочитай теорию и запускай тренировку кнопкой «✏️ Начать тренажёр» — так вход в новую тему проще и спокойнее.',
+        selector: '#s-theory .btn.btn-p[data-wave87r-action="start-normal-quiz"], #tc',
+        prepare: openTheoryStep,
+        cta: 'Дальше'
+      },
+      {
+        id: 'smart-start',
+        title: '3. Кнопка «▶ Заниматься» ведёт сама',
+        lead: 'Когда не знаешь, с чего начать, жми одну кнопку.',
+        body: 'На главном экране «▶ Заниматься» сама выберет следующий полезный шаг: ошибки, слабые темы, незавершённую или новую тему. В «⚙️ Настройки» можно в любой момент выключить простой режим и снова включить продвинутые сценарии.',
+        selector: '#daily-meter',
+        prepare: ensureMain,
+        cta: 'Готово'
+      }
+    ];
+    return steps[idx] || steps[0];
+  }
+  function queryTarget(selector){
+    if (!selector) return null;
+    var parts = String(selector).split(',');
+    for (var i = 0; i < parts.length; i += 1) {
+      var item = String(parts[i] || '').trim();
+      if (!item) continue;
+      var found = document.querySelector(item);
+      if (found) return found;
+    }
+    return null;
+  }
+  function overlayButton(label, action, kind){
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'wave89e-tour-btn' + (kind ? ' ' + kind : '');
+    btn.setAttribute('data-wave89e-action', action);
+    btn.textContent = label;
+    return btn;
+  }
+  function buildOverlay(){
+    var overlay = document.createElement('div');
+    overlay.id = OVERLAY_ID;
+    overlay.className = 'wave89e-tour-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'wave89e-tour-title');
+
+    var card = document.createElement('div');
+    card.className = 'wave89e-tour-card';
+
+    var badge = document.createElement('div');
+    badge.className = 'wave89e-tour-badge';
+    badge.textContent = '👋 Быстрый старт';
+
+    var title = document.createElement('h3');
+    title.id = 'wave89e-tour-title';
+    title.className = 'wave89e-tour-title';
+
+    var lead = document.createElement('p');
+    lead.className = 'wave89e-tour-lead';
+    lead.setAttribute('data-wave89e-tour', 'lead');
+
+    var body = document.createElement('p');
+    body.className = 'wave89e-tour-body';
+    body.setAttribute('data-wave89e-tour', 'body');
+
+    var progress = document.createElement('div');
+    progress.className = 'wave89e-tour-progress';
+    progress.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < state.stepCount; i += 1) {
+      var dot = document.createElement('span');
+      dot.className = 'wave89e-tour-dot';
+      dot.setAttribute('data-wave89e-dot', String(i));
+      progress.appendChild(dot);
+    }
+
+    var footer = document.createElement('div');
+    footer.className = 'wave89e-tour-actions';
+    footer.appendChild(overlayButton('Пропустить', 'skip', 'ghost'));
+    footer.appendChild(overlayButton('Назад', 'prev', 'ghost'));
+    footer.appendChild(overlayButton('Дальше', 'next', 'accent'));
+
+    card.appendChild(badge);
+    card.appendChild(title);
+    card.appendChild(lead);
+    card.appendChild(body);
+    card.appendChild(progress);
+    card.appendChild(footer);
+    overlay.appendChild(card);
+
+    overlay.addEventListener('click', function(event){
+      var actionNode = event && event.target && event.target.closest ? event.target.closest('[data-wave89e-action]') : null;
+      if (!actionNode) return;
+      var action = actionNode.getAttribute('data-wave89e-action');
+      if (action === 'skip') {
+        close({ mark:'skip', reason:'skip' });
+      } else if (action === 'prev') {
+        prev();
+      } else if (action === 'next') {
+        next();
+      }
+    });
+    return overlay;
+  }
+  function ensureOverlay(){
+    var overlay = document.getElementById(OVERLAY_ID);
+    if (overlay) return overlay;
+    overlay = buildOverlay();
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+  function onKeydown(event){
+    if (!state.open || !event) return;
+    if (event.key === 'Escape') {
+      if (event.preventDefault) event.preventDefault();
+      close({ mark: state.manual ? '' : 'skip', reason:'escape' });
+      return;
+    }
+    if (event.key === 'ArrowRight' || event.key === 'Enter') {
+      if (event.preventDefault) event.preventDefault();
+      next();
+      return;
+    }
+    if (event.key === 'ArrowLeft') {
+      if (event.preventDefault) event.preventDefault();
+      prev();
+    }
+  }
+  function bindKeydown(){
+    if (KEYDOWN_BOUND || !root.addEventListener) return;
+    root.addEventListener('keydown', onKeydown, true);
+    KEYDOWN_BOUND = true;
+  }
+  function unbindKeydown(){
+    if (!KEYDOWN_BOUND || !root.removeEventListener) return;
+    root.removeEventListener('keydown', onKeydown, true);
+    KEYDOWN_BOUND = false;
+  }
+  function updateOverlay(){
+    if (!state.open) return;
+    var step = currentStep();
+    var overlay = ensureOverlay();
+    var title = overlay.querySelector('#wave89e-tour-title');
+    var lead = overlay.querySelector('[data-wave89e-tour="lead"]');
+    var body = overlay.querySelector('[data-wave89e-tour="body"]');
+    var prevBtn = overlay.querySelector('[data-wave89e-action="prev"]');
+    var nextBtn = overlay.querySelector('[data-wave89e-action="next"]');
+    if (title) title.textContent = step.title;
+    if (lead) lead.textContent = step.lead;
+    if (body) body.textContent = step.body;
+    if (prevBtn) prevBtn.disabled = state.stepIndex === 0;
+    if (nextBtn) nextBtn.textContent = step.cta || (state.stepIndex >= state.stepCount - 1 ? 'Готово' : 'Дальше');
+    Array.prototype.slice.call(overlay.querySelectorAll('[data-wave89e-dot]')).forEach(function(dot){
+      var idx = Number(dot.getAttribute('data-wave89e-dot')) || 0;
+      dot.classList.toggle('active', idx === state.stepIndex);
+    });
+    clearStepTimer();
+    stepTimer = (root.setTimeout || setTimeout)(function(){
+      stepTimer = 0;
+      highlightTarget(queryTarget(step.selector));
+    }, 90);
+  }
+  function showStep(index){
+    state.stepIndex = Math.max(0, Math.min(state.stepCount - 1, Number(index) || 0));
+    var step = currentStep();
+    try { if (step.prepare) step.prepare(); } catch (_err) {}
+    updateOverlay();
+  }
+  function next(){
+    if (!state.open) return false;
+    if (state.stepIndex >= state.stepCount - 1) {
+      close({ mark:'done', reason:'complete' });
+      return true;
+    }
+    showStep(state.stepIndex + 1);
+    return true;
+  }
+  function prev(){
+    if (!state.open) return false;
+    if (state.stepIndex <= 0) return false;
+    showStep(state.stepIndex - 1);
+    return true;
+  }
+  function isBusyScreen(){
+    var screen = activeScreenId();
+    return screen === 's-play' || screen === 's-result';
+  }
+  function shouldAutoOpen(){
+    if (hasSeenTour()) return false;
+    if (isBusyScreen()) return false;
+    return !hasMeaningfulProgress();
+  }
+  function close(options){
+    options = options || {};
+    state.open = false;
+    state.completed = options.mark === 'done';
+    state.lastReason = options.reason || '';
+    clearStepTimer();
+    clearHighlight();
+    addBodyClass(false);
+    var overlay = document.getElementById(OVERLAY_ID);
+    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    unbindKeydown();
+    if (options.mark) markSeen(options.mark === 'skip' ? 'skip' : 'done');
+    if (typeof options.after === 'function') {
+      try { options.after(); } catch (_err) {}
+    }
+    return true;
+  }
+  function start(options){
+    options = options || {};
+    if (!options.manual && !shouldAutoOpen()) return false;
+    if (options.manual && isBusyScreen()) {
+      toast('Заверши текущую сессию, чтобы открыть быстрый тур.');
+      return false;
+    }
+    close({});
+    state.open = true;
+    state.manual = !!options.manual;
+    state.completed = false;
+    state.lastReason = 'open';
+    state.tourTopic = null;
+    addBodyClass(true);
+    bindKeydown();
+    showStep(0);
+    return true;
+  }
+  function scheduleAutoOpen(){
+    if (!shouldAutoOpen()) return false;
+    clearStepTimer();
+    stepTimer = (root.setTimeout || setTimeout)(function(){
+      stepTimer = 0;
+      start({ manual:false, auto:true });
+    }, 260);
+    return true;
+  }
+  function bind(){
+    scheduleAutoOpen();
+  }
+
+  if (document.readyState === 'loading' && document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', bind, { once:true });
+  } else {
+    bind();
+  }
+
+  root.__wave89eOnboarding = {
+    version: 'wave89e',
+    storageKey: STORAGE_KEY,
+    start: start,
+    next: next,
+    prev: prev,
+    close: close,
+    shouldAutoOpen: shouldAutoOpen,
+    scheduleAutoOpen: scheduleAutoOpen,
+    activeScreenId: activeScreenId,
+    findTourTopic: findTourTopic,
+    isOpen: function(){ return !!state.open; },
+    getState: function(){
+      return {
+        open: !!state.open,
+        manual: !!state.manual,
+        stepIndex: state.stepIndex,
+        stepCount: state.stepCount,
+        completed: !!state.completed,
+        lastReason: state.lastReason,
+        hasSeen: hasSeenTour()
+      };
+    }
+  };
+})();
+
+
+
+/* wave89f: hamburger menu / secondary actions */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89fHamburgerMenu) return;
+
+  var root = window;
+  var TRIGGER_ID = 'wave89f-menu-trigger';
+  var OVERLAY_ID = 'wave89f-menu-overlay';
+  var PANEL_ID = 'wave89f-menu-panel';
+  var BODY_CLASS = 'wave89f-menu-open';
+  var HIDE_ATTR = 'data-wave89f-relocated';
+  var ROW_ATTR = 'data-wave89f-menu-row';
+  var ROW_EMPTY_ATTR = 'data-wave89f-empty-row';
+  var observer = null;
+  var syncTimer = 0;
+  var keydownBound = false;
+  var state = { open:false };
+
+  function asText(value){
+    return String(value == null ? '' : value);
+  }
+  function isElement(node){
+    return !!(node && typeof node === 'object' && node.nodeType === 1);
+  }
+  function hasClass(node, className){
+    return !!(isElement(node) && node.classList && node.classList.contains(className));
+  }
+  function toast(message){
+    try {
+      if (typeof root.toast === 'function') root.toast(message);
+      else if (typeof root.alert === 'function') root.alert(message);
+    } catch (_err) {}
+  }
+  function getById(id){
+    return document.getElementById ? document.getElementById(id) : null;
+  }
+  function activeScreenId(){
+    var ids = ['s-main', 's-subj', 's-theory', 's-play', 's-result', 's-prog', 's-info'];
+    for (var i = 0; i < ids.length; i += 1) {
+      var node = getById(ids[i]);
+      if (hasClass(node, 'on')) return ids[i];
+    }
+    return '';
+  }
+  function addBodyClass(enabled){
+    if (document.body && document.body.classList) document.body.classList[enabled ? 'add' : 'remove'](BODY_CLASS);
+    if (document.documentElement && document.documentElement.classList) {
+      document.documentElement.classList[enabled ? 'add' : 'remove'](BODY_CLASS);
+    }
+  }
+  function applyTriggerState(open){
+    var btn = getById(TRIGGER_ID);
+    if (!btn) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.classList.toggle('open', !!open);
+  }
+  function gradeLabel(){
+    try {
+      if (root.__wave88dBreadcrumbs && typeof root.__wave88dBreadcrumbs.gradeLabel === 'function') {
+        return root.__wave88dBreadcrumbs.gradeLabel();
+      }
+    } catch (_err) {}
+    var raw = asText(root.GRADE_TITLE || root.GRADE_NUM || root.GRADE_NO || '').trim();
+    raw = raw.replace(/^[^0-9А-Яа-яA-Za-z]+/, '').trim();
+    if (!raw) raw = 'Класс';
+    if (!/класс/i.test(raw)) raw += ' класс';
+    return raw;
+  }
+  function isSimpleMode(){
+    return !!(root.__wave89dSimpleMode && typeof root.__wave89dSimpleMode.isEnabled === 'function' && root.__wave89dSimpleMode.isEnabled());
+  }
+  function blockAdvanced(kind){
+    if (root.__wave89dSimpleMode && typeof root.__wave89dSimpleMode.blockAdvanced === 'function') {
+      return root.__wave89dSimpleMode.blockAdvanced(kind);
+    }
+    toast('Эта функция скрыта в простом режиме.');
+    return false;
+  }
+  function maybeLeavePlay(){
+    if (activeScreenId() !== 's-play') return true;
+    var ok = typeof root.confirm === 'function'
+      ? root.confirm('Выйти из текущей сессии? Результат будет сохранён.')
+      : true;
+    if (!ok) return false;
+    if (typeof root.endSession === 'function') root.endSession();
+    return true;
+  }
+  function menuSections(){
+    var simple = isSimpleMode();
+    var sections = [
+      {
+        title: 'Учёба',
+        items: [
+          { id:'help', icon:'📖', label:'Справка', note:'Коротко вспомнить режимы и логику тренажёра' },
+          { id:'journal', icon:'🔁', label:'Ошибки', note:'Открыть журнал ошибок и слабых тем' },
+          { id:'badges', icon:'🏆', label:'Награды', note:'Посмотреть достижения, серии и бейджи' },
+          { id:'dates', icon:'📅', label:'Даты диагностик', note:'Сместить фокус микса к ближайшим проверочным' }
+        ]
+      },
+      {
+        title: 'Аккаунт',
+        items: [
+          { id:'profile', icon:'👑', label:'Профиль', note:'Серия, статистика и код восстановления' },
+          simple ? null : { id:'rating', icon:'🏆', label:'Рейтинг Молнии', note:'Локальный и общий рейтинг по режиму «Молния»' }
+        ]
+      },
+      {
+        title: 'Отчёты и экспорт',
+        items: [
+          { id:'report', icon:'📊', label:'Отчёт для родителя', note:'Открыть подробный снимок прогресса', accent:true },
+          { id:'share-report', icon:'📤', label:'Поделиться прогрессом', note:'Создать ссылку-отчёт со снимком результатов' },
+          { id:'export-csv', icon:'⬇️', label:'Экспорт CSV', note:'Скачать таблицу прогресса для родителя' },
+          { id:'export-json', icon:'🧾', label:'Экспорт JSON', note:'Скачать JSON прогресса текущего класса' }
+        ]
+      },
+      {
+        title: 'Данные',
+        items: [
+          { id:'backup', icon:'💾', label:'Резервная копия', note:'Сохранить и восстановить данные текущего класса' },
+          simple ? null : { id:'sync', icon:'☁️', label:'Синхронизация', note:'Облако между устройствами без лишних кнопок на главной' }
+        ]
+      },
+      {
+        title: 'Система',
+        items: [
+          { id:'settings', icon:'⚙️', label:'Настройки', note:'Простой режим, оформление и быстрый тур' },
+          { id:'classes', icon:'🏫', label:'Другой класс', note:'Вернуться к выбору класса или открыть список классов' }
+        ]
+      }
+    ];
+    return sections.map(function(section){
+      return {
+        title: section.title,
+        items: (Array.isArray(section.items) ? section.items : []).filter(Boolean)
+      };
+    }).filter(function(section){ return section.items.length > 0; });
+  }
+  function visibleItemIds(){
+    return menuSections().reduce(function(acc, section){
+      section.items.forEach(function(item){ acc.push(item.id); });
+      return acc;
+    }, []);
+  }
+  function getHydrator(){
+    return root.wave87nRuntimeSplit && typeof root.wave87nRuntimeSplit.hydrateForAction === 'function'
+      ? root.wave87nRuntimeSplit.hydrateForAction
+      : null;
+  }
+  function hydrate(action, opts){
+    var fn = getHydrator();
+    if (typeof fn === 'function' && action) {
+      try { return Promise.resolve(fn(action, opts || {})); } catch (_err) { return Promise.resolve(false); }
+    }
+    return Promise.resolve(false);
+  }
+  function loadServices(opts){
+    var api = root.wave87nRuntimeSplit;
+    if (api && typeof api.loadServices === 'function') {
+      try { return Promise.resolve(api.loadServices(opts || {})); } catch (_err) { return Promise.resolve(false); }
+    }
+    return Promise.resolve(false);
+  }
+  function scheduleSync(){
+    if (syncTimer && typeof root.clearTimeout === 'function') root.clearTimeout(syncTimer);
+    syncTimer = (typeof root.setTimeout === 'function' ? root.setTimeout : setTimeout)(function(){
+      syncTimer = 0;
+      sync();
+    }, 50);
+  }
+  function closeMenu(){
+    state.open = false;
+    var overlay = getById(OVERLAY_ID);
+    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    addBodyClass(false);
+    applyTriggerState(false);
+    if (keydownBound && root.removeEventListener) {
+      root.removeEventListener('keydown', onKeydown, true);
+      keydownBound = false;
+    }
+    return true;
+  }
+  function closeThen(run){
+    closeMenu();
+    (root.setTimeout || setTimeout)(function(){
+      try { if (typeof run === 'function') run(); } catch (_err) {}
+      scheduleSync();
+    }, 20);
+  }
+  function runMenuAction(id){
+    id = asText(id).trim();
+    if (!id) return false;
+    if (!maybeLeavePlay()) return false;
+    if (id === 'help') {
+      closeThen(function(){
+        if (typeof root.go === 'function') root.go('info');
+        else toast('Справка пока недоступна.');
+      });
+      return true;
+    }
+    if (id === 'journal') {
+      closeThen(function(){
+        if (typeof root.showJournal === 'function') root.showJournal();
+        else toast('Журнал ошибок пока недоступен.');
+      });
+      return true;
+    }
+    if (id === 'badges') {
+      closeThen(function(){
+        hydrate('show-badges', { interactive:true, source:'menu-badges' }).then(function(){
+          if (typeof root.showBadges === 'function') root.showBadges();
+          else toast('Награды пока недоступны.');
+        });
+      });
+      return true;
+    }
+    if (id === 'dates') {
+      closeThen(function(){
+        if (typeof root.showDateEditor === 'function') root.showDateEditor();
+        else toast('Редактор дат пока недоступен.');
+      });
+      return true;
+    }
+    if (id === 'profile') {
+      closeThen(function(){
+        hydrate('show-profile', { interactive:true, source:'menu-profile' }).then(function(){
+          if (typeof root.showHallOfFame === 'function') root.showHallOfFame();
+        });
+      });
+      return true;
+    }
+    if (id === 'rating') {
+      if (isSimpleMode()) return blockAdvanced('rating');
+      closeThen(function(){
+        if (typeof root.showRushRecords === 'function') root.showRushRecords();
+        else toast('Рейтинг пока недоступен.');
+      });
+      return true;
+    }
+    if (id === 'report') {
+      closeThen(function(){
+        hydrate('generate-report', { interactive:true, source:'menu-report' }).then(function(){
+          if (typeof root.generateReport === 'function') root.generateReport();
+          else toast('Отчёт пока загружается.');
+        });
+      });
+      return true;
+    }
+    if (id === 'share-report') {
+      closeThen(function(){
+        hydrate('share-report', { interactive:true, source:'menu-share-report' }).then(function(){
+          if (typeof root.shareReport === 'function') root.shareReport();
+          else toast('Поделиться прогрессом пока нельзя.');
+        });
+      });
+      return true;
+    }
+    if (id === 'export-csv' || id === 'export-json') {
+      closeThen(function(){
+        var api = root.wave86nProgressTools;
+        var format = id === 'export-csv' ? 'csv' : 'json';
+        if (api && typeof api.exportParentProgress === 'function') api.exportParentProgress(format);
+        else toast('Экспорт пока не готов.');
+      });
+      return true;
+    }
+    if (id === 'backup') {
+      closeThen(function(){
+        hydrate('show-backup', { interactive:true, source:'menu-backup' }).then(function(){
+          if (typeof root.showBackupModal === 'function') root.showBackupModal();
+          else toast('Резервная копия пока загружается.');
+        });
+      });
+      return true;
+    }
+    if (id === 'sync') {
+      if (isSimpleMode()) return blockAdvanced('sync');
+      closeThen(function(){
+        loadServices({ ui:{ scope:'runtime', kind:'services', action:'sync', title:'Подгружаю синхронизацию', label:'Загружаю облачные сервисы и резервное хранилище…' } }).then(function(){
+          if (root.wave86wCloudSync && typeof root.wave86wCloudSync.open === 'function') root.wave86wCloudSync.open();
+          else toast('Синхронизация ещё загружается.');
+        });
+      });
+      return true;
+    }
+    if (id === 'settings') {
+      closeThen(function(){
+        if (root.__wave89dSimpleMode && typeof root.__wave89dSimpleMode.openSettings === 'function') root.__wave89dSimpleMode.openSettings();
+        else if (typeof root.showAbout === 'function') root.showAbout();
+      });
+      return true;
+    }
+    if (id === 'classes') {
+      closeThen(function(){
+        if (typeof root.showClassSelect === 'function') root.showClassSelect();
+        else if (root.location && typeof root.location.assign === 'function') root.location.assign('index.html?choose');
+        else if (root.location) root.location.href = 'index.html?choose';
+      });
+      return true;
+    }
+    return false;
+  }
+  function menuActionButton(item){
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'wave89f-menu-item' + (item.accent ? ' accent' : '');
+    btn.setAttribute('data-wave89f-item', item.id);
+
+    var icon = document.createElement('span');
+    icon.className = 'wave89f-menu-item-icon';
+    icon.textContent = item.icon || '•';
+
+    var copy = document.createElement('span');
+    copy.className = 'wave89f-menu-item-copy';
+    var strong = document.createElement('strong');
+    strong.textContent = item.label;
+    var note = document.createElement('span');
+    note.textContent = item.note || '';
+    copy.appendChild(strong);
+    copy.appendChild(note);
+
+    btn.appendChild(icon);
+    btn.appendChild(copy);
+    btn.addEventListener('click', function(){ runMenuAction(item.id); });
+    return btn;
+  }
+  function buildMenuOverlay(){
+    var overlay = document.createElement('div');
+    overlay.id = OVERLAY_ID;
+    overlay.className = 'wave89f-menu-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'wave89f-menu-title');
+    overlay.addEventListener('click', function(event){
+      if (event.target === overlay) closeMenu();
+    });
+
+    var panel = document.createElement('div');
+    panel.id = PANEL_ID;
+    panel.className = 'wave89f-menu-panel';
+
+    var head = document.createElement('div');
+    head.className = 'wave89f-menu-head';
+
+    var meta = document.createElement('div');
+    meta.className = 'wave89f-menu-meta';
+    var badge = document.createElement('div');
+    badge.className = 'wave89f-menu-badge';
+    badge.textContent = '☰ Быстрое меню';
+    var title = document.createElement('h3');
+    title.id = 'wave89f-menu-title';
+    title.className = 'wave89f-menu-title';
+    title.textContent = gradeLabel();
+    var sub = document.createElement('p');
+    sub.className = 'wave89f-menu-sub';
+    sub.textContent = isSimpleMode()
+      ? 'В простом режиме вторичные функции собраны здесь, а главное остаётся на экране.'
+      : 'Вторичные функции и данные собраны в одном месте без перегруза главного экрана.';
+    meta.appendChild(badge);
+    meta.appendChild(title);
+    meta.appendChild(sub);
+
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'wave89f-menu-close';
+    close.setAttribute('aria-label', 'Закрыть меню');
+    close.textContent = '✕';
+    close.addEventListener('click', closeMenu);
+
+    head.appendChild(meta);
+    head.appendChild(close);
+    panel.appendChild(head);
+
+    var sections = menuSections();
+    for (var i = 0; i < sections.length; i += 1) {
+      var section = sections[i];
+      var wrap = document.createElement('section');
+      wrap.className = 'wave89f-menu-section';
+      var heading = document.createElement('h4');
+      heading.className = 'wave89f-menu-section-title';
+      heading.textContent = section.title;
+      var grid = document.createElement('div');
+      grid.className = 'wave89f-menu-grid';
+      section.items.forEach(function(item){ grid.appendChild(menuActionButton(item)); });
+      wrap.appendChild(heading);
+      wrap.appendChild(grid);
+      panel.appendChild(wrap);
+    }
+
+    overlay.appendChild(panel);
+    return overlay;
+  }
+  function openMenu(){
+    closeMenu();
+    var overlay = buildMenuOverlay();
+    document.body.appendChild(overlay);
+    state.open = true;
+    addBodyClass(true);
+    applyTriggerState(true);
+    if (!keydownBound && root.addEventListener) {
+      root.addEventListener('keydown', onKeydown, true);
+      keydownBound = true;
+    }
+    var closeBtn = overlay.querySelector('.wave89f-menu-close');
+    if (closeBtn && typeof closeBtn.focus === 'function') {
+      try { closeBtn.focus({ preventScroll:true }); } catch (_err) { try { closeBtn.focus(); } catch (_err2) {} }
+    }
+    return overlay;
+  }
+  function toggleMenu(){
+    return state.open ? closeMenu() : openMenu();
+  }
+  function onKeydown(event){
+    if (!state.open || !event) return;
+    if (event.key === 'Escape') {
+      if (event.preventDefault) event.preventDefault();
+      closeMenu();
+    }
+  }
+  function ensureTrigger(){
+    var header = document.querySelector('header');
+    if (!header) return null;
+    var button = getById(TRIGGER_ID);
+    if (button && button.parentNode !== header) {
+      try { button.parentNode.removeChild(button); } catch (_err) {}
+      button = null;
+    }
+    if (!button) {
+      button = document.createElement('button');
+      button.id = TRIGGER_ID;
+      button.type = 'button';
+      button.className = 'wave89f-menu-trigger';
+      button.textContent = '☰';
+      button.setAttribute('aria-label', 'Открыть быстрое меню');
+      button.setAttribute('title', 'Меню');
+      button.setAttribute('aria-haspopup', 'dialog');
+      button.setAttribute('aria-controls', OVERLAY_ID);
+      button.setAttribute('aria-expanded', 'false');
+      button.addEventListener('click', function(event){
+        if (event && event.preventDefault) event.preventDefault();
+        toggleMenu();
+      });
+      header.appendChild(button);
+    }
+    return button;
+  }
+  function markRelocated(node){
+    if (!isElement(node)) return;
+    node.setAttribute(HIDE_ATTR, '1');
+    if (node.parentElement) node.parentElement.setAttribute(ROW_ATTR, '1');
+  }
+  function syncRelocatedNodes(){
+    Array.prototype.slice.call(document.querySelectorAll('[data-wave87r-action="show-profile"], [data-wave87r-action="generate-report"], [data-wave87r-action="show-backup"], [data-wave87r-action="share-report"]')).forEach(markRelocated);
+    Array.prototype.slice.call(document.querySelectorAll('#wave86n-export-row, #wave86w-main-cloud-btn')).forEach(markRelocated);
+    Array.prototype.slice.call(document.querySelectorAll('#daily-meter button[onclick*="showRushRecords"]')).forEach(markRelocated);
+  }
+  function isRelocated(node){
+    return !!(isElement(node) && typeof node.getAttribute === 'function' && node.getAttribute(HIDE_ATTR) === '1');
+  }
+  function syncEmptyRows(){
+    Array.prototype.slice.call(document.querySelectorAll('[' + ROW_ATTR + '="1"]')).forEach(function(row){
+      var visible = 0;
+      Array.prototype.slice.call(row.children || []).forEach(function(child){
+        if (!isElement(child) || isRelocated(child)) return;
+        if (child.hidden) return;
+        if (child.style && (child.style.display === 'none' || child.style.visibility === 'hidden')) return;
+        visible += 1;
+      });
+      row.setAttribute(ROW_EMPTY_ATTR, visible ? '0' : '1');
+    });
+  }
+  function syncOpenOverlay(){
+    if (!state.open) return;
+    var overlay = getById(OVERLAY_ID);
+    if (!overlay) {
+      state.open = false;
+      addBodyClass(false);
+      applyTriggerState(false);
+      return;
+    }
+    var panel = getById(PANEL_ID);
+    if (!panel || overlay.parentNode !== document.body) {
+      closeMenu();
+      openMenu();
+    }
+  }
+  function sync(){
+    ensureTrigger();
+    syncRelocatedNodes();
+    syncEmptyRows();
+    syncOpenOverlay();
+  }
+  function bind(){
+    ensureTrigger();
+    syncRelocatedNodes();
+    syncEmptyRows();
+    if (document.addEventListener) {
+      document.addEventListener('trainer:simplemodechange', scheduleSync);
+    }
+    if (typeof MutationObserver === 'function' && document.body) {
+      observer = new MutationObserver(scheduleSync);
+      try {
+        observer.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['class', 'hidden', 'aria-hidden'] });
+      } catch (_err) {}
+    }
+    scheduleSync();
+  }
+
+  if (document.readyState === 'loading' && document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', bind, { once:true });
+  } else {
+    bind();
+  }
+
+  root.__wave89fHamburgerMenu = {
+    version: 'wave89f',
+    triggerId: TRIGGER_ID,
+    overlayId: OVERLAY_ID,
+    open: openMenu,
+    close: closeMenu,
+    toggle: toggleMenu,
+    sync: sync,
+    menuSections: menuSections,
+    visibleItemIds: visibleItemIds,
+    runMenuAction: runMenuAction,
+    activeScreenId: activeScreenId,
+    maybeLeavePlay: maybeLeavePlay,
+    isOpen: function(){ return !!state.open; },
+    isSimpleMode: isSimpleMode
+  };
+})();
+
+/* wave89g: minimal main footer / utility condensation */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89gMinimalFooter) return;
+
+  var root = window;
+  var FOOTER_ID = 'wave89g-main-footer';
+  var FOOTER_HINT_ID = 'wave89g-main-footer-hint';
+  var LEGACY_ATTR = 'data-wave89g-footer-legacy';
+  var LEGACY_ACTIONS = ['go-info', 'show-journal', 'show-badges', 'show-class-select', 'go-prog', 'show-about', 'show-date-editor'];
+  var syncTimer = 0;
+  var observer = null;
+
+  function isElement(node){
+    return !!(node && typeof node === 'object' && node.nodeType === 1);
+  }
+  function getById(id){
+    return document.getElementById ? document.getElementById(id) : null;
+  }
+  function mainScreen(){
+    return getById('s-main');
+  }
+  function mainWrap(){
+    var screen = mainScreen();
+    return screen && screen.querySelector ? screen.querySelector('.w') : null;
+  }
+  function inFooter(node){
+    for (var current = node; current; current = current.parentElement) {
+      if (current.id === FOOTER_ID) return true;
+    }
+    return false;
+  }
+  function toast(message){
+    try {
+      if (typeof root.toast === 'function') root.toast(message);
+      else if (typeof root.alert === 'function') root.alert(message);
+    } catch (_err) {}
+  }
+  function runAction(action){
+    if (action === 'go-prog') {
+      if (typeof root.go === 'function') root.go('prog');
+      else toast('Прогресс пока недоступен.');
+      return true;
+    }
+    if (action === 'show-about') {
+      if (typeof root.showAbout === 'function') root.showAbout();
+      else toast('Настройки пока недоступны.');
+      return true;
+    }
+    return false;
+  }
+  function footerButton(label, action, accent){
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn ' + (accent ? 'btn-p' : 'btn-o') + ' wave89g-main-footer-btn';
+    button.setAttribute('data-wave87r-action', action);
+    button.setAttribute('data-wave89g-action', action);
+    button.textContent = label;
+    button.addEventListener('click', function(event){
+      if (event && event.preventDefault) event.preventDefault();
+      runAction(action);
+    });
+    return button;
+  }
+  function buildFooter(){
+    var host = document.createElement('section');
+    host.id = FOOTER_ID;
+    host.className = 'wave89g-main-footer';
+    host.setAttribute('aria-label', 'Быстрые действия');
+
+    var hint = document.createElement('p');
+    hint.id = FOOTER_HINT_ID;
+    hint.className = 'wave89g-main-footer-hint';
+    hint.textContent = 'Остальное — в меню ☰';
+
+    var grid = document.createElement('div');
+    grid.className = 'wave89g-main-footer-grid';
+    grid.appendChild(footerButton('📈 Прогресс', 'go-prog', true));
+    grid.appendChild(footerButton('⚙️ Настройки', 'show-about', false));
+
+    host.appendChild(hint);
+    host.appendChild(grid);
+    return host;
+  }
+  function ensureFooter(){
+    var wrap = mainWrap();
+    if (!wrap) return null;
+    var footer = getById(FOOTER_ID);
+    if (!footer) {
+      footer = buildFooter();
+      var anchor = getById('daily-meter');
+      if (anchor && anchor.parentElement === wrap) {
+        if (anchor.nextSibling) wrap.insertBefore(footer, anchor.nextSibling);
+        else wrap.appendChild(footer);
+      } else {
+        wrap.appendChild(footer);
+      }
+    }
+    return footer;
+  }
+  function collectLegacyButtons(){
+    var screen = mainScreen();
+    if (!screen || !screen.querySelectorAll) return [];
+    var out = [];
+    LEGACY_ACTIONS.forEach(function(action){
+      Array.prototype.slice.call(screen.querySelectorAll('[data-wave87r-action="' + action + '"]')).forEach(function(node){
+        out.push(node);
+      });
+    });
+    return out;
+  }
+  function hideLegacyRows(){
+    collectLegacyButtons().forEach(function(node){
+      if (!isElement(node) || inFooter(node)) return;
+      var row = node.parentElement;
+      if (row && isElement(row) && !inFooter(row)) row.setAttribute(LEGACY_ATTR, '1');
+    });
+  }
+  function sync(){
+    ensureFooter();
+    hideLegacyRows();
+  }
+  function scheduleSync(){
+    if (syncTimer && typeof root.clearTimeout === 'function') root.clearTimeout(syncTimer);
+    syncTimer = (typeof root.setTimeout === 'function' ? root.setTimeout : setTimeout)(function(){
+      syncTimer = 0;
+      sync();
+    }, 40);
+  }
+  function bind(){
+    sync();
+    if (document.addEventListener) {
+      document.addEventListener('trainer:simplemodechange', scheduleSync);
+    }
+    if (typeof MutationObserver === 'function' && document.body) {
+      observer = new MutationObserver(scheduleSync);
+      try {
+        observer.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['class', 'hidden', 'aria-hidden'] });
+      } catch (_err) {}
+    }
+    scheduleSync();
+  }
+
+  if (document.readyState === 'loading' && document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', bind, { once:true });
+  } else {
+    bind();
+  }
+
+  root.__wave89gMinimalFooter = {
+    version: 'wave89g',
+    footerId: FOOTER_ID,
+    legacyAttr: LEGACY_ATTR,
+    sync: sync,
+    legacyActions: LEGACY_ACTIONS.slice(),
+    visibleButtons: function(){
+      var footer = getById(FOOTER_ID);
+      if (!footer || !footer.querySelectorAll) return [];
+      return Array.prototype.slice.call(footer.querySelectorAll('[data-wave89g-action]')).map(function(node){
+        return node.getAttribute('data-wave89g-action') || '';
+      }).filter(Boolean);
+    },
+    hiddenLegacyRows: function(){
+      return document.querySelectorAll ? document.querySelectorAll('[' + LEGACY_ATTR + '="1"]').length : 0;
+    }
+  };
+})();
+
+
+/* wave89h: skeleton loading / lazy chunks */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89hLazySkeleton) return;
+
+  var root = window;
+  var OVERLAY_ID = 'wave89h-lazy-overlay';
+  var BODY_CLASS = 'wave89h-lazy-open';
+  var pending = Object.create(null);
+  var state = { open:false, timer:0 };
+
+  function getById(id){
+    return document.getElementById ? document.getElementById(id) : null;
+  }
+  function body(){
+    return document.body || document.documentElement || null;
+  }
+  function setBodyState(active){
+    var node = body();
+    if (!node || !node.classList) return;
+    if (active) node.classList.add(BODY_CLASS);
+    else node.classList.remove(BODY_CLASS);
+  }
+  function hasPending(){
+    return Object.keys(pending).length > 0;
+  }
+  function latestPending(){
+    var ids = Object.keys(pending);
+    return ids.length ? pending[ids[ids.length - 1]] : null;
+  }
+  function resolveCopy(detail){
+    detail = detail || {};
+    var title = detail.title || 'Подгружаю модуль…';
+    var label = detail.label || 'Нужный блок подгружается отдельным чанком и откроется автоматически.';
+    if (detail.scope === 'subject') {
+      title = detail.title || 'Подгружаю предмет 10 класса…';
+      label = detail.label || 'Банк предмета загружается отдельным чанком и откроется сразу после загрузки.';
+    }
+    if (detail.scope === 'runtime' && detail.kind === 'services') {
+      title = detail.title || 'Подгружаю сервисы…';
+      label = detail.label || 'Загружаю дополнительные экраны и сервисные модули.';
+    }
+    if (detail.scope === 'runtime' && detail.kind === 'features') {
+      title = detail.title || 'Подгружаю возможности…';
+      label = detail.label || 'Загружаю дополнительный интерфейс для выбранного действия.';
+    }
+    return { title:title, label:label };
+  }
+  function line(widthClass){
+    var span = document.createElement('span');
+    span.className = 'wave89h-skeleton-line ' + widthClass;
+    span.setAttribute('aria-hidden', 'true');
+    return span;
+  }
+  function ensureOverlay(){
+    var overlay = getById(OVERLAY_ID);
+    if (overlay) return overlay;
+    overlay = document.createElement('div');
+    overlay.id = OVERLAY_ID;
+    overlay.className = 'wave89h-lazy-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+
+    var card = document.createElement('div');
+    card.className = 'wave89h-lazy-card';
+    card.setAttribute('role', 'status');
+    card.setAttribute('aria-live', 'polite');
+    card.setAttribute('aria-atomic', 'true');
+
+    var badge = document.createElement('div');
+    badge.className = 'wave89h-lazy-badge';
+    badge.textContent = 'Загрузка';
+
+    var title = document.createElement('h3');
+    title.className = 'wave89h-lazy-title';
+    title.setAttribute('data-wave89h-title', '');
+
+    var copy = document.createElement('p');
+    copy.className = 'wave89h-lazy-copy';
+    copy.setAttribute('data-wave89h-copy', '');
+
+    var skeleton = document.createElement('div');
+    skeleton.className = 'wave89h-skeleton';
+    skeleton.appendChild(line('w92'));
+    skeleton.appendChild(line('w76'));
+    skeleton.appendChild(line('w58'));
+
+    card.appendChild(badge);
+    card.appendChild(title);
+    card.appendChild(copy);
+    card.appendChild(skeleton);
+    overlay.appendChild(card);
+    (body() || document.documentElement).appendChild(overlay);
+    return overlay;
+  }
+  function syncCopy(){
+    var overlay = ensureOverlay();
+    var info = resolveCopy(latestPending());
+    var title = overlay.querySelector ? overlay.querySelector('[data-wave89h-title]') : null;
+    var copy = overlay.querySelector ? overlay.querySelector('[data-wave89h-copy]') : null;
+    if (title) title.textContent = info.title;
+    if (copy) copy.textContent = info.label;
+  }
+  function openOverlay(){
+    if (state.open || !hasPending()) return false;
+    state.open = true;
+    var overlay = ensureOverlay();
+    syncCopy();
+    overlay.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('is-visible');
+    setBodyState(true);
+    return true;
+  }
+  function closeOverlay(){
+    if (state.timer && typeof root.clearTimeout === 'function') {
+      root.clearTimeout(state.timer);
+      state.timer = 0;
+    }
+    if (hasPending()) return false;
+    state.open = false;
+    var overlay = getById(OVERLAY_ID);
+    if (overlay) {
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.classList.remove('is-visible');
+    }
+    setBodyState(false);
+    return true;
+  }
+  function scheduleOpen(){
+    if (state.open) {
+      syncCopy();
+      return;
+    }
+    if (state.timer) return;
+    state.timer = (typeof root.setTimeout === 'function' ? root.setTimeout : setTimeout)(function(){
+      state.timer = 0;
+      if (hasPending()) openOverlay();
+    }, 120);
+  }
+  function onStart(event){
+    var detail = event && event.detail ? event.detail : {};
+    var id = String(detail.id || ('wave89h-fallback-' + Date.now()));
+    pending[id] = Object.assign({ id:id }, detail || {});
+    syncCopy();
+    scheduleOpen();
+  }
+  function onEnd(event){
+    var detail = event && event.detail ? event.detail : {};
+    var id = String(detail.id || '');
+    if (id && pending[id]) delete pending[id];
+    if (state.timer && !hasPending() && typeof root.clearTimeout === 'function') {
+      root.clearTimeout(state.timer);
+      state.timer = 0;
+    }
+    if (hasPending()) syncCopy();
+    closeOverlay();
+  }
+  function bind(){
+    if (root.addEventListener) {
+      root.addEventListener('trainer:lazy-start', onStart);
+      root.addEventListener('trainer:lazy-end', onEnd);
+      root.addEventListener('pagehide', function(){
+        pending = Object.create(null);
+        closeOverlay();
+      }, { once:true });
+    }
+  }
+
+  if (document.readyState === 'loading' && document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', bind, { once:true });
+  } else {
+    bind();
+  }
+
+  root.__wave89hLazySkeleton = {
+    version: 'wave89h',
+    overlayId: OVERLAY_ID,
+    isOpen: function(){ return !!state.open; },
+    pendingCount: function(){ return Object.keys(pending).length; },
+    latest: function(){ return latestPending(); },
+    syncCopy: syncCopy,
+    close: function(){ pending = Object.create(null); return closeOverlay(); }
+  };
+})();
+
+/* wave89k: weak-device adaptive UI / readability + tap targets */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89kAdaptiveUi) return;
+
+  var root = window;
+  var applyTimer = 0;
+  var mediaBindings = [];
+  var state = {
+    enabled:false,
+    coarse:false,
+    compact:false,
+    lowMemory:false,
+    lowCpu:false,
+    saveData:false,
+    reducedMotion:false,
+    viewportWidth:0,
+    viewportHeight:0
+  };
+  var CLASSES = {
+    enabled:'wave89k-weak-ui',
+    coarse:'wave89k-coarse',
+    compact:'wave89k-compact',
+    reduced:'wave89k-reduced-motion'
+  };
+
+  function numberOf(value){
+    var num = Number(value);
+    return num > 0 ? num : 0;
+  }
+  function docEl(){
+    return document.documentElement || null;
+  }
+  function body(){
+    return document.body || null;
+  }
+  function navigatorInfo(){
+    return root.navigator || {};
+  }
+  function viewport(){
+    var html = docEl();
+    var bodyNode = body();
+    return {
+      width: Math.max(numberOf(root.innerWidth), numberOf(html && html.clientWidth), numberOf(bodyNode && bodyNode.clientWidth)),
+      height: Math.max(numberOf(root.innerHeight), numberOf(html && html.clientHeight), numberOf(bodyNode && bodyNode.clientHeight))
+    };
+  }
+  function mediaMatches(query){
+    try {
+      return !!(root.matchMedia && root.matchMedia(query).matches);
+    } catch (_err) {
+      return false;
+    }
+  }
+  function setClass(node, name, enabled){
+    if (!node || !node.classList || !name) return;
+    if (enabled) node.classList.add(name);
+    else node.classList.remove(name);
+  }
+  function cloneState(source){
+    return {
+      enabled: !!(source && source.enabled),
+      coarse: !!(source && source.coarse),
+      compact: !!(source && source.compact),
+      lowMemory: !!(source && source.lowMemory),
+      lowCpu: !!(source && source.lowCpu),
+      saveData: !!(source && source.saveData),
+      reducedMotion: !!(source && source.reducedMotion),
+      viewportWidth: numberOf(source && source.viewportWidth),
+      viewportHeight: numberOf(source && source.viewportHeight)
+    };
+  }
+  function sameState(a, b){
+    return !!(a && b &&
+      a.enabled === b.enabled &&
+      a.coarse === b.coarse &&
+      a.compact === b.compact &&
+      a.lowMemory === b.lowMemory &&
+      a.lowCpu === b.lowCpu &&
+      a.saveData === b.saveData &&
+      a.reducedMotion === b.reducedMotion &&
+      a.viewportWidth === b.viewportWidth &&
+      a.viewportHeight === b.viewportHeight);
+  }
+  function applyClasses(next){
+    [docEl(), body()].forEach(function(node){
+      setClass(node, CLASSES.enabled, next.enabled);
+      setClass(node, CLASSES.coarse, next.coarse);
+      setClass(node, CLASSES.compact, next.compact);
+      setClass(node, CLASSES.reduced, next.reducedMotion);
+    });
+  }
+  function evaluate(){
+    var nav = navigatorInfo();
+    var size = viewport();
+    var coarse = mediaMatches('(pointer: coarse)') || mediaMatches('(any-pointer: coarse)') || numberOf(nav.maxTouchPoints) > 0 || ('ontouchstart' in root);
+    var compact = !!((size.width && size.width <= 560) || (size.height && size.height <= 720));
+    var lowMemory = !!(numberOf(nav.deviceMemory) && numberOf(nav.deviceMemory) <= 4);
+    var lowCpu = !!(numberOf(nav.hardwareConcurrency) && numberOf(nav.hardwareConcurrency) <= 4);
+    var saveData = !!(nav.connection && nav.connection.saveData);
+    var reducedMotion = mediaMatches('(prefers-reduced-motion: reduce)');
+    return {
+      enabled: !!(coarse || compact || lowMemory || lowCpu || saveData || reducedMotion),
+      coarse: coarse,
+      compact: compact,
+      lowMemory: lowMemory,
+      lowCpu: lowCpu,
+      saveData: saveData,
+      reducedMotion: reducedMotion,
+      viewportWidth: size.width,
+      viewportHeight: size.height
+    };
+  }
+  function emit(next){
+    try {
+      document.dispatchEvent(new CustomEvent('trainer:adaptivechange', { detail: cloneState(next) }));
+    } catch (_err) {}
+  }
+  function apply(){
+    var next = cloneState(evaluate());
+    applyClasses(next);
+    if (!sameState(state, next)) emit(next);
+    state = next;
+    return cloneState(state);
+  }
+  function scheduleApply(){
+    if (applyTimer && typeof root.clearTimeout === 'function') root.clearTimeout(applyTimer);
+    applyTimer = (typeof root.setTimeout === 'function' ? root.setTimeout : setTimeout)(function(){
+      applyTimer = 0;
+      apply();
+    }, 40);
+  }
+  function bindMedia(query){
+    try {
+      if (!root.matchMedia) return;
+      var media = root.matchMedia(query);
+      if (!media || mediaBindings.indexOf(media) !== -1) return;
+      mediaBindings.push(media);
+      if (typeof media.addEventListener === 'function') media.addEventListener('change', scheduleApply);
+      else if (typeof media.addListener === 'function') media.addListener(scheduleApply);
+    } catch (_err) {}
+  }
+  function bindConnection(){
+    try {
+      var connection = navigatorInfo().connection;
+      if (!connection) return;
+      if (typeof connection.addEventListener === 'function') connection.addEventListener('change', scheduleApply);
+      else if (typeof connection.addListener === 'function') connection.addListener(scheduleApply);
+    } catch (_err) {}
+  }
+  function bind(){
+    apply();
+    if (root.addEventListener) {
+      root.addEventListener('resize', scheduleApply, { passive:true });
+      root.addEventListener('orientationchange', scheduleApply, { passive:true });
+      root.addEventListener('pageshow', scheduleApply);
+    }
+    if (document.addEventListener) {
+      document.addEventListener('trainer:simplemodechange', scheduleApply);
+    }
+    bindConnection();
+    bindMedia('(pointer: coarse)');
+    bindMedia('(any-pointer: coarse)');
+    bindMedia('(prefers-reduced-motion: reduce)');
+  }
+
+  if (document.readyState === 'loading' && document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', bind, { once:true });
+  } else {
+    bind();
+  }
+
+  root.__wave89kAdaptiveUi = {
+    version: 'wave89k',
+    classes: CLASSES,
+    evaluate: evaluate,
+    apply: apply,
+    current: function(){ return cloneState(state); },
+    isEnabled: function(){ return !!state.enabled; },
+    scheduleApply: scheduleApply
+  };
+})();
+
+
+
+/* wave89m: adaptive difficulty */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89mAdaptiveDifficulty) return;
+
+  var root = window;
+  var SESSION_STREAK_TRIGGER = 5;
+  var SESSION_TROUBLE_TRIGGER = 2;
+  var SESSION_SLOW_TRIGGER = 3;
+  var SESSION_SHIFT_MIN = -1;
+  var SESSION_SHIFT_MAX = 1;
+  var STORAGE_PREFIX = 'trainer_adaptive_difficulty_';
+  var PROGRESS_ATTR = 'data-wave89m-progress-card';
+  var PLAY_ATTR = 'data-wave89m-play-card';
+  var CANDIDATE_COUNT = 14;
+  var LEVELS = ['easy', 'medium', 'hard'];
+  var RU_LABELS = {
+    easy: 'лёгкий',
+    medium: 'средний',
+    hard: 'сложный'
+  };
+  var state = {
+    active: false,
+    shift: 0,
+    correctRun: 0,
+    troubleRun: 0,
+    slowRun: 0,
+    answers: 0,
+    lastReason: '',
+    lastChange: 0,
+    lastTarget: 'easy',
+    lastBucket: 'easy',
+    sessionMode: ''
+  };
+  var timingCache = { key:'', rows:[] };
+
+  function gradeKey(){ return String(root.GRADE_NUM || root.GRADE_NO || ''); }
+  function storageKey(){ return STORAGE_PREFIX + gradeKey(); }
+  function asText(value){ return String(value == null ? '' : value); }
+  function num(value){ var out = Number(value); return isFinite(out) ? out : 0; }
+  function int(value){ return Math.max(0, Math.floor(num(value))); }
+  function clamp(value, min, max){ return Math.min(max, Math.max(min, num(value))); }
+  function clone(value){
+    try { return JSON.parse(JSON.stringify(value)); }
+    catch (_err) { return value; }
+  }
+  function safeJSON(raw, fallback){
+    try { return raw ? JSON.parse(raw) : fallback; }
+    catch (_err) { return fallback; }
+  }
+  function normalizeText(value){
+    return asText(value).toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+  }
+  function safeReadStore(){
+    try {
+      var raw = root.localStorage && root.localStorage.getItem(storageKey());
+      var data = safeJSON(raw, { version:'wave89m', grade:gradeKey(), topics:{} });
+      if (!data || typeof data !== 'object') data = { version:'wave89m', grade:gradeKey(), topics:{} };
+      if (!data.topics || typeof data.topics !== 'object') data.topics = {};
+      return data;
+    } catch (_err) {
+      return { version:'wave89m', grade:gradeKey(), topics:{} };
+    }
+  }
+  function safeWriteStore(data){
+    try {
+      if (!root.localStorage) return false;
+      var topics = data && data.topics && typeof data.topics === 'object' ? data.topics : {};
+      root.localStorage.setItem(storageKey(), JSON.stringify({
+        version: 'wave89m',
+        grade: gradeKey(),
+        updatedAt: Date.now(),
+        topics: topics
+      }));
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+  function bucketName(value){
+    var raw = normalizeText(value);
+    if (raw === 'hard' || raw === '3' || raw === 'сложный') return 'hard';
+    if (raw === 'medium' || raw === '2' || raw === 'средний') return 'medium';
+    if (raw === 'easy' || raw === '1' || raw === 'легкий' || raw === 'лёгкий') return 'easy';
+    return 'medium';
+  }
+  function bucketLevel(bucket){ return LEVELS.indexOf(bucketName(bucket)); }
+  function levelBucket(level){ return LEVELS[Math.max(0, Math.min(2, Math.round(num(level))))] || 'medium'; }
+  function levelNumber(value){
+    if (typeof value === 'number') {
+      var direct = Math.round(num(value));
+      if (direct >= 1 && direct <= 3) return direct;
+      if (direct < 0) direct = 0;
+      if (direct > 2) direct = 2;
+      return direct + 1;
+    }
+    var level = bucketLevel(value);
+    if (level < 0) level = 1;
+    if (level > 2) level = 2;
+    return level + 1;
+  }
+  function levelLabel(value){
+    var bucket;
+    if (typeof value === 'number') {
+      var direct = Math.round(num(value));
+      bucket = direct >= 1 && direct <= 3 ? levelBucket(direct - 1) : levelBucket(direct);
+    } else {
+      bucket = bucketName(value);
+    }
+    return RU_LABELS[bucket] || RU_LABELS.medium;
+  }
+  function inferDifficulty(question){
+    if (!question || typeof question !== 'object') return 'medium';
+    var questionText = asText(question.question || question.q);
+    var answerText = asText(question.answer || question.a);
+    var tag = asText(question.tag || question.topic || question.topicName);
+    var grade = num(question.grade || question.g || root.GRADE_NUM || root.GRADE_NO || 0);
+    var score = 0;
+    var numbers = questionText.match(/-?\d+(?:[\.,]\d+)?/g) || [];
+    if (questionText.length >= 90) score += 1;
+    if (numbers.length >= 3) score += 1;
+    if (/√|\^|≤|≥|\/|дроб|процент|скорост|уравнен|функц|координат|вектор|производн|интеграл|логарифм|тригоном|электростат|электромаг|биохим|органик|polit|sozio|socio|право|эконом|grammar|article|modal|conditional/i.test(questionText + ' ' + tag)) score += 1;
+    if (/почему|объясни|сделай вывод|наиболее вероятно|какой вывод|сравни|определи по описанию|выбери утверждение|justify|explain/i.test(questionText)) score += 1;
+    if (grade >= 9) score += 1;
+    if (grade >= 11) score += 1;
+    if (answerText.length >= 24) score += 1;
+    return score <= 1 ? 'easy' : (score <= 3 ? 'medium' : 'hard');
+  }
+  function difficultyOf(question){
+    if (!question || typeof question !== 'object') return 'medium';
+    if (question.diffBucket || question.difficulty) return bucketName(question.diffBucket || question.difficulty);
+    var explicitLevel = int(question.difficultyLevel || question.level || 0);
+    if (explicitLevel >= 1 && explicitLevel <= 3) return levelBucket(explicitLevel - 1);
+    var score = num(question.diffScore);
+    if (score >= 4) return 'hard';
+    if (score >= 2) return 'medium';
+    return inferDifficulty(question);
+  }
+  function getCurrentQuestion(){
+    try { if (typeof prob !== 'undefined' && prob && typeof prob === 'object') return prob; } catch (_err) {}
+    return root.prob && typeof root.prob === 'object' ? root.prob : null;
+  }
+  function setCurrentQuestion(question){
+    try { prob = question; } catch (_err) {}
+    root.prob = question;
+  }
+  function getSelection(){
+    try { if (typeof sel !== 'undefined') return sel; } catch (_err) {}
+    return root.sel;
+  }
+  function setSelection(value){
+    try { sel = value; } catch (_err) {}
+    root.sel = value;
+  }
+  function setHintState(value){
+    try { hintOn = !!value; } catch (_err) {}
+    root.hintOn = !!value;
+  }
+  function setTheoryState(value){
+    try { shpOn = !!value; } catch (_err) {}
+    root.shpOn = !!value;
+  }
+  function setHelpState(value){
+    try { usedHelp = !!value; } catch (_err) {}
+    root.usedHelp = !!value;
+  }
+  function getUsedHelp(){
+    try { if (typeof usedHelp !== 'undefined') return !!usedHelp; } catch (_err) {}
+    return !!root.usedHelp;
+  }
+  function getCurrentSubject(){
+    try { if (typeof cS !== 'undefined') return cS; } catch (_err) {}
+    return root.cS || null;
+  }
+  function setCurrentSubject(subject){
+    try { cS = subject; } catch (_err) {}
+    root.cS = subject || null;
+  }
+  function getCurrentTopic(){
+    try { if (typeof cT !== 'undefined') return cT; } catch (_err) {}
+    return root.cT || null;
+  }
+  function setCurrentTopic(topic){
+    try { cT = topic; } catch (_err) {}
+    root.cT = topic || null;
+  }
+  function getCurrentTheory(){
+    try { if (typeof curTheory !== 'undefined') return curTheory; } catch (_err) {}
+    return root.curTheory || null;
+  }
+  function setCurrentTheory(theory){
+    try { curTheory = theory; } catch (_err) {}
+    root.curTheory = theory || null;
+  }
+  function getSeenMap(){
+    try { if (typeof seenQs !== 'undefined' && seenQs && typeof seenQs === 'object') return seenQs; } catch (_err) {}
+    return root.seenQs && typeof root.seenQs === 'object' ? root.seenQs : null;
+  }
+  function getStats(){
+    try { if (typeof st !== 'undefined' && st && typeof st === 'object') return st; } catch (_err) {}
+    return root.st && typeof root.st === 'object' ? root.st : null;
+  }
+  function getMixStreak(){
+    try { if (typeof mixStreak !== 'undefined') return mixStreak; } catch (_err) {}
+    return root.mixStreak || null;
+  }
+  function setMixStreak(next){
+    try { mixStreak = next; } catch (_err) {}
+    root.mixStreak = next;
+  }
+  function isRushMode(){
+    try { if (typeof rushMode !== 'undefined') return !!rushMode; } catch (_err) {}
+    return !!root.rushMode;
+  }
+  function isDiagMode(){
+    try { if (typeof diagMode !== 'undefined') return !!diagMode; } catch (_err) {}
+    return !!root.diagMode;
+  }
+  function isGlobalMixMode(){
+    try { if (typeof globalMix !== 'undefined') return !!globalMix; } catch (_err) {}
+    return !!root.globalMix;
+  }
+  function isMixMode(){
+    try { if (typeof mix !== 'undefined') return !!mix; } catch (_err) {}
+    return !!root.mix;
+  }
+  function timingRuntime(){
+    return root.__wave87xInputTimingRuntime && typeof root.__wave87xInputTimingRuntime.readStore === 'function'
+      ? root.__wave87xInputTimingRuntime
+      : null;
+  }
+  function timingRows(){
+    var rt = timingRuntime();
+    if (!rt) return [];
+    if (timingCache.key === gradeKey() && timingCache.rows.length) return timingCache.rows.slice();
+    var data = rt.readStore();
+    var rows = Array.isArray(data && data.samples) ? data.samples.filter(function(item){
+      return item && item.mode === 'train';
+    }) : [];
+    timingCache.key = gradeKey();
+    timingCache.rows = rows.slice();
+    return rows.slice();
+  }
+  function invalidateTimingCache(){ timingCache.key = ''; timingCache.rows = []; }
+  function emptyBucketStats(){ return { asked:0, correct:0, totalMs:0 }; }
+  function contextKey(subjectId, topicId, topicName){
+    var sid = asText(subjectId || 'global') || 'global';
+    var tid = asText(topicId || ('tag:' + normalizeText(topicName || 'misc')));
+    return sid + '::' + tid;
+  }
+  function normalizeProfile(profile, context){
+    var ctx = context || {};
+    var out = profile && typeof profile === 'object' ? clone(profile) : {};
+    out.subjectId = asText(out.subjectId || ctx.subjectId);
+    out.topicId = asText(out.topicId || ctx.topicId);
+    out.subjectName = asText(out.subjectName || ctx.subjectName);
+    out.topicName = asText(out.topicName || ctx.topicName);
+    out.key = asText(out.key || ctx.key || contextKey(out.subjectId, out.topicId, out.topicName));
+    out.asked = int(out.asked);
+    out.correct = int(out.correct);
+    out.wrong = int(out.wrong);
+    out.helped = int(out.helped);
+    out.totalMs = int(out.totalMs);
+    out.lastMs = int(out.lastMs);
+    out.lastTarget = bucketName(out.lastTarget || 'easy');
+    out.lastBucket = bucketName(out.lastBucket || 'easy');
+    out.level = clamp(out.level, 0, 2);
+    out.updatedAt = int(out.updatedAt);
+    out.recent = Array.isArray(out.recent) ? out.recent.map(function(item){ return item ? 1 : 0; }).slice(-12) : [];
+    out.buckets = out.buckets && typeof out.buckets === 'object' ? out.buckets : {};
+    LEVELS.forEach(function(bucket){
+      var row = out.buckets[bucket] && typeof out.buckets[bucket] === 'object' ? out.buckets[bucket] : {};
+      out.buckets[bucket] = {
+        asked: int(row.asked),
+        correct: int(row.correct),
+        totalMs: int(row.totalMs)
+      };
+    });
+    return out;
+  }
+  function safeFindTopicMeta(subjectId, topicTag){
+    var normalizedTag = normalizeText(topicTag);
+    var wantedSubject = normalizeText(subjectId);
+    if (!normalizedTag) return null;
+    if (typeof findTopicMeta === 'function') {
+      try {
+        var direct = findTopicMeta(subjectId, topicTag);
+        if (direct && direct.topic) return direct;
+      } catch (_err) {}
+      try {
+        var loose = findTopicMeta(topicTag);
+        if (loose && loose.topic) {
+          if (!wantedSubject || normalizeText(loose.subj && loose.subj.id) === wantedSubject) return loose;
+        }
+      } catch (_err2) {}
+    }
+    var allSubjects = Array.isArray(root.SUBJ) ? root.SUBJ : [];
+    var fallback = null;
+    for (var s = 0; s < allSubjects.length; s++) {
+      var subject = allSubjects[s];
+      if (!subject || !Array.isArray(subject.tops)) continue;
+      if (wantedSubject && normalizeText(subject.id) !== wantedSubject) continue;
+      for (var t = 0; t < subject.tops.length; t++) {
+        var topic = subject.tops[t];
+        if (!topic) continue;
+        var name = normalizeText(topic.nm || topic.name || topic.id);
+        var id = normalizeText(topic.id);
+        if (name === normalizedTag || id === normalizedTag) return { subj:subject, topic:topic };
+        if (!fallback && (name.indexOf(normalizedTag) >= 0 || normalizedTag.indexOf(name) >= 0 || id === normalizedTag)) {
+          fallback = { subj:subject, topic:topic };
+        }
+      }
+    }
+    return fallback;
+  }
+  function inferContext(question, subjectRef, topicRef){
+    var subject = subjectRef || getCurrentSubject();
+    var topic = topicRef || getCurrentTopic();
+    var tag = asText(question && (question.tag || question.topic || question.topicName));
+    if ((!topic || !topic.id) && tag) {
+      var meta = safeFindTopicMeta(subject && subject.id, tag);
+      if (meta && meta.topic) {
+        if (!subject) subject = meta.subj || subject;
+        topic = meta.topic;
+      }
+    }
+    if (!subject && topic && Array.isArray(root.SUBJ)) {
+      root.SUBJ.some(function(candidate){
+        if (!candidate || !Array.isArray(candidate.tops)) return false;
+        var found = candidate.tops.some(function(row){ return row === topic; });
+        if (found) subject = candidate;
+        return found;
+      });
+    }
+    var subjectId = asText(subject && subject.id);
+    var topicId = asText(topic && topic.id);
+    var topicName = asText(topic && topic.nm) || tag || 'Тема';
+    return {
+      subjectId: subjectId,
+      subjectName: asText(subject && subject.nm),
+      topicId: topicId || ('tag:' + normalizeText(topicName)),
+      topicName: topicName,
+      key: contextKey(subjectId, topicId, topicName)
+    };
+  }
+  function readProfile(context){
+    var ctx = context || {};
+    var store = safeReadStore();
+    return normalizeProfile(store.topics[ctx.key], ctx);
+  }
+  function writeProfile(profile, context){
+    var ctx = context || profile || {};
+    var store = safeReadStore();
+    var next = normalizeProfile(profile, ctx);
+    store.topics[next.key] = next;
+    safeWriteStore(store);
+    return next;
+  }
+  function recentAccuracy(profile, size){
+    var rows = Array.isArray(profile && profile.recent) ? profile.recent.slice(-Math.max(1, int(size) || 6)) : [];
+    if (!rows.length) return profile && profile.asked ? profile.correct / Math.max(1, profile.asked) : 0;
+    var ok = rows.filter(Boolean).length;
+    return ok / rows.length;
+  }
+  function averageMs(profile){
+    return profile && profile.asked ? profile.totalMs / Math.max(1, profile.asked) : 0;
+  }
+  function timingSummary(context){
+    var ctx = context || {};
+    var rows = timingRows();
+    var subjectId = normalizeText(ctx.subjectId);
+    var topicName = normalizeText(ctx.topicName);
+    var filtered = rows.filter(function(item){
+      if (!item) return false;
+      if (subjectId && normalizeText(item.subject) !== subjectId) return false;
+      if (topicName && normalizeText(item.tag) !== topicName) return false;
+      return true;
+    }).slice(-12);
+    var totalMs = 0;
+    var ok = 0;
+    filtered.forEach(function(item){ totalMs += num(item.ms); if (item.correct) ok += 1; });
+    return {
+      count: filtered.length,
+      avgMs: filtered.length ? totalMs / filtered.length : 0,
+      correctPct: filtered.length ? Math.round(ok / filtered.length * 100) : 0
+    };
+  }
+  function recommendBaseLevel(profile, context){
+    var p = normalizeProfile(profile, context);
+    var timing = timingSummary(context || p);
+    if (!p.asked) {
+      if (timing.count >= 10 && timing.correctPct >= 84 && (!timing.avgMs || timing.avgMs <= 17000)) return 1;
+      if (timing.count >= 6 && timing.correctPct >= 74 && (!timing.avgMs || timing.avgMs <= 22000)) return 1;
+      return 0;
+    }
+    var recent6 = recentAccuracy(p, 6);
+    var recent8 = recentAccuracy(p, 8);
+    var avgMsValue = timing.count ? timing.avgMs : averageMs(p);
+    var mediumAcc = p.buckets.medium.asked ? p.buckets.medium.correct / Math.max(1, p.buckets.medium.asked) : recent6;
+    var hardAcc = p.buckets.hard.asked ? p.buckets.hard.correct / Math.max(1, p.buckets.hard.asked) : recent8;
+    var level = 0;
+    if (p.asked >= 7 && recent6 >= 0.72 && (!avgMsValue || avgMsValue <= 22000)) level = 1;
+    if (timing.count >= 8 && timing.correctPct >= 82 && (!timing.avgMs || timing.avgMs <= 18000)) level = Math.max(level, 1);
+    if (p.asked >= 18 && recent8 >= 0.82 && mediumAcc >= 0.72 && (!avgMsValue || avgMsValue <= 17000)) level = 2;
+    if (p.buckets.hard.asked >= 5 && hardAcc < 0.55) level = Math.min(level, 1);
+    if (p.asked >= 4 && recent6 <= 0.45) level = 0;
+    if (timing.count >= 8 && timing.correctPct <= 55 && timing.avgMs >= 26000) level = 0;
+    if (avgMsValue >= 30000 && recent6 < 0.65) level = Math.max(0, level - 1);
+    return clamp(level, 0, 2);
+  }
+  function effectiveTargetLevel(profile, context){
+    var baseLevel = recommendBaseLevel(profile, context);
+    return clamp(baseLevel + state.shift, 0, 2);
+  }
+  function effectiveTargetBucket(profile, context){ return levelBucket(effectiveTargetLevel(profile, context)); }
+  function questionSeenCount(question){
+    var seen = getSeenMap();
+    if (!seen) return 0;
+    var key = asText(question && question.question) + asText(question && question.answer);
+    return int(seen[key]);
+  }
+  function slowThreshold(bucket){
+    if (bucket === 'hard') return 30000;
+    if (bucket === 'medium') return 22000;
+    return 16000;
+  }
+  function applyOutcome(profile, context, outcome){
+    var previous = normalizeProfile(profile, context);
+    var previousTarget = effectiveTargetLevel(previous, context);
+    var p = normalizeProfile(profile, context);
+    var bucket = bucketName(outcome && outcome.bucket);
+    var correct = !!(outcome && outcome.correct);
+    var helped = !!(outcome && outcome.usedHelp);
+    var ms = Math.max(0, int(outcome && outcome.ms));
+    var slow = !!(ms && ms > slowThreshold(bucket));
+
+    p.asked += 1;
+    p.correct += correct ? 1 : 0;
+    p.wrong += correct ? 0 : 1;
+    p.helped += helped ? 1 : 0;
+    p.totalMs += ms;
+    p.lastMs = ms;
+    p.lastTarget = bucketName(outcome && outcome.target);
+    p.lastBucket = bucket;
+    p.updatedAt = Date.now();
+    p.recent.push(correct ? 1 : 0);
+    if (p.recent.length > 12) p.recent = p.recent.slice(-12);
+    p.buckets[bucket].asked += 1;
+    p.buckets[bucket].correct += correct ? 1 : 0;
+    p.buckets[bucket].totalMs += ms;
+
+    state.answers += 1;
+    if (correct && !helped) {
+      state.correctRun += 1;
+      state.troubleRun = 0;
+    } else {
+      state.correctRun = 0;
+      state.troubleRun += 1;
+    }
+    state.slowRun = slow ? state.slowRun + 1 : 0;
+    state.lastChange = 0;
+    state.lastReason = '';
+
+    var nextBaseLevel = recommendBaseLevel(p, context);
+    if (state.correctRun >= SESSION_STREAK_TRIGGER && previousTarget < 2) {
+      state.shift = clamp((previousTarget + 1) - nextBaseLevel, SESSION_SHIFT_MIN, SESSION_SHIFT_MAX);
+      state.correctRun = 0;
+      state.troubleRun = 0;
+      state.slowRun = 0;
+      state.lastChange = 1;
+      state.lastReason = '5 верных подряд — повышаем сложность на один шаг';
+    } else if ((state.troubleRun >= SESSION_TROUBLE_TRIGGER || helped) && previousTarget > 0) {
+      state.shift = clamp((previousTarget - 1) - nextBaseLevel, SESSION_SHIFT_MIN, SESSION_SHIFT_MAX);
+      state.troubleRun = 0;
+      state.slowRun = 0;
+      state.lastChange = -1;
+      state.lastReason = 'серия ошибок или помощь — временно упрощаем на один шаг';
+    } else if (state.slowRun >= SESSION_SLOW_TRIGGER && previousTarget > 0) {
+      state.shift = clamp((previousTarget - 1) - nextBaseLevel, SESSION_SHIFT_MIN, SESSION_SHIFT_MAX);
+      state.slowRun = 0;
+      state.lastChange = -1;
+      state.lastReason = 'ответы идут слишком медленно — снижаем нагрузку на один шаг';
+    }
+
+    p.level = nextBaseLevel;
+    state.lastTarget = levelBucket(clamp(nextBaseLevel + state.shift, 0, 2));
+    state.lastBucket = bucket;
+    return normalizeProfile(p, context);
+  }
+  function levelCountSummary(){
+    var store = safeReadStore();
+    var counts = { easy:0, medium:0, hard:0 };
+    Object.keys(store.topics || {}).forEach(function(key){
+      var profile = normalizeProfile(store.topics[key], store.topics[key]);
+      profile.level = recommendBaseLevel(profile, profile);
+      counts[levelBucket(profile.level)] += 1;
+    });
+    return counts;
+  }
+  function buildSummary(){
+    var store = safeReadStore();
+    var profiles = Object.keys(store.topics || {}).map(function(key){
+      var profile = normalizeProfile(store.topics[key], store.topics[key]);
+      profile.level = recommendBaseLevel(profile, profile);
+      return profile;
+    }).filter(function(profile){ return profile.asked > 0; });
+    profiles.sort(function(a, b){ return int(b.updatedAt) - int(a.updatedAt); });
+    return {
+      totalTopics: profiles.length,
+      counts: levelCountSummary(),
+      latest: profiles.slice(0, 5)
+    };
+  }
+  function randomItem(list){
+    var rows = Array.isArray(list) ? list : [];
+    return rows.length ? rows[Math.floor(Math.random() * rows.length)] : null;
+  }
+  function finalizeQuestion(raw){
+    var question = raw;
+    try {
+      if (typeof prepareQuestion === 'function') question = prepareQuestion(raw);
+      else if (typeof root.prepareQuestion === 'function') question = root.prepareQuestion(raw);
+    } catch (_err) {}
+    if (question && typeof question === 'object') {
+      var bucket = difficultyOf(question);
+      question.difficulty = bucket;
+      question.diffBucket = bucket;
+      question.difficultyLevel = levelNumber(bucket);
+      question.difficultyLabel = bucket;
+    }
+    return question;
+  }
+  function candidateScore(candidate, seenMap, forcedTargetLevel){
+    var context = candidate && candidate.context ? candidate.context : inferContext(candidate && candidate.raw, candidate && candidate.subject, candidate && candidate.topic);
+    var profile = readProfile(context);
+    var targetLevel = forcedTargetLevel == null ? effectiveTargetLevel(profile, context) : clamp(forcedTargetLevel, 0, 2);
+    var bucket = difficultyOf(candidate && candidate.raw);
+    var questionLevel = bucketLevel(bucket);
+    var key = asText(candidate && candidate.raw && candidate.raw.question) + asText(candidate && candidate.raw && candidate.raw.answer);
+    var seenCount = seenMap && typeof seenMap === 'object' ? int(seenMap[key]) : questionSeenCount(candidate && candidate.raw);
+    var score = 12 - Math.abs(questionLevel - targetLevel) * 5;
+    if (seenCount === 0) score += 3;
+    else if (seenCount === 1) score += 1;
+    else score -= Math.min(6, seenCount * 2);
+    if (profile.asked < 4 && questionLevel === 0) score += 1;
+    if (profile.asked >= 12 && targetLevel === 2 && questionLevel === 2) score += 1;
+    if (profile.asked >= 8 && targetLevel === 1 && questionLevel === 1) score += 1;
+    return {
+      score: score,
+      seenCount: seenCount,
+      targetLevel: targetLevel,
+      targetBucket: levelBucket(targetLevel),
+      bucket: bucket,
+      context: context,
+      profile: profile
+    };
+  }
+  function selectCandidateFromPool(pool, seenMap, forcedTargetLevel){
+    var list = Array.isArray(pool) ? pool.filter(function(item){ return item && item.raw; }) : [];
+    if (!list.length) return null;
+    var best = null;
+    list.forEach(function(candidate, index){
+      var scored = candidateScore(candidate, seenMap, forcedTargetLevel);
+      var scoredCandidate = Object.assign({ index:index }, candidate, scored);
+      if (!best || scoredCandidate.score > best.score || (scoredCandidate.score === best.score && scoredCandidate.seenCount < best.seenCount)) {
+        best = scoredCandidate;
+      }
+    });
+    return best;
+  }
+  function snapshotGlobalMix(){
+    return {
+      subject: getCurrentSubject(),
+      topic: getCurrentTopic(),
+      theory: getCurrentTheory(),
+      mixStreak: clone(getMixStreak())
+    };
+  }
+  function restoreGlobalMix(snapshot){
+    if (!snapshot) return;
+    setCurrentSubject(snapshot.subject || null);
+    setCurrentTopic(snapshot.topic || null);
+    setCurrentTheory(snapshot.theory || null);
+    setMixStreak(snapshot.mixStreak || null);
+  }
+  function generateTopicCandidates(subject, topic, limit){
+    var out = [];
+    if (!topic || typeof topic.gen !== 'function') return out;
+    for (var i = 0; i < limit; i++) {
+      try {
+        var raw = topic.gen();
+        if (!raw || typeof raw !== 'object') continue;
+        out.push({ raw:raw, subject:subject, topic:topic, context: inferContext(raw, subject, topic) });
+      } catch (_err) {}
+    }
+    return out;
+  }
+  function generateMixedCandidates(subject, limit){
+    var out = [];
+    var topics = subject && Array.isArray(subject.tops) ? subject.tops.filter(function(topic){ return topic && typeof topic.gen === 'function'; }) : [];
+    for (var i = 0; i < limit; i++) {
+      var topic = randomItem(topics);
+      if (!topic) break;
+      try {
+        var raw = topic.gen();
+        if (!raw || typeof raw !== 'object') continue;
+        out.push({ raw:raw, subject:subject, topic:topic, context: inferContext(raw, subject, topic) });
+      } catch (_err) {}
+    }
+    return out;
+  }
+  function generateGlobalMixCandidates(limit){
+    var out = [];
+    if (typeof genGlobalMix !== 'function' && typeof root.genGlobalMix !== 'function') return out;
+    var picker = typeof genGlobalMix === 'function' ? genGlobalMix : root.genGlobalMix;
+    for (var i = 0; i < limit; i++) {
+      var snapshot = snapshotGlobalMix();
+      try {
+        var raw = picker();
+        var subject = getCurrentSubject();
+        var topic = null;
+        var tag = asText(raw && (raw.tag || raw.topic || raw.topicName));
+        if (subject && tag) {
+          topic = safeFindTopicMeta(subject.id, tag);
+          topic = topic && topic.topic ? topic.topic : null;
+        }
+        var theoryAfter = getCurrentTheory();
+        var mixStateAfter = clone(getMixStreak());
+        restoreGlobalMix(snapshot);
+        if (!raw || typeof raw !== 'object') continue;
+        out.push({
+          raw: raw,
+          subject: subject,
+          topic: topic,
+          theoryAfter: theoryAfter,
+          mixStateAfter: mixStateAfter,
+          context: inferContext(raw, subject, topic)
+        });
+      } catch (_err) {
+        restoreGlobalMix(snapshot);
+      }
+    }
+    return out;
+  }
+  function gatherCandidates(limit){
+    var count = Math.max(6, int(limit) || CANDIDATE_COUNT);
+    if (isGlobalMixMode()) return generateGlobalMixCandidates(count);
+    var subject = getCurrentSubject();
+    if (isMixMode()) return generateMixedCandidates(subject, count);
+    var topic = getCurrentTopic();
+    if (topic && typeof topic.gen === 'function') return generateTopicCandidates(subject, topic, count);
+    return [];
+  }
+  function shouldDelegateNextQ(){
+    if (isRushMode() || isDiagMode()) return true;
+    if (Array.isArray(root.__wave21QuestionQueue)) return true;
+    if (root.__wave28CurrentReviewKey) return true;
+    if (root.__wave21SessionMode === 'error-review') return true;
+    if (root.wave28Debug && typeof root.wave28Debug.isReviewMode === 'function' && root.wave28Debug.isReviewMode()) return true;
+    return false;
+  }
+  function noteText(){
+    if (state.lastReason) return state.lastReason;
+    if (state.lastChange > 0) return 'Серия идёт уверенно — поднимаем сложность на один шаг.';
+    if (state.lastChange < 0) return 'Ошибки или медленные ответы — временно снижаем сложность на один шаг.';
+    return 'Движок учитывает точность по теме и время ответа, включая накопленные тайминг-сэмплы: вопросы уже тегированы по уровням 1–3, после 5 уверенных верных подряд сложность растёт на один шаг, после серии ошибок или медленных ответов временно снижается.';
+  }
+  function onPlayScreen(){
+    var screen = document.getElementById('s-play');
+    return !!(screen && screen.classList && screen.classList.contains('on'));
+  }
+  function percentage(ok, total){
+    return total ? Math.round(num(ok) / Math.max(1, num(total)) * 100) : 0;
+  }
+  function formatSeconds(ms){
+    if (!ms) return '—';
+    var sec = Math.max(0, num(ms)) / 1000;
+    var digits = sec < 10 ? 1 : 0;
+    return sec.toFixed(digits).replace('.', ',') + ' с';
+  }
+  function removePlayCard(){
+    var existing = document.querySelector ? document.querySelector('[' + PLAY_ATTR + ']') : null;
+    if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
+  }
+  function renderPlayCard(){
+    if (!onPlayScreen() || shouldDelegateNextQ()) { removePlayCard(); return; }
+    var question = getCurrentQuestion();
+    if (!question) { removePlayCard(); return; }
+    var context = inferContext(question);
+    var profile = readProfile(context);
+    var target = effectiveTargetBucket(profile, context);
+    var bucket = difficultyOf(question);
+    state.lastTarget = target;
+    state.lastBucket = bucket;
+
+    var qcard = document.getElementById('qc');
+    var host = qcard && qcard.parentNode ? qcard.parentNode : document.getElementById('pa');
+    if (!host) return;
+    var card = host.querySelector ? host.querySelector('[' + PLAY_ATTR + ']') : null;
+    if (!card) {
+      card = document.createElement('div');
+      card.className = 'wave89m-adaptive-card';
+      card.setAttribute(PLAY_ATTR, '1');
+      if (qcard && host.insertBefore) host.insertBefore(card, qcard);
+      else host.appendChild(card);
+    }
+    card.innerHTML = '';
+
+    var title = document.createElement('div');
+    title.className = 'wave89m-adaptive-title';
+    title.textContent = '🎚 Адаптивная сложность';
+    card.appendChild(title);
+
+    var chips = document.createElement('div');
+    chips.className = 'wave89m-adaptive-chips';
+    [
+      'цель: ' + levelNumber(target) + '/3 · ' + levelLabel(target),
+      'вопрос: ' + levelNumber(bucket) + '/3 · ' + levelLabel(bucket),
+      'серия: ' + state.correctRun,
+      'ответов: ' + profile.asked
+    ].forEach(function(text){
+      var chip = document.createElement('span');
+      chip.className = 'wave89m-adaptive-chip';
+      chip.textContent = text;
+      chips.appendChild(chip);
+    });
+    if (state.lastChange > 0 || state.lastChange < 0) {
+      var deltaChip = document.createElement('span');
+      deltaChip.className = 'wave89m-adaptive-chip';
+      deltaChip.textContent = state.lastChange > 0 ? '↑ усложняем' : '↓ упрощаем';
+      chips.appendChild(deltaChip);
+    }
+    card.appendChild(chips);
+
+    var note = document.createElement('div');
+    note.className = 'wave89m-adaptive-note';
+    note.textContent = noteText();
+    card.appendChild(note);
+  }
+  function appendProgressCard(){
+    var host = document.getElementById('prog-content');
+    if (!host) return;
+    var old = host.querySelector ? host.querySelector('[' + PROGRESS_ATTR + ']') : null;
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    var summary = buildSummary();
+    if (!summary.totalTopics) return;
+
+    var card = document.createElement('div');
+    card.className = 'rcard wave89m-adaptive-card';
+    card.setAttribute(PROGRESS_ATTR, '1');
+
+    var title = document.createElement('h3');
+    title.className = 'wave89m-adaptive-title';
+    title.textContent = '🎚 Адаптивная сложность';
+    card.appendChild(title);
+
+    var note = document.createElement('div');
+    note.className = 'wave89m-adaptive-note';
+    note.textContent = 'Движок подстраивает сложность по теме по точности и времени ответа. После 5 уверенных верных подряд целевой уровень повышается на один шаг; после серии ошибок, подсказок или медленных ответов временно снижается.';
+    card.appendChild(note);
+
+    var chips = document.createElement('div');
+    chips.className = 'wave89m-adaptive-chips';
+    [
+      'уровень 1: ' + summary.counts.easy,
+      'уровень 2: ' + summary.counts.medium,
+      'уровень 3: ' + summary.counts.hard,
+      'профилей: ' + summary.totalTopics
+    ].forEach(function(text){
+      var chip = document.createElement('span');
+      chip.className = 'wave89m-adaptive-chip';
+      chip.textContent = text;
+      chips.appendChild(chip);
+    });
+    card.appendChild(chips);
+
+    if (summary.latest && summary.latest.length) {
+      var list = document.createElement('ol');
+      list.className = 'wave89m-adaptive-list';
+      summary.latest.forEach(function(profile){
+        var li = document.createElement('li');
+        var avg = averageMs(profile);
+        li.textContent = (profile.subjectName || 'Предмет') + ' → ' + (profile.topicName || 'Тема')
+          + ' — ур. ' + levelNumber(profile.level) + ' · ' + levelLabel(profile.level)
+          + ' · ' + percentage(profile.correct, profile.asked) + '%'
+          + (avg ? ' · ' + formatSeconds(avg) : '');
+        list.appendChild(li);
+      });
+      card.appendChild(list);
+    }
+
+    var secondChild = host.children && host.children[1] ? host.children[1] : null;
+    if (secondChild) host.insertBefore(card, secondChild);
+    else host.appendChild(card);
+  }
+  function resetState(){
+    state.active = !isRushMode() && !isDiagMode();
+    state.shift = 0;
+    state.correctRun = 0;
+    state.troubleRun = 0;
+    state.slowRun = 0;
+    state.answers = 0;
+    state.lastReason = '';
+    state.lastChange = 0;
+    state.lastTarget = 'easy';
+    state.lastBucket = 'easy';
+    state.sessionMode = isGlobalMixMode() ? 'global-mix' : (isMixMode() ? 'subject-mix' : (getCurrentTopic() ? 'topic' : 'idle'));
+  }
+  function setSeen(question){
+    var seen = getSeenMap();
+    if (!seen || !question) return;
+    var key = asText(question.question) + asText(question.answer);
+    seen[key] = int(seen[key]) + 1;
+  }
+  function applyCandidate(candidate){
+    if (!candidate || !candidate.raw) return false;
+    var question = finalizeQuestion(candidate.raw);
+    if (!question) return false;
+
+    if (isGlobalMixMode()) {
+      if (candidate.subject) setCurrentSubject(candidate.subject);
+      setCurrentTopic(null);
+      if (candidate.topic) setCurrentTheory(candidate.topic.th || candidate.theoryAfter || null);
+      else setCurrentTheory(candidate.theoryAfter || null);
+      if (candidate.mixStateAfter) setMixStreak(candidate.mixStateAfter);
+    } else if (isMixMode()) {
+      if (candidate.subject) setCurrentSubject(candidate.subject);
+      setCurrentTopic(null);
+      if (candidate.topic && candidate.topic.th) setCurrentTheory(candidate.topic.th);
+    } else {
+      if (candidate.subject) setCurrentSubject(candidate.subject);
+      if (candidate.topic) {
+        setCurrentTopic(candidate.topic);
+        if (candidate.topic.th) setCurrentTheory(candidate.topic.th);
+      }
+    }
+
+    setCurrentQuestion(question);
+    setSeen(question);
+    setSelection(null);
+    setHintState(false);
+    setTheoryState(false);
+    setHelpState(false);
+    state.active = true;
+    state.lastTarget = candidate.targetBucket || difficultyOf(question);
+    state.lastBucket = difficultyOf(question);
+    if (typeof render === 'function') render();
+    try { root.scrollTo({ top:0, behavior:'smooth' }); } catch (_err) {}
+    return true;
+  }
+  function recordOutcome(contextOrQuestion, outcome){
+    var context = null;
+    if (contextOrQuestion && contextOrQuestion.key) context = contextOrQuestion;
+    else if (contextOrQuestion && contextOrQuestion.raw) context = contextOrQuestion.context || inferContext(contextOrQuestion.raw, contextOrQuestion.subject, contextOrQuestion.topic);
+    else context = inferContext(contextOrQuestion || getCurrentQuestion());
+    var profile = applyOutcome(readProfile(context), context, outcome || {});
+    writeProfile(profile, context);
+    invalidateTimingCache();
+    return {
+      profile: profile,
+      state: clone(state),
+      summary: buildSummary()
+    };
+  }
+
+  var baseStartQuiz = typeof root.startQuiz === 'function' ? root.startQuiz : null;
+  if (baseStartQuiz) {
+    root.startQuiz = function(){
+      resetState();
+      return baseStartQuiz.apply(this, arguments);
+    };
+  }
+
+  var baseNextQ = typeof root.nextQ === 'function' ? root.nextQ : null;
+  if (baseNextQ) {
+    root.nextQ = function(){
+      if (shouldDelegateNextQ()) return baseNextQ.apply(this, arguments);
+      var candidates = gatherCandidates(CANDIDATE_COUNT);
+      var chosen = selectCandidateFromPool(candidates, getSeenMap(), null);
+      if (!chosen || !applyCandidate(chosen)) return baseNextQ.apply(this, arguments);
+      return true;
+    };
+  }
+
+  var baseAns = typeof root.ans === 'function' ? root.ans : null;
+  if (baseAns) {
+    root.ans = function(){
+      var question = getCurrentQuestion();
+      var hadSelection = getSelection() != null;
+      var result = baseAns.apply(this, arguments);
+      try {
+        if (!question || hadSelection || shouldDelegateNextQ()) return result;
+        if (getSelection() == null) return result;
+        var sample = question.__wave87xTiming && question.__wave87xTiming.last ? question.__wave87xTiming.last : null;
+        recordOutcome(question, {
+          correct: asText(getSelection()) === asText(question.answer),
+          usedHelp: getUsedHelp(),
+          ms: sample && sample.ms ? num(sample.ms) : 0,
+          bucket: difficultyOf(question),
+          target: state.lastTarget || difficultyOf(question)
+        });
+      } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseRender = typeof root.render === 'function' ? root.render : null;
+  if (baseRender) {
+    root.render = function(){
+      var result = baseRender.apply(this, arguments);
+      try { renderPlayCard(); } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseRenderProg = typeof root.renderProg === 'function' ? root.renderProg : null;
+  if (baseRenderProg) {
+    root.renderProg = function(){
+      var result = baseRenderProg.apply(this, arguments);
+      try { appendProgressCard(); } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseEndSession = typeof root.endSession === 'function' ? root.endSession : null;
+  if (baseEndSession) {
+    root.endSession = function(){
+      state.active = false;
+      return baseEndSession.apply(this, arguments);
+    };
+  }
+
+  root.__wave89mAdaptiveDifficulty = {
+    version: 'wave89m',
+    storageKey: storageKey,
+    readStore: safeReadStore,
+    writeStore: safeWriteStore,
+    readProfile: readProfile,
+    writeProfile: writeProfile,
+    inferContext: inferContext,
+    difficultyOf: difficultyOf,
+    bucketLevel: bucketLevel,
+    levelBucket: levelBucket,
+    levelNumber: levelNumber,
+    levelLabel: levelLabel,
+    timingSummary: timingSummary,
+    invalidateTimingCache: invalidateTimingCache,
+    recommendBaseLevel: recommendBaseLevel,
+    effectiveTargetBucket: effectiveTargetBucket,
+    selectCandidateFromPool: selectCandidateFromPool,
+    candidateScore: candidateScore,
+    applyOutcome: applyOutcome,
+    recordOutcome: recordOutcome,
+    buildSummary: buildSummary,
+    resetSession: resetState,
+    clear: function(){ try { if (root.localStorage) root.localStorage.removeItem(storageKey()); } catch (_err) {} resetState(); invalidateTimingCache(); },
+    currentState: function(){ return clone(state); },
+    noteText: noteText
+  };
+})();
+
+
+/* wave89n: guided learning path */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89nLearningPath) return;
+
+  var root = window;
+  var STORAGE_PREFIX = 'trainer_learning_path_';
+  var THEORY_ATTR = 'data-wave89n-theory-card';
+  var PLAY_ATTR = 'data-wave89n-play-card';
+  var PROGRESS_ATTR = 'data-wave89n-progress-card';
+  var STAGE_ORDER = ['theory', 'example', 'easy', 'medium', 'hard'];
+  var STAGE_LABELS = {
+    theory: 'Теория',
+    example: 'Пример',
+    easy: 'Лёгкое',
+    medium: 'Среднее',
+    hard: 'Сложное'
+  };
+  var STAGE_ICONS = {
+    theory: '📖',
+    example: '🧪',
+    easy: '🟢',
+    medium: '🟠',
+    hard: '🔴'
+  };
+  var state = {
+    active: false,
+    phase: 'idle',
+    topicKey: '',
+    subjectId: '',
+    topicId: '',
+    currentStage: '',
+    stageResults: {},
+    example: null,
+    lastCompletedTopicKey: '',
+    completionCounted: false,
+    lastPlanStages: []
+  };
+  var cache = {};
+
+  function asText(value){ return String(value == null ? '' : value); }
+  function cleanText(value){ return asText(value).replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim(); }
+  function norm(value){ return cleanText(value).toLowerCase().replace(/ё/g, 'е'); }
+  function num(value){ var out = Number(value); return isFinite(out) ? out : 0; }
+  function clone(value){ try { return JSON.parse(JSON.stringify(value)); } catch (_err) { return value; } }
+  function esc(value){ return asText(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function safeJSON(raw, fallback){ try { return raw ? JSON.parse(raw) : fallback; } catch (_err) { return fallback; } }
+  function uniqText(list){
+    var seen = {};
+    var out = [];
+    (Array.isArray(list) ? list : []).forEach(function(item){
+      var value = cleanText(item);
+      if (!value) return;
+      var key = norm(value);
+      if (seen[key]) return;
+      seen[key] = true;
+      out.push(value);
+    });
+    return out;
+  }
+  function gradeKey(){ return String(root.GRADE_NUM || root.GRADE_NO || ''); }
+  function storageKey(){ return STORAGE_PREFIX + gradeKey(); }
+  function currentSubject(){ try { if (typeof cS !== 'undefined') return cS; } catch (_err) {} return root.cS || null; }
+  function currentTopic(){ try { if (typeof cT !== 'undefined') return cT; } catch (_err) {} return root.cT || null; }
+  function currentQuestion(){ try { if (typeof prob !== 'undefined') return prob; } catch (_err) {} return root.prob || null; }
+  function currentSelection(){ try { if (typeof sel !== 'undefined') return sel; } catch (_err) {} return root.sel; }
+  function usedHelpState(){ try { if (typeof usedHelp !== 'undefined') return !!usedHelp; } catch (_err) {} return !!root.usedHelp; }
+  function activeScreen(screenId){
+    var node = root.document && root.document.getElementById ? root.document.getElementById(screenId) : null;
+    var cls = cleanText(node && node.className);
+    return !!node && /(^|\s)on($|\s)/.test(cls);
+  }
+  function removeByAttr(attr){
+    if (!root.document || !root.document.querySelectorAll) return;
+    Array.prototype.slice.call(root.document.querySelectorAll('[' + attr + ']')).forEach(function(node){
+      if (node && typeof node.remove === 'function') node.remove();
+      else if (node && node.parentNode && typeof node.parentNode.removeChild === 'function') node.parentNode.removeChild(node);
+    });
+  }
+  function readStore(){
+    try {
+      var raw = root.localStorage && root.localStorage.getItem(storageKey());
+      var data = safeJSON(raw, { version:'wave89n', grade:gradeKey(), topics:{} });
+      if (!data || typeof data !== 'object') data = { version:'wave89n', grade:gradeKey(), topics:{} };
+      if (!data.topics || typeof data.topics !== 'object') data.topics = {};
+      return data;
+    } catch (_err) {
+      return { version:'wave89n', grade:gradeKey(), topics:{} };
+    }
+  }
+  function writeStore(data){
+    try {
+      if (!root.localStorage) return false;
+      root.localStorage.setItem(storageKey(), JSON.stringify({
+        version: 'wave89n',
+        grade: gradeKey(),
+        updatedAt: Date.now(),
+        topics: data && data.topics && typeof data.topics === 'object' ? data.topics : {}
+      }));
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+  function progressStore(){
+    try {
+      var raw = root.localStorage && root.localStorage.getItem('trainer_progress_' + gradeKey());
+      var data = safeJSON(raw, {});
+      return data && typeof data === 'object' ? data : {};
+    } catch (_err) {
+      return {};
+    }
+  }
+  function topicAttempts(subjectId, topicId){
+    var progress = progressStore();
+    var subj = progress && progress[subjectId];
+    var row = subj && subj[topicId];
+    return row ? (num(row.ok) + num(row.err)) : 0;
+  }
+  function topicKey(subject, topic){
+    var sid = cleanText(subject && subject.id);
+    var tid = cleanText(topic && topic.id);
+    return sid + '::' + tid;
+  }
+  function defaultRecord(subject, topic){
+    return {
+      subjectId: cleanText(subject && subject.id),
+      topicId: cleanText(topic && topic.id),
+      subjectName: cleanText(subject && subject.nm),
+      topicName: cleanText(topic && topic.nm),
+      startedRuns: 0,
+      completedRuns: 0,
+      stageStats: {},
+      lastStage: '',
+      lastPath: [],
+      lastRunAt: 0,
+      theorySeenAt: 0,
+      exampleSeenAt: 0,
+      lastExample: null
+    };
+  }
+  function updateRecord(subject, topic, mutator){
+    if (!subject || !topic) return null;
+    var store = readStore();
+    var key = topicKey(subject, topic);
+    var record = store.topics[key] && typeof store.topics[key] === 'object' ? store.topics[key] : defaultRecord(subject, topic);
+    if (typeof mutator === 'function') mutator(record);
+    record.subjectId = cleanText(subject.id);
+    record.topicId = cleanText(topic.id);
+    record.subjectName = cleanText(subject.nm);
+    record.topicName = cleanText(topic.nm);
+    record.updatedAt = Date.now();
+    store.topics[key] = record;
+    writeStore(store);
+    return clone(record);
+  }
+  function readRecord(subject, topic){
+    if (!subject || !topic) return null;
+    var store = readStore();
+    var key = topicKey(subject, topic);
+    var record = store.topics[key] && typeof store.topics[key] === 'object' ? store.topics[key] : defaultRecord(subject, topic);
+    store.topics[key] = record;
+    return clone(record);
+  }
+  function difficultyApi(){
+    return root.__wave89mAdaptiveDifficulty && typeof root.__wave89mAdaptiveDifficulty.difficultyOf === 'function'
+      ? root.__wave89mAdaptiveDifficulty
+      : null;
+  }
+  function difficultyOf(question){
+    var api = difficultyApi();
+    if (api) return api.difficultyOf(question);
+    var raw = norm(question && (question.diffBucket || question.difficulty || question.difficultyLabel || question.level || 'medium'));
+    if (raw === 'hard' || raw === '3') return 'hard';
+    if (raw === 'easy' || raw === '1') return 'easy';
+    return 'medium';
+  }
+  function questionKey(question){
+    return norm(question && question.question) + '||' + norm(question && question.answer);
+  }
+  function finalizeQuestion(raw, subject, topic){
+    if (!raw || typeof raw !== 'object') return null;
+    var question = clone(raw) || {};
+    if (question.question == null && question.q != null) question.question = question.q;
+    if (question.answer == null && question.a != null) question.answer = question.a;
+    if (question.options == null) question.options = question.opts != null ? question.opts : question.o;
+    if (question.hint == null && question.h != null) question.hint = question.h;
+    if (question.tag == null && question.topic != null) question.tag = question.topic;
+    if (!question.tag && topic && topic.nm) question.tag = topic.nm;
+    if (!question.color && subject && subject.cl) question.color = subject.cl;
+    if (!question.bg && subject && subject.bg) question.bg = subject.bg;
+    if (typeof root.prepareQuestion === 'function') {
+      try { question = root.prepareQuestion(question) || question; } catch (_err) {}
+    }
+    if (question.answer == null) question.answer = '';
+    question.answer = asText(question.answer);
+    if (!Array.isArray(question.options) || !question.options.length) question.options = uniqText([question.answer, 'Вариант 2', 'Вариант 3', 'Вариант 4']).slice(0, 4);
+    question.__subjectId = subject && subject.id ? subject.id : null;
+    question.__topicId = topic && topic.id ? topic.id : null;
+    return question;
+  }
+  function chooseExample(pool){
+    var ordered = [];
+    if (pool && pool.buckets) {
+      ordered = ordered.concat(pool.buckets.easy || [], pool.buckets.medium || [], pool.buckets.hard || []);
+    }
+    var best = null;
+    for (var i = 0; i < ordered.length; i += 1) {
+      var item = ordered[i];
+      if (!item) continue;
+      if (!item.interactionType && !item.inputMode) return clone(item);
+      if (!best) best = item;
+    }
+    return best ? clone(best) : null;
+  }
+  function sampleTopic(subject, topic){
+    if (!subject || !topic || typeof topic.gen !== 'function') return null;
+    var key = topicKey(subject, topic);
+    if (cache[key] && cache[key].total >= 1) return clone(cache[key]);
+    var buckets = { easy:[], medium:[], hard:[] };
+    var all = [];
+    var seen = {};
+    var attempts = 0;
+    while (attempts < 36 && all.length < 18) {
+      attempts += 1;
+      var raw = null;
+      try { raw = topic.gen(); } catch (_err) { raw = null; }
+      var question = finalizeQuestion(raw, subject, topic);
+      if (!question || !cleanText(question.question) || !cleanText(question.answer)) continue;
+      var keyQuestion = questionKey(question);
+      if (seen[keyQuestion]) continue;
+      seen[keyQuestion] = true;
+      var bucket = difficultyOf(question);
+      question.__wave89nStage = bucket;
+      all.push(question);
+      if (!buckets[bucket]) buckets[bucket] = [];
+      buckets[bucket].push(question);
+    }
+    var pool = {
+      key: key,
+      sampledAt: Date.now(),
+      total: all.length,
+      buckets: {
+        easy: clone(buckets.easy),
+        medium: clone(buckets.medium),
+        hard: clone(buckets.hard)
+      },
+      example: chooseExample({ buckets:buckets })
+    };
+    cache[key] = clone(pool);
+    return clone(pool);
+  }
+  function buildGuidedPlan(subject, topic){
+    var pool = sampleTopic(subject, topic);
+    if (!pool) return null;
+    var queue = new root.Array();
+    var used = {};
+    ['easy', 'medium', 'hard'].forEach(function(bucket){
+      var list = pool.buckets && Array.isArray(pool.buckets[bucket]) ? pool.buckets[bucket] : [];
+      for (var i = 0; i < list.length; i += 1) {
+        var candidate = list[i];
+        var keyQuestion = questionKey(candidate);
+        if (used[keyQuestion]) continue;
+        used[keyQuestion] = true;
+        candidate = clone(candidate);
+        candidate.__wave89nStage = bucket;
+        queue.push(candidate);
+        break;
+      }
+    });
+    if (!queue.length && pool.example) {
+      var fallback = clone(pool.example);
+      fallback.__wave89nStage = difficultyOf(fallback);
+      queue.push(fallback);
+    }
+    return {
+      key: topicKey(subject, topic),
+      example: pool.example ? clone(pool.example) : null,
+      queue: queue,
+      buckets: pool.buckets ? clone(pool.buckets) : { easy:[], medium:[], hard:[] },
+      total: pool.total || queue.length,
+      stageOrder: (function(){
+        var stageOrder = new root.Array();
+        queue.forEach(function(item){ stageOrder.push(item && item.__wave89nStage ? item.__wave89nStage : difficultyOf(item)); });
+        return stageOrder;
+      })()
+    };
+  }
+  function shouldSeedForTopic(subject, topic){
+    if (!subject || !topic) return false;
+    if (root.mix || root.globalMix || root.rushMode || root.diagMode) return false;
+    if (Array.isArray(root.__wave21QuestionQueue) && root.__wave21QuestionQueue.length) return false;
+    if (root.__wave21SessionMode === 'error-review') return false;
+    if (root.__wave28CurrentReviewKey) return false;
+    var record = readRecord(subject, topic);
+    if ((num(record.completedRuns) || 0) > 0) return false;
+    return topicAttempts(subject.id, topic.id) === 0 || num(record.startedRuns) === 0;
+  }
+  function markTheory(subject, topic){
+    return updateRecord(subject, topic, function(record){
+      if (!record.theorySeenAt) record.theorySeenAt = Date.now();
+    });
+  }
+  function markExample(subject, topic, example){
+    return updateRecord(subject, topic, function(record){
+      if (!record.exampleSeenAt) record.exampleSeenAt = Date.now();
+      if (example) {
+        record.lastExample = {
+          question: cleanText(example.question).slice(0, 220),
+          answer: cleanText(example.answer),
+          bucket: difficultyOf(example)
+        };
+      }
+    });
+  }
+  function recordStage(subject, topic, stage, outcome, question){
+    if (!subject || !topic || !stage) return null;
+    return updateRecord(subject, topic, function(record){
+      record.stageStats = record.stageStats && typeof record.stageStats === 'object' ? record.stageStats : {};
+      var row = record.stageStats[stage] && typeof record.stageStats[stage] === 'object'
+        ? record.stageStats[stage]
+        : { attempts:0, correct:0, wrong:0, helped:0, lastMs:0 };
+      row.attempts += 1;
+      if (outcome && outcome.correct) row.correct += 1;
+      else row.wrong += 1;
+      if (outcome && outcome.usedHelp) row.helped += 1;
+      if (outcome && outcome.ms) row.lastMs = Math.round(num(outcome.ms));
+      if (question && question.question) row.lastQuestion = cleanText(question.question).slice(0, 180);
+      record.stageStats[stage] = row;
+      record.lastStage = stage;
+      record.lastRunAt = Date.now();
+      if (stage === 'hard' && !state.completionCounted) {
+        record.completedRuns = num(record.completedRuns) + 1;
+        state.completionCounted = true;
+      }
+    });
+  }
+  function seedGuidedPath(subject, topic){
+    var plan = buildGuidedPlan(subject, topic);
+    if (!plan || !plan.queue || !plan.queue.length) return false;
+    updateRecord(subject, topic, function(record){
+      record.startedRuns = num(record.startedRuns) + 1;
+      record.lastPath = plan.stageOrder.slice();
+      record.lastRunAt = Date.now();
+    });
+    if (plan.example) markExample(subject, topic, plan.example);
+    root.__wave21QuestionQueue = plan.queue.map(function(item){ return clone(item); });
+    root.__wave21QuestionQueueTotal = plan.queue.length;
+    root.__wave21SessionMode = 'learning-path';
+    state.active = true;
+    state.phase = 'guided';
+    state.topicKey = topicKey(subject, topic);
+    state.subjectId = cleanText(subject.id);
+    state.topicId = cleanText(topic.id);
+    state.currentStage = plan.queue[0] && plan.queue[0].__wave89nStage ? plan.queue[0].__wave89nStage : '';
+    state.stageResults = {};
+    state.example = plan.example ? {
+      question: cleanText(plan.example.question),
+      answer: cleanText(plan.example.answer),
+      hint: cleanText(plan.example.hint || plan.example.h),
+      ex: cleanText(plan.example.ex),
+      bucket: difficultyOf(plan.example)
+    } : null;
+    state.lastPlanStages = plan.stageOrder.slice();
+    state.completionCounted = false;
+    return true;
+  }
+  function syncStateFromContext(){
+    var subject = currentSubject();
+    var topic = currentTopic();
+    var question = currentQuestion();
+    if (!subject || !topic) return false;
+    var key = topicKey(subject, topic);
+    if (root.__wave21SessionMode === 'learning-path' || (question && question.__wave89nStage)) {
+      state.active = true;
+      state.topicKey = key;
+      state.subjectId = cleanText(subject.id);
+      state.topicId = cleanText(topic.id);
+      state.phase = root.__wave21SessionMode === 'learning-path' ? 'guided' : (state.phase === 'regular' ? 'regular' : 'guided');
+      if (question && question.__wave89nStage) state.currentStage = question.__wave89nStage;
+      return true;
+    }
+    return false;
+  }
+  function finishGuidedPhase(){
+    if (!state.active) return false;
+    state.phase = 'regular';
+    state.currentStage = '';
+    state.lastCompletedTopicKey = state.topicKey;
+    root.__wave21QuestionQueue = null;
+    root.__wave21QuestionQueueTotal = 0;
+    if (root.__wave21SessionMode === 'learning-path') root.__wave21SessionMode = null;
+    try {
+      if (typeof root.showToast === 'function') root.showToast('🧭 Маршрут темы пройден — дальше обычная тренировка.', 'success', 2200);
+    } catch (_err) {}
+    return true;
+  }
+  function supportsAutoSeed(){
+    return typeof root.wave21OpenTopic === 'function'
+      || typeof root.wave21ResumeSession === 'function'
+      || typeof root.wave21ForceSnapshot === 'function';
+  }
+  function stageStatus(record, stage, currentStage){
+    if (stage === 'theory') return record && record.theorySeenAt ? 'done' : 'idle';
+    if (stage === 'example') return (record && (record.exampleSeenAt || record.lastExample)) || state.example ? 'done' : 'idle';
+    if (currentStage === stage) return 'active';
+    if (state.stageResults && state.stageResults[stage] && state.stageResults[stage].attempted) {
+      return state.stageResults[stage].correct ? 'done' : 'warn';
+    }
+    if (state.phase === 'regular' && state.lastCompletedTopicKey && state.lastCompletedTopicKey === state.topicKey) return 'done';
+    var row = record && record.stageStats && record.stageStats[stage];
+    if (row && row.attempts) return row.correct > 0 ? 'done' : 'warn';
+    return 'idle';
+  }
+  function stageChip(stage, status){
+    return '<span class="wave89n-step ' + esc(status || 'idle') + '"><span class="ico">' + esc(STAGE_ICONS[stage] || '•') + '</span><span>' + esc(STAGE_LABELS[stage] || stage) + '</span></span>';
+  }
+  function renderTheoryCard(){
+    if (!activeScreen('s-theory')) { removeByAttr(THEORY_ATTR); return; }
+    var subject = currentSubject();
+    var topic = currentTopic();
+    var host = root.document && root.document.getElementById ? root.document.getElementById('tc') : null;
+    if (!host || !subject || !topic) { removeByAttr(THEORY_ATTR); return; }
+    var plan = buildGuidedPlan(subject, topic);
+    if (!plan) { removeByAttr(THEORY_ATTR); return; }
+    var record = markTheory(subject, topic) || readRecord(subject, topic);
+    if (plan.example) record = markExample(subject, topic, plan.example) || record;
+    removeByAttr(THEORY_ATTR);
+    var card = root.document.createElement('div');
+    card.className = 'tcard wave89n-path-card';
+    card.setAttribute(THEORY_ATTR, '');
+    var example = plan.example;
+    var exampleHtml = example
+      ? '<div class="wave89n-example"><div class="wave89n-example-q"><b>Пример:</b> ' + esc(example.question) + '</div><div class="wave89n-example-a">Ответ: <b>' + esc(example.answer) + '</b></div>' + ((example.ex || example.hint) ? '<div class="wave89n-note">' + esc(example.ex || example.hint) + '</div>' : '') + '</div>'
+      : '<div class="wave89n-note">Для этой темы пока не удалось собрать отдельный пример, но стартовая лестница сложности всё равно сработает при запуске тренажёра.</div>';
+    card.innerHTML = '<div class="wave89n-path-head"><div><div class="wave89n-path-title">🧭 Маршрут темы</div><div class="wave89n-path-sub">Сначала теория и пример, затем 3 стартовых шага: лёгкое → среднее → сложное.</div></div>'
+      + (num(record.completedRuns) > 0 ? '<span class="wave89n-badge done">Пройдено</span>' : '<span class="wave89n-badge">Новый маршрут</span>')
+      + '</div><div class="wave89n-steps">'
+      + STAGE_ORDER.map(function(stage){ return stageChip(stage, stageStatus(record, stage, '')); }).join('')
+      + '</div>' + exampleHtml
+      + '<div class="wave89n-note">После стартовой лестницы тренировка перейдёт в обычный режим и подхватит уже существующую адаптивную сложность.</div>';
+    host.appendChild(card);
+  }
+  function renderPlayCard(){
+    if (!activeScreen('s-play')) { removeByAttr(PLAY_ATTR); return; }
+    var subject = currentSubject();
+    var topic = currentTopic();
+    var host = root.document && root.document.getElementById ? root.document.getElementById('pa') : null;
+    if (!host || !subject || !topic) { removeByAttr(PLAY_ATTR); return; }
+    syncStateFromContext();
+    var key = topicKey(subject, topic);
+    if (!(root.__wave21SessionMode === 'learning-path' || (state.active && state.topicKey === key))) { removeByAttr(PLAY_ATTR); return; }
+    var record = readRecord(subject, topic) || defaultRecord(subject, topic);
+    var question = currentQuestion();
+    var currentStage = question && question.__wave89nStage ? question.__wave89nStage : '';
+    removeByAttr(PLAY_ATTR);
+    var card = root.document.createElement('div');
+    card.className = 'wave89n-path-card wave89n-play-card';
+    card.setAttribute(PLAY_ATTR, '');
+    var note = currentStage
+      ? 'Сейчас идёт шаг «' + (STAGE_LABELS[currentStage] || currentStage) + '». После стартовых вопросов тренировка продолжится в обычном режиме.'
+      : 'Стартовая лестница сложности уже пройдена — дальше идёт обычная тренировка по теме.';
+    var exampleHtml = state.example && state.phase === 'guided'
+      ? '<div class="wave89n-note">Короткий пример перед стартом: <b>' + esc(state.example.answer) + '</b> — ' + esc(state.example.question) + '.</div>'
+      : '';
+    card.innerHTML = '<div class="wave89n-path-head"><div><div class="wave89n-path-title">🧭 Маршрут темы</div><div class="wave89n-path-sub">' + esc(topic.nm || '') + '</div></div>'
+      + '<span class="wave89n-badge ' + esc(state.phase === 'regular' ? 'done' : '') + '">' + esc(state.phase === 'regular' ? 'Обычный режим' : 'Стартовый путь') + '</span></div>'
+      + '<div class="wave89n-steps">' + STAGE_ORDER.map(function(stage){ return stageChip(stage, stageStatus(record, stage, currentStage)); }).join('') + '</div>'
+      + exampleHtml + '<div class="wave89n-note">' + esc(note) + '</div>';
+    host.appendChild(card);
+  }
+  function summarizeStore(){
+    var store = readStore();
+    var totalTopics = 0;
+    if (Array.isArray(root.SUBJ)) {
+      root.SUBJ.forEach(function(subject){ totalTopics += Array.isArray(subject && subject.tops) ? subject.tops.length : 0; });
+    }
+    var started = 0;
+    var completed = 0;
+    var theorySeen = 0;
+    var exampleReady = 0;
+    var lastTopic = null;
+    Object.keys(store.topics || {}).forEach(function(key){
+      var record = store.topics[key];
+      if (!record || typeof record !== 'object') return;
+      started += 1;
+      if (num(record.completedRuns) > 0) completed += 1;
+      if (record.theorySeenAt) theorySeen += 1;
+      if (record.lastExample) exampleReady += 1;
+      if (!lastTopic || num(record.lastRunAt) > num(lastTopic.lastRunAt)) lastTopic = record;
+    });
+    return {
+      totalTopics: totalTopics,
+      started: started,
+      completed: completed,
+      theorySeen: theorySeen,
+      exampleReady: exampleReady,
+      lastTopic: lastTopic ? clone(lastTopic) : null
+    };
+  }
+  function appendProgressCard(){
+    var host = root.document && root.document.getElementById ? root.document.getElementById('prog-content') : null;
+    if (!host) { removeByAttr(PROGRESS_ATTR); return; }
+    var summary = summarizeStore();
+    removeByAttr(PROGRESS_ATTR);
+    var card = root.document.createElement('div');
+    card.className = 'rcard wave89n-path-card';
+    card.setAttribute(PROGRESS_ATTR, '');
+    var completedPct = summary.totalTopics ? Math.round(summary.completed / summary.totalTopics * 100) : 0;
+    var lastHtml = summary.lastTopic
+      ? '<li><b>Последняя тема:</b> ' + esc(summary.lastTopic.subjectName) + ' → ' + esc(summary.lastTopic.topicName) + '</li>'
+      : '<li><b>Последняя тема:</b> пока нет запусков маршрута</li>';
+    card.innerHTML = '<div class="wave89n-path-head"><div><div class="wave89n-path-title">🧭 Learning path</div><div class="wave89n-path-sub">Маршрут по темам: теория → пример → лёгкое → среднее → сложное.</div></div>'
+      + '<span class="wave89n-badge">' + esc(completedPct + '%') + '</span></div>'
+      + '<div class="wave89n-steps">'
+      + '<span class="wave89n-step done"><span class="ico">📚</span><span>Тем начато: ' + esc(summary.started) + '</span></span>'
+      + '<span class="wave89n-step ' + (summary.completed ? 'done' : 'idle') + '"><span class="ico">✅</span><span>Пройдено: ' + esc(summary.completed) + '</span></span>'
+      + '<span class="wave89n-step ' + (summary.theorySeen ? 'done' : 'idle') + '"><span class="ico">📖</span><span>Теория открыта: ' + esc(summary.theorySeen) + '</span></span>'
+      + '<span class="wave89n-step ' + (summary.exampleReady ? 'done' : 'idle') + '"><span class="ico">🧪</span><span>Примеры готовы: ' + esc(summary.exampleReady) + '</span></span>'
+      + '</div><ul class="wave89n-note-list">' + lastHtml + '<li><b>Всего тем в классе:</b> ' + esc(summary.totalTopics) + '</li></ul>';
+    host.appendChild(card);
+  }
+  function resetState(){
+    state.active = false;
+    state.phase = 'idle';
+    state.topicKey = '';
+    state.subjectId = '';
+    state.topicId = '';
+    state.currentStage = '';
+    state.stageResults = {};
+    state.example = null;
+    state.completionCounted = false;
+    state.lastPlanStages = [];
+  }
+
+  var baseStartQuiz = typeof root.startQuiz === 'function' ? root.startQuiz : null;
+  if (baseStartQuiz) {
+    root.startQuiz = function(){
+      var subject = currentSubject();
+      var topic = currentTopic();
+      if (supportsAutoSeed() && shouldSeedForTopic(subject, topic)) seedGuidedPath(subject, topic);
+      else syncStateFromContext();
+      return baseStartQuiz.apply(this, arguments);
+    };
+  }
+
+  var baseAns = typeof root.ans === 'function' ? root.ans : null;
+  if (baseAns) {
+    root.ans = function(){
+      var question = currentQuestion();
+      var stage = question && question.__wave89nStage ? question.__wave89nStage : '';
+      var subject = currentSubject();
+      var topic = currentTopic();
+      var hadSelection = currentSelection() != null;
+      var result = baseAns.apply(this, arguments);
+      try {
+        if (!stage || hadSelection || currentSelection() == null) return result;
+        var sample = question.__wave87xTiming && question.__wave87xTiming.last ? question.__wave87xTiming.last : null;
+        state.stageResults[stage] = {
+          attempted: true,
+          correct: norm(currentSelection()) === norm(question.answer),
+          usedHelp: usedHelpState(),
+          ms: sample && sample.ms ? Math.round(num(sample.ms)) : 0
+        };
+        recordStage(subject, topic, stage, state.stageResults[stage], question);
+        try {
+          var adaptive = root.__wave89mAdaptiveDifficulty;
+          if (adaptive && typeof adaptive.recordOutcome === 'function') {
+            var adaptiveState = adaptive.currentState && typeof adaptive.currentState === 'function' ? adaptive.currentState() : null;
+            adaptive.recordOutcome(question, {
+              correct: !!state.stageResults[stage].correct,
+              usedHelp: !!state.stageResults[stage].usedHelp,
+              ms: state.stageResults[stage].ms || 0,
+              bucket: difficultyOf(question),
+              target: adaptiveState && adaptiveState.lastTarget ? adaptiveState.lastTarget : difficultyOf(question)
+            });
+          }
+        } catch (_err) {}
+        state.currentStage = stage;
+        state.active = true;
+        state.topicKey = topicKey(subject, topic);
+        state.subjectId = cleanText(subject && subject.id);
+        state.topicId = cleanText(topic && topic.id);
+      } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseNextQ = typeof root.nextQ === 'function' ? root.nextQ : null;
+  if (baseNextQ) {
+    root.nextQ = function(){
+      if (state.active && root.__wave21SessionMode === 'learning-path' && Array.isArray(root.__wave21QuestionQueue) && root.__wave21QuestionQueue.length === 0) finishGuidedPhase();
+      var result = baseNextQ.apply(this, arguments);
+      try { renderPlayCard(); } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseRender = typeof root.render === 'function' ? root.render : null;
+  if (baseRender) {
+    root.render = function(){
+      var result = baseRender.apply(this, arguments);
+      try { renderPlayCard(); } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseRenderProg = typeof root.renderProg === 'function' ? root.renderProg : null;
+  if (baseRenderProg) {
+    root.renderProg = function(){
+      var result = baseRenderProg.apply(this, arguments);
+      try { appendProgressCard(); } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseGo = typeof root.go === 'function' ? root.go : null;
+  if (baseGo) {
+    root.go = function(screen){
+      var result = baseGo.apply(this, arguments);
+      try {
+        if (screen === 'theory') renderTheoryCard();
+        else removeByAttr(THEORY_ATTR);
+        if (screen === 'play') renderPlayCard();
+        else removeByAttr(PLAY_ATTR);
+        if (screen === 'prog') appendProgressCard();
+        else removeByAttr(PROGRESS_ATTR);
+      } catch (_err) {}
+      return result;
+    };
+  }
+
+  var baseEndSession = typeof root.endSession === 'function' ? root.endSession : null;
+  if (baseEndSession) {
+    root.endSession = function(){
+      var result = baseEndSession.apply(this, arguments);
+      resetState();
+      removeByAttr(PLAY_ATTR);
+      return result;
+    };
+  }
+
+  function init(){
+    try {
+      if (activeScreen('s-theory')) renderTheoryCard();
+      if (activeScreen('s-play')) renderPlayCard();
+      if (activeScreen('s-prog')) appendProgressCard();
+    } catch (_err) {}
+  }
+  if (root.document && root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', init, { once:true });
+  else init();
+
+  root.__wave89nLearningPath = {
+    version: 'wave89n',
+    storageKey: storageKey,
+    readStore: readStore,
+    writeStore: writeStore,
+    readRecord: readRecord,
+    updateRecord: updateRecord,
+    topicAttempts: topicAttempts,
+    buildGuidedPlan: buildGuidedPlan,
+    seedGuidedPath: seedGuidedPath,
+    shouldSeedForTopic: shouldSeedForTopic,
+    markTheory: markTheory,
+    markExample: markExample,
+    recordStage: recordStage,
+    finishGuidedPhase: finishGuidedPhase,
+    renderTheoryCard: renderTheoryCard,
+    renderPlayCard: renderPlayCard,
+    appendProgressCard: appendProgressCard,
+    summarizeStore: summarizeStore,
+    currentState: function(){ return clone(state); },
+    clear: function(){ try { if (root.localStorage) root.localStorage.removeItem(storageKey()); } catch (_err) {} resetState(); cache = {}; }
+  };
+})();
+

@@ -8,7 +8,8 @@ const bridgeSrc = fs.readFileSync(path.join(root, 'assets/_src/js/chunk_roadmap_
 const bindingChecks = [
   {
     file: 'assets/_src/js/bundle_grade_runtime_core_wave87n.js',
-    patterns: ['bindDirectActions', "data-wave87r-action", "hydrateForAction(action)"]
+    patterns: ['bindDirectActions', "data-wave87r-action"],
+    anyOf: ["hydrateForAction(action)", "function hydrateForAction(action, opts)", "hydrateForAction(action, { interactive:true, source:'direct-click' })"]
   },
   {
     file: 'assets/_src/js/inline_dashboard_1_wave86u.js',
@@ -60,7 +61,9 @@ result.bridgeStillDispatches = /installStaticActions\(|runStaticAction\(|getStat
 for (const check of bindingChecks) {
   const abs = path.join(root, check.file);
   const raw = fs.existsSync(abs) ? fs.readFileSync(abs, 'utf8') : '';
-  const ok = check.patterns.every((pattern) => raw.includes(pattern));
+  const requiredOk = (check.patterns || []).every((pattern) => raw.includes(pattern));
+  const anyOk = !check.anyOf || check.anyOf.some((pattern) => raw.includes(pattern));
+  const ok = requiredOk && anyOk;
   if (!ok) result.missingDirectBindingFiles.push(check.file);
 }
 result.ok = (

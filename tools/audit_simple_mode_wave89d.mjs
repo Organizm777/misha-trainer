@@ -17,9 +17,9 @@ const cssLogical = 'assets/css/wave88d_breadcrumbs.css';
 const runtimeBuilt = manifest.assets[runtimeLogical];
 const cssBuilt = manifest.assets[cssLogical];
 
-assert.equal(healthz.wave, 'wave89d', `healthz.wave should be wave89d, got ${healthz.wave}`);
-assert.equal(healthz.build_id, 'wave89d', `healthz.build_id should be wave89d, got ${healthz.build_id}`);
-assert.ok(String(healthz.cache || '').includes('wave89d'), `healthz.cache should reference wave89d, got ${healthz.cache}`);
+assert.ok(/^wave89[a-z]+$/i.test(String(healthz.wave || '')), `healthz.wave should stay on a wave89* build, got ${healthz.wave}`);
+assert.ok(/^wave89[a-z]+$/i.test(String(healthz.build_id || '')), `healthz.build_id should stay on a wave89* build, got ${healthz.build_id}`);
+assert.ok(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference healthz.build_id, got ${healthz.cache}`);
 assert.ok(runtimeBuilt, `asset-manifest missing ${runtimeLogical}`);
 assert.ok(cssBuilt, `asset-manifest missing ${cssLogical}`);
 assert.ok(exists(runtimeBuilt), `missing built runtime asset ${runtimeBuilt}`);

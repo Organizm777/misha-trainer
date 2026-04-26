@@ -1,0 +1,75 @@
+{
+  "logical": "assets/js/bundle_grade_runtime_inputs_timing_wave87x.js",
+  "builtRel": "assets/js/bundle_grade_runtime_extended_wave89b.db3d4b6d00.js",
+  "healthzWave": "wave89m",
+  "englishBlankCount": 451,
+  "pageChecks": [
+    {
+      "grade": 1,
+      "hasRuntime": true
+    },
+    {
+      "grade": 2,
+      "hasRuntime": true
+    },
+    {
+      "grade": 3,
+      "hasRuntime": true
+    },
+    {
+      "grade": 4,
+      "hasRuntime": true
+    },
+    {
+      "grade": 5,
+      "hasRuntime": true
+    },
+    {
+      "grade": 6,
+      "hasRuntime": true
+    },
+    {
+      "grade": 7,
+      "hasRuntime": true
+    },
+    {
+      "grade": 8,
+      "hasRuntime": true
+    },
+    {
+      "grade": 9,
+      "hasRuntime": true
+    },
+    {
+      "grade": 10,
+      "hasRuntime": true
+    },
+    {
+      "grade": 11,
+      "hasRuntime": true
+    }
+  ],
+  "contentSummary": [
+    {
+      "file": "assets/_src/js/grade8_data.js",
+      "topicId": "cloze8w87x",
+      "blankMarkers": 6
+    },
+    {
+      "file": "assets/_src/js/grade9_data.js",
+      "topicId": "cloze9w87x",
+      "blankMarkers": 6
+    },
+    {
+      "file": "assets/_src/js/grade11_data.js",
+      "topicId": "cloze11w87x",
+      "blankMarkers": 6
+    },
+    {
+      "file": "assets/_src/js/grade10_subject_rus_wave86s.js",
+      "topicId": "cloze10w87x",
+      "blankMarkers": 6
+    }
+  ],
+  "hashedAssetCount": 101
+}

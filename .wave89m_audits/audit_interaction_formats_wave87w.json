@@ -1,0 +1,126 @@
+{
+  "logical": "assets/js/bundle_grade_runtime_interactions_wave87w.js",
+  "builtRel": "assets/js/bundle_grade_runtime_extended_wave89b.db3d4b6d00.js",
+  "healthzWave": "wave89m",
+  "pageChecks": [
+    {
+      "grade": 1,
+      "hasRuntime": true
+    },
+    {
+      "grade": 2,
+      "hasRuntime": true
+    },
+    {
+      "grade": 3,
+      "hasRuntime": true
+    },
+    {
+      "grade": 4,
+      "hasRuntime": true
+    },
+    {
+      "grade": 5,
+      "hasRuntime": true
+    },
+    {
+      "grade": 6,
+      "hasRuntime": true
+    },
+    {
+      "grade": 7,
+      "hasRuntime": true
+    },
+    {
+      "grade": 8,
+      "hasRuntime": true
+    },
+    {
+      "grade": 9,
+      "hasRuntime": true
+    },
+    {
+      "grade": 10,
+      "hasRuntime": true
+    },
+    {
+      "grade": 11,
+      "hasRuntime": true
+    }
+  ],
+  "counts": {
+    "filesChecked": 7,
+    "topicIdsChecked": 13,
+    "interactiveRows": 13,
+    "perType": {
+      "find-error": 4,
+      "sequence": 5,
+      "match": 4
+    },
+    "files": [
+      {
+        "file": "assets/_src/js/grade8_data.js",
+        "ids": 3,
+        "uses": {
+          "errorRow": 1,
+          "sequenceRow": 1,
+          "matchRow": 1
+        }
+      },
+      {
+        "file": "assets/_src/js/grade9_data.js",
+        "ids": 3,
+        "uses": {
+          "errorRow": 1,
+          "sequenceRow": 1,
+          "matchRow": 1
+        }
+      },
+      {
+        "file": "assets/_src/js/grade11_data.js",
+        "ids": 3,
+        "uses": {
+          "errorRow": 1,
+          "sequenceRow": 1,
+          "matchRow": 1
+        }
+      },
+      {
+        "file": "assets/_src/js/grade10_subject_alg_wave86s.js",
+        "ids": 1,
+        "uses": {
+          "errorRow": 1,
+          "sequenceRow": 0,
+          "matchRow": 0
+        }
+      },
+      {
+        "file": "assets/_src/js/grade10_subject_phy_wave86s.js",
+        "ids": 1,
+        "uses": {
+          "errorRow": 0,
+          "sequenceRow": 1,
+          "matchRow": 0
+        }
+      },
+      {
+        "file": "assets/_src/js/grade10_subject_inf_wave86s.js",
+        "ids": 1,
+        "uses": {
+          "errorRow": 0,
+          "sequenceRow": 0,
+          "matchRow": 1
+        }
+      },
+      {
+        "file": "assets/_src/js/grade10_subject_chem_wave86s.js",
+        "ids": 1,
+        "uses": {
+          "errorRow": 0,
+          "sequenceRow": 1,
+          "matchRow": 0
+        }
+      }
+    ]
+  }
+}

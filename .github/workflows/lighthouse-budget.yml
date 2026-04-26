@@ -43,6 +43,16 @@ jobs:
           node tools/cleanup_build_artifacts.mjs --check
           node tools/audit_scripts_budget_wave89c.mjs
           node tools/audit_simple_mode_wave89d.mjs
+          node tools/audit_onboarding_wave89e.mjs
+          node tools/audit_hamburger_wave89f.mjs
+          node tools/audit_minimal_footer_wave89g.mjs
+          node tools/audit_skeleton_loading_wave89h.mjs
+          node tools/audit_subject_color_groups_wave89i.mjs
+          node tools/audit_parent_dashboard_wave89j.mjs
+          node tools/audit_weak_device_adaptive_wave89k.mjs
+          node tools/audit_spaced_repetition_sm2_wave89l.mjs
+          node tools/audit_adaptive_difficulty_wave89m.mjs
+          node tools/audit_learning_path_wave89n.mjs
           node tools/audit_performance_wave86z.mjs
           node tools/audit_static_events_wave87e.mjs
 

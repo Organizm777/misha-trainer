@@ -177,8 +177,8 @@ assert(builtJs, `asset-manifest: missing ${jsLogical} or ${jsMergedLogical}`);
 assert(builtCss, `asset-manifest: missing ${cssLogical}`);
 assert(exists(builtJs), `built runtime missing: ${builtJs}`);
 assert(exists(builtCss), `built css missing: ${builtCss}`);
-assert(/^(wave88d|wave89[abcd])$/.test(healthz.wave), `healthz.wave should be wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
-assert(/wave88d|wave89a|wave89b|wave89c|wave89d/.test(String(healthz.cache || '')), `healthz.cache should reference wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.cache}`);
+assert(/^(wave88d|wave89[a-z]+)$/i.test(String(healthz.wave || '')), `healthz.wave should be wave88d or a later wave89* build, got ${healthz.wave}`);
+assert(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference healthz.build_id, got ${healthz.cache}`);
 
 for (let grade = 1; grade <= 11; grade += 1) {
   const html = read(`grade${grade}_v2.html`);
@@ -194,7 +194,7 @@ for (const page of ['index.html','dashboard.html','diagnostic.html','tests.html'
 const sw = read('sw.js');
 assert(sw.includes(`./${builtJs}`), 'sw.js: missing breadcrumb runtime precache asset');
 assert(sw.includes(`./${builtCss}`), 'sw.js: missing breadcrumb css precache asset');
-assert(/trainer-build-(wave88d|wave89a|wave89b|wave89c|wave89d)-2026-04-25/.test(sw), 'sw.js: cache name should be bumped to wave88d/wave89a/wave89b/wave89c/wave89d');
+assert(sw.includes(String(healthz.cache || '')), 'sw.js: cache name should match healthz.cache');
 
 const srcJs = read('assets/_src/js/bundle_grade_runtime_breadcrumbs_wave88d.js');
 const srcCss = read('assets/_src/css/wave88d_breadcrumbs.css');

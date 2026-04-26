@@ -1,0 +1,128 @@
+{
+  "runtimeBuilt": "assets/js/bundle_grade_runtime_extended_wave89b.db3d4b6d00.js",
+  "chunkBuilt": "assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js",
+  "healthzWave": "wave89m",
+  "runtimeChecks": {
+    "version": "wave88b",
+    "serialized": "A | C",
+    "runtimeCorrect": [
+      "A",
+      "C"
+    ],
+    "optionCount": 6
+  },
+  "pageChecks": [
+    {
+      "grade": 8,
+      "hasRuntime": true,
+      "hasChunk": true
+    },
+    {
+      "grade": 9,
+      "hasRuntime": true,
+      "hasChunk": true
+    },
+    {
+      "grade": 10,
+      "hasRuntime": true,
+      "hasChunk": true
+    },
+    {
+      "grade": 11,
+      "hasRuntime": true,
+      "hasChunk": true
+    }
+  ],
+  "gradeSummaries": [
+    {
+      "grade": 8,
+      "topicCount": 2,
+      "rowCount": 12,
+      "loadedScripts": 13,
+      "topics": [
+        {
+          "topicId": "multibio8w88b",
+          "subjectId": "bio",
+          "answer": "вскармливают детёнышей молоком | тело покрыто шерстью | дышат лёгкими",
+          "correctCount": 3,
+          "optionCount": 6
+        },
+        {
+          "topicId": "multihis8w88b",
+          "subjectId": "his",
+          "answer": "машинное производство | рост фабрик и заводов | переход от мануфактуры к фабрике",
+          "correctCount": 3,
+          "optionCount": 6
+        }
+      ]
+    },
+    {
+      "grade": 9,
+      "topicCount": 2,
+      "rowCount": 12,
+      "loadedScripts": 11,
+      "topics": [
+        {
+          "topicId": "multichem9w88b",
+          "subjectId": "chem",
+          "answer": "выделение газа | образование осадка | изменение цвета",
+          "correctCount": 3,
+          "optionCount": 6
+        },
+        {
+          "topicId": "multisoc9w88b",
+          "subjectId": "soc",
+          "answer": "верховенство закона | разделение властей | гарантия прав и свобод человека",
+          "correctCount": 3,
+          "optionCount": 6
+        }
+      ]
+    },
+    {
+      "grade": 10,
+      "topicCount": 2,
+      "rowCount": 12,
+      "loadedScripts": 12,
+      "topics": [
+        {
+          "topicId": "multiinf10w88b",
+          "subjectId": "inf",
+          "answer": "дискретность | определённость | результативность",
+          "correctCount": 3,
+          "optionCount": 6
+        },
+        {
+          "topicId": "multisoc10w88b",
+          "subjectId": "soc",
+          "answer": "самостоятельные общественные объединения | независимость частной жизни от государства | активное участие граждан в общественной жизни",
+          "correctCount": 3,
+          "optionCount": 6
+        }
+      ]
+    },
+    {
+      "grade": 11,
+      "topicCount": 2,
+      "rowCount": 12,
+      "loadedScripts": 12,
+      "topics": [
+        {
+          "topicId": "multirus11w88b",
+          "subjectId": "rus",
+          "answer": "метафора | эпитет | олицетворение",
+          "correctCount": 3,
+          "optionCount": 6
+        },
+        {
+          "topicId": "multibio11w88b",
+          "subjectId": "bio",
+          "answer": "мутации | кроссинговер | независимое расхождение хромосом в мейозе",
+          "correctCount": 3,
+          "optionCount": 6
+        }
+      ]
+    }
+  ],
+  "totalRows": 48,
+  "hashedAssetCount": 101
+}

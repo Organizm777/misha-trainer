@@ -576,15 +576,17 @@
   }
 
   window.downloadDashboardCSV = function(){
-    if(!window._dashboardState) return;
-    const csv = buildCSV(window._dashboardState);
+    const state = (window.__dashboardGetActiveState && window.__dashboardGetActiveState()) || window.__dashboardActiveState || window._dashboardState;
+    if(!state) return;
+    const csv = buildCSV(state);
     const today = new Date().toISOString().slice(0,10);
     download(`dashboard_${today}.csv`, new Blob([csv], { type:'text/csv;charset=utf-8' }));
   };
 
   window.downloadDashboardPNG = function(){
-    if(!window._dashboardState) return;
-    const canvas = buildPngCanvas(window._dashboardState);
+    const state = (window.__dashboardGetActiveState && window.__dashboardGetActiveState()) || window.__dashboardActiveState || window._dashboardState;
+    if(!state) return;
+    const canvas = buildPngCanvas(state);
     canvas.toBlob(function(blob){
       if(!blob) return;
       const today = new Date().toISOString().slice(0,10);
@@ -602,8 +604,15 @@
     renderSubjects(state);
   }
 
-  window.addEventListener('dashboard-state-ready', function(ev){ render(ev.detail || window._dashboardState); });
-  if(window._dashboardState) setTimeout(function(){ render(window._dashboardState); }, 0);
+  window.__dashboardEnsureAnalytics = ensureAnalytics;
+  window.__dashboardRenderAnalytics = function(state){
+    render(state || (window.__dashboardGetActiveState && window.__dashboardGetActiveState()) || window.__dashboardActiveState || window._dashboardState);
+  };
+
+  window.addEventListener('dashboard-state-ready', function(ev){
+    render((window.__dashboardGetActiveState && window.__dashboardGetActiveState()) || window.__dashboardActiveState || ev.detail || window._dashboardState);
+  });
+  if(window._dashboardState) setTimeout(function(){ render((window.__dashboardGetActiveState && window.__dashboardGetActiveState()) || window.__dashboardActiveState || window._dashboardState); }, 0);
 })();
 
 ;
@@ -789,4 +798,302 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
   else init();
 })();
-//# sourceMappingURL=bundle_dashboard_tools.5592be36f3.js.map
+
+;
+/* --- wave89j_parent_dashboard.js --- */
+(function(){
+  if (typeof window === 'undefined') return;
+  if (!document.getElementById('grades')) return;
+
+  const MODE_KEY = 'trainer_dashboard_mode_wave89j_v1';
+  const FILTER_KEY = 'trainer_dashboard_grade_filter_wave89j_v1';
+  const ADVANCED_IDS = ['wave22-insights','wave22-heatmap','wave22-radar','wave22-trend','wave22-subjects'];
+
+  function safeGet(key, fallback){
+    try {
+      const value = localStorage.getItem(key);
+      return value == null ? fallback : value;
+    } catch(_) {
+      return fallback;
+    }
+  }
+
+  function safeSet(key, value){
+    try { localStorage.setItem(key, value); } catch(_) {}
+  }
+
+  function getLastDays(count){
+    const out = [];
+    const base = new Date();
+    for(let i = count - 1; i >= 0; i -= 1){
+      const d = new Date(base);
+      d.setDate(base.getDate() - i);
+      out.push(d.toISOString().slice(0, 10));
+    }
+    return out;
+  }
+
+  function allGrades(base){
+    return (base && Array.isArray(base.gradeData) ? base.gradeData : []).map(row => String(row.grade.n));
+  }
+
+  function normalizeMode(mode){
+    return String(mode || '').toLowerCase() === 'full' ? 'full' : 'parent';
+  }
+
+  function normalizeFilter(base, value){
+    const raw = String(value == null ? 'all' : value);
+    if (raw === 'all') return 'all';
+    return allGrades(base).includes(raw) ? raw : 'all';
+  }
+
+  function applyModeClass(mode){
+    document.body.classList.toggle('wave89j-parent-mode', mode !== 'full');
+    document.body.classList.toggle('wave89j-full-mode', mode === 'full');
+  }
+
+  function ensureAdvancedMarkers(){
+    ADVANCED_IDS.forEach((id) => {
+      const node = document.getElementById(id);
+      if (!node) return;
+      node.setAttribute('data-wave89j-advanced', '1');
+      const title = node.previousElementSibling;
+      if (title && title.classList && title.classList.contains('section')) title.setAttribute('data-wave89j-advanced', '1');
+    });
+  }
+
+  function ensureHosts(){
+    let toolbar = document.getElementById('wave89j-parent-toolbar');
+    let summary = document.getElementById('wave89j-parent-summary');
+    if (!toolbar || !summary) {
+      const grades = document.getElementById('grades');
+      const anchor = grades && grades.previousElementSibling;
+      if (anchor && anchor.parentNode) {
+        if (!toolbar) {
+          toolbar = document.createElement('div');
+          toolbar.id = 'wave89j-parent-toolbar';
+          anchor.parentNode.insertBefore(toolbar, anchor);
+        }
+        if (!summary) {
+          summary = document.createElement('div');
+          summary.id = 'wave89j-parent-summary';
+          anchor.parentNode.insertBefore(summary, anchor);
+        }
+      }
+    }
+    return { toolbar, summary };
+  }
+
+  function pickAnchorGrade(base){
+    const rows = base && Array.isArray(base.gradeData) ? base.gradeData.slice() : [];
+    if (!rows.length) return null;
+    rows.sort((a,b) => {
+      const tsA = a && a.lastActivityDate ? new Date(a.lastActivityDate).getTime() : 0;
+      const tsB = b && b.lastActivityDate ? new Date(b.lastActivityDate).getTime() : 0;
+      return tsB - tsA || Number(b.last7Total || 0) - Number(a.last7Total || 0) || Number(b.qs || 0) - Number(a.qs || 0) || Number(b.grade.n || 0) - Number(a.grade.n || 0);
+    });
+    return rows[0] || null;
+  }
+
+  function composeView(base, filter){
+    if (typeof window.__dashboardComposeState === 'function') return window.__dashboardComposeState(base, filter);
+    return base || null;
+  }
+
+  function makeChecklist(base, view, analytics, filter){
+    const rows = [];
+    const weakest = analytics && analytics.subjectSummary ? analytics.subjectSummary.weakest : null;
+    const anchor = filter !== 'all' ? (base.gradeData || []).find(row => String(row.grade.n) === String(filter)) : pickAnchorGrade(base);
+    const diagnostics = base && base.wave25Diagnostics ? base.wave25Diagnostics : null;
+
+    if (!view || !Number(view.totalQs || 0)) {
+      rows.push({ icon:'🌱', title:'Сделать первый короткий заход', text:'Запустите одну тему на 10–15 минут, чтобы появилась базовая статистика и слабые места.' });
+    } else if (weakest && Number(weakest.acc || 0) < 60) {
+      rows.push({ icon:'🎯', title:'Повторить зону роста', text:`Лучше всего сейчас закрепить ${weakest.label}: точность ${weakest.acc}% при ${weakest.qs} задачах.` });
+    } else {
+      rows.push({ icon:'✅', title:'Поддерживать текущий темп', text:`За 7 дней решено ${view.last7Total || 0} задач. Короткие регулярные сессии сейчас важнее длинных марафонов.` });
+    }
+
+    if (!diagnostics || !diagnostics.latest) {
+      rows.push({ icon:'📍', title:'Снять опорную диагностику', text:'После первой микро-диагностики родительская панель покажет готовность по предметам и понятные рекомендации.' });
+    } else {
+      rows.push({ icon:'🧪', title:'Проверить готовность', text:`Последняя диагностика: ${diagnostics.latest.subjectName || diagnostics.latest.subjectId || 'предмет'} · ${diagnostics.latest.pct}% · ${diagnostics.latest.modeLabel || 'режим'}.` });
+    }
+
+    if ((view.totalDays || 0) < 3) {
+      rows.push({ icon:'🗓', title:'Добавить регулярность', text:'Полезная цель для недели — хотя бы 3 активных дня, даже если сессии короткие.' });
+    } else if (anchor) {
+      rows.push({ icon:'📘', title:'Открыть актуальный класс', text:`Больше всего движения сейчас в разделе «${anchor.grade.nm}». Там проще всего продолжить без лишнего поиска.` });
+    }
+
+    return rows.slice(0, 3);
+  }
+
+  function makeStatus(view, analytics){
+    if (!view || !Number(view.totalQs || 0)) return { tone:'idle', label:'Старт', title:'Пока мало данных', text:'Сначала нужна короткая практика, затем уже будет видно сильные и слабые стороны.' };
+    if ((view.last7Total || 0) < 10) return { tone:'focus', label:'Фокус недели', title:'Нужно немного регулярности', text:'Последняя неделя была спокойной. Полезно вернуть 2–3 короткие сессии без перегруза.' };
+    const weakest = analytics && analytics.subjectSummary ? analytics.subjectSummary.weakest : null;
+    if (weakest && Number(weakest.acc || 0) < 60) return { tone:'alert', label:'Зона роста', title:`Точка внимания: ${weakest.label}`, text:`Сейчас именно этот предмет тянет общую картину вниз: ${weakest.acc}% точности.` };
+    if (analytics && Number(analytics.accDelta || 0) >= 5) return { tone:'good', label:'Хорошая динамика', title:'Точность растёт', text:`По сравнению с прошлой неделей точность выросла на ${analytics.accDelta} п.п.` };
+    return { tone:'good', label:'Стабильно', title:'Рабочий ритм найден', text:'Ошибки есть, но общая картина ровная. Сейчас важнее удерживать темп и не распыляться.' };
+  }
+
+  function openLinkFor(base, filter, preferDiagnostic){
+    if (preferDiagnostic) return 'diagnostic.html';
+    const anchor = filter !== 'all' ? (base.gradeData || []).find(row => String(row.grade.n) === String(filter)) : pickAnchorGrade(base);
+    return anchor && anchor.grade ? anchor.grade.file : 'index.html';
+  }
+
+  function renderToolbar(base, mode, filter){
+    const host = document.getElementById('wave89j-parent-toolbar');
+    if (!host || !base) return;
+    const grades = (base.gradeData || []).map(row => row.grade);
+    host.innerHTML = `
+      <div class="wave89j-toolbar fade">
+        <div class="wave89j-toolbar-card">
+          <div class="wave89j-toolbar-head">
+            <div>
+              <div class="wave89j-toolbar-title">Компактный взгляд для родителя</div>
+              <div class="wave89j-toolbar-sub">По умолчанию показываем короткую сводку, рекомендации и быстрый фокус. Полная аналитика доступна по кнопке.</div>
+            </div>
+            <div class="wave89j-toolbar-badge">${mode === 'full' ? 'Полная аналитика' : 'Режим родителя'}</div>
+          </div>
+          <div class="wave89j-chip-row">
+            <button type="button" class="wave89j-chip is-mode ${mode === 'parent' ? 'is-active' : ''}" data-wave89j-mode="parent">👨‍👩‍👧 Коротко</button>
+            <button type="button" class="wave89j-chip is-mode ${mode === 'full' ? 'is-active' : ''}" data-wave89j-mode="full">📊 Подробно</button>
+          </div>
+          <div class="wave89j-chip-row">
+            <button type="button" class="wave89j-chip ${filter === 'all' ? 'is-active' : ''}" data-wave89j-filter="all">Все классы</button>
+            ${grades.map((grade) => `<button type="button" class="wave89j-chip ${String(filter) === String(grade.n) ? 'is-active' : ''}" data-wave89j-filter="${grade.n}">${grade.ic} ${grade.n}</button>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderSummary(base, view, mode, filter){
+    const host = document.getElementById('wave89j-parent-summary');
+    if (!host || !view) return;
+    const analytics = typeof window.__dashboardEnsureAnalytics === 'function' ? window.__dashboardEnsureAnalytics(view) : null;
+    const status = makeStatus(view, analytics);
+    const diagnostics = base && base.wave25Diagnostics ? base.wave25Diagnostics : null;
+    const checklist = makeChecklist(base, view, analytics, filter);
+    const strongest = analytics && analytics.subjectSummary ? analytics.subjectSummary.best : null;
+    const weakest = analytics && analytics.subjectSummary ? analytics.subjectSummary.weakest : null;
+    const openHref = openLinkFor(base, filter, !Number(view.totalQs || 0));
+    host.innerHTML = `
+      <div class="wave89j-parent-card fade">
+        <div class="wave89j-parent-head">
+          <div>
+            <div class="wave89j-parent-title">Что важно сейчас</div>
+            <div class="wave89j-parent-sub">${view.filterGrade ? `Фокус на ${view.filterLabel}` : 'Сводка по всем классам'} · ${mode === 'full' ? 'подробный режим включён' : 'компактный режим включён'}</div>
+          </div>
+          <div class="wave89j-tone ${status.tone}">${status.label}</div>
+        </div>
+        <div class="wave89j-parent-grid">
+          <div class="wave89j-parent-metric">
+            <div class="wave89j-parent-k">Сейчас</div>
+            <div class="wave89j-parent-v">${view.totalQs || 0}</div>
+            <div class="wave89j-parent-note">${status.title}. ${status.text}</div>
+          </div>
+          <div class="wave89j-parent-metric">
+            <div class="wave89j-parent-k">Лучшее</div>
+            <div class="wave89j-parent-v">${strongest ? strongest.acc + '%' : '—'}</div>
+            <div class="wave89j-parent-note">${strongest ? strongest.label : 'Пока мало данных для сильной стороны.'}</div>
+          </div>
+          <div class="wave89j-parent-metric">
+            <div class="wave89j-parent-k">Проверка</div>
+            <div class="wave89j-parent-v">${diagnostics && diagnostics.latest ? diagnostics.latest.pct + '%' : '—'}</div>
+            <div class="wave89j-parent-note">${diagnostics && diagnostics.latest ? `${diagnostics.latest.subjectName || diagnostics.latest.subjectId || 'диагностика'} · ${diagnostics.latest.modeLabel || 'режим'}` : 'Диагностика ещё не запускалась.'}</div>
+          </div>
+        </div>
+        <div class="wave89j-parent-list">
+          ${checklist.map((item) => `<div class="wave89j-parent-item"><div class="wave89j-parent-icon">${item.icon}</div><div><b>${item.title}</b><span>${item.text}</span></div></div>`).join('')}
+          ${weakest && Number(weakest.acc || 0) < 60 ? `<div class="wave89j-parent-item"><div class="wave89j-parent-icon">🧩</div><div><b>Отдельно проседает ${weakest.label}</b><span>Точность ${weakest.acc}% при ${weakest.qs} задачах. Хорошая цель — 10–15 минут повторения именно здесь.</span></div></div>` : ''}
+        </div>
+        <div class="wave89j-parent-actions">
+          <a class="wave89j-parent-action primary" href="${openHref}">${Number(view.totalQs || 0) ? '▶ Открыть следующий шаг' : '▶ Начать практику'}</a>
+          <button type="button" class="wave89j-parent-action secondary" data-wave89j-mode="${mode === 'full' ? 'parent' : 'full'}">${mode === 'full' ? '👨‍👩‍👧 Короткая сводка' : '📊 Полная аналитика'}</button>
+          <button type="button" class="wave89j-parent-action secondary" data-wave89j-export="report">📝 TXT-сводка</button>
+        </div>
+        <div class="wave89j-parent-hint">${view.filterGrade ? 'Фильтр влияет на верхнюю сводку, активность, ошибки и экспорт отчёта. Карточки классов ниже остаются кликабельными для быстрого перехода.' : 'Выберите класс выше, если хотите увидеть сводку только по одному разделу без лишнего шума.'}</div>
+      </div>`;
+  }
+
+  function readMode(){ return normalizeMode(safeGet(MODE_KEY, 'parent')); }
+  function readFilter(base){ return normalizeFilter(base, safeGet(FILTER_KEY, 'all')); }
+
+  function renderAll(){
+    const base = window._dashboardState || (typeof window.__dashboardBaseState === 'function' ? window.__dashboardBaseState() : null);
+    if (!base) return;
+    ensureHosts();
+    ensureAdvancedMarkers();
+    const mode = readMode();
+    const filter = readFilter(base);
+    applyModeClass(mode);
+    const view = composeView(base, filter);
+    window.__dashboardActiveState = view;
+    if (typeof window.__dashboardRenderCore === 'function') window.__dashboardRenderCore(base, { gradeFilter: filter, viewState: view });
+    if (typeof window.__dashboardRenderAnalytics === 'function') window.__dashboardRenderAnalytics(view);
+    renderToolbar(base, mode, filter);
+    renderSummary(base, view, mode, filter);
+  }
+
+  function setMode(mode){
+    safeSet(MODE_KEY, normalizeMode(mode));
+    renderAll();
+  }
+
+  function setFilter(filter){
+    safeSet(FILTER_KEY, String(filter == null ? 'all' : filter));
+    renderAll();
+  }
+
+  function bindHostClicks(){
+    document.addEventListener('click', function(event){
+      const modeBtn = event.target && event.target.closest ? event.target.closest('[data-wave89j-mode]') : null;
+      if (modeBtn) {
+        event.preventDefault();
+        setMode(modeBtn.getAttribute('data-wave89j-mode'));
+        return;
+      }
+      const filterBtn = event.target && event.target.closest ? event.target.closest('[data-wave89j-filter]') : null;
+      if (filterBtn) {
+        event.preventDefault();
+        setFilter(filterBtn.getAttribute('data-wave89j-filter'));
+        return;
+      }
+      const exportBtn = event.target && event.target.closest ? event.target.closest('[data-wave89j-export]') : null;
+      if (exportBtn) {
+        event.preventDefault();
+        if (exportBtn.getAttribute('data-wave89j-export') === 'report' && typeof window.downloadDashboardReport === 'function') window.downloadDashboardReport();
+      }
+    });
+  }
+
+  let bound = false;
+  function init(){
+    ensureHosts();
+    ensureAdvancedMarkers();
+    if (!bound) {
+      bindHostClicks();
+      bound = true;
+    }
+    renderAll();
+    window.addEventListener('dashboard-state-ready', function(){ renderAll(); });
+    window.addEventListener('wave25-diagnostic-saved', function(){ setTimeout(renderAll, 0); });
+  }
+
+  window.__wave89jParentDashboard = {
+    version:'wave89j',
+    defaultMode:'parent',
+    renderAll,
+    setMode,
+    setFilter,
+    getMode: readMode,
+    getFilter: function(){ return readFilter(window._dashboardState || {}); },
+    composeView: function(filter){ return composeView(window._dashboardState || {}, filter == null ? readFilter(window._dashboardState || {}) : filter); }
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
+  else init();
+})();

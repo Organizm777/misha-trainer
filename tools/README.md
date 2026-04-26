@@ -23,7 +23,7 @@ node tools/rebuild_hashed_assets.mjs assets/_src/js/grade2_data.js assets/_src/j
 ```
 
 - `rebuild_hashed_assets.mjs` recalculates the content hash for one or more source JS/CSS assets under `assets/_src`, writes new built files under `assets/js` or `assets/css`, updates `asset-manifest.json`, rewrites runtime references in HTML/SW, and removes the superseded hashed asset files.
-- `sync_release_metadata.mjs --wave wave89d --date 2026-04-25` resynchronizes `asset-manifest.json`, `healthz.json`, and the `sw.js` cache / precache arrays after a rebuild, cleanup pass, merge pass, or runtime split.
+- `sync_release_metadata.mjs --wave wave89m --date 2026-04-26` resynchronizes `asset-manifest.json`, `healthz.json`, and the `sw.js` cache / precache arrays after a rebuild, cleanup pass, merge pass, or runtime split.
 
 ## Release audits
 
@@ -49,6 +49,15 @@ node tools/audit_theory_coverage.mjs
 node tools/audit_merge_pass_wave89b.mjs
 node tools/audit_scripts_budget_wave89c.mjs
 node tools/audit_simple_mode_wave89d.mjs
+node tools/audit_onboarding_wave89e.mjs
+node tools/audit_hamburger_wave89f.mjs
+node tools/audit_minimal_footer_wave89g.mjs
+node tools/audit_skeleton_loading_wave89h.mjs
+node tools/audit_subject_color_groups_wave89i.mjs
+node tools/audit_parent_dashboard_wave89j.mjs
+node tools/audit_weak_device_adaptive_wave89k.mjs
+node tools/audit_spaced_repetition_sm2_wave89l.mjs
+node tools/audit_adaptive_difficulty_wave89m.mjs
 node tools/validate_questions.js
 ```
 
@@ -91,3 +100,12 @@ node tools/validate_questions.js
 - `build_scripts_budget_wave89c.mjs` — assembles the merged wave89c source chunk for the remaining grades 7–9 STEM script-budget pass.
 - `audit_scripts_budget_wave89c.mjs` — verifies the wave89c scripts-budget follow-up: every grade page stays at or below 20 external scripts, grades 7–9 load the merged `wave89c_secondary_stem_7_9` asset, and the old wave58/wave59 chunk pair disappears from HTML/SW/manifest.
 - `audit_simple_mode_wave89d.mjs` — verifies the wave89d simple-mode + smart-start UX gate: default-on state, persisted toggle, `.simple-mode` class application, settings-modal hooks, smart-start order (due/sticky/weak/resume/continue/new/mix) in a VM harness, grade-page asset wiring, and SW precache coverage for the rebuilt merged runtime/CSS assets.
+
+- `audit_onboarding_wave89e.mjs` — verifies the wave89e first-visit onboarding pass: the merged runtime exposes `window.__wave89eOnboarding`, the settings modal offers `👋 Быстрый тур`, the tour persists completion under `trainer_onboarding_wave89e_v1`, grade pages keep using the same merged runtime/CSS assets without breaking the 20-script budget, and both CI workflows run the new audit.
+
+- `audit_hamburger_wave89f.mjs` — verifies the wave89f hamburger-menu declutter pass: the merged runtime exposes `window.__wave89fHamburgerMenu`, the shared grade CSS styles the trigger/overlay and relocated-action hiding, grade pages keep the same merged runtime/CSS assets without breaking the 20-script budget, and a VM harness confirms that simple mode hides rating/sync while advanced mode still routes profile/report/export/backup/sync/class actions through the existing APIs.
+- `audit_minimal_footer_wave89g.mjs` — verifies the wave89g footer-condensing pass: the merged runtime exposes `window.__wave89gMinimalFooter`, the shared grade CSS styles the compact two-button utility footer, legacy main-screen utility rows are hidden additively, the moved help/errors/badges/dates actions remain reachable through the hamburger menu, and grade pages stay within the 20-script budget.
+- `audit_weak_device_adaptive_wave89k.mjs` — verifies the wave89k weak-device adaptive UI pass: the merged grade runtime exposes `window.__wave89kAdaptiveUi`, the shared grade CSS raises core controls to 48px tap targets and 16px core text, grade pages keep using the same merged runtime/CSS assets without adding scripts, and a VM harness checks weak-touch, roomy-desktop, and reduced-motion detection states.
+- `audit_spaced_repetition_sm2_wave89l.mjs` — verifies the wave89l SM-2 review pass: the core runtime exposes the upgraded spaced-repetition scheduler without a new eager asset, legacy fixed-step review state migrates to `{ version: 2, algo: 'sm2' }`, weekly/EF summaries are present, and a VM harness checks the 1 day → 6 days → EF cadence, helped-answer resets, sticky-card release, and `step`/`repetitions` compatibility.
+- `audit_adaptive_difficulty_wave89m.mjs` — verifies the wave89m pedagogy pass: the merged runtime exposes `window.__wave89mAdaptiveDifficulty`, the shared grade CSS renders the play/progress adaptive cards, the quality chunk stamps `difficultyLevel: 1–3`, historical `wave87x` timing samples influence recommendations, and a VM harness checks the 5-correct raise, trouble/slow drop, and candidate-bucket selection logic.
+- `audit_learning_path_wave89n.mjs` — verifies the wave89n learning-path pass: the merged runtime exposes `window.__wave89nLearningPath`, the shared grade CSS renders theory/play/progress route cards, topical sessions seed a `wave21` starter queue in `easy → medium → hard` order, the queue hands off to the regular trainer instead of ending early, and CI metadata/docs stay synchronized.

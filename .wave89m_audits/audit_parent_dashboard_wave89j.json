@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "wave": "wave89m",
+  "hashedAssetCount": 101,
+  "finalMode": "full",
+  "filtersTested": [
+    "all",
+    "10"
+  ],
+  "coreRenders": 3,
+  "analyticsRenders": 3
+}

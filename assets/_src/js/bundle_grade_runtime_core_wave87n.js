@@ -3297,7 +3297,12 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   if (window.wave28Debug) return;
 
   var REVIEW_KEY = 'trainer_review_' + (window.GRADE_NUM || '10');
-  var REVIEW_STEPS = [1, 3, 7, 14, 30];
+  /* wave89l: SM-2 spaced repetition */
+  var LEGACY_REVIEW_STEPS = [1, 3, 7, 14, 30];
+  var SM2_BASE_EF = 2.5;
+  var SM2_MIN_EF = 1.3;
+  var SM2_FIRST_INTERVAL = 1;
+  var SM2_SECOND_INTERVAL = 6;
   var MAX_JOURNAL = 150;
   var MAX_REVIEW_ITEMS = 240;
   var reviewMode = null;
@@ -3315,6 +3320,121 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   function say(msg, type, ms){ if(hasFn(window.showToast)) window.showToast(msg, type || 'info', ms || 2200); else alert(msg); }
   function reviewKey(entry){ return [norm(entry.tag), norm(entry.correct), norm(entry.q)].join('¦').slice(0, 320); }
   function gradeKey(){ return String(window.GRADE_NUM || '10'); }
+
+  function toNum(value, fallback){
+    var num = Number(value);
+    return isFinite(num) ? num : (fallback == null ? 0 : (Number(fallback) || 0));
+  }
+  function clamp(value, min, max){ return Math.max(min, Math.min(max, value)); }
+  function round2(value){ return Math.round(toNum(value) * 100) / 100; }
+  function formatEf(value){ return round2(Math.max(SM2_MIN_EF, toNum(value, SM2_BASE_EF))).toFixed(2).replace('.', ','); }
+  function reviewStageFromItem(item){
+    return Math.max(0, Math.floor(toNum(item && (item.repetitions != null ? item.repetitions : item.step), 0)));
+  }
+  function reviewEfFromItem(item){
+    return round2(Math.max(SM2_MIN_EF, toNum(item && (item.ef != null ? item.ef : item.easeFactor), SM2_BASE_EF)));
+  }
+  function reviewIntervalFromItem(item){
+    var stage = reviewStageFromItem(item);
+    var fallback = LEGACY_REVIEW_STEPS[Math.min(LEGACY_REVIEW_STEPS.length - 1, stage)] || SM2_FIRST_INTERVAL;
+    return Math.max(1, Math.round(toNum(item && item.intervalDays, fallback)));
+  }
+  function sm2UpdatedEf(ef, quality){
+    var q = clamp(Math.round(toNum(quality, 0)), 0, 5);
+    var delta = 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02);
+    return round2(Math.max(SM2_MIN_EF, toNum(ef, SM2_BASE_EF) + delta));
+  }
+  function normalizeReviewItem(item){
+    var row = clone(item || {}) || {};
+    row.key = row.key || reviewKey(row);
+    row.createdAt = toNum(row.createdAt, nowTs());
+    row.updatedAt = toNum(row.updatedAt, row.createdAt);
+    row.lastSeenAt = toNum(row.lastSeenAt, row.updatedAt);
+    row.lastWrongAt = toNum(row.lastWrongAt, row.createdAt);
+    row.rightCount = Math.max(0, Math.round(toNum(row.rightCount, 0)));
+    row.wrongCount = Math.max(0, Math.round(toNum(row.wrongCount, 0)));
+    row.successes = Math.max(0, Math.round(toNum(row.successes, row.rightCount)));
+    row.lapses = Math.max(0, Math.round(toNum(row.lapses, row.wrongCount)));
+    row.reviewCorrectStreak = Math.max(0, Math.round(toNum(row.reviewCorrectStreak, 0)));
+    row.repetitions = reviewStageFromItem(row);
+    row.step = row.repetitions;
+    row.intervalDays = reviewIntervalFromItem(row);
+    row.ef = reviewEfFromItem(row);
+    row.easeFactor = row.ef;
+    row.lastGrade = clamp(Math.round(toNum(row.lastGrade, row.repetitions ? 5 : (row.wrongCount ? 2 : 0))), 0, 5);
+    row.dueAt = toNum(row.dueAt, addDays(dayStart(row.updatedAt), row.intervalDays));
+    row.lastOutcome = row.lastOutcome || (row.wrongCount > row.rightCount ? 'wrong' : 'correct');
+    row.sticky = row.sticky == null ? row.lapses >= 3 : !!row.sticky;
+    row.sm2 = true;
+    return row;
+  }
+  function reviewPreview(item, quality){
+    var base = normalizeReviewItem(item);
+    var q = clamp(Math.round(toNum(quality, 5)), 0, 5);
+    var interval = base.intervalDays;
+    var repetitions = base.repetitions;
+    var ef = base.ef;
+    var lapses = Math.max(0, base.lapses);
+    if (q < 3){
+      repetitions = 0;
+      interval = SM2_FIRST_INTERVAL;
+      lapses += 1;
+    } else if (repetitions <= 0){
+      repetitions = 1;
+      interval = SM2_FIRST_INTERVAL;
+    } else if (repetitions === 1){
+      repetitions = 2;
+      interval = SM2_SECOND_INTERVAL;
+    } else {
+      repetitions += 1;
+      interval = Math.max(1, Math.round(interval * ef));
+    }
+    var nextEf = sm2UpdatedEf(ef, q);
+    var nextStreak = q >= 4 ? base.reviewCorrectStreak + 1 : 0;
+    var sticky = (base.sticky || lapses >= 3) && !(q >= 4 && nextStreak >= 2);
+    return {
+      quality: q,
+      repetitions: repetitions,
+      step: repetitions,
+      intervalDays: interval,
+      ef: nextEf,
+      easeFactor: nextEf,
+      lapses: lapses,
+      reviewCorrectStreak: nextStreak,
+      sticky: sticky,
+      dueAt: addDays(dayStart(), interval)
+    };
+  }
+  function bindRowToItem(item, row){
+    item.q = row.q;
+    item.correct = row.correct;
+    item.tag = row.tag;
+    item.hint = row.hint || item.hint || '';
+    item.options = sanitizedOptions(row);
+    item.code = row.code || '';
+    item.isMath = !!row.isMath;
+    item.bg = row.bg || item.bg || 'var(--card)';
+    item.color = row.color || item.color || 'var(--text)';
+    item.subjectId = row.subjectId || item.subjectId || '';
+    item.topicId = row.topicId || item.topicId || '';
+    return item;
+  }
+  function reviewDigest(state){
+    state = state || loadReviewState();
+    var all = listReviewItems(state);
+    var now = nowTs();
+    var weekEdge = addDays(dayStart(), 7);
+    var upcomingWeek = all.filter(function(item){ var due = toNum(item.dueAt, 0); return due > now && due <= weekEdge; }).length;
+    var avgEf = all.length ? round2(all.reduce(function(sum, item){ return sum + reviewEfFromItem(item); }, 0) / all.length) : 0;
+    return {
+      total: all.length,
+      due: dueItems(state).length,
+      upcomingWeek: upcomingWeek,
+      sticky: stickyItems(state).length,
+      mastered: masteredCount(state),
+      avgEf: avgEf
+    };
+  }
 
   function ensureStyles(){
     if (document.getElementById('wave28-style')) return;
@@ -3365,34 +3485,47 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   window.saveJournal = saveJournalSafe;
 
   function loadReviewState(){
-    var state = readJSON(REVIEW_KEY, {version:1, items:{}});
-    if (!state || typeof state !== 'object') state = {version:1, items:{}};
+    var state = readJSON(REVIEW_KEY, {version:2, algo:'sm2', items:{}});
+    if (!state || typeof state !== 'object') state = {version:2, algo:'sm2', items:{}};
     if (!state.items || typeof state.items !== 'object') state.items = {};
+    var items = {};
+    Object.keys(state.items).forEach(function(key){
+      items[key] = normalizeReviewItem(Object.assign({ key:key }, state.items[key] || {}));
+    });
+    state.version = 2;
+    state.algo = 'sm2';
+    state.items = items;
     return state;
   }
   function saveReviewState(state){
-    var items = Object.values(state.items || {}).sort(function(a,b){ return (b.updatedAt||0) - (a.updatedAt||0); }).slice(0, MAX_REVIEW_ITEMS);
-    var out = {version:1, items:{}};
-    items.forEach(function(item){ out.items[item.key] = item; });
+    var items = Object.values((state && state.items) || {}).map(normalizeReviewItem).sort(function(a,b){ return (b.updatedAt||0) - (a.updatedAt||0); }).slice(0, MAX_REVIEW_ITEMS);
+    var out = {version:2, algo:'sm2', items:{}};
+    items.forEach(function(item){ out.items[item.key] = normalizeReviewItem(item); });
     writeJSON(REVIEW_KEY, out);
   }
-  function listReviewItems(state){ return Object.values((state || loadReviewState()).items || {}); }
+  function listReviewItems(state){
+    return Object.values((state || loadReviewState()).items || {}).map(normalizeReviewItem);
+  }
   function dueItems(state){
     var ts = nowTs();
     return listReviewItems(state).filter(function(item){ return (item.dueAt || 0) <= ts; }).sort(function(a,b){
       if ((a.dueAt||0) !== (b.dueAt||0)) return (a.dueAt||0) - (b.dueAt||0);
+      if ((a.repetitions||0) !== (b.repetitions||0)) return (a.repetitions||0) - (b.repetitions||0);
+      if (reviewEfFromItem(a) !== reviewEfFromItem(b)) return reviewEfFromItem(a) - reviewEfFromItem(b);
       if ((b.wrongCount||0) !== (a.wrongCount||0)) return (b.wrongCount||0) - (a.wrongCount||0);
       return (b.updatedAt||0) - (a.updatedAt||0);
     });
   }
   function stickyItems(state){
     return listReviewItems(state).filter(function(item){ return !!item.sticky; }).sort(function(a,b){
-      if ((b.wrongCount||0) !== (a.wrongCount||0)) return (b.wrongCount||0) - (a.wrongCount||0);
+      if ((b.lapses||0) !== (a.lapses||0)) return (b.lapses||0) - (a.lapses||0);
+      if ((a.dueAt||0) !== (b.dueAt||0)) return (a.dueAt||0) - (b.dueAt||0);
+      if (reviewEfFromItem(a) !== reviewEfFromItem(b)) return reviewEfFromItem(a) - reviewEfFromItem(b);
       return (b.updatedAt||0) - (a.updatedAt||0);
     });
   }
   function masteredCount(state){
-    return listReviewItems(state).filter(function(item){ return !item.sticky && (item.step||0) >= 3; }).length;
+    return listReviewItems(state).filter(function(item){ return !item.sticky && reviewStageFromItem(item) >= 3; }).length;
   }
   function topicMetaByIds(subjectId, topicId){
     if (!subjectId || !topicId || !Array.isArray(window.SUBJ)) return null;
@@ -3440,7 +3573,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   }
   function dayLabel(ts){
     var diff = Math.round((dayStart(ts) - dayStart()) / 86400000);
-    if (diff <= 0) return 'сегодня';
+    if (diff < 0) return 'просрочено на ' + Math.abs(diff) + ' ' + declNum(Math.abs(diff), 'день', 'дня', 'дней');
+    if (diff === 0) return 'сегодня';
     return 'через ' + diff + ' ' + declNum(diff, 'день', 'дня', 'дней');
   }
   function countByTag(items){
@@ -3474,61 +3608,94 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   function registerMistake(entry){
     var row = enrichEntry(entry);
     var state = loadReviewState();
-    var item = state.items[row.key] || {
+    var isNew = !state.items[row.key];
+    var item = normalizeReviewItem(state.items[row.key] || {
       key: row.key,
       createdAt: nowTs(),
       rightCount: 0,
       wrongCount: 0,
       reviewCorrectStreak: 0,
-      step: 0,
-      intervalDays: REVIEW_STEPS[0]
-    };
-    item.q = row.q;
-    item.correct = row.correct;
-    item.tag = row.tag;
-    item.hint = row.hint || item.hint || '';
-    item.options = sanitizedOptions(row);
-    item.code = row.code || '';
-    item.isMath = !!row.isMath;
-    item.bg = row.bg || item.bg || 'var(--card)';
-    item.color = row.color || item.color || 'var(--text)';
-    item.subjectId = row.subjectId || item.subjectId || '';
-    item.topicId = row.topicId || item.topicId || '';
+      repetitions: 0,
+      intervalDays: SM2_FIRST_INTERVAL,
+      ef: SM2_BASE_EF,
+      lapses: 0,
+      successes: 0
+    });
+    bindRowToItem(item, row);
     item.updatedAt = nowTs();
     item.lastSeenAt = nowTs();
     item.lastWrongAt = nowTs();
     item.lastOutcome = 'wrong';
     item.wrongCount = (item.wrongCount || 0) + 1;
     item.reviewCorrectStreak = 0;
+    var scheduled = reviewPreview(item, isNew ? 2 : 1);
+    item.lapses = scheduled.lapses;
+    item.repetitions = 0;
     item.step = 0;
-    item.intervalDays = REVIEW_STEPS[0];
-    item.dueAt = addDays(dayStart(), REVIEW_STEPS[0]);
-    item.sticky = (item.wrongCount || 0) >= 3;
+    item.intervalDays = scheduled.intervalDays;
+    item.dueAt = scheduled.dueAt;
+    item.ef = scheduled.ef;
+    item.easeFactor = scheduled.easeFactor;
+    item.lastGrade = scheduled.quality;
+    item.sticky = !!item.sticky || item.lapses >= 3;
+    item.sm2 = true;
     state.items[item.key] = item;
     saveReviewState(state);
-    return item;
+    return clone(item);
   }
-  function advanceReviewSuccess(key, helped){
+  function gradeReviewCard(key, quality, helped){
     var state = loadReviewState();
     var item = state.items[key];
     if (!item) return null;
+    item = normalizeReviewItem(item);
     item.updatedAt = nowTs();
     item.lastSeenAt = nowTs();
-    item.rightCount = (item.rightCount || 0) + 1;
-    item.reviewCorrectStreak = (item.reviewCorrectStreak || 0) + 1;
-    item.lastOutcome = helped ? 'helped' : 'correct';
     if (helped){
-      item.intervalDays = Math.max(1, item.intervalDays || REVIEW_STEPS[0]);
-      item.dueAt = addDays(dayStart(), 1);
+      item.rightCount = (item.rightCount || 0) + 1;
+      item.successes = (item.successes || 0) + 1;
+      item.reviewCorrectStreak = 0;
+      item.lastOutcome = 'helped';
+      item.lastGrade = 3;
+      item.repetitions = 0;
+      item.step = 0;
+      item.intervalDays = SM2_FIRST_INTERVAL;
+      item.dueAt = addDays(dayStart(), SM2_FIRST_INTERVAL);
+      item.ef = sm2UpdatedEf(item.ef, 3);
+      item.easeFactor = item.ef;
+      item.sticky = !!item.sticky || item.lapses >= 3;
     } else {
-      item.step = Math.min(REVIEW_STEPS.length - 1, (item.step || 0) + 1);
-      item.intervalDays = REVIEW_STEPS[item.step];
-      item.dueAt = addDays(dayStart(), item.intervalDays);
+      var scheduled = reviewPreview(item, quality);
+      item.lastGrade = scheduled.quality;
+      item.intervalDays = scheduled.intervalDays;
+      item.dueAt = scheduled.dueAt;
+      item.ef = scheduled.ef;
+      item.easeFactor = scheduled.easeFactor;
+      item.sm2 = true;
+      if (scheduled.quality < 3){
+        item.wrongCount = (item.wrongCount || 0) + 1;
+        item.lapses = scheduled.lapses;
+        item.reviewCorrectStreak = 0;
+        item.repetitions = 0;
+        item.step = 0;
+        item.lastWrongAt = nowTs();
+        item.lastOutcome = 'wrong';
+        item.sticky = !!item.sticky || item.lapses >= 3;
+      } else {
+        item.rightCount = (item.rightCount || 0) + 1;
+        item.successes = (item.successes || 0) + 1;
+        item.reviewCorrectStreak = scheduled.reviewCorrectStreak;
+        item.repetitions = scheduled.repetitions;
+        item.step = scheduled.step;
+        item.lastOutcome = 'correct';
+        item.sticky = scheduled.sticky;
+      }
     }
-    if ((item.reviewCorrectStreak || 0) >= 2) item.sticky = false;
-    state.items[key] = item;
+    state.items[item.key] = item;
     saveReviewState(state);
-    return item;
+    return clone(item);
+  }
+  function advanceReviewSuccess(key, helped){
+    return gradeReviewCard(key, 5, !!helped);
   }
   function clearReviewState(){ try{ localStorage.removeItem(REVIEW_KEY); }catch(e){} }
 
@@ -3545,14 +3712,17 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   };
 
   function getReviewSummary(){
-    var state = loadReviewState();
+    var digest = reviewDigest(loadReviewState());
     return {
-      total: listReviewItems(state).length,
-      due: dueItems(state).length,
-      sticky: stickyItems(state).length,
-      mastered: masteredCount(state)
+      total: digest.total,
+      due: digest.due,
+      sticky: digest.sticky,
+      mastered: digest.mastered,
+      upcomingWeek: digest.upcomingWeek,
+      avgEf: digest.avgEf
     };
   }
+  window.getReviewSummary = getReviewSummary;
   function buildProb(item){
     return {
       question: item.q,
@@ -3578,7 +3748,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     }
   }
   function startReviewDeck(kind, items){
-    if (!items || !items.length) return say('Сегодня повторять нечего.', 'info', 2200);
+    if (!items || !items.length) return say('На сегодня карточек SM-2 нет.', 'info', 2200);
     reviewMode = {
       kind: kind,
       items: items.slice(0, 20).map(clone),
@@ -3596,6 +3766,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   function startStickyReview(){ startReviewDeck('sticky', stickyItems()); }
   window.startDueReview = startDueReview;
   window.startStickyReview = startStickyReview;
+  window.startSpacedReview = startDueReview;
 
   var _oldNextQ = window.nextQ;
   window.nextQ = function(){
@@ -3626,10 +3797,11 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
         var idx = Math.min(reviewMode.items.length, (window.st ? st.ok + st.err : 0) + 1);
         var current = reviewMode.items[Math.max(0, idx - 1)] || reviewMode.items[0];
         var pct = Math.round(((idx - 1) / Math.max(1, reviewMode.items.length)) * 100);
+        var preview = current ? reviewPreview(current, 5) : null;
         pa.innerHTML = '<div id="wave28-session-meta">'
-          + '<div class="ttl">' + (reviewMode.kind === 'sticky' ? '📌 Мои сложные вопросы' : '🔁 Повторение ошибок') + '</div>'
+          + '<div class="ttl">' + (reviewMode.kind === 'sticky' ? '📌 SM-2: сложные карточки' : '🔁 SM-2 повторение') + '</div>'
           + '<div class="bar"><div class="fill" style="width:' + pct + '%"></div></div>'
-          + '<div class="meta"><span>Карточка ' + idx + ' из ' + reviewMode.items.length + '</span><span>Следующий интервал: ' + ((current && current.intervalDays) || 1) + ' д.</span></div>'
+          + '<div class="meta"><span>Карточка ' + idx + ' из ' + reviewMode.items.length + '</span><span>EF ' + formatEf(current && current.ef) + ' · после верного ≈ ' + (preview ? preview.intervalDays : 1) + ' д.</span></div>'
           + '</div>';
       }
     }
@@ -3669,19 +3841,18 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
         var host = document.getElementById('res-topics');
         if (host){
           var state = loadReviewState();
-          var due = dueItems(state).length;
-          var sticky = stickyItems(state).length;
-          var mastered = masteredCount(state);
-          var html = '<div class="rcard"><h3>🔁 Повторение ошибок</h3>'
+          var digest = reviewDigest(state);
+          var html = '<div class="rcard"><h3>🔁 SM-2 повторение</h3>'
             + '<div class="wave28-stats" style="margin-top:10px">'
-            + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + due + '</div><div class="l">сегодня</div></div>'
-            + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + sticky + '</div><div class="l">сложные</div></div>'
-            + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + mastered + '</div><div class="l">закреплены</div></div>'
-            + '<div class="wave28-stat"><div class="v">' + listReviewItems(state).length + '</div><div class="l">в журнале</div></div>'
+            + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + digest.due + '</div><div class="l">сегодня</div></div>'
+            + '<div class="wave28-stat"><div class="v" style="color:var(--orange)">' + digest.upcomingWeek + '</div><div class="l">на неделе</div></div>'
+            + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + digest.sticky + '</div><div class="l">сложные</div></div>'
+            + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + digest.mastered + '</div><div class="l">закреплены</div></div>'
             + '</div>'
+            + '<div class="wave28-muted" style="margin:8px 0 10px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '.</div>'
             + '<div class="wave28-actions">'
-            + '<button class="btn btn-p" ' + (due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.5"') + '>🔁 Повторить сегодня</button>'
-            + '<button class="btn btn-o" ' + (sticky ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.5"') + '>📌 Мои сложные</button>'
+            + '<button class="btn btn-p" ' + (digest.due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.5"') + '>🔁 Повторить сегодня</button>'
+            + '<button class="btn btn-o" ' + (digest.sticky ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.5"') + '>📌 Мои сложные</button>'
             + '</div></div>';
           host.innerHTML += html;
         }
@@ -3732,25 +3903,22 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var old = document.getElementById('wave28-review-card');
     if (old) old.remove();
     var state = loadReviewState();
-    var total = listReviewItems(state).length;
-    var due = dueItems(state).length;
-    var sticky = stickyItems(state).length;
-    var mastered = masteredCount(state);
-    if (!total) return;
+    var digest = reviewDigest(state);
+    if (!digest.total) return;
     var card = document.createElement('div');
     card.id = 'wave28-review-card';
     card.className = 'wave28-card';
-    card.innerHTML = '<div class="wave28-title">🔁 Повторение ошибок</div>'
+    card.innerHTML = '<div class="wave28-title">🔁 SM-2 повторение</div>'
       + '<div class="wave28-stats">'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + due + '</div><div class="l">сегодня</div></div>'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + sticky + '</div><div class="l">сложные</div></div>'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + mastered + '</div><div class="l">закреплены</div></div>'
-      + '<div class="wave28-stat"><div class="v">' + total + '</div><div class="l">в журнале</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + digest.due + '</div><div class="l">сегодня</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--orange)">' + digest.upcomingWeek + '</div><div class="l">на неделе</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + digest.sticky + '</div><div class="l">сложные</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + digest.mastered + '</div><div class="l">закреплены</div></div>'
       + '</div>'
-      + '<div class="wave28-muted" style="margin-bottom:10px">Ошибки теперь попадают в интервальное повторение: 1 / 3 / 7 / 14 / 30 дней. После двух уверенных повторов вопрос снимается с пометки «сложный».</div>'
+      + '<div class="wave28-muted" style="margin-bottom:10px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '. Ошибка даёт вопросу короткий интервал, дальше SM-2 растит паузу по силе запоминания: 1 день → 6 дней → дальше по коэффициенту EF.</div>'
       + '<div class="wave28-actions">'
-      + '<button class="btn btn-p" ' + (due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
-      + '<button class="btn btn-o" ' + (sticky ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Мои сложные</button>'
+      + '<button class="btn btn-p" ' + (digest.due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
+      + '<button class="btn btn-o" ' + (digest.sticky ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Мои сложные</button>'
       + '<button class="btn btn-o" onclick="showJournal()">📚 Журнал</button>'
       + '</div>';
     host.appendChild(card);
@@ -3762,8 +3930,8 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var old = document.getElementById('wave28-prog-card');
     if (old) old.remove();
     var state = loadReviewState();
-    var total = listReviewItems(state).length;
-    if (!total) return;
+    var digest = reviewDigest(state);
+    if (!digest.total) return;
     var due = dueItems(state);
     var sticky = stickyItems(state);
     var groups = countByTag(due.slice(0, 8));
@@ -3771,23 +3939,24 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     card.id = 'wave28-prog-card';
     card.className = 'rcard';
     var chips = groups.length ? groups.map(function(pair){ return '<span class="wave28-chip">' + esc(pair[0]) + ': ' + pair[1].count + '</span>'; }).join('') : '<span class="wave28-muted">На сегодня повторов нет.</span>';
-    card.innerHTML = '<h3>🔁 Журнал ошибок и интервальное повторение</h3>'
+    card.innerHTML = '<h3>🔁 SM-2 и журнал ошибок</h3>'
       + '<div class="wave28-stats" style="margin-top:10px">'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + due.length + '</div><div class="l">сегодня</div></div>'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + sticky.length + '</div><div class="l">сложные</div></div>'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + masteredCount(state) + '</div><div class="l">закреплены</div></div>'
-      + '<div class="wave28-stat"><div class="v">' + total + '</div><div class="l">всего карт</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + digest.due + '</div><div class="l">сегодня</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--orange)">' + digest.upcomingWeek + '</div><div class="l">на неделе</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + digest.sticky + '</div><div class="l">сложные</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + digest.mastered + '</div><div class="l">закреплены</div></div>'
       + '</div>'
-      + '<div class="wave28-muted" style="margin-bottom:8px">Сегодня в повторе сильнее всего выпадают такие темы:</div>'
+      + '<div class="wave28-muted" style="margin-bottom:8px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '. На сегодня сильнее всего выпадают такие темы:</div>'
       + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">' + chips + '</div>'
       + '<div class="wave28-actions">'
-      + '<button class="btn btn-p" ' + (due.length ? 'onclick="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
+      + '<button class="btn btn-p" ' + (digest.due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
       + '<button class="btn btn-o" ' + (sticky.length ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Сложные</button>'
       + '<button class="btn btn-o" onclick="showJournal()">📚 Открыть журнал</button>'
       + '</div>';
     host.appendChild(card);
   }
   var _oldRenderDailyMeter = window.renderDailyMeter;
+
   if (hasFn(_oldRenderDailyMeter)) window.renderDailyMeter = function(){ var out = _oldRenderDailyMeter.apply(this, arguments); try{ renderReviewCard(); }catch(e){} return out; };
   var _oldRenderProg = window.renderProg;
   if (hasFn(_oldRenderProg)) window.renderProg = function(){ var out = _oldRenderProg.apply(this, arguments); try{ appendReviewProgress(); }catch(e){} return out; };
@@ -3808,14 +3977,15 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     var card = document.createElement('div');
     card.style.cssText = 'background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:16px;padding:24px 20px;max-width:460px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 12px 30px rgba(0,0,0,.25)';
     card.onclick = function(e){ e.stopPropagation(); };
-    var html = '<h3 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800;margin-bottom:12px;text-align:center">🔁 Журнал ошибок</h3>'
+    var digest = reviewDigest(state);
+    var html = '<h3 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800;margin-bottom:12px;text-align:center">🔁 SM-2 журнал ошибок</h3>'
       + '<div class="wave28-stats">'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + due.length + '</div><div class="l">сегодня</div></div>'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + sticky.length + '</div><div class="l">сложные</div></div>'
-      + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + masteredCount(state) + '</div><div class="l">закреплены</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + digest.due + '</div><div class="l">сегодня</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--orange)">' + digest.upcomingWeek + '</div><div class="l">на неделе</div></div>'
+      + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + digest.sticky + '</div><div class="l">сложные</div></div>'
       + '<div class="wave28-stat"><div class="v">' + journal.length + '</div><div class="l">последних ошибок</div></div>'
       + '</div>'
-      + '<div class="wave28-muted" style="margin-bottom:10px">Ошибки попадают в интервальное повторение: 1 / 3 / 7 / 14 / 30 дней. После двух успешных повторов вопрос перестаёт считаться «сложным».</div>'
+      + '<div class="wave28-muted" style="margin-bottom:10px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '. Ошибка даёт короткий интервал, потом SM-2 растит паузу: 1 день → 6 дней → дальше по коэффициенту запоминания. Подсказка сбрасывает карточку на быстрый повтор.</div>'
       + '<div class="wave28-actions" style="margin-bottom:12px">'
       + '<button class="btn btn-p" ' + (due.length ? 'onclick="this.closest(\'div[style*=fixed]\').remove();startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
       + '<button class="btn btn-o" ' + (sticky.length ? 'onclick="this.closest(\'div[style*=fixed]\').remove();startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Мои сложные</button>'
@@ -3839,7 +4009,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     if (sticky.length){
       html += '<div class="wave28-title" style="font-size:11px;margin-top:12px">Сложные вопросы</div><div class="wave28-list">';
       sticky.slice(0, 6).forEach(function(item){
-        html += '<div class="wave28-item"><div class="q">' + esc(item.q) + '</div><div class="m">' + esc(item.tag) + ' · ошибок: ' + (item.wrongCount||0) + ' · ' + dayLabel(item.dueAt || nowTs()) + '</div></div>';
+        html += '<div class="wave28-item"><div class="q">' + esc(item.q) + '</div><div class="m">' + esc(item.tag) + ' · ошибок: ' + (item.wrongCount||0) + ' · EF ' + formatEf(item.ef) + ' · ' + dayLabel(item.dueAt || nowTs()) + '</div></div>';
       });
       html += '</div>';
     }
@@ -3854,7 +4024,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       html += '<div style="text-align:center;color:var(--muted);padding:24px 0;font-size:13px">Ошибок пока нет. Решай задачи!</div>';
     }
 
-    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="if(confirm(\'Очистить журнал ошибок и интервальное повторение?\')){localStorage.removeItem(\'' + 'trainer_journal_' + gradeKey() + '\');localStorage.removeItem(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}">Очистить журнал и повторение</button>';
+    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="if(confirm(\'Очистить журнал ошибок и SM-2 повторение?\')){localStorage.removeItem(\'' + 'trainer_journal_' + gradeKey() + '\');localStorage.removeItem(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}">Очистить журнал и повторение</button>';
     html += '<button style="margin-top:8px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--text);color:var(--bg);font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
 
     card.innerHTML = html;
@@ -3873,17 +4043,25 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
   setTimeout(patchMainJournalButton, 0);
 
   window.wave28Debug = {
-    version: 'wave28',
+    version: 'wave89l-sm2',
     loadReview: function(){ return loadReviewState(); },
     dueCount: function(){ return dueItems().length; },
     stickyCount: function(){ return stickyItems().length; },
     totalCount: function(){ return listReviewItems(loadReviewState()).length; },
     masteredCount: function(){ return masteredCount(loadReviewState()); },
-    markAllDue: function(){ var s = loadReviewState(); listReviewItems(s).forEach(function(item){ item.dueAt = dayStart() - 1000; item.updatedAt = nowTs(); s.items[item.key] = item; }); saveReviewState(s); renderReviewCard(); appendReviewProgress(); },
+    digest: function(){ return reviewDigest(loadReviewState()); },
+    registerMistake: function(entry){ return registerMistake(entry || {}); },
+    previewQuality: function(keyOrItem, quality){
+      var item = typeof keyOrItem === 'string' ? loadReviewState().items[keyOrItem] : keyOrItem;
+      return item ? reviewPreview(item, quality) : null;
+    },
+    gradeCard: function(key, quality, helped){ return gradeReviewCard(key, quality, !!helped); },
+    markAllDue: function(){ var s = loadReviewState(); listReviewItems(s).forEach(function(item){ item = normalizeReviewItem(item); item.dueAt = dayStart() - 1000; item.updatedAt = nowTs(); s.items[item.key] = item; }); saveReviewState(s); renderReviewCard(); appendReviewProgress(); },
     clear: function(){ clearReviewState(); saveJournalSafe([]); renderReviewCard(); appendReviewProgress(); },
     isReviewMode: function(){ return !!reviewMode; },
     startDueReview: startDueReview,
-    startStickyReview: startStickyReview
+    startStickyReview: startStickyReview,
+    startSpacedReview: startDueReview
   };
 
   setTimeout(function(){ try{ renderReviewCard(); }catch(e){} try{ appendReviewProgress(); }catch(e){} }, 0);
@@ -4654,6 +4832,61 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     } catch (_) {}
     try { root.dispatchEvent(new CustomEvent('trainer:perf-sample', { detail: JSON.parse(JSON.stringify(perf)) })); } catch (_) {}
   }
+  /* wave89h: lazy loading skeleton events */
+  var lazyUiSeq = 0;
+  function emitLazyUi(phase, detail){
+    try {
+      var payload = Object.assign({
+        phase: phase,
+        wave: 'wave89h',
+        ts: Date.now()
+      }, detail || {});
+      root.dispatchEvent(new CustomEvent('trainer:lazy-' + phase, { detail: payload }));
+      return payload.id || '';
+    } catch (_err) {
+      return (detail && detail.id) || '';
+    }
+  }
+  function lazyUiId(kind){
+    lazyUiSeq += 1;
+    return 'wave89h-' + String(kind || 'lazy') + '-' + lazyUiSeq;
+  }
+  function withLazyUi(promise, detail){
+    if (!detail) return Promise.resolve(promise);
+    var payload = Object.assign({}, detail);
+    if (!payload.id) payload.id = lazyUiId(payload.kind || payload.scope || 'lazy');
+    emitLazyUi('start', payload);
+    return Promise.resolve(promise).then(function(result){
+      emitLazyUi('end', {
+        id: payload.id,
+        scope: payload.scope || '',
+        kind: payload.kind || '',
+        action: payload.action || '',
+        status: 'ok'
+      });
+      return result;
+    }, function(err){
+      emitLazyUi('end', {
+        id: payload.id,
+        scope: payload.scope || '',
+        kind: payload.kind || '',
+        action: payload.action || '',
+        status: 'error',
+        message: err && err.message ? String(err.message) : ''
+      });
+      throw err;
+    });
+  }
+  function actionUiMeta(action){
+    action = String(action || '');
+    if (action === 'show-badges') return { scope:'runtime', kind:'features', action:action, title:'Подгружаю награды', label:'Загружаю экран достижений и статистику по ачивкам…' };
+    if (action === 'show-profile') return { scope:'runtime', kind:'services', action:action, title:'Подгружаю профиль', label:'Загружаю профиль, отчёты и облачные сервисы…' };
+    if (action === 'generate-report') return { scope:'runtime', kind:'services', action:action, title:'Подгружаю отчёт', label:'Загружаю модуль отчётов для родителя…' };
+    if (action === 'show-backup') return { scope:'runtime', kind:'services', action:action, title:'Подгружаю резервную копию', label:'Загружаю модуль экспорта и резервного восстановления…' };
+    if (action === 'share-report') return { scope:'runtime', kind:'services', action:action, title:'Подгружаю шаринг', label:'Загружаю инструменты для отправки прогресса…' };
+    if (action === 'sync') return { scope:'runtime', kind:'services', action:action, title:'Подгружаю синхронизацию', label:'Загружаю облачные сервисы и резервное хранилище…' };
+    return null;
+  }
   function scriptLoaded(src){
     var scripts = document.querySelectorAll('script[src]');
     for (var i = 0; i < scripts.length; i++) {
@@ -4692,9 +4925,13 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       }
     });
   }
-  function load(kind){
+  function load(kind, opts){
+    opts = opts || {};
     if (loaded[kind]) return Promise.resolve(true);
-    if (loading[kind]) return loading[kind];
+    var pending = loading[kind];
+    if (pending) {
+      return opts.ui ? withLazyUi(pending, opts.ui) : pending;
+    }
     var src = manifest[kind];
     if (!src) return Promise.resolve(false);
     record('requested_' + kind);
@@ -4702,10 +4939,10 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       try { console.warn('[wave87n runtime split] failed to load', kind, err); } catch (_) {}
       return false;
     });
-    return loading[kind];
+    return opts.ui ? withLazyUi(loading[kind], opts.ui) : loading[kind];
   }
-  function loadFeatures(){ return load('features'); }
-  function loadServices(){ return load('services'); }
+  function loadFeatures(opts){ return load('features', opts); }
+  function loadServices(opts){ return load('services', opts); }
   function scheduleIdleLoads(){
     var info = connectionInfo();
     var lowEnd = detectLowEnd(info);
@@ -4725,11 +4962,13 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     }
     return '';
   }
-  function hydrateForAction(action){
+  function hydrateForAction(action, opts){
     action = String(action || '');
-    if (action === 'show-badges') return loadFeatures();
-    if (action === 'show-profile') return loadFeatures().then(function(){ return loadServices(); });
-    if (action === 'generate-report' || action === 'show-backup' || action === 'share-report') return loadServices();
+    opts = opts || {};
+    var ui = opts.interactive ? actionUiMeta(action) : null;
+    if (action === 'show-badges') return withLazyUi(loadFeatures(), ui);
+    if (action === 'show-profile') return withLazyUi(loadFeatures().then(function(){ return loadServices(); }), ui);
+    if (action === 'generate-report' || action === 'show-backup' || action === 'share-report') return withLazyUi(loadServices(), ui);
     return Promise.resolve(false);
   }
   function bindDirectAction(action, handler){
@@ -4740,7 +4979,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
       el.__wave87rDirectBound = true;
       el.addEventListener('click', function(event){
         if (event) event.preventDefault();
-        Promise.resolve(hydrateForAction(action)).catch(function(){ return false; }).then(function(){
+        Promise.resolve(hydrateForAction(action, { interactive:true, source:'direct-click' })).catch(function(){ return false; }).then(function(){
           try { handler(event); }
           catch (err) {
             try { console.warn('[wave87r direct action] failed', action, err); } catch (_) {}
@@ -4774,7 +5013,7 @@ html[data-theme="dark"] #${THEME_BTN_ID}{background:rgba(30,30,46,.94);color:#e8
     function onIntent(event){
       var action = actionNameFromNode(event.target);
       if (!action) return;
-      hydrateForAction(action);
+      hydrateForAction(action, { warmup:true, source:'intent-warmup' });
     }
     document.addEventListener('pointerdown', onIntent, true);
     document.addEventListener('focusin', onIntent, true);

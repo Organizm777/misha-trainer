@@ -277,8 +277,8 @@ assert(read('sw.js').includes(`'./${runtimeBuilt}'`), `sw.js: missing ${runtimeB
 assert(read('sw.js').includes(`'./${chunkBuilt}'`), `sw.js: missing ${chunkBuilt}`);
 
 const healthz = JSON.parse(read('healthz.json'));
-assert(/^(wave88[bcd]|wave89[abcd])$/.test(healthz.wave), `healthz.json: expected wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.wave}`);
-assert(/^(wave88[bcd]|wave89[abcd])$/.test(healthz.build_id), `healthz.json: expected build_id wave88b/wave88c/wave88d/wave89a/wave89b/wave89c/wave89d, got ${healthz.build_id}`);
+assert(/^(wave88[bcd]|wave89[a-z]+)$/i.test(String(healthz.wave || '')), `healthz.json: expected wave88b+ or a later wave89* build, got ${healthz.wave}`);
+assert(/^(wave88[bcd]|wave89[a-z]+)$/i.test(String(healthz.build_id || '')), `healthz.json: expected build_id wave88b+ or a later wave89* build, got ${healthz.build_id}`);
 assert(healthz.hashed_asset_count === Object.keys(manifest.assets || {}).length, 'healthz.json: hashed_asset_count mismatch');
 
 const docRel = 'docs/MULTI_SELECT_wave88b.md';
