@@ -1,0 +1,110 @@
+{
+  "ok": true,
+  "wave": "wave87r",
+  "pages": 16,
+  "legacyAttrs": 0,
+  "oldStaticActionAttrs": 0,
+  "actionMarkers": 268,
+  "uniqueMarkerActions": 40,
+  "pagesMissingBridge": [],
+  "bridgeStillDispatches": false,
+  "missingDirectBindingFiles": [],
+  "byPage": {
+    "dashboard.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 4,
+      "hasBridge": true
+    },
+    "diagnostic.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 6,
+      "hasBridge": true
+    },
+    "grade10_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade11_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade1_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade2_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade3_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade4_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade5_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade6_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade7_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade8_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "grade9_v2.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 22,
+      "hasBridge": true
+    },
+    "index.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 0,
+      "hasBridge": true
+    },
+    "spec_subjects.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 0,
+      "hasBridge": true
+    },
+    "tests.html": {
+      "legacyAttrs": 0,
+      "oldStaticActionAttrs": 0,
+      "actionMarkers": 16,
+      "hasBridge": true
+    }
+  }
+}

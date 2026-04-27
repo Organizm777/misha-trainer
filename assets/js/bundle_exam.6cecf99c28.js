@@ -119,6 +119,19 @@
       opts: (row.opts || []).slice(),
       a: row.a,
       hint: row.hint || 'Разбор — после результата.',
+      ex: row.ex || row.explanation || '',
+      criteria: Array.isArray(row.criteria) ? row.criteria.slice() : (row.criteria || ''),
+      code: row.code || '',
+      isMath: !!row.isMath,
+      inputMode: row.inputMode || '',
+      interactionType: row.interactionType || row.type || '',
+      acceptedAnswers: Array.isArray(row.acceptedAnswers) ? row.acceptedAnswers.slice() : [],
+      answers: Array.isArray(row.answers) ? row.answers.slice() : [],
+      correctAnswers: Array.isArray(row.correctAnswers) ? row.correctAnswers.slice() : [],
+      sequenceItems: Array.isArray(row.sequenceItems) ? row.sequenceItems.slice() : [],
+      sequencePool: Array.isArray(row.sequencePool) ? row.sequencePool.slice() : [],
+      matchPairs: Array.isArray(row.matchPairs) ? row.matchPairs.map(function(pair){ return Array.isArray(pair) ? pair.slice() : pair; }) : [],
+      matchOptions: Array.isArray(row.matchOptions) ? row.matchOptions.slice() : [],
       sourceTag: row.sourceTag || row.wave38Source || '',
       bankSource: row.bankSource || '',
       __wave38: row.__wave38 || null
@@ -616,6 +629,24 @@
 
   function cloneSections(list){ return (list || []).map(function(section){ return JSON.parse(JSON.stringify(section)); }); }
   function packSeed(id, sectionLabel){ return String(id) + '|' + String(sectionLabel || 'section'); }
+  function structuredVariantNosHint(familyId, fallbackCount){
+    var seen = {};
+    try {
+      var payload = window.WAVE89Q_EXAM_BANK;
+      var family = payload && payload.families && payload.families[familyId];
+      if (family && Array.isArray(family.variants) && family.variants.length) {
+        return family.variants.map(function(value){ return toNum(value); }).filter(function(value){
+          if (!(value > 0) || seen[value]) return false;
+          seen[value] = 1;
+          return true;
+        }).sort(function(a, b){ return a - b; });
+      }
+    } catch(_) {}
+    var out = [];
+    var total = Math.max(1, toNum(fallbackCount) || 1);
+    for (var i = 1; i <= total; i++) out.push(i);
+    return out;
+  }
   function makeWave69MathVariant(idx){
     return {
       id: 'oge_math_var' + idx,
@@ -754,12 +785,10 @@
   }
   function attachWave69OgePacks(){
     ['oge_math','oge_russian','oge_informatics','oge_physics'].forEach(function(id){ if (EXAM_PACKS[id]) EXAM_PACKS[id].hidden = true; });
-    for (var i = 1; i <= 3; i++) {
-      EXAM_PACKS['oge_math_var' + i] = makeWave69MathVariant(i);
-      EXAM_PACKS['oge_russian_var' + i] = makeWave69RussianVariant(i);
-      EXAM_PACKS['oge_english_var' + i] = makeWave69EnglishVariant(i);
-      EXAM_PACKS['oge_social_var' + i] = makeWave69SocialVariant(i);
-    }
+    structuredVariantNosHint('oge_math_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_math_var' + i] = makeWave69MathVariant(i); });
+    structuredVariantNosHint('oge_russian_2026_full', 3).forEach(function(i){ EXAM_PACKS['oge_russian_var' + i] = makeWave69RussianVariant(i); });
+    structuredVariantNosHint('oge_english_2026_full', 3).forEach(function(i){ EXAM_PACKS['oge_english_var' + i] = makeWave69EnglishVariant(i); });
+    structuredVariantNosHint('oge_social_2026_full', 3).forEach(function(i){ EXAM_PACKS['oge_social_var' + i] = makeWave69SocialVariant(i); });
   }
   attachWave69OgePacks();
 
@@ -912,11 +941,9 @@
   function attachWave70EgePacks(){
     ['ege_base_math','ege_profile_math','ege_russian'].forEach(function(id){ if (EXAM_PACKS[id]) EXAM_PACKS[id].hidden = true; });
     if (EXAM_PACKS.ege_english) EXAM_PACKS.ege_english.order = 99;
-    for (var i = 1; i <= 3; i++) {
-      EXAM_PACKS['ege_base_math_var' + i] = makeWave70EgeBaseMathVariant(i);
-      EXAM_PACKS['ege_profile_math_var' + i] = makeWave70EgeProfileMathVariant(i);
-      EXAM_PACKS['ege_russian_var' + i] = makeWave70EgeRussianVariant(i);
-    }
+    structuredVariantNosHint('ege_base_math_2026_full', 3).forEach(function(i){ EXAM_PACKS['ege_base_math_var' + i] = makeWave70EgeBaseMathVariant(i); });
+    structuredVariantNosHint('ege_profile_math_2026_part1', 5).forEach(function(i){ EXAM_PACKS['ege_profile_math_var' + i] = makeWave70EgeProfileMathVariant(i); });
+    structuredVariantNosHint('ege_russian_2026_part1', 3).forEach(function(i){ EXAM_PACKS['ege_russian_var' + i] = makeWave70EgeRussianVariant(i); });
   }
   attachWave70EgePacks();
 
@@ -1071,7 +1098,296 @@
   }
   attachWave71EgePacks();
 
+  /* wave89q: structured exam bank + KIM generator */
+  var STRUCTURED_SCHEMA_VERSION = 'wave89q_exam_bank_v1';
+  var STRUCTURED_FAMILY_CACHE = {};
+  var STRUCTURED_FAMILY_SPECS = {
+    oge_math_2026_full: { pattern: /^oge_math_var(\d+)$/, exam:'ОГЭ', subject:'math', year:2026, mode:'full' },
+    oge_russian_2026_full: { pattern: /^oge_russian_var(\d+)$/, exam:'ОГЭ', subject:'russian', year:2026, mode:'full' },
+    oge_english_2026_full: { pattern: /^oge_english_var(\d+)$/, exam:'ОГЭ', subject:'english', year:2026, mode:'full' },
+    oge_social_2026_full: { pattern: /^oge_social_var(\d+)$/, exam:'ОГЭ', subject:'social', year:2026, mode:'full' },
+    ege_base_math_2026_full: { pattern: /^ege_base_math_var(\d+)$/, exam:'ЕГЭ', subject:'base_math', year:2026, mode:'full' },
+    ege_profile_math_2026_part1: { pattern: /^ege_profile_math_var(\d+)$/, exam:'ЕГЭ', subject:'profile_math', year:2026, mode:'part1' },
+    ege_russian_2026_part1: { pattern: /^ege_russian_var(\d+)$/, exam:'ЕГЭ', subject:'russian', year:2026, mode:'part1' },
+    ege_social_2026_part1: { pattern: /^ege_social_var(\d+)$/, exam:'ЕГЭ', subject:'social', year:2026, mode:'part1' },
+    ege_english_2026_part1: { pattern: /^ege_english_var(\d+)$/, exam:'ЕГЭ', subject:'english', year:2026, mode:'part1' },
+    ege_physics_2026_part1: { pattern: /^ege_physics_var(\d+)$/, exam:'ЕГЭ', subject:'physics', year:2026, mode:'part1' }
+  };
+
+  function clonePlain(value){
+    try { return JSON.parse(JSON.stringify(value)); } catch(_) { return value; }
+  }
+  function structuredRuntimePayload(){
+    try { return window.WAVE89Q_EXAM_BANK || null; } catch(_) { return null; }
+  }
+  function structuredRuntimeFamily(familyId){
+    var payload = structuredRuntimePayload();
+    var family = payload && payload.families && payload.families[familyId];
+    return family ? clonePlain(family) : null;
+  }
+  function listStructuredFamilies(){ return Object.keys(STRUCTURED_FAMILY_SPECS); }
+  function matchStructuredPackId(packId){
+    packId = String(packId || '');
+    var keys = listStructuredFamilies();
+    for (var i = 0; i < keys.length; i++) {
+      var familyId = keys[i];
+      var spec = STRUCTURED_FAMILY_SPECS[familyId];
+      var match = packId.match(spec.pattern);
+      if (match) return { familyId: familyId, variantNo: toNum(match[1]) || 1, spec: spec };
+    }
+    return null;
+  }
+  function structuredPackIds(familyId){
+    var match = familyId ? STRUCTURED_FAMILY_SPECS[familyId] : null;
+    if (!match) return [];
+    return Object.keys(EXAM_PACKS).filter(function(id){ return match.pattern.test(id); }).sort(function(a, b){ return a.localeCompare(b, 'ru'); });
+  }
+  function structuredYearForPack(pack, fallback){
+    var raw = String((pack && pack.scoreModel) || '') + ' ' + String((pack && pack.label) || '') + ' ' + String((pack && pack.summary) || '');
+    var match = raw.match(/20\d{2}/);
+    return match ? toNum(match[0]) : toNum(fallback || 2026);
+  }
+  function structuredSubjectForPack(pack, spec){
+    if (spec && spec.subject) return spec.subject;
+    var id = String((pack && pack.subjectId) || '');
+    if (id === 'algebra' && /^ege_profile_math/.test(String(pack && pack.id || ''))) return 'profile_math';
+    if (id === 'mathall' && /^ege_base_math/.test(String(pack && pack.id || ''))) return 'base_math';
+    if (id === 'mathall' && /^oge_math/.test(String(pack && pack.id || ''))) return 'math';
+    return id || 'subject';
+  }
+  function structuredTypeFromQuestion(question){
+    if (!question) return 'single';
+    if (question.inputMode === 'text') return 'short_text';
+    if (question.inputMode === 'numeric') return 'short_numeric';
+    if (question.interactionType === 'match') return 'match';
+    if (question.interactionType === 'sequence') return 'sequence';
+    if (question.interactionType === 'find-error') return 'find_error';
+    if (question.interactionType === 'multi-select' || Array.isArray(question.correctAnswers)) return 'multiple';
+    return 'single';
+  }
+  function structuredTopicTag(value){
+    return String(value || '').toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '_').replace(/^_+|_+$/g, '') || 'exam_topic';
+  }
+  function structuredCriteriaForQuestion(question, points, type){
+    if (Array.isArray(question && question.criteria) && question.criteria.length) return question.criteria.slice();
+    if (type === 'short_text' || type === 'short_numeric') return ['1 балл за точный ответ без лишних символов.'];
+    if (type === 'multiple') return ['1 балл только при выборе всех верных вариантов.'];
+    if (points > 1) return [String(points) + ' балла за полный и верный ответ.', 'Проверьте ход решения и итоговый результат.'];
+    return ['1 балл за верный ответ.'];
+  }
+  function structuredBlueprintFromBuilt(pack, built, familyId, spec){
+    var tasks = (built.questions || []).map(function(question){
+      return {
+        task_num: toNum(question.taskNo),
+        section: question.section || question.topic || 'Раздел',
+        type: structuredTypeFromQuestion(question),
+        max_score: toNum(question.points || 1),
+        topic_tag: structuredTopicTag(question.section || question.topic),
+        part: question.part || (toNum(question.points || 1) > 1 ? 'B' : 'A')
+      };
+    });
+    return {
+      schema: STRUCTURED_SCHEMA_VERSION,
+      family_id: familyId,
+      exam: built.exam,
+      subject: structuredSubjectForPack(pack, spec),
+      year: structuredYearForPack(pack, spec && spec.year),
+      mode: spec && spec.mode ? spec.mode : 'variant',
+      task_count: tasks.length,
+      time_limit_sec: toNum(built.timeLimit),
+      summary: built.summary || '',
+      score_kind: built.scoreKind || '',
+      score_model: built.scoreModel || '',
+      accent: built.accent || '',
+      grades: built.grades || '',
+      tasks: tasks
+    };
+  }
+  function structuredRowFromQuestion(pack, built, question, variantNo, spec){
+    var type = structuredTypeFromQuestion(question);
+    return {
+      exam: built.exam,
+      subject: structuredSubjectForPack(pack, spec),
+      year: structuredYearForPack(pack, spec && spec.year),
+      variant: toNum(variantNo) || 1,
+      task_num: toNum(question.taskNo),
+      type: type,
+      max_score: toNum(question.points || 1),
+      q: question.q,
+      a: question.a,
+      o: (question.opts || []).slice(),
+      h: question.hint || '',
+      ex: question.ex || '',
+      criteria: structuredCriteriaForQuestion(question, toNum(question.points || 1), type),
+      topic_tag: structuredTopicTag(question.section || question.topic),
+      section: question.section || '',
+      topic: question.topic || '',
+      grades: built.grades || '',
+      source_pack: pack.id,
+      source_tag: question.sourceTag || question.bankSource || '',
+      score_kind: built.scoreKind || '',
+      score_model: built.scoreModel || '',
+      part: question.part || (toNum(question.points || 1) > 1 ? 'B' : 'A')
+    };
+  }
+  function compileStructuredFamily(familyId){
+    if (STRUCTURED_FAMILY_CACHE[familyId]) return STRUCTURED_FAMILY_CACHE[familyId];
+    var runtimeFamily = structuredRuntimeFamily(familyId);
+    if (runtimeFamily && runtimeFamily.rows && runtimeFamily.rows.length && runtimeFamily.blueprint) {
+      STRUCTURED_FAMILY_CACHE[familyId] = runtimeFamily;
+      return runtimeFamily;
+    }
+    var spec = STRUCTURED_FAMILY_SPECS[familyId];
+    if (!spec) return null;
+    var packIds = structuredPackIds(familyId);
+    var rows = [];
+    var variants = [];
+    var blueprint = null;
+    var firstBuilt = null;
+    var firstPack = null;
+    packIds.forEach(function(packId){
+      var match = matchStructuredPackId(packId);
+      var pack = EXAM_PACKS[packId];
+      var built = pack ? buildLegacyPack(packId) : null;
+      if (!match || !pack || !built || !built.questions || !built.questions.length) return;
+      firstBuilt = firstBuilt || built;
+      firstPack = firstPack || pack;
+      if (!blueprint) blueprint = structuredBlueprintFromBuilt(pack, built, familyId, spec);
+      variants.push(match.variantNo);
+      (built.questions || []).forEach(function(question){
+        rows.push(structuredRowFromQuestion(pack, built, question, match.variantNo, spec));
+      });
+    });
+    if (!firstBuilt || !rows.length || !blueprint) return null;
+    blueprint.variant_count = variants.length;
+    var snapshot = {
+      schema: STRUCTURED_SCHEMA_VERSION,
+      family_id: familyId,
+      exam: firstBuilt.exam,
+      subject: structuredSubjectForPack(firstPack, spec),
+      year: structuredYearForPack(firstPack, spec && spec.year),
+      variants: variants.slice().sort(function(a, b){ return a - b; }),
+      blueprint: blueprint,
+      rows: rows,
+      row_count: rows.length,
+      pack_ids: packIds.slice(),
+      compiled_from: 'legacy_runtime'
+    };
+    STRUCTURED_FAMILY_CACHE[familyId] = snapshot;
+    return snapshot;
+  }
+  function getStructuredFamily(familyId){
+    var family = compileStructuredFamily(familyId);
+    return family ? clonePlain(family) : null;
+  }
+  function getStructuredBlueprint(familyId){
+    var family = compileStructuredFamily(familyId);
+    return family ? clonePlain(family.blueprint) : null;
+  }
+  function getStructuredRows(familyId){
+    var family = compileStructuredFamily(familyId);
+    return family ? clonePlain(family.rows) : [];
+  }
+  function buildStructuredKim(familyId, variantNo){
+    if (familyId && typeof familyId === 'object') {
+      variantNo = familyId.variant || familyId.variantNo || familyId.variant_index;
+      familyId = familyId.familyId || familyId.id || familyId.family_id;
+    }
+    familyId = String(familyId || '');
+    var family = compileStructuredFamily(familyId);
+    if (!family) return null;
+    variantNo = Math.max(1, toNum(variantNo) || toNum((family.variants || [1])[0]));
+    var packId = '';
+    Object.keys(EXAM_PACKS).some(function(id){
+      var match = matchStructuredPackId(id);
+      if (match && match.familyId === familyId && toNum(match.variantNo) === variantNo) { packId = id; return true; }
+      return false;
+    });
+    var pack = packId && EXAM_PACKS[packId] ? EXAM_PACKS[packId] : null;
+    var tasks = (family.blueprint && family.blueprint.tasks ? family.blueprint.tasks.slice() : []).sort(function(a, b){ return toNum(a.task_num) - toNum(b.task_num); });
+    var pickedRows = [];
+    tasks.forEach(function(task){
+      var rows = family.rows.filter(function(row){ return toNum(row.variant) === variantNo && toNum(row.task_num) === toNum(task.task_num); });
+      if (!rows.length) rows = family.rows.filter(function(row){ return toNum(row.task_num) === toNum(task.task_num); });
+      if (!rows.length) return;
+      var chosen = stableShuffle(rows, familyId + '|v' + variantNo + '|t' + toNum(task.task_num))[0];
+      if (chosen) pickedRows.push(chosen);
+    });
+    if (!pickedRows.length) return null;
+    pickedRows.sort(function(a, b){ return toNum(a.task_num) - toNum(b.task_num); });
+    var questions = pickedRows.map(function(row){
+      var meta = {
+        examPackId: pack ? pack.id : (familyId + '_v' + variantNo),
+        examLabel: pack ? pack.label : (family.exam + ' · ' + family.subject + ' · Вариант ' + variantNo),
+        exam: family.exam,
+        section: row.section || row.topic || 'Раздел',
+        points: toNum(row.max_score || 1),
+        part: row.part || (toNum(row.max_score || 1) > 1 ? 'B' : 'A'),
+        taskNo: toNum(row.task_num),
+        scoreKind: pack ? pack.scoreKind : family.blueprint.score_kind,
+        ex: row.ex || '',
+        criteria: Array.isArray(row.criteria) ? row.criteria.slice() : [],
+        sourceTag: 'structured-bank',
+        bankSource: familyId,
+        structuredBankRow: clonePlain(row),
+        structuredFamilySource: family.compiled_from || 'legacy_runtime',
+        topicTag: row.topic_tag
+      };
+      return cloneQuestion({
+        g: pack ? toNum(pack.maxG || pack.minG || 9) : 11,
+        topic: row.section || row.topic || 'Экзамен',
+        q: row.q,
+        opts: (row.o || []).slice(),
+        a: row.a,
+        hint: row.h || 'Разбор — после результата.'
+      }, meta);
+    });
+    var maxPoints = questions.reduce(function(sum, row){ return sum + toNum(row.points || 1); }, 0);
+    return {
+      id: pack ? pack.id : (familyId + '_v' + variantNo),
+      label: pack ? pack.label : (family.exam + ' · ' + family.subject + ' · Вариант ' + variantNo),
+      exam: family.exam,
+      subjectId: pack ? pack.subjectId : family.subject,
+      summary: pack ? pack.summary : (family.blueprint && family.blueprint.summary) || '',
+      maxQ: questions.length,
+      timeLimit: pack ? pack.timeLimit : toNum(family.blueprint && family.blueprint.time_limit_sec),
+      scoreKind: pack ? pack.scoreKind : (family.blueprint && family.blueprint.score_kind) || '',
+      scoreModel: pack ? (pack.scoreModel || '') : (family.blueprint && family.blueprint.score_model) || '',
+      geometrySections: pack ? (pack.geometrySections || []).slice() : [],
+      literacySections: pack ? (pack.literacySections || []).slice() : [],
+      bands: pack ? pack.bands : [],
+      accent: pack ? pack.accent : (family.blueprint && family.blueprint.accent) || '',
+      grades: pack ? pack.grades : (family.blueprint && family.blueprint.grades) || '',
+      questions: questions,
+      bankCount: toNum(family.row_count),
+      maxPoints: maxPoints,
+      structuredFamilyId: familyId,
+      structuredVariant: variantNo,
+      structuredSchema: STRUCTURED_SCHEMA_VERSION,
+      structuredFamilySource: family.compiled_from || 'legacy_runtime',
+      generatedFromStructuredBank: true,
+      generatedFromStructuredJson: family.compiled_from === 'json_bank',
+      structuredBlueprint: clonePlain(family.blueprint)
+    };
+  }
+  function exportStructuredBankSnapshot(){
+    var out = {};
+    listStructuredFamilies().forEach(function(familyId){
+      var family = compileStructuredFamily(familyId);
+      if (family) out[familyId] = clonePlain(family);
+    });
+    return { schema: STRUCTURED_SCHEMA_VERSION, families: out };
+  }
   function buildPack(packId){
+    var match = matchStructuredPackId(packId);
+    if (match) {
+      var structured = buildStructuredKim(match.familyId, match.variantNo);
+      if (structured && structured.questions && structured.questions.length) return structured;
+    }
+    return buildLegacyPack(packId);
+  }
+
+  function buildLegacyPack(packId){
     var pack = EXAM_PACKS[packId];
     if (!pack) return null;
     var questions = [];
@@ -1355,6 +1671,9 @@
       packLabel: pack.label,
       exam: pack.exam,
       subjectId: pack.subjectId,
+      structuredFamilyId: pack.structuredFamilyId || '',
+      structuredVariant: toNum(pack.structuredVariant || 0),
+      structuredSchema: pack.structuredSchema || '',
       rawPoints: raw,
       maxPoints: max,
       pct: pct(raw, max),
@@ -1434,6 +1753,9 @@
       packLabel: result.packLabel,
       exam: result.exam,
       subjectId: result.subjectId,
+      structuredFamilyId: result.structuredFamilyId || '',
+      structuredVariant: toNum(result.structuredVariant || 0),
+      structuredSchema: result.structuredSchema || '',
       rawPoints: result.rawPoints,
       maxPoints: result.maxPoints,
       pct: result.pct,
@@ -1653,6 +1975,12 @@
 
   function auditSnapshot(){
     var summaries = {};
+    var structuredRows = 0;
+    listStructuredFamilies().forEach(function(familyId){
+      var family = null;
+      try { family = compileStructuredFamily(familyId); } catch(_) { family = null; }
+      if (family && family.row_count) structuredRows += toNum(family.row_count);
+    });
     Object.keys(EXAM_PACKS).forEach(function(id){
       var built = null;
       try { built = buildPack(id); } catch(_) { built = null; }
@@ -1663,7 +1991,11 @@
         bankCount: built.bankCount,
         maxPoints: built.maxPoints,
         timeLimit: built.timeLimit,
-        scoreKind: built.scoreKind
+        scoreKind: built.scoreKind,
+        generatedFromStructuredBank: !!built.generatedFromStructuredBank,
+        generatedFromStructuredJson: !!built.generatedFromStructuredJson,
+        structuredFamilyId: built.structuredFamilyId || '',
+        structuredFamilySource: built.structuredFamilySource || ''
       } : {
         label: EXAM_PACKS[id].label,
         exam: EXAM_PACKS[id].exam,
@@ -1671,11 +2003,16 @@
         bankCount: 0,
         maxPoints: 0,
         timeLimit: EXAM_PACKS[id].timeLimit,
-        scoreKind: EXAM_PACKS[id].scoreKind
+        scoreKind: EXAM_PACKS[id].scoreKind,
+        generatedFromStructuredBank: false,
+        generatedFromStructuredJson: false,
+        structuredFamilyId: '',
+        structuredFamilySource: ''
       };
     });
     return {
       version: VERSION,
+      structuredSchema: STRUCTURED_SCHEMA_VERSION,
       packCount: Object.keys(EXAM_PACKS).length,
       historyKey: EXAM_HISTORY_KEY,
       features: {
@@ -1686,6 +2023,11 @@
         hasExamResultBlock: !!document.getElementById('wave30-exam-block') || isDiagnosticPage(),
         hasDashboardSection: !!document.getElementById('wave30-exam-dashboard') || isDashboardPage(),
         hasDashboardReportPatch: !!window.__wave30ExamPatchedReport || isDashboardPage(),
+        hasStructuredBank: listStructuredFamilies().length > 0,
+        hasWave89ExamBankAlias: typeof window.wave89ExamBank === 'object',
+        hasStructuredJsonRuntime: !!(structuredRuntimePayload() && structuredRuntimePayload().families),
+        structuredFamilyCount: listStructuredFamilies().length,
+        structuredRowCount: structuredRows,
         swHasWave30Asset: false,
         swCacheV27: false
       },
@@ -1725,15 +2067,48 @@
   window.wave30Exam = {
     version: VERSION,
     historyKey: EXAM_HISTORY_KEY,
+    structuredSchema: STRUCTURED_SCHEMA_VERSION,
     packIds: function(){ return Object.keys(EXAM_PACKS); },
     packs: EXAM_PACKS,
     buildPack: buildPack,
+    buildLegacyPack: buildLegacyPack,
+    buildStructuredKim: buildStructuredKim,
     startPack: startPack,
     calcExamResult: calcExamResult,
     getHistory: loadHistory,
     getActivePack: getActivePack,
     dashboardSummaryPresent: function(){ return !!document.getElementById('wave30-exam-dashboard'); },
+    structured: {
+      schema: STRUCTURED_SCHEMA_VERSION,
+      listFamilies: listStructuredFamilies,
+      matchPackId: matchStructuredPackId,
+      getFamily: getStructuredFamily,
+      getRows: getStructuredRows,
+      getBlueprint: getStructuredBlueprint,
+      buildKim: buildStructuredKim,
+      exportSnapshot: exportStructuredBankSnapshot,
+      buildKimForPack: function(packId){
+        var match = matchStructuredPackId(packId);
+        return match ? buildStructuredKim(match.familyId, match.variantNo) : null;
+      }
+    },
     auditSnapshot: auditSnapshot
+  };
+
+  window.wave89ExamBank = {
+    version: 'wave89s',
+    schema: STRUCTURED_SCHEMA_VERSION,
+    listFamilies: listStructuredFamilies,
+    matchPackId: matchStructuredPackId,
+    getFamily: getStructuredFamily,
+    getRows: getStructuredRows,
+    getBlueprint: getStructuredBlueprint,
+    buildKim: buildStructuredKim,
+    buildKimForPack: function(packId){
+      var match = matchStructuredPackId(packId);
+      return match ? buildStructuredKim(match.familyId, match.variantNo) : null;
+    },
+    exportSnapshot: exportStructuredBankSnapshot
   };
 
   var initRetries = 0;
@@ -1754,4 +2129,4 @@
   setTimeout(init, 0);
   setTimeout(init, 60);
 })();
-//# sourceMappingURL=bundle_exam.21c1f611f3.js.map
+

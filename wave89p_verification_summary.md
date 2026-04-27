@@ -1,24 +1,35 @@
 # wave89p verification summary
 
-- Block 0 tasks closed: `#4 self-host fonts`, `#5 theory_coverage CI gate`
-- Local font stylesheet: `assets/css/wave89p_self_host_fonts.4aa7c3337c.css`
-- Local font files precached: `9`
-- Health/version: `trainer-build-wave89p-2026-04-26`
-- SW cache: `trainer-build-wave89p-2026-04-26`
+## Closed plan items
 
-## Audits
+- `#4` — self-host fonts
+- `#5` — theory coverage CI gate
 
-- `tools/audit_self_host_fonts_wave89p.mjs` — OK
-- `tools/audit_theory_coverage.mjs` — OK (`topics=633`, `fallbackTopics=0`, `loadErrors=0`)
-- `tools/audit_offline_readiness_wave86y.mjs` — OK (all totals `0`)
-- `tools/audit_style_csp_wave87q.mjs` — OK
-- `tools/audit_lighthouse_ci_wave87s.mjs` — OK
-- `tools/audit_critical_bugfixes_wave89a.mjs` — OK
-- `tools/audit_scripts_budget_wave89c.mjs` — OK
-- `tools/cleanup_build_artifacts.mjs --check` — OK
+## Key results
 
-## Notes
+- Local font stack enabled on all 16 public HTML pages via `assets/css/wave89p_self_host_fonts.*.css`
+- `assets/fonts/` precaches **20** local `.woff2` files in `sw.js`
+- Google Fonts hosts removed from public HTML, CSP, and SW runtime logic
+- Theory coverage audit now checks every assembled topic and reports exact gaps/fallbacks if they appear
+- Current assembled coverage: **633 / 633 topics** with theory, **0** missing, **0** fallback placeholders
 
-- Public HTML no longer references `fonts.googleapis.com` / `fonts.gstatic.com`.
-- Both CI workflows now require `audit_self_host_fonts_wave89p` and `audit_theory_coverage`.
-- `sw.js` precaches the local font stylesheet plus `assets/fonts/*.woff2` and keeps the runtime fetch path same-origin only.
+## Verification commands run
+
+```bash
+node tools/audit_self_host_fonts_wave89p.mjs
+node tools/audit_theory_coverage.mjs
+node tools/audit_offline_readiness_wave86y.mjs
+node tools/audit_diagnostic_runtime_wave86y.js
+node tools/audit_style_csp_wave87q.mjs
+node tools/audit_lighthouse_ci_wave87s.mjs
+node tools/audit_critical_bugfixes_wave89a.mjs
+node tools/audit_scripts_budget_wave89c.mjs
+node tools/audit_performance_wave86z.mjs
+node tools/audit_static_events_wave87e.mjs
+node tools/cleanup_build_artifacts.mjs --check
+node tools/validate_questions.js
+```
+
+## Outcome
+
+All commands above completed successfully on the packaged `wave89p` workspace.

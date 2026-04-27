@@ -1,0 +1,2265 @@
+{
+  "ok": true,
+  "totals": {
+    "beforeMissing": 0,
+    "afterMissing": 0,
+    "fallbackTopics": 0,
+    "topics": 633,
+    "withTheory": 633,
+    "loadErrors": 0
+  },
+  "grades": [
+    {
+      "grade": 1,
+      "page": "grade1_v2.html",
+      "before": {
+        "subjects": 4,
+        "topics": 29,
+        "withTheory": 29,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "world",
+            "subjectName": "Окружающий мир",
+            "topics": 11,
+            "withTheory": 11,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 4,
+        "topics": 29,
+        "withTheory": 29,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "world",
+            "subjectName": "Окружающий мир",
+            "topics": 11,
+            "withTheory": 11,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 4,
+        "topics": 29,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 2,
+      "page": "grade2_v2.html",
+      "before": {
+        "subjects": 5,
+        "topics": 33,
+        "withTheory": 33,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "world",
+            "subjectName": "Окружающий мир",
+            "topics": 11,
+            "withTheory": 11,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 5,
+        "topics": 33,
+        "withTheory": 33,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "world",
+            "subjectName": "Окружающий мир",
+            "topics": 11,
+            "withTheory": 11,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 5,
+        "topics": 33,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 3,
+      "page": "grade3_v2.html",
+      "before": {
+        "subjects": 5,
+        "topics": 37,
+        "withTheory": 37,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "okr",
+            "subjectName": "Окружающий мир",
+            "topics": 13,
+            "withTheory": 13,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 5,
+        "topics": 37,
+        "withTheory": 37,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "okr",
+            "subjectName": "Окружающий мир",
+            "topics": 13,
+            "withTheory": 13,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 5,
+        "topics": 37,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 4,
+      "page": "grade4_v2.html",
+      "before": {
+        "subjects": 6,
+        "topics": 30,
+        "withTheory": 30,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "okr",
+            "subjectName": "Окружающий мир",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "orkse",
+            "subjectName": "ОРКСЭ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 6,
+        "topics": 30,
+        "withTheory": 30,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "read",
+            "subjectName": "Литературное чтение",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "okr",
+            "subjectName": "Окружающий мир",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "orkse",
+            "subjectName": "ОРКСЭ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 6,
+        "topics": 30,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 5,
+      "page": "grade5_v2.html",
+      "before": {
+        "subjects": 10,
+        "topics": 40,
+        "withTheory": 40,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "odnknr",
+            "subjectName": "ОДНКНР",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo5",
+            "subjectName": "География",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 10,
+        "topics": 40,
+        "withTheory": 40,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "odnknr",
+            "subjectName": "ОДНКНР",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo5",
+            "subjectName": "География",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 10,
+        "topics": 40,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 6,
+      "page": "grade6_v2.html",
+      "before": {
+        "subjects": 9,
+        "topics": 38,
+        "withTheory": 38,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo6",
+            "subjectName": "География",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 9,
+        "topics": 38,
+        "withTheory": 38,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "math",
+            "subjectName": "Математика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo6",
+            "subjectName": "География",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 2,
+            "withTheory": 2,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 9,
+        "topics": 38,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 7,
+      "page": "grade7_v2.html",
+      "before": {
+        "subjects": 12,
+        "topics": 53,
+        "withTheory": 53,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность и статистика",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 12,
+        "topics": 53,
+        "withTheory": 53,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность и статистика",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 12,
+        "topics": 53,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 8,
+      "page": "grade8_v2.html",
+      "before": {
+        "subjects": 14,
+        "topics": 78,
+        "withTheory": 78,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность и статистика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 14,
+        "topics": 78,
+        "withTheory": 78,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность и статистика",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 14,
+        "topics": 78,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 9,
+      "page": "grade9_v2.html",
+      "before": {
+        "subjects": 13,
+        "topics": 73,
+        "withTheory": 73,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 13,
+        "topics": 73,
+        "withTheory": 73,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 13,
+        "topics": 73,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    },
+    {
+      "grade": 10,
+      "page": "grade10_v2.html",
+      "before": {
+        "subjects": 17,
+        "topics": 114,
+        "withTheory": 114,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 22,
+            "withTheory": 22,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bridge1011",
+            "subjectName": "Переход 10→11",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "art",
+            "subjectName": "История искусств",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "oly",
+            "subjectName": "Олимпиада",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 17,
+        "topics": 114,
+        "withTheory": 114,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 10,
+            "withTheory": 10,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 22,
+            "withTheory": 22,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bridge1011",
+            "subjectName": "Переход 10→11",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "art",
+            "subjectName": "История искусств",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "oly",
+            "subjectName": "Олимпиада",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 17,
+        "topics": 114,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      },
+      "english10": {
+        "topics": 22,
+        "withTheory": 22,
+        "fallback": 0,
+        "ids": [
+          "mixed_tenses",
+          "relative_clauses",
+          "comparatives",
+          "prepositions",
+          "articles10",
+          "vocab_b2",
+          "phrasal10",
+          "wordform10",
+          "confusing10",
+          "spelling_b2",
+          "question_tags",
+          "quantifiers",
+          "reading_strategies",
+          "essay_writing",
+          "academic_vocab",
+          "collocations10",
+          "confusing_verbs",
+          "british_american",
+          "idioms_fixed",
+          "advgram10w61",
+          "writing10w61",
+          "texteng10w87z"
+        ]
+      },
+      "coverage": {
+        "version": "wave89a",
+        "totalTopics": 19,
+        "withTheory": 19,
+        "fallbackTopics": 0,
+        "ids": [
+          "mixed_tenses",
+          "relative_clauses",
+          "comparatives",
+          "prepositions",
+          "articles10",
+          "vocab_b2",
+          "phrasal10",
+          "wordform10",
+          "confusing10",
+          "spelling_b2",
+          "question_tags",
+          "quantifiers",
+          "reading_strategies",
+          "essay_writing",
+          "academic_vocab",
+          "collocations10",
+          "confusing_verbs",
+          "british_american",
+          "idioms_fixed"
+        ]
+      }
+    },
+    {
+      "grade": 11,
+      "page": "grade11_v2.html",
+      "before": {
+        "subjects": 16,
+        "topics": 108,
+        "withTheory": 108,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра и начала анализа",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность и статистика",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 11,
+            "withTheory": 11,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "art",
+            "subjectName": "Искусство",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 16,
+            "withTheory": 16,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "oly",
+            "subjectName": "Олимпиада",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "after": {
+        "subjects": 16,
+        "topics": 108,
+        "withTheory": 108,
+        "missing": 0,
+        "fallback": 0,
+        "missingTopics": [],
+        "fallbackTopics": [],
+        "subjectsSummary": [
+          {
+            "subjectId": "alg",
+            "subjectName": "Алгебра и начала анализа",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "prob",
+            "subjectName": "Вероятность и статистика",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geo",
+            "subjectName": "Геометрия",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "phy",
+            "subjectName": "Физика",
+            "topics": 7,
+            "withTheory": 7,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "chem",
+            "subjectName": "Химия",
+            "topics": 8,
+            "withTheory": 8,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "bio",
+            "subjectName": "Биология",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "rus",
+            "subjectName": "Русский язык",
+            "topics": 11,
+            "withTheory": 11,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "his",
+            "subjectName": "История",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "geog",
+            "subjectName": "География",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "lit",
+            "subjectName": "Литература",
+            "topics": 5,
+            "withTheory": 5,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "art",
+            "subjectName": "Искусство",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "soc",
+            "subjectName": "Обществознание",
+            "topics": 9,
+            "withTheory": 9,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "inf",
+            "subjectName": "Информатика",
+            "topics": 6,
+            "withTheory": 6,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "obzh",
+            "subjectName": "ОБЖ",
+            "topics": 3,
+            "withTheory": 3,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "eng",
+            "subjectName": "Английский",
+            "topics": 16,
+            "withTheory": 16,
+            "missing": 0,
+            "fallback": 0
+          },
+          {
+            "subjectId": "oly",
+            "subjectName": "Олимпиада",
+            "topics": 4,
+            "withTheory": 4,
+            "missing": 0,
+            "fallback": 0
+          }
+        ]
+      },
+      "loadErrors": [],
+      "runtimeAudit": {
+        "wave": "wave86r",
+        "subjects": 16,
+        "topics": 108,
+        "missingTheory": 0,
+        "fallbackTopics": 0,
+        "addedAchievements": 12,
+        "openSubjPatched": true,
+        "ansPatched": true,
+        "checkBadgesPatched": true
+      }
+    }
+  ],
+  "errors": [],
+  "note": "wave89p turns theory coverage into a hard CI gate: every assembled topic must carry authored theory text, and the report now lists any exact subject/topic gaps or fallback placeholders."
+}

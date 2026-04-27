@@ -63,10 +63,23 @@ const htmlPages = [
   'grade1_v2.html', 'grade2_v2.html', 'grade3_v2.html', 'grade4_v2.html', 'grade5_v2.html',
   'grade6_v2.html', 'grade7_v2.html', 'grade8_v2.html', 'grade9_v2.html', 'grade10_v2.html', 'grade11_v2.html'
 ];
-const specDataDir = path.join(ROOT, 'assets', 'data', 'spec_subjects');
-const specDataFiles = fs.existsSync(specDataDir)
-  ? fs.readdirSync(specDataDir).filter(name => name.endsWith('.json')).sort().map(name => `./assets/data/spec_subjects/${name}`)
-  : [];
+const dataDir = path.join(ROOT, 'assets', 'data');
+function walkJsonFiles(relBase){
+  const absBase = path.join(ROOT, relBase);
+  if (!fs.existsSync(absBase)) return [];
+  const out = [];
+  function walk(absDir, relDir){
+    for (const entry of fs.readdirSync(absDir, { withFileTypes: true })) {
+      const nextAbs = path.join(absDir, entry.name);
+      const nextRel = path.join(relDir, entry.name).replace(/\\/g, '/');
+      if (entry.isDirectory()) walk(nextAbs, nextRel);
+      else if (entry.isFile() && entry.name.endsWith('.json')) out.push(`./${nextRel}`);
+    }
+  }
+  walk(absBase, relBase);
+  return out.sort();
+}
+const dataJsonFiles = walkJsonFiles('assets/data');
 const iconsDir = path.join(ROOT, 'assets', 'icons');
 const iconFiles = fs.existsSync(iconsDir)
   ? fs.readdirSync(iconsDir).filter(name => /\.(png|svg|webp)$/i.test(name)).sort().map(name => `./assets/icons/${name}`)
@@ -86,7 +99,7 @@ const ASSETS = [
   './assets/asset-manifest.json',
   ...assetFiles,
   ...fontFiles,
-  ...specDataFiles,
+  ...dataJsonFiles,
   ...iconFiles
 ];
 const CSP_BRIDGE_ASSETS = [
@@ -99,10 +112,13 @@ const diagnosticStemChunks = manifest.assets['assets/js/chunk_subject_expansion_
       manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.js'),
       manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js')
     ];
+const examBankChunk = manifest.assets['assets/js/chunk_exam_bank_wave89q.js']
+  ? [manifestAsset(manifest, 'assets/js/chunk_exam_bank_wave89q.js')]
+  : [];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
-  manifestAsset(manifest, 'assets/css/wave89p_self_host_fonts.css'),
   manifestAsset(manifest, 'assets/css/wave86x_inline_diagnostic.css'),
   manifestAsset(manifest, 'assets/css/wave86z_static_style_classes.css'),
+  manifestAsset(manifest, 'assets/css/wave89p_self_host_fonts.css'),
   manifestAsset(manifest, 'assets/js/inline_diagnostic_1_wave86u.js'),
   manifestAsset(manifest, 'assets/js/inline_diagnostic_2_wave86u.js'),
   manifestAsset(manifest, 'assets/js/wave35_plans.js'),
@@ -122,6 +138,7 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   manifestAsset(manifest, 'assets/js/chunk_subject_expansion_wave63_quality.js'),
   manifestAsset(manifest, 'assets/js/bundle_gamification_xp.js'),
   manifestAsset(manifest, 'assets/js/bundle_gamification_meta.js'),
+  ...examBankChunk,
   manifestAsset(manifest, 'assets/js/bundle_exam.js'),
   manifestAsset(manifest, 'assets/js/bundle_profile_social.js'),
   manifestAsset(manifest, 'assets/js/bundle_error_tracking.js'),
@@ -141,5 +158,7 @@ console.log(JSON.stringify({
   generatedAt,
   hashedAssetCount: manifest.hashed_asset_count,
   assets: ASSETS.length,
+  dataAssets: dataJsonFiles.length,
+  fontAssets: fontFiles.length,
   diagnosticAssets: DIAGNOSTIC_OFFLINE_ASSETS.length
 }, null, 2));

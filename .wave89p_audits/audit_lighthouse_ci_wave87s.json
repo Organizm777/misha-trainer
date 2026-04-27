@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "wave": "wave87s",
+  "workflow": ".github/workflows/lighthouse-budget.yml",
+  "config": ".lighthouserc.json",
+  "workflowChecks": {
+    "pullRequest": true,
+    "workflowDispatch": true,
+    "noAutorun": true,
+    "checkoutFetchDepth": true,
+    "baseBranchFetch": true,
+    "node20": true,
+    "resolvesChromePath": true,
+    "preflightCleanup": true,
+    "preflightPerfAudit": true,
+    "preflightStaticActions": true,
+    "installsPinnedCli": true,
+    "healthcheck": true,
+    "collect": true,
+    "assert": true,
+    "artifacts": true
+  },
+  "configChecks": {
+    "staticDistDir": true,
+    "noStartServerCommand": true,
+    "urlCount": 3,
+    "hasIndexChoose": true,
+    "hasGrade3": true,
+    "hasGrade10": true,
+    "numberOfRuns": 2,
+    "multipleRuns": true,
+    "chromeFlags": "--headless=new --no-sandbox --disable-dev-shm-usage",
+    "chromeFlagsContainHeadless": true,
+    "chromeFlagsContainNoSandbox": true,
+    "chromeFlagsContainDisableDevShm": true,
+    "presetRecommended": true,
+    "includePassedAssertions": true,
+    "accessibility": {
+      "level": "error",
+      "minScore": 0.9
+    },
+    "performance": {
+      "level": "warn",
+      "minScore": 0.7
+    },
+    "totalByteWeight": {
+      "level": "error",
+      "maxNumericValue": 1800000,
+      "aggregationMethod": "pessimistic"
+    },
+    "cls": {
+      "level": "warn",
+      "maxNumericValue": 0.45,
+      "aggregationMethod": "pessimistic"
+    },
+    "lcp": {
+      "level": "warn",
+      "maxNumericValue": 5000,
+      "aggregationMethod": "pessimistic"
+    },
+    "consoleErrors": {
+      "level": "warn",
+      "minScore": 0.9
+    }
+  },
+  "note": "wave87s keeps the explicit PR gate. After wave89p the app self-hosts fonts, but console-noise assertions stay downgraded to warn because headless CI can still see flaky third-party requests (for example npoint-backed data or future external embeds) on otherwise valid static pages."
+}

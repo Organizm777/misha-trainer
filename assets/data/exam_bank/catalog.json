@@ -1,0 +1,348 @@
+{
+  "version": "wave89s",
+  "generated_from": "legacy wave30 exact variants + wave89s authored variants",
+  "structures": {
+    "oge_math_full_v1": {
+      "id": "oge_math_full_v1",
+      "bank_id": "oge_math_2026_foundation",
+      "exam": "ОГЭ",
+      "subject": "Математика",
+      "subject_id": "mathall",
+      "year": 2026,
+      "time_limit_sec": 14100,
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "accent": "#2563eb",
+      "grades": "9 класс",
+      "summary": "полный вариант · 25 заданий · алгебра, геометрия, практика · JSON bank",
+      "bands": [
+        {
+          "min": 0,
+          "label": "2",
+          "note": "ниже базового порога"
+        },
+        {
+          "min": 8,
+          "label": "3",
+          "note": "порог ОГЭ пройден"
+        },
+        {
+          "min": 15,
+          "label": "4",
+          "note": "хороший результат"
+        },
+        {
+          "min": 22,
+          "label": "5",
+          "note": "сильный результат"
+        }
+      ],
+      "slots": [
+        {
+          "task_num": 1,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Числа и вычисления",
+          "topic_tag": "chisla_i_vychisleniya_kvadratnye_uravneniya_01"
+        },
+        {
+          "task_num": 2,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Числа и вычисления",
+          "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_02"
+        },
+        {
+          "task_num": 3,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Числа и вычисления",
+          "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_03"
+        },
+        {
+          "task_num": 4,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Числа и вычисления",
+          "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_04"
+        },
+        {
+          "task_num": 5,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Числа и вычисления",
+          "topic_tag": "chisla_i_vychisleniya_progressii_05"
+        },
+        {
+          "task_num": 6,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Числа и вычисления",
+          "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_06"
+        },
+        {
+          "task_num": 7,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Числа и вычисления",
+          "topic_tag": "chisla_i_vychisleniya_veroyatnost_07"
+        },
+        {
+          "task_num": 8,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра",
+          "topic_tag": "algebra_sistemy_uravneniy_08"
+        },
+        {
+          "task_num": 9,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра",
+          "topic_tag": "algebra_kvadratichnaya_funktsiya_09"
+        },
+        {
+          "task_num": 10,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра",
+          "topic_tag": "algebra_progressii_10"
+        },
+        {
+          "task_num": 11,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра",
+          "topic_tag": "algebra_progressii_11"
+        },
+        {
+          "task_num": 12,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра",
+          "topic_tag": "algebra_neravenstva_12"
+        },
+        {
+          "task_num": 13,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра",
+          "topic_tag": "algebra_stepeni_13"
+        },
+        {
+          "task_num": 14,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра",
+          "topic_tag": "algebra_neravenstva_14"
+        },
+        {
+          "task_num": 15,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия: базовые задачи",
+          "topic_tag": "geometriya_bazovye_zadachi_ploschadi_15"
+        },
+        {
+          "task_num": 16,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия: базовые задачи",
+          "topic_tag": "geometriya_bazovye_zadachi_okruzhnost_16"
+        },
+        {
+          "task_num": 17,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия: базовые задачи",
+          "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_17"
+        },
+        {
+          "task_num": 18,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия: базовые задачи",
+          "topic_tag": "geometriya_bazovye_zadachi_treugolniki_18"
+        },
+        {
+          "task_num": 19,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия: базовые задачи",
+          "topic_tag": "geometriya_bazovye_zadachi_chetyrehugolniki_19"
+        },
+        {
+          "task_num": 20,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия: базовые задачи",
+          "topic_tag": "geometriya_bazovye_zadachi_treugolniki_20"
+        },
+        {
+          "task_num": 21,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия: базовые задачи",
+          "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_21"
+        },
+        {
+          "task_num": 22,
+          "type": "choice",
+          "max_score": 2,
+          "section": "Практика и вероятность",
+          "topic_tag": "praktika_i_veroyatnost_geometriya_22"
+        },
+        {
+          "task_num": 23,
+          "type": "choice",
+          "max_score": 2,
+          "section": "Практика и вероятность",
+          "topic_tag": "praktika_i_veroyatnost_oge_algebra_core_23"
+        },
+        {
+          "task_num": 24,
+          "type": "choice",
+          "max_score": 3,
+          "section": "Геометрия: развернутые",
+          "topic_tag": "geometriya_razvernutye_okruzhnost_24"
+        },
+        {
+          "task_num": 25,
+          "type": "choice",
+          "max_score": 3,
+          "section": "Геометрия: развернутые",
+          "topic_tag": "geometriya_razvernutye_metod_koordinat_25"
+        }
+      ],
+      "family_id": "oge_math_2026_full"
+    },
+    "ege_profile_math_part1_v1": {
+      "id": "ege_profile_math_part1_v1",
+      "bank_id": "ege_profile_math_2026_foundation",
+      "exam": "ЕГЭ",
+      "subject": "Математика (профиль)",
+      "subject_id": "algebra",
+      "year": 2026,
+      "time_limit_sec": 14100,
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "accent": "#7c3aed",
+      "grades": "11 класс",
+      "summary": "часть 1 · 12 заданий · профильный уровень · JSON bank",
+      "bands": [
+        {
+          "min": 0,
+          "label": "ниже порога",
+          "note": "нужно добрать базовые баллы"
+        },
+        {
+          "min": 4,
+          "label": "27+ / порог",
+          "note": "тренажёрная модель опирается на вузовский минимум 27"
+        },
+        {
+          "min": 6,
+          "label": "50+ / рабочий",
+          "note": "уверенная часть 1"
+        },
+        {
+          "min": 8,
+          "label": "70+ / сильный",
+          "note": "сильный профильный результат"
+        },
+        {
+          "min": 10,
+          "label": "85+ / высокий",
+          "note": "очень сильная часть 1"
+        }
+      ],
+      "slots": [
+        {
+          "task_num": 1,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра и преобразования",
+          "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_01"
+        },
+        {
+          "task_num": 2,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра и преобразования",
+          "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_02"
+        },
+        {
+          "task_num": 3,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Алгебра и преобразования",
+          "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_03"
+        },
+        {
+          "task_num": 4,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Функции, графики, производная",
+          "topic_tag": "funktsii_grafiki_proizvodnaya_trigonometriya_04"
+        },
+        {
+          "task_num": 5,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Функции, графики, производная",
+          "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_05"
+        },
+        {
+          "task_num": 6,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Функции, графики, производная",
+          "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_06"
+        },
+        {
+          "task_num": 7,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Уравнения и неравенства",
+          "topic_tag": "uravneniya_i_neravenstva_neravenstva_07"
+        },
+        {
+          "task_num": 8,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Уравнения и неравенства",
+          "topic_tag": "uravneniya_i_neravenstva_matematika_funktsii_i_veroyatnost_08"
+        },
+        {
+          "task_num": 9,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Вероятность и текстовые модели",
+          "topic_tag": "veroyatnost_i_tekstovye_modeli_matematika_funktsii_i_veroyatnost_09"
+        },
+        {
+          "task_num": 10,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Вероятность и текстовые модели",
+          "topic_tag": "veroyatnost_i_tekstovye_modeli_ege_profil_algebra_core_10"
+        },
+        {
+          "task_num": 11,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия и координаты",
+          "topic_tag": "geometriya_i_koordinaty_stereometriya_11"
+        },
+        {
+          "task_num": 12,
+          "type": "choice",
+          "max_score": 1,
+          "section": "Геометрия и координаты",
+          "topic_tag": "geometriya_i_koordinaty_planimetriya_12"
+        }
+      ],
+      "family_id": "ege_profile_math_2026_part1"
+    }
+  }
+}

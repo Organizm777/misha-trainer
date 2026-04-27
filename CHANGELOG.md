@@ -1,8 +1,33 @@
+## wave89t — 2026-04-26
+
+- desktop quiz interaction fix: grade play sessions now render answer buttons plus `Подсказка` / `Шпаргалка` / `Следующий` controls with explicit `data-wave89t-*` markers instead of legacy inline `onclick`, so strict-CSP desktop Chromium/Edge builds no longer depend on fragile dynamic handler scrubbing before an answer can be selected.
+- runtime binding hardening: `engine10` now exports `window.wave89tPlayBinding` and installs a delegated document-level click bridge for those dynamic play controls while preserving the existing `ans(...)`, `nextQ()`, `wave86uToggleHint()`, and `wave86uToggleShp()` quiz APIs.
+- CI/tooling: added `tools/audit_play_selection_wave89t.mjs`, wired it into both GitHub workflows, and refreshed the engine hashed asset / release metadata for the wave89t release.
+
+## wave89s — 2026-04-26
+
+- roadmap follow-up after `#6–#7`: expanded the first canonical math families under `assets/data/exam_bank/` from **3 to 5 variants** (`oge_math_2026_full`, `ege_profile_math_2026_part1`) by adding authored variants 4–5 on top of the earlier legacy-export foundation.
+- generator/runtime scaling: `bundle_exam` no longer hard-codes a 3-variant ceiling for supported math families; the pack registry now reads variant numbers from the structured runtime payload when available and falls back to the new 5-variant baseline for OГЭ/ЕГЭ mathematics.
+- audit hardening: `tools/audit_exam_bank_generator_wave89q.mjs` now checks every JSON-backed pack alias (not just the first one) and enforces the wider canonical family coverage, so new variants cannot silently exist in JSON without surfacing in `wave30Exam.buildPack(...)` and `auditSnapshot()`.
+
+## wave89r — 2026-04-26
+
+- roadmap `#6–#7` follow-up: extracted the first canonical exam-bank source files into `assets/data/exam_bank/*.json` (`catalog.json`, `oge_math_2026_foundation.json`, `ege_profile_math_2026_foundation.json`) so supported variants are no longer trapped only inside `bundle_exam` internals.
+- runtime split: added `tools/build_exam_bank_runtime_wave89q.mjs`, generated the dedicated `chunk_exam_bank_wave89q.*.js` payload, taught `bundle_exam` to prefer `window.WAVE89Q_EXAM_BANK.families[*]` (`compiled_from: 'json_bank'`) and keep the previous legacy compile path only as a fallback for families not yet externalized.
+- integration/offline/audits: `diagnostic.html` and `dashboard.html` now load the hashed exam-bank chunk before `bundle_exam`, release metadata precaches `assets/data/exam_bank/*.json` plus the new runtime chunk, and `tools/audit_exam_bank_generator_wave89q.mjs` now enforces JSON-runtime sync plus `generatedFromStructuredJson` coverage for the canonical families.
+
+## wave89q — 2026-04-26
+
+- roadmap `#6–#7`: `bundle_exam` now compiles supported OГЭ/ЕГЭ variant families into a **structured exam-bank schema** (`wave89q_exam_bank_v1`) with canonical row fields `{exam, subject, year, variant, task_num, type, max_score, q, a, o, h, ex, criteria, topic_tag}` instead of keeping exam content purely ad-hoc inside pack sections.
+- generator layer: added `buildStructuredKim(...)` plus `window.wave30Exam.structured.*` helpers (`listFamilies`, `matchPackId`, `getFamily`, `getRows`, `getBlueprint`, `exportSnapshot`), so supported families can now rebuild a full KIM from explicit bank rows + blueprint task numbering.
+- live app integration: `buildPack(packId)` now automatically routes the supported variant families through the structured bank-backed generator and falls back to the legacy pack builder only when no structured family is available, which keeps the existing exam UI stable while moving the runtime onto the new contract.
+- tooling/docs: added `tools/audit_exam_bank_generator_wave89q.mjs`, `docs/EXAM_BANK_GENERATOR_wave89q.md`, wired the audit into both CI workflows, and refreshed release metadata for the wave89q release.
+
 ## wave89p — 2026-04-26
 
-- roadmap Block 0 (`#4–#5`): self-hosted the three shared UI fonts (`Unbounded`, `Golos Text`, `JetBrains Mono`) under `assets/fonts/`, introduced the local stylesheet `wave89p_self_host_fonts`, removed Google Fonts dependencies from every public HTML page and CSP, and narrowed the service-worker runtime fetch path back to same-origin assets only.
-- CI hardening: the existing `tools/audit_theory_coverage.mjs` is now a required gate in both GitHub workflows, and the new `tools/audit_self_host_fonts_wave89p.mjs` prevents regressions by rejecting any return of Google Fonts hosts or missing local font precache entries.
-- release metadata: synchronized SW precache metadata so the new font CSS plus local `assets/fonts/*.woff2` files are cached offline with the `wave89p` release.
+- roadmap Block 0 follow-up (`#4–#5`): the app now self-hosts its three UI font families (`Unbounded`, `Golos Text`, `JetBrains Mono`) from same-origin `assets/fonts` instead of depending on Google Fonts, and `tools/audit_theory_coverage.mjs` is now a hard CI gate that verifies theory coverage for every assembled topic.
+- offline/CSP hardening: all public HTML pages now load the hashed `wave89p_self_host_fonts` stylesheet, Google Fonts hosts were removed from HTML + CSP + service-worker runtime logic, and `tools/sync_release_metadata.mjs` now precaches the local `.woff2` files so first-install offline mode keeps the intended typography.
+- CI/tooling: added `tools/audit_self_host_fonts_wave89p.mjs`, upgraded the theory audit to report exact `{subjectId, topicId}` regressions and reject fallback placeholders, wired both audits into `validate-questions.yml` and `lighthouse-budget.yml`, and refreshed release metadata/docs for the wave89p release.
 
 ## wave89o — 2026-04-26
 

@@ -26,6 +26,7 @@
     ├── css/                # собранные с хэшем: engine10.{hash}.css
     ├── js/                 # собранные с хэшем: bundle_*.{hash}.js
     ├── data/spec_subjects/*.json
+    ├── data/exam_bank/*.json
     └── icons/
 ```
 
@@ -467,7 +468,7 @@ Starter short-answer content for grades 8–11 lives in `chunk_subject_expansion
 - `spec_subjects` must stay free of inline `onclick` / `oninput` / `style=` markup. Use `data-spec-action` / `data-spec-input` markers and one delegated listener on `#spec-root`; the page is under strict CSP and cannot rely on inline handlers.
 - The floating theme FAB from `wave86q` is deprecated. Keep theme sync, but do not reintroduce `#theme-toggle` or fixed-position theme buttons; theme switching belongs in settings/system sync only.
 - Grade 10 English booster theory now depends on an explicit `var ENG_TH = window.ENG_TH = window.ENG_TH || {};` declaration. When extending English topics, keep `window.__wave89aEnglishTheoryCoverage` accurate and preserve full coverage for all 19 grade-10 English topics.
-- Missing `topic.th` should degrade to the explicit `📖 Теория в разработке` stub rather than hiding theory affordances. Use `node tools/audit_theory_coverage.mjs` together with `node tools/audit_self_host_fonts_wave89p.mjs`, `node tools/audit_critical_bugfixes_wave89a.mjs`, the relevant legacy audits, `node tools/validate_questions.js`, and `node tools/cleanup_build_artifacts.mjs --check` before shipping another wave.
+- Missing `topic.th` should degrade to the explicit `📖 Теория в разработке` stub rather than hiding theory affordances. Use `node tools/audit_theory_coverage.mjs` together with `node tools/audit_critical_bugfixes_wave89a.mjs`, the relevant legacy audits, `node tools/validate_questions.js`, and `node tools/cleanup_build_artifacts.mjs --check` before shipping another wave.
 - `tools/sync_release_metadata.mjs --wave <wave> --date <YYYY-MM-DD>` is the preferred way to resync `asset-manifest.json`, `healthz.json` and the SW precache arrays after hashed rebuilds or runtime rebundles.
 
 ### wave89b merge pass + wave89c scripts budget
@@ -520,3 +521,20 @@ Starter short-answer content for grades 8–11 lives in `chunk_subject_expansion
 - Keep it additive inside the merged `bundle_grade_runtime_extended_wave89b` layer; do not introduce a new eager asset or reroute smart-start away from `wave21OpenTopic(..., 'train')`, because `wave89d` audits still depend on that contract.
 - Reuse the existing `wave21` queue so resume/session snapshots continue to work. When the starter queue is exhausted, clear the `learning-path` queue/session-mode and immediately continue into the normal trainer rather than ending the session.
 - Persist topic-level route progress under `trainer_learning_path_<grade>`, render a `🧭 Маршрут темы` card on the theory screen plus a compact status card on play/progress, and keep mix/global mix/rush/diagnostic/review flows untouched.
+
+### wave89t desktop play bindings
+
+- Play-screen answer selection should no longer depend on legacy inline `onclick` handlers for dynamically rendered quiz controls. Render answer/hint/theory/next buttons with explicit `data-wave89t-play-action` markers and route them through a document-level delegated click handler so strict-CSP desktop browsers behave the same as mobile builds.
+- Keep this fix inside `engine10`/shared grade runtime; do not add another eager asset just to wire clicks. Preserve the existing `ans(...)`, `nextQ()`, `wave86uToggleHint()`, and `wave86uToggleShp()` APIs — the change is the binding strategy, not the quiz logic.
+- Validate with `node tools/audit_play_selection_wave89t.mjs` alongside the existing static-events, theory-coverage, scripts-budget, and cleanup audits before shipping another wave.
+
+### wave89q structured exam bank
+
+- Roadmap items `#6–#7` now expect two separate layers in `bundle_exam`: a canonical structured bank row schema and a generator that can rebuild a full exam variant from that bank plus an explicit task blueprint.
+- Supported variant families should compile into `wave89q_exam_bank_v1` rows with at least `{ exam, subject, year, variant, task_num, type, max_score, q, a, o, h, ex, criteria, topic_tag }`. Keep extra metadata additive (`section`, `part`, `score_model`, etc.), but do not regress those canonical fields.
+- The live diagnostic UI should keep using `buildPack(packId)`, but supported OГЭ/ЕГЭ families should flow through `buildStructuredKim(...)` first and only fall back to `buildLegacyPack(packId)` when the structured bank is unavailable.
+- Canonical source data now lives under `assets/data/exam_bank/*.json`; `tools/build_exam_bank_runtime_wave89q.mjs` compiles the JSON catalog into `assets/_src/js/chunk_exam_bank_wave89q.js`, and `diagnostic.html` / `dashboard.html` must load the hashed `chunk_exam_bank_wave89q.*.js` before `bundle_exam.*.js`.
+- Supported math families should no longer be capped at 3 variants in the pack registry. Read variant numbers from the structured runtime payload when it is available, and keep the current baseline at 5 variants for `oge_math_2026_full` and `ege_profile_math_2026_part1`.
+- Keep the public API under `window.wave30Exam.structured` stable enough for audits and future tooling: `listFamilies`, `matchPackId`, `getFamily`, `getRows`, `getBlueprint`, `buildKim`, `exportSnapshot`.
+- This wave is infrastructure, not official archive import. Future content waves can swap in real FIPI tasks without rewriting the runtime contract as long as the structured schema and deterministic task numbering stay intact.
+

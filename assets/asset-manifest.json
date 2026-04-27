@@ -1,11 +1,11 @@
 {
-  "version": "trainer-build-wave89p-2026-04-26",
+  "version": "trainer-build-wave89t-2026-04-26",
   "assets": {
     "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.ce945f33ae.js",
     "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.9025bc19a4.js",
     "assets/js/bundle_diagnostic_tools.js": "assets/js/bundle_diagnostic_tools.641a191419.js",
     "assets/js/bundle_error_tracking.js": "assets/js/bundle_error_tracking.e8a9fb4295.js",
-    "assets/js/bundle_exam.js": "assets/js/bundle_exam.21c1f611f3.js",
+    "assets/js/bundle_exam.js": "assets/js/bundle_exam.6cecf99c28.js",
     "assets/js/bundle_gamification_meta.js": "assets/js/bundle_gamification_meta.9853e9e1bb.js",
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
     "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.6f6ed7e2ff.js",
@@ -21,7 +21,7 @@
     "assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.js": "assets/js/chunk_subject_expansion_wave60_biology_history_english_5_8.ecfc9c5b63.js",
     "assets/js/chunk_subject_expansion_wave61_senior_school_10_11.js": "assets/js/chunk_subject_expansion_wave61_senior_school_10_11.61cb4ae0a9.js",
     "assets/js/chunk_subject_expansion_wave63_quality.js": "assets/js/chunk_subject_expansion_wave63_quality.f64a8f682f.js",
-    "assets/js/engine10.js": "assets/js/engine10.90815e0ece.js",
+    "assets/js/engine10.js": "assets/js/engine10.5b67e7e188.js",
     "assets/js/wave35_plans.js": "assets/js/wave35_plans.f812119619.js",
     "assets/css/engine10.css": "assets/css/engine10.dac1e147e6.css",
     "assets/js/chunk_subject_expansion_wave86l_grade3_balance.js": "assets/js/chunk_subject_expansion_wave86l_grade3_balance.9681242b09.js",
@@ -102,9 +102,10 @@
     "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.0455583291.js",
     "assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.js": "assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js",
     "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js": "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.ea7e74deee.js",
-    "assets/css/wave89p_self_host_fonts.css": "assets/css/wave89p_self_host_fonts.4aa7c3337c.css"
+    "assets/css/wave89p_self_host_fonts.css": "assets/css/wave89p_self_host_fonts.5603de96b7.css",
+    "assets/js/chunk_exam_bank_wave89q.js": "assets/js/chunk_exam_bank_wave89q.344e49dbff.js"
   },
   "generated_at": "2026-04-23T00:00:00Z",
-  "hashed_asset_count": 102,
+  "hashed_asset_count": 103,
   "generated_at_utc": "2026-04-26T00:00:00Z"
 }

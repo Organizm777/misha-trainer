@@ -1,0 +1,216 @@
+{
+  "ok": true,
+  "wave": "wave87q",
+  "logicalBridge": "assets/js/chunk_roadmap_wave86x_style_csp_bridge.js",
+  "builtBridge": "assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js",
+  "bridgeBytes": 15611,
+  "htmlChecks": [
+    {
+      "file": "dashboard.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "diagnostic.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade10_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade11_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade1_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade2_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade3_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade4_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade5_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade6_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade7_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade8_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "grade9_v2.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "index.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "spec_subjects.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    },
+    {
+      "file": "tests.html",
+      "hasStyleBlob": false,
+      "hasStyleUnsafeInline": false,
+      "hasBridge": true,
+      "hasStaticClassCss": true
+    }
+  ],
+  "bridgeRefFailures": [],
+  "staticClassCssFailures": [],
+  "runtimeStyleHotspots": {
+    "files": 30,
+    "styleElements": 51,
+    "styleCssText": 68,
+    "inlineStyleMarkup": 959,
+    "topFiles": [
+      {
+        "rel": "assets/_src/js/engine10.js",
+        "styleElements": 1,
+        "styleCssText": 37,
+        "inlineStyleMarkup": 307,
+        "total": 345
+      },
+      {
+        "rel": "assets/_src/js/bundle_grade_runtime_core_wave87n.js",
+        "styleElements": 10,
+        "styleCssText": 8,
+        "inlineStyleMarkup": 120,
+        "total": 138
+      },
+      {
+        "rel": "assets/_src/js/bundle_grade_after.js",
+        "styleElements": 8,
+        "styleCssText": 8,
+        "inlineStyleMarkup": 103,
+        "total": 119
+      },
+      {
+        "rel": "assets/_src/js/inline_tests_3_wave86u.js",
+        "styleElements": 0,
+        "styleCssText": 3,
+        "inlineStyleMarkup": 78,
+        "total": 81
+      },
+      {
+        "rel": "assets/_src/js/bundle_grade_runtime_features_wave87n.js",
+        "styleElements": 5,
+        "styleCssText": 1,
+        "inlineStyleMarkup": 52,
+        "total": 58
+      },
+      {
+        "rel": "assets/_src/js/bundle_grade_runtime_services_wave87n.js",
+        "styleElements": 3,
+        "styleCssText": 3,
+        "inlineStyleMarkup": 48,
+        "total": 54
+      },
+      {
+        "rel": "assets/_src/js/wave35_plans.js",
+        "styleElements": 4,
+        "styleCssText": 0,
+        "inlineStyleMarkup": 48,
+        "total": 52
+      },
+      {
+        "rel": "assets/_src/js/inline_tests_1_wave86u.js",
+        "styleElements": 0,
+        "styleCssText": 0,
+        "inlineStyleMarkup": 46,
+        "total": 46
+      },
+      {
+        "rel": "assets/_src/js/bundle_profile_social.js",
+        "styleElements": 1,
+        "styleCssText": 0,
+        "inlineStyleMarkup": 28,
+        "total": 29
+      },
+      {
+        "rel": "assets/_src/js/chunk_roadmap_wave86v_pvp_link_battle.js",
+        "styleElements": 1,
+        "styleCssText": 1,
+        "inlineStyleMarkup": 19,
+        "total": 21
+      },
+      {
+        "rel": "assets/_src/js/bundle_sharing.js",
+        "styleElements": 1,
+        "styleCssText": 0,
+        "inlineStyleMarkup": 16,
+        "total": 17
+      },
+      {
+        "rel": "assets/_src/js/chunk_roadmap_wave86p_exam_challenge.js",
+        "styleElements": 1,
+        "styleCssText": 0,
+        "inlineStyleMarkup": 16,
+        "total": 17
+      }
+    ]
+  },
+  "note": "wave87q keeps the runtime style shim, but routes dynamic rules into the already-loaded same-origin wave86z_static_style_classes stylesheet via CSSOM. Runtime style hotspots still exist, yet style-src/style-src-elem no longer need blob:."
+}

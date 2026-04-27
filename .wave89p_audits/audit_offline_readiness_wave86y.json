@@ -1,0 +1,134 @@
+{
+  "ok": true,
+  "pages": 16,
+  "swAssets": 152,
+  "criticalAssets": 34,
+  "bridgeAssets": [
+    "./assets/js/chunk_roadmap_wave86u_csp_bridge.c9e654ca09.js",
+    "./assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js"
+  ],
+  "diagnosticOfflineAssets": 26,
+  "hasHardCriticalInstall": true,
+  "bridgesFirstInCriticalPrecache": true,
+  "totals": {
+    "missingPageFiles": 0,
+    "missingPageSwAssets": 0,
+    "diagnosticMissingFromCritical": 0,
+    "diagnosticMissingFromSw": 0,
+    "bridgeMissingFromCritical": 0,
+    "bridgeMissingFiles": 0,
+    "criticalMissingFiles": 0,
+    "criticalMissingFromSw": 0
+  },
+  "diagnostic": {
+    "deps": 28,
+    "missingFromCritical": [],
+    "missingFromSw": []
+  },
+  "bridges": {
+    "missingFromCritical": [],
+    "missingFiles": []
+  },
+  "critical": {
+    "missingFiles": [],
+    "missingFromSw": []
+  },
+  "pageReports": [
+    {
+      "page": "dashboard.html",
+      "deps": 20,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "diagnostic.html",
+      "deps": 31,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade10_v2.html",
+      "deps": 27,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade11_v2.html",
+      "deps": 27,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade1_v2.html",
+      "deps": 23,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade2_v2.html",
+      "deps": 24,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade3_v2.html",
+      "deps": 25,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade4_v2.html",
+      "deps": 26,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade5_v2.html",
+      "deps": 29,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade6_v2.html",
+      "deps": 29,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade7_v2.html",
+      "deps": 29,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade8_v2.html",
+      "deps": 28,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "grade9_v2.html",
+      "deps": 26,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "index.html",
+      "deps": 18,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "spec_subjects.html",
+      "deps": 16,
+      "missingFiles": [],
+      "missingSw": []
+    },
+    {
+      "page": "tests.html",
+      "deps": 16,
+      "missingFiles": [],
+      "missingSw": []
+    }
+  ]
+}

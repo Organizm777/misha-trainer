@@ -8,6 +8,7 @@ const GRADE_PAGES = Array.from({ length: 11 }, (_, i) => `grade${i + 1}_v2.html`
 const INCLUDE_RE = /\/assets\/js\/(grade\d+_data\.|bundle_boosters\.|chunk_grade_content_|chunk_subject_expansion_|chunk_grade10_lazy_wave86s\.)/;
 const GRADE10_SUBJECT_RE = /^(grade10_subject_.*_wave86s|grade10_subject_oly_(logic|cross|traps|deep)_wave87c)\.[a-f0-9]{10}\.js$/;
 const errors = [];
+
 function assert(cond, message){ if (!cond) errors.push(message); }
 function read(rel){ return fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
 function exists(rel){ return fs.existsSync(path.join(ROOT, rel)); }
@@ -111,22 +112,53 @@ function stripTags(html){
     .replace(/\s+/g, ' ')
     .trim();
 }
+function safeName(entity, fallback){
+  return String(entity && (entity.nm || entity.name || entity.title || entity.label || fallback) || fallback || '').trim();
+}
 function theoryStats(subjects){
-  let subjectsCount = Array.isArray(subjects) ? subjects.length : 0;
-  let topics = 0;
-  let withTheory = 0;
-  let missing = 0;
-  let fallback = 0;
-  for (const subject of Array.isArray(subjects) ? subjects : []) {
-    for (const topic of Array.isArray(subject && subject.tops) ? subject.tops : []) {
-      topics += 1;
+  const normalizedSubjects = Array.isArray(subjects) ? subjects : [];
+  const summary = {
+    subjects: normalizedSubjects.length,
+    topics: 0,
+    withTheory: 0,
+    missing: 0,
+    fallback: 0,
+    missingTopics: [],
+    fallbackTopics: [],
+    subjectsSummary: []
+  };
+
+  for (const subject of normalizedSubjects) {
+    const subjectId = String(subject && subject.id || '').trim();
+    const subjectName = safeName(subject, subjectId || 'subject');
+    const subjectSummary = { subjectId, subjectName, topics: 0, withTheory: 0, missing: 0, fallback: 0 };
+    const topics = Array.isArray(subject && subject.tops) ? subject.tops : [];
+    for (const topic of topics) {
+      const topicId = String(topic && topic.id || '').trim();
+      const topicName = safeName(topic, topicId || 'topic');
+      const topicRecord = { subjectId, subjectName, topicId, topicName };
       const hasTheory = !!stripTags(topic && topic.th);
-      if (hasTheory) withTheory += 1;
-      else missing += 1;
-      if (topic && topic.__wave89aTheoryFallback) fallback += 1;
+      const isFallback = !!(topic && topic.__wave89aTheoryFallback);
+      summary.topics += 1;
+      subjectSummary.topics += 1;
+      if (hasTheory) {
+        summary.withTheory += 1;
+        subjectSummary.withTheory += 1;
+      } else {
+        summary.missing += 1;
+        subjectSummary.missing += 1;
+        summary.missingTopics.push(topicRecord);
+      }
+      if (isFallback) {
+        summary.fallback += 1;
+        subjectSummary.fallback += 1;
+        summary.fallbackTopics.push(topicRecord);
+      }
     }
+    summary.subjectsSummary.push(subjectSummary);
   }
-  return { subjects: subjectsCount, topics, withTheory, missing, fallback };
+
+  return summary;
 }
 
 const manifest = JSON.parse(read('assets/asset-manifest.json'));
@@ -164,6 +196,8 @@ for (let grade = 1; grade <= 11; grade += 1) {
 
   assert(loadErrors.length === 0, `grade${grade}: script load errors detected`);
   assert(after.missing === 0, `grade${grade}: missing theory remains after normalization (${after.missing})`);
+  assert(after.withTheory === after.topics, `grade${grade}: expected theory for every topic, got ${after.withTheory}/${after.topics}`);
+  assert(after.fallback === 0, `grade${grade}: fallback theory placeholders remain (${after.fallback})`);
   if (runtimeAudit) {
     assert(runtimeAudit.missingTheory === 0, `grade${grade}: wave86r runtime audit reports missingTheory=${runtimeAudit.missingTheory}`);
   } else {
@@ -190,21 +224,22 @@ for (let grade = 1; grade <= 11; grade += 1) {
     }
     reports.push({
       grade,
+      page: GRADE_PAGES[grade - 1],
       before,
       after,
       loadErrors,
       runtimeAudit,
       english10: english10 ? {
-        topics: theoryStats([english10]).topics,
-        withTheory: theoryStats([english10]).withTheory,
-        fallback: theoryStats([english10]).fallback,
+        topics: englishStats.topics,
+        withTheory: englishStats.withTheory,
+        fallback: englishStats.fallback,
         ids: (english10.tops || []).map(topic => topic.id)
       } : null,
       coverage
     });
     continue;
   }
-  reports.push({ grade, before, after, loadErrors, runtimeAudit });
+  reports.push({ grade, page: GRADE_PAGES[grade - 1], before, after, loadErrors, runtimeAudit });
 }
 
 const totals = reports.reduce((acc, row) => {
@@ -212,15 +247,17 @@ const totals = reports.reduce((acc, row) => {
   acc.afterMissing += Number(row.after && row.after.missing || 0);
   acc.fallbackTopics += Number(row.after && row.after.fallback || 0);
   acc.topics += Number(row.after && row.after.topics || 0);
+  acc.withTheory += Number(row.after && row.after.withTheory || 0);
   acc.loadErrors += Array.isArray(row.loadErrors) ? row.loadErrors.length : 0;
   return acc;
-}, { beforeMissing: 0, afterMissing: 0, fallbackTopics: 0, topics: 0, loadErrors: 0 });
+}, { beforeMissing: 0, afterMissing: 0, fallbackTopics: 0, topics: 0, withTheory: 0, loadErrors: 0 });
 
 const report = {
   ok: errors.length === 0,
   totals,
   grades: reports,
-  errors
+  errors,
+  note: 'wave89p turns theory coverage into a hard CI gate: every assembled topic must carry authored theory text, and the report now lists any exact subject/topic gaps or fallback placeholders.'
 };
 console.log(JSON.stringify(report, null, 2));
 process.exit(report.ok ? 0 : 1);

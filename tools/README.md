@@ -45,7 +45,6 @@ node tools/audit_multi_select_wave88b.mjs
 node tools/audit_keyboard_shortcuts_wave88c.mjs
 node tools/audit_breadcrumbs_wave88d.mjs
 node tools/audit_critical_bugfixes_wave89a.mjs
-node tools/audit_self_host_fonts_wave89p.mjs
 node tools/audit_theory_coverage.mjs
 node tools/audit_merge_pass_wave89b.mjs
 node tools/audit_scripts_budget_wave89c.mjs
@@ -59,6 +58,12 @@ node tools/audit_parent_dashboard_wave89j.mjs
 node tools/audit_weak_device_adaptive_wave89k.mjs
 node tools/audit_spaced_repetition_sm2_wave89l.mjs
 node tools/audit_adaptive_difficulty_wave89m.mjs
+node tools/audit_learning_path_wave89n.mjs
+node tools/build_exam_bank_runtime_wave89q.mjs --check
+node tools/audit_exam_bank_generator_wave89q.mjs
+node tools/audit_self_host_fonts_wave89p.mjs
+node tools/audit_play_selection_wave89t.mjs
+node tools/audit_theory_coverage.mjs
 node tools/validate_questions.js
 ```
 
@@ -84,7 +89,6 @@ node tools/validate_questions.js
 - `audit_style_csp_wave87q.mjs` — verifies the wave87q CSP/style follow-up: public HTML no longer carries `blob:` in `style-src` / `style-src-elem`, the rebuilt style bridge no longer uses Blob/object-URL APIs, and every page still mounts `wave86z_static_style_classes.*.css` as the CSSOM sink for runtime styles.
 - `audit_runtime_style_shim_wave87p.mjs` — historical shim audit for the wave87p→wave87q migration: public HTML stays free of `data-wave86x-style`, the legacy logical bridge no longer migrates that attribute, and the script still reports the largest runtime inline-style hotspots for future cleanup passes.
 - `audit_lighthouse_ci_wave87s.mjs` — verifies the wave87s Lighthouse CI gate: PR workflow triggers, fetch-depth/base-branch ancestry fix, pinned LHCI CLI install, multi-run staticDistDir collection, preflight audits, and `.lighthouseci` artifact upload.
-- `audit_self_host_fonts_wave89p.mjs` — verifies the wave89p self-host-font pass: every public page references the local font stylesheet, Google Fonts hosts are gone from HTML/CSP/SW, and the service worker precaches the local `assets/fonts/*` payload.
 
 - `audit_rich_content_wave87v.mjs` — verifies the wave87v rich-content pass: required formula/code topic ids exist across grades 8–11, chemistry rich topics are injected in the expected science chunks, and the source layer contains a minimum number of `code:` and `isMath:true` rows before rebuild.
 - `audit_interaction_formats_wave87w.mjs` — verifies the wave87w interaction layer: the runtime bundle is present in grades 8–11 and SW precache, grades 1–7 stay clean, and the owning source bundles still contain enough `find-error` / `sequence` / `match` rows plus the metadata plumbing that preserves those fields through `bank(...)`. The build-wave guard now also allows wave88a/wave88b because later waves reuse the same logical runtime bundle.
@@ -111,3 +115,8 @@ node tools/validate_questions.js
 - `audit_spaced_repetition_sm2_wave89l.mjs` — verifies the wave89l SM-2 review pass: the core runtime exposes the upgraded spaced-repetition scheduler without a new eager asset, legacy fixed-step review state migrates to `{ version: 2, algo: 'sm2' }`, weekly/EF summaries are present, and a VM harness checks the 1 day → 6 days → EF cadence, helped-answer resets, sticky-card release, and `step`/`repetitions` compatibility.
 - `audit_adaptive_difficulty_wave89m.mjs` — verifies the wave89m pedagogy pass: the merged runtime exposes `window.__wave89mAdaptiveDifficulty`, the shared grade CSS renders the play/progress adaptive cards, the quality chunk stamps `difficultyLevel: 1–3`, historical `wave87x` timing samples influence recommendations, and a VM harness checks the 5-correct raise, trouble/slow drop, and candidate-bucket selection logic.
 - `audit_learning_path_wave89n.mjs` — verifies the wave89n learning-path pass: the merged runtime exposes `window.__wave89nLearningPath`, the shared grade CSS renders theory/play/progress route cards, topical sessions seed a `wave21` starter queue in `easy → medium → hard` order, the queue hands off to the regular trainer instead of ending early, and CI metadata/docs stay synchronized.
+- `build_exam_bank_runtime_wave89q.mjs` — compiles the canonical `assets/data/exam_bank/*.json` catalog into `assets/_src/js/chunk_exam_bank_wave89q.js`. Use `--check` in CI to catch stale generated runtime data.
+- `audit_exam_bank_generator_wave89q.mjs` — verifies the structured exam-bank path end to end: the canonical JSON catalog exists, the generated `chunk_exam_bank_wave89q.*.js` runtime is in sync and loaded before `bundle_exam.*.js`, supported OГЭ/ЕГЭ families expose explicit `{exam, subject, year, variant, task_num, type, max_score, q, a, o, h, ex, criteria, topic_tag}` rows, every JSON-backed pack alias resolves through both `wave89ExamBank.buildKimForPack(...)` and `wave30Exam.buildPack(...)`, and the canonical math families now surface the wider 5-variant coverage.
+- `audit_self_host_fonts_wave89p.mjs` — verifies the wave89p font pass: all public pages load the hashed same-origin `wave89p_self_host_fonts` stylesheet, HTML/CSP/SW no longer reference Google Fonts, the selected `.woff2` files exist under `assets/fonts`, and release metadata now precaches them for offline use.
+- `audit_play_selection_wave89t.mjs` — verifies the desktop-safe quiz binding pass: `engine10` now renders play-screen answer / hint / theory / next controls with explicit `data-wave89t-*` attributes instead of inline `onclick`, exports `window.wave89tPlayBinding`, and keeps both source + hashed runtime assets free of the legacy answer-click snippets that were flaky under strict CSP on desktop Chromium/Edge.
+- `audit_theory_coverage.mjs` — now acts as a hard theory-coverage gate: it assembles every grade in a VM, verifies that every topic ships non-empty `th`, rejects fallback placeholders, and reports exact `{subjectId, topicId}` gaps if coverage regresses.

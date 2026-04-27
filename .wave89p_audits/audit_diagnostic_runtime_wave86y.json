@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "scripts": 24,
+  "errors": [],
+  "qbankKeys": [
+    "math",
+    "algebra",
+    "geometry",
+    "physics",
+    "russian",
+    "history",
+    "informatics",
+    "literature",
+    "social",
+    "biology",
+    "geography",
+    "english",
+    "mathall",
+    "chemistry"
+  ],
+  "subjectCount": 14,
+  "hasStartDiag": true,
+  "hasShareResult": true
+}

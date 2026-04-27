@@ -22,8 +22,6 @@ jobs:
         run: |
           node tools/cleanup_build_artifacts.mjs --check
           node tools/audit_critical_bugfixes_wave89a.mjs
-          node tools/audit_self_host_fonts_wave89p.mjs
-          node tools/audit_theory_coverage.mjs
 
       - name: Enforce grade-page scripts budget
         run: node tools/audit_scripts_budget_wave89c.mjs
@@ -49,6 +47,14 @@ jobs:
         run: node tools/audit_adaptive_difficulty_wave89m.mjs
       - name: Enforce guided learning path
         run: node tools/audit_learning_path_wave89n.mjs
+      - name: Enforce structured exam bank / KIM generator
+        run: node tools/audit_exam_bank_generator_wave89q.mjs
+      - name: Enforce self-hosted fonts / offline font coverage
+        run: node tools/audit_self_host_fonts_wave89p.mjs
+      - name: Enforce full theory coverage
+        run: node tools/audit_theory_coverage.mjs
+      - name: Enforce desktop-safe play control bindings
+        run: node tools/audit_play_selection_wave89t.mjs
 
       - name: Validate question generators
         run: node tools/validate_questions.js

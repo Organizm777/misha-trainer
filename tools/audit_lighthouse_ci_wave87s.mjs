@@ -38,8 +38,6 @@ const workflowChecks = {
   preflightCleanup: /node tools\/cleanup_build_artifacts\.mjs --check/.test(workflow),
   preflightPerfAudit: /node tools\/audit_performance_wave86z\.mjs/.test(workflow),
   preflightStaticActions: /node tools\/audit_static_events_wave87e\.mjs/.test(workflow),
-  preflightSelfHostedFonts: /node tools\/audit_self_host_fonts_wave89p\.mjs/.test(workflow),
-  preflightTheoryCoverage: /node tools\/audit_theory_coverage\.mjs/.test(workflow),
   installsPinnedCli: /@lhci\/cli@0\.15\.1/.test(workflow),
   healthcheck: /\bnpx lhci healthcheck --fatal\b/.test(workflow),
   collect: /\bnpx lhci collect --config=\.lighthouserc\.json\b/.test(workflow),
@@ -106,7 +104,7 @@ const result = {
   config: CONFIG_REL,
   workflowChecks,
   configChecks,
-  note: 'wave87s keeps the explicit PR gate; by wave89p Google Fonts are self-hosted, so the downgraded console gate mainly absorbs flaky npoint.io requests on otherwise valid static pages.'
+  note: 'wave87s keeps the explicit PR gate. After wave89p the app self-hosts fonts, but console-noise assertions stay downgraded to warn because headless CI can still see flaky third-party requests (for example npoint-backed data or future external embeds) on otherwise valid static pages.'
 };
 
 console.log(JSON.stringify(result, null, 2));

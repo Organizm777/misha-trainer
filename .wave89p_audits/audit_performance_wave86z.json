@@ -1,0 +1,97 @@
+{
+  "ok": true,
+  "wave": "wave86z",
+  "note": "Static proxy for N10. Real-device Lighthouse/FCP/LCP still needs browser hardware, but this guards request-count and local payload regressions.",
+  "baselineFromReview": {
+    "maxGradeScriptsBeforeWave86z": 31
+  },
+  "budgets": {
+    "maxGradeScripts": 20,
+    "maxGradeJsBytes": 1900000
+  },
+  "summary": {
+    "maxGradeScripts": 20,
+    "maxGradeJsBytes": 1820681,
+    "pageCount": 16,
+    "gradePageCount": 11
+  },
+  "gradePages": [
+    {
+      "file": "grade10_v2.html",
+      "scriptCount": 18,
+      "stylesheetCount": 5,
+      "localJsBytes": 1572141,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade11_v2.html",
+      "scriptCount": 18,
+      "stylesheetCount": 5,
+      "localJsBytes": 1805156,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade1_v2.html",
+      "scriptCount": 14,
+      "stylesheetCount": 5,
+      "localJsBytes": 1192712,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade2_v2.html",
+      "scriptCount": 15,
+      "stylesheetCount": 5,
+      "localJsBytes": 1215175,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade3_v2.html",
+      "scriptCount": 16,
+      "stylesheetCount": 5,
+      "localJsBytes": 1249070,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade4_v2.html",
+      "scriptCount": 17,
+      "stylesheetCount": 5,
+      "localJsBytes": 1269536,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade5_v2.html",
+      "scriptCount": 20,
+      "stylesheetCount": 5,
+      "localJsBytes": 1476406,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade6_v2.html",
+      "scriptCount": 20,
+      "stylesheetCount": 5,
+      "localJsBytes": 1456732,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade7_v2.html",
+      "scriptCount": 20,
+      "stylesheetCount": 5,
+      "localJsBytes": 1675136,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade8_v2.html",
+      "scriptCount": 19,
+      "stylesheetCount": 5,
+      "localJsBytes": 1820681,
+      "localCssBytes": 53804
+    },
+    {
+      "file": "grade9_v2.html",
+      "scriptCount": 17,
+      "stylesheetCount": 5,
+      "localJsBytes": 1612608,
+      "localCssBytes": 53804
+    }
+  ]
+}

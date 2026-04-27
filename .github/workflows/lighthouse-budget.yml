@@ -42,8 +42,6 @@ jobs:
         run: |
           node tools/cleanup_build_artifacts.mjs --check
           node tools/audit_critical_bugfixes_wave89a.mjs
-          node tools/audit_self_host_fonts_wave89p.mjs
-          node tools/audit_theory_coverage.mjs
           node tools/audit_scripts_budget_wave89c.mjs
           node tools/audit_simple_mode_wave89d.mjs
           node tools/audit_onboarding_wave89e.mjs
@@ -56,8 +54,12 @@ jobs:
           node tools/audit_spaced_repetition_sm2_wave89l.mjs
           node tools/audit_adaptive_difficulty_wave89m.mjs
           node tools/audit_learning_path_wave89n.mjs
+          node tools/audit_exam_bank_generator_wave89q.mjs
+          node tools/audit_self_host_fonts_wave89p.mjs
+          node tools/audit_theory_coverage.mjs
           node tools/audit_performance_wave86z.mjs
           node tools/audit_static_events_wave87e.mjs
+          node tools/audit_play_selection_wave89t.mjs
 
       - name: Install Lighthouse CI CLI
         run: npm install --no-save --no-audit --no-fund @lhci/cli@0.15.1
