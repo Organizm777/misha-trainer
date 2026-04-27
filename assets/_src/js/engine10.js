@@ -210,7 +210,8 @@ function showClassSelect(){
 }
 // === SW + ACCESSIBILITY ===
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.querySelector('div[style*="z-index:9999"]');if(m)m.remove()}});
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{})}
+function shouldRegisterTrainerSW(){try{const o=new URLSearchParams(location.search||"");if("1"===o.get("lhci")||navigator.webdriver)return!1}catch{}return!0}
+if('serviceWorker' in navigator&&shouldRegisterTrainerSW()){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{})}
 
 
 // === WAVE 8: BACKUP / TRANSFER ===

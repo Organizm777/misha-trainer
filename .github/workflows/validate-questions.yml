@@ -57,6 +57,8 @@ jobs:
         run: node tools/audit_play_selection_wave89t.mjs
       - name: Enforce window-state bridge / junior input guard
         run: node tools/audit_input_bridge_wave89v.mjs
+      - name: Enforce rendered input editability / junior suppression
+        run: node tools/audit_input_render_wave89w.mjs
       - name: Enforce Lighthouse CI stability policy
         run: node tools/audit_lighthouse_ci_wave87s.mjs
       - name: Enforce diagnostic / exam CSP-safe controls

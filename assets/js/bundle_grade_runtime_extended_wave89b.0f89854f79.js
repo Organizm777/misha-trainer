@@ -49,6 +49,8 @@
     } catch (_err) {}
   }
   function currentQuestion(){
+    var lexicalQuestion = lexicalValue(function(){ return prob; });
+    if (lexicalQuestion && typeof lexicalQuestion === 'object') return lexicalQuestion;
     return root.prob && typeof root.prob === 'object' ? root.prob : null;
   }
   function isInteractiveQuestion(question){
@@ -202,7 +204,7 @@
     return count + ' ' + optionWord(count);
   }
   function toggleMultiSelect(question, value){
-    if (!question || root.sel !== null) return false;
+    if (!question || hasSelection()) return false;
     var state = ensureMultiSelectState(question);
     if (!state) return false;
     var item = asText(value).trim();
@@ -253,7 +255,7 @@
     return list.indexOf(value);
   }
   function submitCustomValue(question, value){
-    if (!question || root.sel !== null) return false;
+    if (!question || hasSelection()) return false;
     var idx = ensureOption(question, value);
     if (idx < 0) return false;
     if (typeof baseAns === 'function') {
@@ -357,12 +359,12 @@
     if (!shouldEnhance(question)) return;
     var slot = document.getElementById('fba');
     if (!slot) return;
-    if (root.sel === null) {
+    if (!hasSelection()) {
       slot.innerHTML = '';
       return;
     }
     slot.innerHTML = '';
-    var correct = asText(root.sel) === asText(question.answer);
+    var correct = asText(selectionValue()) === asText(question.answer);
     var wrap = document.createElement('div');
     wrap.className = 'fb';
 
@@ -406,15 +408,15 @@
     opts.appendChild(card('Найди первый неверный шаг', 'Прочитай решение и нажми на строку, где впервые появилась ошибка.'));
     steps.forEach(function(step, idx){
       var className = 'opt';
-      if (root.sel !== null) {
+      if (hasSelection()) {
         className += ' done';
         if (asText(step) === asText(question.answer)) className += ' ok';
-        else if (asText(step) === asText(root.sel)) className += ' no';
+        else if (asText(step) === asText(selectionValue())) className += ' no';
         else className += ' dim';
       }
       var button = stepButton(idx + 1, step, className);
-      button.disabled = root.sel !== null;
-      if (root.sel === null) {
+      button.disabled = hasSelection();
+      if (!hasSelection()) {
         button.addEventListener('click', function(){ submitCustomValue(question, step); });
       }
       opts.appendChild(button);
@@ -427,7 +429,7 @@
     opts.innerHTML = '';
     opts.appendChild(card('Расставь шаги по порядку', 'Сначала собери правильную последовательность, потом нажми «Проверить».'));
 
-    if (root.sel !== null) {
+    if (hasSelection()) {
       appendSequenceList(opts, steps);
       return;
     }
@@ -490,7 +492,7 @@
 
       var hint = document.createElement('div');
       hint.className = 'fbh';
-      hint.textContent = root.sel === null ? 'Выбери соответствие из списка.' : 'Правильная пара: ' + asText(Array.isArray(pair) ? pair[1] : '');
+      hint.textContent = !hasSelection() ? 'Выбери соответствие из списка.' : 'Правильная пара: ' + asText(Array.isArray(pair) ? pair[1] : '');
       row.appendChild(hint);
 
       var select = document.createElement('select');
@@ -506,15 +508,15 @@
         if (asText(state.selection[idx]) === asText(option)) item.selected = true;
         select.appendChild(item);
       });
-      select.disabled = root.sel !== null;
-      if (root.sel === null) {
+      select.disabled = hasSelection();
+      if (!hasSelection()) {
         select.addEventListener('change', function(){ state.selection[idx] = asText(select.value); });
       }
       row.appendChild(select);
       opts.appendChild(row);
     });
 
-    if (root.sel !== null) return;
+    if (hasSelection()) return;
 
     var submit = makePrimaryButton('Проверить пары');
     submit.addEventListener('click', function(){
@@ -536,7 +538,7 @@
     var state = ensureMultiSelectState(question);
     var min = multiSelectMin(question);
     var max = multiSelectMax(question);
-    var chosen = root.sel !== null ? selectionFromRaw(question, root.sel) : state.selected;
+    var chosen = hasSelection() ? selectionFromRaw(question, root.sel) : state.selected;
     var correct = multiSelectCorrect(question);
 
     opts.innerHTML = '';
@@ -545,7 +547,7 @@
     var summary = card('Текущий выбор', chosen.length
       ? 'Отмечено: ' + countText(chosen.length) + '. ' + requirementText(question)
       : 'Пока ничего не отмечено. ' + requirementText(question));
-    if (chosen.length && root.sel === null) {
+    if (chosen.length && !hasSelection()) {
       chosen.forEach(function(item){
         var chip = stepButton('✓', item, 'opt ok');
         chip.setAttribute('role', 'checkbox');
@@ -556,7 +558,7 @@
         });
         summary.appendChild(chip);
       });
-    } else if (root.sel !== null) {
+    } else if (hasSelection()) {
       appendExplanationBlock(summary, 'Вы выбрали', displayMultiSelect(question, chosen) || 'ничего');
     }
     opts.appendChild(summary);
@@ -566,7 +568,7 @@
       var selected = chosen.indexOf(item) !== -1;
       var isCorrect = correct.indexOf(item) !== -1;
       var className = 'opt';
-      if (root.sel !== null) {
+      if (hasSelection()) {
         className += ' done';
         if (isCorrect) className += ' ok';
         else if (selected) className += ' no';
@@ -578,7 +580,7 @@
       button.setAttribute('role', 'checkbox');
       button.setAttribute('aria-checked', selected ? 'true' : 'false');
       button.setAttribute('aria-keyshortcuts', String(idx + 1));
-      if (root.sel === null) {
+      if (!hasSelection()) {
         button.addEventListener('click', function(){
           if (toggleMultiSelect(question, item) && typeof root.render === 'function') root.render();
         });
@@ -589,7 +591,7 @@
     });
     opts.appendChild(pool);
 
-    if (root.sel !== null) return;
+    if (hasSelection()) return;
 
     var submit = makePrimaryButton('Проверить варианты');
     submit.addEventListener('click', function(){
@@ -623,7 +625,7 @@
   function bindInteractiveKeyboard(){
     document.addEventListener('keydown', function(event){
       var question = currentQuestion();
-      if (!shouldEnhance(question) || !question || root.sel !== null) return;
+      if (!shouldEnhance(question) || !question || hasSelection()) return;
       if (question.interactionType !== TYPES.MULTI_SELECT) return;
       if (isEditableTarget(event.target)) return;
       var key = asText(event.key);
@@ -774,6 +776,14 @@
       return false;
     }
   }
+  function lexicalValue(getter){
+    try {
+      var value = getter();
+      return value === undefined ? undefined : value;
+    } catch (_err) {
+      return undefined;
+    }
+  }
   function currentQuestion(){
     return root.prob && typeof root.prob === 'object' ? root.prob : null;
   }
@@ -868,7 +878,19 @@
     return /_{2,}/.test(asText(question && question.question));
   }
   function currentSubjectId(){
-    return root.cS && root.cS.id ? String(root.cS.id) : (root.globalMix ? 'mix' : '');
+    var lexicalSubject = lexicalValue(function(){ return cS; });
+    var subject = lexicalSubject && typeof lexicalSubject === 'object' ? lexicalSubject : (root.cS && typeof root.cS === 'object' ? root.cS : null);
+    if (subject && subject.id) return String(subject.id);
+    var mixed = lexicalValue(function(){ return globalMix; });
+    return (mixed == null ? !!root.globalMix : !!mixed) ? 'mix' : '';
+  }
+  function selectionValue(){
+    var lexicalSelection = lexicalValue(function(){ return sel; });
+    if (lexicalSelection !== undefined) return lexicalSelection == null ? null : lexicalSelection;
+    return root.sel == null ? null : root.sel;
+  }
+  function hasSelection(){
+    return selectionValue() !== null;
   }
   function explicitInputMode(question){
     var mode = normalizeClozeText(question && question.inputMode);
@@ -878,8 +900,15 @@
     if (mode === 'numeric' || mode === 'number' || mode === 'free-number') return 'numeric';
     return '';
   }
+  function pageGrade(){
+    var lexicalGrade = lexicalValue(function(){ return typeof GRADE_NUM !== 'undefined' ? GRADE_NUM : (typeof GRADE_NO !== 'undefined' ? GRADE_NO : undefined); });
+    var page = toNumber(root.GRADE_NUM || root.GRADE_NO || lexicalGrade || 0);
+    return page > 0 ? page : 0;
+  }
   function autoInputEligible(question){
-    var grade = toNumber(question && (question.grade != null ? question.grade : question.g != null ? question.g : root.GRADE_NUM || root.GRADE_NO || 0));
+    var page = pageGrade();
+    if (page) return page >= 8;
+    var grade = toNumber(question && (question.grade != null ? question.grade : question.g != null ? question.g : 0));
     return grade >= 8;
   }
   function inputModeFor(question){
@@ -1084,7 +1113,7 @@
     writeStore(data);
   }
   function armTiming(question){
-    if (!question || !onPlayScreen() || root.sel !== null) return;
+    if (!question || !onPlayScreen() || hasSelection()) return;
     if (timingState.activeQuestion === question && !timingState.logged) return;
     timingState.activeQuestion = question;
     timingState.activeId = questionFingerprint(question);
@@ -1108,7 +1137,7 @@
       mode: modeName(),
       subject: currentSubjectId(),
       tag: asText(question.tag),
-      correct: asText(root.sel) === asText(question.answer),
+      correct: asText(selectionValue()) === asText(question.answer),
       usedHelp: !!root.usedHelp,
       inputMode: state && state.mode ? state.mode : (inputModeFor(question) || 'choice')
     };
@@ -1125,7 +1154,7 @@
     return question.options.indexOf(value);
   }
   function submitCustomValue(question, value){
-    if (!question || root.sel !== null || typeof root.ans !== 'function') return false;
+    if (!question || hasSelection() || typeof root.ans !== 'function') return false;
     var idx = ensureOption(question, value);
     if (idx < 0) return false;
     allowProgrammaticAns = true;
@@ -1206,7 +1235,7 @@
     return document.getElementById('wave87x-free-answer');
   }
   function submitCurrentInput(question, mode){
-    if (!question || root.sel !== null) return false;
+    if (!question || hasSelection()) return false;
     var state = ensureInputState(question);
     var input = currentInputElement();
     var rawValue = input ? input.value : state.draft;
@@ -1266,9 +1295,9 @@
     input.inputMode = mode === 'numeric' ? 'decimal' : 'text';
     input.placeholder = inputPlaceholder(mode, question);
     input.setAttribute('aria-label', title.textContent);
-    input.value = root.sel === null ? (state.draft || '') : (state.lastValue || state.draft || '');
-    input.disabled = root.sel !== null;
-    if (root.sel === null) {
+    input.value = hasSelection() ? (state.lastValue || state.draft || '') : (state.draft || '');
+    input.disabled = hasSelection();
+    if (!hasSelection()) {
       input.addEventListener('input', function(){ state.draft = input.value; });
       input.addEventListener('keydown', function(event){
         if (event.key === 'Enter' || event.key === 'NumpadEnter') {
@@ -1279,19 +1308,19 @@
     }
     row.appendChild(input);
 
-    if (root.sel === null) {
+    if (!hasSelection()) {
       var submit = makeButton('Проверить', 'btn btn-p');
       submit.addEventListener('click', function(){ submitCurrentInput(question, mode); });
       row.appendChild(submit);
     }
     box.appendChild(row);
 
-    if (root.sel !== null) {
+    if (hasSelection()) {
       var info = document.createElement('div');
       info.className = 'wave87x-chiprow';
 
       var typed = document.createElement('span');
-      typed.className = 'wave87x-chip ' + (asText(root.sel) === asText(question.answer) ? 'ok' : 'no');
+      typed.className = 'wave87x-chip ' + (asText(selectionValue()) === asText(question.answer) ? 'ok' : 'no');
       typed.textContent = 'Ввод: ' + (state.lastValue || '—');
       info.appendChild(typed);
 
@@ -1324,7 +1353,7 @@
     opts.setAttribute('aria-label', mode === 'numeric' ? 'Числовой ответ' : mode === 'text' ? 'Текстовый ответ' : 'Ответ с вводом');
     opts.appendChild(wrap);
 
-    if (root.sel === null) {
+    if (!hasSelection()) {
       setTimeout(function(){
         try {
           input.focus({ preventScroll:true });
@@ -1335,7 +1364,7 @@
   }
   function appendTimingToFeedback(){
     var question = currentQuestion();
-    if (!question || root.sel === null) return;
+    if (!question || !hasSelection()) return;
     var sample = question.__wave87xTiming && question.__wave87xTiming.last ? question.__wave87xTiming.last : null;
     if (!sample) return;
     var slot = document.getElementById('fba');
@@ -1496,7 +1525,7 @@
       if (!onPlayScreen()) return;
       var question = currentQuestion();
       var mode = inputModeFor(question);
-      if (!mode || root.sel !== null) return;
+      if (!mode || hasSelection()) return;
       if (isEditableTarget(event.target)) return;
       var key = asText(event.key);
       if (/^[1-4a-dA-D]$/.test(key)) {
@@ -1521,10 +1550,10 @@
     root.ans = function(idx){
       var question = currentQuestion();
       if (inputModeFor(question) && !allowProgrammaticAns) return null;
-      var hadSelection = root.sel !== null;
+      var hadSelection = hasSelection();
       var result = baseAns.apply(this, arguments);
       try {
-        if (!hadSelection && question && root.sel !== null) captureTiming(question);
+        if (!hadSelection && question && hasSelection()) captureTiming(question);
       } catch (_err) {}
       return result;
     };
@@ -1561,7 +1590,12 @@
     questionFingerprint: questionFingerprint,
     levenshteinDistance: levenshteinDistance,
     normalizeTextAnswer: normalizeTextAnswer,
-    matchTextInput: matchTextInput
+    matchTextInput: matchTextInput,
+    currentQuestion: currentQuestion,
+    currentSubjectId: currentSubjectId,
+    selectionValue: selectionValue,
+    hasSelection: hasSelection,
+    pageGrade: pageGrade
   };
 })();
 
@@ -1730,7 +1764,7 @@
     return !!(question && question.interactionType === 'multi-select');
   }
   function hasResolvedSelection(){
-    return root.sel !== null && typeof root.sel !== 'undefined';
+    return hasSelection() && typeof root.sel !== 'undefined';
   }
   function handleDigitKey(key){
     var idx = digitIndexForKey(key);

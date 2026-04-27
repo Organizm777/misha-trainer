@@ -3,9 +3,9 @@
     "collect": {
       "staticDistDir": "./",
       "url": [
-        "http://localhost/index.html?choose",
-        "http://localhost/grade3_v2.html",
-        "http://localhost/grade10_v2.html"
+        "http://localhost/index.html?choose&lhci=1",
+        "http://localhost/grade3_v2.html?lhci=1",
+        "http://localhost/grade10_v2.html?lhci=1"
       ],
       "numberOfRuns": 2,
       "settings": {

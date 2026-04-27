@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave89v-2026-04-27';
+const CACHE_NAME = 'trainer-build-wave89w-2026-04-27';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -42,7 +42,7 @@ const ASSETS = [
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_grade_runtime_core_wave87n.1bd154a017.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.16bd88ffed.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.0f89854f79.js',
   './assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',
@@ -87,7 +87,7 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave86m_gap_balance_grade9_wave87d.0cfd6b7a6b.js',
   './assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js',
   './assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.ea7e74deee.js',
-  './assets/js/engine10.d55751517b.js',
+  './assets/js/engine10.a8d5b8c39f.js',
   './assets/js/grade10_data.db674036ab.js',
   './assets/js/grade10_subject_alg_wave86s.533785e914.js',
   './assets/js/grade10_subject_art_wave86s.ffd6808253.js',
@@ -117,13 +117,13 @@ const ASSETS = [
   './assets/js/grade7_data.cf7365a889.js',
   './assets/js/grade8_data.ef2a17eb15.js',
   './assets/js/grade9_data.8b3457c2ec.js',
-  './assets/js/inline_dashboard_1_wave86u.d03cb817ed.js',
+  './assets/js/inline_dashboard_1_wave86u.e425d9d26a.js',
   './assets/js/inline_diagnostic_1_wave86u.10ff5e8d9b.js',
-  './assets/js/inline_diagnostic_2_wave86u.d7f19b85e9.js',
-  './assets/js/inline_index_1_wave86u.d7f19b85e9.js',
-  './assets/js/inline_spec_subjects_1_wave86u.d7f19b85e9.js',
+  './assets/js/inline_diagnostic_2_wave86u.1bca35f107.js',
+  './assets/js/inline_index_1_wave86u.1bca35f107.js',
+  './assets/js/inline_spec_subjects_1_wave86u.1bca35f107.js',
   './assets/js/inline_tests_1_wave86u.08cb8f7dc8.js',
-  './assets/js/inline_tests_2_wave86u.a5635ca67e.js',
+  './assets/js/inline_tests_2_wave86u.ae4d81b485.js',
   './assets/js/inline_tests_3_wave86u.bab0f051a9.js',
   './assets/js/wave35_plans.f812119619.js',
   './assets/fonts/golos-text-cyrillic-400-normal.woff2',
@@ -179,7 +179,7 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   './assets/css/wave86z_static_style_classes.7a515bc89a.css',
   './assets/css/wave89p_self_host_fonts.5603de96b7.css',
   './assets/js/inline_diagnostic_1_wave86u.10ff5e8d9b.js',
-  './assets/js/inline_diagnostic_2_wave86u.d7f19b85e9.js',
+  './assets/js/inline_diagnostic_2_wave86u.1bca35f107.js',
   './assets/js/wave35_plans.f812119619.js',
   './assets/js/bundle_shell.5670562070.js',
   './assets/js/bundle_diagnostic_tools.9792be3cd6.js',
@@ -215,6 +215,21 @@ const CRITICAL_ASSETS = Array.from(new Set(CSP_BRIDGE_ASSETS.concat(
   ]
 )));
 function isCacheable(request, response){ return request.method === 'GET' && response && (response.ok || response.type === 'opaque'); }
+function isDocumentRequest(request){
+  if (!request) return false;
+  if (request.mode === 'navigate') return true;
+  try {
+    var accept = request.headers && request.headers.get ? request.headers.get('accept') || '' : '';
+    return /text\/html/i.test(accept);
+  } catch (_err) {
+    return false;
+  }
+}
+function shouldBypassRequest(request, url){
+  if (!request || !url) return false;
+  if (request.cache === 'no-store') return true;
+  return /\/sw\.js(?:\?|$)/.test(url.pathname || '');
+}
 async function precache(){
   const cache = await caches.open(STATIC_CACHE);
   const MAX_ATTEMPTS = 3;
@@ -246,6 +261,17 @@ async function precache(){
   await Promise.all(workers);
 }
 async function staleWhileRevalidate(request, cacheName){ const cache = await caches.open(cacheName); const cached = await cache.match(request); const networkPromise = fetch(request).then(response => { if(isCacheable(request, response)) cache.put(request, response.clone()); return response; }).catch(() => null); if(cached) return { response: cached, revalidate: networkPromise }; const fresh = await networkPromise; return { response: fresh, revalidate: Promise.resolve(fresh) }; }
+async function networkFirst(request, cacheName){
+  const cache = await caches.open(cacheName);
+  try {
+    const response = await fetch(request);
+    if (isCacheable(request, response)) await cache.put(request, response.clone());
+    return { response, from:'network' };
+  } catch (_err) {
+    const cached = await cache.match(request) || await caches.match(request);
+    return { response: cached || null, from: cached ? 'cache' : 'none' };
+  }
+}
 self.addEventListener('install', event => { event.waitUntil((async () => { await precache(); await self.skipWaiting(); })()); });
 self.addEventListener('activate', event => { event.waitUntil((async () => { const keys = await caches.keys(); await Promise.all(keys.filter(key => ![STATIC_CACHE, RUNTIME_CACHE].includes(key)).map(key => caches.delete(key))); await self.clients.claim(); })()); });
 self.addEventListener('message', event => { if(event && event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting(); });
@@ -254,16 +280,19 @@ self.addEventListener('fetch', event => {
   if(request.method !== 'GET') return;
   const url = new URL(request.url);
   const isSameOrigin = url.origin === self.location.origin;
-  if(!isSameOrigin) return;
-  const cacheName = STATIC_CACHE;
+  if(!isSameOrigin || shouldBypassRequest(request, url)) return;
+  const cacheName = isDocumentRequest(request) ? RUNTIME_CACHE : STATIC_CACHE;
   event.respondWith((async () => {
+    if (isDocumentRequest(request)) {
+      const result = await networkFirst(request, cacheName);
+      if(result.response) return result.response;
+      const fallback = await caches.match('./index.html');
+      if(fallback) return fallback;
+      return fetch(request);
+    }
     const result = await staleWhileRevalidate(request, cacheName);
     if(result.revalidate) event.waitUntil(result.revalidate.then(() => undefined).catch(() => undefined));
     if(result.response) return result.response;
-    if(request.mode === 'navigate'){
-      const fallback = await caches.match('./index.html');
-      if(fallback) return fallback;
-    }
     return fetch(request);
   })());
 });

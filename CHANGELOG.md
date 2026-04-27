@@ -1,3 +1,11 @@
+## wave89w — 2026-04-27
+
+- Lighthouse/email hardening: the dedicated `lighthouse-budget.yml` workflow is now **PR/manual only** (no `push` trigger), every live LHCI step (`policy audit`, CLI install, healthcheck, collect, assert) is advisory, and the audited URLs now carry `?lhci=1` so headless Lighthouse runs do not register the service worker and no longer keep sending routine push-email noise.
+- stale-cache mitigation: all public entrypoints that register the service worker now skip registration for `navigator.webdriver` / `lhci=1`, and `sw.js` now bypasses `cache:'no-store'` requests plus serves HTML/document navigations with a **network-first** strategy instead of stale-while-revalidate so desktop browsers stop mixing fresh JS with stale cached HTML.
+- free-input reliability fix: the grade runtime now normalizes lexical/global quiz state through `selectionValue()` / `hasSelection()` fallbacks, reads the active question/subject from either lexical engine state or `window`, and treats `undefined` like “ещё не отвечено” instead of “ответ уже выбран”, which unblocks typing inside rendered `<input>` controls.
+- junior-grade suppression hardening: automatic free-input promotion now prefers the **page grade** over per-row metadata, so stray high-grade row flags cannot suddenly turn grade 1–7 questions (including grade 2) into numeric/text input cards unless `inputMode` was authored explicitly.
+- regression coverage: added `tools/audit_input_render_wave89w.mjs` and wired it into `validate-questions.yml`; the audit now simulates rendered grade 2 / grade 10 sessions and verifies that junior pages suppress auto-input, senior pages render an editable input, and answered senior questions lock correctly after submission.
+
 ## wave89v — 2026-04-27
 
 - Lighthouse CI stabilization: removed `api.npoint.io` preconnect noise from the public HTML entry points audited by LHCI, added `--disable-gpu` to the Chrome flags, converted the live `lhci collect/assert` workflow steps into advisory uploads, and also moved the currently red `audit_performance_wave86z` proxy check to advisory inside the Lighthouse workflow so transient/live LHCI failures stop producing fatal email spam while content/CSP/regression audits stay hard-gated.

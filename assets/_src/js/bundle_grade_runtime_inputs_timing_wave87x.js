@@ -72,7 +72,17 @@
       return false;
     }
   }
+  function lexicalValue(getter){
+    try {
+      var value = getter();
+      return value === undefined ? undefined : value;
+    } catch (_err) {
+      return undefined;
+    }
+  }
   function currentQuestion(){
+    var lexicalQuestion = lexicalValue(function(){ return prob; });
+    if (lexicalQuestion && typeof lexicalQuestion === 'object') return lexicalQuestion;
     return root.prob && typeof root.prob === 'object' ? root.prob : null;
   }
   function onPlayScreen(){
@@ -166,7 +176,19 @@
     return /_{2,}/.test(asText(question && question.question));
   }
   function currentSubjectId(){
-    return root.cS && root.cS.id ? String(root.cS.id) : (root.globalMix ? 'mix' : '');
+    var lexicalSubject = lexicalValue(function(){ return cS; });
+    var subject = lexicalSubject && typeof lexicalSubject === 'object' ? lexicalSubject : (root.cS && typeof root.cS === 'object' ? root.cS : null);
+    if (subject && subject.id) return String(subject.id);
+    var mixed = lexicalValue(function(){ return globalMix; });
+    return (mixed == null ? !!root.globalMix : !!mixed) ? 'mix' : '';
+  }
+  function selectionValue(){
+    var lexicalSelection = lexicalValue(function(){ return sel; });
+    if (lexicalSelection !== undefined) return lexicalSelection == null ? null : lexicalSelection;
+    return root.sel == null ? null : root.sel;
+  }
+  function hasSelection(){
+    return selectionValue() !== null;
   }
   function explicitInputMode(question){
     var mode = normalizeClozeText(question && question.inputMode);
@@ -176,8 +198,15 @@
     if (mode === 'numeric' || mode === 'number' || mode === 'free-number') return 'numeric';
     return '';
   }
+  function pageGrade(){
+    var lexicalGrade = lexicalValue(function(){ return typeof GRADE_NUM !== 'undefined' ? GRADE_NUM : (typeof GRADE_NO !== 'undefined' ? GRADE_NO : undefined); });
+    var page = toNumber(root.GRADE_NUM || root.GRADE_NO || lexicalGrade || 0);
+    return page > 0 ? page : 0;
+  }
   function autoInputEligible(question){
-    var grade = toNumber(question && (question.grade != null ? question.grade : question.g != null ? question.g : root.GRADE_NUM || root.GRADE_NO || 0));
+    var page = pageGrade();
+    if (page) return page >= 8;
+    var grade = toNumber(question && (question.grade != null ? question.grade : question.g != null ? question.g : 0));
     return grade >= 8;
   }
   function inputModeFor(question){
@@ -382,7 +411,7 @@
     writeStore(data);
   }
   function armTiming(question){
-    if (!question || !onPlayScreen() || root.sel !== null) return;
+    if (!question || !onPlayScreen() || hasSelection()) return;
     if (timingState.activeQuestion === question && !timingState.logged) return;
     timingState.activeQuestion = question;
     timingState.activeId = questionFingerprint(question);
@@ -406,7 +435,7 @@
       mode: modeName(),
       subject: currentSubjectId(),
       tag: asText(question.tag),
-      correct: asText(root.sel) === asText(question.answer),
+      correct: asText(selectionValue()) === asText(question.answer),
       usedHelp: !!root.usedHelp,
       inputMode: state && state.mode ? state.mode : (inputModeFor(question) || 'choice')
     };
@@ -423,7 +452,7 @@
     return question.options.indexOf(value);
   }
   function submitCustomValue(question, value){
-    if (!question || root.sel !== null || typeof root.ans !== 'function') return false;
+    if (!question || hasSelection() || typeof root.ans !== 'function') return false;
     var idx = ensureOption(question, value);
     if (idx < 0) return false;
     allowProgrammaticAns = true;
@@ -504,7 +533,7 @@
     return document.getElementById('wave87x-free-answer');
   }
   function submitCurrentInput(question, mode){
-    if (!question || root.sel !== null) return false;
+    if (!question || hasSelection()) return false;
     var state = ensureInputState(question);
     var input = currentInputElement();
     var rawValue = input ? input.value : state.draft;
@@ -564,9 +593,9 @@
     input.inputMode = mode === 'numeric' ? 'decimal' : 'text';
     input.placeholder = inputPlaceholder(mode, question);
     input.setAttribute('aria-label', title.textContent);
-    input.value = root.sel === null ? (state.draft || '') : (state.lastValue || state.draft || '');
-    input.disabled = root.sel !== null;
-    if (root.sel === null) {
+    input.value = hasSelection() ? (state.lastValue || state.draft || '') : (state.draft || '');
+    input.disabled = hasSelection();
+    if (!hasSelection()) {
       input.addEventListener('input', function(){ state.draft = input.value; });
       input.addEventListener('keydown', function(event){
         if (event.key === 'Enter' || event.key === 'NumpadEnter') {
@@ -577,19 +606,19 @@
     }
     row.appendChild(input);
 
-    if (root.sel === null) {
+    if (!hasSelection()) {
       var submit = makeButton('Проверить', 'btn btn-p');
       submit.addEventListener('click', function(){ submitCurrentInput(question, mode); });
       row.appendChild(submit);
     }
     box.appendChild(row);
 
-    if (root.sel !== null) {
+    if (hasSelection()) {
       var info = document.createElement('div');
       info.className = 'wave87x-chiprow';
 
       var typed = document.createElement('span');
-      typed.className = 'wave87x-chip ' + (asText(root.sel) === asText(question.answer) ? 'ok' : 'no');
+      typed.className = 'wave87x-chip ' + (asText(selectionValue()) === asText(question.answer) ? 'ok' : 'no');
       typed.textContent = 'Ввод: ' + (state.lastValue || '—');
       info.appendChild(typed);
 
@@ -622,7 +651,7 @@
     opts.setAttribute('aria-label', mode === 'numeric' ? 'Числовой ответ' : mode === 'text' ? 'Текстовый ответ' : 'Ответ с вводом');
     opts.appendChild(wrap);
 
-    if (root.sel === null) {
+    if (!hasSelection()) {
       setTimeout(function(){
         try {
           input.focus({ preventScroll:true });
@@ -633,7 +662,7 @@
   }
   function appendTimingToFeedback(){
     var question = currentQuestion();
-    if (!question || root.sel === null) return;
+    if (!question || !hasSelection()) return;
     var sample = question.__wave87xTiming && question.__wave87xTiming.last ? question.__wave87xTiming.last : null;
     if (!sample) return;
     var slot = document.getElementById('fba');
@@ -794,7 +823,7 @@
       if (!onPlayScreen()) return;
       var question = currentQuestion();
       var mode = inputModeFor(question);
-      if (!mode || root.sel !== null) return;
+      if (!mode || hasSelection()) return;
       if (isEditableTarget(event.target)) return;
       var key = asText(event.key);
       if (/^[1-4a-dA-D]$/.test(key)) {
@@ -819,10 +848,10 @@
     root.ans = function(idx){
       var question = currentQuestion();
       if (inputModeFor(question) && !allowProgrammaticAns) return null;
-      var hadSelection = root.sel !== null;
+      var hadSelection = hasSelection();
       var result = baseAns.apply(this, arguments);
       try {
-        if (!hadSelection && question && root.sel !== null) captureTiming(question);
+        if (!hadSelection && question && hasSelection()) captureTiming(question);
       } catch (_err) {}
       return result;
     };
@@ -859,6 +888,11 @@
     questionFingerprint: questionFingerprint,
     levenshteinDistance: levenshteinDistance,
     normalizeTextAnswer: normalizeTextAnswer,
-    matchTextInput: matchTextInput
+    matchTextInput: matchTextInput,
+    currentQuestion: currentQuestion,
+    currentSubjectId: currentSubjectId,
+    selectionValue: selectionValue,
+    hasSelection: hasSelection,
+    pageGrade: pageGrade
   };
 })();
