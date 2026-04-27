@@ -1,12 +1,12 @@
 {
-  "version": "wave89s",
   "bank_id": "oge_math_2026_foundation",
+  "family_id": "oge_math_2026_full",
   "exam": "ОГЭ",
   "subject": "Математика",
   "subject_id": "mathall",
   "year": 2026,
-  "source": "exported_from_wave30_legacy_variants_and_wave89s_authored_expansion",
-  "description": "Полные тренировочные варианты ОГЭ по математике: legacy exact-variants + authored variants 4–5.",
+  "source": "wave89u structured snapshot",
+  "description": "полный вариант · 25 заданий · алгебра, геометрия, практика · canonical JSON bank",
   "variants": [
     1,
     2,
@@ -18,7 +18,7 @@
   "items": [
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 1,
@@ -40,11 +40,16 @@
       "topic_tag": "chisla_i_vychisleniya_kvadratnye_uravneniya_01",
       "section": "Числа и вычисления",
       "topic": "Квадратные уравнения",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 2,
@@ -66,11 +71,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_02",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 3,
@@ -92,11 +102,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_03",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 4,
@@ -118,11 +133,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_04",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 5,
@@ -144,11 +164,16 @@
       "topic_tag": "chisla_i_vychisleniya_progressii_05",
       "section": "Числа и вычисления",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 6,
@@ -170,11 +195,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_06",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 7,
@@ -196,11 +226,16 @@
       "topic_tag": "chisla_i_vychisleniya_veroyatnost_07",
       "section": "Числа и вычисления",
       "topic": "Вероятность",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 8,
@@ -222,11 +257,16 @@
       "topic_tag": "algebra_sistemy_uravneniy_08",
       "section": "Алгебра",
       "topic": "Системы уравнений",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 9,
@@ -248,11 +288,16 @@
       "topic_tag": "algebra_kvadratichnaya_funktsiya_09",
       "section": "Алгебра",
       "topic": "Квадратичная функция",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 10,
@@ -274,11 +319,16 @@
       "topic_tag": "algebra_progressii_10",
       "section": "Алгебра",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 11,
@@ -300,11 +350,16 @@
       "topic_tag": "algebra_progressii_11",
       "section": "Алгебра",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 12,
@@ -326,11 +381,16 @@
       "topic_tag": "algebra_neravenstva_12",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 13,
@@ -352,11 +412,16 @@
       "topic_tag": "algebra_stepeni_13",
       "section": "Алгебра",
       "topic": "Степени",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 14,
@@ -378,11 +443,16 @@
       "topic_tag": "algebra_neravenstva_14",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 15,
@@ -404,11 +474,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_ploschadi_15",
       "section": "Геометрия: базовые задачи",
       "topic": "Площади",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 16,
@@ -430,11 +505,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_okruzhnost_16",
       "section": "Геометрия: базовые задачи",
       "topic": "Окружность",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 17,
@@ -456,11 +536,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_17",
       "section": "Геометрия: базовые задачи",
       "topic": "Подобие треугольников",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 18,
@@ -482,11 +567,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_18",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 19,
@@ -508,11 +598,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_chetyrehugolniki_19",
       "section": "Геометрия: базовые задачи",
       "topic": "Четырёхугольники",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 20,
@@ -534,11 +629,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_20",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 21,
@@ -560,11 +660,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_21",
       "section": "Геометрия: базовые задачи",
       "topic": "Подобие треугольников",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 22,
@@ -586,11 +691,16 @@
       "topic_tag": "praktika_i_veroyatnost_geometriya_22",
       "section": "Практика и вероятность",
       "topic": "Геометрия",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 23,
@@ -612,11 +722,16 @@
       "topic_tag": "praktika_i_veroyatnost_oge_algebra_core_23",
       "section": "Практика и вероятность",
       "topic": "ОГЭ: алгебра core",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 24,
@@ -638,11 +753,16 @@
       "topic_tag": "geometriya_razvernutye_okruzhnost_24",
       "section": "Геометрия: развернутые",
       "topic": "Окружность",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 1,
       "task_num": 25,
@@ -664,11 +784,16 @@
       "topic_tag": "geometriya_razvernutye_metod_koordinat_25",
       "section": "Геометрия: развернутые",
       "topic": "Метод координат",
-      "source_pack": "oge_math_var1"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 1,
@@ -690,11 +815,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_01",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 2,
@@ -716,11 +846,16 @@
       "topic_tag": "chisla_i_vychisleniya_kvadratnye_uravneniya_02",
       "section": "Числа и вычисления",
       "topic": "Квадратные уравнения",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 3,
@@ -742,11 +877,16 @@
       "topic_tag": "chisla_i_vychisleniya_praktika_03",
       "section": "Числа и вычисления",
       "topic": "Практика",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 4,
@@ -768,11 +908,16 @@
       "topic_tag": "chisla_i_vychisleniya_progressii_04",
       "section": "Числа и вычисления",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 5,
@@ -794,11 +939,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_05",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 6,
@@ -820,11 +970,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_06",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 7,
@@ -846,11 +1001,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_07",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 8,
@@ -872,11 +1032,16 @@
       "topic_tag": "algebra_kvadratichnaya_funktsiya_08",
       "section": "Алгебра",
       "topic": "Квадратичная функция",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 9,
@@ -898,11 +1063,16 @@
       "topic_tag": "algebra_neravenstva_09",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 10,
@@ -924,11 +1094,16 @@
       "topic_tag": "algebra_kvadratichnaya_funktsiya_10",
       "section": "Алгебра",
       "topic": "Квадратичная функция",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 11,
@@ -950,11 +1125,16 @@
       "topic_tag": "algebra_kvadratnye_uravneniya_11",
       "section": "Алгебра",
       "topic": "Квадратные уравнения",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 12,
@@ -976,11 +1156,16 @@
       "topic_tag": "algebra_sistemy_uravneniy_12",
       "section": "Алгебра",
       "topic": "Системы уравнений",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 13,
@@ -1002,11 +1187,16 @@
       "topic_tag": "algebra_neravenstva_13",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 14,
@@ -1028,11 +1218,16 @@
       "topic_tag": "algebra_lineynye_uravneniya_14",
       "section": "Алгебра",
       "topic": "Линейные уравнения",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 15,
@@ -1054,11 +1249,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_15",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 16,
@@ -1080,11 +1280,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_teorema_pifagora_16",
       "section": "Геометрия: базовые задачи",
       "topic": "Теорема Пифагора",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 17,
@@ -1106,11 +1311,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_17",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 18,
@@ -1132,11 +1342,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_parallelnye_pryamye_18",
       "section": "Геометрия: базовые задачи",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 19,
@@ -1158,11 +1373,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_parallelnye_pryamye_19",
       "section": "Геометрия: базовые задачи",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 20,
@@ -1184,11 +1404,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_20",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 21,
@@ -1210,11 +1435,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_parallelnye_pryamye_21",
       "section": "Геометрия: базовые задачи",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 22,
@@ -1236,11 +1466,16 @@
       "topic_tag": "praktika_i_veroyatnost_geometriya_22",
       "section": "Практика и вероятность",
       "topic": "Геометрия",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 23,
@@ -1262,11 +1497,16 @@
       "topic_tag": "praktika_i_veroyatnost_veroyatnost_23",
       "section": "Практика и вероятность",
       "topic": "Вероятность",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 24,
@@ -1288,11 +1528,16 @@
       "topic_tag": "geometriya_razvernutye_metod_koordinat_24",
       "section": "Геометрия: развернутые",
       "topic": "Метод координат",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 2,
       "task_num": 25,
@@ -1314,11 +1559,16 @@
       "topic_tag": "geometriya_razvernutye_parallelnye_pryamye_25",
       "section": "Геометрия: развернутые",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var2"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 1,
@@ -1340,11 +1590,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_01",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 2,
@@ -1366,11 +1621,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_02",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 3,
@@ -1392,11 +1652,16 @@
       "topic_tag": "chisla_i_vychisleniya_progressii_03",
       "section": "Числа и вычисления",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 4,
@@ -1418,11 +1683,16 @@
       "topic_tag": "chisla_i_vychisleniya_praktika_04",
       "section": "Числа и вычисления",
       "topic": "Практика",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 5,
@@ -1444,11 +1714,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_05",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 6,
@@ -1470,11 +1745,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_06",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 7,
@@ -1496,11 +1776,16 @@
       "topic_tag": "chisla_i_vychisleniya_metod_koordinat_07",
       "section": "Числа и вычисления",
       "topic": "Метод координат",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 8,
@@ -1522,11 +1807,16 @@
       "topic_tag": "algebra_sistemy_uravneniy_08",
       "section": "Алгебра",
       "topic": "Системы уравнений",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 9,
@@ -1548,11 +1838,16 @@
       "topic_tag": "algebra_stepeni_09",
       "section": "Алгебра",
       "topic": "Степени",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 10,
@@ -1574,11 +1869,16 @@
       "topic_tag": "algebra_kvadratichnaya_funktsiya_10",
       "section": "Алгебра",
       "topic": "Квадратичная функция",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 11,
@@ -1600,11 +1900,16 @@
       "topic_tag": "algebra_stepeni_11",
       "section": "Алгебра",
       "topic": "Степени",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 12,
@@ -1626,11 +1931,16 @@
       "topic_tag": "algebra_mnogochleny_12",
       "section": "Алгебра",
       "topic": "Многочлены",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 13,
@@ -1652,11 +1962,16 @@
       "topic_tag": "algebra_sistemy_uravneniy_13",
       "section": "Алгебра",
       "topic": "Системы уравнений",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 14,
@@ -1678,11 +1993,16 @@
       "topic_tag": "algebra_kvadratichnaya_funktsiya_14",
       "section": "Алгебра",
       "topic": "Квадратичная функция",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 15,
@@ -1704,11 +2024,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_parallelnye_pryamye_15",
       "section": "Геометрия: базовые задачи",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 16,
@@ -1730,11 +2055,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_16",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 17,
@@ -1756,11 +2086,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_17",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 18,
@@ -1782,11 +2117,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_okruzhnost_18",
       "section": "Геометрия: базовые задачи",
       "topic": "Окружность",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 19,
@@ -1808,11 +2148,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_parallelnye_pryamye_19",
       "section": "Геометрия: базовые задачи",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 20,
@@ -1834,11 +2179,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_20",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 21,
@@ -1860,11 +2210,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_parallelnye_pryamye_21",
       "section": "Геометрия: базовые задачи",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 22,
@@ -1886,11 +2241,16 @@
       "topic_tag": "praktika_i_veroyatnost_grafiki_22",
       "section": "Практика и вероятность",
       "topic": "Графики",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 23,
@@ -1912,11 +2272,16 @@
       "topic_tag": "praktika_i_veroyatnost_oge_algebra_core_23",
       "section": "Практика и вероятность",
       "topic": "ОГЭ: алгебра core",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 24,
@@ -1938,11 +2303,16 @@
       "topic_tag": "geometriya_razvernutye_chetyrehugolniki_24",
       "section": "Геометрия: развернутые",
       "topic": "Четырёхугольники",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 3,
       "task_num": 25,
@@ -1964,11 +2334,16 @@
       "topic_tag": "geometriya_razvernutye_parallelnye_pryamye_25",
       "section": "Геометрия: развернутые",
       "topic": "Параллельные прямые",
-      "source_pack": "oge_math_var3"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 1,
@@ -1990,11 +2365,16 @@
       "topic_tag": "chisla_i_vychisleniya_kvadratnye_uravneniya_01",
       "section": "Числа и вычисления",
       "topic": "Квадратные уравнения",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 2,
@@ -2016,11 +2396,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_02",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 3,
@@ -2042,11 +2427,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_03",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 4,
@@ -2068,11 +2458,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_04",
       "section": "Числа и вычисления",
       "topic": "Проценты и вычисления",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 5,
@@ -2094,11 +2489,16 @@
       "topic_tag": "chisla_i_vychisleniya_progressii_05",
       "section": "Числа и вычисления",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 6,
@@ -2120,11 +2520,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_06",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 7,
@@ -2146,11 +2551,16 @@
       "topic_tag": "chisla_i_vychisleniya_veroyatnost_07",
       "section": "Числа и вычисления",
       "topic": "Вероятность",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 8,
@@ -2172,11 +2582,16 @@
       "topic_tag": "algebra_sistemy_uravneniy_08",
       "section": "Алгебра",
       "topic": "Системы уравнений",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 9,
@@ -2198,11 +2613,16 @@
       "topic_tag": "algebra_kvadratichnaya_funktsiya_09",
       "section": "Алгебра",
       "topic": "Квадратичная функция",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 10,
@@ -2224,11 +2644,16 @@
       "topic_tag": "algebra_progressii_10",
       "section": "Алгебра",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 11,
@@ -2250,11 +2675,16 @@
       "topic_tag": "algebra_progressii_11",
       "section": "Алгебра",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 12,
@@ -2276,11 +2706,16 @@
       "topic_tag": "algebra_neravenstva_12",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 13,
@@ -2302,11 +2737,16 @@
       "topic_tag": "algebra_stepeni_13",
       "section": "Алгебра",
       "topic": "Степени",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 14,
@@ -2328,11 +2768,16 @@
       "topic_tag": "algebra_neravenstva_14",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 15,
@@ -2354,11 +2799,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_ploschadi_15",
       "section": "Геометрия: базовые задачи",
       "topic": "Площади",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 16,
@@ -2380,11 +2830,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_okruzhnost_16",
       "section": "Геометрия: базовые задачи",
       "topic": "Окружность",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 17,
@@ -2406,11 +2861,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_17",
       "section": "Геометрия: базовые задачи",
       "topic": "Подобие треугольников",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 18,
@@ -2432,11 +2892,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_18",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 19,
@@ -2458,11 +2923,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_chetyrehugolniki_19",
       "section": "Геометрия: базовые задачи",
       "topic": "Четырёхугольники",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 20,
@@ -2484,11 +2954,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_20",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 21,
@@ -2510,11 +2985,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_21",
       "section": "Геометрия: базовые задачи",
       "topic": "Подобие треугольников",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 22,
@@ -2536,11 +3016,16 @@
       "topic_tag": "praktika_i_veroyatnost_geometriya_22",
       "section": "Практика и вероятность",
       "topic": "Практическая геометрия",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 23,
@@ -2562,11 +3047,16 @@
       "topic_tag": "praktika_i_veroyatnost_oge_algebra_core_23",
       "section": "Практика и вероятность",
       "topic": "Алгебраическое ядро",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 24,
@@ -2588,11 +3078,16 @@
       "topic_tag": "geometriya_razvernutye_okruzhnost_24",
       "section": "Геометрия: развернутые",
       "topic": "Окружность",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 4,
       "task_num": 25,
@@ -2614,11 +3109,16 @@
       "topic_tag": "geometriya_razvernutye_metod_koordinat_25",
       "section": "Геометрия: развернутые",
       "topic": "Метод координат",
-      "source_pack": "oge_math_var4"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 1,
@@ -2640,11 +3140,16 @@
       "topic_tag": "chisla_i_vychisleniya_kvadratnye_uravneniya_01",
       "section": "Числа и вычисления",
       "topic": "Квадратные уравнения",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 2,
@@ -2666,11 +3171,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_02",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 3,
@@ -2692,11 +3202,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_03",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 4,
@@ -2718,11 +3233,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_04",
       "section": "Числа и вычисления",
       "topic": "Проценты и вычисления",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 5,
@@ -2744,11 +3264,16 @@
       "topic_tag": "chisla_i_vychisleniya_progressii_05",
       "section": "Числа и вычисления",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 6,
@@ -2770,11 +3295,16 @@
       "topic_tag": "chisla_i_vychisleniya_drobi_i_vyrazheniya_06",
       "section": "Числа и вычисления",
       "topic": "Дроби и выражения",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 7,
@@ -2796,11 +3326,16 @@
       "topic_tag": "chisla_i_vychisleniya_veroyatnost_07",
       "section": "Числа и вычисления",
       "topic": "Вероятность",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 8,
@@ -2822,11 +3357,16 @@
       "topic_tag": "algebra_sistemy_uravneniy_08",
       "section": "Алгебра",
       "topic": "Системы уравнений",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 9,
@@ -2848,11 +3388,16 @@
       "topic_tag": "algebra_kvadratichnaya_funktsiya_09",
       "section": "Алгебра",
       "topic": "Квадратичная функция",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 10,
@@ -2874,11 +3419,16 @@
       "topic_tag": "algebra_progressii_10",
       "section": "Алгебра",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 11,
@@ -2900,11 +3450,16 @@
       "topic_tag": "algebra_progressii_11",
       "section": "Алгебра",
       "topic": "Прогрессии",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 12,
@@ -2926,11 +3481,16 @@
       "topic_tag": "algebra_neravenstva_12",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 13,
@@ -2952,11 +3512,16 @@
       "topic_tag": "algebra_stepeni_13",
       "section": "Алгебра",
       "topic": "Степени",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 14,
@@ -2978,11 +3543,16 @@
       "topic_tag": "algebra_neravenstva_14",
       "section": "Алгебра",
       "topic": "Неравенства",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 15,
@@ -3004,11 +3574,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_ploschadi_15",
       "section": "Геометрия: базовые задачи",
       "topic": "Площади",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 16,
@@ -3030,11 +3605,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_okruzhnost_16",
       "section": "Геометрия: базовые задачи",
       "topic": "Окружность",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 17,
@@ -3056,11 +3636,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_17",
       "section": "Геометрия: базовые задачи",
       "topic": "Подобие треугольников",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 18,
@@ -3082,11 +3667,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_18",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 19,
@@ -3108,11 +3698,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_chetyrehugolniki_19",
       "section": "Геометрия: базовые задачи",
       "topic": "Четырёхугольники",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 20,
@@ -3134,11 +3729,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_treugolniki_20",
       "section": "Геометрия: базовые задачи",
       "topic": "Треугольники",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 21,
@@ -3160,11 +3760,16 @@
       "topic_tag": "geometriya_bazovye_zadachi_podobie_treugolnikov_21",
       "section": "Геометрия: базовые задачи",
       "topic": "Подобие треугольников",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "A"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 22,
@@ -3186,11 +3791,16 @@
       "topic_tag": "praktika_i_veroyatnost_geometriya_22",
       "section": "Практика и вероятность",
       "topic": "Практическая геометрия",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 23,
@@ -3212,11 +3822,16 @@
       "topic_tag": "praktika_i_veroyatnost_oge_algebra_core_23",
       "section": "Практика и вероятность",
       "topic": "Алгебраическое ядро",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 24,
@@ -3238,11 +3853,16 @@
       "topic_tag": "geometriya_razvernutye_okruzhnost_24",
       "section": "Геометрия: развернутые",
       "topic": "Окружность",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     },
     {
       "exam": "ОГЭ",
-      "subject": "Математика",
+      "subject": "math",
       "year": 2026,
       "variant": 5,
       "task_num": 25,
@@ -3264,8 +3884,12 @@
       "topic_tag": "geometriya_razvernutye_metod_koordinat_25",
       "section": "Геометрия: развернутые",
       "topic": "Метод координат",
-      "source_pack": "oge_math_var5"
+      "grades": "9 класс",
+      "source_pack": "oge_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "grade",
+      "score_model": "oge_math_2026",
+      "part": "B"
     }
-  ],
-  "family_id": "oge_math_2026_full"
+  ]
 }

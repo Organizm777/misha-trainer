@@ -181,7 +181,15 @@ const runtimeFamilies = runtimePayload && runtimePayload.families ? Object.keys(
 const expectedFamilies = Object.values(catalog.structures || {}).map((structure) => String(structure.family_id || '')).filter(Boolean);
 const EXPECTED_MIN_VARIANTS = {
   oge_math_2026_full: 5,
-  ege_profile_math_2026_part1: 5
+  oge_russian_2026_full: 5,
+  oge_english_2026_full: 5,
+  oge_social_2026_full: 5,
+  ege_base_math_2026_full: 5,
+  ege_profile_math_2026_part1: 5,
+  ege_russian_2026_part1: 5,
+  ege_social_2026_part1: 5,
+  ege_english_2026_part1: 5,
+  ege_physics_2026_part1: 5
 };
 const auditSnapshot = safeJSON('wave30Exam && wave30Exam.auditSnapshot ? wave30Exam.auditSnapshot() : null', null);
 const exportedSnapshot = safeJSON('wave89ExamBank && wave89ExamBank.exportSnapshot ? wave89ExamBank.exportSnapshot() : null', null);

@@ -143,6 +143,9 @@
   window.WAVE25_DIAG_SUBJECT_CONFIGS = SUBJECT_CONFIGS;
   window.WAVE25_DIAG_MODES = MODES;
 
+  var DIAG_TOOLS_ACTION_ATTR = 'data-wave89u-diag-tools-action';
+  var DIAG_TOOLS_MODE_ATTR = 'data-wave89u-diag-tools-mode';
+
   function safeJSON(key, fallback){
     try {
       var raw = localStorage.getItem(key);
@@ -256,7 +259,7 @@
     var active = getModeId();
     bar.innerHTML = Object.keys(MODES).map(function(id){
       var mode = MODES[id];
-      return '<button class="wave25-chip' + (id === active ? ' active' : '') + '" onclick="wave25Diag.setMode(\'' + id + '\')">' + mode.label + ' · ' + mode.short + '</button>';
+      return '<button class="wave25-chip' + (id === active ? ' active' : '') + '" type="button" ' + DIAG_TOOLS_ACTION_ATTR + '="set-mode" ' + DIAG_TOOLS_MODE_ATTR + '="' + id + '">' + mode.label + ' · ' + mode.short + '</button>';
     }).join('');
     hint.textContent = (MODES[active] && MODES[active].desc) || '';
     pack.innerHTML = Object.keys(EXAM_PACKS).map(function(key){
@@ -319,10 +322,52 @@
         '</div>';
       }).join('') + '</div>' +
       '<div class="wave25-h-actions">' +
-        '<button class="wave25-btn" onclick="wave25Diag.repeatLast()">↻ Повторить последний предмет</button>' +
-        '<button class="wave25-btn alt" onclick="wave25Diag.clearHistory()">Очистить историю</button>' +
+        '<button class="wave25-btn" type="button" ' + DIAG_TOOLS_ACTION_ATTR + '="repeat-last">↻ Повторить последний предмет</button>' +
+        '<button class="wave25-btn alt" type="button" ' + DIAG_TOOLS_ACTION_ATTR + '="clear-history">Очистить историю</button>' +
       '</div>';
   }
+
+  function findDiagnosticToolsActionNode(node){
+    for (var el = node; el && el !== document; el = el.parentElement) {
+      if (el.nodeType === 1 && el.hasAttribute && el.hasAttribute(DIAG_TOOLS_ACTION_ATTR)) return el;
+    }
+    return null;
+  }
+
+  function runDiagnosticToolsAction(el, event){
+    if (!el || el.disabled) return;
+    var action = el.getAttribute(DIAG_TOOLS_ACTION_ATTR) || '';
+    if (!action) return;
+    if (event && typeof event.preventDefault === 'function') event.preventDefault();
+    if (action === 'set-mode') {
+      setMode(el.getAttribute(DIAG_TOOLS_MODE_ATTR) || 'full');
+      return;
+    }
+    if (action === 'repeat-last') {
+      repeatLast();
+      return;
+    }
+    if (action === 'clear-history') {
+      clearHistory();
+    }
+  }
+
+  function bindDiagnosticToolsActions(){
+    if (document.__wave89uDiagnosticToolsBound) return;
+    document.__wave89uDiagnosticToolsBound = true;
+    document.addEventListener('click', function(event){
+      var el = findDiagnosticToolsActionNode(event.target);
+      if (!el) return;
+      runDiagnosticToolsAction(el, event);
+    }, true);
+  }
+
+  window.wave89uDiagnosticToolsBinding = {
+    actionAttr: DIAG_TOOLS_ACTION_ATTR,
+    modeAttr: DIAG_TOOLS_MODE_ATTR,
+    handle: runDiagnosticToolsAction,
+    isBound: function(){ return !!document.__wave89uDiagnosticToolsBound; }
+  };
 
   function repeatLast(){
     var last = getLastEntry();
@@ -606,6 +651,7 @@
 
   function init(){
     ensureModeUi();
+    bindDiagnosticToolsActions();
     patchStart();
     patchRender();
     patchSelectOpt();
@@ -631,4 +677,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
   else init();
 })();
-//# sourceMappingURL=bundle_diagnostic_tools.641a191419.js.map
+

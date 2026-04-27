@@ -55,6 +55,12 @@ jobs:
         run: node tools/audit_theory_coverage.mjs
       - name: Enforce desktop-safe play control bindings
         run: node tools/audit_play_selection_wave89t.mjs
+      - name: Enforce window-state bridge / junior input guard
+        run: node tools/audit_input_bridge_wave89v.mjs
+      - name: Enforce Lighthouse CI stability policy
+        run: node tools/audit_lighthouse_ci_wave87s.mjs
+      - name: Enforce diagnostic / exam CSP-safe controls
+        run: node tools/audit_diagnostic_exam_bindings_wave89u.mjs
 
       - name: Validate question generators
         run: node tools/validate_questions.js

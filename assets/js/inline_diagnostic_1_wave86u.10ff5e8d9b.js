@@ -553,6 +553,8 @@ let answers = [];      // {q, grade, topic, correct}
 let correctStreak = 0;
 let wrongStreak = 0;
 const MAX_Q = 20;
+const DIAG_ACTION_ATTR = 'data-wave89u-diag-action';
+const DIAG_ANSWER_INDEX_ATTR = 'data-wave89u-diag-answer-index';
 
 //
 // INIT SUBJECT GRID
@@ -680,7 +682,7 @@ function renderQ(){
   window._curAnswer = q.a;
   window._curHint = q.hint;
   opts.innerHTML = shuffled.map((o,i)=>`
-    <button class="opt" onclick="selectOptIdx(this,${i})">${o}</button>
+    <button class="opt" type="button" ${DIAG_ACTION_ATTR}="answer" ${DIAG_ANSWER_INDEX_ATTR}="${i}">${esc(o)}</button>
   `).join('');
 }
 
@@ -757,6 +759,7 @@ function skipQ(){
 }
 
 function adaptNext(wasCorrect){
+  if(window.__wave30ActivePack) return;
   const pool = sanitizePool(QBANK[curSubject.id]);
   const usedQs = new Set(questions.map(q=>q.q));
   const allGrades = [...new Set(pool.map(q=>q.g).filter(Number.isFinite))].sort((a,b)=>a-b);
@@ -956,6 +959,41 @@ function copyText(text){
     .catch(()=>prompt('Скопируй:',text));
 }
 
+function findDiagnosticActionNode(node){
+  for(let el=node;el&&el!==document;el=el.parentElement){
+    if(el.nodeType===1&&el.hasAttribute&&el.hasAttribute(DIAG_ACTION_ATTR)) return el;
+  }
+  return null;
+}
+
+function runDiagnosticRuntimeAction(el, event){
+  if(!el || el.disabled) return;
+  const action = el.getAttribute(DIAG_ACTION_ATTR) || '';
+  if(!action) return;
+  if(event && typeof event.preventDefault === 'function') event.preventDefault();
+  if(action === 'answer'){
+    const idx = Number(el.getAttribute(DIAG_ANSWER_INDEX_ATTR));
+    if(Number.isInteger(idx)) selectOptIdx(el, idx);
+  }
+}
+
+function bindDiagnosticRuntimeActions(){
+  if(document.__wave89uDiagnosticRuntimeBound) return;
+  document.__wave89uDiagnosticRuntimeBound = true;
+  document.addEventListener('click', event=>{
+    const el = findDiagnosticActionNode(event.target);
+    if(!el) return;
+    runDiagnosticRuntimeAction(el, event);
+  }, true);
+}
+
+window.wave89uDiagnosticBinding = {
+  actionAttr: DIAG_ACTION_ATTR,
+  answerIndexAttr: DIAG_ANSWER_INDEX_ATTR,
+  handle: runDiagnosticRuntimeAction,
+  isBound: ()=>!!document.__wave89uDiagnosticRuntimeBound
+};
+
 function bindDiagnosticAction(action, handler){
   document.querySelectorAll('[data-wave87r-action="'+action+'"]').forEach(el=>{
     if(el.__wave87rDiagnosticBound) return;
@@ -981,4 +1019,5 @@ function bindDiagnosticActions(){
   bindDiagnosticAction('diag-share', ()=>shareResult());
 }
 
+bindDiagnosticRuntimeActions();
 bindDiagnosticActions();

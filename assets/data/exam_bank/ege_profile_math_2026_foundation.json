@@ -1,12 +1,12 @@
 {
-  "version": "wave89s",
   "bank_id": "ege_profile_math_2026_foundation",
+  "family_id": "ege_profile_math_2026_part1",
   "exam": "ЕГЭ",
   "subject": "Математика (профиль)",
   "subject_id": "algebra",
   "year": 2026,
-  "source": "exported_from_wave30_legacy_variants_and_wave89s_authored_expansion",
-  "description": "Полные тренировочные варианты ЕГЭ профиль по математике, часть 1: legacy exact-variants + authored variants 4–5.",
+  "source": "wave89u structured snapshot",
+  "description": "часть 1 · 12 заданий · профильный уровень · canonical JSON bank",
   "variants": [
     1,
     2,
@@ -18,7 +18,7 @@
   "items": [
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 1,
@@ -40,11 +40,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_01",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 2,
@@ -66,11 +71,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_02",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 3,
@@ -92,11 +102,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_03",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 4,
@@ -118,11 +133,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_trigonometriya_04",
       "section": "Функции, графики, производная",
       "topic": "Тригонометрия",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 5,
@@ -144,11 +164,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_05",
       "section": "Функции, графики, производная",
       "topic": "Производная",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 6,
@@ -170,11 +195,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_06",
       "section": "Функции, графики, производная",
       "topic": "Производная",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 7,
@@ -196,11 +226,16 @@
       "topic_tag": "uravneniya_i_neravenstva_neravenstva_07",
       "section": "Уравнения и неравенства",
       "topic": "Неравенства",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 8,
@@ -222,11 +257,16 @@
       "topic_tag": "uravneniya_i_neravenstva_matematika_funktsii_i_veroyatnost_08",
       "section": "Уравнения и неравенства",
       "topic": "Математика: функции и вероятность",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 9,
@@ -248,11 +288,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_matematika_funktsii_i_veroyatnost_09",
       "section": "Вероятность и текстовые модели",
       "topic": "Математика: функции и вероятность",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 10,
@@ -274,11 +319,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_ege_profil_algebra_core_10",
       "section": "Вероятность и текстовые модели",
       "topic": "ЕГЭ профиль: algebra core",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 11,
@@ -300,11 +350,16 @@
       "topic_tag": "geometriya_i_koordinaty_stereometriya_11",
       "section": "Геометрия и координаты",
       "topic": "Стереометрия",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 1,
       "task_num": 12,
@@ -326,11 +381,16 @@
       "topic_tag": "geometriya_i_koordinaty_planimetriya_12",
       "section": "Геометрия и координаты",
       "topic": "Планиметрия",
-      "source_pack": "ege_profile_math_var1"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var1",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 1,
@@ -352,11 +412,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_01",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 2,
@@ -378,11 +443,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_02",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 3,
@@ -404,11 +474,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_proizvodnaya_03",
       "section": "Алгебра и преобразования",
       "topic": "Производная",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 4,
@@ -430,11 +505,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_matematika_funktsii_i_veroyatnost_04",
       "section": "Функции, графики, производная",
       "topic": "Математика: функции и вероятность",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 5,
@@ -456,11 +536,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_05",
       "section": "Функции, графики, производная",
       "topic": "Производная",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 6,
@@ -482,11 +567,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_integral_06",
       "section": "Функции, графики, производная",
       "topic": "Интеграл",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 7,
@@ -508,11 +598,16 @@
       "topic_tag": "uravneniya_i_neravenstva_neravenstva_07",
       "section": "Уравнения и неравенства",
       "topic": "Неравенства",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 8,
@@ -534,11 +629,16 @@
       "topic_tag": "uravneniya_i_neravenstva_matematika_funktsii_i_veroyatnost_08",
       "section": "Уравнения и неравенства",
       "topic": "Математика: функции и вероятность",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 9,
@@ -560,11 +660,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_veroyatnost_i_kombinatorika_09",
       "section": "Вероятность и текстовые модели",
       "topic": "Вероятность и комбинаторика",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 10,
@@ -586,11 +691,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_veroyatnost_i_kombinatorika_10",
       "section": "Вероятность и текстовые модели",
       "topic": "Вероятность и комбинаторика",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 11,
@@ -612,11 +722,16 @@
       "topic_tag": "geometriya_i_koordinaty_koordinaty_v_3d_11",
       "section": "Геометрия и координаты",
       "topic": "Координаты в 3D",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 2,
       "task_num": 12,
@@ -638,11 +753,16 @@
       "topic_tag": "geometriya_i_koordinaty_stereometriya_12",
       "section": "Геометрия и координаты",
       "topic": "Стереометрия",
-      "source_pack": "ege_profile_math_var2"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var2",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 1,
@@ -664,11 +784,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_01",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 2,
@@ -690,11 +815,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_02",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 3,
@@ -716,11 +846,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_03",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы: свойства",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 4,
@@ -742,11 +877,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_trigonometriya_04",
       "section": "Функции, графики, производная",
       "topic": "Тригонометрия",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 5,
@@ -768,11 +908,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_integral_i_ploschad_05",
       "section": "Функции, графики, производная",
       "topic": "Интеграл и площадь",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 6,
@@ -794,11 +939,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_trigonometriya_06",
       "section": "Функции, графики, производная",
       "topic": "Тригонометрия",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 7,
@@ -820,11 +970,16 @@
       "topic_tag": "uravneniya_i_neravenstva_pokazatelnye_uravneniya_07",
       "section": "Уравнения и неравенства",
       "topic": "Показательные уравнения",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 8,
@@ -846,11 +1001,16 @@
       "topic_tag": "uravneniya_i_neravenstva_neravenstva_08",
       "section": "Уравнения и неравенства",
       "topic": "Неравенства",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 9,
@@ -872,11 +1032,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_matematika_funktsii_i_veroyatnost_09",
       "section": "Вероятность и текстовые модели",
       "topic": "Математика: функции и вероятность",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 10,
@@ -898,11 +1063,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_matematika_funktsii_i_veroyatnost_10",
       "section": "Вероятность и текстовые модели",
       "topic": "Математика: функции и вероятность",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 11,
@@ -924,11 +1094,16 @@
       "topic_tag": "geometriya_i_koordinaty_koordinaty_i_vektory_11",
       "section": "Геометрия и координаты",
       "topic": "Координаты и векторы",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 3,
       "task_num": 12,
@@ -950,11 +1125,16 @@
       "topic_tag": "geometriya_i_koordinaty_stereometriya_12",
       "section": "Геометрия и координаты",
       "topic": "Стереометрия",
-      "source_pack": "ege_profile_math_var3"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var3",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 1,
@@ -976,11 +1156,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_01",
       "section": "Алгебра и преобразования",
       "topic": "Алгебраические преобразования",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 2,
@@ -1002,11 +1187,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_02",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 3,
@@ -1028,11 +1218,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_03",
       "section": "Алгебра и преобразования",
       "topic": "Функции",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 4,
@@ -1054,11 +1249,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_trigonometriya_04",
       "section": "Функции, графики, производная",
       "topic": "Тригонометрия",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 5,
@@ -1080,11 +1280,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_05",
       "section": "Функции, графики, производная",
       "topic": "Производная",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 6,
@@ -1106,11 +1311,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_06",
       "section": "Функции, графики, производная",
       "topic": "Уравнения",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 7,
@@ -1132,11 +1342,16 @@
       "topic_tag": "uravneniya_i_neravenstva_neravenstva_07",
       "section": "Уравнения и неравенства",
       "topic": "Неравенства",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 8,
@@ -1158,11 +1373,16 @@
       "topic_tag": "uravneniya_i_neravenstva_matematika_funktsii_i_veroyatnost_08",
       "section": "Уравнения и неравенства",
       "topic": "Вероятность",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 9,
@@ -1184,11 +1404,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_matematika_funktsii_i_veroyatnost_09",
       "section": "Вероятность и текстовые модели",
       "topic": "Текстовые модели",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 10,
@@ -1210,11 +1435,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_ege_profil_algebra_core_10",
       "section": "Вероятность и текстовые модели",
       "topic": "Планиметрия",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 11,
@@ -1236,11 +1466,16 @@
       "topic_tag": "geometriya_i_koordinaty_stereometriya_11",
       "section": "Геометрия и координаты",
       "topic": "Стереометрия",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 4,
       "task_num": 12,
@@ -1262,11 +1497,16 @@
       "topic_tag": "geometriya_i_koordinaty_planimetriya_12",
       "section": "Геометрия и координаты",
       "topic": "Координаты",
-      "source_pack": "ege_profile_math_var4"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var4",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 1,
@@ -1288,11 +1528,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_01",
       "section": "Алгебра и преобразования",
       "topic": "Алгебраические преобразования",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 2,
@@ -1314,11 +1559,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_02",
       "section": "Алгебра и преобразования",
       "topic": "Логарифмы",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 3,
@@ -1340,11 +1590,16 @@
       "topic_tag": "algebra_i_preobrazovaniya_logarifmy_svoystva_03",
       "section": "Алгебра и преобразования",
       "topic": "Функции",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 4,
@@ -1366,11 +1621,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_trigonometriya_04",
       "section": "Функции, графики, производная",
       "topic": "Тригонометрия",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 5,
@@ -1392,11 +1652,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_05",
       "section": "Функции, графики, производная",
       "topic": "Производная",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 6,
@@ -1418,11 +1683,16 @@
       "topic_tag": "funktsii_grafiki_proizvodnaya_proizvodnaya_06",
       "section": "Функции, графики, производная",
       "topic": "Уравнения",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 7,
@@ -1444,11 +1714,16 @@
       "topic_tag": "uravneniya_i_neravenstva_neravenstva_07",
       "section": "Уравнения и неравенства",
       "topic": "Неравенства",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 8,
@@ -1470,11 +1745,16 @@
       "topic_tag": "uravneniya_i_neravenstva_matematika_funktsii_i_veroyatnost_08",
       "section": "Уравнения и неравенства",
       "topic": "Вероятность",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 9,
@@ -1496,11 +1776,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_matematika_funktsii_i_veroyatnost_09",
       "section": "Вероятность и текстовые модели",
       "topic": "Текстовые модели",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 10,
@@ -1522,11 +1807,16 @@
       "topic_tag": "veroyatnost_i_tekstovye_modeli_ege_profil_algebra_core_10",
       "section": "Вероятность и текстовые модели",
       "topic": "Планиметрия",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 11,
@@ -1548,11 +1838,16 @@
       "topic_tag": "geometriya_i_koordinaty_stereometriya_11",
       "section": "Геометрия и координаты",
       "topic": "Стереометрия",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     },
     {
       "exam": "ЕГЭ",
-      "subject": "Математика (профиль)",
+      "subject": "profile_math",
       "year": 2026,
       "variant": 5,
       "task_num": 12,
@@ -1574,8 +1869,12 @@
       "topic_tag": "geometriya_i_koordinaty_planimetriya_12",
       "section": "Геометрия и координаты",
       "topic": "Координаты",
-      "source_pack": "ege_profile_math_var5"
+      "grades": "11 класс",
+      "source_pack": "ege_profile_math_var5",
+      "source_tag": "exam_bank_json",
+      "score_kind": "ege100",
+      "score_model": "ege_profile_math_part1_2026",
+      "part": "A"
     }
-  ],
-  "family_id": "ege_profile_math_2026_part1"
+  ]
 }

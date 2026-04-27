@@ -8,6 +8,8 @@
   var EXAM_HASH_KEY = 'exam';
   var STYLE_ID = 'wave30-exam-style';
   var MAX_HISTORY = 80;
+  var EXAM_ACTION_ATTR = 'data-wave89u-exam-action';
+  var EXAM_PACK_ATTR = 'data-wave89u-pack-id';
 
   function toNum(v){ return Number(v || 0) || 0; }
   function pct(ok, total){ return total > 0 ? Math.round(ok / total * 100) : 0; }
@@ -786,9 +788,9 @@
   function attachWave69OgePacks(){
     ['oge_math','oge_russian','oge_informatics','oge_physics'].forEach(function(id){ if (EXAM_PACKS[id]) EXAM_PACKS[id].hidden = true; });
     structuredVariantNosHint('oge_math_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_math_var' + i] = makeWave69MathVariant(i); });
-    structuredVariantNosHint('oge_russian_2026_full', 3).forEach(function(i){ EXAM_PACKS['oge_russian_var' + i] = makeWave69RussianVariant(i); });
-    structuredVariantNosHint('oge_english_2026_full', 3).forEach(function(i){ EXAM_PACKS['oge_english_var' + i] = makeWave69EnglishVariant(i); });
-    structuredVariantNosHint('oge_social_2026_full', 3).forEach(function(i){ EXAM_PACKS['oge_social_var' + i] = makeWave69SocialVariant(i); });
+    structuredVariantNosHint('oge_russian_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_russian_var' + i] = makeWave69RussianVariant(i); });
+    structuredVariantNosHint('oge_english_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_english_var' + i] = makeWave69EnglishVariant(i); });
+    structuredVariantNosHint('oge_social_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_social_var' + i] = makeWave69SocialVariant(i); });
   }
   attachWave69OgePacks();
 
@@ -941,9 +943,9 @@
   function attachWave70EgePacks(){
     ['ege_base_math','ege_profile_math','ege_russian'].forEach(function(id){ if (EXAM_PACKS[id]) EXAM_PACKS[id].hidden = true; });
     if (EXAM_PACKS.ege_english) EXAM_PACKS.ege_english.order = 99;
-    structuredVariantNosHint('ege_base_math_2026_full', 3).forEach(function(i){ EXAM_PACKS['ege_base_math_var' + i] = makeWave70EgeBaseMathVariant(i); });
+    structuredVariantNosHint('ege_base_math_2026_full', 5).forEach(function(i){ EXAM_PACKS['ege_base_math_var' + i] = makeWave70EgeBaseMathVariant(i); });
     structuredVariantNosHint('ege_profile_math_2026_part1', 5).forEach(function(i){ EXAM_PACKS['ege_profile_math_var' + i] = makeWave70EgeProfileMathVariant(i); });
-    structuredVariantNosHint('ege_russian_2026_part1', 3).forEach(function(i){ EXAM_PACKS['ege_russian_var' + i] = makeWave70EgeRussianVariant(i); });
+    structuredVariantNosHint('ege_russian_2026_part1', 5).forEach(function(i){ EXAM_PACKS['ege_russian_var' + i] = makeWave70EgeRussianVariant(i); });
   }
   attachWave70EgePacks();
 
@@ -1090,11 +1092,15 @@
 
   function attachWave71EgePacks(){
     if (EXAM_PACKS.ege_english) EXAM_PACKS.ege_english.hidden = true;
-    for (var i = 1; i <= 3; i++) {
+    structuredVariantNosHint('ege_social_2026_part1', 5).forEach(function(i){
       EXAM_PACKS['ege_social_var' + i] = makeWave71EgeSocialVariant(i);
+    });
+    structuredVariantNosHint('ege_english_2026_part1', 5).forEach(function(i){
       EXAM_PACKS['ege_english_var' + i] = makeWave71EgeEnglishVariant(i);
+    });
+    structuredVariantNosHint('ege_physics_2026_part1', 5).forEach(function(i){
       EXAM_PACKS['ege_physics_var' + i] = makeWave71EgePhysicsVariant(i);
-    }
+    });
   }
   attachWave71EgePacks();
 
@@ -1601,11 +1607,45 @@
             '<div class="wave30-pack-head"><div class="wave30-pack-name">' + esc(pack.label) + '</div><span class="wave30-pack-badge">' + esc(pack.grades) + '</span></div>' +
             '<div class="wave30-pack-meta">' + esc(pack.summary) + '<br>' + pack.maxQ + ' заданий · ' + fmtTime(pack.timeLimit) + '</div>' +
             '<div class="wave30-pack-last">' + (latest ? ('Последний: <b style="color:' + esc(colorForPct(latest.pct)) + '">' + esc(String(latest.rawPoints) + '/' + String(latest.maxPoints)) + '</b> · ' + esc(latest.bandLabel) + ' · ' + esc(fmtDate(latest.ts))) : 'Пока без попыток') + '</div>' +
-            '<button class="wave30-pack-btn" style="--pack-accent:' + esc(pack.accent) + ';--pack-bg:' + esc(hexToRgba(pack.accent, 0.10)) + '" onclick="wave30Exam.startPack(\'' + pack.id + '\')">▶ Начать тест</button>' +
+            '<button class="wave30-pack-btn" type="button" style="--pack-accent:' + esc(pack.accent) + ';--pack-bg:' + esc(hexToRgba(pack.accent, 0.10)) + '" ' + EXAM_ACTION_ATTR + '="start-pack" ' + EXAM_PACK_ATTR + '="' + esc(pack.id) + '">▶ Начать тест</button>' +
           '</div>';
         }).join('') + '</div></div>';
     }).join('');
   }
+
+  function findExamActionNode(node){
+    for (var el = node; el && el !== document; el = el.parentElement) {
+      if (el.nodeType === 1 && el.hasAttribute && el.hasAttribute(EXAM_ACTION_ATTR)) return el;
+    }
+    return null;
+  }
+
+  function runExamAction(el, event){
+    if (!el || el.disabled) return;
+    var action = el.getAttribute(EXAM_ACTION_ATTR) || '';
+    if (!action) return;
+    if (event && typeof event.preventDefault === 'function') event.preventDefault();
+    if (action === 'start-pack') {
+      startPack(el.getAttribute(EXAM_PACK_ATTR) || '');
+    }
+  }
+
+  function bindExamActions(){
+    if (document.__wave89uExamBindingsBound) return;
+    document.__wave89uExamBindingsBound = true;
+    document.addEventListener('click', function(event){
+      var el = findExamActionNode(event.target);
+      if (!el) return;
+      runExamAction(el, event);
+    }, true);
+  }
+
+  window.wave89uExamBinding = {
+    actionAttr: EXAM_ACTION_ATTR,
+    packAttr: EXAM_PACK_ATTR,
+    handle: runExamAction,
+    isBound: function(){ return !!document.__wave89uExamBindingsBound; }
+  };
 
   function updateQuizMeta(){
     if (!isDiagnosticPage()) return;
@@ -2039,6 +2079,7 @@
   var dashBooted = false;
 
   function initDiagnostic(){
+    bindExamActions();
     renderPackHub();
     setTimeout(renderPackHub, 40);
     setDiagShellState('browse');

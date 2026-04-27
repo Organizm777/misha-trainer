@@ -25,6 +25,7 @@ function familyMode(familyId){
 function familySubject(familyId, structure){
   const id = String(familyId || '');
   if (id === 'oge_math_2026_full') return 'math';
+  if (id === 'ege_base_math_2026_full') return 'base_math';
   if (id === 'ege_profile_math_2026_part1') return 'profile_math';
   return String(structure.subject_id || structure.subject || 'subject');
 }

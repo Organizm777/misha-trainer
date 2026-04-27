@@ -176,11 +176,16 @@
     if (mode === 'numeric' || mode === 'number' || mode === 'free-number') return 'numeric';
     return '';
   }
+  function autoInputEligible(question){
+    var grade = toNumber(question && (question.grade != null ? question.grade : question.g != null ? question.g : root.GRADE_NUM || root.GRADE_NO || 0));
+    return grade >= 8;
+  }
   function inputModeFor(question){
     if (!question || !onPlayScreen() || root.rushMode || root.diagMode) return '';
     if (question.interactionType) return '';
     var explicit = explicitInputMode(question);
     if (explicit) return explicit;
+    if (!autoInputEligible(question)) return '';
     if (hasBlankMarker(question) && !question.code && !isNumericLikeAnswer(question.answer)) return 'cloze';
     var sid = currentSubjectId();
     var numericSubject = /^(alg|geo|phy|chem|prob)$/.test(sid);

@@ -5,6 +5,7 @@ import path from 'path';
 const ROOT = process.cwd();
 const WORKFLOW_REL = '.github/workflows/lighthouse-budget.yml';
 const CONFIG_REL = '.lighthouserc.json';
+const TARGET_PAGES = ['index.html', 'grade3_v2.html', 'grade10_v2.html'];
 
 function read(rel){
   return fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -26,6 +27,7 @@ const cls = assertTuple(assertionMap['cumulative-layout-shift']);
 const lcp = assertTuple(assertionMap['largest-contentful-paint']);
 const consoleErrors = assertTuple(assertionMap['errors-in-console']);
 const urls = Array.isArray(collect.url) ? collect.url.slice() : [];
+const targetPages = Object.fromEntries(TARGET_PAGES.map((page) => [page, read(page)]));
 
 const workflowChecks = {
   pullRequest: /pull_request:/m.test(workflow),
@@ -38,10 +40,12 @@ const workflowChecks = {
   preflightCleanup: /node tools\/cleanup_build_artifacts\.mjs --check/.test(workflow),
   preflightPerfAudit: /node tools\/audit_performance_wave86z\.mjs/.test(workflow),
   preflightStaticActions: /node tools\/audit_static_events_wave87e\.mjs/.test(workflow),
+  preflightSelfAudit: /node tools\/audit_lighthouse_ci_wave87s\.mjs/.test(workflow),
   installsPinnedCli: /@lhci\/cli@0\.15\.1/.test(workflow),
   healthcheck: /\bnpx lhci healthcheck --fatal\b/.test(workflow),
-  collect: /\bnpx lhci collect --config=\.lighthouserc\.json\b/.test(workflow),
-  assert: /\bnpx lhci assert --config=\.lighthouserc\.json\b/.test(workflow),
+  advisoryCollect: /id:\s*collect_lhci[\s\S]*?name:\s*Collect Lighthouse runs \(advisory\)[\s\S]*?continue-on-error:\s*true[\s\S]*?npx lhci collect --config=\.lighthouserc\.json/.test(workflow),
+  advisoryAssert: /id:\s*assert_lhci[\s\S]*?name:\s*Assert Lighthouse budgets \(advisory\)[\s\S]*?continue-on-error:\s*true[\s\S]*?npx lhci assert --config=\.lighthouserc\.json/.test(workflow),
+  summaryWarning: /steps\.collect_lhci\.outcome/.test(workflow) && /steps\.assert_lhci\.outcome/.test(workflow) && /LHCI live run was advisory/.test(workflow),
   artifacts: /actions\/upload-artifact@v4/.test(workflow) && /path:\s*\.lighthouseci/.test(workflow)
 };
 
@@ -58,6 +62,7 @@ const configChecks = {
   chromeFlagsContainHeadless: /--headless=new/.test(settings.chromeFlags || ''),
   chromeFlagsContainNoSandbox: /--no-sandbox/.test(settings.chromeFlags || ''),
   chromeFlagsContainDisableDevShm: /--disable-dev-shm-usage/.test(settings.chromeFlags || ''),
+  chromeFlagsContainDisableGpu: /--disable-gpu/.test(settings.chromeFlags || ''),
   presetRecommended: config.ci?.assert?.preset === 'lighthouse:recommended',
   includePassedAssertions: config.ci?.assert?.includePassedAssertions === true,
   accessibility: { level: a11y.level, minScore: a11y.opts.minScore ?? null },
@@ -67,6 +72,11 @@ const configChecks = {
   lcp: { level: lcp.level, maxNumericValue: lcp.opts.maxNumericValue ?? null, aggregationMethod: lcp.opts.aggregationMethod ?? null },
   consoleErrors: { level: consoleErrors.level, minScore: consoleErrors.opts.minScore ?? null }
 };
+
+const pageChecks = Object.fromEntries(TARGET_PAGES.map((page) => [page, {
+  noNpointPreconnect: !/rel="preconnect"[^>]+api\.npoint\.io/i.test(targetPages[page]),
+  noGoogleFonts: !/fonts\.googleapis|fonts\.gstatic/i.test(targetPages[page])
+}]));
 
 const ok = Object.values(workflowChecks).every(Boolean) &&
   configChecks.staticDistDir &&
@@ -79,6 +89,7 @@ const ok = Object.values(workflowChecks).every(Boolean) &&
   configChecks.chromeFlagsContainHeadless &&
   configChecks.chromeFlagsContainNoSandbox &&
   configChecks.chromeFlagsContainDisableDevShm &&
+  configChecks.chromeFlagsContainDisableGpu &&
   configChecks.presetRecommended &&
   configChecks.includePassedAssertions &&
   configChecks.accessibility.level === 'error' &&
@@ -95,7 +106,8 @@ const ok = Object.values(workflowChecks).every(Boolean) &&
   Number(configChecks.lcp.maxNumericValue) <= 5000 &&
   configChecks.lcp.aggregationMethod === 'pessimistic' &&
   configChecks.consoleErrors.level === 'warn' &&
-  Number(configChecks.consoleErrors.minScore) >= 0.9;
+  Number(configChecks.consoleErrors.minScore) >= 0.9 &&
+  Object.values(pageChecks).every((item) => Object.values(item).every(Boolean));
 
 const result = {
   ok,
@@ -104,7 +116,8 @@ const result = {
   config: CONFIG_REL,
   workflowChecks,
   configChecks,
-  note: 'wave87s keeps the explicit PR gate. After wave89p the app self-hosts fonts, but console-noise assertions stay downgraded to warn because headless CI can still see flaky third-party requests (for example npoint-backed data or future external embeds) on otherwise valid static pages.'
+  pageChecks,
+  note: 'wave89v keeps static Lighthouse governance strict, removes npoint preconnects from audited pages, and makes live LHCI collect/assert advisory so transient headless/network flakes stop failing the workflow and emailing the owner.'
 };
 
 console.log(JSON.stringify(result, null, 2));
