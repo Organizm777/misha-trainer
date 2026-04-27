@@ -1,3 +1,15 @@
+### wave89x lazy optional senior banks + static performance proxy back to green
+
+The wave89x pass continues the post-wave89w stabilization work by cutting one remaining eager load hotspot on grade pages 8–11. The optional senior `inputs_interactions_banks` chunk was still being shipped directly from HTML even though most sessions do not need it immediately. That kept the legacy static proxy in `tools/audit_performance_wave86z.mjs` red, especially on grade 8.
+
+`bundle_grade_runtime_extended_wave89b` now owns the optional-bank bootstrap itself through `window.__wave89xOptionalInputBanks`. The runtime primes the chunk in the background after first intent / window load, patches `openSubj(...)` so the current subject can wait for the chunk only when needed, and emits `wave89x-optional-input-banks-ready` once the lazy bank is available. Senior pages 8–11 therefore stop paying the optional-bank cost on first paint while still keeping the content available before interactive use.
+
+This is intentionally a **proxy-budget** recovery, not the final performance target from the roadmap. The old 1.9 MB static cap is green again, but the stricter long-term `#82` goal (`max 1500KB eager JS`) still needs additional bundle surgery.
+
+Release check for this layer:
+- `node tools/audit_optional_input_banks_wave89x.mjs`
+- `node tools/audit_performance_wave86z.mjs`
+
 ### wave89v lighthouse stabilization + input-state bridge
 
 The wave89v pass closes two regressions that surfaced after the earlier runtime merges. First, merged free-input helpers were reading `window.sel` / `window.prob` / `window.cS` even though `engine10` still stored those values in top-level `let` bindings. In classic scripts those bindings are not exported to `window`, so `window.sel` became `undefined`, the input runtime interpreted that as "an answer is already locked", and free-text/numeric fields rendered disabled. `engine10` now installs a `window` bridge for the active quiz state so legacy local state and newer merged runtimes stay synchronized.

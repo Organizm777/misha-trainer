@@ -5911,3 +5911,229 @@
   };
 })();
 
+
+
+/* wave89x: lazy-load senior optional input / interaction banks to keep grade pages under the proxy JS budget */
+(function(){
+  'use strict';
+  if (typeof window === 'undefined' || window.__wave89xOptionalInputBanks) return;
+
+  var root = window;
+  var grade = String(root.GRADE_NUM || root.GRADE_NO || '');
+  var enabled = /^(8|9|10|11)$/.test(grade);
+  var chunkSrc = './assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js';
+  var state = {
+    version: 'wave89x',
+    active: enabled,
+    grade: grade,
+    chunkSrc: chunkSrc,
+    status: enabled ? 'idle' : 'skipped',
+    patchedOpenSubj: false,
+    loadCount: 0,
+    waitCount: 0
+  };
+  root.__wave89xOptionalInputBanks = state;
+  if (!enabled || !root.document) return;
+
+  var loadPromise = null;
+  var loaded = false;
+
+  function nowTs(){
+    try { return Date.now(); }
+    catch (_err) { return +new Date(); }
+  }
+
+  function hasOptionalTopics(){
+    var subjects = Array.isArray(root.SUBJ) ? root.SUBJ : [];
+    for (var i = 0; i < subjects.length; i += 1) {
+      var subject = subjects[i];
+      var topics = subject && Array.isArray(subject.tops) ? subject.tops : [];
+      for (var j = 0; j < topics.length; j += 1) {
+        var topicId = String(topics[j] && topics[j].id || '');
+        if (/^(?:num(?:alg|prob|phy|chem)(?:8|9|10|11)w87y|text(?:rus|eng)(?:8|9|10|11)w87z|multi(?:bio8|his8|chem9|soc9|inf10|soc10|rus11|bio11)w88b)$/.test(topicId)) return true;
+      }
+    }
+    return false;
+  }
+
+  function markReady(source){
+    loaded = true;
+    state.status = 'ready';
+    state.loadedAt = nowTs();
+    state.readyFrom = source || state.lastReason || 'runtime';
+    try {
+      root.dispatchEvent(new CustomEvent('wave89x-optional-input-banks-ready', {
+        detail: {
+          grade: grade,
+          chunkSrc: chunkSrc,
+          readyFrom: state.readyFrom
+        }
+      }));
+    } catch (_err) {}
+    return true;
+  }
+
+  function currentSubjectId(){
+    var subject = root.cS;
+    return subject && subject.id ? String(subject.id) : '';
+  }
+
+  function refreshCurrentSubject(){
+    if (typeof root.openSubj !== 'function') return false;
+    var screen = root.document.getElementById('s-subj');
+    if (!(screen && screen.classList && screen.classList.contains('on'))) return false;
+    var subjectId = currentSubjectId();
+    if (!subjectId) return false;
+    try {
+      root.openSubj(subjectId, { keepSearch:true });
+      state.refreshedOpenSubject = true;
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function attachExistingScript(existing, resolve, reject){
+    if (!existing) return false;
+    existing.addEventListener('load', function(){
+      markReady('existing-script');
+      resolve(true);
+    }, { once:true });
+    existing.addEventListener('error', function(){
+      state.status = 'error';
+      state.error = 'existing-script-failed';
+      reject(new Error('existing optional banks script failed to load'));
+    }, { once:true });
+    return true;
+  }
+
+  function ensureLoaded(reason){
+    reason = reason || 'runtime';
+    state.lastReason = reason;
+    if (loaded || hasOptionalTopics()) return Promise.resolve(markReady('topics-present'));
+    if (loadPromise) return loadPromise;
+
+    state.status = 'loading';
+    state.requestedAt = nowTs();
+    state.loadCount += 1;
+
+    loadPromise = new Promise(function(resolve, reject){
+      var existing = root.document.querySelector('script[data-wave89x-optional-banks],script[src$="chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js"]');
+      if (attachExistingScript(existing, resolve, reject)) return;
+      var script = root.document.createElement('script');
+      script.src = chunkSrc;
+      script.defer = true;
+      script.async = true;
+      script.setAttribute('data-wave89x-optional-banks', '1');
+      script.addEventListener('load', function(){
+        markReady('dynamic-script');
+        resolve(true);
+      }, { once:true });
+      script.addEventListener('error', function(){
+        state.status = 'error';
+        state.error = 'dynamic-script-failed';
+        reject(new Error('dynamic optional banks script failed to load'));
+      }, { once:true });
+      (root.document.head || root.document.documentElement || root.document.body).appendChild(script);
+    }).catch(function(err){
+      state.status = 'error';
+      state.errorMessage = err && err.message ? String(err.message) : 'unknown-error';
+      return false;
+    });
+
+    return loadPromise;
+  }
+
+  function notifyWait(){
+    state.waitCount += 1;
+    state.lastWaitAt = nowTs();
+    try {
+      if (typeof root.toast === 'function') root.toast('Загружаем расширенные задания…');
+    } catch (_err) {}
+  }
+
+  function patchOpenSubj(){
+    if (typeof root.openSubj !== 'function' || root.__wave89xOptionalInputBanksPatchedOpenSubj) return false;
+    var original = root.openSubj;
+    root.openSubj = function(subjectId, opts){
+      if (loaded || hasOptionalTopics()) {
+        markReady('topics-present');
+        return original.apply(this, arguments);
+      }
+      var args = arguments;
+      notifyWait();
+      ensureLoaded('open-subject').then(function(){
+        original.apply(root, args);
+      }).catch(function(){
+        original.apply(root, args);
+      });
+      return false;
+    };
+    root.__wave89xOptionalInputBanksPatchedOpenSubj = true;
+    state.patchedOpenSubj = true;
+    return true;
+  }
+
+  function primeOnIntent(){
+    if (state.intentPrimed) return;
+    state.intentPrimed = true;
+    var once = function(){
+      ensureLoaded('user-intent');
+      root.document.removeEventListener('pointerdown', onPointer, true);
+      root.document.removeEventListener('keydown', onKey, true);
+    };
+    function isMainUiTarget(target){
+      if (!target || typeof target.closest !== 'function') return false;
+      return !!target.closest('#sg, #s-main, #player-badge, #main-search-slot');
+    }
+    function onPointer(event){
+      if (!isMainUiTarget(event.target)) return;
+      once();
+    }
+    function onKey(event){
+      if (!isMainUiTarget(event.target)) return;
+      if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return;
+      once();
+    }
+    root.document.addEventListener('pointerdown', onPointer, true);
+    root.document.addEventListener('keydown', onKey, true);
+  }
+
+  function scheduleWarmup(){
+    if (state.warmupScheduled) return;
+    state.warmupScheduled = true;
+    var run = function(){
+      ensureLoaded('warmup').then(function(ok){
+        if (ok) refreshCurrentSubject();
+      });
+    };
+    var onLoad = function(){
+      if (typeof root.requestIdleCallback === 'function') {
+        root.requestIdleCallback(run, { timeout: 1500 });
+      } else {
+        root.setTimeout(run, 300);
+      }
+    };
+    if (root.document.readyState === 'complete' || typeof root.addEventListener !== 'function') onLoad();
+    else root.addEventListener('load', onLoad, { once:true });
+  }
+
+  function init(){
+    patchOpenSubj();
+    primeOnIntent();
+    scheduleWarmup();
+    if (hasOptionalTopics()) markReady('topics-present');
+  }
+
+  if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', init, { once:true });
+  else init();
+
+  if (typeof root.addEventListener === 'function') {
+    root.addEventListener('wave89x-optional-input-banks-ready', function(){
+      refreshCurrentSubject();
+    });
+  }
+
+  state.ensureLoaded = ensureLoaded;
+  state.isReady = function(){ return !!loaded || hasOptionalTopics(); };
+})();

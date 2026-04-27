@@ -1,3 +1,15 @@
+## wave89y — 2026-04-27
+
+- CI failure fix: restored the advisory wave89e→wave89n UX/pedagogy audits inside `lighthouse-budget.yml`, which unblocks `validate-questions.yml` after the earlier Lighthouse-only edits stopped satisfying the existing cross-workflow assertions baked into `tools/audit_onboarding_wave89e.mjs`, `audit_hamburger_wave89f.mjs`, `audit_minimal_footer_wave89g.mjs`, `audit_skeleton_loading_wave89h.mjs`, `audit_subject_color_groups_wave89i.mjs`, `audit_parent_dashboard_wave89j.mjs`, `audit_weak_device_adaptive_wave89k.mjs`, `audit_spaced_repetition_sm2_wave89l.mjs`, `audit_adaptive_difficulty_wave89m.mjs`, and `audit_learning_path_wave89n.mjs`.
+- workflow hardening: added `tools/audit_workflow_parity_wave89y.mjs` and made it the first validate step so future Lighthouse workflow edits fail with one explicit parity report instead of surfacing later as a generic exit-code-1 email from the middle of the validate job.
+- GitHub Actions noise reduction: bumped `actions/checkout` and `actions/setup-node` to `@v5` in both workflows while keeping the audited Node runtime contract (`node-version: 20`) unchanged, which should remove the specific GitHub runner warning about the old `@v4` Node 20 action runtime from the validate workflow page.
+
+## wave89x — 2026-04-27
+
+- tech-debt / performance follow-up after the Lighthouse+input stabilization pass: grades 8–11 no longer eagerly ship the optional `wave89b_inputs_interactions_banks` chunk on first load, so the old static byte-count proxy (`tools/audit_performance_wave86z.mjs`) is back in the green without undoing the authored senior input/interactions content.
+- runtime lazy-loader: `bundle_grade_runtime_extended_wave89b` now owns `window.__wave89xOptionalInputBanks`, background-primes the optional senior chunk, intercepts `openSubj(...)` when that chunk is still cold, shows a lightweight “Загружаем расширенные задания…” toast, and refreshes the current subject once the banks finish loading.
+- HTML cleanup / CI hardening: `grade8_v2.html`, `grade9_v2.html`, `grade10_v2.html`, and `grade11_v2.html` dropped the eager optional-banks `<script>` tag; `tools/audit_optional_input_banks_wave89x.mjs` was added and `validate-questions.yml` now hard-gates both the lazy-loader wiring and the restored `audit_performance_wave86z` budget.
+
 ## wave89w — 2026-04-27
 
 - Lighthouse/email hardening: the dedicated `lighthouse-budget.yml` workflow is now **PR/manual only** (no `push` trigger), every live LHCI step (`policy audit`, CLI install, healthcheck, collect, assert) is advisory, and the audited URLs now carry `?lhci=1` so headless Lighthouse runs do not register the service worker and no longer keep sending routine push-email noise.

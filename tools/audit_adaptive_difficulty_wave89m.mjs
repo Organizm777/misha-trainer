@@ -196,6 +196,10 @@ function createHarness(){
     Date, JSON, Number, String, Boolean, Array, Object, RegExp, Error, TypeError, SyntaxError,
     parseInt, parseFloat, isFinite, isNaN,
     document,
+    setTimeout(fn){ if (typeof fn === 'function') return 0; return 0; },
+    clearTimeout(){},
+    setInterval(){ return 0; },
+    clearInterval(){},
     CustomEvent: function CustomEvent(type, init){ this.type = type; this.detail = init && init.detail; },
     navigator: {},
     localStorage: {
@@ -203,6 +207,9 @@ function createHarness(){
       setItem: setStorage,
       removeItem(key){ store.delete(String(key)); }
     },
+    addEventListener(){},
+    removeEventListener(){},
+    dispatchEvent(){ return true; },
     GRADE_NUM: '10',
     SUBJ: [subject],
     cS: subject,

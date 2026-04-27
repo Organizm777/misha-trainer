@@ -108,6 +108,13 @@ function createHarness(){
       setItem(key, value){ store.set(String(key), String(value)); },
       removeItem(key){ store.delete(String(key)); }
     },
+    setTimeout(fn){ if (typeof fn === 'function') return 0; return 0; },
+    clearTimeout(){},
+    setInterval(){ return 0; },
+    clearInterval(){},
+    addEventListener(){},
+    removeEventListener(){},
+    dispatchEvent(){ return true; },
     CustomEvent: function CustomEvent(type, init){ this.type = type; this.detail = init && init.detail; },
     navigator: {},
     location: { href:'https://example.test/grade10_v2.html' },

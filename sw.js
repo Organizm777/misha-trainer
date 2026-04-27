@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave89w-2026-04-27';
+const CACHE_NAME = 'trainer-build-wave89x-2026-04-27';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -42,7 +42,7 @@ const ASSETS = [
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_grade_runtime_core_wave87n.1bd154a017.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.0f89854f79.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.3d75aa6edd.js',
   './assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',

@@ -11,12 +11,15 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
+
+      - name: Enforce workflow audit parity
+        run: node tools/audit_workflow_parity_wave89y.mjs
 
       - name: Assert no orphan hashed assets
         run: |
@@ -59,6 +62,10 @@ jobs:
         run: node tools/audit_input_bridge_wave89v.mjs
       - name: Enforce rendered input editability / junior suppression
         run: node tools/audit_input_render_wave89w.mjs
+      - name: Enforce lazy optional input / interaction banks
+        run: node tools/audit_optional_input_banks_wave89x.mjs
+      - name: Enforce static performance budget proxy
+        run: node tools/audit_performance_wave86z.mjs
       - name: Enforce Lighthouse CI stability policy
         run: node tools/audit_lighthouse_ci_wave87s.mjs
       - name: Enforce diagnostic / exam CSP-safe controls

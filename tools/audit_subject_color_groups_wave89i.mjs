@@ -305,7 +305,12 @@ for (let grade = 1; grade <= 11; grade += 1) {
   const page = `grade${grade}_v2.html`;
   const html = read(page);
   assert.ok(html.includes(`./${qualityBuilt}`), `${page} should reference the rebuilt quality chunk`);
-  if (grade >= 8) assert.ok(html.includes(`./${wave89bBuilt}`), `${page} should reference the rebuilt wave89b merged banks chunk`);
+  if (grade >= 8 && waveRank(healthz.wave) < waveRank('wave89x')) {
+    assert.ok(html.includes(`./${wave89bBuilt}`), `${page} should reference the rebuilt wave89b merged banks chunk`);
+  }
+  if (grade >= 8 && waveRank(healthz.wave) >= waveRank('wave89x')) {
+    assert.ok(!html.includes(`./${wave89bBuilt}`), `${page} should lazy-load the rebuilt wave89b merged banks chunk after wave89x`);
+  }
   if (grade === 10) assert.ok(html.includes(`./${lazy10Built}`), 'grade10_v2.html should reference the rebuilt grade10 lazy helper');
   const { ctx, loaded } = loadGradeInitial(grade);
   const inspected = inspectGradeSubjects(ctx, grade);

@@ -27,6 +27,23 @@ node tools/rebuild_hashed_assets.mjs assets/_src/js/grade2_data.js assets/_src/j
 
 ## Release audits
 
+Latest wave89x follow-up (lazy optional senior banks + restored static performance proxy):
+
+```bash
+node tools/audit_optional_input_banks_wave89x.mjs
+node tools/audit_performance_wave86z.mjs
+```
+
+These two checks work together: `audit_optional_input_banks_wave89x.mjs` verifies that grades 8–11 no longer eagerly include the optional senior input/interactions bank and that the merged runtime exposes the lazy-loader markers; `audit_performance_wave86z.mjs` then confirms the legacy 1.9 MB proxy budget is back in the green after the HTML/runtime split.
+
+Latest wave89y follow-up (validate↔lighthouse workflow parity):
+
+```bash
+node tools/audit_workflow_parity_wave89y.mjs
+```
+
+This guard checks that the Lighthouse workflow still carries the advisory wave89e→wave89n UX/pedagogy audits required by the existing cross-workflow assertions. It is wired as the first step in `validate-questions.yml` so future workflow edits fail with a direct parity report instead of a late generic `Process completed with exit code 1`.
+
 ```bash
 node tools/cleanup_build_artifacts.mjs --check
 node tools/audit_offline_readiness_wave86y.mjs

@@ -71,6 +71,13 @@ function exportsHelpers(source){
     && source.includes('pageGrade: pageGrade');
 }
 
+function hasLazyOptionalLoader(source){
+  return source.includes('wave89xOptionalInputBanks')
+    && source.includes('data-wave89x-optional-banks')
+    && source.includes('wave89x-optional-input-banks-ready')
+    && source.includes('chunk_subject_expansion_wave89b_inputs_interactions_banks');
+}
+
 function makeClassList(on){
   return {
     add(){}, remove(){}, toggle(){ return false; },
@@ -171,6 +178,8 @@ assert(exportsHelpers(runtimeSrc), 'inputs timing source: missing exported helpe
 assert(exportsHelpers(mergedSrc), 'merged runtime source: missing exported helper debug hooks');
 assert(hasRuntimeFallbacks(mergedBuilt), 'merged runtime built asset: missing lexical fallback / page-grade guard');
 assert(usesSafeSelectionChecks(mergedBuilt), 'merged runtime built asset: missing safe selection checks');
+assert(hasLazyOptionalLoader(mergedSrc), 'merged runtime source: missing lazy optional senior input-bank loader');
+assert(hasLazyOptionalLoader(mergedBuilt), 'merged runtime built asset: missing lazy optional senior input-bank loader');
 if (runtimeBuilt) {
   assert(hasRuntimeFallbacks(runtimeBuilt), 'inputs timing built asset: missing lexical fallback / page-grade guard');
   assert(usesSafeSelectionChecks(runtimeBuilt), 'inputs timing built asset: missing safe selection checks');
@@ -179,7 +188,8 @@ if (runtimeBuilt) {
 const grade2Html = read('grade2_v2.html');
 const grade10Html = read('grade10_v2.html');
 assert(!grade2Html.includes('chunk_subject_expansion_wave89b_inputs_interactions_banks'), 'grade2_v2.html: unexpected explicit input-bank chunk');
-assert(grade10Html.includes('chunk_subject_expansion_wave89b_inputs_interactions_banks'), 'grade10_v2.html: missing explicit input-bank chunk');
+assert(!grade10Html.includes('chunk_subject_expansion_wave89b_inputs_interactions_banks'), 'grade10_v2.html: senior input-bank chunk should no longer load eagerly');
+assert(hasLazyOptionalLoader(mergedSrc), 'grade10_v2.html: missing lazy senior input-bank delivery path in merged runtime');
 
 const juniorCtx = makeContext({ grade:2, onPlayScreen:true, subjectId:'alg', selection:undefined });
 vm.runInContext(runtimeSrc, juniorCtx, { filename:'bundle_grade_runtime_inputs_timing_wave87x.js', timeout:1000 });
@@ -226,7 +236,8 @@ console.log(JSON.stringify({
   },
   pages: {
     grade2HasExplicitInputChunk: false,
-    grade10HasExplicitInputChunk: true
+    grade10HasExplicitInputChunk: false,
+    grade10UsesLazyOptionalBanks: hasLazyOptionalLoader(mergedSrc)
   },
   behavior: {
     juniorAutoInput: juniorApi.inputModeFor({ question:'2+2', answer:'4', isMath:true, grade:10 }),

@@ -16,7 +16,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 20
 
@@ -25,7 +25,7 @@ jobs:
         run: git fetch --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
 
@@ -35,6 +35,46 @@ jobs:
           set -euo pipefail
           CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
           echo "CHROME_PATH=${CHROME_PATH}" >> "$GITHUB_ENV"
+
+      - name: Advisory onboarding audit
+        continue-on-error: true
+        run: node tools/audit_onboarding_wave89e.mjs
+
+      - name: Advisory hamburger-menu audit
+        continue-on-error: true
+        run: node tools/audit_hamburger_wave89f.mjs
+
+      - name: Advisory minimal-footer audit
+        continue-on-error: true
+        run: node tools/audit_minimal_footer_wave89g.mjs
+
+      - name: Advisory skeleton-loading audit
+        continue-on-error: true
+        run: node tools/audit_skeleton_loading_wave89h.mjs
+
+      - name: Advisory grouped-palette audit
+        continue-on-error: true
+        run: node tools/audit_subject_color_groups_wave89i.mjs
+
+      - name: Advisory parent-dashboard audit
+        continue-on-error: true
+        run: node tools/audit_parent_dashboard_wave89j.mjs
+
+      - name: Advisory weak-device audit
+        continue-on-error: true
+        run: node tools/audit_weak_device_adaptive_wave89k.mjs
+
+      - name: Advisory SM-2 audit
+        continue-on-error: true
+        run: node tools/audit_spaced_repetition_sm2_wave89l.mjs
+
+      - name: Advisory adaptive-difficulty audit
+        continue-on-error: true
+        run: node tools/audit_adaptive_difficulty_wave89m.mjs
+
+      - name: Advisory learning-path audit
+        continue-on-error: true
+        run: node tools/audit_learning_path_wave89n.mjs
 
       - id: policy_audit
         name: Lighthouse static policy audit (advisory)
