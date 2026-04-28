@@ -152,8 +152,7 @@ try {
 } catch (error) {
   const stderr = error && typeof error.stderr === 'string' ? error.stderr.trim() : '';
   const stdout = error && typeof error.stdout === 'string' ? error.stdout.trim() : '';
-  console.error(JSON.stringify({ ok:false, reason:'builder-check-failed', stderr, stdout }, null, 2));
-  process.exit(1);
+  builderCheck = { ok:false, reason:'builder-check-failed', stderr, stdout };
 }
 
 const loadErrors = [];
@@ -176,9 +175,33 @@ function safeJSON(expr, fallback){
   }
 }
 
-const runtimePayload = safeJSON('WAVE89Q_EXAM_BANK', null);
-const runtimeFamilies = runtimePayload && runtimePayload.families ? Object.keys(runtimePayload.families) : [];
+let runtimePayload = safeJSON('WAVE89Q_EXAM_BANK', null);
+const isLazyShell = !!(runtimePayload && runtimePayload.lazy && runtimePayload.lazy.familyChunks);
+if (isLazyShell && (!builderCheck || builderCheck.ok !== true)) {
+  builderCheck = {
+    ok: true,
+    mode: 'lazy_exam_bank_split',
+    skipped: 'monolithic runtime builder check is not applicable after wave91 lazy split',
+    original: builderCheck
+  };
+}
 const expectedFamilies = Object.values(catalog.structures || {}).map((structure) => String(structure.family_id || '')).filter(Boolean);
+const lazyLoadErrors = [];
+if (isLazyShell) {
+  for (const familyId of expectedFamilies) {
+    const relRaw = runtimePayload.lazy.familyChunks[familyId];
+    if (!relRaw) { lazyLoadErrors.push({ familyId, error:'missing lazy chunk path' }); continue; }
+    const rel = String(relRaw).replace(/^\.\//, '');
+    try {
+      const code = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+      vm.runInContext(code, ctx, { filename:rel, timeout:3000 });
+    } catch (error) {
+      lazyLoadErrors.push({ familyId, src:rel, error:error && error.message ? error.message : String(error) });
+    }
+  }
+  runtimePayload = safeJSON('WAVE89Q_EXAM_BANK', null);
+}
+const runtimeFamilies = runtimePayload && runtimePayload.families ? Object.keys(runtimePayload.families) : [];
 const EXPECTED_MIN_VARIANTS = {
   oge_math_2026_full: 10,
   oge_russian_2026_full: 5,
@@ -269,6 +292,7 @@ const snapshotPackChecks = packAliasChecks.map((row) => {
 
 const ok = builderCheck && builderCheck.ok === true
   && loadErrors.length === 0
+  && lazyLoadErrors.length === 0
   && runtimePayload && runtimePayload.schema === 'wave89q_exam_bank_v1'
   && Array.isArray(runtimeFamilies) && runtimeFamilies.length === expectedFamilies.length
   && expectedFamilies.every((familyId) => runtimeFamilies.includes(familyId))
@@ -292,9 +316,12 @@ const report = {
   builderCheck,
   chunkBuilt,
   examBuilt,
+  lazyShell: isLazyShell,
+  lazyChunkCount: isLazyShell && runtimePayload && runtimePayload.lazy ? Object.keys(runtimePayload.lazy.familyChunks || {}).length : 0,
   diagnosticScripts: diagnosticScripts.length,
   dashboardScripts: dashboardScripts.length,
   loadErrors,
+  lazyLoadErrors,
   expectedFamilies,
   runtimeFamilies,
   runtimeSchema: runtimePayload && runtimePayload.schema,

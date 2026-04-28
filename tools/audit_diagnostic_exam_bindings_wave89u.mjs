@@ -245,6 +245,20 @@ for (const src of htmlScripts(diagnosticHtml)) {
   }
 }
 
+// wave91+: exam-bank shell is intentionally lazy. The VM audit needs to load the
+// concrete family chunk synchronously before starting a sample pack.
+try {
+  const payload = ctx.WAVE89Q_EXAM_BANK;
+  const raw = payload && payload.lazy && payload.lazy.familyChunks && payload.lazy.familyChunks.oge_math_2026_full;
+  if (raw) {
+    const rel = String(raw).replace(/^\.\//, '');
+    documentStub.currentScript = { src:'./' + rel, dataset:{} };
+    vm.runInContext(read(rel), ctx, { filename:rel, timeout:5000 });
+  }
+} catch (error) {
+  loadErrors.push({ src:'wave91-lazy-exam-family', error:error.message });
+}
+
 function safeJSON(expr, fallback){
   try {
     const raw = vm.runInContext(`JSON.stringify(${expr})`, ctx, { timeout:5000 });

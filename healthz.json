@@ -1,12 +1,12 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave90d",
-  "version": "trainer-build-wave90d-2026-04-28",
-  "build_id": "wave90d",
+  "wave": "wave91e",
+  "version": "trainer-build-wave91e-2026-04-28",
+  "build_id": "wave91e",
   "generated_at_utc": "2026-04-28T00:00:00Z",
   "git_sha": null,
-  "hashed_asset_count": 103,
+  "hashed_asset_count": 112,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -25,5 +25,5 @@
     "grade10_v2.html",
     "grade11_v2.html"
   ],
-  "cache": "trainer-build-wave90d-2026-04-28"
+  "cache": "trainer-build-wave91e-2026-04-28"
 }

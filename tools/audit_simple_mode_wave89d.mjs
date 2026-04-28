@@ -50,7 +50,8 @@ for (let grade = 1; grade <= 11; grade += 1) {
 const srcRuntime = read('assets/_src/js/bundle_grade_runtime_extended_wave89b.js');
 const srcCss = read('assets/_src/css/wave88d_breadcrumbs.css');
 assert.ok(srcRuntime.includes('window.__wave89dSimpleMode'), 'runtime source should expose window.__wave89dSimpleMode');
-assert.ok(srcRuntime.includes('trainer_simple_mode_v1'), 'runtime source should persist trainer_simple_mode_v1');
+assert.ok(srcRuntime.includes('trainer_ui_mode'), 'runtime source should persist trainer_ui_mode');
+assert.ok(srcRuntime.includes('trainer_simple_mode_v1'), 'runtime source should retain trainer_simple_mode_v1 legacy compatibility');
 assert.ok(srcRuntime.includes('wave89d-settings-modal'), 'runtime source should define the settings modal id');
 assert.ok(srcRuntime.includes('showMixFilter'), 'runtime source should patch showMixFilter');
 assert.ok(srcRuntime.includes('startRush'), 'runtime source should patch startRush');
@@ -126,7 +127,8 @@ function runVm(options = {}){
   const documentElement = makeNode('html');
   documentElement.classList = htmlClassList;
   const storage = new Map();
-  if (typeof options.initialMode === 'string') storage.set('trainer_simple_mode_v1', options.initialMode);
+  if (typeof options.initialMode === 'string') storage.set('trainer_ui_mode', options.initialMode);
+  if (typeof options.initialLegacyMode === 'string') storage.set('trainer_simple_mode_v1', options.initialLegacyMode);
   Object.entries(options.storage || {}).forEach(([key, value]) => {
     storage.set(String(key), asStored(value));
   });
@@ -162,6 +164,8 @@ function runVm(options = {}){
     console,
     setTimeout(fn){ if (typeof fn === 'function') fn(); return 1; },
     clearTimeout(){},
+    setInterval(){ return 1; },
+    clearInterval(){},
     alert(message){ toasts.push(String(message)); },
     navigator: {},
     location: {},
@@ -193,20 +197,26 @@ function runVm(options = {}){
 
 const fresh = runVm();
 assert.ok(fresh.context.window.__wave89dSimpleMode, 'vm: __wave89dSimpleMode should be exposed');
-assert.equal(fresh.context.window.__wave89dSimpleMode.storageKey, 'trainer_simple_mode_v1', 'vm: storageKey mismatch');
+assert.equal(fresh.context.window.__wave89dSimpleMode.storageKey, 'trainer_ui_mode', 'vm: storageKey mismatch');
+assert.equal(fresh.context.window.__wave89dSimpleMode.legacyStorageKey, 'trainer_simple_mode_v1', 'vm: legacyStorageKey mismatch');
 assert.equal(fresh.context.window.__wave89dSimpleMode.isEnabled(), true, 'vm: simple mode should default to ON');
 assert.ok(fresh.htmlClassList.contains('simple-mode'), 'vm: html should get simple-mode class by default');
 assert.ok(fresh.bodyClassList.contains('simple-mode'), 'vm: body should get simple-mode class by default');
 
 fresh.context.window.__wave89dSimpleMode.setEnabled(false, { silent:true });
-assert.equal(fresh.storage.get('trainer_simple_mode_v1'), 'off', 'vm: disabling should persist off');
+assert.equal(fresh.storage.get('trainer_ui_mode'), 'full', 'vm: disabling should persist full');
+assert.equal(fresh.storage.get('trainer_simple_mode_v1'), 'off', 'vm: disabling should persist legacy off');
 assert.equal(fresh.context.window.__wave89dSimpleMode.isEnabled(), false, 'vm: simple mode should switch off');
 assert.ok(!fresh.htmlClassList.contains('simple-mode'), 'vm: html should drop simple-mode class after disabling');
 assert.ok(!fresh.bodyClassList.contains('simple-mode'), 'vm: body should drop simple-mode class after disabling');
 
-const persistedOff = runVm({ initialMode:'off' });
-assert.equal(persistedOff.context.window.__wave89dSimpleMode.isEnabled(), false, 'vm: persisted off should stay off on boot');
-assert.ok(!persistedOff.htmlClassList.contains('simple-mode'), 'vm: persisted off should not add html simple-mode class');
+const persistedOff = runVm({ initialMode:'full' });
+assert.equal(persistedOff.context.window.__wave89dSimpleMode.isEnabled(), false, 'vm: persisted full should stay off on boot');
+assert.ok(!persistedOff.htmlClassList.contains('simple-mode'), 'vm: persisted full should not add html simple-mode class');
+
+const legacyOff = runVm({ initialLegacyMode:'off' });
+assert.equal(legacyOff.context.window.__wave89dSimpleMode.isEnabled(), false, 'vm: legacy persisted off should stay off on boot');
+assert.ok(!legacyOff.htmlClassList.contains('simple-mode'), 'vm: legacy persisted off should not add html simple-mode class');
 
 const dueVm = runVm({ reviewCounts:{ due:3, sticky:1, total:4 } });
 const duePlan = dueVm.context.window.__wave89dSimpleMode.resolvePracticePlan();
@@ -295,7 +305,8 @@ console.log(JSON.stringify({
   wave: healthz.wave,
   runtimeBuilt,
   cssBuilt,
-  storageKey: 'trainer_simple_mode_v1',
+  storageKey: 'trainer_ui_mode',
+  legacyStorageKey: 'trainer_simple_mode_v1',
   defaultOn: true,
   smartStartOrder: ['due-review', 'sticky-review', 'weak-topics', 'resume-session', 'continue-last', 'new-topic', 'global-mix'],
   gradePages: 11,

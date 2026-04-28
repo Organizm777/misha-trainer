@@ -1,3 +1,54 @@
+# wave91e — learning formats and CI guards
+
+- D1: added “Объясни другу” on the practice screen: the student writes an explanation, compares it with the model explanation/hint/answer, then self-grades it; rows are stored per grade in `trainer_explain_friend_wave91e_*`.
+- D4: added a Pomodoro training card with 25-minute focus, 5-minute break, persistent per-grade counters and a mini timer in the play header.
+- D8: added a static-app Anki export path: journal errors can be downloaded as Anki-compatible TSV import files with HTML front/back fields and tags.
+- A10: added configurable OГЭ/ЕГЭ countdown cards for grades 9 and 11; the exam date is stored locally and the card shows a daily plan.
+- J1: `tools/update_index_stats.mjs` now has `--check` mode and is wired into the validation workflow.
+- J2/C1/C5 verified: full theory coverage audit remains green, including English theory and fallback handling.
+- Kept grade-page script budget intact by merging the new wave91e code into the existing `bundle_grade_runtime_extended_wave89b` asset instead of adding a separate eager script.
+- Updated cache/build metadata to `trainer-build-wave91e-2026-04-28`; hashed asset count remains 112.
+
+# wave91d — exam variant expansion
+
+- Expanded OGE/EGE JSON banks to 400 total training variants and 7750 exam rows.
+- Kept wave91 lazy exam-bank split: shell + per-subject lazy chunks.
+- Added EGE Russian slots 21–26 to align the part-1 scaffold with 26 tasks.
+- Updated bundle_exam fallback variant counts to 50/30.
+- Updated cache/build metadata to trainer-build-wave91d-2026-04-28.
+
+## wave91c — 2026-04-28
+
+- B6: расширен предмет 10 класса «История искусств» пятью дизайн-темами: «Дизайн XX–XXI веков», «Фэшн-иллюстрация», «Костюм в искусстве», «Плакат и графика», «Промышленный дизайн».
+- Для каждой новой темы добавлена HTML-теория и банк из 15 вопросов; суммарно +5 тем и +75 вопросов в lazy-чанк `grade10_subject_art_wave86s`.
+- Обновлён shell `grade10_data`: новые темы видны в карточке «История искусств» до загрузки lazy-банка, а сам банк грузится по прежнему механизму `__wave86sApplyGrade10Subject`.
+- Обновлены hashed assets: `grade10_data.5dbdf34ddd.js`, `grade10_subject_art_wave86s.84d7703046.js`; service worker/cache переведены на `trainer-build-wave91c-2026-04-28`.
+- Обновлены счётчики 10 класса на главной и meta description `grade10_v2.html`: 67 тем, на карточке — `65+ тем`.
+- Добавлен `tools/audit_art_history_wave91c.mjs`; аудит B1–B5 адаптирован к последующему wave91c release-bump.
+
+## wave91b — 2026-04-28
+
+- B1: добавлен спецпредмет «Дизайн одежды и текстиля» — 10 тем, 150 вопросов с подсказками и `ex`-разборами.
+- B2: добавлен отдельный спецпредмет «Архитектура» — 10 тем, 150 вопросов; не смешивается со «Строительством».
+- B3: добавлен спецпредмет «Графический дизайн» — 8 тем, 80 вопросов по типографике, вёрстке, брендингу, UI/UX, цвету, инструментам, печати и веб-дизайну.
+- B4: добавлен спецпредмет «Дизайн интерьера» — 7 тем, 70 вопросов по стилям, эргономике, свету, цвету, материалам, проектированию и цифровым инструментам.
+- B5: добавлен спецпредмет «Вступительные (дизайн)» — 6 тем, 60 вопросов по рисунку, живописи, композиции, МАРХИ, Строгановке, Британке/ВШЭ и портфолио.
+- Runtime спецпредметов обновлён до `wave91b`: 11 направлений, 93 темы, 3588 вопросов; JSON-банки грузятся по предмету через существующий lazy-fetch.
+- UI спецпредметов теперь показывает `ex`-разборы под подсказкой после ответа, добавлены цветовые акценты для новых карточек.
+- `tools/update_index_stats.mjs` теперь динамически пересчитывает спецпредметы, hero-счётчики и правильные русские формы; главная обновлена до `40+` предметов и `15 000+` задач.
+- Обновлены карточка «Спецпредметы» на главной, meta description `spec_subjects.html`, service worker, asset manifest, healthz и `tools/audit_special_subjects_wave91b.mjs`.
+
+## wave91a — 2026-04-28
+
+- 0.1: с главной страницы убран блок «Задание дня» и его daily-question ассеты исключены из precache.
+- 0.2: обновлены hero-статистика, подписи и счётчики тем на карточках классов; добавлен `tools/update_index_stats.mjs`.
+- 0.3: подтверждено отсутствие FAB-переключателя темы; сохранён только переключатель в настройках.
+- 0.4: режим «Простой / Полный» переведён на ключ `trainer_ui_mode` с совместимостью со старым `trainer_simple_mode_v1`; простой режим включён по умолчанию.
+- 0.5: exam bank разбит на shell-каталог и 10 lazy chunks по предметам; `bundle_exam` загружает нужный банк при выборе экзамена.
+- 0.6: расширение senior school 10/11 подключается через lazy-loader на страницах 10–11 класса.
+- 0.7: удалены root `wave*_verification_summary.*`, добавлено правило в `.gitignore`.
+- Build: обновлены content-hash ассеты, manifest, healthz и cache name service worker.
+
 ## wave90d — 2026-04-28
 
 - roadmap continuation for `#11`, `#12`, `#14`, `#15`, `#16`: all remaining canonical OГЭ/ЕГЭ JSON families now expose **10 variants each** instead of 5 — `oge_russian` → **90 rows**, `oge_english` → **200**, `oge_social` → **240**, `ege_base_math` → **210**, `ege_russian` → **200**, `ege_social` → **200**, `ege_english` → **200**, `ege_physics` → **200**.

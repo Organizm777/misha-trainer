@@ -60,6 +60,10 @@ jobs:
         run: node tools/audit_self_host_fonts_wave89p.mjs
       - name: Enforce full theory coverage
         run: node tools/audit_theory_coverage.mjs
+      - name: Enforce wave91e learning formats
+        run: node tools/audit_learning_formats_wave91e.mjs
+      - name: Enforce generated index stats
+        run: node tools/update_index_stats.mjs --check
       - name: Enforce desktop-safe play control bindings
         run: node tools/audit_play_selection_wave89t.mjs
       - name: Enforce window-state bridge / junior input guard

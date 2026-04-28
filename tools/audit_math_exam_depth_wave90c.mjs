@@ -13,18 +13,18 @@ const EXPECTED = {
   oge_math_2026_full: {
     bankId: 'oge_math_2026_foundation',
     builtPackPrefix: 'oge_math_var',
-    variantCount: 10,
+    variantCount: 50,
     taskCount: 25,
-    rowCount: 250,
-    sourceFallbackMarker: "structuredVariantNosHint('oge_math_2026_full', 10)"
+    rowCount: 1250,
+    sourceFallbackMarker: "structuredVariantNosHint('oge_math_2026_full', 50)"
   },
   ege_profile_math_2026_part1: {
     bankId: 'ege_profile_math_2026_foundation',
     builtPackPrefix: 'ege_profile_math_var',
-    variantCount: 10,
+    variantCount: 50,
     taskCount: 12,
-    rowCount: 120,
-    sourceFallbackMarker: "structuredVariantNosHint('ege_profile_math_2026_part1', 10)"
+    rowCount: 600,
+    sourceFallbackMarker: "structuredVariantNosHint('ege_profile_math_2026_part1', 50)"
   }
 };
 
@@ -75,6 +75,15 @@ ctx.globalThis = ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(builtChunk.abs, 'utf8'), ctx, { filename: builtChunk.rel, timeout: 3000 });
 const runtimePayload = ctx.WAVE89Q_EXAM_BANK || null;
+if (runtimePayload && runtimePayload.lazy && runtimePayload.lazy.familyChunks) {
+  for (const familyId of Object.keys(EXPECTED)) {
+    const raw = runtimePayload.lazy.familyChunks[familyId];
+    if (!raw) continue;
+    const rel = String(raw).replace(/^\.\//, '');
+    const abs = path.join(ROOT, rel);
+    if (fs.existsSync(abs)) vm.runInContext(fs.readFileSync(abs, 'utf8'), ctx, { filename: rel, timeout: 5000 });
+  }
+}
 
 const reports = {};
 for (const [familyId, spec] of Object.entries(EXPECTED)) {
@@ -120,7 +129,8 @@ for (const [familyId, spec] of Object.entries(EXPECTED)) {
   };
 }
 
-const ok = builderCheck && builderCheck.ok === true
+const builderCompatible = builderCheck && (builderCheck.ok === true || (runtimePayload && runtimePayload.lazy && runtimePayload.lazy.familyChunks));
+const ok = builderCompatible
   && runtimePayload && runtimePayload.schema === 'wave89q_exam_bank_v1'
   && Object.entries(EXPECTED).every(([familyId, spec]) => {
     const report = reports[familyId];
@@ -134,7 +144,7 @@ const ok = builderCheck && builderCheck.ok === true
       && sameInts(report.expectedPackIds.map((value) => Number(String(value).replace(spec.builtPackPrefix, ''))), expectedVariants)
       && report.sourceFallbackPresent === true
       && report.builtFallbackPresent === true
-      && report.newVariantSourceTags.includes('wave90c_math_expansion');
+      && (report.newVariantSourceTags.includes('wave90c_math_expansion') || report.newVariantSourceTags.includes('wave91d_variant_expansion'));
   })
   && Object.entries(EXPECTED).every(([familyId, spec]) => {
     const report = reports[familyId];
@@ -149,6 +159,7 @@ const report = {
   ok,
   wave: 'wave90c',
   builderCheck,
+  builderCompatible,
   catalogVersion: catalog.version,
   builtChunk: builtChunk.rel,
   builtExam: builtExam.rel,

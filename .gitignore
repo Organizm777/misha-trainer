@@ -22,3 +22,6 @@ tools/generated/
 
 # local fact-review sampling
 /_tmp_question_samples*.json
+
+# generated verification summaries
+*_verification_summary.*
