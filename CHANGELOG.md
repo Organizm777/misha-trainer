@@ -1,3 +1,22 @@
+## wave90d — 2026-04-28
+
+- roadmap continuation for `#11`, `#12`, `#14`, `#15`, `#16`: all remaining canonical OГЭ/ЕГЭ JSON families now expose **10 variants each** instead of 5 — `oge_russian` → **90 rows**, `oge_english` → **200**, `oge_social` → **240**, `ege_base_math` → **210**, `ege_russian` → **200**, `ege_social` → **200**, `ege_english` → **200**, `ege_physics` → **200**.
+- exam-bank export tooling: added `tools/export_exam_bank_foundations_wave90d.mjs`, which regenerates the non-math foundation JSON banks straight from the live legacy pack builders (without depending on the structured runtime payload), runs inside a deterministic seeded VM so option ordering stays stable across reruns, stamps rows with `wave90d_variant_depth`, and makes the 10-variant depth reproducible instead of hand-editing bank files.
+- runtime/CI hardening: `bundle_exam` now keeps `fallbackCount: 10` for **every** structured family, `catalog.json` moved to `version: "wave90d"`, `chunk_exam_bank_wave89q` was regenerated from the wider JSON surface, and the new `tools/audit_exam_variant_depth_wave90d.mjs` hard-gates full-family 10-variant coverage in both workflows plus workflow-parity checks.
+
+## wave90c — 2026-04-27
+
+- roadmap `#10` + `#13` continuation: canonical JSON-backed math families now expose **10 variants each** instead of 5 — `oge_math_2026_full` grew to **250 rows** (25×10), and `ege_profile_math_2026_part1` grew to **120 rows** (12×10).
+- exam-bank/runtime sync: `assets/data/exam_bank/catalog.json` moved to `version: "wave90c"`, both math bank files now advertise the 10-variant coverage, `chunk_exam_bank_wave89q` was regenerated from the updated JSON payload, and `bundle_exam` now keeps a `fallbackCount: 10` for the two math families so the extra variants still appear even if the structured runtime is unavailable during a cold diagnostic/exam boot.
+- CI/tooling: `tools/audit_exam_bank_generator_wave89q.mjs` now hard-requires 10 variants for the canonical OГЭ math / EГЭ профиль families, and the new `tools/audit_math_exam_depth_wave90c.mjs` locks in sequential variant coverage, row counts, source/built fallback markers, and cross-workflow parity for these expanded math banks.
+
+## wave90b — 2026-04-27
+
+- grade-play runtime fix: the merged `bundle_grade_runtime_extended_wave89b` prelude now resolves the active question through a safe lexical/global fallback (`typeof prob !== 'undefined' ? prob : undefined` → `window.prob`) instead of calling an out-of-scope helper, which removes the `ReferenceError: lexicalValue is not defined` failure that made desktop answer buttons look unclickable on grade pages.
+- roadmap `#8` exam-mode follow-up: active structured exam packs now support per-task navigation, a visible task palette, `📌 Отметить «вернусь»`, a final-review modal, and explicit finish/return actions while keeping answer checking deferred until the end of the variant.
+- exam-session grading hardening: exam-mode answer selections are now upserted per task, revisiting a task preserves the selected option, and `showResult()` rebuilds `gradeStats` from the deferred answer map before calculating the final pack breakdown.
+- CI/tooling: added `tools/audit_answer_click_runtime_wave90a.mjs` and `tools/audit_exam_mode_navigation_wave90b.mjs`, wired both into `validate-questions.yml` plus advisory `lighthouse-budget.yml`, and extended `tools/audit_workflow_parity_wave89y.mjs` so future workflow edits cannot silently drop these new runtime/exam checks.
+
 ## wave89y — 2026-04-27
 
 - CI failure fix: restored the advisory wave89e→wave89n UX/pedagogy audits inside `lighthouse-budget.yml`, which unblocks `validate-questions.yml` after the earlier Lighthouse-only edits stopped satisfying the existing cross-workflow assertions baked into `tools/audit_onboarding_wave89e.mjs`, `audit_hamburger_wave89f.mjs`, `audit_minimal_footer_wave89g.mjs`, `audit_skeleton_loading_wave89h.mjs`, `audit_subject_color_groups_wave89i.mjs`, `audit_parent_dashboard_wave89j.mjs`, `audit_weak_device_adaptive_wave89k.mjs`, `audit_spaced_repetition_sm2_wave89l.mjs`, `audit_adaptive_difficulty_wave89m.mjs`, and `audit_learning_path_wave89n.mjs`.

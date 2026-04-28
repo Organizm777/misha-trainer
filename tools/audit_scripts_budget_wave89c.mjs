@@ -18,8 +18,22 @@ const legacyLogical = [
 function read(rel){ return fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
 function scriptCount(html){ return (html.match(/<script\b[^>]*\bsrc=/g) || []).length; }
 
-assert.ok(/^wave89[a-z]+$/i.test(String(healthz.wave || '')), `healthz.wave should stay on a wave89* build, got ${healthz.wave}`);
-assert.ok(/^wave89[a-z]+$/i.test(String(healthz.build_id || '')), `healthz.build_id should stay on a wave89* build, got ${healthz.build_id}`);
+
+function waveRank(value){
+  const raw = String(value || '').trim().toLowerCase();
+  const match = raw.match(/^wave(\d+)([a-z]*)$/);
+  if (!match) return -1;
+  const major = Number(match[1]) || 0;
+  const suffix = match[2] || '';
+  let minor = 0;
+  for (let i = 0; i < suffix.length; i += 1) {
+    minor = minor * 26 + (suffix.charCodeAt(i) - 96);
+  }
+  return major * 1000 + minor;
+}
+
+assert.ok(waveRank(healthz.wave) >= waveRank('wave89c'), `healthz.wave should be wave89c+ (got ${healthz.wave})`);
+assert.ok(waveRank(healthz.build_id) >= waveRank('wave89c'), `healthz.build_id should be wave89c+ (got ${healthz.build_id})`);
 assert.ok(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference healthz.build_id, got ${healthz.cache}`);
 assert.equal(healthz.hashed_asset_count, Object.keys(manifest.assets || {}).length, 'healthz.hashed_asset_count mismatch');
 assert.ok(mergedBuilt, `asset-manifest missing ${mergedLogical}`);

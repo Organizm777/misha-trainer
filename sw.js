@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave89x-2026-04-27';
+const CACHE_NAME = 'trainer-build-wave90d-2026-04-28';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -38,18 +38,18 @@ const ASSETS = [
   './assets/js/bundle_dashboard_tools.9025bc19a4.js',
   './assets/js/bundle_diagnostic_tools.9792be3cd6.js',
   './assets/js/bundle_error_tracking.e8a9fb4295.js',
-  './assets/js/bundle_exam.385cc1c494.js',
+  './assets/js/bundle_exam.fa244ccf1f.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_grade_runtime_core_wave87n.1bd154a017.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.3d75aa6edd.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.7f761c6ad1.js',
   './assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',
   './assets/js/bundle_sharing.75450d41f8.js',
   './assets/js/bundle_shell.5670562070.js',
   './assets/js/bundle_special_subjects.db82ee1d26.js',
-  './assets/js/chunk_exam_bank_wave89q.f7f1c7914a.js',
+  './assets/js/chunk_exam_bank_wave89q.a3c103d1d8.js',
   './assets/js/chunk_grade10_lazy_wave86s.135fbaef2b.js',
   './assets/js/chunk_grade_content_wave12_english_wave86t.61be17ebe4.js',
   './assets/js/chunk_grade_content_wave13_english_wave86t.4415e1929d.js',
@@ -197,8 +197,8 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   './assets/js/chunk_subject_expansion_wave63_quality.f64a8f682f.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
-  './assets/js/chunk_exam_bank_wave89q.f7f1c7914a.js',
-  './assets/js/bundle_exam.385cc1c494.js',
+  './assets/js/chunk_exam_bank_wave89q.a3c103d1d8.js',
+  './assets/js/bundle_exam.fa244ccf1f.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',
   './assets/js/bundle_error_tracking.e8a9fb4295.js',
   './diagnostic.html'

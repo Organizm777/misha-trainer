@@ -49,7 +49,12 @@
     } catch (_err) {}
   }
   function currentQuestion(){
-    var lexicalQuestion = lexicalValue(function(){ return prob; });
+    var lexicalQuestion;
+    try {
+      lexicalQuestion = typeof prob !== 'undefined' ? prob : undefined;
+    } catch (_err) {
+      lexicalQuestion = undefined;
+    }
     if (lexicalQuestion && typeof lexicalQuestion === 'object') return lexicalQuestion;
     return root.prob && typeof root.prob === 'object' ? root.prob : null;
   }

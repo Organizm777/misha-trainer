@@ -1,6 +1,6 @@
 {
-  "version": "wave89u",
-  "generated_from": "wave89u structured snapshot → canonical exam_bank JSON",
+  "version": "wave90d",
+  "generated_from": "wave90d_exam_variant_depth",
   "structures": {
     "oge_math_full_v1": {
       "id": "oge_math_full_v1",

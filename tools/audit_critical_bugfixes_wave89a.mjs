@@ -10,6 +10,20 @@ function exists(rel){ return fs.existsSync(path.join(ROOT, rel)); }
 function assert(cond, message){ if (!cond) errors.push(message); }
 function countMatches(text, re){ return (text.match(re) || []).length; }
 
+
+function waveRank(value){
+  const raw = String(value || '').trim().toLowerCase();
+  const match = raw.match(/^wave(\d+)([a-z]*)$/);
+  if (!match) return -1;
+  const major = Number(match[1]) || 0;
+  const suffix = match[2] || '';
+  let minor = 0;
+  for (let i = 0; i < suffix.length; i += 1) {
+    minor = minor * 26 + (suffix.charCodeAt(i) - 96);
+  }
+  return major * 1000 + minor;
+}
+
 const manifest = readJSON('assets/asset-manifest.json');
 const healthz = readJSON('healthz.json');
 const sw = read('sw.js');
@@ -29,8 +43,8 @@ for (const [k, rel] of Object.entries(built)) {
   if (rel) assert(exists(rel), `built asset missing for ${k}: ${rel}`);
 }
 
-assert(/^wave89[a-z]+$/i.test(String(healthz.wave || '')), `healthz.wave should stay on a wave89* build, got ${healthz.wave}`);
-assert(/^wave89[a-z]+$/i.test(String(healthz.build_id || '')), `healthz.build_id should stay on a wave89* build, got ${healthz.build_id}`);
+assert(waveRank(healthz.wave) >= waveRank('wave89a'), `healthz.wave should be wave89a+ (got ${healthz.wave})`);
+assert(waveRank(healthz.build_id) >= waveRank('wave89a'), `healthz.build_id should be wave89a+ (got ${healthz.build_id})`);
 assert(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference healthz.build_id, got ${healthz.cache}`);
 assert(healthz.hashed_asset_count === Object.keys(manifest.assets || {}).length, 'healthz.hashed_asset_count mismatch');
 assert(sw.includes(String(healthz.cache || '')), 'sw.js: cache name should match healthz.cache');

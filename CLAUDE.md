@@ -1,3 +1,18 @@
+### wave90c math exam expansion (ОГЭ math + ЕГЭ профиль)
+
+The roadmap focus after wave90b stays on the structured exam block. Wave90c deepens the two canonical math families from the plan — `#10` EГЭ профильная математика and `#13` OГЭ математика — without changing the schema again.
+
+- `assets/data/exam_bank/oge_math_2026_foundation.json` now ships **10 explicit variants** (`oge_math_var1..10`) with **250 rows** total.
+- `assets/data/exam_bank/ege_profile_math_2026_foundation.json` now ships **10 explicit variants** (`ege_profile_math_var1..10`) with **120 rows** total.
+- `assets/data/exam_bank/catalog.json` moved to `version: wave90c`; rebuild the generated runtime with `node tools/build_exam_bank_runtime_wave89q.mjs` after touching these JSON banks.
+- `assets/_src/js/bundle_exam.js` now keeps `structuredVariantNosHint(..., 10)` for the two math families so the larger variant range still renders if the structured runtime fails to hydrate.
+- `tools/audit_math_exam_depth_wave90c.mjs` is the new guard for this layer; it checks sequential variants `1..10`, per-variant task coverage, row counts (`250` / `120`), rebuilt fallback markers, and runtime sync.
+
+Release check for this layer:
+- `node tools/build_exam_bank_runtime_wave89q.mjs --check`
+- `node tools/audit_exam_bank_generator_wave89q.mjs`
+- `node tools/audit_math_exam_depth_wave90c.mjs`
+
 ### wave89x lazy optional senior banks + static performance proxy back to green
 
 The wave89x pass continues the post-wave89w stabilization work by cutting one remaining eager load hotspot on grade pages 8–11. The optional senior `inputs_interactions_banks` chunk was still being shipped directly from HTML even though most sessions do not need it immediately. That kept the legacy static proxy in `tools/audit_performance_wave86z.mjs` red, especially on grade 8.

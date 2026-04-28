@@ -27,6 +27,35 @@ node tools/rebuild_hashed_assets.mjs assets/_src/js/grade2_data.js assets/_src/j
 
 ## Release audits
 
+Latest wave90c follow-up (math exam depth / 10-variant coverage):
+
+```bash
+node tools/build_exam_bank_runtime_wave89q.mjs --check
+node tools/audit_exam_bank_generator_wave89q.mjs
+node tools/audit_math_exam_depth_wave90c.mjs
+```
+
+`audit_math_exam_depth_wave90c.mjs` hard-gates the expanded canonical math families: OГЭ math must expose variants `1..10` with `250` JSON rows, EГЭ profile math part 1 must expose variants `1..10` with `120` rows, every variant must cover its full sequential task range, and both source + rebuilt `bundle_exam` assets must keep the `fallbackCount: 10` markers so the additional variants survive cold runtime failures.
+
+Latest wave90d follow-up (all structured exam families → 10 variants):
+
+```bash
+node tools/export_exam_bank_foundations_wave90d.mjs
+node tools/export_exam_bank_foundations_wave90d.mjs --check
+node tools/audit_exam_variant_depth_wave90d.mjs
+```
+
+`export_exam_bank_foundations_wave90d.mjs` regenerates the remaining canonical OГЭ/ЕГЭ foundation JSON banks directly from the live legacy pack builders (without loading the structured runtime), uses a deterministic seeded VM so shuffled answer options stay stable across reruns, stamps rows with `wave90d_variant_depth`, and expands the non-math families to `1..10` variants. `audit_exam_variant_depth_wave90d.mjs` then hard-gates every structured family — bank JSON, runtime payload, pack aliases, sequential task coverage, and fallback markers in both source + rebuilt `bundle_exam` must all expose the full 10-variant surface.
+
+Latest wave90b follow-up (answer-click runtime + exam navigation/final review):
+
+```bash
+node tools/audit_answer_click_runtime_wave90a.mjs
+node tools/audit_exam_mode_navigation_wave90b.mjs
+```
+
+`audit_answer_click_runtime_wave90a.mjs` verifies that the first prelude of `bundle_grade_runtime_extended_wave89b` no longer references the out-of-scope `lexicalValue(...)` helper before answer clicks are processed, while `audit_exam_mode_navigation_wave90b.mjs` locks in the new exam-mode task palette, mark-for-return action, final-review modal, and deferred grading hooks in both source and rebuilt hashed assets.
+
 Latest wave89x follow-up (lazy optional senior banks + restored static performance proxy):
 
 ```bash
@@ -135,7 +164,8 @@ node tools/validate_questions.js
 - `audit_adaptive_difficulty_wave89m.mjs` — verifies the wave89m pedagogy pass: the merged runtime exposes `window.__wave89mAdaptiveDifficulty`, the shared grade CSS renders the play/progress adaptive cards, the quality chunk stamps `difficultyLevel: 1–3`, historical `wave87x` timing samples influence recommendations, and a VM harness checks the 5-correct raise, trouble/slow drop, and candidate-bucket selection logic.
 - `audit_learning_path_wave89n.mjs` — verifies the wave89n learning-path pass: the merged runtime exposes `window.__wave89nLearningPath`, the shared grade CSS renders theory/play/progress route cards, topical sessions seed a `wave21` starter queue in `easy → medium → hard` order, the queue hands off to the regular trainer instead of ending early, and CI metadata/docs stay synchronized.
 - `build_exam_bank_runtime_wave89q.mjs` — compiles the canonical `assets/data/exam_bank/*.json` catalog into `assets/_src/js/chunk_exam_bank_wave89q.js`. Use `--check` in CI to catch stale generated runtime data.
-- `audit_exam_bank_generator_wave89q.mjs` — verifies the structured exam-bank path end to end: the canonical JSON catalog exists, the generated `chunk_exam_bank_wave89q.*.js` runtime is in sync and loaded before `bundle_exam.*.js`, supported OГЭ/ЕГЭ families expose explicit `{exam, subject, year, variant, task_num, type, max_score, q, a, o, h, ex, criteria, topic_tag}` rows, every JSON-backed pack alias resolves through both `wave89ExamBank.buildKimForPack(...)` and `wave30Exam.buildPack(...)`, and the canonical math families now surface the wider 5-variant coverage.
+- `audit_exam_bank_generator_wave89q.mjs` — verifies the structured exam-bank path end to end: the canonical JSON catalog exists, the generated `chunk_exam_bank_wave89q.*.js` runtime is in sync and loaded before `bundle_exam.*.js`, supported OГЭ/ЕГЭ families expose explicit `{exam, subject, year, variant, task_num, type, max_score, q, a, o, h, ex, criteria, topic_tag}` rows, every JSON-backed pack alias resolves through both `wave89ExamBank.buildKimForPack(...)` and `wave30Exam.buildPack(...)`, and the structured families now surface the wider canonical variant coverage.
+- `audit_exam_variant_depth_wave90d.mjs` — locks the canonical exam-bank depth after the wave90d pass: every shipped structured family must expose variants `1..10`, every bank/runtime row-count pair must equal `task_count × 10`, every variant must cover its full sequential task range, all newly regenerated non-math banks must carry the `wave90d_variant_depth` row marker, and source + rebuilt `bundle_exam` assets must retain the matching `fallbackCount: 10` markers.
 - `audit_diagnostic_exam_bindings_wave89u.mjs` — verifies the wave89u CSP-safe diagnostic/exam control pass: `diagnostic.html` loads the rebuilt diagnostic + exam bundles, source and hashed assets stay free of legacy inline `onclick` for answers / mode buttons / history actions / exam starts, the new `wave89u*Binding` exports are present, structured exam packs start correctly inside a VM harness, and `adaptNext(...)` no longer mutates questions while an active exam pack is running.
 - `audit_self_host_fonts_wave89p.mjs` — verifies the wave89p font pass: all public pages load the hashed same-origin `wave89p_self_host_fonts` stylesheet, HTML/CSP/SW no longer reference Google Fonts, the selected `.woff2` files exist under `assets/fonts`, and release metadata now precaches them for offline use.
 - `audit_play_selection_wave89t.mjs` — verifies the desktop-safe quiz binding pass: `engine10` now renders play-screen answer / hint / theory / next controls with explicit `data-wave89t-*` attributes instead of inline `onclick`, exports `window.wave89tPlayBinding`, and keeps both source + hashed runtime assets free of the legacy answer-click snippets that were flaky under strict CSP on desktop Chromium/Edge.

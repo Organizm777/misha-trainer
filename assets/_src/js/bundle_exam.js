@@ -10,6 +10,8 @@
   var MAX_HISTORY = 80;
   var EXAM_ACTION_ATTR = 'data-wave89u-exam-action';
   var EXAM_PACK_ATTR = 'data-wave89u-pack-id';
+  var EXAM_TASK_ATTR = 'data-wave90b-task-index';
+  var EXAM_REVIEW_ID = 'wave30-exam-review';
 
   function toNum(v){ return Number(v || 0) || 0; }
   function pct(ok, total){ return total > 0 ? Math.round(ok / total * 100) : 0; }
@@ -787,10 +789,10 @@
   }
   function attachWave69OgePacks(){
     ['oge_math','oge_russian','oge_informatics','oge_physics'].forEach(function(id){ if (EXAM_PACKS[id]) EXAM_PACKS[id].hidden = true; });
-    structuredVariantNosHint('oge_math_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_math_var' + i] = makeWave69MathVariant(i); });
-    structuredVariantNosHint('oge_russian_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_russian_var' + i] = makeWave69RussianVariant(i); });
-    structuredVariantNosHint('oge_english_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_english_var' + i] = makeWave69EnglishVariant(i); });
-    structuredVariantNosHint('oge_social_2026_full', 5).forEach(function(i){ EXAM_PACKS['oge_social_var' + i] = makeWave69SocialVariant(i); });
+    structuredVariantNosHint('oge_math_2026_full', 10).forEach(function(i){ EXAM_PACKS['oge_math_var' + i] = makeWave69MathVariant(i); });
+    structuredVariantNosHint('oge_russian_2026_full', 10).forEach(function(i){ EXAM_PACKS['oge_russian_var' + i] = makeWave69RussianVariant(i); });
+    structuredVariantNosHint('oge_english_2026_full', 10).forEach(function(i){ EXAM_PACKS['oge_english_var' + i] = makeWave69EnglishVariant(i); });
+    structuredVariantNosHint('oge_social_2026_full', 10).forEach(function(i){ EXAM_PACKS['oge_social_var' + i] = makeWave69SocialVariant(i); });
   }
   attachWave69OgePacks();
 
@@ -943,9 +945,9 @@
   function attachWave70EgePacks(){
     ['ege_base_math','ege_profile_math','ege_russian'].forEach(function(id){ if (EXAM_PACKS[id]) EXAM_PACKS[id].hidden = true; });
     if (EXAM_PACKS.ege_english) EXAM_PACKS.ege_english.order = 99;
-    structuredVariantNosHint('ege_base_math_2026_full', 5).forEach(function(i){ EXAM_PACKS['ege_base_math_var' + i] = makeWave70EgeBaseMathVariant(i); });
-    structuredVariantNosHint('ege_profile_math_2026_part1', 5).forEach(function(i){ EXAM_PACKS['ege_profile_math_var' + i] = makeWave70EgeProfileMathVariant(i); });
-    structuredVariantNosHint('ege_russian_2026_part1', 5).forEach(function(i){ EXAM_PACKS['ege_russian_var' + i] = makeWave70EgeRussianVariant(i); });
+    structuredVariantNosHint('ege_base_math_2026_full', 10).forEach(function(i){ EXAM_PACKS['ege_base_math_var' + i] = makeWave70EgeBaseMathVariant(i); });
+    structuredVariantNosHint('ege_profile_math_2026_part1', 10).forEach(function(i){ EXAM_PACKS['ege_profile_math_var' + i] = makeWave70EgeProfileMathVariant(i); });
+    structuredVariantNosHint('ege_russian_2026_part1', 10).forEach(function(i){ EXAM_PACKS['ege_russian_var' + i] = makeWave70EgeRussianVariant(i); });
   }
   attachWave70EgePacks();
 
@@ -1092,13 +1094,13 @@
 
   function attachWave71EgePacks(){
     if (EXAM_PACKS.ege_english) EXAM_PACKS.ege_english.hidden = true;
-    structuredVariantNosHint('ege_social_2026_part1', 5).forEach(function(i){
+    structuredVariantNosHint('ege_social_2026_part1', 10).forEach(function(i){
       EXAM_PACKS['ege_social_var' + i] = makeWave71EgeSocialVariant(i);
     });
-    structuredVariantNosHint('ege_english_2026_part1', 5).forEach(function(i){
+    structuredVariantNosHint('ege_english_2026_part1', 10).forEach(function(i){
       EXAM_PACKS['ege_english_var' + i] = makeWave71EgeEnglishVariant(i);
     });
-    structuredVariantNosHint('ege_physics_2026_part1', 5).forEach(function(i){
+    structuredVariantNosHint('ege_physics_2026_part1', 10).forEach(function(i){
       EXAM_PACKS['ege_physics_var' + i] = makeWave71EgePhysicsVariant(i);
     });
   }
@@ -1551,6 +1553,241 @@
     window.__wave30ActivePack = null;
     window.__wave30LastExamResult = null;
     window.__wave30ExamPending = null;
+    window.__wave30ExamUiState = null;
+    closeExamReview(true);
+  }
+
+  function examUiState(){
+    var pack = getActivePack();
+    if (!pack) return null;
+    var state = window.__wave30ExamUiState;
+    if (!state || state.packId !== pack.id) {
+      state = { packId: pack.id, flags: {}, visited: {} };
+      window.__wave30ExamUiState = state;
+    }
+    if (!state.flags || typeof state.flags !== 'object') state.flags = {};
+    if (!state.visited || typeof state.visited !== 'object') state.visited = {};
+    return state;
+  }
+
+  function answerEntries(){
+    return typeof answers !== 'undefined' && Array.isArray(answers) ? answers : [];
+  }
+
+  function answerMap(){
+    var map = {};
+    answerEntries().forEach(function(row){
+      if (!row || typeof row.qi === 'undefined' || row.qi === null) return;
+      map[String(row.qi)] = row;
+    });
+    return map;
+  }
+
+  function answerEntry(index){
+    var map = answerMap();
+    var key = String(index);
+    return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : null;
+  }
+
+  function upsertExamAnswer(entry){
+    if (!entry || typeof entry.qi === 'undefined') return;
+    if (typeof answers === 'undefined' || !Array.isArray(answers)) return;
+    var key = String(entry.qi);
+    for (var i = answers.length - 1; i >= 0; i--) {
+      if (answers[i] && String(answers[i].qi) === key) {
+        answers[i] = entry;
+        return;
+      }
+    }
+    answers.push(entry);
+  }
+
+  function packQuestionCount(pack){
+    pack = pack || getActivePack();
+    if (pack && pack.maxQ) return toNum(pack.maxQ);
+    return typeof questions !== 'undefined' && Array.isArray(questions) ? questions.length : 0;
+  }
+
+  function answeredCount(pack){
+    pack = pack || getActivePack();
+    var total = packQuestionCount(pack);
+    var map = answerMap();
+    var count = 0;
+    for (var i = 0; i < total; i++) {
+      if (map[String(i)]) count += 1;
+    }
+    return count;
+  }
+
+  function unansweredCount(pack){
+    pack = pack || getActivePack();
+    return Math.max(0, packQuestionCount(pack) - answeredCount(pack));
+  }
+
+  function flaggedCount(pack){
+    pack = pack || getActivePack();
+    var state = examUiState();
+    if (!state || !state.flags) return 0;
+    var total = packQuestionCount(pack);
+    var count = 0;
+    for (var i = 0; i < total; i++) {
+      if (state.flags[String(i)]) count += 1;
+    }
+    return count;
+  }
+
+  function isFlagged(index){
+    var state = examUiState();
+    return !!(state && state.flags && state.flags[String(index)]);
+  }
+
+  function setFlag(index, flagged){
+    var state = examUiState();
+    if (!state) return;
+    var key = String(index);
+    if (flagged) state.flags[key] = true;
+    else delete state.flags[key];
+  }
+
+  function toggleFlag(index){
+    setFlag(index, !isFlagged(index));
+    updateQuizMeta();
+  }
+
+  function currentRemainingText(){
+    var session = window.__wave25DiagSession || null;
+    if (!session || !session.timeLimit) return '';
+    var remaining = typeof session.remaining === 'number' ? session.remaining : session.timeLimit;
+    return fmtTime(remaining);
+  }
+
+  function buildTaskButton(index, currentIndex){
+    var classes = 'wave30-task-btn';
+    if (index === currentIndex) classes += ' current';
+    if (answerEntry(index)) classes += ' answered';
+    else classes += ' pending';
+    if (isFlagged(index)) classes += ' flagged';
+    return '<button class="' + classes + '" type="button" ' + EXAM_ACTION_ATTR + '="jump-task" ' + EXAM_TASK_ATTR + '="' + index + '">' + (index + 1) + '</button>';
+  }
+
+  function closeExamReview(silent){
+    var overlay = document.getElementById(EXAM_REVIEW_ID);
+    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    if (!silent) updateQuizMeta();
+  }
+
+  function goToExamTask(index){
+    if (typeof questions === 'undefined' || !Array.isArray(questions)) return false;
+    index = toNum(index);
+    if (index < 0 || index >= questions.length) return false;
+    closeExamReview(true);
+    if (typeof qIndex !== 'undefined') qIndex = index;
+    if (typeof window.renderQ === 'function') window.renderQ();
+    return true;
+  }
+
+  function nextExamIndex(fromIndex, unansweredOnly){
+    if (typeof questions === 'undefined' || !Array.isArray(questions) || !questions.length) return -1;
+    var total = questions.length;
+    var start = toNum(fromIndex);
+    for (var step = 1; step <= total; step++) {
+      var idx = (start + step) % total;
+      if (!unansweredOnly || !answerEntry(idx)) return idx;
+    }
+    return -1;
+  }
+
+  function rebuildExamGradeStats(){
+    var pack = getActivePack();
+    if (!pack || typeof questions === 'undefined' || !Array.isArray(questions)) return;
+    if (typeof gradeStats === 'undefined') return;
+    gradeStats = {};
+    questions.forEach(function(q, idx){
+      var grade = toNum(q && (q.g != null ? q.g : q.grade));
+      if (!grade) grade = toNum(pack.minG || pack.maxG || 9);
+      if (!gradeStats[grade]) gradeStats[grade] = { ok:0, total:0, topics:[] };
+      gradeStats[grade].total += 1;
+      var entry = answerEntry(idx);
+      if (entry && entry.correct) gradeStats[grade].ok += 1;
+      else if (q && q.topic && gradeStats[grade].topics.indexOf(q.topic) === -1) gradeStats[grade].topics.push(q.topic);
+    });
+  }
+
+  function syncExamQuestionUi(){
+    var pack = getActivePack();
+    if (!pack || typeof questions === 'undefined' || !Array.isArray(questions) || !questions[qIndex]) return;
+    var strip = document.getElementById('adapt-strip');
+    if (strip) strip.style.display = 'none';
+    var skipBtn = document.getElementById('skip-btn');
+    if (skipBtn) {
+      skipBtn.style.display = 'block';
+      skipBtn.textContent = qIndex >= questions.length - 1 ? 'К финальной проверке →' : 'Дальше без ответа →';
+    }
+    var nextBtn = document.getElementById('next-btn');
+    if (nextBtn) nextBtn.textContent = qIndex >= questions.length - 1 ? 'Финальная проверка →' : 'Следующее →';
+    var hintBox = document.getElementById('hint-box');
+    if (hintBox) {
+      hintBox.textContent = '';
+      hintBox.className = 'hint-box';
+    }
+    var entry = answerEntry(qIndex);
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('#opts .opt'));
+    if (!buttons.length) return;
+    buttons.forEach(function(btn){
+      btn.disabled = false;
+      btn.classList.remove('ok');
+      btn.classList.remove('no');
+      btn.classList.remove('dim');
+      btn.classList.remove('selected');
+      if (entry && entry.chosenText && String(btn.textContent || '').trim() === String(entry.chosenText).trim()) {
+        btn.classList.add('selected');
+      }
+    });
+    if (nextBtn) nextBtn.className = entry ? 'next-btn show' : 'next-btn';
+  }
+
+  function openExamReview(){
+    var pack = getActivePack();
+    if (!pack) return false;
+    ensureStyle();
+    closeExamReview(true);
+    var total = packQuestionCount(pack);
+    var answered = answeredCount(pack);
+    var flagged = flaggedCount(pack);
+    var unanswered = Math.max(0, total - answered);
+    var currentIndex = typeof qIndex !== 'undefined' ? qIndex : 0;
+    var buttons = '';
+    for (var i = 0; i < total; i++) buttons += buildTaskButton(i, currentIndex);
+    var overlay = document.createElement('div');
+    overlay.id = EXAM_REVIEW_ID;
+    overlay.className = 'wave30-review';
+    overlay.innerHTML = '' +
+      '<div class="wave30-review-card" role="dialog" aria-modal="true" aria-labelledby="wave30-review-title">' +
+        '<div class="wave30-review-title" id="wave30-review-title">Финальная проверка</div>' +
+        '<div class="wave30-review-sub">Проверь, все ли задания отмечены. Можно вернуться к любому номеру до завершения варианта.</div>' +
+        '<div class="wave30-review-stats">' +
+          '<div class="wave30-review-stat"><b>' + answered + '/' + total + '</b><span>отвечено</span></div>' +
+          '<div class="wave30-review-stat"><b>' + unanswered + '</b><span>без ответа</span></div>' +
+          '<div class="wave30-review-stat"><b>' + flagged + '</b><span>отмечено «вернусь»</span></div>' +
+          '<div class="wave30-review-stat"><b>' + esc(currentRemainingText() || '—') + '</b><span>времени осталось</span></div>' +
+        '</div>' +
+        '<div class="wave30-review-task-grid">' + buttons + '</div>' +
+        '<div class="wave30-review-actions">' +
+          '<button class="wave30-review-btn secondary" type="button" ' + EXAM_ACTION_ATTR + '="close-review">Вернуться к варианту</button>' +
+          '<button class="wave30-review-btn primary" type="button" ' + EXAM_ACTION_ATTR + '="finish-pack">Завершить и показать результат' + (unanswered ? ' (' + unanswered + ' без ответа)' : '') + '</button>' +
+        '</div>' +
+      '</div>';
+    overlay.addEventListener('click', function(event){
+      if (event.target === overlay) closeExamReview();
+    });
+    document.body.appendChild(overlay);
+    return true;
+  }
+
+  function finishExamPack(){
+    rebuildExamGradeStats();
+    closeExamReview(true);
+    if (typeof window.showResult === 'function') window.showResult();
   }
 
   function ensureStyle(){
@@ -1563,6 +1800,12 @@
       '.wave30-exam-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}.wave30-exam-stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 8px;text-align:center}.wave30-exam-stat b{display:block;font-family:Unbounded,system-ui,sans-serif;font-size:16px}.wave30-exam-stat span{display:block;font-size:10px;color:var(--muted);margin-top:4px}.wave30-sec-list{display:flex;flex-direction:column;gap:8px}.wave30-sec-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--border)}.wave30-sec-row:first-child{border-top:none;padding-top:0}.wave30-sec-name{font-size:12px;font-weight:700}.wave30-sec-meta{font-size:10px;color:var(--muted);margin-top:3px}.wave30-sec-score{font-family:JetBrains Mono,monospace;font-size:13px;font-weight:800}.wave30-sec-band{margin-top:10px;font-size:12px;line-height:1.45;color:var(--text)}' +
       '.wave30-dash-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px}.wave30-dash-card{background:var(--card);border:1px solid var(--border);border-radius:var(--R,16px);padding:14px}.wave30-dash-k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}.wave30-dash-v{font-family:Unbounded,system-ui,sans-serif;font-size:17px;font-weight:900;margin-top:6px}.wave30-dash-sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}.wave30-dash-list{display:flex;flex-direction:column;gap:8px}.wave30-dash-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--R,16px)}.wave30-dash-name{font-size:13px;font-weight:800}.wave30-dash-meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.45}.wave30-dash-score{font-family:JetBrains Mono,monospace;font-size:14px;font-weight:800}.wave30-dash-link{display:inline-flex;align-items:center;gap:6px;padding:7px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:10px;color:var(--muted);text-decoration:none;margin-top:8px}' +
       '@media (max-width:560px){.wave30-pack-grid,.wave30-exam-grid,.wave30-dash-grid{grid-template-columns:1fr}.wave30-pack-card,.wave30-dash-card,.wave30-dash-row{padding:12px}}';
+    style.textContent += '' +
+      '.wave30-quiz-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:-2px 0 10px}.wave30-quiz-action{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:10.5px;font-weight:800;cursor:pointer}.wave30-quiz-action.flagged{border-color:rgba(245,158,11,.45);background:rgba(245,158,11,.12);color:#b45309}.wave30-quiz-counter{font-size:10.5px;color:var(--muted);font-weight:700}.wave30-quiz-note{font-size:10px;color:var(--muted);font-weight:700}' +
+      '.wave30-task-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin-bottom:10px}.wave30-task-btn{min-width:0;padding:8px 0;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:10.5px;font-weight:800;cursor:pointer}.wave30-task-btn.current{border-color:rgba(37,99,235,.35);background:rgba(37,99,235,.1);color:var(--text)}.wave30-task-btn.answered{color:var(--green);border-color:rgba(22,163,74,.28)}.wave30-task-btn.flagged{box-shadow:inset 0 0 0 1px rgba(245,158,11,.45);color:#b45309}.wave30-task-btn.pending{color:var(--muted)}' +
+      '.wave30-review{position:fixed;inset:0;z-index:10030;display:flex;align-items:flex-end;justify-content:center;padding:16px;background:rgba(15,23,42,.38)}.wave30-review-card{width:min(720px,100%);max-height:88vh;overflow:auto;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:16px}.wave30-review-title{font-size:16px;font-weight:900;font-family:Unbounded,system-ui,sans-serif}.wave30-review-sub{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}.wave30-review-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}.wave30-review-stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center}.wave30-review-stat b{display:block;font-family:Unbounded,system-ui,sans-serif;font-size:16px}.wave30-review-stat span{display:block;font-size:10px;color:var(--muted);margin-top:4px}.wave30-review-task-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:14px}.wave30-review-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.wave30-review-btn{flex:1 1 180px;padding:11px 14px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-weight:800;cursor:pointer}.wave30-review-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.wave30-review-btn.secondary{background:var(--card)}' +
+      '.opt.selected{border-color:var(--accent);background:rgba(37,99,235,.08);color:var(--text)}' +
+      '@media (max-width:560px){.wave30-task-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.wave30-review{padding:10px}.wave30-review-card{padding:14px}.wave30-review-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.wave30-review-task-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}';
     document.head.appendChild(style);
   }
 
@@ -1627,6 +1870,26 @@
     if (event && typeof event.preventDefault === 'function') event.preventDefault();
     if (action === 'start-pack') {
       startPack(el.getAttribute(EXAM_PACK_ATTR) || '');
+      return;
+    }
+    if (action === 'jump-task') {
+      goToExamTask(el.getAttribute(EXAM_TASK_ATTR));
+      return;
+    }
+    if (action === 'toggle-flag') {
+      toggleFlag(typeof qIndex !== 'undefined' ? qIndex : 0);
+      return;
+    }
+    if (action === 'review-pack') {
+      openExamReview();
+      return;
+    }
+    if (action === 'close-review') {
+      closeExamReview();
+      return;
+    }
+    if (action === 'finish-pack') {
+      finishExamPack();
     }
   }
 
@@ -1659,24 +1922,40 @@
       qhdr.parentNode.insertBefore(holder, qhdr.nextSibling);
     }
     if (!holder) return;
+    var strip = document.getElementById('adapt-strip');
     var pack = getActivePack();
     if (!pack || typeof questions === 'undefined' || !Array.isArray(questions) || !questions[qIndex]) {
       holder.innerHTML = '';
+      if (strip) strip.style.display = '';
       return;
     }
+    if (strip) strip.style.display = 'none';
     var q = questions[qIndex];
+    var total = packQuestionCount(pack);
+    var answered = answeredCount(pack);
+    var flagged = flaggedCount(pack);
+    var taskButtons = '';
+    for (var i = 0; i < total; i++) taskButtons += buildTaskButton(i, qIndex);
     var pill = document.getElementById('grade-pill');
     if (pill) pill.textContent = 'Задание ' + q.taskNo;
     var topic = document.getElementById('q-topic');
     if (topic) topic.textContent = q.section + ' · ' + q.topic;
     var timerHint = document.getElementById('wave25-timer-pill');
     if (timerHint && window.__wave25DiagSession && window.__wave25DiagSession.timeLimit) {
-      timerHint.textContent = fmtTime(window.__wave25DiagSession.remaining || window.__wave25DiagSession.timeLimit);
+      timerHint.textContent = currentRemainingText();
     }
     holder.innerHTML = '' +
       '<span class="wave30-quiz-chip"><b>' + esc(pack.exam) + '</b> ' + esc(pack.label.replace(pack.exam + ' · ', '').replace('ЕГЭ база · ', '').replace('ЕГЭ профиль · ', '')) + '</span>' +
       '<span class="wave30-quiz-chip"><b>Задание</b> ' + esc(String(q.taskNo)) + '/' + esc(String(pack.maxQ)) + '</span>' +
-      '<span class="wave30-quiz-chip"><b>' + esc(q.section) + '</b> · ' + esc(String(q.points)) + ' б.</span>';
+      '<span class="wave30-quiz-chip"><b>' + esc(q.section) + '</b> · ' + esc(String(q.points)) + ' б.</span>' +
+      '<div class="wave30-quiz-toolbar">' +
+        '<button class="wave30-quiz-action' + (isFlagged(qIndex) ? ' flagged' : '') + '" type="button" ' + EXAM_ACTION_ATTR + '="toggle-flag">' + (isFlagged(qIndex) ? '🚩 Вернусь к этому' : '📌 Отметить «вернусь»') + '</button>' +
+        '<button class="wave30-quiz-action" type="button" ' + EXAM_ACTION_ATTR + '="review-pack">📋 Финальная проверка</button>' +
+        '<span class="wave30-quiz-counter">Отвечено ' + answered + '/' + total + (flagged ? (' · отмечено ' + flagged) : '') + (currentRemainingText() ? (' · осталось ' + esc(currentRemainingText())) : '') + '</span>' +
+      '</div>' +
+      '<div class="wave30-task-grid">' + taskButtons + '</div>' +
+      '<div class="wave30-quiz-note">В экзаменном режиме можно переходить между заданиями. Проверка ответов — в конце.</div>';
+    syncExamQuestionUi();
   }
 
   function calcExamResult(pack){
@@ -1850,6 +2129,8 @@
       if (typeof correctStreak !== 'undefined') correctStreak = 0;
       if (typeof wrongStreak !== 'undefined') wrongStreak = 0;
       window.__wave30ActivePack = packRuntime;
+      window.__wave30ExamUiState = { packId: packRuntime.id, flags: {}, visited: {} };
+      closeExamReview(true);
       if (window.__wave25DiagSession) {
         window.__wave25DiagSession.modeId = 'exam';
         window.__wave25DiagSession.maxQ = packRuntime.maxQ;
@@ -1882,11 +2163,93 @@
     window.__wave30ExamPatchedRender = true;
   }
 
+  function patchSelect(){
+    if (!isDiagnosticPage() || window.__wave30ExamPatchedSelect || typeof window.selectOpt !== 'function') return;
+    var original = window.selectOpt;
+    window.selectOpt = function(btn, chosen, correct, hint){
+      var pack = getActivePack();
+      if (!pack) return original.apply(this, arguments);
+      if (typeof questions === 'undefined' || !Array.isArray(questions) || !questions[qIndex]) return original.apply(this, arguments);
+      var q = questions[qIndex];
+      upsertExamAnswer({
+        qi: qIndex,
+        grade: q.g,
+        topic: q.topic,
+        correct: chosen === correct,
+        chosen: chosen,
+        chosenText: chosen,
+        correctAnswer: correct,
+        taskNo: q.taskNo,
+        section: q.section || ''
+      });
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('#opts .opt'));
+      buttons.forEach(function(node){
+        node.disabled = false;
+        node.classList.remove('ok');
+        node.classList.remove('no');
+        node.classList.remove('dim');
+        node.classList.remove('selected');
+      });
+      if (btn && btn.classList) btn.classList.add('selected');
+      var hintBox = document.getElementById('hint-box');
+      if (hintBox) {
+        hintBox.textContent = '';
+        hintBox.className = 'hint-box';
+      }
+      var nextBtn = document.getElementById('next-btn');
+      if (nextBtn) {
+        nextBtn.className = 'next-btn show';
+        nextBtn.textContent = qIndex >= questions.length - 1 ? 'Финальная проверка →' : 'Следующее →';
+      }
+      var skipBtn = document.getElementById('skip-btn');
+      if (skipBtn) {
+        skipBtn.style.display = 'block';
+        skipBtn.textContent = qIndex >= questions.length - 1 ? 'К финальной проверке →' : 'Дальше без ответа →';
+      }
+      updateQuizMeta();
+      return;
+    };
+    window.__wave30ExamPatchedSelect = true;
+  }
+
+  function patchNext(){
+    if (!isDiagnosticPage() || window.__wave30ExamPatchedNext || typeof window.nextQ !== 'function') return;
+    var original = window.nextQ;
+    window.nextQ = function(){
+      var pack = getActivePack();
+      if (!pack) return original.apply(this, arguments);
+      var total = packQuestionCount(pack);
+      if (!total) return original.apply(this, arguments);
+      if (qIndex >= total - 1) return openExamReview();
+      return goToExamTask(qIndex + 1);
+    };
+    window.__wave30ExamPatchedNext = true;
+  }
+
+  function patchSkip(){
+    if (!isDiagnosticPage() || window.__wave30ExamPatchedSkip || typeof window.skipQ !== 'function') return;
+    var original = window.skipQ;
+    window.skipQ = function(){
+      var pack = getActivePack();
+      if (!pack) return original.apply(this, arguments);
+      var total = packQuestionCount(pack);
+      if (!total) return original.apply(this, arguments);
+      if (qIndex >= total - 1) return openExamReview();
+      var next = nextExamIndex(qIndex, true);
+      if (next < 0 || next === qIndex) next = nextExamIndex(qIndex, false);
+      if (next < 0 || next === qIndex) return openExamReview();
+      return goToExamTask(next);
+    };
+    window.__wave30ExamPatchedSkip = true;
+  }
+
   function patchShowResult(){
     if (!isDiagnosticPage() || window.__wave30ExamPatchedResult || typeof window.showResult !== 'function') return;
     var original = window.showResult;
     window.showResult = function(){
       var pack = getActivePack();
+      if (pack) rebuildExamGradeStats();
+      closeExamReview(true);
       var out = original.apply(this, arguments);
       if (pack) {
         var result = calcExamResult(pack);
@@ -1918,11 +2281,14 @@
     if (!isDiagnosticPage() || window.__wave30ExamPatchedGo || typeof window.go !== 'function') return;
     var original = window.go;
     window.go = function(id){
+      if (id === 'select' || id === 'result') closeExamReview(true);
       if (id === 'select') {
         resetPackState();
         setHashParam(EXAM_HASH_KEY, '');
         var holder = document.getElementById('wave30-quiz-meta');
         if (holder) holder.innerHTML = '';
+        var strip = document.getElementById('adapt-strip');
+        if (strip) strip.style.display = '';
         setDiagShellState('browse');
       }
       return original.apply(this, arguments);
@@ -2087,6 +2453,9 @@
     diagBooted = true;
     patchStart();
     patchRender();
+    patchSelect();
+    patchNext();
+    patchSkip();
     patchShowResult();
     patchShare();
     patchGo();
@@ -2118,6 +2487,9 @@
     calcExamResult: calcExamResult,
     getHistory: loadHistory,
     getActivePack: getActivePack,
+    openReview: openExamReview,
+    finishPack: finishExamPack,
+    goToTask: goToExamTask,
     dashboardSummaryPresent: function(){ return !!document.getElementById('wave30-exam-dashboard'); },
     structured: {
       schema: STRUCTURED_SCHEMA_VERSION,
@@ -2137,7 +2509,7 @@
   };
 
   window.wave89ExamBank = {
-    version: 'wave89s',
+    version: 'wave90d',
     schema: STRUCTURED_SCHEMA_VERSION,
     listFamilies: listStructuredFamilies,
     matchPackId: matchStructuredPackId,

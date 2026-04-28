@@ -42,8 +42,11 @@ function hasBridge(source){
 }
 
 function hasRuntimeFallbacks(source){
+  const questionFallback = source.includes('var lexicalQuestion = lexicalValue(function(){ return prob; });')
+    || source.includes("typeof prob !== 'undefined' ? prob : undefined")
+    || source.includes("try { if (typeof prob !== 'undefined') return prob; } catch (_err) {} return root.prob || null;");
   return source.includes('function lexicalValue(getter)')
-    && source.includes('var lexicalQuestion = lexicalValue(function(){ return prob; });')
+    && questionFallback
     && source.includes('var lexicalSubject = lexicalValue(function(){ return cS; });')
     && source.includes('function selectionValue()')
     && source.includes('function hasSelection()')

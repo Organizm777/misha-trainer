@@ -76,6 +76,22 @@ jobs:
         continue-on-error: true
         run: node tools/audit_learning_path_wave89n.mjs
 
+      - name: Advisory answer-click runtime audit
+        continue-on-error: true
+        run: node tools/audit_answer_click_runtime_wave90a.mjs
+
+      - name: Advisory exam-mode navigation audit
+        continue-on-error: true
+        run: node tools/audit_exam_mode_navigation_wave90b.mjs
+
+      - name: Advisory math exam depth audit
+        continue-on-error: true
+        run: node tools/audit_math_exam_depth_wave90c.mjs
+
+      - name: Advisory full exam variant-depth audit
+        continue-on-error: true
+        run: node tools/audit_exam_variant_depth_wave90d.mjs
+
       - id: policy_audit
         name: Lighthouse static policy audit (advisory)
         continue-on-error: true

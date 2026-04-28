@@ -9,6 +9,20 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 const readJSON = (rel) => JSON.parse(read(rel));
 const exists = (rel) => fs.existsSync(path.join(ROOT, rel));
 
+
+function waveRank(value){
+  const raw = String(value || '').trim().toLowerCase();
+  const match = raw.match(/^wave(\d+)([a-z]*)$/);
+  if (!match) return -1;
+  const major = Number(match[1]) || 0;
+  const suffix = match[2] || '';
+  let minor = 0;
+  for (let i = 0; i < suffix.length; i += 1) {
+    minor = minor * 26 + (suffix.charCodeAt(i) - 96);
+  }
+  return major * 1000 + minor;
+}
+
 const manifest = readJSON('assets/asset-manifest.json');
 const healthz = readJSON('healthz.json');
 const sw = read('sw.js');
@@ -17,8 +31,8 @@ const cssLogical = 'assets/css/wave88d_breadcrumbs.css';
 const runtimeBuilt = manifest.assets[runtimeLogical];
 const cssBuilt = manifest.assets[cssLogical];
 
-assert.ok(/^wave89[a-z]+$/i.test(String(healthz.wave || '')), `healthz.wave should stay on a wave89* build, got ${healthz.wave}`);
-assert.ok(/^wave89[a-z]+$/i.test(String(healthz.build_id || '')), `healthz.build_id should stay on a wave89* build, got ${healthz.build_id}`);
+assert.ok(waveRank(healthz.wave) >= waveRank('wave89d'), `healthz.wave should be wave89d+ (got ${healthz.wave})`);
+assert.ok(waveRank(healthz.build_id) >= waveRank('wave89d'), `healthz.build_id should be wave89d+ (got ${healthz.build_id})`);
 assert.ok(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference healthz.build_id, got ${healthz.cache}`);
 assert.ok(runtimeBuilt, `asset-manifest missing ${runtimeLogical}`);
 assert.ok(cssBuilt, `asset-manifest missing ${cssLogical}`);

@@ -180,12 +180,12 @@ const runtimePayload = safeJSON('WAVE89Q_EXAM_BANK', null);
 const runtimeFamilies = runtimePayload && runtimePayload.families ? Object.keys(runtimePayload.families) : [];
 const expectedFamilies = Object.values(catalog.structures || {}).map((structure) => String(structure.family_id || '')).filter(Boolean);
 const EXPECTED_MIN_VARIANTS = {
-  oge_math_2026_full: 5,
+  oge_math_2026_full: 10,
   oge_russian_2026_full: 5,
   oge_english_2026_full: 5,
   oge_social_2026_full: 5,
   ege_base_math_2026_full: 5,
-  ege_profile_math_2026_part1: 5,
+  ege_profile_math_2026_part1: 10,
   ege_russian_2026_part1: 5,
   ege_social_2026_part1: 5,
   ege_english_2026_part1: 5,

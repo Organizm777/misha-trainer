@@ -15,7 +15,11 @@ const REQUIRED_PARITY_AUDITS = [
   'node tools/audit_weak_device_adaptive_wave89k.mjs',
   'node tools/audit_spaced_repetition_sm2_wave89l.mjs',
   'node tools/audit_adaptive_difficulty_wave89m.mjs',
-  'node tools/audit_learning_path_wave89n.mjs'
+  'node tools/audit_learning_path_wave89n.mjs',
+  'node tools/audit_answer_click_runtime_wave90a.mjs',
+  'node tools/audit_exam_mode_navigation_wave90b.mjs',
+  'node tools/audit_math_exam_depth_wave90c.mjs',
+  'node tools/audit_exam_variant_depth_wave90d.mjs'
 ];
 
 function read(rel) {
@@ -46,7 +50,7 @@ const ok = missingInValidate.length === 0
 
 const result = {
   ok,
-  wave: 'wave89y',
+  wave: 'wave90d',
   workflows: {
     validate: VALIDATE_REL,
     lighthouse: LIGHTHOUSE_REL
@@ -59,7 +63,7 @@ const result = {
     validateAuditCommands: validateAuditCommands.length,
     lighthouseAuditCommands: lighthouseAuditCommands.length
   },
-  note: 'Hard-gates the specific validate↔lighthouse workflow parity that regressed when the Lighthouse workflow stopped carrying the advisory UX/pedagogy audits required by the existing wave89e–wave89n checks.'
+  note: 'Hard-gates the specific validate↔lighthouse workflow parity that regressed when the Lighthouse workflow stopped carrying the advisory UX/pedagogy/runtime audits required by the existing wave89e–wave90d checks.'
 };
 
 console.log(JSON.stringify(result, null, 2));
