@@ -10,6 +10,9 @@ const healthz = JSON.parse(fs.readFileSync(path.join(ROOT, 'healthz.json'), 'utf
 const sw = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 const mergedLogical = 'assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js';
 const mergedBuilt = manifest.assets[mergedLogical];
+const lazyLoaderLogical = 'assets/js/chunk_grade_lazy_payloads_wave91h.js';
+const lazyLoaderBuilt = manifest.assets[lazyLoaderLogical] || '';
+const lazyLoaderSource = lazyLoaderBuilt ? read('assets/_src/js/chunk_grade_lazy_payloads_wave91h.js') : '';
 const legacyLogical = [
   'assets/js/chunk_subject_expansion_wave58_secondary_math_7_9.js',
   'assets/js/chunk_subject_expansion_wave59_physics_chemistry_7_9.js'
@@ -58,7 +61,9 @@ for (const page of pages) {
   counts[grade] = scriptCount(html);
   assert.ok(counts[grade] <= 20, `${page} should stay at or below 20 external scripts, got ${counts[grade]}`);
   if ([7, 8, 9].includes(grade)) {
-    assert.ok(html.includes(`./${mergedBuilt}`), `${page} should load ${mergedBuilt}`);
+    const hasEagerMerged = html.includes(`./${mergedBuilt}`);
+    const hasWave91hLazyMerged = !!(lazyLoaderBuilt && html.includes(`./${lazyLoaderBuilt}`) && lazyLoaderSource.includes(`./${mergedBuilt}`));
+    assert.ok(hasEagerMerged || hasWave91hLazyMerged, `${page} should load ${mergedBuilt} eagerly or via wave91h lazy loader`);
     assert.ok(!/chunk_subject_expansion_wave58_secondary_math_7_9\.[a-f0-9]{10}\.js/.test(html), `${page} should not load legacy wave58 chunk`);
     assert.ok(!/chunk_subject_expansion_wave59_physics_chemistry_7_9\.[a-f0-9]{10}\.js/.test(html), `${page} should not load legacy wave59 chunk`);
   }

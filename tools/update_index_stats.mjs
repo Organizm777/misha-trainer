@@ -20,9 +20,9 @@ const gradeDisplay = {
   6: { topics:'75+ тем', subjects:'Математика · Русский · Английский · История · Литература · Биология · География' },
   7: { topics:'75+ тем', subjects:'Алгебра · Геометрия · Физика · Русский · Английский и ещё 7 предметов' },
   8: { topics:'85+ тем', subjects:'Алгебра · Геометрия · Физика · Химия · Биология и ещё 8 предметов' },
-  9: { topics:'85+ тем · 4 экзамена ОГЭ', subjects:'Алгебра · Геометрия · Физика · Химия · Биология и ещё 8 предметов + ОГЭ' },
+  9: { topics:'85+ тем · 6 экзаменов ОГЭ', subjects:'Алгебра · Геометрия · Физика · Химия · Биология и ещё 8 предметов + ОГЭ' },
   10: { topics:'65+ тем', subjects:'Алгебра · Геометрия · Физика · Русский · История и ещё 10 предметов' },
-  11: { topics:'110+ тем · 6 экзаменов ЕГЭ', subjects:'Алгебра · Геометрия · Физика · Химия · Биология и ещё 8 предметов' }
+  11: { topics:'110+ тем · 8 экзаменов ЕГЭ', subjects:'Алгебра · Геометрия · Физика · Химия · Биология и ещё 8 предметов' }
 };
 
 function pluralRu(n, one, few, many){
@@ -65,15 +65,17 @@ function updateGradeCards(html){
   let next = html;
   for (const [grade, data] of Object.entries(gradeDisplay)) {
     const href = `grade${grade}_v2.html`;
-    const cardRe = new RegExp(`(<a class="card [^"]+" href="${href}">[\\s\\S]*?<div class="cs">)([\\s\\S]*?)(<\\/div><div class="cf"><span class="ct">)([\\s\\S]*?)(<\\/span><span class="ca">→<\\/span><\\/div><\\/a>)`);
-    next = next.replace(cardRe, `$1${data.subjects}$3${data.topics}$5`);
+    const cardRe = new RegExp(
+      `(<a class="card [^"]+" href="${href}">[\\s\\S]*?<div class="cs">)([\\s\\S]*?)(<\/div>)(<div class="daily-mini">[\\s\\S]*?<\/div>)?(<div class="cf"><span class="ct">)([\\s\\S]*?)(<\/span><span class="ca">→<\/span><\/div><\/a>)`
+    );
+    next = next.replace(cardRe, `$1${data.subjects}$3$4$5${data.topics}$7`);
   }
   return next;
 }
 
 const spec = countSpecialSubjects();
 const exam = countExamRows();
-const subjectsFloor = Math.max(BASE_HERO.subjectsFloor, BASE_HERO.subjectsFloor + Math.max(0, spec.directions - BASE_SPECIAL.directions));
+const subjectsFloor = Math.max(BASE_HERO.subjectsFloor, BASE_HERO.subjectsFloor + Math.max(0, spec.directions - BASE_SPECIAL.directions) + Math.max(0, exam.banks - 10));
 const questionsFloor = Math.max(20000, roundDown(BASE_HERO.questionsFloor + Math.max(0, spec.questions - BASE_SPECIAL.questions) + Math.max(0, exam.rows - BASE_EXAM_ROWS), 1000));
 const directionsWord = pluralRu(spec.directions, 'направление', 'направления', 'направлений');
 const topicsWord = pluralRu(spec.topics, 'тема', 'темы', 'тем');
@@ -88,8 +90,9 @@ html = html.replace(/\d+ направлени[а-яё]+ · \d+ тем[а-яё]* 
 const report = { ok: html === originalHtml, updated:'index.html', mode: CHECK_MODE ? 'check' : 'write', grades:Object.keys(gradeDisplay).length, subjectsFloor, questionsFloor, specialSubjects:spec, examBank:exam };
 if (CHECK_MODE) {
   console.log(JSON.stringify(report, null, 2));
-  if (!report.ok) process.exit(1);
+  process.exit(report.ok ? 0 : 1);
 } else {
   fs.writeFileSync(INDEX, html);
   console.log(JSON.stringify({ ...report, ok:true }, null, 2));
+  process.exit(0);
 }

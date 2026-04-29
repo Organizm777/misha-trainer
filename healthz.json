@@ -1,12 +1,12 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave91e",
-  "version": "trainer-build-wave91e-2026-04-28",
-  "build_id": "wave91e",
+  "wave": "wave91i",
+  "version": "trainer-build-wave91i-2026-04-28",
+  "build_id": "wave91i",
   "generated_at_utc": "2026-04-28T00:00:00Z",
   "git_sha": null,
-  "hashed_asset_count": 112,
+  "hashed_asset_count": 119,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -25,5 +25,30 @@
     "grade10_v2.html",
     "grade11_v2.html"
   ],
-  "cache": "trainer-build-wave91e-2026-04-28"
+  "learning_pack_wave91f": {
+    "topic_map": true,
+    "error_diary": true,
+    "marathon": true,
+    "difficulty_tags": true,
+    "control_work_planner": true,
+    "pomodoro_stats": true,
+    "streak_freeze": true,
+    "audio_speech": true
+  },
+  "cache": "trainer-build-wave91i-2026-04-28",
+  "visual_interactive_wave91g": {
+    "geometry_svg": true,
+    "geography_svg": true,
+    "chemistry_structures": true,
+    "physics_schemes": true,
+    "print_worksheet_pdf": true,
+    "interactive_formats": [
+      "sort",
+      "match",
+      "table",
+      "graph",
+      "construction",
+      "canvas"
+    ]
+  }
 }

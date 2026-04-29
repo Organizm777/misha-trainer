@@ -51,7 +51,7 @@ const builtExam = read(builtExamRel);
 const shellRel = builtAsset(manifest, 'assets/js/chunk_exam_bank_wave89q.js');
 const shellSource = read(shellRel);
 
-assert(catalog.version === 'wave91d', `catalog version should be wave91d, got ${catalog.version}`);
+assert(waveRank(catalog.version) >= waveRank('wave91d'), `catalog version should be wave91d+, got ${catalog.version}`);
 assert(sw.includes(String(manifest.version || '')), 'sw cache should match manifest version');
 assert(/^trainer-build-wave91[a-z]-2026-04-28$/.test(String(manifest.version || '')) && waveRank(manifest.build_id) >= waveRank('wave91d'), `asset manifest should be wave91d+, got ${manifest.version} / ${manifest.build_id}`);
 assert(waveRank(manifest.build_id) >= waveRank('wave91d'), `asset manifest build_id should be wave91d+, got ${manifest.build_id}`);

@@ -45,6 +45,8 @@ function replaceArray(source, name, values){
 
 const manifest = readJSON('assets/asset-manifest.json');
 manifest.version = version;
+manifest.wave = wave;
+manifest.build_id = wave;
 manifest.generated_at_utc = generatedAt;
 manifest.hashed_asset_count = Object.keys(manifest.assets || {}).length;
 writeJSON('assets/asset-manifest.json', manifest);

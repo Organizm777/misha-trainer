@@ -62,6 +62,20 @@ jobs:
         run: node tools/audit_theory_coverage.mjs
       - name: Enforce wave91e learning formats
         run: node tools/audit_learning_formats_wave91e.mjs
+      - name: Enforce wave91f learning formats
+        run: node tools/audit_learning_formats_wave91f.mjs
+      - name: Enforce wave91g visual and interactive formats
+        run: node tools/audit_visual_interactive_wave91g.mjs
+      - name: Enforce wave91h UX/gamification/performance pack
+        run: node tools/audit_wave91h_ux_perf.mjs
+      - name: Enforce wave91h Brotli precompression
+        run: node tools/precompress_brotli_wave91h.mjs --check
+      - name: Enforce wave91i exam banks and solution steps
+        run: node tools/audit_exam_banks_wave91i.mjs
+      - name: Enforce wave91i theory patches
+        run: node tools/audit_theory_wave91i.mjs
+      - name: Enforce wave91i bundle analyzer budget
+        run: node tools/bundle_analyzer_wave91i.mjs --check
       - name: Enforce generated index stats
         run: node tools/update_index_stats.mjs --check
       - name: Enforce desktop-safe play control bindings

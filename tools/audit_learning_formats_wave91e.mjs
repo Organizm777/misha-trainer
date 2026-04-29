@@ -16,16 +16,29 @@ const healthz = readJSON('healthz.json');
 const sw = read('sw.js');
 const built = manifest.assets && manifest.assets[runtimeLogical];
 
-assert.equal(healthz.wave, 'wave91e', `healthz.wave should be wave91e, got ${healthz.wave}`);
-assert.equal(healthz.build_id, 'wave91e', `healthz.build_id should be wave91e, got ${healthz.build_id}`);
-assert.equal(healthz.cache, 'trainer-build-wave91e-2026-04-28', `healthz.cache should be wave91e, got ${healthz.cache}`);
+function waveRank(value){
+  const raw = String(value || '').trim().toLowerCase();
+  const match = raw.match(/^wave(\d+)([a-z]*)$/);
+  if (!match) return -1;
+  const major = Number(match[1]) || 0;
+  const suffix = match[2] || '';
+  let minor = 0;
+  for (let i = 0; i < suffix.length; i += 1) {
+    minor = minor * 26 + (suffix.charCodeAt(i) - 96);
+  }
+  return major * 1000 + minor;
+}
+
+assert.ok(waveRank(healthz.wave) >= waveRank('wave91e'), `healthz.wave should be wave91e+ (got ${healthz.wave})`);
+assert.ok(waveRank(healthz.build_id) >= waveRank('wave91e'), `healthz.build_id should be wave91e+ (got ${healthz.build_id})`);
+assert.ok(String(healthz.cache || '').includes(String(healthz.build_id || '')), `healthz.cache should reference build_id, got ${healthz.cache}`);
 assert.equal(manifest.version, healthz.version, 'manifest/healthz versions should match');
 assert.equal(manifest.build_id, healthz.build_id, 'manifest/healthz build_id should match');
 assert.ok(built, `asset-manifest missing ${runtimeLogical}`);
 assert.ok(exists(srcRel), `missing source ${srcRel}`);
 assert.ok(exists(extendedSrcRel), `missing extended runtime source ${extendedSrcRel}`);
 assert.ok(exists(built), `missing built extended runtime asset ${built}`);
-assert.ok(sw.includes("trainer-build-wave91e-2026-04-28"), 'sw.js should use wave91e cache name');
+assert.ok(sw.includes(String(healthz.cache || '')), 'sw.js should use current cache name');
 assert.ok(sw.includes(`./${built}`), `sw.js should precache ${built}`);
 
 const src = read(srcRel);
@@ -63,10 +76,10 @@ let gradeRefs = 0;
 for (let grade = 1; grade <= 11; grade += 1) {
   const html = read(`grade${grade}_v2.html`);
   const needle = `./${built}`;
-  const count = html.split(needle).length - 1;
-  assert.equal(count, 1, `grade${grade}_v2.html should reference ${needle} exactly once`);
+  const scriptMatches = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].filter(m => m[1] === needle).length;
+  assert.equal(scriptMatches, 1, `grade${grade}_v2.html should reference ${needle} exactly once as a script`);
   assert.equal(html.includes('chunk_wave91e_learning_formats.'), false, `grade${grade}_v2.html should not add a separate wave91e script`);
-  gradeRefs += count;
+  gradeRefs += scriptMatches;
 }
 assert.equal(gradeRefs, 11, 'extended runtime with wave91e should be attached to all 11 grade pages');
 

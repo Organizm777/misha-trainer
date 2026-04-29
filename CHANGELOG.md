@@ -1,3 +1,38 @@
+# wave91i — exam banks, theory and bundle analyzer
+
+- A7: added structured OГЭ/ЕГЭ Informatics JSON banks: 30 variants each, 900 tasks total, loaded through the existing lazy exam-bank shell.
+- A8: added structured OГЭ/ЕГЭ History JSON banks: 20 variants each, 880 tasks total, also lazy-loaded by family.
+- A9: added `solution_steps` to all 600 ЕГЭ профильная математика part-1 rows and rendered a collapsible step-by-step review after exam completion.
+- C2: expanded Grade 10 Olympiad with a fifth lazy topic, “Стратегии решения”, including theory and an 8-question strategy bank.
+- C3/C4: added lazy theory enrichment for formulas/code topics in grades 8–11, social studies in grades 5–7 and probability/statistics in grades 7–8.
+- K3: added `tools/bundle_analyzer_wave91i.mjs --check` and wired wave91i exam/theory/bundle audits into CI.
+- `tools/update_index_stats.mjs` now reflects 14 exam banks, 500 variants, 9530 exam rows, `44+` subjects and `22 000+` tasks on the landing page.
+- Build metadata updated to `trainer-build-wave91i-2026-04-28`; max grade-page eager JS stays below the 1500 KiB budget.
+
+# wave91h — UX/gamification/performance pass
+
+- Added Notification API reminders, quiet hour, heat map, FGOS progress, parent print/PDF report, QR topic cards, daily quiz, seasonal events, levels, and marathon leaderboard.
+- Reworked daily task into class-card mini banners only.
+- Added wave91h lazy payload loader and reduced grade-page eager JS to <= 1500 KiB.
+- Added Brotli precompression script/check and wave91h CI audit.
+- Added modulepreload links for grade runtime core/extended bundles.
+
+# Wave91g — визуальный контент и интерактивные форматы
+
+- Добавлены E1/E2/E3/E6: SVG-чертежи для геометрии, SVG-карты для географии, структурные формулы для химии и схемы физических опытов.
+- Добавлена E5: печатные рабочие листы с browser-safe сохранением через печать / PDF.
+- Добавлены F1–F6: timeline-sort, matching, table data, graph analysis, geometry construction и canvas-ввод формул.
+- Добавлен `ARCHITECTURE.md` и audit `tools/audit_visual_interactive_wave91g.mjs`.
+- Wave91g встроен в существующий runtime `assets/js/bundle_grade_runtime_extended_wave89b.7037118c49.js`, без нового eager-скрипта на страницах классов.
+- Service-worker cache обновлён до `trainer-build-wave91g-2026-04-28`.
+
+# Wave91f — новые форматы обучения
+
+- Добавлены D2–D7: карта связей тем, дневник ошибок, марафон до первой ошибки, теги сложности 1–3, подготовка к контрольной и инструменты в режиме тренировки.
+- Добавлены E4/G5/H5/H6: озвучивание заданий через Web Speech API, расширенные горячие клавиши, Pomodoro-статистика и Streak freeze.
+- Wave91f встроен в существующий runtime `bundle_grade_runtime_extended_wave89b`, без нового eager-скрипта на страницах классов.
+- Добавлен audit `tools/audit_learning_formats_wave91f.mjs`; service-worker cache обновлён до `trainer-build-wave91f-2026-04-28`.
+
 # wave91e — learning formats and CI guards
 
 - D1: added “Объясни другу” on the practice screen: the student writes an explanation, compares it with the model explanation/hint/answer, then self-grades it; rows are stored per grade in `trainer_explain_friend_wave91e_*`.
