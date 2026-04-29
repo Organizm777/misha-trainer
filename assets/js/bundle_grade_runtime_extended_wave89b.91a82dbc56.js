@@ -5,6 +5,19 @@
   var WAVE = 'wave91e';
   var STYLE_ID = 'wave91e-learning-formats-style';
   var timers = { pomodoro: null, boot: null };
+  function isSimpleMode(){
+    try {
+      var raw = localStorage.getItem('trainer_ui_mode');
+      raw = String(raw == null ? '' : raw).trim().toLowerCase();
+      if (raw === 'full') return false;
+      if (raw === 'simple' || raw === '') return true;
+    } catch(_){ return true; }
+    try {
+      return !!((document.body && document.body.classList && document.body.classList.contains('simple-mode')) ||
+        (document.documentElement && document.documentElement.classList && document.documentElement.classList.contains('simple-mode')));
+    } catch(_){ return true; }
+  }
+  function removeIf(id){ try { var el = document.getElementById(id); if (el && el.parentNode) el.parentNode.removeChild(el); } catch(_){} }
 
   function gradeKey(){ try { return String(window.GRADE_NUM || window.GRADE_NO || '10'); } catch(_){ return '10'; } }
   function now(){ return Date.now ? Date.now() : +new Date(); }
@@ -96,6 +109,7 @@
       '.wave91e-toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0));transform:translateX(-50%) translateY(14px);z-index:100001;max-width:min(440px,calc(100vw - 28px));padding:12px 14px;border-radius:16px;background:var(--text);color:var(--bg);font-weight:900;font-size:13px;box-shadow:0 14px 34px rgba(0,0,0,.24);opacity:0;pointer-events:none}',
       '.wave91e-toast.show{animation:wave91eToast 2.5s ease forwards}',
       '@keyframes wave91eToast{0%{opacity:0;transform:translateX(-50%) translateY(14px) scale(.96)}14%,84%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(8px) scale(.98)}}',
+      'body.simple-mode .wave91e-card,html.simple-mode .wave91e-card,body.simple-mode .wave91e-mini,html.simple-mode .wave91e-mini,body.simple-mode .wave91e-explain-card,html.simple-mode .wave91e-explain-card,body.simple-mode .wave91e-play-host,html.simple-mode .wave91e-play-host{display:none!important}',
       '@media(max-width:520px){.wave91e-grid{grid-template-columns:1fr}.wave91e-actions{display:grid;grid-template-columns:1fr 1fr}.wave91e-btn{width:100%}}',
       '@media(prefers-reduced-motion:reduce){.wave91e-toast.show{animation:none;opacity:1}.wave91e-progress>span{transition:none}}'
     ].join('\n');
@@ -174,6 +188,7 @@
     if (mini) mini.textContent = state.running ? ('🍅 ' + formatSec(rem)) : ('🍅 ' + completed);
   }
   function mountPomodoro(){
+    if (isSimpleMode()) { removeIf('wave91e-pomodoro-card'); return; }
     var main = document.querySelector('#s-main .w');
     if (!main || document.getElementById('wave91e-pomodoro-card')) return;
     var card = document.createElement('section');
@@ -185,6 +200,7 @@
     renderPomodoro();
   }
   function mountPomodoroMini(){
+    if (isSimpleMode()) { removeIf('wave91e-pomodoro-mini'); return; }
     var qh = document.querySelector('#s-play .qh');
     if (!qh || document.getElementById('wave91e-pomodoro-mini')) return;
     var mini = document.createElement('button');
@@ -216,6 +232,7 @@
     return parts.join(' ') || 'Сформулируй правило, покажи ход рассуждения и проверь ответ по условию.';
   }
   function mountExplainFriend(){
+    if (isSimpleMode()) { removeIf('wave91e-explain-host'); return; }
     var q = getCurrentQuestion();
     var target = document.getElementById('ha');
     if (!target || !q || isAnswered() || isExamLike()) return;
@@ -325,6 +342,7 @@
     }
   }
   function mountAnkiCard(){
+    if (isSimpleMode()) { removeIf('wave91e-anki-card'); return; }
     var main = document.querySelector('#s-main .w');
     if (!main || document.getElementById('wave91e-anki-card')) return;
     var card = document.createElement('section');
@@ -351,6 +369,7 @@
     return Math.ceil((target - base) / 86400000);
   }
   function mountExamCountdown(){
+    if (isSimpleMode()) { removeIf('wave91e-exam-countdown'); return; }
     var g = gradeKey();
     if (g !== '9' && g !== '11') return;
     var main = document.querySelector('#s-main .w');
@@ -1241,7 +1260,7 @@
         updatedAt: Date.now(),
         samples: rows
       };
-      try { root.localStorage.setItem(storageKey(), JSON.stringify(next)); } catch(__wave92bLsErr) { return false; }
+      root.localStorage.setItem(storageKey(), JSON.stringify(next));
       return true;
     } catch (_err) {
       return false;
@@ -4843,12 +4862,12 @@
     try {
       if (!root.localStorage) return false;
       var topics = data && data.topics && typeof data.topics === 'object' ? data.topics : {};
-      try { root.localStorage.setItem(storageKey(), JSON.stringify({
+      root.localStorage.setItem(storageKey(), JSON.stringify({
         version: 'wave89m',
         grade: gradeKey(),
         updatedAt: Date.now(),
         topics: topics
-      })); } catch(__wave92bLsErr) { return false; }
+      }));
       return true;
     } catch (_err) {
       return false;
@@ -5460,6 +5479,12 @@
     if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
   }
   function renderPlayCard(){
+    try {
+      var modeRaw = localStorage.getItem('trainer_ui_mode');
+      modeRaw = String(modeRaw == null ? '' : modeRaw).trim().toLowerCase();
+      var simple = modeRaw !== 'full' && (modeRaw === 'simple' || modeRaw === '' || (document.body && document.body.classList && document.body.classList.contains('simple-mode')) || (document.documentElement && document.documentElement.classList && document.documentElement.classList.contains('simple-mode')));
+      if (simple) { removePlayCard(); return; }
+    } catch (_wave92cSimpleGuard) { removePlayCard(); return; }
     if (!onPlayScreen() || shouldDelegateNextQ()) { removePlayCard(); return; }
     var question = getCurrentQuestion();
     if (!question) { removePlayCard(); return; }
@@ -5830,12 +5855,12 @@
   function writeStore(data){
     try {
       if (!root.localStorage) return false;
-      try { root.localStorage.setItem(storageKey(), JSON.stringify({
+      root.localStorage.setItem(storageKey(), JSON.stringify({
         version: 'wave89n',
         grade: gradeKey(),
         updatedAt: Date.now(),
         topics: data && data.topics && typeof data.topics === 'object' ? data.topics : {}
-      })); } catch(__wave92bLsErr) { return false; }
+      }));
       return true;
     } catch (_err) {
       return false;
@@ -6181,6 +6206,12 @@
     host.appendChild(card);
   }
   function renderPlayCard(){
+    try {
+      var modeRaw = localStorage.getItem('trainer_ui_mode');
+      modeRaw = String(modeRaw == null ? '' : modeRaw).trim().toLowerCase();
+      var simple = modeRaw !== 'full' && (modeRaw === 'simple' || modeRaw === '' || (root.document.body && root.document.body.classList && root.document.body.classList.contains('simple-mode')) || (root.document.documentElement && root.document.documentElement.classList && root.document.documentElement.classList.contains('simple-mode')));
+      if (simple) { removeByAttr(PLAY_ATTR); return; }
+    } catch (_wave92cSimpleGuard) { removeByAttr(PLAY_ATTR); return; }
     if (!activeScreen('s-play')) { removeByAttr(PLAY_ATTR); return; }
     var subject = currentSubject();
     var topic = currentTopic();
@@ -6645,6 +6676,8 @@
 'use strict';
 if(typeof window==='undefined'||window.__wave91fLearningPack)return;window.__wave91fLearningPack=1;
 var r=window,W='wave91f',SID='wave91f-style',timer=0;
+function simple(){try{var raw=localStorage.getItem('trainer_ui_mode');raw=String(raw==null?'':raw).trim().toLowerCase();if(raw==='full')return false;if(raw==='simple'||raw==='')return true;return !!((document.body&&document.body.classList&&document.body.classList.contains('simple-mode'))||(document.documentElement&&document.documentElement.classList&&document.documentElement.classList.contains('simple-mode')))}catch(_){return true}}
+function rm(id){try{var x=document.getElementById(id);if(x&&x.parentNode)x.parentNode.removeChild(x)}catch(_){}}
 function g(){try{return String(r.GRADE_NUM||r.GRADE_NO||'10')}catch(e){return'10'}}
 function ts(){return Date.now?Date.now():(+new Date())}
 function day(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -6668,7 +6701,7 @@ function chosen(x){var s=selv(),o=qo(x);if(typeof s==='number'&&o[s]!=null)retur
 function ok(x){return n(chosen(x))===n(qa(x))}
 function toast(m){try{var old=document.querySelector('.wave91f-toast');if(old)old.remove();var d=document.createElement('div');d.className='wave91f-toast';d.textContent=m;document.body.appendChild(d);requestAnimationFrame(function(){d.classList.add('show')});setTimeout(function(){if(d.parentNode)d.remove()},2400)}catch(e){}}
 function dl(name,body,type){try{var b=new Blob([body],{type:type||'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},400)}catch(e){}}
-function css(){if(document.getElementById(SID))return;var s=document.createElement('style');s.id=SID;s.textContent='.wave91f-card{margin:10px 0;padding:14px;border:1px solid var(--border);border-radius:18px;background:var(--card);box-shadow:0 10px 28px rgba(15,23,42,.06)}.wave91f-card h3{margin:0 0 6px;font-family:Unbounded,system-ui,sans-serif;font-size:14px}.wave91f-sub{font-size:12px;line-height:1.45;color:var(--muted);margin:0 0 10px}.wave91f-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.wave91f-btn{border:1px solid var(--border);border-radius:12px;background:var(--bg);color:var(--text);font:800 12px Golos Text,system-ui;padding:9px 11px;cursor:pointer}.wave91f-btn.primary{border-color:transparent;background:var(--accent);color:#fff}.wave91f-btn.danger{border-color:transparent;background:var(--red);color:#fff}.wave91f-input,.wave91f-ta{border:1px solid var(--border);border-radius:12px;background:var(--bg);color:var(--text);padding:9px 11px;font:inherit}.wave91f-ta{width:100%;min-height:70px;box-sizing:border-box}.wave91f-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.wave91f-kpi{padding:10px;border:1px solid var(--border);border-radius:14px;background:var(--bg)}.wave91f-kpi b{display:block;font-size:18px}.wave91f-banner{margin:8px 0;padding:10px;border:1px dashed var(--accent);border-radius:14px;background:color-mix(in srgb,var(--accent) 10%,transparent);font-size:12px}.wave91f-tools{margin:8px 0 10px;padding:10px;border:1px solid var(--border);border-radius:14px;background:var(--card)}.wave91f-modal{position:fixed;inset:0;z-index:10060;background:rgba(15,23,42,.58);display:flex;align-items:center;justify-content:center;padding:16px}.wave91f-dialog{width:min(920px,100%);max-height:88vh;overflow:auto;border:1px solid var(--border);border-radius:22px;background:var(--card);color:var(--text);padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.28)}.wave91f-map{width:100%;min-height:430px;border:1px solid var(--border);border-radius:16px;background:var(--bg)}.wave91f-toast{position:fixed;left:50%;bottom:22px;z-index:10070;transform:translateX(-50%) translateY(10px);opacity:0;padding:10px 13px;border-radius:14px;background:var(--text);color:var(--bg);font-size:13px;font-weight:850;box-shadow:0 18px 50px rgba(0,0,0,.25);transition:.18s}.wave91f-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}body.simple-mode .wave91f-adv{display:none!important}';var hp=document.head||document.documentElement||document.body;if(hp&&hp.appendChild)hp.appendChild(s)}
+function css(){if(document.getElementById(SID))return;var s=document.createElement('style');s.id=SID;s.textContent='.wave91f-card{margin:10px 0;padding:14px;border:1px solid var(--border);border-radius:18px;background:var(--card);box-shadow:0 10px 28px rgba(15,23,42,.06)}.wave91f-card h3{margin:0 0 6px;font-family:Unbounded,system-ui,sans-serif;font-size:14px}.wave91f-sub{font-size:12px;line-height:1.45;color:var(--muted);margin:0 0 10px}.wave91f-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.wave91f-btn{border:1px solid var(--border);border-radius:12px;background:var(--bg);color:var(--text);font:800 12px Golos Text,system-ui;padding:9px 11px;cursor:pointer}.wave91f-btn.primary{border-color:transparent;background:var(--accent);color:#fff}.wave91f-btn.danger{border-color:transparent;background:var(--red);color:#fff}.wave91f-input,.wave91f-ta{border:1px solid var(--border);border-radius:12px;background:var(--bg);color:var(--text);padding:9px 11px;font:inherit}.wave91f-ta{width:100%;min-height:70px;box-sizing:border-box}.wave91f-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.wave91f-kpi{padding:10px;border:1px solid var(--border);border-radius:14px;background:var(--bg)}.wave91f-kpi b{display:block;font-size:18px}.wave91f-banner{margin:8px 0;padding:10px;border:1px dashed var(--accent);border-radius:14px;background:color-mix(in srgb,var(--accent) 10%,transparent);font-size:12px}.wave91f-tools{margin:8px 0 10px;padding:10px;border:1px solid var(--border);border-radius:14px;background:var(--card)}.wave91f-modal{position:fixed;inset:0;z-index:10060;background:rgba(15,23,42,.58);display:flex;align-items:center;justify-content:center;padding:16px}.wave91f-dialog{width:min(920px,100%);max-height:88vh;overflow:auto;border:1px solid var(--border);border-radius:22px;background:var(--card);color:var(--text);padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.28)}.wave91f-map{width:100%;min-height:430px;border:1px solid var(--border);border-radius:16px;background:var(--bg)}.wave91f-toast{position:fixed;left:50%;bottom:22px;z-index:10070;transform:translateX(-50%) translateY(10px);opacity:0;padding:10px 13px;border-radius:14px;background:var(--text);color:var(--bg);font-size:13px;font-weight:850;box-shadow:0 18px 50px rgba(0,0,0,.25);transition:.18s}.wave91f-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}body.simple-mode .wave91f-adv,html.simple-mode .wave91f-adv,body.simple-mode #wave91f-tools,html.simple-mode #wave91f-tools,body.simple-mode .wave91f-tools,html.simple-mode .wave91f-tools,body.simple-mode #wave91f-main-card,html.simple-mode #wave91f-main-card,body.simple-mode #wave91f-plan-banner,html.simple-mode #wave91f-plan-banner,body.simple-mode #wave91f-marathon-banner,html.simple-mode #wave91f-marathon-banner{display:none!important}';var hp=document.head||document.documentElement||document.body;if(hp&&hp.appendChild)hp.appendChild(s)}
 function main(){return document.querySelector('#s-main .w')||document.querySelector('#s-main')}
 function play(){return document.querySelector('#s-play .w')||document.querySelector('#s-play')}
 function anchor(){return document.getElementById('wave91e-exam-countdown')||document.getElementById('wave91e-anki-card')||document.getElementById('wave91e-pomodoro-card')||document.getElementById('daily-meter')||document.getElementById('sg')}
@@ -6684,7 +6717,7 @@ function mar(){var s=R(K('marathon'),null);return s&&typeof s==='object'?s:{acti
 function savem(s){s.hist=Array.isArray(s.hist)?s.hist.slice(-40):[];S(K('marathon'),s)}
 function startM(){var s=mar();s.active=true;s.score=0;s.seen={};s.startedAt=ts();savem(s);toast('Марафон запущен')}
 function stopM(rn){var s=mar();if(!s.active)return;s.active=false;s.reason=rn||'stop';s.best=Math.max(+s.best||0,+s.score||0);s.hist.push({ts:ts(),score:s.score,reason:s.reason});savem(s);toast((rn==='wrong'?'Первая ошибка. ':'Марафон остановлен. ')+'Счёт: '+s.score)}
-function tickM(){var x=q(),s=mar();if(!x||!s.active)return;var p=play(),b=document.getElementById('wave91f-marathon-banner');if(p&&!b){b=document.createElement('div');b.id='wave91f-marathon-banner';b.className='wave91f-banner';p.insertBefore(b,p.firstChild)}if(b)b.innerHTML='🏃 <b>Марафон</b> · счёт: <b>'+s.score+'</b> <button class="wave91f-btn" id="wave91f-stop-m">Стоп</button>';var sb=document.getElementById('wave91f-stop-m');if(sb)sb.onclick=function(){stopM('manual')};if(selv()==null)return;var id=qid(x);s.seen=s.seen||{};if(s.seen[id])return;s.seen[id]=1;if(ok(x)){s.score=(+s.score||0)+1;savem(s)}else stopM('wrong')}
+function tickM(){if(simple()){rm('wave91f-marathon-banner');return;}var x=q(),s=mar();if(!x||!s.active)return;var p=play(),b=document.getElementById('wave91f-marathon-banner');if(p&&!b){b=document.createElement('div');b.id='wave91f-marathon-banner';b.className='wave91f-banner';p.insertBefore(b,p.firstChild)}if(b)b.innerHTML='🏃 <b>Марафон</b> · счёт: <b>'+s.score+'</b> <button class="wave91f-btn" id="wave91f-stop-m">Стоп</button>';var sb=document.getElementById('wave91f-stop-m');if(sb)sb.onclick=function(){stopM('manual')};if(selv()==null)return;var id=qid(x);s.seen=s.seen||{};if(s.seen[id])return;s.seen[id]=1;if(ok(x)){s.score=(+s.score||0)+1;savem(s)}else stopM('wrong')}
 function diff(){var m=R(K('difficulty_tags'),{});return m&&typeof m==='object'&&!Array.isArray(m)?m:{}}
 function setD(l){var x=q();if(!x)return;var m=diff();m[qid(x)]={level:l,ts:ts(),subject:subj(),topic:topic(x),q:qs(x)};S(K('difficulty_tags'),m);toast('Сложность: '+l);var box=document.getElementById('wave91f-tools');if(box)box.remove();tools()}
 function diffStats(){var m=diff(),o=[0,0,0,0];Object.keys(m).forEach(function(k){var l=+m[k].level;if(l>=1&&l<=3){o[0]++;o[l]++}});return o}
@@ -6694,10 +6727,10 @@ function savePlan(){var d=document.getElementById('wave91f-plan-date'),t=documen
 function pom(){var s=R('trainer_pomodoro_wave91e_'+g(),{}),h=Array.isArray(s.history)?s.history:[];return{done:+s.completed||0,min:Math.round(h.reduce(function(a,x){return a+(x&&x.completed!==false?(+x.durationSec||0):0)},(+s.completed||0)*1500)/60)}}
 function freeze(){var s=R(K('streak_freeze'),null);return s&&typeof s==='object'?s:{balance:2,used:[]}}
 function useFreeze(){var s=freeze(),d=day();s.used=Array.isArray(s.used)?s.used:[];if(s.used.indexOf(d)>=0)return toast('Freeze уже активен сегодня');if((+s.balance||0)<=0)return toast('Freeze закончились');s.balance=(+s.balance||0)-1;s.used.push(d);S(K('streak_freeze'),s);toast('Freeze активирован');var c=document.getElementById('wave91f-main-card');if(c)c.remove();card()}
-function card(){var h=main();if(!h||document.getElementById('wave91f-main-card'))return;var m=mar(),ds=diffStats(),p=plan(),pm=pom(),fr=freeze(),ld=left(p.date),c=document.createElement('section');c.id='wave91f-main-card';c.className='wave91f-card';c.innerHTML='<h3>🧩 Форматы wave91f</h3><p class="wave91f-sub">Карта тем, дневник ошибок, марафон, теги сложности, план к контрольной, статистика Pomodoro и streak freeze.</p><div class="wave91f-grid"><div class="wave91f-kpi"><span>Марафон best</span><b>'+m.best+'</b></div><div class="wave91f-kpi"><span>Сложность 1/2/3</span><b>'+ds[1]+' · '+ds[2]+' · '+ds[3]+'</b></div><div class="wave91f-kpi"><span>Pomodoro</span><b>'+pm.done+' / '+pm.min+'м</b></div><div class="wave91f-kpi"><span>Freeze</span><b>'+fr.balance+'</b></div></div><div class="wave91f-actions" style="margin-top:10px"><button class="wave91f-btn primary" id="wave91f-map">Карта тем</button><button class="wave91f-btn" id="wave91f-diary">Дневник ошибок</button><button class="wave91f-btn" id="wave91f-marathon">Старт марафона</button><button class="wave91f-btn" id="wave91f-freeze">Freeze сегодня</button></div><div class="wave91f-grid" style="margin-top:10px"><input class="wave91f-input" type="date" id="wave91f-plan-date" value="'+e(p.date||'')+'"><input class="wave91f-input" id="wave91f-plan-topic" placeholder="Тема контрольной" value="'+e(p.topic||'')+'"></div><p class="wave91f-sub">'+(p.date||p.topic?'Контрольная: <b>'+e(p.topic||'повторение')+'</b>'+(ld==null?'':' · осталось '+ld+' дн.'):'План к контрольной пока не задан.')+'</p><button class="wave91f-btn primary" id="wave91f-plan-save">Сохранить план</button>';ins(anchor(),c,h);var bMap=c.querySelector('#wave91f-map');if(bMap)bMap.onclick=openMap;var bDiary=c.querySelector('#wave91f-diary');if(bDiary)bDiary.onclick=openDiary;var bMar=c.querySelector('#wave91f-marathon');if(bMar)bMar.onclick=startM;var bFr=c.querySelector('#wave91f-freeze');if(bFr)bFr.onclick=useFreeze;var bPlan=c.querySelector('#wave91f-plan-save');if(bPlan)bPlan.onclick=savePlan}
-function banner(){var p=plan(),h=play()||main();if(!h||(!p.date&&!p.topic))return;if(document.getElementById('wave91f-plan-banner'))return;var b=document.createElement('div');b.id='wave91f-plan-banner';b.className='wave91f-banner';var ld=left(p.date);b.innerHTML='🎯 <b>Фокус к контрольной</b>: '+e(p.topic||'повторение')+(ld==null?'':' · '+ld+' дн.')+'. Сегодня: 5 заданий + разбор ошибок.';h.insertBefore(b,h.firstChild)}
+function card(){if(simple()){rm('wave91f-main-card');return;}var h=main();if(!h||document.getElementById('wave91f-main-card'))return;var m=mar(),ds=diffStats(),p=plan(),pm=pom(),fr=freeze(),ld=left(p.date),c=document.createElement('section');c.id='wave91f-main-card';c.className='wave91f-card';c.innerHTML='<h3>🧩 Форматы wave91f</h3><p class="wave91f-sub">Карта тем, дневник ошибок, марафон, теги сложности, план к контрольной, статистика Pomodoro и streak freeze.</p><div class="wave91f-grid"><div class="wave91f-kpi"><span>Марафон best</span><b>'+m.best+'</b></div><div class="wave91f-kpi"><span>Сложность 1/2/3</span><b>'+ds[1]+' · '+ds[2]+' · '+ds[3]+'</b></div><div class="wave91f-kpi"><span>Pomodoro</span><b>'+pm.done+' / '+pm.min+'м</b></div><div class="wave91f-kpi"><span>Freeze</span><b>'+fr.balance+'</b></div></div><div class="wave91f-actions" style="margin-top:10px"><button class="wave91f-btn primary" id="wave91f-map">Карта тем</button><button class="wave91f-btn" id="wave91f-diary">Дневник ошибок</button><button class="wave91f-btn" id="wave91f-marathon">Старт марафона</button><button class="wave91f-btn" id="wave91f-freeze">Freeze сегодня</button></div><div class="wave91f-grid" style="margin-top:10px"><input class="wave91f-input" type="date" id="wave91f-plan-date" value="'+e(p.date||'')+'"><input class="wave91f-input" id="wave91f-plan-topic" placeholder="Тема контрольной" value="'+e(p.topic||'')+'"></div><p class="wave91f-sub">'+(p.date||p.topic?'Контрольная: <b>'+e(p.topic||'повторение')+'</b>'+(ld==null?'':' · осталось '+ld+' дн.'):'План к контрольной пока не задан.')+'</p><button class="wave91f-btn primary" id="wave91f-plan-save">Сохранить план</button>';ins(anchor(),c,h);var bMap=c.querySelector('#wave91f-map');if(bMap)bMap.onclick=openMap;var bDiary=c.querySelector('#wave91f-diary');if(bDiary)bDiary.onclick=openDiary;var bMar=c.querySelector('#wave91f-marathon');if(bMar)bMar.onclick=startM;var bFr=c.querySelector('#wave91f-freeze');if(bFr)bFr.onclick=useFreeze;var bPlan=c.querySelector('#wave91f-plan-save');if(bPlan)bPlan.onclick=savePlan}
+function banner(){if(simple()){rm('wave91f-plan-banner');return;}var p=plan(),h=play()||main();if(!h||(!p.date&&!p.topic))return;if(document.getElementById('wave91f-plan-banner'))return;var b=document.createElement('div');b.id='wave91f-plan-banner';b.className='wave91f-banner';var ld=left(p.date);b.innerHTML='🎯 <b>Фокус к контрольной</b>: '+e(p.topic||'повторение')+(ld==null?'':' · '+ld+' дн.')+'. Сегодня: 5 заданий + разбор ошибок.';h.insertBefore(b,h.firstChild)}
 function speak(){try{var x=q();if(!x||!r.speechSynthesis)return toast('Озвучивание недоступно');var u=new SpeechSynthesisUtterance(txt(qs(x)));u.lang=/англ|english/i.test(subj())?'en-US':'ru-RU';u.rate=u.lang==='en-US'?.92:1;r.speechSynthesis.cancel();r.speechSynthesis.speak(u)}catch(e){toast('Не удалось озвучить')}}
-function tools(){var h=play(),x=q();if(!h||!x||document.getElementById('wave91f-tools'))return;var m=diff(),lv=m[qid(x)]&&m[qid(x)].level,eng=/англ|english/i.test(subj())||/[a-z]{3,}/i.test(qs(x)),d=document.createElement('div');d.id='wave91f-tools';d.className='wave91f-tools';d.innerHTML='<div class="wave91f-actions"><span>🏷 Сложность</span><button class="wave91f-btn" data-d="1" aria-pressed="'+(lv==1)+'">1</button><button class="wave91f-btn" data-d="2" aria-pressed="'+(lv==2)+'">2</button><button class="wave91f-btn" data-d="3" aria-pressed="'+(lv==3)+'">3</button>'+(eng?'<button class="wave91f-btn" id="wave91f-speak">🔊 Озвучить</button>':'')+'</div>';var a=document.getElementById('ha')||h.firstChild;if(a&&a.parentNode)a.parentNode.insertBefore(d,a);else h.insertBefore(d,h.firstChild);Array.prototype.forEach.call(d.querySelectorAll('[data-d]'),function(b){b.onclick=function(){setD(+b.getAttribute('data-d'))}});var sp=d.querySelector('#wave91f-speak');if(sp)sp.onclick=speak}
+function tools(){if(simple()){rm('wave91f-tools');return;}var h=play(),x=q();if(!h||!x||document.getElementById('wave91f-tools'))return;var m=diff(),lv=m[qid(x)]&&m[qid(x)].level,eng=/англ|english/i.test(subj())||/[a-z]{3,}/i.test(qs(x)),d=document.createElement('div');d.id='wave91f-tools';d.className='wave91f-tools';d.innerHTML='<div class="wave91f-actions"><span>🏷 Сложность</span><button class="wave91f-btn" data-d="1" aria-pressed="'+(lv==1)+'">1</button><button class="wave91f-btn" data-d="2" aria-pressed="'+(lv==2)+'">2</button><button class="wave91f-btn" data-d="3" aria-pressed="'+(lv==3)+'">3</button>'+(eng?'<button class="wave91f-btn" id="wave91f-speak">🔊 Озвучить</button>':'')+'</div>';var a=document.getElementById('ha')||h.firstChild;if(a&&a.parentNode)a.parentNode.insertBefore(d,a);else h.insertBefore(d,h.firstChild);Array.prototype.forEach.call(d.querySelectorAll('[data-d]'),function(b){b.onclick=function(){setD(+b.getAttribute('data-d'))}});var sp=d.querySelector('#wave91f-speak');if(sp)sp.onclick=speak}
 function hot(){if(r.__wave91fHotkeys)return;r.__wave91fHotkeys=1;document.addEventListener('keydown',function(ev){if(ev.ctrlKey||ev.metaKey||ev.altKey)return;var tag=ev.target&&ev.target.tagName;if(/INPUT|TEXTAREA|SELECT/.test(tag||''))return;var k=String(ev.key||'').toLowerCase();if(k==='?')modal('⌨️ Горячие клавиши','<div class="wave91f-grid"><div class="wave91f-kpi"><span>M</span><b style="font-size:13px">Главная</b></div><div class="wave91f-kpi"><span>D</span><b style="font-size:13px">Дневник ошибок</b></div><div class="wave91f-kpi"><span>P</span><b style="font-size:13px">Pomodoro</b></div><div class="wave91f-kpi"><span>?</span><b style="font-size:13px">Справка</b></div></div>');else if(k==='m'){try{go('main')}catch(e){}}else if(k==='d')openDiary();else if(k==='p'){var p=document.getElementById('wave91e-pomodoro-card');if(p)p.scrollIntoView({behavior:'smooth',block:'center'})}})}
 function mount(){css();hot();card();banner();tools();tickM()}
 function patch(){try{if(typeof render==='function'&&!render.__wave91f){var o=render;render=function(){var z=o.apply(this,arguments);setTimeout(mount,0);return z};render.__wave91f=1;r.render=render}}catch(e){}try{if(typeof go==='function'&&!go.__wave91f){var og=go;go=function(){var z=og.apply(this,arguments);setTimeout(mount,0);return z};go.__wave91f=1;r.go=go}}catch(e){}}
@@ -6711,6 +6744,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   var W = 'wave91g';
   var STYLE_ID = 'wave91g-visual-interactive-style';
   var tickTimer = null;
+  function isSimpleMode(){
+    try {
+      var raw = localStorage.getItem('trainer_ui_mode');
+      raw = String(raw == null ? '' : raw).trim().toLowerCase();
+      if (raw === 'full') return false;
+      if (raw === 'simple' || raw === '') return true;
+      return !!((document.body && document.body.classList && document.body.classList.contains('simple-mode')) ||
+        (document.documentElement && document.documentElement.classList && document.documentElement.classList.contains('simple-mode')));
+    } catch(_){ return true; }
+  }
+  function removeById(id){ try { var el=document.getElementById(id); if(el&&el.parentNode)el.parentNode.removeChild(el); } catch(_){} }
 
   function esc(v){
     return String(v == null ? '' : v)
@@ -6799,7 +6843,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       '.wave91g-plane{cursor:crosshair}',
       '.wave91g-toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(12px);z-index:100001;border:1px solid var(--border);border-radius:999px;background:var(--card);color:var(--text);padding:10px 14px;font-size:12px;font-weight:900;box-shadow:0 16px 40px rgba(0,0,0,.22);opacity:0;transition:opacity .16s ease,transform .16s ease}',
       '.wave91g-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}',
-      'body.simple-mode .wave91g-main-card{display:none!important}',
+      'body.simple-mode .wave91g-main-card,html.simple-mode .wave91g-main-card,body.simple-mode #wave91g-visual,html.simple-mode #wave91g-visual,body.simple-mode #wave91g-format,html.simple-mode #wave91g-format,body.simple-mode #wave91g-play-tools,html.simple-mode #wave91g-play-tools{display:none!important}',
       '@media print{.wave91g-card,.wave91g-modal,.wave91g-toast{display:none!important}}'
     ].join('\n');
     var style = document.createElement('style');
@@ -6966,6 +7010,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     return null;
   }
   function mountVisual(){
+    if (isSimpleMode()) { removeById('wave91g-visual'); return; }
     var host = document.getElementById('s-play');
     var q = question();
     var old = document.getElementById('wave91g-visual');
@@ -7174,6 +7219,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     bindLab(root);
   }
   function customFormat(){
+    if (isSimpleMode()) { removeById('wave91g-format'); return; }
     var q = question();
     if (!q || !active('s-play')) return;
     var kind = lower(q.format || q.fmt || q.type || q.kind || '');
@@ -7193,6 +7239,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     if (b) b.onclick = function(){ openLab(kind); };
   }
   function mainCard(){
+    if (isSimpleMode()) { removeById('wave91g-main-card'); return; }
     if (!active('s-main')) return;
     if (document.getElementById('wave91g-main-card')) return;
     var host = document.querySelector('#s-main .w');
@@ -7210,6 +7257,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     if (ws) ws.onclick = openWorksheet;
   }
   function playTools(){
+    if (isSimpleMode()) { removeById('wave91g-play-tools'); return; }
     if (!active('s-play') || !question()) return;
     if (document.getElementById('wave91g-play-tools')) return;
     var h = document.getElementById('s-play');
@@ -7341,7 +7389,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   function qrPayload(){var s=curS(),t=curT(),raw='TRN-G'+g()+'-'+((s&&s.id)||'MAIN')+'-'+((t&&t.id)||day());return raw.toUpperCase().replace(/[^0-9A-Z $%*+\-.\/:]/g,'-').slice(0,42)}
   function openQr(){var p=qrPayload();modal('🔳 QR-код параграфа', '<p class="wave91h-sub">G7: локальный QR для текущего класса/темы. Его можно вставить в распечатку или тетрадь.</p><div class="wave91h-qr">'+qrSvg(p)+'</div><p class="wave91h-sub"><code>'+e(p)+'</code></p><button class="wave91h-btn" id="wave91h-copy-qr">Скопировать код</button>',function(d){var b=d.querySelector('#wave91h-copy-qr');if(b)b.onclick=function(){try{navigator.clipboard.writeText(p);toast('Код скопирован')}catch(_){toast('Скопируй код вручную')}}})}
   function leaderboard(){var m=R('trainer_marathon_wave91f_'+g(),{}),hist=Array.isArray(m.hist)?m.hist:[],rows=hist.concat([{ts:Date.now(),score:+m.best||0,reason:'best'}]).filter(function(x){return +x.score>0}).sort(function(a,b){return (+b.score||0)-(+a.score||0)}).slice(0,10),h='<p class="wave91h-sub">H4: локальный лидерборд марафона до первой ошибки.</p><table style="width:100%;border-collapse:collapse">'+rows.map(function(x,i){return '<tr><td style="padding:8px;border-bottom:1px solid var(--border)">#'+(i+1)+'</td><td style="padding:8px;border-bottom:1px solid var(--border)"><b>'+e(x.score)+'</b></td><td style="padding:8px;border-bottom:1px solid var(--border)">'+new Date(x.ts||Date.now()).toLocaleDateString('ru-RU')+'</td></tr>'}).join('')+'</table><button class="wave91h-btn" id="wave91h-lb-export">Экспорт CSV</button>';modal('🏁 Marathon leaderboard',h,function(d){var b=d.querySelector('#wave91h-lb-export');if(b)b.onclick=function(){dl('trainer3_marathon_leaderboard_grade'+g()+'.csv','rank,score,date\n'+rows.map(function(x,i){return [i+1,x.score,new Date(x.ts||Date.now()).toISOString()].join(',')}).join('\n'),'text/csv;charset=utf-8')}})}
-  function card(){var h=main();if(!h||document.getElementById('wave91h-main-card'))return;var lv=level(),sea=seasonal(),q=quiz(),c=document.createElement('section');c.id='wave91h-main-card';c.className='wave91h-card wave91h-advanced';c.innerHTML='<h3>🚀 UX и геймификация wave91h</h3><p class="wave91h-sub">Уровни, heat map, ФГОС, PDF-отчёт, уведомления, тихий час, QR-коды, daily quiz, сезонные события и leaderboard марафона.</p><div class="wave91h-grid"><div class="wave91h-kpi"><span>H1 уровень</span><b>'+e(lv.name)+'</b><div class="wave91h-bar"><div class="wave91h-fill" style="width:'+lv.pct+'%"></div></div></div><div class="wave91h-kpi"><span>H2 quiz</span><b>'+(q.done?'готово':'сегодня')+'</b></div><div class="wave91h-kpi"><span>H3 '+e(sea.name)+'</span><b>'+sea.pts+' очк.</b><div class="wave91h-bar"><div class="wave91h-fill" style="width:'+sea.pct+'%"></div></div></div></div><div class="wave91h-actions" style="margin-top:10px"><button class="wave91h-btn primary" id="wave91h-heat">Heat map</button><button class="wave91h-btn" id="wave91h-fgos">ФГОС</button><button class="wave91h-btn" id="wave91h-report">PDF-отчёт</button><button class="wave91h-btn" id="wave91h-quiz">Daily quiz</button><button class="wave91h-btn" id="wave91h-qr">QR</button><button class="wave91h-btn" id="wave91h-lb">Leaderboard</button><button class="wave91h-btn" id="wave91h-settings">Уведомления</button></div>';var after=document.getElementById('wave91g-main-card')||document.getElementById('wave91f-main-card')||document.getElementById('sg')||h.firstElementChild;if(after&&after.parentNode&&typeof after.parentNode.insertBefore==='function')after.parentNode.insertBefore(c,after.nextSibling);else if(h&&typeof h.appendChild==='function')h.appendChild(c);var bHeat=c.querySelector('#wave91h-heat');if(bHeat)bHeat.onclick=openHeat;var bFgos=c.querySelector('#wave91h-fgos');if(bFgos)bFgos.onclick=openFgos;var bReport=c.querySelector('#wave91h-report');if(bReport)bReport.onclick=parentReport;var bQuiz=c.querySelector('#wave91h-quiz');if(bQuiz)bQuiz.onclick=openQuiz;var bQr=c.querySelector('#wave91h-qr');if(bQr)bQr.onclick=openQr;var bLb=c.querySelector('#wave91h-lb');if(bLb)bLb.onclick=leaderboard;var bSet=c.querySelector('#wave91h-settings');if(bSet)bSet.onclick=openSettings}
+  function card(){try{var raw=localStorage.getItem('trainer_ui_mode');raw=String(raw==null?'':raw).trim().toLowerCase();if(raw!=='full'){var old=document.getElementById('wave91h-main-card');if(old&&old.parentNode)old.parentNode.removeChild(old);return;}}catch(_){return;}var h=main();if(!h||document.getElementById('wave91h-main-card'))return;var lv=level(),sea=seasonal(),q=quiz(),c=document.createElement('section');c.id='wave91h-main-card';c.className='wave91h-card wave91h-advanced';c.innerHTML='<h3>🚀 UX и геймификация wave91h</h3><p class="wave91h-sub">Уровни, heat map, ФГОС, PDF-отчёт, уведомления, тихий час, QR-коды, daily quiz, сезонные события и leaderboard марафона.</p><div class="wave91h-grid"><div class="wave91h-kpi"><span>H1 уровень</span><b>'+e(lv.name)+'</b><div class="wave91h-bar"><div class="wave91h-fill" style="width:'+lv.pct+'%"></div></div></div><div class="wave91h-kpi"><span>H2 quiz</span><b>'+(q.done?'готово':'сегодня')+'</b></div><div class="wave91h-kpi"><span>H3 '+e(sea.name)+'</span><b>'+sea.pts+' очк.</b><div class="wave91h-bar"><div class="wave91h-fill" style="width:'+sea.pct+'%"></div></div></div></div><div class="wave91h-actions" style="margin-top:10px"><button class="wave91h-btn primary" id="wave91h-heat">Heat map</button><button class="wave91h-btn" id="wave91h-fgos">ФГОС</button><button class="wave91h-btn" id="wave91h-report">PDF-отчёт</button><button class="wave91h-btn" id="wave91h-quiz">Daily quiz</button><button class="wave91h-btn" id="wave91h-qr">QR</button><button class="wave91h-btn" id="wave91h-lb">Leaderboard</button><button class="wave91h-btn" id="wave91h-settings">Уведомления</button></div>';var after=document.getElementById('wave91g-main-card')||document.getElementById('wave91f-main-card')||document.getElementById('sg')||h.firstElementChild;if(after&&after.parentNode&&typeof after.parentNode.insertBefore==='function')after.parentNode.insertBefore(c,after.nextSibling);else if(h&&typeof h.appendChild==='function')h.appendChild(c);var bHeat=c.querySelector('#wave91h-heat');if(bHeat)bHeat.onclick=openHeat;var bFgos=c.querySelector('#wave91h-fgos');if(bFgos)bFgos.onclick=openFgos;var bReport=c.querySelector('#wave91h-report');if(bReport)bReport.onclick=parentReport;var bQuiz=c.querySelector('#wave91h-quiz');if(bQuiz)bQuiz.onclick=openQuiz;var bQr=c.querySelector('#wave91h-qr');if(bQr)bQr.onclick=openQr;var bLb=c.querySelector('#wave91h-lb');if(bLb)bLb.onclick=leaderboard;var bSet=c.querySelector('#wave91h-settings');if(bSet)bSet.onclick=openSettings}
   function patch(){try{if(typeof render==='function'&&!render.__wave91h){var o=render;render=function(){var z=o.apply(this,arguments);setTimeout(mount,0);return z};render.__wave91h=1;r.render=render}}catch(_){}try{if(typeof go==='function'&&!go.__wave91h){var og=go;go=function(){var z=og.apply(this,arguments);setTimeout(mount,0);return z};go.__wave91h=1;r.go=go}}catch(_){}}
   function mount(){css();applyQuiet();if(active('s-main'))card()}
   function boot(){patch();mount();scheduleNotification();r.wave91hUxGamification={version:W,keys:{notifications:K('notifications'),quiet:K('quiet_hour'),dailyQuiz:K('daily_quiz_'+day())},level:level(),seasonal:seasonal(),fgos:fgos(),auditSnapshot:function(){return{wave:W,grade:g(),hasCard:!!document.getElementById('wave91h-main-card')||!!document.getElementById('s-main'),level:level(),seasonal:seasonal(),heatCells:heatRows().length,fgos:fgos().length,quietActive:quietActive(),supports:['G1-notification-api','G2-knowledge-heatmap','G3-parent-pdf-report','G4-fgos-progress','G6-quiet-hour','G7-qr-codes','G8-daily-mini-banner','H1-levels','H2-daily-quiz','H3-seasonal-events','H4-marathon-leaderboard']}},openHeatmap:openHeat,openParentReport:parentReport,openQr:openQr}}
@@ -7406,3 +7454,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   if(root&&typeof root.addEventListener==='function')root.addEventListener('load',function(){setTimeout(boot,0)},{once:true});
 })();
+
+/* wave92c: clean training screen rule marker */
+(function(){if(typeof window!=='undefined'){window.__wave92cCleanTraining={version:'wave92c',simpleDefault:true,playWidgetsHidden:['wave89m-adaptive','wave89n-path','wave91e-explain-pomodoro','wave91f-difficulty-marathon','wave91g-visual-tools'],allowedPlayElements:['question','answer-options','feedback','next','question-report']};}})();

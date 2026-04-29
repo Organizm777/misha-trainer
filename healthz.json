@@ -1,9 +1,9 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92b",
-  "version": "trainer-build-wave92b-2026-04-29",
-  "build_id": "wave92b",
+  "wave": "wave92c",
+  "version": "trainer-build-wave92c-2026-04-29",
+  "build_id": "wave92c",
   "generated_at_utc": "2026-04-29T00:00:00Z",
   "git_sha": null,
   "hashed_asset_count": 127,
@@ -39,7 +39,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92b-2026-04-29",
+  "cache": "trainer-build-wave92c-2026-04-29",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -60,19 +60,20 @@
     "woff2_count": 20,
     "sw_precache": true
   },
-  "wave92b": {
-    "exact_duplicate_rows_contextualized": 3672,
-    "exact_duplicate_groups_touched": 1749,
-    "lazy_retry": true,
-    "exam_autosave": true,
-    "skeleton_loading": true,
-    "localstorage_guard_targets": true,
-    "zip_deflate_required": true,
-    "brotli_count": 187,
-    "exam_js_regenerated_from_json": true,
-    "exam_js_regenerated_count": 14,
-    "fixed_grade10_oly_lazy_ref": true,
-    "exact_duplicate_rows_after": 0
+  "wave92c": {
+    "clean_training_screen": true,
+    "simple_mode_default": true,
+    "css_hide_selectors": true,
+    "render_guards": true,
+    "training_screen_allows": [
+      "question",
+      "answer_options",
+      "feedback",
+      "next_button",
+      "question_report_button"
+    ],
+    "fonts_preserved": true,
+    "zip_deflate_required": true
   },
   "brotli_count": 187
 }

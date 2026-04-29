@@ -1081,3 +1081,40 @@ html.simple-mode .scard .matchchip,
 body.simple-mode .scard .matchchip{
   display:none !important;
 }
+
+
+/* wave92c: clean training screen in default simple mode */
+html.simple-mode .wave89m-adaptive-card,
+body.simple-mode .wave89m-adaptive-card,
+html.simple-mode .wave89m-adaptive-progress,
+body.simple-mode .wave89m-adaptive-progress,
+html.simple-mode .wave89n-play-card,
+body.simple-mode .wave89n-play-card,
+html.simple-mode #wave91f-tools,
+body.simple-mode #wave91f-tools,
+html.simple-mode .wave91f-tools,
+body.simple-mode .wave91f-tools,
+html.simple-mode #wave91f-marathon-banner,
+body.simple-mode #wave91f-marathon-banner,
+html.simple-mode #wave91f-plan-banner,
+body.simple-mode #wave91f-plan-banner,
+html.simple-mode .wave91e-card,
+body.simple-mode .wave91e-card,
+html.simple-mode .wave91e-mini,
+body.simple-mode .wave91e-mini,
+html.simple-mode .wave91e-explain-card,
+body.simple-mode .wave91e-explain-card,
+html.simple-mode .wave91e-play-host,
+body.simple-mode .wave91e-play-host,
+html.simple-mode #wave91g-visual,
+body.simple-mode #wave91g-visual,
+html.simple-mode #wave91g-format,
+body.simple-mode #wave91g-format,
+html.simple-mode #wave91g-play-tools,
+body.simple-mode #wave91g-play-tools,
+html.simple-mode .wave91g-main-card,
+body.simple-mode .wave91g-main-card,
+html.simple-mode .wave91h-advanced,
+body.simple-mode .wave91h-advanced {
+  display: none !important;
+}

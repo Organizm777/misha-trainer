@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave92b-2026-04-29';
+const CACHE_NAME = 'trainer-build-wave92c-2026-04-29';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -34,7 +34,7 @@ const ASSETS = [
   './assets/css/wave86x_inline_spec_subjects.d549c141b2.css',
   './assets/css/wave86x_inline_tests.45c5256157.css',
   './assets/css/wave86z_static_style_classes.7a515bc89a.css',
-  './assets/css/wave88d_breadcrumbs.26637df710.css',
+  './assets/css/wave88d_breadcrumbs.41aca30c03.css',
   './assets/css/wave89p_self_host_fonts.5603de96b7.css',
   './assets/fonts/golos-text-cyrillic-400-normal.woff2',
   './assets/fonts/golos-text-cyrillic-500-normal.woff2',
@@ -68,7 +68,7 @@ const ASSETS = [
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_grade_after.114dd48332.js',
   './assets/js/bundle_grade_runtime_core_wave87n.204cadcc82.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.7d23960c74.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.91a82dbc56.js',
   './assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js',
   './assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
