@@ -1,9 +1,9 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92c",
-  "version": "trainer-build-wave92c-2026-04-29",
-  "build_id": "wave92c",
+  "wave": "wave92d",
+  "version": "trainer-build-wave92d-2026-04-29",
+  "build_id": "wave92d",
   "generated_at_utc": "2026-04-29T00:00:00Z",
   "git_sha": null,
   "hashed_asset_count": 127,
@@ -39,7 +39,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92c-2026-04-29",
+  "cache": "trainer-build-wave92d-2026-04-29",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -75,5 +75,14 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "brotli_count": 187
+  "brotli_count": 187,
+  "wave92d": {
+    "indexeddb_analytics": true,
+    "exam_near_duplicate_threshold_pct": 5,
+    "exam_near_duplicate_excess_pct": 0,
+    "contextualized_exam_rows": 9530,
+    "mobile_bottom_nav_audited": true,
+    "install_banner": true,
+    "accessibility_gate": true
+  }
 }
