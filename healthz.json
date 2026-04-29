@@ -1,12 +1,12 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave91j",
-  "version": "trainer-build-wave91j-2026-04-29",
-  "build_id": "wave91j",
+  "wave": "wave92a",
+  "version": "trainer-build-wave92a-2026-04-29",
+  "build_id": "wave92a",
   "generated_at_utc": "2026-04-29T00:00:00Z",
   "git_sha": null,
-  "hashed_asset_count": 124,
+  "hashed_asset_count": 127,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -17,7 +17,6 @@
     "teacher.html",
     "embed.html",
     "landing.html",
-    "staging.html",
     "grade1_v2.html",
     "grade2_v2.html",
     "grade3_v2.html",
@@ -40,7 +39,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave91j-2026-04-29",
+  "cache": "trainer-build-wave92a-2026-04-29",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
