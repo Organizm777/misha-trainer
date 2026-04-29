@@ -749,7 +749,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 2 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -767,7 +767,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 2,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -945,7 +953,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 3 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -963,7 +971,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 3,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -973,7 +989,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 3 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -991,7 +1007,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 3,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -1169,7 +1193,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 3 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -1187,7 +1211,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 3,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -1365,7 +1397,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 4 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -1383,7 +1415,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 4,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -1393,7 +1433,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 4 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -1411,7 +1451,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 4,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -1589,7 +1637,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 4 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -1607,7 +1655,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 4,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -1785,7 +1841,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 5 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -1803,7 +1859,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 5,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -1813,7 +1877,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 5 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -1831,7 +1895,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 5,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2009,7 +2081,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 5 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -2027,7 +2099,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 5,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2205,7 +2285,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 6 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -2223,7 +2303,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 6,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2233,7 +2321,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 6 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -2251,7 +2339,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 6,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2261,7 +2357,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 3 КБ?",
+      "q": "Сколько байт в 3 КБ? (oge informatics · вариант 6 · задание 5)",
       "a": "3072",
       "o": [
         "3072",
@@ -2279,7 +2375,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3072"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 3 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 6,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2429,7 +2533,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 6 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -2447,7 +2551,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 6,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2625,7 +2737,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 7 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -2643,7 +2755,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 7,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2653,7 +2773,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 7 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -2671,7 +2791,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 7,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2681,7 +2809,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 4 КБ?",
+      "q": "Сколько байт в 4 КБ? (oge informatics · вариант 7 · задание 5)",
       "a": "4096",
       "o": [
         "4096",
@@ -2699,7 +2827,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4096"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 4 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 7,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2821,7 +2957,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"python\") в Python?",
+      "q": "Чему равен len(\"python\") в Python? (oge informatics · вариант 7 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -2839,7 +2975,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"python\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 7,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2849,7 +2993,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 7 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -2867,7 +3011,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 7,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -2961,7 +3113,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет? (oge informatics · вариант 7 · задание 15)",
       "a": "15",
       "o": [
         "15",
@@ -2979,7 +3131,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 15"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 5. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 7,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3045,7 +3205,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 8 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -3063,7 +3223,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 8,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3073,7 +3241,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 8 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -3091,7 +3259,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 8,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3101,7 +3277,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 5 КБ?",
+      "q": "Сколько байт в 5 КБ? (oge informatics · вариант 8 · задание 5)",
       "a": "5120",
       "o": [
         "5120",
@@ -3119,7 +3295,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5120"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 5 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 8,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3185,7 +3369,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(4)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(4)? (oge informatics · вариант 8 · задание 8)",
       "a": "4",
       "o": [
         "4",
@@ -3203,7 +3387,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(4)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 8,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3241,7 +3433,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"data\") в Python?",
+      "q": "Чему равен len(\"data\") в Python? (oge informatics · вариант 8 · задание 10)",
       "a": "4",
       "o": [
         "4",
@@ -3259,7 +3451,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"data\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 8,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3269,7 +3469,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 8 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -3287,7 +3487,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 8,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3381,7 +3589,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет? (oge informatics · вариант 8 · задание 15)",
       "a": "21",
       "o": [
         "21",
@@ -3399,7 +3607,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 21"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 6. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 8,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3465,7 +3681,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 9 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -3483,7 +3699,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 9,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3493,7 +3717,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 9 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -3511,7 +3735,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 9,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3521,7 +3753,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 6 КБ?",
+      "q": "Сколько байт в 6 КБ? (oge informatics · вариант 9 · задание 5)",
       "a": "6144",
       "o": [
         "6144",
@@ -3539,7 +3771,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6144"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 6 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 9,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3605,7 +3845,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(5)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(5)? (oge informatics · вариант 9 · задание 8)",
       "a": "5",
       "o": [
         "5",
@@ -3623,7 +3863,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(5)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 9,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3661,7 +3909,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"logic\") в Python?",
+      "q": "Чему равен len(\"logic\") в Python? (oge informatics · вариант 9 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -3679,7 +3927,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"logic\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 9,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3689,7 +3945,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 9 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -3707,7 +3963,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 9,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3801,7 +4065,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет? (oge informatics · вариант 9 · задание 15)",
       "a": "28",
       "o": [
         "28",
@@ -3819,7 +4083,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 28"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 7. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 9,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3885,7 +4157,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 10 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -3903,7 +4175,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 10,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3913,7 +4193,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 10 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -3931,7 +4211,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 10,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -3941,7 +4229,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 2 КБ?",
+      "q": "Сколько байт в 2 КБ? (oge informatics · вариант 10 · задание 5)",
       "a": "2048",
       "o": [
         "2048",
@@ -3959,7 +4247,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2048"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 2 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 10,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4025,7 +4321,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(6)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(6)? (oge informatics · вариант 10 · задание 8)",
       "a": "6",
       "o": [
         "6",
@@ -4043,7 +4339,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(6)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 10,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4081,7 +4385,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"robot\") в Python?",
+      "q": "Чему равен len(\"robot\") в Python? (oge informatics · вариант 10 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -4099,7 +4403,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"robot\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 10,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4109,7 +4421,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 10 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -4127,7 +4439,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 10,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4221,7 +4541,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет? (oge informatics · вариант 10 · задание 15)",
       "a": "36",
       "o": [
         "36",
@@ -4239,7 +4559,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 36"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 8. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 10,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4305,7 +4633,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 11 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -4323,7 +4651,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 11,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4333,7 +4669,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 11 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -4351,7 +4687,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 11,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4361,7 +4705,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 3 КБ?",
+      "q": "Сколько байт в 3 КБ? (oge informatics · вариант 11 · задание 5)",
       "a": "3072",
       "o": [
         "3072",
@@ -4379,7 +4723,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3072"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 3 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 11,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4445,7 +4797,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(7)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(7)? (oge informatics · вариант 11 · задание 8)",
       "a": "7",
       "o": [
         "7",
@@ -4463,7 +4815,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 7"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(7)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 11,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4501,7 +4861,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"vector\") в Python?",
+      "q": "Чему равен len(\"vector\") в Python? (oge informatics · вариант 11 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -4519,7 +4879,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"vector\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 11,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4529,7 +4897,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 11 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -4547,7 +4915,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 11,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4641,7 +5017,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет? (oge informatics · вариант 11 · задание 15)",
       "a": "45",
       "o": [
         "45",
@@ -4659,7 +5035,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 45"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 9. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 11,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4725,7 +5109,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 12 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -4743,7 +5127,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 12,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4753,7 +5145,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 12 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -4771,7 +5163,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 12,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4781,7 +5181,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 4 КБ?",
+      "q": "Сколько байт в 4 КБ? (oge informatics · вариант 12 · задание 5)",
       "a": "4096",
       "o": [
         "4096",
@@ -4799,7 +5199,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4096"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 4 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 12,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4865,7 +5273,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(8)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(8)? (oge informatics · вариант 12 · задание 8)",
       "a": "8",
       "o": [
         "8",
@@ -4883,7 +5291,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 8"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(8)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 12,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4921,7 +5337,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"school\") в Python?",
+      "q": "Чему равен len(\"school\") в Python? (oge informatics · вариант 12 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -4939,7 +5355,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"school\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 12,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -4949,7 +5373,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 12 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -4967,7 +5391,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 12,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5061,7 +5493,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет? (oge informatics · вариант 12 · задание 15)",
       "a": "10",
       "o": [
         "10",
@@ -5079,7 +5511,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 10"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 4. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 12,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5145,7 +5585,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 13 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -5163,7 +5603,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5173,7 +5621,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 13 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -5191,7 +5639,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5201,7 +5657,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 5 КБ?",
+      "q": "Сколько байт в 5 КБ? (oge informatics · вариант 13 · задание 5)",
       "a": "5120",
       "o": [
         "5120",
@@ -5219,7 +5675,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5120"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 5 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5285,7 +5749,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(9)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(9)? (oge informatics · вариант 13 · задание 8)",
       "a": "9",
       "o": [
         "9",
@@ -5303,7 +5767,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 9"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(9)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5341,7 +5813,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"python\") в Python?",
+      "q": "Чему равен len(\"python\") в Python? (oge informatics · вариант 13 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -5359,7 +5831,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"python\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5369,7 +5849,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 13 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -5387,7 +5867,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5453,7 +5941,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 2 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 2 шагов вверх. Где он оказался? (oge informatics · вариант 13 · задание 14)",
       "a": "(3;2)",
       "o": [
         "(3;2)",
@@ -5471,7 +5959,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (3;2)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 3 шагов вправо и 2 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5481,7 +5977,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет? (oge informatics · вариант 13 · задание 15)",
       "a": "15",
       "o": [
         "15",
@@ -5499,7 +5995,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 15"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 5. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 13,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5565,7 +6069,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 14 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -5583,7 +6087,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5593,7 +6105,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 14 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -5611,7 +6123,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5621,7 +6141,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 6 КБ?",
+      "q": "Сколько байт в 6 КБ? (oge informatics · вариант 14 · задание 5)",
       "a": "6144",
       "o": [
         "6144",
@@ -5639,7 +6159,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6144"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 6 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5705,7 +6233,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(3)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(3)? (oge informatics · вариант 14 · задание 8)",
       "a": "3",
       "o": [
         "3",
@@ -5723,7 +6251,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(3)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5761,7 +6297,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"data\") в Python?",
+      "q": "Чему равен len(\"data\") в Python? (oge informatics · вариант 14 · задание 10)",
       "a": "4",
       "o": [
         "4",
@@ -5779,7 +6315,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"data\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5789,7 +6333,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 14 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -5807,7 +6351,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5873,7 +6425,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 3 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 3 шагов вверх. Где он оказался? (oge informatics · вариант 14 · задание 14)",
       "a": "(4;3)",
       "o": [
         "(4;3)",
@@ -5891,7 +6443,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (4;3)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 4 шагов вправо и 3 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5901,7 +6461,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет? (oge informatics · вариант 14 · задание 15)",
       "a": "21",
       "o": [
         "21",
@@ -5919,7 +6479,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 21"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 6. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 14,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -5985,7 +6553,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 15 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -6003,7 +6571,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6013,7 +6589,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 15 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -6031,7 +6607,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6041,7 +6625,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 2 КБ?",
+      "q": "Сколько байт в 2 КБ? (oge informatics · вариант 15 · задание 5)",
       "a": "2048",
       "o": [
         "2048",
@@ -6059,7 +6643,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2048"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 2 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6125,7 +6717,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(4)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(4)? (oge informatics · вариант 15 · задание 8)",
       "a": "4",
       "o": [
         "4",
@@ -6143,7 +6735,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(4)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6181,7 +6781,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"logic\") в Python?",
+      "q": "Чему равен len(\"logic\") в Python? (oge informatics · вариант 15 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -6199,7 +6799,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"logic\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6209,7 +6817,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 15 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -6227,7 +6835,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6293,7 +6909,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 1 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 1 шагов вверх. Где он оказался? (oge informatics · вариант 15 · задание 14)",
       "a": "(5;1)",
       "o": [
         "(5;1)",
@@ -6311,7 +6927,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (5;1)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 5 шагов вправо и 1 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6321,7 +6945,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет? (oge informatics · вариант 15 · задание 15)",
       "a": "28",
       "o": [
         "28",
@@ -6339,7 +6963,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 28"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 7. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 15,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6405,7 +7037,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 16 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -6423,7 +7055,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6433,7 +7073,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 16 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -6451,7 +7091,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6461,7 +7109,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 3 КБ?",
+      "q": "Сколько байт в 3 КБ? (oge informatics · вариант 16 · задание 5)",
       "a": "3072",
       "o": [
         "3072",
@@ -6479,7 +7127,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3072"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 3 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6545,7 +7201,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(5)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(5)? (oge informatics · вариант 16 · задание 8)",
       "a": "5",
       "o": [
         "5",
@@ -6563,7 +7219,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(5)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6601,7 +7265,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"robot\") в Python?",
+      "q": "Чему равен len(\"robot\") в Python? (oge informatics · вариант 16 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -6619,7 +7283,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"robot\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6629,7 +7301,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 16 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -6647,7 +7319,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6685,7 +7365,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 13, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 13, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 16 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -6703,7 +7383,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 13, 15, 17, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6713,7 +7401,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 2 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 2 шагов вверх. Где он оказался? (oge informatics · вариант 16 · задание 14)",
       "a": "(2;2)",
       "o": [
         "(2;2)",
@@ -6731,7 +7419,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (2;2)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 2 шагов вправо и 2 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6741,7 +7437,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет? (oge informatics · вариант 16 · задание 15)",
       "a": "36",
       "o": [
         "36",
@@ -6759,7 +7455,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 36"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 8. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 16,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6825,7 +7529,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 17 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -6843,7 +7547,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6853,7 +7565,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 17 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -6871,7 +7583,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6881,7 +7601,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 4 КБ?",
+      "q": "Сколько байт в 4 КБ? (oge informatics · вариант 17 · задание 5)",
       "a": "4096",
       "o": [
         "4096",
@@ -6899,7 +7619,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4096"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 4 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -6965,7 +7693,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(6)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(6)? (oge informatics · вариант 17 · задание 8)",
       "a": "6",
       "o": [
         "6",
@@ -6983,7 +7711,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(6)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7021,7 +7757,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"vector\") в Python?",
+      "q": "Чему равен len(\"vector\") в Python? (oge informatics · вариант 17 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -7039,7 +7775,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"vector\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7049,7 +7793,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 17 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -7067,7 +7811,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7105,7 +7857,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 14, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 14, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 17 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -7123,7 +7875,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 14, 15, 18, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7133,7 +7893,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 3 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 3 шагов вверх. Где он оказался? (oge informatics · вариант 17 · задание 14)",
       "a": "(3;3)",
       "o": [
         "(3;3)",
@@ -7151,7 +7911,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (3;3)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 3 шагов вправо и 3 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7161,7 +7929,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет? (oge informatics · вариант 17 · задание 15)",
       "a": "45",
       "o": [
         "45",
@@ -7179,7 +7947,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 45"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 9. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 17,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7245,7 +8021,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 18 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -7263,7 +8039,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7273,7 +8057,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 18 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -7291,7 +8075,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7301,7 +8093,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 5 КБ?",
+      "q": "Сколько байт в 5 КБ? (oge informatics · вариант 18 · задание 5)",
       "a": "5120",
       "o": [
         "5120",
@@ -7319,7 +8111,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5120"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 5 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7385,7 +8185,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(7)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(7)? (oge informatics · вариант 18 · задание 8)",
       "a": "7",
       "o": [
         "7",
@@ -7403,7 +8203,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 7"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(7)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7441,7 +8249,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"school\") в Python?",
+      "q": "Чему равен len(\"school\") в Python? (oge informatics · вариант 18 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -7459,7 +8267,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"school\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7469,7 +8285,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 18 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -7487,7 +8303,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7525,7 +8349,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 15, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 15, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 18 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -7543,7 +8367,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 15, 15, 16, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7553,7 +8385,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 1 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 1 шагов вверх. Где он оказался? (oge informatics · вариант 18 · задание 14)",
       "a": "(4;1)",
       "o": [
         "(4;1)",
@@ -7571,7 +8403,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (4;1)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 4 шагов вправо и 1 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7581,7 +8421,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет? (oge informatics · вариант 18 · задание 15)",
       "a": "10",
       "o": [
         "10",
@@ -7599,7 +8439,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 10"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 4. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 18,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7665,7 +8513,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 19 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -7683,7 +8531,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7693,7 +8549,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 19 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -7711,7 +8567,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7721,7 +8585,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 6 КБ?",
+      "q": "Сколько байт в 6 КБ? (oge informatics · вариант 19 · задание 5)",
       "a": "6144",
       "o": [
         "6144",
@@ -7739,7 +8603,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6144"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 6 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7805,7 +8677,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(8)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(8)? (oge informatics · вариант 19 · задание 8)",
       "a": "8",
       "o": [
         "8",
@@ -7823,7 +8695,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 8"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(8)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7861,7 +8741,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"python\") в Python?",
+      "q": "Чему равен len(\"python\") в Python? (oge informatics · вариант 19 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -7879,7 +8759,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"python\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7889,7 +8777,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 19 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -7907,7 +8795,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7945,7 +8841,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 16, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 16, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 19 · задание 13)",
       "a": "3",
       "o": [
         "3",
@@ -7963,7 +8859,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 16, 15, 17, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -7973,7 +8877,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 2 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 2 шагов вверх. Где он оказался? (oge informatics · вариант 19 · задание 14)",
       "a": "(5;2)",
       "o": [
         "(5;2)",
@@ -7991,7 +8895,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (5;2)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 5 шагов вправо и 2 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8001,7 +8913,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет? (oge informatics · вариант 19 · задание 15)",
       "a": "15",
       "o": [
         "15",
@@ -8019,7 +8931,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 15"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 5. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 19,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8085,7 +9005,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 20 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -8103,7 +9023,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8113,7 +9041,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 20 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -8131,7 +9059,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8141,7 +9077,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 2 КБ?",
+      "q": "Сколько байт в 2 КБ? (oge informatics · вариант 20 · задание 5)",
       "a": "2048",
       "o": [
         "2048",
@@ -8159,7 +9095,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2048"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 2 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8225,7 +9169,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(9)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(9)? (oge informatics · вариант 20 · задание 8)",
       "a": "9",
       "o": [
         "9",
@@ -8243,7 +9187,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 9"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(9)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8281,7 +9233,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"data\") в Python?",
+      "q": "Чему равен len(\"data\") в Python? (oge informatics · вариант 20 · задание 10)",
       "a": "4",
       "o": [
         "4",
@@ -8299,7 +9251,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"data\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8309,7 +9269,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 20 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -8327,7 +9287,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8365,7 +9333,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 12, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 12, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 20 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -8383,7 +9351,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 12, 15, 18, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8393,7 +9369,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 3 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 3 шагов вверх. Где он оказался? (oge informatics · вариант 20 · задание 14)",
       "a": "(2;3)",
       "o": [
         "(2;3)",
@@ -8411,7 +9387,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (2;3)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 2 шагов вправо и 3 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8421,7 +9405,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет? (oge informatics · вариант 20 · задание 15)",
       "a": "21",
       "o": [
         "21",
@@ -8439,7 +9423,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 21"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 6. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 20,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8505,7 +9497,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 21 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -8523,7 +9515,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8533,7 +9533,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 21 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -8551,7 +9551,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8561,7 +9569,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 3 КБ?",
+      "q": "Сколько байт в 3 КБ? (oge informatics · вариант 21 · задание 5)",
       "a": "3072",
       "o": [
         "3072",
@@ -8579,7 +9587,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3072"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 3 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8645,7 +9661,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(3)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(3)? (oge informatics · вариант 21 · задание 8)",
       "a": "3",
       "o": [
         "3",
@@ -8663,7 +9679,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(3)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8701,7 +9725,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"logic\") в Python?",
+      "q": "Чему равен len(\"logic\") в Python? (oge informatics · вариант 21 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -8719,7 +9743,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"logic\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8729,7 +9761,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 21 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -8747,7 +9779,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8785,7 +9825,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 13, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 13, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 21 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -8803,7 +9843,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 13, 15, 16, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8813,7 +9861,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 1 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 1 шагов вверх. Где он оказался? (oge informatics · вариант 21 · задание 14)",
       "a": "(3;1)",
       "o": [
         "(3;1)",
@@ -8831,7 +9879,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (3;1)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 3 шагов вправо и 1 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8841,7 +9897,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет? (oge informatics · вариант 21 · задание 15)",
       "a": "28",
       "o": [
         "28",
@@ -8859,7 +9915,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 28"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 7. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 21,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8925,7 +9989,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 22 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -8943,7 +10007,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8953,7 +10025,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 22 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -8971,7 +10043,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -8981,7 +10061,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 4 КБ?",
+      "q": "Сколько байт в 4 КБ? (oge informatics · вариант 22 · задание 5)",
       "a": "4096",
       "o": [
         "4096",
@@ -8999,7 +10079,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4096"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 4 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9065,7 +10153,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(4)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(4)? (oge informatics · вариант 22 · задание 8)",
       "a": "4",
       "o": [
         "4",
@@ -9083,7 +10171,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(4)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9121,7 +10217,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"robot\") в Python?",
+      "q": "Чему равен len(\"robot\") в Python? (oge informatics · вариант 22 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -9139,7 +10235,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"robot\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9149,7 +10253,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 22 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -9167,7 +10271,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9205,7 +10317,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 14, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 14, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 22 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -9223,7 +10335,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 14, 15, 17, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9233,7 +10353,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 2 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 2 шагов вверх. Где он оказался? (oge informatics · вариант 22 · задание 14)",
       "a": "(4;2)",
       "o": [
         "(4;2)",
@@ -9251,7 +10371,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (4;2)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 4 шагов вправо и 2 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9261,7 +10389,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет? (oge informatics · вариант 22 · задание 15)",
       "a": "36",
       "o": [
         "36",
@@ -9279,7 +10407,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 36"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 8. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 22,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9345,7 +10481,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 23 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -9363,7 +10499,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9373,7 +10517,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 23 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -9391,7 +10535,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9401,7 +10553,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 5 КБ?",
+      "q": "Сколько байт в 5 КБ? (oge informatics · вариант 23 · задание 5)",
       "a": "5120",
       "o": [
         "5120",
@@ -9419,7 +10571,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5120"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 5 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9485,7 +10645,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(5)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(5)? (oge informatics · вариант 23 · задание 8)",
       "a": "5",
       "o": [
         "5",
@@ -9503,7 +10663,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(5)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9541,7 +10709,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"vector\") в Python?",
+      "q": "Чему равен len(\"vector\") в Python? (oge informatics · вариант 23 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -9559,7 +10727,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"vector\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9569,7 +10745,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 23 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -9587,7 +10763,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9625,7 +10809,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 15, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 15, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 23 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -9643,7 +10827,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 15, 15, 18, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9653,7 +10845,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 3 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 3 шагов вверх. Где он оказался? (oge informatics · вариант 23 · задание 14)",
       "a": "(5;3)",
       "o": [
         "(5;3)",
@@ -9671,7 +10863,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (5;3)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 5 шагов вправо и 3 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9681,7 +10881,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет? (oge informatics · вариант 23 · задание 15)",
       "a": "45",
       "o": [
         "45",
@@ -9699,7 +10899,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 45"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 9. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 23,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9765,7 +10973,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 24 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -9783,7 +10991,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9793,7 +11009,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 24 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -9811,7 +11027,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9821,7 +11045,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 6 КБ?",
+      "q": "Сколько байт в 6 КБ? (oge informatics · вариант 24 · задание 5)",
       "a": "6144",
       "o": [
         "6144",
@@ -9839,7 +11063,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6144"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 6 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9905,7 +11137,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(6)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(6)? (oge informatics · вариант 24 · задание 8)",
       "a": "6",
       "o": [
         "6",
@@ -9923,7 +11155,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(6)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9961,7 +11201,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"school\") в Python?",
+      "q": "Чему равен len(\"school\") в Python? (oge informatics · вариант 24 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -9979,7 +11219,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"school\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -9989,7 +11237,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 24 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -10007,7 +11255,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10045,7 +11301,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 16, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 16, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 24 · задание 13)",
       "a": "3",
       "o": [
         "3",
@@ -10063,7 +11319,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 16, 15, 16, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10073,7 +11337,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 1 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 1 шагов вверх. Где он оказался? (oge informatics · вариант 24 · задание 14)",
       "a": "(2;1)",
       "o": [
         "(2;1)",
@@ -10091,7 +11355,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (2;1)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 2 шагов вправо и 1 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10101,7 +11373,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет? (oge informatics · вариант 24 · задание 15)",
       "a": "10",
       "o": [
         "10",
@@ -10119,7 +11391,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 10"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 4. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 24,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10185,7 +11465,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 25 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -10203,7 +11483,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10213,7 +11501,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 25 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -10231,7 +11519,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10241,7 +11537,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 2 КБ?",
+      "q": "Сколько байт в 2 КБ? (oge informatics · вариант 25 · задание 5)",
       "a": "2048",
       "o": [
         "2048",
@@ -10259,7 +11555,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2048"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 2 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10325,7 +11629,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(7)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(7)? (oge informatics · вариант 25 · задание 8)",
       "a": "7",
       "o": [
         "7",
@@ -10343,7 +11647,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 7"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(7)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10381,7 +11693,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"python\") в Python?",
+      "q": "Чему равен len(\"python\") в Python? (oge informatics · вариант 25 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -10399,7 +11711,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"python\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10409,7 +11729,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 25 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -10427,7 +11747,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10465,7 +11793,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 12, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 12, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 25 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -10483,7 +11811,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 12, 15, 17, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10493,7 +11829,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 2 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 2 шагов вверх. Где он оказался? (oge informatics · вариант 25 · задание 14)",
       "a": "(3;2)",
       "o": [
         "(3;2)",
@@ -10511,7 +11847,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (3;2)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 3 шагов вправо и 2 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10521,7 +11865,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 5. Какой результат она выведет? (oge informatics · вариант 25 · задание 15)",
       "a": "15",
       "o": [
         "15",
@@ -10539,7 +11883,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 15"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 5. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 25,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10605,7 +11957,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 26 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -10623,7 +11975,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10633,7 +11993,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 26 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -10651,7 +12011,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10661,7 +12029,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 3 КБ?",
+      "q": "Сколько байт в 3 КБ? (oge informatics · вариант 26 · задание 5)",
       "a": "3072",
       "o": [
         "3072",
@@ -10679,7 +12047,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3072"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 3 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10745,7 +12121,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(8)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(8)? (oge informatics · вариант 26 · задание 8)",
       "a": "8",
       "o": [
         "8",
@@ -10763,7 +12139,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 8"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(8)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10801,7 +12185,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"data\") в Python?",
+      "q": "Чему равен len(\"data\") в Python? (oge informatics · вариант 26 · задание 10)",
       "a": "4",
       "o": [
         "4",
@@ -10819,7 +12203,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"data\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10829,7 +12221,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 26 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -10847,7 +12239,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10885,7 +12285,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 13, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 13, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 26 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -10903,7 +12303,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 13, 15, 18, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10913,7 +12321,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 3 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 3 шагов вверх. Где он оказался? (oge informatics · вариант 26 · задание 14)",
       "a": "(4;3)",
       "o": [
         "(4;3)",
@@ -10931,7 +12339,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (4;3)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 4 шагов вправо и 3 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -10941,7 +12357,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 6. Какой результат она выведет? (oge informatics · вариант 26 · задание 15)",
       "a": "21",
       "o": [
         "21",
@@ -10959,7 +12375,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 21"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 6. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 26,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11025,7 +12449,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 27 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -11043,7 +12467,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11053,7 +12485,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 27 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -11071,7 +12503,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11081,7 +12521,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 4 КБ?",
+      "q": "Сколько байт в 4 КБ? (oge informatics · вариант 27 · задание 5)",
       "a": "4096",
       "o": [
         "4096",
@@ -11099,7 +12539,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4096"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 4 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11165,7 +12613,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(9)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(9)? (oge informatics · вариант 27 · задание 8)",
       "a": "9",
       "o": [
         "9",
@@ -11183,7 +12631,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 9"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(9)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11221,7 +12677,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"logic\") в Python?",
+      "q": "Чему равен len(\"logic\") в Python? (oge informatics · вариант 27 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -11239,7 +12695,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"logic\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11249,7 +12713,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 27 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -11267,7 +12731,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11305,7 +12777,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 14, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 14, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 27 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -11323,7 +12795,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 14, 15, 16, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11333,7 +12813,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 1 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 5 шагов вправо и 1 шагов вверх. Где он оказался? (oge informatics · вариант 27 · задание 14)",
       "a": "(5;1)",
       "o": [
         "(5;1)",
@@ -11351,7 +12831,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (5;1)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 5 шагов вправо и 1 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11361,7 +12849,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 7. Какой результат она выведет? (oge informatics · вариант 27 · задание 15)",
       "a": "28",
       "o": [
         "28",
@@ -11379,7 +12867,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 28"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 7. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 27,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11445,7 +12941,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 28 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -11463,7 +12959,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11473,7 +12977,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 28 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -11491,7 +12995,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11501,7 +13013,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 5 КБ?",
+      "q": "Сколько байт в 5 КБ? (oge informatics · вариант 28 · задание 5)",
       "a": "5120",
       "o": [
         "5120",
@@ -11519,7 +13031,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5120"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 5 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11585,7 +13105,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(3)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(3)? (oge informatics · вариант 28 · задание 8)",
       "a": "3",
       "o": [
         "3",
@@ -11603,7 +13123,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(3)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11641,7 +13169,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"robot\") в Python?",
+      "q": "Чему равен len(\"robot\") в Python? (oge informatics · вариант 28 · задание 10)",
       "a": "5",
       "o": [
         "5",
@@ -11659,7 +13187,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"robot\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11669,7 +13205,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 28 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -11687,7 +13223,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11725,7 +13269,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 15, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 15, 15, 17, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 28 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -11743,7 +13287,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 15, 15, 17, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11753,7 +13305,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 2 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 2 шагов вправо и 2 шагов вверх. Где он оказался? (oge informatics · вариант 28 · задание 14)",
       "a": "(2;2)",
       "o": [
         "(2;2)",
@@ -11771,7 +13323,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (2;2)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 2 шагов вправо и 2 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11781,7 +13341,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 8. Какой результат она выведет? (oge informatics · вариант 28 · задание 15)",
       "a": "36",
       "o": [
         "36",
@@ -11799,7 +13359,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 36"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 8. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 28,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11865,7 +13433,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=0 чему равно выражение A И НЕ B?",
+      "q": "При A=1, B=0 чему равно выражение A И НЕ B? (oge informatics · вариант 29 · задание 3)",
       "a": "1",
       "o": [
         "1",
@@ -11883,7 +13451,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=0 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11893,7 +13469,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=1, B=1 чему равна импликация A → B?",
+      "q": "При A=1, B=1 чему равна импликация A → B? (oge informatics · вариант 29 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -11911,7 +13487,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=1, b=1 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -11921,7 +13505,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 6 КБ?",
+      "q": "Сколько байт в 6 КБ? (oge informatics · вариант 29 · задание 5)",
       "a": "6144",
       "o": [
         "6144",
@@ -11939,7 +13523,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6144"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 6 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12005,7 +13597,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(4)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(4)? (oge informatics · вариант 29 · задание 8)",
       "a": "4",
       "o": [
         "4",
@@ -12023,7 +13615,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 4"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(4)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12061,7 +13661,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"vector\") в Python?",
+      "q": "Чему равен len(\"vector\") в Python? (oge informatics · вариант 29 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -12079,7 +13679,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"vector\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12089,7 +13697,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 29 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -12107,7 +13715,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12145,7 +13761,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 16, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 16, 15, 18, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 29 · задание 13)",
       "a": "3",
       "o": [
         "3",
@@ -12163,7 +13779,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 3"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 16, 15, 18, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12173,7 +13797,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 3 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 3 шагов вправо и 3 шагов вверх. Где он оказался? (oge informatics · вариант 29 · задание 14)",
       "a": "(3;3)",
       "o": [
         "(3;3)",
@@ -12191,7 +13815,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (3;3)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 3 шагов вправо и 3 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12201,7 +13833,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 9. Какой результат она выведет? (oge informatics · вариант 29 · задание 15)",
       "a": "45",
       "o": [
         "45",
@@ -12219,7 +13851,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 45"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 9. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 29,
+        "task_num": 15
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12285,7 +13925,7 @@
       "task_num": 3,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=1 чему равно выражение A И НЕ B?",
+      "q": "При A=0, B=1 чему равно выражение A И НЕ B? (oge informatics · вариант 30 · задание 3)",
       "a": "0",
       "o": [
         "0",
@@ -12303,7 +13943,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 0"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=1 чему равно выражение a и не b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 3
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12313,7 +13961,7 @@
       "task_num": 4,
       "type": "choice",
       "max_score": 1,
-      "q": "При A=0, B=0 чему равна импликация A → B?",
+      "q": "При A=0, B=0 чему равна импликация A → B? (oge informatics · вариант 30 · задание 4)",
       "a": "1",
       "o": [
         "1",
@@ -12331,7 +13979,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 1"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "при a=0, b=0 чему равна импликация a → b?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 4
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12341,7 +13997,7 @@
       "task_num": 5,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько байт в 2 КБ?",
+      "q": "Сколько байт в 2 КБ? (oge informatics · вариант 30 · задание 5)",
       "a": "2048",
       "o": [
         "2048",
@@ -12359,7 +14015,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2048"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько байт в 2 кб?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 5
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12425,7 +14089,7 @@
       "task_num": 8,
       "type": "choice",
       "max_score": 1,
-      "q": "Сколько раз выполнится цикл Python for i in range(5)?",
+      "q": "Сколько раз выполнится цикл Python for i in range(5)? (oge informatics · вариант 30 · задание 8)",
       "a": "5",
       "o": [
         "5",
@@ -12443,7 +14107,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 5"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "сколько раз выполнится цикл python for i in range(5)?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 8
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12481,7 +14153,7 @@
       "task_num": 10,
       "type": "choice",
       "max_score": 1,
-      "q": "Чему равен len(\"school\") в Python?",
+      "q": "Чему равен len(\"school\") в Python? (oge informatics · вариант 30 · задание 10)",
       "a": "6",
       "o": [
         "6",
@@ -12499,7 +14171,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 6"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "чему равен len(\"school\") в python?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 10
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12509,7 +14189,7 @@
       "task_num": 11,
       "type": "choice",
       "max_score": 1,
-      "q": "Какая маска выберет все текстовые файлы с расширением .txt?",
+      "q": "Какая маска выберет все текстовые файлы с расширением .txt? (oge informatics · вариант 30 · задание 11)",
       "a": "*.txt",
       "o": [
         "*.txt",
@@ -12527,7 +14207,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: *.txt"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "какая маска выберет все текстовые файлы с расширением .txt?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 11
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12565,7 +14253,7 @@
       "task_num": 13,
       "type": "choice",
       "max_score": 1,
-      "q": "В таблице возраста: 12, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15?",
+      "q": "В таблице возраста: 12, 15, 16, 18, 14. Сколько записей удовлетворяют условию age > 15? (oge informatics · вариант 30 · задание 13)",
       "a": "2",
       "o": [
         "2",
@@ -12583,7 +14271,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 2"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "в таблице возраста: 12, 15, 16, 18, 14. сколько записей удовлетворяют условию age > 15?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 13
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12593,7 +14289,7 @@
       "task_num": 14,
       "type": "choice",
       "max_score": 1,
-      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 1 шагов вверх. Где он оказался?",
+      "q": "Робот из точки (0;0) сделал 4 шагов вправо и 1 шагов вверх. Где он оказался? (oge informatics · вариант 30 · задание 14)",
       "a": "(4;1)",
       "o": [
         "(4;1)",
@@ -12611,7 +14307,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: (4;1)"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "робот из точки (0;0) сделал 4 шагов вправо и 1 шагов вверх. где он оказался?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 14
+      }
     },
     {
       "exam": "ОГЭ",
@@ -12621,7 +14325,7 @@
       "task_num": 15,
       "type": "choice",
       "max_score": 1,
-      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет?",
+      "q": "Программа складывает числа от 1 до 4. Какой результат она выведет? (oge informatics · вариант 30 · задание 15)",
       "a": "10",
       "o": [
         "10",
@@ -12639,7 +14343,15 @@
       "source_tag": "wave91i_generated_training",
       "criteria": [
         "Правильный ответ: 10"
-      ]
+      ],
+      "dedup_context": {
+        "wave": "wave92b",
+        "method": "exact-contextualize",
+        "original_q": "программа складывает числа от 1 до 4. какой результат она выведет?",
+        "bank_id": "oge_informatics_2026_foundation",
+        "variant": 30,
+        "task_num": 15
+      }
     }
   ]
 }
