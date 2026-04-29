@@ -43,6 +43,13 @@ function replaceArray(source, name, values){
   return source.replace(re, formatArray(name, values));
 }
 
+const htmlPages = [
+  'index.html', 'dashboard.html', 'diagnostic.html', 'tests.html', 'spec_subjects.html',
+  'content_depth.html', 'teacher.html', 'embed.html', 'landing.html', 'staging.html',
+  'grade1_v2.html', 'grade2_v2.html', 'grade3_v2.html', 'grade4_v2.html', 'grade5_v2.html',
+  'grade6_v2.html', 'grade7_v2.html', 'grade8_v2.html', 'grade9_v2.html', 'grade10_v2.html', 'grade11_v2.html'
+];
+
 const manifest = readJSON('assets/asset-manifest.json');
 manifest.version = version;
 manifest.wave = wave;
@@ -58,13 +65,9 @@ healthz.build_id = wave;
 healthz.generated_at_utc = generatedAt;
 healthz.hashed_asset_count = manifest.hashed_asset_count;
 healthz.cache = version;
+healthz.pages = htmlPages;
 writeJSON('healthz.json', healthz);
 
-const htmlPages = [
-  'index.html', 'dashboard.html', 'diagnostic.html', 'tests.html', 'spec_subjects.html',
-  'grade1_v2.html', 'grade2_v2.html', 'grade3_v2.html', 'grade4_v2.html', 'grade5_v2.html',
-  'grade6_v2.html', 'grade7_v2.html', 'grade8_v2.html', 'grade9_v2.html', 'grade10_v2.html', 'grade11_v2.html'
-];
 const dataDir = path.join(ROOT, 'assets', 'data');
 function walkJsonFiles(relBase){
   const absBase = path.join(ROOT, relBase);
@@ -82,6 +85,7 @@ function walkJsonFiles(relBase){
   return out.sort();
 }
 const dataJsonFiles = walkJsonFiles('assets/data');
+const rootApiJsonFiles = walkJsonFiles('api');
 const iconsDir = path.join(ROOT, 'assets', 'icons');
 const iconFiles = fs.existsSync(iconsDir)
   ? fs.readdirSync(iconsDir).filter(name => /\.(png|svg|webp)$/i.test(name)).sort().map(name => `./assets/icons/${name}`)
@@ -102,6 +106,7 @@ const ASSETS = [
   ...assetFiles,
   ...fontFiles,
   ...dataJsonFiles,
+  ...rootApiJsonFiles,
   ...iconFiles
 ];
 const CSP_BRIDGE_ASSETS = [

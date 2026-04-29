@@ -6,6 +6,7 @@ const ROOT = process.cwd();
 const INDEX = path.join(ROOT, 'index.html');
 const SPEC_DIR = path.join(ROOT, 'assets', 'data', 'spec_subjects');
 const EXAM_DIR = path.join(ROOT, 'assets', 'data', 'exam_bank');
+const CONTENT_DEPTH_DIR = path.join(ROOT, 'assets', 'data', 'content_depth');
 const BASE_EXAM_ROWS = 1910;
 const BASE_SPECIAL = { directions: 6, topics: 52, questions: 3078 };
 const BASE_HERO = { subjectsFloor: 35, questionsFloor: 14500 };
@@ -48,6 +49,30 @@ function countSpecialSubjects(){
   return { directions: files.length, topics, questions };
 }
 
+
+function countQuestionLikeRows(value){
+  let count = 0;
+  function walk(node){
+    if (!node) return;
+    if (Array.isArray(node)) { for (const item of node) walk(item); return; }
+    if (typeof node !== 'object') return;
+    if (typeof node.q === 'string' && (typeof node.a === 'string' || typeof node.answer === 'string')) count++;
+    for (const child of Object.values(node)) walk(child);
+  }
+  walk(value);
+  return count;
+}
+function countContentDepthRows(){
+  if (!fs.existsSync(CONTENT_DEPTH_DIR)) return { rows:0, files:0 };
+  const files = fs.readdirSync(CONTENT_DEPTH_DIR).filter((file) => file.endsWith('.json') && file !== 'textbook_bindings.json' && file !== 'manifest.json');
+  let rows = 0;
+  for (const file of files) {
+    const json = JSON.parse(fs.readFileSync(path.join(CONTENT_DEPTH_DIR, file), 'utf8'));
+    rows += Number(json.item_count || 0) || countQuestionLikeRows(json);
+  }
+  return { rows, files:files.length };
+}
+
 function countExamRows(){
   if (!fs.existsSync(EXAM_DIR)) return { rows: BASE_EXAM_ROWS, banks: 0, variants: 0 };
   const files = fs.readdirSync(EXAM_DIR).filter((file) => /_2026_foundation\.json$/.test(file));
@@ -75,8 +100,9 @@ function updateGradeCards(html){
 
 const spec = countSpecialSubjects();
 const exam = countExamRows();
+const contentDepth = countContentDepthRows();
 const subjectsFloor = Math.max(BASE_HERO.subjectsFloor, BASE_HERO.subjectsFloor + Math.max(0, spec.directions - BASE_SPECIAL.directions) + Math.max(0, exam.banks - 10));
-const questionsFloor = Math.max(20000, roundDown(BASE_HERO.questionsFloor + Math.max(0, spec.questions - BASE_SPECIAL.questions) + Math.max(0, exam.rows - BASE_EXAM_ROWS), 1000));
+const questionsFloor = Math.max(25000, roundDown(BASE_HERO.questionsFloor + Math.max(0, spec.questions - BASE_SPECIAL.questions) + Math.max(0, exam.rows - BASE_EXAM_ROWS) + contentDepth.rows, 1000));
 const directionsWord = pluralRu(spec.directions, 'направление', 'направления', 'направлений');
 const topicsWord = pluralRu(spec.topics, 'тема', 'темы', 'тем');
 
@@ -87,7 +113,7 @@ html = html.replace(/<div class="stat-n">[^<]*<\/div><div class="stat-l">Зад�
 html = updateGradeCards(html);
 html = html.replace(/\d+ направлени[а-яё]+ · \d+ тем[а-яё]* · тренировки и диагностика/, `${spec.directions} ${directionsWord} · ${spec.topics} ${topicsWord} · тренировки и диагностика`);
 
-const report = { ok: html === originalHtml, updated:'index.html', mode: CHECK_MODE ? 'check' : 'write', grades:Object.keys(gradeDisplay).length, subjectsFloor, questionsFloor, specialSubjects:spec, examBank:exam };
+const report = { ok: html === originalHtml, updated:'index.html', mode: CHECK_MODE ? 'check' : 'write', grades:Object.keys(gradeDisplay).length, subjectsFloor, questionsFloor, specialSubjects:spec, examBank:exam, contentDepth };
 if (CHECK_MODE) {
   console.log(JSON.stringify(report, null, 2));
   process.exit(report.ok ? 0 : 1);

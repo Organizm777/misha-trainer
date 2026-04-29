@@ -1,3 +1,17 @@
+# wave91j — content depth, infrastructure and ecosystem
+
+- I1: added a lazy content-depth pack with 6970 new JSON questions/prompts; total question accounting audit now exceeds 25,000 rows and the landing page shows `29 000+` tasks.
+- I2/I6: added textbook/paragraph bindings for Мерзляк, Атанасян, Баранов and other common school lines; surfaced them in `content_depth.html`.
+- I3: added cross-grade diagnostic data for grades 1–11.
+- I4: added functional literacy / PISA-style case bank.
+- I5: added final essay topics with criteria and recommended argument planning.
+- K1: added Playwright configuration and smoke tests for content-depth, teacher mode and embed widget.
+- K2/K6: added lightweight navigation logging and extended standalone error tracking with navigation context.
+- K5: added `staging.html` and staging documentation.
+- L3–L6: added landing page, teacher mode, embed widget and static JSON API index.
+- New CI audits: `tools/audit_content_depth_wave91j.mjs` and `tools/audit_infra_ecosystem_wave91j.mjs`.
+- Build metadata updated to `trainer-build-wave91j-2026-04-29`; grade-page eager JS budget remains unchanged.
+
 # wave91i — exam banks, theory and bundle analyzer
 
 - A7: added structured OГЭ/ЕГЭ Informatics JSON banks: 30 variants each, 900 tasks total, loaded through the existing lazy exam-bank shell.

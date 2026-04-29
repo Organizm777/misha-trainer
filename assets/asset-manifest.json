@@ -1,12 +1,12 @@
 {
-  "version": "trainer-build-wave91i-2026-04-28",
-  "wave": "wave91i",
+  "version": "trainer-build-wave91j-2026-04-29",
+  "wave": "wave91j",
   "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.421a8bd8e8.js",
   "assets": {
     "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.ce945f33ae.js",
     "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.9025bc19a4.js",
     "assets/js/bundle_diagnostic_tools.js": "assets/js/bundle_diagnostic_tools.9792be3cd6.js",
-    "assets/js/bundle_error_tracking.js": "assets/js/bundle_error_tracking.e8a9fb4295.js",
+    "assets/js/bundle_error_tracking.js": "assets/js/bundle_error_tracking.dc19ab4e63.js",
     "assets/js/bundle_exam.js": "assets/js/bundle_exam.79b5ffec4f.js",
     "assets/js/bundle_gamification_meta.js": "assets/js/bundle_gamification_meta.9853e9e1bb.js",
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
@@ -121,12 +121,17 @@
     "assets/js/exam_bank_oge_history_wave91i.js": "assets/js/exam_bank_oge_history_wave91i.7278185444.js",
     "assets/js/exam_bank_ege_history_wave91i.js": "assets/js/exam_bank_ege_history_wave91i.554a8f1c23.js",
     "assets/js/grade10_subject_oly_strategy_wave91i.js": "assets/js/grade10_subject_oly_strategy_wave91i.9079de7ddb.js",
-    "assets/js/chunk_theory_wave91i.js": "assets/js/chunk_theory_wave91i.a8fa390972.js"
+    "assets/js/chunk_theory_wave91i.js": "assets/js/chunk_theory_wave91i.a8fa390972.js",
+    "assets/css/wave91j_content_depth.css": "assets/css/wave91j_content_depth.1e5dc33349.css",
+    "assets/js/bundle_navigation_logger.js": "assets/js/bundle_navigation_logger.9ffdcfacd7.js",
+    "assets/js/bundle_content_depth.js": "assets/js/bundle_content_depth.927eb95760.js",
+    "assets/js/bundle_teacher_mode.js": "assets/js/bundle_teacher_mode.a4017c6e0e.js",
+    "assets/js/bundle_embed_widget.js": "assets/js/bundle_embed_widget.11310cbc74.js"
   },
   "generated_at": "2026-04-28T00:00:00Z",
-  "hashed_asset_count": 119,
-  "generated_at_utc": "2026-04-28T00:00:00Z",
-  "build_id": "wave91i",
+  "hashed_asset_count": 124,
+  "generated_at_utc": "2026-04-29T00:00:00Z",
+  "build_id": "wave91j",
   "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.7037118c49.js",
   "wave91g_visual_interactive": {
     "visuals": [
@@ -145,6 +150,6 @@
     ],
     "worksheet_export": "print_to_pdf_html"
   },
-  "brotli_count": 119,
-  "brotli_wave": "wave91i"
+  "brotli_count": 129,
+  "brotli_wave": "wave91j"
 }

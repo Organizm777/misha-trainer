@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave91i-2026-04-28';
+const CACHE_NAME = 'trainer-build-wave91j-2026-04-29';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -8,6 +8,11 @@ const ASSETS = [
   './diagnostic.html',
   './tests.html',
   './spec_subjects.html',
+  './content_depth.html',
+  './teacher.html',
+  './embed.html',
+  './landing.html',
+  './staging.html',
   './grade1_v2.html',
   './grade2_v2.html',
   './grade3_v2.html',
@@ -33,10 +38,13 @@ const ASSETS = [
   './assets/css/wave86z_static_style_classes.7a515bc89a.css',
   './assets/css/wave88d_breadcrumbs.26637df710.css',
   './assets/css/wave89p_self_host_fonts.5603de96b7.css',
+  './assets/css/wave91j_content_depth.1e5dc33349.css',
   './assets/js/bundle_boosters.ce945f33ae.js',
+  './assets/js/bundle_content_depth.927eb95760.js',
   './assets/js/bundle_dashboard_tools.9025bc19a4.js',
   './assets/js/bundle_diagnostic_tools.9792be3cd6.js',
-  './assets/js/bundle_error_tracking.e8a9fb4295.js',
+  './assets/js/bundle_embed_widget.11310cbc74.js',
+  './assets/js/bundle_error_tracking.dc19ab4e63.js',
   './assets/js/bundle_exam.79b5ffec4f.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
@@ -44,10 +52,12 @@ const ASSETS = [
   './assets/js/bundle_grade_runtime_extended_wave89b.3e59e96288.js',
   './assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
+  './assets/js/bundle_navigation_logger.9ffdcfacd7.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',
   './assets/js/bundle_sharing.75450d41f8.js',
   './assets/js/bundle_shell.5670562070.js',
   './assets/js/bundle_special_subjects.f45ea13d73.js',
+  './assets/js/bundle_teacher_mode.a4017c6e0e.js',
   './assets/js/chunk_exam_bank_wave89q.cc4e296d5f.js',
   './assets/js/chunk_grade10_lazy_wave86s.135fbaef2b.js',
   './assets/js/chunk_grade_content_wave12_english_wave86t.61be17ebe4.js',
@@ -142,6 +152,15 @@ const ASSETS = [
   './assets/js/inline_tests_2_wave86u.ae4d81b485.js',
   './assets/js/inline_tests_3_wave86u.bab0f051a9.js',
   './assets/js/wave35_plans.f812119619.js',
+  './assets/data/api/trainer3_content_api.json',
+  './assets/data/content_depth/cross_grade_diagnostic.json',
+  './assets/data/content_depth/final_essay_bank.json',
+  './assets/data/content_depth/functional_literacy_pisa.json',
+  './assets/data/content_depth/manifest.json',
+  './assets/data/content_depth/school_question_pack_middle.json',
+  './assets/data/content_depth/school_question_pack_primary.json',
+  './assets/data/content_depth/school_question_pack_senior.json',
+  './assets/data/content_depth/textbook_bindings.json',
   './assets/data/exam_bank/catalog.json',
   './assets/data/exam_bank/ege_base_math_2026_foundation.json',
   './assets/data/exam_bank/ege_english_2026_foundation.json',
@@ -171,6 +190,7 @@ const ASSETS = [
   './assets/data/spec_subjects/management.json',
   './assets/data/spec_subjects/procurement.json',
   './assets/data/spec_subjects/psychology.json',
+  './api/index.json',
   './assets/icons/apple-touch-icon.png',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png'
@@ -205,7 +225,7 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   './assets/js/chunk_exam_bank_wave89q.cc4e296d5f.js',
   './assets/js/bundle_exam.79b5ffec4f.js',
   './assets/js/bundle_profile_social.6f6ed7e2ff.js',
-  './assets/js/bundle_error_tracking.e8a9fb4295.js',
+  './assets/js/bundle_error_tracking.dc19ab4e63.js',
   './diagnostic.html'
 ];
 const CRITICAL_ASSETS = Array.from(new Set(CSP_BRIDGE_ASSETS.concat(

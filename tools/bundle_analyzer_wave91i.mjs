@@ -25,6 +25,6 @@ if (max && max.eagerKiB > MAX_EAGER_KIB) failures.push(`grade eager JS over ${MA
   const built = manifest.assets && manifest.assets[logical];
   if (!built || !exists(built)) failures.push(`missing built asset ${logical}`);
 });
-const result = { ok: failures.length === 0, wave:'wave91i', mode: CHECK?'check':'report', maxGradeEager:max, largestAssets:largest, failures };
+const result = { ok: failures.length === 0, wave:manifest.wave || 'wave91i', mode: CHECK?'check':'report', maxGradeEager:max, largestAssets:largest, failures };
 console.log(JSON.stringify(result, null, 2));
 if (CHECK && failures.length) process.exit(1);

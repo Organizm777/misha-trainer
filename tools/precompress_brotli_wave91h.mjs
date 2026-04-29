@@ -55,7 +55,7 @@ if (CHECK && (missing.length || stale.length)) {
 }
 if (!CHECK) {
   manifest.brotli_count = written;
-  manifest.brotli_wave = 'wave91i';
+  manifest.brotli_wave = manifest.wave || 'wave91j';
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 }
 console.log(JSON.stringify({ ok:true, mode:CHECK?'check':'write', files:files.length, brotli:CHECK?files.length:written, maxBytes:MAX_BYTES }, null, 2));

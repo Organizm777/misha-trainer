@@ -1,0 +1,10 @@
+{
+  "id": "trainer3_static_api_root_wave91j",
+  "wave": "wave91j",
+  "description": "Static API index for offline-friendly integrations.",
+  "endpoints": {
+    "content": "../assets/data/api/trainer3_content_api.json",
+    "manifest": "../assets/data/content_depth/manifest.json",
+    "embed": "../embed.html?grade=7&subject=математика"
+  }
+}

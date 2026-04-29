@@ -92,6 +92,14 @@ jobs:
         continue-on-error: true
         run: node tools/audit_exam_variant_depth_wave90d.mjs
 
+      - name: Advisory wave91j content depth audit
+        continue-on-error: true
+        run: node tools/audit_content_depth_wave91j.mjs
+
+      - name: Advisory wave91j infrastructure ecosystem audit
+        continue-on-error: true
+        run: node tools/audit_infra_ecosystem_wave91j.mjs
+
       - id: policy_audit
         name: Lighthouse static policy audit (advisory)
         continue-on-error: true

@@ -76,6 +76,10 @@ jobs:
         run: node tools/audit_theory_wave91i.mjs
       - name: Enforce wave91i bundle analyzer budget
         run: node tools/bundle_analyzer_wave91i.mjs --check
+      - name: Enforce wave91j content depth pack
+        run: node tools/audit_content_depth_wave91j.mjs
+      - name: Enforce wave91j infrastructure and ecosystem pack
+        run: node tools/audit_infra_ecosystem_wave91j.mjs
       - name: Enforce generated index stats
         run: node tools/update_index_stats.mjs --check
       - name: Enforce desktop-safe play control bindings
