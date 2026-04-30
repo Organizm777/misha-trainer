@@ -377,7 +377,7 @@
   function installCss(){
     if (!document.documentElement || document.documentElement.dataset.wave92gCss === '1') return;
     var rules = [
-      '.wave92g-a11y-btn{position:fixed;right:12px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:2147483000;border:0;border-radius:999px;padding:10px 13px;min-width:44px;min-height:44px;background:var(--card,#fff);color:var(--text,#111827);box-shadow:0 8px 30px rgba(15,23,42,.18);font-weight:800;cursor:pointer}',
+      '.wave92g-a11y-btn{display:none!important;position:fixed;right:12px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:2147483000;border:0;border-radius:999px;padding:10px 13px;min-width:44px;min-height:44px;background:var(--card,#fff);color:var(--text,#111827);box-shadow:0 8px 30px rgba(15,23,42,.18);font-weight:800;cursor:pointer}',
       'body.simple-mode #s-play.on ~ .wave92g-a11y-btn,body.simple-mode .wave92g-a11y-btn[data-hidden="1"]{display:none!important}',
       '.wave92g-panel{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483001;max-width:560px;margin:0 auto;padding:16px;border-radius:20px;background:var(--card,#fff);color:var(--text,#111827);box-shadow:0 20px 70px rgba(15,23,42,.32);border:1px solid rgba(148,163,184,.35)}',
       '.wave92g-panel[hidden],.wave92g-toast[hidden],.wave92g-whats-new[hidden]{display:none!important}',
@@ -495,22 +495,7 @@
     return panel;
   }
   function ensureButton(){
-    if (!document.body || document.getElementById('wave92g-a11y-btn')) return;
-    var btn = document.createElement('button');
-    btn.id = 'wave92g-a11y-btn';
-    btn.className = 'wave92g-a11y-btn';
-    btn.type = 'button';
-    btn.setAttribute('aria-controls', 'wave92g-panel');
-    btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-label', 'Быстрые настройки доступности');
-    btn.textContent = '⚙︎';
-    document.body.appendChild(btn);
-    btn.addEventListener('click', function(){
-      haptic(8);
-      togglePanel();
-      track('ui_click', { id: 'wave92g-a11y-btn' });
-    });
-    updateButtonVisibility();
+    return; // wave92k: floating accessibility button disabled; settings remain explicit.
   }
   function updateButtonVisibility(){
     var b = document.getElementById('wave92g-a11y-btn');
@@ -772,22 +757,7 @@
   }
 
   function showWhatsNew(){
-    if (get(KEY.seen) === VERSION || inPlay() || !document.body || /embed\.html$/.test(page())) return;
-    var n = document.createElement('section');
-    n.id = 'wave92g-whats-new';
-    n.className = 'wave92g-whats-new';
-    n.setAttribute('role', 'dialog');
-    n.setAttribute('aria-modal', 'true');
-    n.setAttribute('aria-labelledby', 'wave92g-wn-title');
-    n.innerHTML =
-      '<div><h2 id="wave92g-wn-title">Что нового</h2>' +
-      '<p>Добавлены мобильные жесты, быстрые настройки доступности, offline-статус, CSV-экспорт локальной аналитики, SRI и Permissions-Policy.</p>' +
-      '<p class="muted">В simple-mode экран тренировки остаётся чистым: вопрос, варианты, feedback и «Далее».</p>' +
-      '<button type="button" data-wave92g-action="whats-new-close">Понятно</button></div>';
-    document.body.appendChild(n);
-    var btn = n.querySelector('button');
-    if (btn) btn.focus();
-    track('whats_new_show', {});
+    return; // wave92k: no automatic 'what is new' overlays.
   }
 
   function handlePanelAction(target){
@@ -878,7 +848,7 @@
     window.addEventListener('online', onlineStatus);
     window.addEventListener('offline', onlineStatus);
     if (!navigator.onLine) onlineStatus();
-    setTimeout(showWhatsNew, isGradePage() ? 1200 : 700);
+    /* wave92k: automatic wave92g what-is-new disabled */
     window.__wave92g = {
       version: VERSION,
       refreshOptionRoles: refreshOptionRoles,
@@ -975,13 +945,7 @@
   }
   function moodKey(){ var p=currentProfile(); return 'trainer_mood_wave92h:' + (p.id || 'default'); }
   function saveMood(value){
-    var list = jget(moodKey(), []); if (!Array.isArray(list)) list = [];
-    list.unshift({ value: value, ts: Date.now(), page: page(), grade: gradeFromPage() || currentProfile().grade || null });
-    list = list.slice(0, 40);
-    jset(moodKey(), list);
-    track('mood_checkin', { value: value, grade: gradeFromPage() || currentProfile().grade || null });
-    showToast(value === 'tired' ? 'Ок: сегодня лучше 5 спокойных задач и разбор ошибок.' : value === 'ready' ? 'Отлично: можно взять тему посложнее.' : 'Зафиксировал настроение.');
-    renderAll();
+    return; // wave92k: mood buttons disabled; no passive localStorage noise.
   }
 
   function installCss(){
@@ -1034,28 +998,7 @@
   }
 
   function ensureIndexHub(){
-    if (!isIndex() || !document.body || document.getElementById('wave92h-home')) return;
-    var wrap = document.querySelector('.w');
-    var header = document.querySelector('.header') || (wrap && wrap.firstElementChild);
-    if (!wrap || !header) return;
-    var p = currentProfile();
-    var grade = Number(p.grade || get('trainer_my_grade_wave92a') || 0);
-    var node = document.createElement('section');
-    node.id = 'wave92h-home';
-    node.className = 'wave92h-card';
-    var gradeLink = grade ? '<a href="grade' + grade + '_v2.html">В мой класс</a>' : '';
-    node.innerHTML =
-      '<h2>👤 Персональная главная</h2>' +
-      '<p><span class="wave92h-pill">' + esc(profileLabel(p)) + '</span></p>' +
-      '<p>' + esc(p.weak ? ('Фокус: ' + p.weak) : 'Настрой профиль, чтобы быстрый вход и подсказки были персональными.') + '</p>' +
-      '<div class="wave92h-row">' + gradeLink +
-      '<button type="button" data-wave92h-action="profile">Профиль</button>' +
-      '<button type="button" data-wave92h-action="onboarding">Онбординг</button>' +
-      '<button type="button" data-wave92h-mood="ready">🔥 Готов</button>' +
-      '<button type="button" data-wave92h-mood="ok">🙂 Норм</button>' +
-      '<button type="button" data-wave92h-mood="tired">😐 Тяжело</button>' +
-      '</div>';
-    header.insertAdjacentElement('afterend', node);
+    return; // wave92k: personal home block disabled; wave92a 'Мой класс' remains.
   }
 
   function microLessonText(grade){
@@ -1065,40 +1008,11 @@
     return 'Мини-урок: в старших классах сначала отделяй данные, формулу/правило и проверку ответа. Это быстрее, чем угадывать из вариантов.';
   }
   function ensureGradeCoach(){
-    var grade = gradeFromPage();
-    if (!grade || !document.body || document.getElementById('wave92h-grade-coach')) return;
-    var host = document.querySelector('#s-main .w .fade') || document.querySelector('#s-main .w');
-    if (!host || !host.parentElement) return;
-    var p = currentProfile();
-    var node = document.createElement('section');
-    node.id = 'wave92h-grade-coach';
-    node.className = 'wave92h-card';
-    node.innerHTML =
-      '<h3>⏱ 30 секунд перед тренировкой</h3>' +
-      '<p>' + esc(microLessonText(grade)) + '</p>' +
-      '<p><span class="wave92h-pill">' + esc(profileLabel(p)) + '</span></p>' +
-      '<div class="wave92h-row">' +
-      '<button type="button" data-wave92h-action="micro-done">Понял, к темам</button>' +
-      '<button type="button" data-wave92h-action="focus-toggle" aria-pressed="false">Режим фокуса</button>' +
-      '<button type="button" data-wave92h-action="profile">Профиль</button>' +
-      '</div>';
-    host.insertAdjacentElement('afterend', node);
+    return; // wave92k: 30-second micro-lesson card disabled.
   }
 
   function enhanceQuickPanel(){
-    var p = document.getElementById('wave92g-panel');
-    if (!p || document.getElementById('wave92h-quick-row')) return;
-    var row = document.createElement('div');
-    row.id = 'wave92h-quick-row';
-    row.className = 'wave92g-row wave92h-row';
-    row.innerHTML =
-      '<button type="button" data-wave92h-action="profile">Профиль</button>' +
-      '<button type="button" data-wave92h-action="onboarding">Онбординг</button>' +
-      '<button type="button" data-wave92h-action="focus-toggle" aria-pressed="false">Фокус</button>' +
-      '<button type="button" data-wave92h-action="theme-toggle">' + esc(scheduleLabel()) + '</button>' +
-      '<button type="button" data-wave92h-action="clipboard-backup">Бэкап в clipboard</button>';
-    p.appendChild(row);
-    applyFocus();
+    return; // wave92k: quick-panel extension disabled.
   }
 
   function closeModal(){ var m = document.getElementById('wave92h-modal'); if (m) m.remove(); }
@@ -1139,16 +1053,7 @@
     modalBase('Профиль ученика', body);
   }
   function showOnboardingModal(){
-    var p = currentProfile();
-    var body =
-      '<p>Короткая настройка: класс, цель, слабые темы и дневная норма. Всё хранится локально.</p>' +
-      '<label for="wave92h-on-name">Имя</label><input id="wave92h-on-name" value="' + esc(p.name || '') + '" placeholder="Имя ученика">' +
-      '<label for="wave92h-on-grade">Класс</label><select id="wave92h-on-grade">' + Array.from({length:11}, function(_,i){ var g=i+1; return '<option value="' + g + '"' + (Number(p.grade)===g?' selected':'') + '>' + g + ' класс</option>'; }).join('') + '</select>' +
-      '<label for="wave92h-on-goal">Главная цель</label><select id="wave92h-on-goal"><option>Ежедневная привычка</option><option>Подготовка к ОГЭ</option><option>Подготовка к ЕГЭ</option><option>Подтянуть оценки</option><option>Вступительные / дизайн</option></select>' +
-      '<label for="wave92h-on-weak">Что сейчас сложнее всего?</label><textarea id="wave92h-on-weak" rows="3" placeholder="2–3 темы через запятую"></textarea>' +
-      '<label for="wave92h-on-minutes">Сколько минут в день реально?</label><select id="wave92h-on-minutes"><option value="10">10 минут</option><option value="15" selected>15 минут</option><option value="25">25 минут</option><option value="40">40 минут</option></select>' +
-      '<div class="wave92h-row"><button type="button" data-wave92h-action="save-onboarding">Готово</button><button type="button" data-wave92h-action="close-modal">Закрыть</button></div>';
-    modalBase('Онбординг', body);
+    return; // wave92k: onboarding modal disabled unless a future explicit plan re-enables it.
   }
 
   function saveProfileFromModal(){
@@ -1247,13 +1152,7 @@
   }
 
   function showWhatsNew(){
-    if (get(KEY.seen) === VERSION || inPlay() || /embed\.html$/.test(page())) return;
-    if (document.getElementById('wave92g-whats-new')) { setTimeout(showWhatsNew, 1600); return; }
-    var body = '<p>Добавлены профили учеников, быстрый онбординг, настроение дня, режим фокуса, тема по расписанию, clipboard-бэкап и 30-секундные микроуроки.</p>' +
-      '<p class="muted">Все новые блоки скрываются во время активной тренировки: вопрос остаётся чистым.</p>' +
-      '<div class="wave92h-row"><button type="button" data-wave92h-action="whats-new-close">Понятно</button><button type="button" data-wave92h-action="onboarding">Настроить профиль</button></div>';
-    modalBase('Что нового в wave92h', body);
-    track('wave92h_whats_new_show', {});
+    return; // wave92k: no automatic 'what is new' overlays.
   }
 
   function handleClick(e){
@@ -1302,7 +1201,7 @@
       var mo = new MutationObserver(function(){ if (!inPlay()) { enhanceQuickPanel(); } });
       mo.observe(document.body, { childList:true, subtree:true });
     } catch(_) {}
-    setTimeout(showWhatsNew, isGradePage() ? 2200 : 1800);
+    /* wave92k: automatic wave92h what-is-new disabled */
     window.__wave92h = {
       version: VERSION,
       profiles: profiles,

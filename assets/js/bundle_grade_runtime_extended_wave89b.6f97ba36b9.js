@@ -161,17 +161,7 @@
   function activePlay(){ try { var s=document.getElementById('s-play'); return !!(s && /\bon\b/.test(s.className || '')); } catch(_) { return false; } }
   function noExam(){ try { return !root.diagMode && !root.rushMode && !root.globalMix; } catch(_) { return true; } }
   function patch(){
-    if (typeof root.ans === 'function' && !root.ans.__wave92fSm2) {
-      var oa = root.ans;
-      root.ans = function(index){ var q = null, ok = null; try { q = typeof prob !== 'undefined' ? prob : root.prob; var chosen = q && q.options ? q.options[index] : null; ok = q ? chosen === q.answer : null; } catch(_) {}
-        var out = oa.apply(this, arguments); try { if (ok !== null) update(q, ok); } catch(_) {} return out; };
-      root.ans.__wave92fSm2 = true;
-    }
-    if (typeof root.nextQ === 'function' && !root.nextQ.__wave92fSm2) {
-      var on = root.nextQ;
-      root.nextQ = function(){ var out = on.apply(this, arguments); try { if (activePlay() && noExam() && ((root.__wave92fSm2Turn = (root.__wave92fSm2Turn || 0) + 1) % 5 === 0)) { var d = due(); if (d && typeof prob !== 'undefined') { prob = d; root.prob = d; if (typeof render === 'function') render(); } } } catch(_) {} return out; };
-      root.nextQ.__wave92fSm2 = true;
-    }
+    return; // wave92k: SM-2 automatic ans()/nextQ() wrappers disabled; API remains passive.
   }
   root.wave92fSm2 = { version:'wave92f', key:KEY, update:update, due:due, all:getLS, count:function(){ return Object.keys(getLS()).length; } };
   function boot(){ patch(); setTimeout(patch, 500); setTimeout(patch, 1500); }
@@ -199,10 +189,7 @@
   function choose(){ var m=meta(), key=m.subj+' '+m.topic; for(var i=0;i<templates.length;i++) if(templates[i].re.test(key)) return templates[i]; return null; }
   function activePlay(){ var s=document.getElementById('s-play'); return !!(s && /\bon\b/.test(s.className || '')); }
   function patch(){
-    if (typeof root.nextQ !== 'function' || root.nextQ.__wave92fParametric) return;
-    var on = root.nextQ;
-    root.nextQ = function(){ var out = on.apply(this, arguments); try { var q = typeof prob !== 'undefined' ? prob : root.prob; if (activePlay() && !root.diagMode && !root.rushMode && !(q && q._wave92fSm2Review) && ((root.__wave92fParamTurn = (root.__wave92fParamTurn || 0) + 1) % 4 === 0)) { var tpl=choose(); if (tpl) { var built = tpl.build(seed(), meta()); built._wave92fParametric = tpl.id; if (typeof prob !== 'undefined') prob = built; root.prob = built; if (typeof render === 'function') render(); } } } catch(_) {} return out; };
-    root.nextQ.__wave92fParametric = true;
+    return; // wave92k: parameterized automatic nextQ wrapper disabled; manual generator remains.
   }
   root.wave92fParametric = { version:'wave92f', templates:templates.map(function(t){return t.id;}), generate:function(){ var t=choose(); return t ? t.build(seed(), meta()) : null; } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', patch, { once:true }); else patch();
@@ -889,45 +876,11 @@
     }, true);
   }
 
-  bindInteractiveKeyboard();
-
-  var baseNextQ = typeof root.nextQ === 'function' ? root.nextQ : null;
-  if (baseNextQ) {
-    root.nextQ = function(){
-      var result;
-      var tries = 0;
-      do {
-        result = baseNextQ.apply(this, arguments);
-        tries += 1;
-        if (!(root.rushMode && isComplexInteractive(currentQuestion()))) break;
-      } while (tries < 8);
-      return result;
-    };
-  }
-
-  var baseRender = typeof root.render === 'function' ? root.render : null;
-  if (baseRender) {
-    root.render = function(){
-      var result = baseRender.apply(this, arguments);
-      try { enhanceInteractiveQuestion(); } catch (_err) {}
-      return result;
-    };
-  }
-
-  var baseAns = typeof root.ans === 'function' ? root.ans : null;
-  if (baseAns) {
-    root.ans = function(idx){
-      var question = currentQuestion();
-      if (!shouldEnhance(question)) return baseAns.apply(this, arguments);
-      if (!isInteractiveQuestion(question)) return baseAns.apply(this, arguments);
-      if (question.interactionType === TYPES.FIND_ERROR) return baseAns.apply(this, arguments);
-      return null;
-    };
-  }
+  // wave92k: interactive keyboard/nextQ/render/ans wrappers disabled; A/B/C/D core only.
 
   root.__wave87wInteractiveFormats = {
     version: 'wave88b',
-    active: true,
+    active: false,
     grade: grade,
     types: Object.keys(TYPES).map(function(key){ return TYPES[key]; }),
     isInteractiveQuestion: isInteractiveQuestion,
@@ -6093,33 +6046,7 @@
     };
   }
 
-  var baseNextQ = typeof root.nextQ === 'function' ? root.nextQ : null;
-  if (baseNextQ) {
-    root.nextQ = function(){
-      if (state.active && root.__wave21SessionMode === 'learning-path' && Array.isArray(root.__wave21QuestionQueue) && root.__wave21QuestionQueue.length === 0) finishGuidedPhase();
-      var result = baseNextQ.apply(this, arguments);
-      try { renderPlayCard(); } catch (_err) {}
-      return result;
-    };
-  }
-
-  var baseRender = typeof root.render === 'function' ? root.render : null;
-  if (baseRender) {
-    root.render = function(){
-      var result = baseRender.apply(this, arguments);
-      try { renderPlayCard(); } catch (_err) {}
-      return result;
-    };
-  }
-
-  var baseRenderProg = typeof root.renderProg === 'function' ? root.renderProg : null;
-  if (baseRenderProg) {
-    root.renderProg = function(){
-      var result = baseRenderProg.apply(this, arguments);
-      try { appendProgressCard(); } catch (_err) {}
-      return result;
-    };
-  }
+  // wave92k: guided-route nextQ/render/renderProg wrappers disabled; route seeding stays off.
 
   var baseGo = typeof root.go === 'function' ? root.go : null;
   if (baseGo) {

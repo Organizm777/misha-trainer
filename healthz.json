@@ -1,9 +1,9 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92j",
-  "version": "trainer-build-wave92j-2026-04-30",
-  "build_id": "trainer-build-wave92j-2026-04-30",
+  "wave": "wave92k",
+  "version": "trainer-build-wave92k-2026-04-30",
+  "build_id": "trainer-build-wave92k-2026-04-30",
   "generated_at_utc": "2026-04-30T00:00:00Z",
   "git_sha": null,
   "hashed_asset_count": 128,
@@ -35,7 +35,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92j-2026-04-30",
+  "cache": "trainer-build-wave92k-2026-04-30",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -71,7 +71,7 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "brotli_count": 189,
+  "brotli_count": 207,
   "wave92d": {
     "indexeddb_analytics": true,
     "exam_near_duplicate_threshold_pct": 5,
@@ -98,7 +98,7 @@
   "wave92f": {
     "runtime_split": true,
     "featurepack_lazy_chunk": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
     "extended_runtime_bytes": 272054,
     "featurepack_bytes": 122459,
     "indexeddb_storage_bridge": true,
@@ -112,12 +112,12 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92g": {
-    "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js",
-    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92j.json",
+    "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92k.json",
     "features": [
       "haptic feedback",
       "swipe navigation",
@@ -169,8 +169,8 @@
     "fonts_required": 20,
     "zip_method": "Deflate level 9"
   },
-  "brotli_wave": "wave92j",
-  "runtime_integrity": "assets/data/runtime_integrity_wave92j.json",
+  "brotli_wave": "wave92k",
+  "runtime_integrity": "assets/data/runtime_integrity_wave92k.json",
   "wave92j_training_core": {
     "answer_history_indexeddb": true,
     "wrong_repeat_after_3_5": true,
@@ -185,5 +185,23 @@
     "monthly_clipboard_backup": true,
     "quota_guard": true,
     "sw_update_notice": true
+  },
+  "wave92k": {
+    "cleanup_runtime": true,
+    "nextq_wrappers_active": 2,
+    "disabled_auto_ui": [
+      "what_is_new",
+      "grade_coach",
+      "personal_home",
+      "mood",
+      "onboarding",
+      "floating_a11y_button"
+    ],
+    "disabled_wrappers": [
+      "sm2_nextq_ans",
+      "parametric_nextq",
+      "interactive_nextq_ans_render",
+      "guided_route_nextq_render"
+    ]
   }
 }

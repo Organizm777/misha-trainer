@@ -1,7 +1,7 @@
 {
-  "version": "trainer-build-wave92j-2026-04-30",
-  "wave": "wave92j",
-  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+  "version": "trainer-build-wave92k-2026-04-30",
+  "wave": "wave92k",
+  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
   "assets": {
     "assets/css/engine10.css": "assets/css/engine10.dac1e147e6.css",
     "assets/css/wave86x_inline_dashboard.css": "assets/css/wave86x_inline_dashboard.314891eaa4.css",
@@ -25,7 +25,7 @@
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
     "assets/js/bundle_grade_after.js": "assets/js/bundle_grade_after.114dd48332.js",
     "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.5153bf0a29.js",
-    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
     "assets/js/bundle_grade_runtime_features_wave87n.js": "assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js",
     "assets/js/bundle_grade_runtime_inputs_timing_wave87x.js": "assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js",
     "assets/js/bundle_grade_runtime_services_wave87n.js": "assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js",
@@ -52,7 +52,7 @@
     "assets/js/chunk_grade_content_wave87m_transition_1011.js": "assets/js/chunk_grade_content_wave87m_transition_1011.fadee67605.js",
     "assets/js/chunk_grade_lazy_payloads_wave91h.js": "assets/js/chunk_grade_lazy_payloads_wave91h.bdb5ac6f2c.js",
     "assets/js/chunk_roadmap_wave86q_accessibility_theme.js": "assets/js/chunk_roadmap_wave86q_accessibility_theme.15a66fbdb3.js",
-    "assets/js/chunk_roadmap_wave86u_csp_bridge.js": "assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js",
+    "assets/js/chunk_roadmap_wave86u_csp_bridge.js": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
     "assets/js/chunk_roadmap_wave86x_style_csp_bridge.js": "assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js",
     "assets/js/chunk_subject_expansion_wave31_russian.js": "assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js",
     "assets/js/chunk_subject_expansion_wave32_math.js": "assets/js/chunk_subject_expansion_wave32_math.8957f08038.js",
@@ -135,8 +135,8 @@
   "generated_at": "2026-04-28T00:00:00Z",
   "hashed_asset_count": 128,
   "generated_at_utc": "2026-04-30T00:00:00Z",
-  "build_id": "trainer-build-wave92j-2026-04-30",
-  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+  "build_id": "trainer-build-wave92k-2026-04-30",
+  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
   "wave91g_visual_interactive": {
     "visuals": [
       "geometry_svg",
@@ -154,7 +154,7 @@
     ],
     "worksheet_export": "print_to_pdf_html"
   },
-  "brotli_count": 189,
+  "brotli_count": 207,
   "brotli_wave": "wave92h",
   "fonts": [
     "assets/fonts/golos-text-cyrillic-400-normal.woff2",
@@ -224,14 +224,14 @@
     "zip_deflate_required": true,
     "csp_bridge_pages": 20
   },
-  "wave92e_csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js",
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+  "wave92e_csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92f_exam": "assets/js/bundle_exam.ce8c0cea55.js",
-  "cache": "trainer-build-wave92j-2026-04-30",
-  "wave92g_csp_mobile_a11y": "assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js",
-  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92j.json",
+  "cache": "trainer-build-wave92k-2026-04-30",
+  "wave92g_csp_mobile_a11y": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
+  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92k.json",
   "wave92g": {
     "mobile_ux": [
       "haptic feedback",
@@ -257,8 +257,8 @@
       "CSV export from local IndexedDB/fallback events"
     ]
   },
-  "wave92h_csp_personalization_focus": "assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js",
-  "wave92h_integrity_manifest": "assets/data/runtime_integrity_wave92j.json",
+  "wave92h_csp_personalization_focus": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
+  "wave92h_integrity_manifest": "assets/data/runtime_integrity_wave92k.json",
   "wave92h": {
     "personalized_home": true,
     "multi_profiles": true,
@@ -270,10 +270,20 @@
     "micro_lessons_30s": true,
     "clean_training_preserved": true
   },
-  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
   "wave92j_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92j_dead_features_disabled": true,
-  "runtime_integrity": "assets/data/runtime_integrity_wave92j.json",
-  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92j.json",
-  "wave92j_csp_storage_training": "assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js"
+  "runtime_integrity": "assets/data/runtime_integrity_wave92k.json",
+  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92k.json",
+  "wave92j_csp_storage_training": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
+  "wave92k_csp_cleanup": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
+  "wave92k_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
+  "wave92k_integrity_manifest": "assets/data/runtime_integrity_wave92k.json",
+  "wave92k": {
+    "completed": true,
+    "cleanup": "auto overlays, floating button, coach, mood, onboarding, dead wrappers disabled",
+    "nextq_wrappers_active": 2,
+    "csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
+    "runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js"
+  }
 }
