@@ -1,12 +1,12 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92d",
-  "version": "trainer-build-wave92d-2026-04-29",
-  "build_id": "wave92d",
-  "generated_at_utc": "2026-04-29T00:00:00Z",
+  "wave": "wave92g",
+  "version": "trainer-build-wave92g-2026-04-30",
+  "build_id": "wave92g",
+  "generated_at_utc": "2026-04-30T00:00:00Z",
   "git_sha": null,
-  "hashed_asset_count": 127,
+  "hashed_asset_count": 128,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -39,7 +39,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92d-2026-04-29",
+  "cache": "trainer-build-wave92g-2026-04-30",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -75,7 +75,7 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "brotli_count": 187,
+  "brotli_count": 189,
   "wave92d": {
     "indexeddb_analytics": true,
     "exam_near_duplicate_threshold_pct": 5,
@@ -84,5 +84,70 @@
     "mobile_bottom_nav_audited": true,
     "install_banner": true,
     "accessibility_gate": true
+  },
+  "wave92e": {
+    "csp_bridge_boot_calls": [
+      "bootTheme",
+      "installScrubber",
+      "installDelegates"
+    ],
+    "spec_subjects_back_link": true,
+    "tests_psych_abort_button": true,
+    "input_mode_disabled": true,
+    "all_questions_multiple_choice": true,
+    "fonts_preserved": true,
+    "zip_deflate_required": true,
+    "csp_bridge_pages": 20
+  },
+  "wave92f": {
+    "runtime_split": true,
+    "featurepack_lazy_chunk": "assets/js/chunk_grade_featurepacks_wave92f.61b2de3bca.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.ce759414ea.js",
+    "extended_runtime_bytes": 272054,
+    "featurepack_bytes": 122459,
+    "indexeddb_storage_bridge": true,
+    "storage_db": "trainer3_store_wave92f",
+    "sm2_main_stream": true,
+    "parametric_questions": true,
+    "content_expiry_valid_until": "2027-08-31",
+    "real_exam_mode": true,
+    "exam_bundle": "assets/js/bundle_exam.ce8c0cea55.js",
+    "clean_training_screen_preserved": true,
+    "fonts_preserved": true,
+    "zip_deflate_required": true
+  },
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.ce759414ea.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.ce759414ea.js",
+  "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.61b2de3bca.js",
+  "wave92g": {
+    "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.0fd5396707.js",
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92g.json",
+    "features": [
+      "haptic feedback",
+      "swipe navigation",
+      "pull-to-refresh",
+      "font-size preference",
+      "scroll restoration",
+      "what's new",
+      "offline indicator",
+      "Share API fallback",
+      "CSV analytics export",
+      "auto old-event purge"
+    ],
+    "a11y": [
+      "ARIA radiogroup",
+      "focus management",
+      "focus-visible",
+      "reduced motion",
+      "dyslexia-readable toggle",
+      "high contrast toggle",
+      "44px touch targets"
+    ],
+    "security": [
+      "SRI on local JS/CSS referenced by HTML",
+      "Permissions-Policy meta on all HTML",
+      "Referrer policy meta on all HTML"
+    ],
+    "clean_training_preserved": true
   }
 }

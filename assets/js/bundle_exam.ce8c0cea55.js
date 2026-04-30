@@ -2774,3 +2774,57 @@
   setTimeout(init, 60);
 })();
 
+
+
+/* wave92f: real exam mode controls */
+(function(){
+  'use strict';
+  var root = window;
+  if (!root || root.__wave92fRealExamMode) return;
+  root.__wave92fRealExamMode = true;
+  var KEY = 'trainer_real_exam_mode_wave92f';
+  function get(){ try { return localStorage.getItem(KEY) === '1'; } catch(_) { return false; } }
+  function set(v){ try { localStorage.setItem(KEY, v ? '1' : '0'); } catch(_) {} apply(); }
+  function page(){ try { return (location.pathname || '').split('/').pop() || 'diagnostic.html'; } catch(_) { return ''; } }
+  function isDiag(){ return page() === 'diagnostic.html' || !!document.getElementById('subj-grid'); }
+  function ensureStyle(){
+    if (document.getElementById('wave92f-real-exam-style')) return;
+    var st = document.createElement('style'); st.id='wave92f-real-exam-style';
+    st.textContent = '.wave92f-real-card{margin:12px 0;padding:13px;border:1px solid var(--border);border-radius:16px;background:var(--card);display:flex;justify-content:space-between;gap:12px;align-items:center}.wave92f-real-card b{font-size:13px}.wave92f-real-card p{margin:4px 0 0;color:var(--muted);font-size:11px;line-height:1.45}.wave92f-real-toggle{border:1px solid var(--border);border-radius:999px;background:var(--bg);color:var(--text);font-size:12px;font-weight:900;padding:9px 12px;cursor:pointer}.wave92f-real-toggle[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}.wave92f-real-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(220,38,38,.25);background:rgba(220,38,38,.08);color:#991b1b;border-radius:999px;padding:6px 9px;font-size:10.5px;font-weight:900}.wave92f-real-note{font-size:10px;color:var(--muted);font-weight:800;margin-top:4px}@media(max-width:560px){.wave92f-real-card{align-items:stretch;flex-direction:column}.wave92f-real-toggle{width:100%}}';
+    (document.head || document.documentElement).appendChild(st);
+  }
+  function mount(){
+    if (!isDiag()) return;
+    ensureStyle();
+    var host = document.getElementById('wave30-pack-host');
+    var intro = document.querySelector('.subj-intro');
+    if (!host && !intro) return;
+    var card = document.getElementById('wave92f-real-exam-card');
+    if (!card) {
+      card = document.createElement('div'); card.id='wave92f-real-exam-card'; card.className='wave92f-real-card';
+      var target = host || intro; if (target && target.parentNode) target.parentNode.insertBefore(card, target); else if (intro) intro.appendChild(card);
+    }
+    var on = get();
+    card.innerHTML = '<div><b>🧪 Экзамен по-настоящему</b><p>Официальный таймер, autosave, финальная проверка перед результатом, без подсказок и мгновенного разбора.</p></div><button type="button" class="wave92f-real-toggle" aria-pressed="'+(on?'true':'false')+'" data-wave92f-real-toggle>'+(on?'Включён':'Выключен')+'</button>';
+  }
+  function chip(){
+    if (!get()) return;
+    var meta = document.getElementById('wave30-quiz-meta'); if (!meta || document.getElementById('wave92f-real-chip')) return;
+    var span = document.createElement('span'); span.id='wave92f-real-chip'; span.className='wave92f-real-chip'; span.textContent='режим: по-настоящему'; meta.insertBefore(span, meta.firstChild);
+    var note = document.createElement('div'); note.id='wave92f-real-note'; note.className='wave92f-real-note'; note.textContent='Ответ можно изменить до финальной проверки. Результат появится только после завершения варианта.'; meta.parentNode && meta.parentNode.insertBefore(note, meta.nextSibling);
+  }
+  function apply(){
+    try { document.body && document.body.setAttribute('data-wave92f-real-exam', get() ? 'on' : 'off'); } catch(_) {}
+    chip();
+    var skip = document.getElementById('skip-btn'); if (skip && get()) skip.textContent = /финал/i.test(skip.textContent||'') ? 'К финальной проверке →' : 'Оставить пустым →';
+  }
+  function bind(){
+    if (document.__wave92fRealExamBound) return; document.__wave92fRealExamBound = true;
+    document.addEventListener('click', function(ev){ var b = ev.target && ev.target.closest ? ev.target.closest('[data-wave92f-real-toggle]') : null; if (!b) return; ev.preventDefault(); set(!get()); mount(); });
+    root.addEventListener('beforeunload', function(ev){ try { if (get() && root.__wave30ActivePack) { ev.preventDefault(); ev.returnValue=''; return ''; } } catch(_) {} });
+    root.addEventListener('wave30-exam-saved', function(ev){ try { var d = ev && ev.detail; if (d && get()) { d.realExamMode = true; var rows = JSON.parse(localStorage.getItem('trainer_real_exam_history_wave92f') || '[]'); if (!Array.isArray(rows)) rows=[]; rows.push(Object.assign({ realExamMode:true }, d)); localStorage.setItem('trainer_real_exam_history_wave92f', JSON.stringify(rows.slice(-50))); } } catch(_) {} });
+  }
+  function boot(){ bind(); mount(); apply(); try { new MutationObserver(function(){ mount(); apply(); }).observe(document.body, { childList:true, subtree:true }); } catch(_) {} setInterval(apply, 1500); }
+  root.wave92fRealExam = { version:'wave92f', key:KEY, enabled:get, set:set, apply:apply, mount:mount };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true }); else boot();
+})();
