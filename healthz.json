@@ -1,9 +1,9 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92g",
-  "version": "trainer-build-wave92g-2026-04-30",
-  "build_id": "wave92g",
+  "wave": "wave92j",
+  "version": "trainer-build-wave92j-2026-04-30",
+  "build_id": "trainer-build-wave92j-2026-04-30",
   "generated_at_utc": "2026-04-30T00:00:00Z",
   "git_sha": null,
   "hashed_asset_count": 128,
@@ -13,10 +13,6 @@
     "diagnostic.html",
     "tests.html",
     "spec_subjects.html",
-    "content_depth.html",
-    "teacher.html",
-    "embed.html",
-    "landing.html",
     "grade1_v2.html",
     "grade2_v2.html",
     "grade3_v2.html",
@@ -39,7 +35,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92g-2026-04-30",
+  "cache": "trainer-build-wave92j-2026-04-30",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -101,8 +97,8 @@
   },
   "wave92f": {
     "runtime_split": true,
-    "featurepack_lazy_chunk": "assets/js/chunk_grade_featurepacks_wave92f.61b2de3bca.js",
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.ce759414ea.js",
+    "featurepack_lazy_chunk": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
     "extended_runtime_bytes": 272054,
     "featurepack_bytes": 122459,
     "indexeddb_storage_bridge": true,
@@ -116,12 +112,12 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.ce759414ea.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.ce759414ea.js",
-  "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.61b2de3bca.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js",
+  "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92g": {
-    "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.0fd5396707.js",
-    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92g.json",
+    "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js",
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92j.json",
     "features": [
       "haptic feedback",
       "swipe navigation",
@@ -149,5 +145,45 @@
       "Referrer policy meta on all HTML"
     ],
     "clean_training_preserved": true
+  },
+  "wave92j": {
+    "dead_features_disabled": [
+      "guided_route",
+      "pomodoro",
+      "pvp",
+      "wordle",
+      "anki_export",
+      "embed",
+      "teacher",
+      "landing",
+      "content_api",
+      "content_depth_nav",
+      "adaptive_play_card",
+      "difficulty_tools"
+    ],
+    "ci_gates": [
+      "inline_handlers_csp",
+      "home_navigation",
+      "guided_route_disabled"
+    ],
+    "fonts_required": 20,
+    "zip_method": "Deflate level 9"
+  },
+  "brotli_wave": "wave92j",
+  "runtime_integrity": "assets/data/runtime_integrity_wave92j.json",
+  "wave92j_training_core": {
+    "answer_history_indexeddb": true,
+    "wrong_repeat_after_3_5": true,
+    "next_question_preload": true,
+    "progress_strip": true,
+    "why_for_wrong_options": true,
+    "digit_shortcuts": true,
+    "question_report_confirmation": true
+  },
+  "wave92j_storage_safety": {
+    "integrity_check": true,
+    "monthly_clipboard_backup": true,
+    "quota_guard": true,
+    "sw_update_notice": true
   }
 }

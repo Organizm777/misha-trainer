@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave92g-2026-04-30';
+const CACHE_NAME = 'trainer-build-wave92j-2026-04-30';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -8,10 +8,6 @@ const ASSETS = [
   './diagnostic.html',
   './tests.html',
   './spec_subjects.html',
-  './content_depth.html',
-  './teacher.html',
-  './embed.html',
-  './landing.html',
   './grade1_v2.html',
   './grade2_v2.html',
   './grade3_v2.html',
@@ -26,7 +22,7 @@ const ASSETS = [
   './manifest.webmanifest',
   './healthz.json',
   './assets/asset-manifest.json',
-  './assets/data/runtime_integrity_wave92g.json',
+  './assets/data/runtime_integrity_wave92j.json',
   './assets/css/engine10.dac1e147e6.css',
   './assets/css/wave86x_inline_dashboard.314891eaa4.css',
   './assets/css/wave86x_inline_diagnostic.0bd1520b48.css',
@@ -57,21 +53,18 @@ const ASSETS = [
   './assets/fonts/unbounded-latin-700-normal.woff2',
   './assets/fonts/unbounded-latin-800-normal.woff2',
   './assets/fonts/unbounded-latin-900-normal.woff2',
-  './assets/css/wave91j_content_depth.1e5dc33349.css',
   './assets/js/bundle_boosters.ce945f33ae.js',
-  './assets/js/bundle_content_depth.927eb95760.js',
   './assets/js/bundle_dashboard_tools.9025bc19a4.js',
   './assets/js/bundle_diagnostic_tools.9792be3cd6.js',
-  './assets/js/bundle_embed_widget.11310cbc74.js',
   './assets/js/bundle_error_tracking.dc19ab4e63.js',
   './assets/js/bundle_exam.ce8c0cea55.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_grade_after.114dd48332.js',
   './assets/js/bundle_grade_runtime_core_wave87n.5153bf0a29.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.ce759414ea.js',
-  './assets/js/chunk_grade_featurepacks_wave92f.61b2de3bca.js',
-  './assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.6d60a72e53.js',
+  './assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js',
+  './assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js',
   './assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js',
   './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
   './assets/js/bundle_navigation_logger.a05b4f024f.js',
@@ -79,7 +72,6 @@ const ASSETS = [
   './assets/js/bundle_sharing.75450d41f8.js',
   './assets/js/bundle_shell.ef4140d586.js',
   './assets/js/bundle_special_subjects.f45ea13d73.js',
-  './assets/js/bundle_teacher_mode.a4017c6e0e.js',
   './assets/js/chunk_exam_bank_wave89q.4babe9e870.js',
   './assets/js/chunk_grade10_lazy_wave86s.135fbaef2b.js',
   './assets/js/chunk_grade_content_wave12_english_wave86t.61be17ebe4.js',
@@ -97,7 +89,7 @@ const ASSETS = [
   './assets/js/chunk_grade_content_wave87m_transition_1011.fadee67605.js',
   './assets/js/chunk_grade_lazy_payloads_wave91h.bdb5ac6f2c.js',
   './assets/js/chunk_roadmap_wave86q_accessibility_theme.15a66fbdb3.js',
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.0fd5396707.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js',
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js',
   './assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js',
   './assets/js/chunk_subject_expansion_wave32_math.8957f08038.js',
@@ -175,15 +167,6 @@ const ASSETS = [
   './assets/js/inline_tests_2_wave86u.ae4d81b485.js',
   './assets/js/inline_tests_3_wave86u.bab0f051a9.js',
   './assets/js/wave35_plans.f812119619.js',
-  './assets/data/api/trainer3_content_api.json',
-  './assets/data/content_depth/cross_grade_diagnostic.json',
-  './assets/data/content_depth/final_essay_bank.json',
-  './assets/data/content_depth/functional_literacy_pisa.json',
-  './assets/data/content_depth/manifest.json',
-  './assets/data/content_depth/school_question_pack_middle.json',
-  './assets/data/content_depth/school_question_pack_primary.json',
-  './assets/data/content_depth/school_question_pack_senior.json',
-  './assets/data/content_depth/textbook_bindings.json',
   './assets/data/exam_bank/catalog.json',
   './assets/data/exam_bank/ege_base_math_2026_foundation.json',
   './assets/data/exam_bank/ege_english_2026_foundation.json',
@@ -210,13 +193,12 @@ const ASSETS = [
   './assets/data/spec_subjects/management.json',
   './assets/data/spec_subjects/procurement.json',
   './assets/data/spec_subjects/psychology.json',
-  './api/index.json',
   './assets/icons/apple-touch-icon.png',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png'
 ];
 const CSP_BRIDGE_ASSETS = [
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.0fd5396707.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.be57171e6a.js',
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js'
 ];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
@@ -255,7 +237,7 @@ const CRITICAL_ASSETS = Array.from(new Set(CSP_BRIDGE_ASSETS.concat(
     './index.html',
     './manifest.webmanifest',
     './assets/asset-manifest.json',
-  './assets/data/runtime_integrity_wave92g.json',
+  './assets/data/runtime_integrity_wave92j.json',
     './assets/icons/icon-192.png',
     './assets/icons/icon-512.png'
   ]
@@ -319,7 +301,7 @@ async function networkFirst(request, cacheName){
   }
 }
 self.addEventListener('install', event => { event.waitUntil((async () => { await precache(); await self.skipWaiting(); })()); });
-self.addEventListener('activate', event => { event.waitUntil((async () => { const keys = await caches.keys(); await Promise.all(keys.filter(key => ![STATIC_CACHE, RUNTIME_CACHE].includes(key)).map(key => caches.delete(key))); await self.clients.claim(); })()); });
+self.addEventListener('activate', event => { event.waitUntil((async () => { const keys = await caches.keys(); await Promise.all(keys.filter(key => ![STATIC_CACHE, RUNTIME_CACHE].includes(key)).map(key => caches.delete(key))); await self.clients.claim(); const clients = await self.clients.matchAll({type:'window', includeUncontrolled:true}); clients.forEach(client => { try { client.postMessage({type:'TRAINER_SW_UPDATED', cache:CACHE_NAME}); } catch(_err) {} }); })()); });
 self.addEventListener('message', event => { if(event && event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting(); });
 self.addEventListener('fetch', event => {
   const request = event.request;

@@ -635,6 +635,7 @@
     closeModal();
   }
   function renderCard(){
+    return; // wave92j: PvP disabled.
     css();
     if (!subjects().length) return;
     var old = document.getElementById(CARD_ID);
@@ -844,6 +845,7 @@
     });
   }
   function init(){
+    return false; // wave92j: PvP disabled.
     if (!Array.isArray(window.SUBJ) || !document.getElementById('s-main')) return false;
     renderCard();
     return true;
@@ -1379,6 +1381,7 @@
     anchor.parentNode.insertBefore(card, anchor.nextSibling);
   }
   function bootIncomingOnce(){
+    return; // wave92j: PvP incoming links disabled.
     if (window.__wave86vIncomingHandled) return;
     var raw = getChallengeParam();
     if (!raw) return;
@@ -2662,3 +2665,5 @@
 });
 
 ;window.__wave87nGradeRuntimeFeaturesBundle = Object.freeze({wave:'wave87n', role:'features', bundled:["chunk_roadmap_wave86r_theory_achievements.js","chunk_roadmap_wave86p_exam_challenge.js","chunk_roadmap_wave86v_pvp_link_battle.js","bundle_gamification_xp.js","bundle_gamification_meta.js"], generatedAt:'2026-04-23T00:00:00Z'});
+
+(function(){if(typeof window!=='undefined'){window.__wave92jPvpDisabled=true;}})();

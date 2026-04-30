@@ -1,30 +1,6 @@
 {
-  "id": "trainer3_static_api_wave91j",
-  "wave": "wave91j",
-  "type": "static-json-api",
-  "content_depth_manifest": "./assets/data/content_depth/manifest.json",
-  "question_total": 6970,
-  "endpoints": [
-    {
-      "name": "content_depth_manifest",
-      "path": "./assets/data/content_depth/manifest.json"
-    },
-    {
-      "name": "pisa",
-      "path": "./assets/data/content_depth/functional_literacy_pisa.json"
-    },
-    {
-      "name": "cross_grade",
-      "path": "./assets/data/content_depth/cross_grade_diagnostic.json"
-    },
-    {
-      "name": "essay",
-      "path": "./assets/data/content_depth/final_essay_bank.json"
-    },
-    {
-      "name": "textbook_bindings",
-      "path": "./assets/data/content_depth/textbook_bindings.json"
-    }
-  ],
-  "cors": "static same-origin / offline service-worker cached"
+  "status": "disabled",
+  "wave": "wave92j",
+  "reason": "Content API disabled; no external consumers in current product plan.",
+  "home": "./index.html"
 }

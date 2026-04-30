@@ -4746,7 +4746,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   var PERF_KEY = 'trainer_perf_samples_wave87n_' + String(root.GRADE_NUM || root.GRADE_NO || 'na');
   var manifest = Object.freeze({
     wave: WAVE,
-    features: "./assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js",
+    features: "./assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js",
     services: "./assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js"
   });
   var loaded = { features:false, services:false };
@@ -5074,7 +5074,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     }
   };
 })();
-;window.__wave87nGradeRuntimeCoreBundle = Object.freeze({wave:'wave87n', role:'core', lazy:['assets/js/bundle_grade_runtime_features_wave87n.eb9412775e.js','assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js'], bundled:["chunk_roadmap_wave86q_accessibility_theme.js","bundle_grade_after.js","chunk_roadmap_wave86n_progress_tools.js","bundle_error_tracking.js"], generatedAt:'2026-04-23T00:00:00Z'});
+;window.__wave87nGradeRuntimeCoreBundle = Object.freeze({wave:'wave87n', role:'core', lazy:['assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js','assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js'], bundled:["chunk_roadmap_wave86q_accessibility_theme.js","bundle_grade_after.js","chunk_roadmap_wave86n_progress_tools.js","bundle_error_tracking.js"], generatedAt:'2026-04-23T00:00:00Z'});
 
 
 ;/* --- wave92d_indexeddb_analytics_grade_core.js --- */

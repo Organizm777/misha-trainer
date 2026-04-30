@@ -1,11 +1,6 @@
 {
-  "id": "trainer3_static_api_root_wave92g",
-  "wave": "wave92g",
-  "description": "Static API index for offline-friendly integrations; wave92g mobile UX, accessibility and security metadata.",
-  "endpoints": {
-    "content": "../assets/data/api/trainer3_content_api.json",
-    "manifest": "../assets/data/content_depth/manifest.json",
-    "embed": "../embed.html?grade=7&subject=математика"
-  },
-  "runtime_integrity": "assets/data/runtime_integrity_wave92g.json"
+  "status": "disabled",
+  "wave": "wave92j",
+  "reason": "Content API disabled; no external consumers in current product plan.",
+  "home": "./index.html"
 }

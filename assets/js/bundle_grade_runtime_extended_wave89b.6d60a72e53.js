@@ -5219,6 +5219,8 @@
     if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
   }
   function renderPlayCard(){
+    removePlayCard();
+    return; // wave92j: adaptive difficulty UI disabled; engine stays under the hood.
     try {
       var modeRaw = localStorage.getItem('trainer_ui_mode');
       modeRaw = String(modeRaw == null ? '' : modeRaw).trim().toLowerCase();
@@ -5791,14 +5793,7 @@
     };
   }
   function shouldSeedForTopic(subject, topic){
-    if (!subject || !topic) return false;
-    if (root.mix || root.globalMix || root.rushMode || root.diagMode) return false;
-    if (Array.isArray(root.__wave21QuestionQueue) && root.__wave21QuestionQueue.length) return false;
-    if (root.__wave21SessionMode === 'error-review') return false;
-    if (root.__wave28CurrentReviewKey) return false;
-    var record = readRecord(subject, topic);
-    if ((num(record.completedRuns) || 0) > 0) return false;
-    return topicAttempts(subject.id, topic.id) === 0 || num(record.startedRuns) === 0;
+    return false; // wave92j: guided route disabled by plan.
   }
   function markTheory(subject, topic){
     return updateRecord(subject, topic, function(record){
@@ -5946,6 +5941,8 @@
     host.appendChild(card);
   }
   function renderPlayCard(){
+    removeByAttr(PLAY_ATTR);
+    return; // wave92j: guided route UI disabled.
     try {
       var modeRaw = localStorage.getItem('trainer_ui_mode');
       modeRaw = String(modeRaw == null ? '' : modeRaw).trim().toLowerCase();
@@ -6473,3 +6470,312 @@
 
 /* wave92c: clean training screen rule marker */
 (function(){if(typeof window!=='undefined'){window.__wave92cCleanTraining={version:'wave92c',simpleDefault:true,playWidgetsHidden:['wave89m-adaptive','wave89n-path','wave91e-explain-pomodoro','wave91f-difficulty-marathon','wave91g-visual-tools'],allowedPlayElements:['question','answer-options','feedback','next','question-report']};}})();
+
+(function(){if(typeof window!=='undefined'){window.__wave92jDeadFeatures={version:'wave92j',guidedRoute:true,adaptivePlayCard:true,difficultyTools:true,pomodoro:true,pvp:true,wordle:true,anki:true,embed:true,teacher:true,landing:true,contentApi:true};}})();
+
+/* wave92j: core training improvements — answer history, retry wrongs, preload, progress, why, shortcuts */
+(function(){
+  'use strict';
+  var root = window;
+  if (!root || root.__wave92jTrainingCore) return;
+  var VERSION = 'wave92j';
+  var DB = 'trainer3_answer_history_wave92j';
+  var STORE = 'answers';
+  var dbp = null;
+  var repeatQueue = [];
+  var lastConfettiStreak = 0;
+  var scheduledRender = 0;
+
+  function txt(v,n){ return String(v == null ? '' : v).replace(/\s+/g,' ').trim().slice(0, n || 500); }
+  function clone(v){ try { return JSON.parse(JSON.stringify(v)); } catch(_) { return v; } }
+  function q(){ return root.prob && typeof root.prob === 'object' ? root.prob : null; }
+  function grade(){ return String(root.GRADE_NUM || root.GRADE_NO || document.documentElement.getAttribute('data-grade') || '10'); }
+  function isPlay(){ try { var s=document.getElementById('s-play'); return !!(s && /\bon\b/.test(s.className || '')); } catch(_) { return false; } }
+  function selected(){ try { return root.sel; } catch(_) { return null; } }
+  function canEnhanceNormal(){ return isPlay() && !root.rushMode && !root.diagMode; }
+  function showToast(message){ try { if (typeof root.showToast === 'function') return root.showToast(message, 'info', 2200); if (typeof root.toast === 'function') return root.toast(message); } catch(_) {} }
+  function track(kind, meta){ try { if (root.trainerEvents && root.trainerEvents.track) root.trainerEvents.track(kind, meta || {}); } catch(_) {} }
+  function openDb(){
+    if (dbp) return dbp;
+    dbp = new Promise(function(resolve, reject){
+      if (!('indexedDB' in root)) { reject(new Error('IndexedDB unavailable')); return; }
+      var req = indexedDB.open(DB, 1);
+      req.onupgradeneeded = function(){
+        var db = req.result;
+        var st = db.objectStoreNames.contains(STORE) ? req.transaction.objectStore(STORE) : db.createObjectStore(STORE, { keyPath:'id', autoIncrement:true });
+        if (!st.indexNames.contains('by_ts')) st.createIndex('by_ts', 'ts');
+        if (!st.indexNames.contains('by_grade')) st.createIndex('by_grade', 'grade');
+        if (!st.indexNames.contains('by_topic')) st.createIndex('by_topic', 'topic');
+        if (!st.indexNames.contains('by_correct')) st.createIndex('by_correct', 'correct');
+      };
+      req.onsuccess = function(){ resolve(req.result); };
+      req.onerror = function(){ reject(req.error || new Error('open failed')); };
+    });
+    return dbp;
+  }
+  function saveAnswer(row){
+    row = row || {};
+    row.ts = new Date().toISOString();
+    openDb().then(function(db){
+      try { db.transaction(STORE, 'readwrite').objectStore(STORE).add(row); } catch(_) {}
+    }).catch(function(){
+      try {
+        var key = 'trainer_answer_history_fallback_wave92j';
+        var arr = JSON.parse(localStorage.getItem(key) || '[]');
+        if (!Array.isArray(arr)) arr = [];
+        arr.push(row);
+        localStorage.setItem(key, JSON.stringify(arr.slice(-500)));
+      } catch(_) {}
+    });
+  }
+  function qKey(question){ return [txt(question && question.tag,80), txt(question && question.question,180), txt(question && question.answer,80)].join('¦').toLowerCase(); }
+  function normalizeQuestion(raw){
+    var out = raw;
+    try { if (typeof root.prepareQuestion === 'function') out = root.prepareQuestion(clone(raw)); }
+    catch(_) { out = clone(raw); }
+    return out;
+  }
+  function generateAlternateWrongRepeat(base){
+    var raw = null;
+    try {
+      var topic = root.cT;
+      if (topic && typeof topic.gen === 'function') {
+        for (var i=0;i<8;i++) {
+          var cand = topic.gen();
+          if (cand && txt(cand.question) && txt(cand.question) !== txt(base && base.question)) { raw = cand; break; }
+        }
+      }
+    } catch(_) {}
+    var prepared = normalizeQuestion(raw || base);
+    if (prepared && raw == null && !prepared.__wave92jRepeatLabel) {
+      prepared.question = 'Повторим похожую ошибку: ' + txt(prepared.question, 460);
+      prepared.__wave92jRepeatLabel = true;
+    }
+    if (prepared) prepared.__wave92jRepeat = true;
+    return prepared;
+  }
+  function scheduleWrongRepeat(question){
+    if (!canEnhanceNormal() || !question) return;
+    var item = generateAlternateWrongRepeat(question);
+    if (!item || !item.question) return;
+    repeatQueue.push({ due: 3 + Math.floor(Math.random() * 3), q: item, key: qKey(item), at: Date.now() });
+    repeatQueue = repeatQueue.slice(-4);
+    root.__wave92jRepeatQueue = repeatQueue;
+    track('wrong_repeat_scheduled', { due: repeatQueue[repeatQueue.length-1].due, topic: txt(item.tag,80) });
+  }
+  function dueRepeat(){
+    if (!repeatQueue.length || !canEnhanceNormal()) return null;
+    for (var i=0;i<repeatQueue.length;i++) repeatQueue[i].due -= 1;
+    var idx = repeatQueue.findIndex(function(x){ return x.due <= 0; });
+    if (idx < 0) return null;
+    var item = repeatQueue.splice(idx, 1)[0];
+    root.__wave92jRepeatQueue = repeatQueue;
+    return item && item.q;
+  }
+  function serveQuestion(question, source){
+    if (!question) return false;
+    try {
+      root.prob = question;
+      root.sel = null;
+      root.hintOn = false;
+      root.shpOn = false;
+      root.usedHelp = false;
+      if (root.seenQs) {
+        var k = txt(question.question) + txt(question.answer);
+        root.seenQs[k] = (root.seenQs[k] || 0) + 1;
+      }
+      if (typeof root.render === 'function') root.render();
+      try { root.scrollTo({ top:0, behavior:'smooth' }); } catch(_) {}
+      track('preloaded_question_served', { source: source || 'unknown', topic: txt(question.tag,80) });
+      return true;
+    } catch(_) { return false; }
+  }
+  function canPreload(){
+    return canEnhanceNormal() && !root.mix && !root.globalMix && !(Array.isArray(root.__wave21QuestionQueue) && root.__wave21QuestionQueue.length) && root.cT && typeof root.cT.gen === 'function';
+  }
+  function preloadNext(){
+    if (!canPreload() || selected() !== null) return;
+    if (root.__wave92jPreparedNext && root.__wave92jPreparedNext.key === qKey(q())) return;
+    var current = q(), raw = null;
+    try {
+      for (var i=0;i<8;i++) {
+        raw = root.cT.gen();
+        if (raw && txt(raw.question) && txt(raw.question) !== txt(current && current.question)) break;
+      }
+      var prepared = normalizeQuestion(raw);
+      if (prepared && prepared.question) root.__wave92jPreparedNext = { key:qKey(current), q:prepared, at:Date.now() };
+    } catch(_) {}
+  }
+  function injectCss(){
+    if (document.getElementById('wave92j-training-css')) return;
+    var css = '.wave92j-progress{margin:6px 0 10px;border-radius:999px;background:var(--line,#e5e7eb);height:7px;overflow:hidden}.wave92j-progress>i{display:block;height:100%;background:var(--accent,#2563eb);width:0}.wave92j-progress-label{font-size:12px;color:var(--muted,#6b7280);display:flex;justify-content:space-between;gap:8px;margin:4px 0 2px}.wave92j-why{margin-top:8px;padding:10px;border-radius:12px;background:var(--soft,#f8fafc);border:1px solid var(--border,#e5e7eb);font-size:12px;line-height:1.45}.wave92j-why b{display:block;margin-bottom:4px}.wave92j-particle{position:fixed;top:-12px;z-index:99999;pointer-events:none;border-radius:50%;background:var(--accent,#2563eb);opacity:.9}@media(prefers-reduced-motion:reduce){.wave92j-particle{display:none!important}}';
+    try { var st = document.createElement('style'); st.id='wave92j-training-css'; st.textContent = css; (document.head || document.documentElement).appendChild(st); } catch(_) {}
+  }
+  function renderProgressStrip(){
+    if (!isPlay() || !q()) return;
+    injectCss();
+    var host = document.getElementById('wave21-session-slot') || document.getElementById('sts');
+    if (!host || document.getElementById('wave92j-progress-strip')) return;
+    var total = root.st ? (+root.st.ok || 0) + (+root.st.err || 0) : 0;
+    var current = total + (selected() === null ? 1 : 0);
+    var goal = root.__wave21QuestionQueueTotal || 20;
+    if (root.diagMode && root.diagMax) goal = root.diagMax;
+    var acc = total ? Math.round(((root.st && +root.st.ok || 0) / total) * 100) : 0;
+    var pct = goal ? Math.min(100, Math.round((Math.min(current, goal) / goal) * 100)) : 0;
+    var box = document.createElement('div'); box.id = 'wave92j-progress-strip';
+    box.innerHTML = '<div class="wave92j-progress-label"><span>' + current + ' из ' + goal + '</span><span>точность ' + (total ? acc + '%' : '—') + '</span></div><div class="wave92j-progress" aria-hidden="true"><i style="width:' + pct + '%"></i></div>';
+    try { host.appendChild(box); } catch(_) {}
+  }
+  function refreshProgressStrip(){
+    var old = document.getElementById('wave92j-progress-strip');
+    if (old) old.remove();
+    renderProgressStrip();
+  }
+  function whyMap(question){
+    var raw = question && (question.why || question.whys || question.optionWhy || question.option_why || question.wrong_explanations);
+    if (!raw) return null;
+    if (Array.isArray(raw)) {
+      var map = {};
+      (question.options || []).forEach(function(opt, idx){ if (raw[idx]) map[txt(opt,120)] = txt(raw[idx],400); });
+      return map;
+    }
+    if (typeof raw === 'object') return raw;
+    return null;
+  }
+  function appendWhyBlock(question, correct){
+    if (!question || correct) return;
+    var slot = document.getElementById('fba');
+    if (!slot || slot.querySelector('.wave92j-why')) return;
+    var picked = selected();
+    var chosen = typeof picked === 'number' && question.options ? question.options[picked] : picked;
+    var map = whyMap(question), chosenKey = txt(chosen,120);
+    var reason = map && (map[chosenKey] || map[String(picked)] || map[picked] || map[txt(chosen,500)]);
+    if (!reason) reason = 'Этот вариант не совпадает с правильным ответом и не проходит проверку по условию. Сравни его с разбором выше и найди место, где правило нарушено.';
+    var box = document.createElement('div');
+    box.className = 'wave92j-why';
+    box.innerHTML = '<b>Почему выбранный вариант неверен</b><span></span>';
+    box.querySelector('span').textContent = reason;
+    slot.appendChild(box);
+  }
+  function haptic(correct){
+    try {
+      if (localStorage.getItem('trainer_haptics_wave92g') === '0') return;
+      if (navigator.vibrate) navigator.vibrate(correct ? [50] : [35, 40, 35]);
+    } catch(_) {}
+  }
+  function confetti(){
+    if (root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    try {
+      for (var i=0;i<24;i++) {
+        var el = document.createElement('i');
+        el.className = 'wave92j-particle';
+        el.style.left = (Math.random() * 100) + '%';
+        el.style.width = el.style.height = (5 + Math.random() * 6) + 'px';
+        document.body.appendChild(el);
+        var dx = (Math.random() * 180 - 90), rot = 360 + Math.random() * 540;
+        var anim = el.animate([{ transform:'translate3d(0,0,0) rotate(0deg)', opacity:1 }, { transform:'translate3d(' + dx + 'px,' + (innerHeight + 60) + 'px,0) rotate(' + rot + 'deg)', opacity:0 }], { duration: 900 + Math.random() * 900, easing:'cubic-bezier(.2,.6,.2,1)' });
+        anim.onfinish = function(){ try { this.effect.target.remove(); } catch(_) {} };
+      }
+    } catch(_) {}
+  }
+  function maybeCelebrate(correct){
+    if (!correct || !root.st || !root.st.streak || root.st.streak < 5) return;
+    if (lastConfettiStreak === root.st.streak) return;
+    lastConfettiStreak = root.st.streak;
+    confetti();
+    track('streak_confetti', { streak: root.st.streak });
+  }
+  function clickOptionByDigit(key){
+    var idx = Number(key) - 1;
+    if (idx < 0 || idx > 3 || !isPlay() || selected() !== null) return false;
+    var opts = document.getElementById('opts');
+    var buttons = opts ? Array.prototype.slice.call(opts.querySelectorAll('button.opt,.opt')) : [];
+    var btn = buttons[idx];
+    if (!btn || btn.disabled) return false;
+    if (typeof btn.click === 'function') { btn.click(); return true; }
+    return false;
+  }
+  function bindShortcuts(){
+    if (root.__wave92jShortcutBound) return;
+    root.__wave92jShortcutBound = true;
+    document.addEventListener('keydown', function(event){
+      if (!event || event.ctrlKey || event.metaKey || event.altKey) return;
+      var tag = event.target && event.target.tagName ? String(event.target.tagName).toLowerCase() : '';
+      if (tag === 'input' || tag === 'textarea' || tag === 'select' || (event.target && event.target.isContentEditable)) return;
+      if (/^[1-4]$/.test(event.key) && clickOptionByDigit(event.key)) { event.preventDefault(); event.stopPropagation(); }
+    }, true);
+  }
+  function patchReportConfirmation(){
+    if (root.__wave92jReportConfirm) return;
+    root.__wave92jReportConfirm = true;
+    document.addEventListener('click', function(event){
+      var target = event.target && event.target.closest ? event.target.closest('#wave92a-report-question') : null;
+      if (!target) return;
+      setTimeout(function(){ showToast('Спасибо, отметка сохранена. Её можно экспортировать из журнала ошибок.'); track('question_report_confirmed', { topic: txt(q() && q().tag, 80) }); }, 50);
+    }, true);
+  }
+  function afterRender(){
+    if (scheduledRender) cancelAnimationFrame(scheduledRender);
+    scheduledRender = requestAnimationFrame(function(){
+      scheduledRender = 0;
+      try { refreshProgressStrip(); } catch(_) {}
+      try { if (selected() !== null) appendWhyBlock(q(), q() && String(selected()) === String(q().answer)); } catch(_) {}
+      try { preloadNext(); } catch(_) {}
+    });
+  }
+  function patchFunctions(){
+    if (typeof root.nextQ === 'function' && !root.nextQ.__wave92jCore) {
+      var baseNext = root.nextQ;
+      root.nextQ = function(){
+        var rep = dueRepeat();
+        if (rep && serveQuestion(rep, 'wrong-repeat')) return;
+        var prepared = root.__wave92jPreparedNext;
+        if (prepared && canPreload()) {
+          root.__wave92jPreparedNext = null;
+          if (serveQuestion(prepared.q, 'preload')) return;
+        }
+        var out = baseNext.apply(this, arguments);
+        try { preloadNext(); } catch(_) {}
+        return out;
+      };
+      root.nextQ.__wave92jCore = true;
+    }
+    if (typeof root.ans === 'function' && !root.ans.__wave92jCore) {
+      var baseAns = root.ans;
+      root.ans = function(idx){
+        var question = clone(q());
+        var chosen = question && question.options ? question.options[idx] : null;
+        var correct = !!(question && chosen === question.answer);
+        var before = root.st ? clone(root.st) : null;
+        var out = baseAns.apply(this, arguments);
+        try {
+          saveAnswer({ grade: grade(), subject: txt(root.cS && root.cS.id,60), subjectName: txt(root.cS && root.cS.nm,120), topic: txt(question && question.tag,120), question: txt(question && question.question,500), answer: txt(question && question.answer,200), chosen: txt(chosen,200), correct: correct, usedHelp: !!root.usedHelp, sessionOkBefore: before && before.ok || 0, sessionErrBefore: before && before.err || 0 });
+          haptic(correct);
+          if (!correct) scheduleWrongRepeat(question);
+          maybeCelebrate(correct);
+          setTimeout(function(){ appendWhyBlock(q(), correct); refreshProgressStrip(); }, 80);
+        } catch(_) {}
+        return out;
+      };
+      root.ans.__wave92jCore = true;
+    }
+    if (typeof root.render === 'function' && !root.render.__wave92jCore) {
+      var baseRender = root.render;
+      root.render = function(){ var out = baseRender.apply(this, arguments); try { afterRender(); } catch(_) {} return out; };
+      root.render.__wave92jCore = true;
+    }
+    if (typeof root.startQuiz === 'function' && !root.startQuiz.__wave92jCore) {
+      var baseStart = root.startQuiz;
+      root.startQuiz = function(){ repeatQueue = []; root.__wave92jPreparedNext = null; lastConfettiStreak = 0; var out = baseStart.apply(this, arguments); try { preloadNext(); refreshProgressStrip(); } catch(_) {} return out; };
+      root.startQuiz.__wave92jCore = true;
+    }
+    if (typeof root.endSession === 'function' && !root.endSession.__wave92jCore) {
+      var baseEnd = root.endSession;
+      root.endSession = function(){ repeatQueue = []; root.__wave92jPreparedNext = null; return baseEnd.apply(this, arguments); };
+      root.endSession.__wave92jCore = true;
+    }
+  }
+  function init(){ bindShortcuts(); patchReportConfirmation(); patchFunctions(); afterRender(); setInterval(patchFunctions, 1200); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true }); else init();
+  root.__wave92jTrainingCore = { version:VERSION, dbName:DB, repeatQueue:function(){ return repeatQueue.slice(); }, preloadNext:preloadNext, saveAnswer:saveAnswer };
+})();
