@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave92p-2026-05-01';
+const CACHE_NAME = 'trainer-build-wave92q-2026-05-01';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -22,7 +22,7 @@ const ASSETS = [
   './manifest.webmanifest',
   './healthz.json',
   './assets/asset-manifest.json',
-  './assets/data/runtime_integrity_wave92p.json',
+  './assets/data/runtime_integrity_wave92q.json',
   './assets/css/engine10.dac1e147e6.css',
   './assets/css/wave86x_inline_dashboard.314891eaa4.css',
   './assets/css/wave86x_inline_diagnostic.0bd1520b48.css',
@@ -62,7 +62,7 @@ const ASSETS = [
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_grade_after.114dd48332.js',
   './assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js',
   './assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js',
   './assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js',
   './assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js',
@@ -89,7 +89,7 @@ const ASSETS = [
   './assets/js/chunk_grade_content_wave87m_transition_1011.fadee67605.js',
   './assets/js/chunk_grade_lazy_payloads_wave91h.64da9b3095.js',
   './assets/js/chunk_roadmap_wave86q_accessibility_theme.15a66fbdb3.js',
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js',
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js',
   './assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js',
   './assets/js/chunk_subject_expansion_wave32_math.8957f08038.js',
@@ -197,7 +197,7 @@ const ASSETS = [
   './assets/icons/icon-512.png'
 ];
 const CSP_BRIDGE_ASSETS = [
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js',
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js'
 ];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
@@ -235,7 +235,7 @@ const CRITICAL_ASSETS = Array.from(new Set(CSP_BRIDGE_ASSETS.concat(
     './index.html',
     './manifest.webmanifest',
     './assets/asset-manifest.json',
-  './assets/data/runtime_integrity_wave92p.json',
+  './assets/data/runtime_integrity_wave92q.json',
     './assets/icons/icon-192.png',
     './assets/icons/icon-512.png'
   ]

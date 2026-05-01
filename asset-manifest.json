@@ -1,7 +1,7 @@
 {
-  "version": "trainer-build-wave92p-2026-05-01",
-  "wave": "wave92p",
-  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+  "version": "trainer-build-wave92q-2026-05-01",
+  "wave": "wave92q",
+  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "assets": {
     "assets/css/engine10.css": "assets/css/engine10.dac1e147e6.css",
     "assets/css/wave86x_inline_dashboard.css": "assets/css/wave86x_inline_dashboard.314891eaa4.css",
@@ -25,7 +25,7 @@
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
     "assets/js/bundle_grade_after.js": "assets/js/bundle_grade_after.114dd48332.js",
     "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
-    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
     "assets/js/bundle_grade_runtime_features_wave87n.js": "assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js",
     "assets/js/bundle_grade_runtime_inputs_timing_wave87x.js": "assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js",
     "assets/js/bundle_grade_runtime_services_wave87n.js": "assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js",
@@ -52,7 +52,7 @@
     "assets/js/chunk_grade_content_wave87m_transition_1011.js": "assets/js/chunk_grade_content_wave87m_transition_1011.fadee67605.js",
     "assets/js/chunk_grade_lazy_payloads_wave91h.js": "assets/js/chunk_grade_lazy_payloads_wave91h.64da9b3095.js",
     "assets/js/chunk_roadmap_wave86q_accessibility_theme.js": "assets/js/chunk_roadmap_wave86q_accessibility_theme.15a66fbdb3.js",
-    "assets/js/chunk_roadmap_wave86u_csp_bridge.js": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
+    "assets/js/chunk_roadmap_wave86u_csp_bridge.js": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
     "assets/js/chunk_roadmap_wave86x_style_csp_bridge.js": "assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js",
     "assets/js/chunk_subject_expansion_wave31_russian.js": "assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js",
     "assets/js/chunk_subject_expansion_wave32_math.js": "assets/js/chunk_subject_expansion_wave32_math.8957f08038.js",
@@ -134,8 +134,8 @@
   "generated_at": "2026-04-28T00:00:00Z",
   "hashed_asset_count": 127,
   "generated_at_utc": "2026-05-01T00:00:00Z",
-  "build_id": "trainer-build-wave92p-2026-05-01",
-  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+  "build_id": "trainer-build-wave92q-2026-05-01",
+  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "wave91g_visual_interactive": {
     "visuals": [
       "geometry_svg",
@@ -153,8 +153,8 @@
     ],
     "worksheet_export": "print_to_pdf_html"
   },
-  "brotli_count": 213,
-  "brotli_wave": "wave92o",
+  "brotli_count": 215,
+  "brotli_wave": "wave92q",
   "fonts": [
     "assets/fonts/golos-text-cyrillic-400-normal.woff2",
     "assets/fonts/golos-text-cyrillic-500-normal.woff2",
@@ -223,14 +223,14 @@
     "zip_deflate_required": true,
     "csp_bridge_pages": 20
   },
-  "wave92e_csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+  "wave92e_csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92f_exam": "assets/js/bundle_exam.ce8c0cea55.js",
-  "cache": "trainer-build-wave92n-2026-05-01",
-  "wave92g_csp_mobile_a11y": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
-  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
+  "cache": "trainer-build-wave92q-2026-05-01",
+  "wave92g_csp_mobile_a11y": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92g": {
     "mobile_ux": [
       "haptic feedback",
@@ -256,8 +256,8 @@
       "CSV export from local IndexedDB/fallback events"
     ]
   },
-  "wave92h_csp_personalization_focus": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
-  "wave92h_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
+  "wave92h_csp_personalization_focus": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+  "wave92h_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92h": {
     "personalized_home": true,
     "multi_profiles": true,
@@ -269,31 +269,31 @@
     "micro_lessons_30s": true,
     "clean_training_preserved": true
   },
-  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "wave92j_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92j_dead_features_disabled": true,
-  "runtime_integrity": "assets/data/runtime_integrity_wave92p.json",
-  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
-  "wave92j_csp_storage_training": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
-  "wave92l_csp_cleanup": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
-  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
-  "wave92l_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
+  "runtime_integrity": "assets/data/runtime_integrity_wave92q.json",
+  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92j_csp_storage_training": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+  "wave92l_csp_cleanup": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
+  "wave92l_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92l": {
     "completed": true,
     "cleanup": "auto overlays, floating button, coach, mood, onboarding, dead wrappers disabled",
     "nextq_wrappers_active": 2,
-    "csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
-    "runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js"
+    "csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+    "runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js"
   },
   "wave92m": {
     "event_analytics_no_monkey_patch": true,
     "generated_at_utc": "2026-05-01T00:00:00Z"
   },
   "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
-  "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
-  "cacheName": "trainer-build-wave92n-2026-05-01",
-  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
-  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
+  "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "cacheName": "trainer-build-wave92q-2026-05-01",
+  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92n": {
     "wave35_removed_from_grade_and_diagnostic": true,
     "no_grade_wave35_eager_script": true,
@@ -302,6 +302,14 @@
     "clean_training_preserved": true
   },
   "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
-  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
-  "wave92p_integrity_manifest": "assets/data/runtime_integrity_wave92p.json"
+  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
+  "wave92p_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92q": {
+    "csp_style_src_attr": "unsafe-inline",
+    "csp_pages_patched": 20,
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+    "dead_code_cleanup": true,
+    "brotli_count": 215
+  }
 }
