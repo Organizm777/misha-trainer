@@ -1,9 +1,9 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92q",
-  "version": "trainer-build-wave92q-2026-05-01",
-  "build_id": "trainer-build-wave92q-2026-05-01",
+  "wave": "wave92r",
+  "version": "trainer-build-wave92r-2026-05-01",
+  "build_id": "trainer-build-wave92r-2026-05-01",
   "generated_at_utc": "2026-05-01T00:00:00Z",
   "git_sha": null,
   "hashed_asset_count": 127,
@@ -35,7 +35,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92q-2026-05-01",
+  "cache": "trainer-build-wave92r-2026-05-01",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -117,7 +117,7 @@
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92g": {
     "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
     "features": [
       "haptic feedback",
       "swipe navigation",
@@ -170,7 +170,7 @@
     "zip_method": "Deflate level 9"
   },
   "brotli_wave": "wave92q",
-  "runtime_integrity": "assets/data/runtime_integrity_wave92q.json",
+  "runtime_integrity": "assets/data/runtime_integrity_wave92r.json",
   "wave92j_training_core": {
     "answer_history_indexeddb": true,
     "wrong_repeat_after_3_5": true,
@@ -193,11 +193,11 @@
     "provider_hooks": true,
     "clean_training_preserved": true
   },
-  "cacheName": "trainer-build-wave92q-2026-05-01",
+  "cacheName": "trainer-build-wave92r-2026-05-01",
   "wave92l_engine10": "assets/js/engine10.47425466af.js",
   "wave92l_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
   "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
-  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "engine10_events": true,
   "single_nextq_engine": true,
   "nextq_wrappers_active": 0,
@@ -214,8 +214,8 @@
     "wave35_grade_wrappers_disabled": true
   },
   "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
-  "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
-  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "wave92n": {
     "wave35_removed_from_grade_and_diagnostic": true,
     "no_grade_wave35_eager_script": true,
@@ -234,7 +234,7 @@
     "clean_training_preserved": true
   },
   "wave92p": "runtime_audit_resource_hints_containment",
-  "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "wave92q": {
     "csp_style_src_attr": "unsafe-inline",
     "csp_pages_patched": 20,
