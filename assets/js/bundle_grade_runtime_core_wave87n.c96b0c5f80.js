@@ -1817,70 +1817,58 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     return res;
   };
 
-  const _origNextQ = nextQ;
-  nextQ = function(){
+  function wave21QueueNextProvider(){
     if(Array.isArray(window.__wave21QuestionQueue)){
       if(window.__wave21QuestionQueue.length === 0){
-        if((st.ok + st.err) >= (window.__wave21QuestionQueueTotal || 0)) return endSession();
+        if((st.ok + st.err) >= (window.__wave21QuestionQueueTotal || 0)) { setTimeout(function(){ try{ endSession(); }catch(_){} },0); return { stop:true }; }
         window.__wave21QuestionQueue = null;
         window.__wave21QuestionQueueTotal = 0;
         window.__wave21SessionMode = null;
       } else {
         const item = clone(window.__wave21QuestionQueue.shift());
         if(item){
-          prob = item;
           if(item.__subjectId){
             const meta = findTopicMeta(item.__subjectId, item.__topicId);
             if(meta){ cS = meta.subj; cT = meta.topic; curTheory = cT.th || curTheory; }
           }
-          sel = null;
-          hintOn = false;
-          shpOn = false;
-          usedHelp = false;
-          render();
-          try { window.scrollTo({top:0,behavior:'smooth'}); } catch {}
-          return;
+          return { question:item, source:'wave21-error-review' };
         }
       }
     }
-    return _origNextQ.apply(this, arguments);
-  };
-
-  const _origRender = render;
-  render = function(){
-    const res = _origRender.apply(this, arguments);
-    try {
-      renderSessionProgress();
-      maybeSaveSnapshot(false);
-    } catch {}
-    return res;
-  };
-
-  const _origAns = ans;
-  ans = function(idx){
-    const active = prob ? {
-      subjectId: cS ? cS.id : null,
-      topicId: cT ? cT.id : (typeof findTopicId === 'function' ? findTopicId(prob.tag) : null),
-      question: prob.question,
-      answer: prob.answer,
-      options: Array.isArray(prob.options) ? prob.options.slice() : [],
-      hint: prob.hint || '',
-      tag: prob.tag,
-      color: prob.color,
-      bg: prob.bg,
-      code: prob.code || null,
-      isMath: !!prob.isMath,
-      chosen: prob && prob.options ? prob.options[idx] : null
-    } : null;
-    const result = _origAns.apply(this, arguments);
-    try {
-      if(active && active.chosen !== active.answer){
-        window.__wave21SessionErrors = window.__wave21SessionErrors || [];
-        window.__wave21SessionErrors.push(active);
-      }
-    } catch {}
-    return result;
-  };
+    return null;
+  }
+  function installWave21EngineHooks(){
+    if(window.__wave21EngineHooks) return;
+    window.__wave21EngineHooks = true;
+    window.__trainerNextQuestionProviders = window.__trainerNextQuestionProviders || [];
+    window.__trainerNextQuestionProviders.push(wave21QueueNextProvider);
+    document.addEventListener('trainer:render', function(){ try { renderSessionProgress(); maybeSaveSnapshot(false); } catch {} });
+    document.addEventListener('trainer:answer', function(ev){
+      try{
+        const d = ev && ev.detail || {};
+        const q = d.question || prob;
+        const chosen = d.choice;
+        if(q && chosen !== q.answer){
+          window.__wave21SessionErrors = window.__wave21SessionErrors || [];
+          window.__wave21SessionErrors.push({
+            subjectId: cS ? cS.id : null,
+            topicId: cT ? cT.id : (typeof findTopicId === 'function' ? findTopicId(q.tag) : null),
+            question: q.question,
+            answer: q.answer,
+            options: Array.isArray(q.options) ? q.options.slice() : [],
+            hint: q.hint || '',
+            tag: q.tag,
+            color: q.color,
+            bg: q.bg,
+            code: q.code || null,
+            isMath: !!q.isMath,
+            chosen: chosen
+          });
+        }
+      }catch(_){}
+    });
+  }
+  installWave21EngineHooks();
 
   const _origEndSession = endSession;
   endSession = function(){
@@ -2422,17 +2410,19 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   }
 
   function patchFunctions(){
-    ['go','openSubj','goSubj','startQuiz','nextQ','render','renderProg','refreshMain','showBadges','showHallOfFame','showRushRecords','showBackupModal','startDiag','showResult','selectOpt'].forEach((name) => {
-      const fn = window[name];
-      if(typeof fn !== 'function' || fn.__wave23Wrapped) return;
-      const wrapped = function(){
-        const out = fn.apply(this, arguments);
-        scheduleRefresh();
-        return out;
-      };
-      wrapped.__wave23Wrapped = true;
-      window[name] = wrapped;
+    if(window.__wave92lA11yEngineHooks) return;
+    window.__wave92lA11yEngineHooks = true;
+    ['trainer:start','trainer:render','trainer:answer','trainer:end'].forEach((type) => {
+      document.addEventListener(type, () => { scheduleRefresh(); }, false);
     });
+    if(!window.__wave92lA11yScreenObserver && typeof MutationObserver !== 'undefined'){
+      const nodes = $('.scr');
+      if(nodes.length){
+        const observer = new MutationObserver(() => { scheduleRefresh(); });
+        nodes.forEach((node) => observer.observe(node, { attributes:true, attributeFilter:['class'] }));
+        window.__wave92lA11yScreenObserver = observer;
+      }
+    }
   }
 
   function refresh(){
@@ -2928,30 +2918,12 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   }
 
   function patchFunctions(){
-    ['go','startQuiz','endSession','showHallOfFame','showClassSelect','showAbout'].forEach((name) => {
-      const orig = window[name];
-      if(typeof orig !== 'function' || orig.__wave24wrapped) return;
-      const wrapped = function(...args){
-        const out = orig.apply(this, args);
-        setTimeout(() => { updateNavState(); syncWakeLock(); }, 20);
-        return out;
-      };
-      wrapped.__wave24wrapped = true;
-      window[name] = wrapped;
+    if(window.__wave92lMobileEngineHooks) return;
+    window.__wave92lMobileEngineHooks = true;
+    ['trainer:start','trainer:render','trainer:answer','trainer:end'].forEach((type) => {
+      document.addEventListener(type, () => { setTimeout(() => { updateNavState(); syncWakeLock(); }, 20); }, false);
     });
-    if(pageType() === 'diagnostic'){
-      ['startDiag','nextQ','showResult'].forEach((name) => {
-        const orig = window[name];
-        if(typeof orig !== 'function' || orig.__wave24wrapped) return;
-        const wrapped = function(...args){
-          const out = orig.apply(this, args);
-          setTimeout(() => { updateNavState(); syncWakeLock(); }, 20);
-          return out;
-        };
-        wrapped.__wave24wrapped = true;
-        window[name] = wrapped;
-      });
-    }
+    setTimeout(() => { updateNavState(); syncWakeLock(); }, 20);
   }
 
   function observeScreens(){
@@ -3154,16 +3126,12 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   }
 
   function patchRender(){
-    if(typeof render !== 'function' || render._wave26Patched) return;
-    const orig = render;
-    render = function(){
-      const out = orig.apply(this, arguments);
+    if(window.__wave26RenderEventBound) return;
+    window.__wave26RenderEventBound = true;
+    document.addEventListener('trainer:render', function(){
       try{ applyQuestionContext(); }catch(_e){}
       try{ enrichExplanation(); }catch(_e){}
-      return out;
-    };
-    render._wave26Patched = true;
-    render._wave26Orig = orig;
+    });
   }
 
   function patchJournal(){
@@ -3760,100 +3728,12 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   window.startStickyReview = startStickyReview;
   window.startSpacedReview = startDueReview;
 
-  var _oldNextQ = window.nextQ;
-  window.nextQ = function(){
-    if (reviewMode){
-      var index = (window.st ? st.ok + st.err : 0);
-      if (index >= reviewMode.items.length) return endSession();
-      var item = reviewMode.items[index];
-      setContextFromItem(item);
-      window.prob = buildProb(item);
-      window.__wave28CurrentReviewKey = item.key;
-      window.sel = null;
-      window.hintOn = false;
-      window.shpOn = false;
-      window.usedHelp = false;
-      render();
-      try{ window.scrollTo({top:0, behavior:'smooth'}); }catch(e){}
-      return;
-    }
-    return _oldNextQ.apply(this, arguments);
-  };
-
-  var _oldRender = window.render;
-  window.render = function(){
-    var out = _oldRender.apply(this, arguments);
-    if (reviewMode){
-      var pa = document.getElementById('pa');
-      if (pa){
-        var idx = Math.min(reviewMode.items.length, (window.st ? st.ok + st.err : 0) + 1);
-        var current = reviewMode.items[Math.max(0, idx - 1)] || reviewMode.items[0];
-        var pct = Math.round(((idx - 1) / Math.max(1, reviewMode.items.length)) * 100);
-        var preview = current ? reviewPreview(current, 5) : null;
-        pa.innerHTML = '<div id="wave28-session-meta">'
-          + '<div class="ttl">' + (reviewMode.kind === 'sticky' ? '📌 SM-2: сложные карточки' : '🔁 SM-2 повторение') + '</div>'
-          + '<div class="bar"><div class="fill" style="width:' + pct + '%"></div></div>'
-          + '<div class="meta"><span>Карточка ' + idx + ' из ' + reviewMode.items.length + '</span><span>EF ' + formatEf(current && current.ef) + ' · после верного ≈ ' + (preview ? preview.intervalDays : 1) + ' д.</span></div>'
-          + '</div>';
-      }
-    }
-    return out;
-  };
-
-  var _oldAns = window.ans;
-  window.ans = function(index){
-    var prevSel = window.sel;
-    var answerValue = window.prob && prob.options ? prob.options[index] : null;
-    var expected = window.prob ? prob.answer : null;
-    var key = window.__wave28CurrentReviewKey || (window.prob ? reviewKey({q:prob.question, correct:prob.answer, tag:prob.tag}) : '');
-    var wasReview = !!reviewMode;
-    var res = _oldAns.apply(this, arguments);
-    if (prevSel === null && answerValue != null){
-      if (wasReview && key && answerValue === expected){
-        advanceReviewSuccess(key, !!window.usedHelp);
-      } else if (!wasReview && key && answerValue === expected){
-        var state = loadReviewState();
-        if (state.items[key]) advanceReviewSuccess(key, !!window.usedHelp);
-      }
-      setTimeout(function(){ try{ renderReviewCard(); }catch(e){} try{ appendReviewProgress(); }catch(e){} }, 0);
-      if (wasReview && window.st && (st.ok + st.err) >= ((reviewMode && reviewMode.items && reviewMode.items.length) || 0) && reviewMode){
-        setTimeout(function(){ if(reviewMode) endSession(); }, 220);
-      }
-    }
-    return res;
-  };
-
-  var _oldEndSession = window.endSession;
-  window.endSession = function(){
-    var mode = reviewMode;
-    reviewMode = null;
-    var res = _oldEndSession.apply(this, arguments);
-    if (mode){
-      setTimeout(function(){
-        var host = document.getElementById('res-topics');
-        if (host){
-          var state = loadReviewState();
-          var digest = reviewDigest(state);
-          var html = '<div class="rcard"><h3>🔁 SM-2 повторение</h3>'
-            + '<div class="wave28-stats" style="margin-top:10px">'
-            + '<div class="wave28-stat"><div class="v" style="color:var(--accent)">' + digest.due + '</div><div class="l">сегодня</div></div>'
-            + '<div class="wave28-stat"><div class="v" style="color:var(--orange)">' + digest.upcomingWeek + '</div><div class="l">на неделе</div></div>'
-            + '<div class="wave28-stat"><div class="v" style="color:var(--red)">' + digest.sticky + '</div><div class="l">сложные</div></div>'
-            + '<div class="wave28-stat"><div class="v" style="color:var(--green)">' + digest.mastered + '</div><div class="l">закреплены</div></div>'
-            + '</div>'
-            + '<div class="wave28-muted" style="margin:8px 0 10px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '.</div>'
-            + '<div class="wave28-actions">'
-            + '<button class="btn btn-p" ' + (digest.due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.5"') + '>🔁 Повторить сегодня</button>'
-            + '<button class="btn btn-o" ' + (digest.sticky ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.5"') + '>📌 Мои сложные</button>'
-            + '</div></div>';
-          host.innerHTML += html;
-        }
-        var resultBtns = document.querySelectorAll('#s-result .btn, #s-result button');
-        resultBtns.forEach(function(btn){ if ((btn.textContent || '').indexOf('Назад') !== -1) btn.onclick = function(){ go('main'); }; });
-      }, 0);
-    }
-    return res;
-  };
+  function wave28ReviewDisabledNotice(){
+    say('SM-2 повторение отключено в wave92l: ядро тренировки работает без nextQ/ans/render monkey-patch.', 'info', 2400);
+  }
+  window.startDueReview = wave28ReviewDisabledNotice;
+  window.startStickyReview = wave28ReviewDisabledNotice;
+  window.startSpacedReview = wave28ReviewDisabledNotice;
 
   var _oldResetProgress = window.resetProgress;
   if (hasFn(_oldResetProgress)){
@@ -5077,5 +4957,116 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
 ;window.__wave87nGradeRuntimeCoreBundle = Object.freeze({wave:'wave87n', role:'core', lazy:['assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js','assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js'], bundled:["chunk_roadmap_wave86q_accessibility_theme.js","bundle_grade_after.js","chunk_roadmap_wave86n_progress_tools.js","bundle_error_tracking.js"], generatedAt:'2026-04-23T00:00:00Z'});
 
 
-;/* --- wave92d_indexeddb_analytics_grade_core.js --- */
-(function(){'use strict';if(window.__wave92dUxBooted)return;window.__wave92dUxBooted=true;var DB='trainer3_events_wave92d',STORE='events',FB='trainer_events_fallback_wave92d',p=null;function txt(v,n){return String(v==null?'':v).replace(/\s+/g,' ').trim().slice(0,n||160)}function set(k,v){try{localStorage.setItem(k,v)}catch(_){}}function get(k){try{return localStorage.getItem(k)}catch(_){return null}}function pg(){try{return(location.pathname||'/').split('/').pop()||'index.html'}catch(_){return'unknown'}}function gr(){try{return window.GRADE_NUM||document.documentElement.getAttribute('data-grade')||null}catch(_){return null}}function db(){if(p)return p;p=new Promise(function(res,rej){if(!('indexedDB'in window)){rej(Error('no idb'));return}var r=indexedDB.open(DB,1);r.onupgradeneeded=function(){var d=r.result,s=d.objectStoreNames.contains(STORE)?r.transaction.objectStore(STORE):d.createObjectStore(STORE,{keyPath:'id',autoIncrement:true});if(!s.indexNames.contains('by_ts'))s.createIndex('by_ts','ts');if(!s.indexNames.contains('by_kind'))s.createIndex('by_kind','kind')};r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}});return p}function fb(e){try{var a=JSON.parse(get(FB)||'[]');if(!Array.isArray(a))a=[];a.push(e);set(FB,JSON.stringify(a.slice(-300)))}catch(_){}}function track(k,m){var e={ts:(new Date).toISOString(),kind:txt(k,64),page:pg(),grade:gr(),meta:m||{}};db().then(function(d){try{d.transaction(STORE,'readwrite').objectStore(STORE).add(e)}catch(_){fb(e)}}).catch(function(){fb(e)});try{window.dispatchEvent(new CustomEvent('trainer:event',{detail:e}))}catch(_){}return e}window.trainerEvents=window.trainerEvents||{};window.trainerEvents.track=track;window.trainerEvents.dbName=DB;window.trainerEvents.readAll=function(cb){db().then(function(d){var r=d.transaction(STORE,'readonly').objectStore(STORE).getAll();r.onsuccess=function(){cb(r.result||[])};r.onerror=function(){cb([])}}).catch(function(){try{cb(JSON.parse(get(FB)||'[]')||[])}catch(_){cb([])}})};function a11y(){var main=document.querySelector('main')||document.querySelector('.scr.on .w')||document.querySelector('.w');if(main){if(!main.id)main.id='main-content';main.setAttribute('role','main')}var o=document.getElementById('opts');if(o){o.setAttribute('role','radiogroup');o.setAttribute('aria-label','Варианты ответа');Array.prototype.forEach.call(o.querySelectorAll('button,.opt'),function(el,i){if(!el.getAttribute('aria-label'))el.setAttribute('aria-label','Вариант ответа '+(i+1)+': '+txt(el.textContent,90))})}}function wrap(n,k,mm){var f=window[n];if(typeof f!=='function'||f.__wave92dTracked)return;window[n]=function(){var a=arguments,r;try{return r=f.apply(this,a)}finally{try{track(k||n,mm?mm(a):{target:txt(a&&a[0],80)})}catch(_){}}};window[n].__wave92dTracked=true}function bind(){wrap('go','screen_change',function(a){return{target:txt(a&&a[0],80)}});wrap('startQuiz','quiz_start');wrap('endSession','quiz_end',function(){return{ok:window.st&&st.ok,err:window.st&&st.err}});wrap('ans','answer_submit',function(a){var i=a&&a[0],ok=null;try{var v=window.prob&&prob.options?prob.options[i]:null;ok=window.prob?v===prob.answer:null}catch(_){}return{index:i,correct:ok,topic:txt(window.prob&&prob.tag,80)}})}function init(){a11y();bind();track('page_view',{title:txt(document.title,120)});try{new MutationObserver(function(){a11y();bind()}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']})}catch(_){}setInterval(bind,1500)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();})();
+;/* --- wave92m_event_analytics_grade_core.js --- */
+(function(){
+  'use strict';
+  if (window.__wave92mEventAnalyticsBooted) return;
+  window.__wave92mEventAnalyticsBooted = true;
+  var DB = 'trainer3_events_wave92d';
+  var STORE = 'events';
+  var FB = 'trainer_events_fallback_wave92d';
+  var dbPromise = null;
+  var lastScreen = '';
+  function txt(v,n){ return String(v == null ? '' : v).replace(/\s+/g,' ').trim().slice(0, n || 160); }
+  function get(k){ try { return localStorage.getItem(k); } catch(_) { return null; } }
+  function set(k,v){ try { localStorage.setItem(k,v); } catch(_) {} }
+  function page(){ try { return (location.pathname || '/').split('/').pop() || 'index.html'; } catch(_) { return 'unknown'; } }
+  function grade(){ try { return window.GRADE_NUM || document.documentElement.getAttribute('data-grade') || document.body.getAttribute('data-grade') || null; } catch(_) { return null; } }
+  function openDb(){
+    if (dbPromise) return dbPromise;
+    dbPromise = new Promise(function(resolve, reject){
+      if (!('indexedDB' in window)) { reject(new Error('indexedDB unavailable')); return; }
+      var req = indexedDB.open(DB, 1);
+      req.onupgradeneeded = function(){
+        var db = req.result;
+        var store = db.objectStoreNames.contains(STORE) ? req.transaction.objectStore(STORE) : db.createObjectStore(STORE, { keyPath:'id', autoIncrement:true });
+        if (!store.indexNames.contains('by_ts')) store.createIndex('by_ts','ts');
+        if (!store.indexNames.contains('by_kind')) store.createIndex('by_kind','kind');
+        if (!store.indexNames.contains('by_page')) store.createIndex('by_page','page');
+      };
+      req.onsuccess = function(){ resolve(req.result); };
+      req.onerror = function(){ reject(req.error || new Error('indexedDB open failed')); };
+    });
+    return dbPromise;
+  }
+  function fallback(entry){
+    try { var rows = JSON.parse(get(FB) || '[]'); if (!Array.isArray(rows)) rows = []; rows.push(entry); set(FB, JSON.stringify(rows.slice(-500))); } catch(_) {}
+  }
+  function track(kind, meta){
+    var entry = { ts:(new Date()).toISOString(), kind:txt(kind,64), page:page(), grade:grade(), meta:meta || {} };
+    openDb().then(function(db){
+      try { db.transaction(STORE,'readwrite').objectStore(STORE).add(entry); } catch(_) { fallback(entry); }
+    }).catch(function(){ fallback(entry); });
+    try { window.dispatchEvent(new CustomEvent('trainer:event', { detail: entry })); } catch(_) {}
+    return entry;
+  }
+  function readAll(cb){
+    openDb().then(function(db){
+      var req = db.transaction(STORE,'readonly').objectStore(STORE).getAll();
+      req.onsuccess = function(){ cb(req.result || []); };
+      req.onerror = function(){ cb([]); };
+    }).catch(function(){ try { cb(JSON.parse(get(FB) || '[]') || []); } catch(_) { cb([]); } });
+  }
+  function clearAll(cb){
+    openDb().then(function(db){
+      var req = db.transaction(STORE,'readwrite').objectStore(STORE).clear();
+      req.onsuccess = function(){ try { localStorage.removeItem(FB); } catch(_) {} if (cb) cb(true); };
+      req.onerror = function(){ if (cb) cb(false); };
+    }).catch(function(){ try { localStorage.removeItem(FB); if (cb) cb(true); } catch(_) { if (cb) cb(false); } });
+  }
+  window.trainerEvents = window.trainerEvents || {};
+  window.trainerEvents.track = track;
+  window.trainerEvents.readAll = readAll;
+  window.trainerEvents.clearAll = clearAll;
+  window.trainerEvents.dbName = DB;
+  function annotate(){
+    var main = document.querySelector('main') || document.querySelector('.scr.on .w') || document.querySelector('.w');
+    if (main) { if (!main.id) main.id = 'main-content'; main.setAttribute('role','main'); }
+    var opts = document.getElementById('opts');
+    if (opts) {
+      opts.setAttribute('role','radiogroup');
+      opts.setAttribute('aria-label','Варианты ответа');
+      Array.prototype.forEach.call(opts.querySelectorAll('button,.opt'), function(el, i){
+        if (!el.getAttribute('aria-label')) el.setAttribute('aria-label', 'Вариант ответа ' + (i + 1) + ': ' + txt(el.textContent, 90));
+        if (!el.getAttribute('role')) el.setAttribute('role', 'radio');
+        if (!el.getAttribute('aria-checked')) el.setAttribute('aria-checked', String(/\bok\b|\bno\b/.test(el.className || '')));
+      });
+    }
+    var fb = document.getElementById('fba');
+    if (fb) { fb.setAttribute('role','alert'); fb.setAttribute('aria-live','polite'); }
+  }
+  function activeScreen(){
+    try { var el = document.querySelector('.scr.on'); return el ? (el.id || txt(el.className, 80)) : ''; } catch(_) { return ''; }
+  }
+  function checkScreen(){
+    var id = activeScreen();
+    if (id && id !== lastScreen) { lastScreen = id; track('screen_change', { target:id }); }
+  }
+  function bindEngineEvents(){
+    document.addEventListener('trainer:start', function(ev){ track('quiz_start', { grade:grade(), mode: txt(ev && ev.detail && ev.detail.mode, 40) }); });
+    document.addEventListener('trainer:answer', function(ev){
+      var d = (ev && ev.detail) || {};
+      var q = d.question || {};
+      track('answer_submit', { index:d.index, correct:!!d.correct, topic:txt(q.tag || q.topic || '', 80), usedHelp:!!d.usedHelp });
+    });
+    document.addEventListener('trainer:end', function(ev){
+      var d = (ev && ev.detail) || {}, st = d.st || {};
+      track('quiz_end', { ok:st.ok || 0, err:st.err || 0, total:(st.ok || 0) + (st.err || 0) });
+    });
+    document.addEventListener('trainer:render', function(){ annotate(); checkScreen(); });
+  }
+  function bindClicks(){
+    document.addEventListener('click', function(ev){
+      var el = ev.target && ev.target.closest ? ev.target.closest('a,button,[role="button"],[data-wave87r-action],[data-wave89t-play-action]') : null;
+      if (!el) return;
+      var kind = el.getAttribute('data-wave89t-play-action') === 'answer' || (el.classList && el.classList.contains('opt')) ? 'answer_click' : 'ui_click';
+      track(kind, { id:el.id || '', action:txt(el.getAttribute('data-wave87r-action') || el.getAttribute('data-wave89t-play-action') || '', 80), text:txt(el.getAttribute('aria-label') || el.textContent, 120), href:el.getAttribute('href') || '' });
+    }, true);
+  }
+  function init(){
+    if (!document.body) return;
+    annotate(); bindClicks(); bindEngineEvents(); checkScreen(); track('page_view', { title:txt(document.title,120) });
+    try { new MutationObserver(function(){ annotate(); checkScreen(); }).observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['class','hidden','aria-hidden'] }); } catch(_) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true }); else init();
+})();

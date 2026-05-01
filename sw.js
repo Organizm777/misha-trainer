@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave92k-2026-04-30';
+const CACHE_NAME = 'trainer-build-wave92p-2026-05-01';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -22,11 +22,11 @@ const ASSETS = [
   './manifest.webmanifest',
   './healthz.json',
   './assets/asset-manifest.json',
-  './assets/data/runtime_integrity_wave92k.json',
+  './assets/data/runtime_integrity_wave92p.json',
   './assets/css/engine10.dac1e147e6.css',
   './assets/css/wave86x_inline_dashboard.314891eaa4.css',
   './assets/css/wave86x_inline_diagnostic.0bd1520b48.css',
-  './assets/css/wave86x_inline_grade.79896c8b48.css',
+  './assets/css/wave86x_inline_grade.52bf08891e.css',
   './assets/css/wave86x_inline_index.53138c0440.css',
   './assets/css/wave86x_inline_spec_subjects.d549c141b2.css',
   './assets/css/wave86x_inline_tests.45c5256157.css',
@@ -61,8 +61,8 @@ const ASSETS = [
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
   './assets/js/bundle_gamification_xp.907a25e6bd.js',
   './assets/js/bundle_grade_after.114dd48332.js',
-  './assets/js/bundle_grade_runtime_core_wave87n.5153bf0a29.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js',
+  './assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js',
   './assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js',
   './assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js',
   './assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js',
@@ -87,9 +87,9 @@ const ASSETS = [
   './assets/js/chunk_grade_content_wave86l_grade56_combined_wave92a.fbe3c34e29.js',
   './assets/js/chunk_grade_content_wave86l_informatics_56_wave86t.a624ae8740.js',
   './assets/js/chunk_grade_content_wave87m_transition_1011.fadee67605.js',
-  './assets/js/chunk_grade_lazy_payloads_wave91h.bdb5ac6f2c.js',
+  './assets/js/chunk_grade_lazy_payloads_wave91h.64da9b3095.js',
   './assets/js/chunk_roadmap_wave86q_accessibility_theme.15a66fbdb3.js',
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js',
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js',
   './assets/js/chunk_subject_expansion_wave31_russian.1702ff758a.js',
   './assets/js/chunk_subject_expansion_wave32_math.8957f08038.js',
@@ -113,7 +113,7 @@ const ASSETS = [
   './assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js',
   './assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.ea7e74deee.js',
   './assets/js/chunk_theory_wave91i.a8fa390972.js',
-  './assets/js/engine10.a8d5b8c39f.js',
+  './assets/js/engine10.47425466af.js',
   './assets/js/exam_bank_ege_base_math_wave92d.7212037c25.js',
   './assets/js/exam_bank_ege_english_wave92d.3bfb4e2fae.js',
   './assets/js/exam_bank_ege_history_wave92d.f13c849b68.js',
@@ -166,7 +166,6 @@ const ASSETS = [
   './assets/js/inline_tests_1_wave86u.08cb8f7dc8.js',
   './assets/js/inline_tests_2_wave86u.ae4d81b485.js',
   './assets/js/inline_tests_3_wave86u.bab0f051a9.js',
-  './assets/js/wave35_plans.f812119619.js',
   './assets/data/exam_bank/catalog.json',
   './assets/data/exam_bank/ege_base_math_2026_foundation.json',
   './assets/data/exam_bank/ege_english_2026_foundation.json',
@@ -198,7 +197,7 @@ const ASSETS = [
   './assets/icons/icon-512.png'
 ];
 const CSP_BRIDGE_ASSETS = [
-  './assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js',
+  './assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js',
   './assets/js/chunk_roadmap_wave86x_style_csp_bridge.bd9c395426.js'
 ];
 const DIAGNOSTIC_OFFLINE_ASSETS = [
@@ -207,7 +206,6 @@ const DIAGNOSTIC_OFFLINE_ASSETS = [
   './assets/css/wave89p_self_host_fonts.5603de96b7.css',
   './assets/js/inline_diagnostic_1_wave86u.10ff5e8d9b.js',
   './assets/js/inline_diagnostic_2_wave86u.1bca35f107.js',
-  './assets/js/wave35_plans.f812119619.js',
   './assets/js/bundle_shell.ef4140d586.js',
   './assets/js/bundle_diagnostic_tools.9792be3cd6.js',
   './assets/js/chunk_roadmap_wave86q_accessibility_theme.15a66fbdb3.js',
@@ -237,7 +235,7 @@ const CRITICAL_ASSETS = Array.from(new Set(CSP_BRIDGE_ASSETS.concat(
     './index.html',
     './manifest.webmanifest',
     './assets/asset-manifest.json',
-  './assets/data/runtime_integrity_wave92k.json',
+  './assets/data/runtime_integrity_wave92p.json',
     './assets/icons/icon-192.png',
     './assets/icons/icon-512.png'
   ]

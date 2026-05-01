@@ -3,7 +3,7 @@
   'use strict';
   var root = window;
   if (!root || root.__wave92fFeaturePackLoader) return;
-  var SRC = "./assets/js/chunk_grade_featurepacks_wave92f.61b2de3bca.js";
+  var SRC = "./assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js";
   var attempts = 0, loading = false, loaded = false;
   function ls(k){ try { return localStorage.getItem(k); } catch(_) { return null; } }
   function isSimple(){
@@ -161,7 +161,7 @@
   function activePlay(){ try { var s=document.getElementById('s-play'); return !!(s && /\bon\b/.test(s.className || '')); } catch(_) { return false; } }
   function noExam(){ try { return !root.diagMode && !root.rushMode && !root.globalMix; } catch(_) { return true; } }
   function patch(){
-    return; // wave92k: SM-2 automatic ans()/nextQ() wrappers disabled; API remains passive.
+    return; // wave92l: SM-2 automatic ans()/nextQ() wrappers disabled; API remains passive.
   }
   root.wave92fSm2 = { version:'wave92f', key:KEY, update:update, due:due, all:getLS, count:function(){ return Object.keys(getLS()).length; } };
   function boot(){ patch(); setTimeout(patch, 500); setTimeout(patch, 1500); }
@@ -189,7 +189,7 @@
   function choose(){ var m=meta(), key=m.subj+' '+m.topic; for(var i=0;i<templates.length;i++) if(templates[i].re.test(key)) return templates[i]; return null; }
   function activePlay(){ var s=document.getElementById('s-play'); return !!(s && /\bon\b/.test(s.className || '')); }
   function patch(){
-    return; // wave92k: parameterized automatic nextQ wrapper disabled; manual generator remains.
+    return; // wave92l: parameterized automatic nextQ wrapper disabled; manual generator remains.
   }
   root.wave92fParametric = { version:'wave92f', templates:templates.map(function(t){return t.id;}), generate:function(){ var t=choose(); return t ? t.build(seed(), meta()) : null; } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', patch, { once:true }); else patch();
@@ -876,7 +876,7 @@
     }, true);
   }
 
-  // wave92k: interactive keyboard/nextQ/render/ans wrappers disabled; A/B/C/D core only.
+  // wave92l: interactive keyboard/nextQ/render/ans wrappers disabled; A/B/C/D core only.
 
   root.__wave87wInteractiveFormats = {
     version: 'wave88b',
@@ -1728,41 +1728,18 @@
 
   bindKeyboardGuard();
 
-  var baseAns = typeof root.ans === 'function' ? root.ans : null;
-  if (baseAns) {
-    root.ans = function(idx){
-      var question = currentQuestion();
-      if (inputModeFor(question) && !allowProgrammaticAns) return null;
-      var hadSelection = hasSelection();
-      var result = baseAns.apply(this, arguments);
-      try {
-        if (!hadSelection && question && hasSelection()) captureTiming(question);
-      } catch (_err) {}
-      return result;
-    };
+  function installInputTimingEngineEvents(){
+    if (root.__wave87xInputTimingEvents) return;
+    root.__wave87xInputTimingEvents = true;
+    document.addEventListener('trainer:answer', function(event){
+      try { var question = event && event.detail && event.detail.question ? event.detail.question : currentQuestion(); if (question) captureTiming(question); } catch (_err) {}
+    });
+    document.addEventListener('trainer:render', function(){
+      try { armTiming(currentQuestion()); renderInputQuestion(); appendTimingToFeedback(); } catch (_err) {}
+    });
+    document.addEventListener('trainer:renderProg', function(){ try { appendTimingProgress(); } catch (_err) {} });
   }
-
-  var baseRender = typeof root.render === 'function' ? root.render : null;
-  if (baseRender) {
-    root.render = function(){
-      var result = baseRender.apply(this, arguments);
-      try {
-        armTiming(currentQuestion());
-        renderInputQuestion();
-        appendTimingToFeedback();
-      } catch (_err) {}
-      return result;
-    };
-  }
-
-  var baseRenderProg = typeof root.renderProg === 'function' ? root.renderProg : null;
-  if (baseRenderProg) {
-    root.renderProg = function(){
-      var result = baseRenderProg.apply(this, arguments);
-      try { appendTimingProgress(); } catch (_err) {}
-      return result;
-    };
-  }
+  installInputTimingEngineEvents();
 
   root.__wave87xInputTimingRuntime = {
     version: 'wave87z',
@@ -5360,72 +5337,28 @@
     };
   }
 
-  var baseStartQuiz = typeof root.startQuiz === 'function' ? root.startQuiz : null;
-  if (baseStartQuiz) {
-    root.startQuiz = function(){
-      resetState();
-      return baseStartQuiz.apply(this, arguments);
-    };
-  }
-
-  var baseNextQ = typeof root.nextQ === 'function' ? root.nextQ : null;
-  if (baseNextQ) {
-    root.nextQ = function(){
-      if (shouldDelegateNextQ()) return baseNextQ.apply(this, arguments);
-      var candidates = gatherCandidates(CANDIDATE_COUNT);
-      var chosen = selectCandidateFromPool(candidates, getSeenMap(), null);
-      if (!chosen || !applyCandidate(chosen)) return baseNextQ.apply(this, arguments);
-      return true;
-    };
-  }
-
-  var baseAns = typeof root.ans === 'function' ? root.ans : null;
-  if (baseAns) {
-    root.ans = function(){
-      var question = getCurrentQuestion();
-      var hadSelection = getSelection() != null;
-      var result = baseAns.apply(this, arguments);
+  function installAdaptiveEngineEvents(){
+    if (root.__wave89mAdaptiveEvents) return;
+    root.__wave89mAdaptiveEvents = true;
+    document.addEventListener('trainer:start', function(){ try { resetState(); } catch (_err) {} });
+    document.addEventListener('trainer:answer', function(event){
       try {
-        if (!question || hadSelection || shouldDelegateNextQ()) return result;
-        if (getSelection() == null) return result;
+        var question = event && event.detail && event.detail.question ? event.detail.question : getCurrentQuestion();
+        if (!question || shouldDelegateNextQ()) return;
         var sample = question.__wave87xTiming && question.__wave87xTiming.last ? question.__wave87xTiming.last : null;
         recordOutcome(question, {
-          correct: asText(getSelection()) === asText(question.answer),
+          correct: !!(event && event.detail && event.detail.correct),
           usedHelp: getUsedHelp(),
           ms: sample && sample.ms ? num(sample.ms) : 0,
           bucket: difficultyOf(question),
           target: state.lastTarget || difficultyOf(question)
         });
       } catch (_err) {}
-      return result;
-    };
+    });
+    document.addEventListener('trainer:end', function(){ try { state.active = false; } catch (_err) {} });
   }
-
-  var baseRender = typeof root.render === 'function' ? root.render : null;
-  if (baseRender) {
-    root.render = function(){
-      var result = baseRender.apply(this, arguments);
-      try { renderPlayCard(); } catch (_err) {}
-      return result;
-    };
-  }
-
-  var baseRenderProg = typeof root.renderProg === 'function' ? root.renderProg : null;
-  if (baseRenderProg) {
-    root.renderProg = function(){
-      var result = baseRenderProg.apply(this, arguments);
-      try { appendProgressCard(); } catch (_err) {}
-      return result;
-    };
-  }
-
-  var baseEndSession = typeof root.endSession === 'function' ? root.endSession : null;
-  if (baseEndSession) {
-    root.endSession = function(){
-      state.active = false;
-      return baseEndSession.apply(this, arguments);
-    };
-  }
+  root.__wave87xCandidateSelectNext = function(){ return null; };
+  installAdaptiveEngineEvents();
 
   root.__wave89mAdaptiveDifficulty = {
     version: 'wave89m',
@@ -5993,87 +5926,7 @@
     state.lastPlanStages = [];
   }
 
-  var baseStartQuiz = typeof root.startQuiz === 'function' ? root.startQuiz : null;
-  if (baseStartQuiz) {
-    root.startQuiz = function(){
-      var subject = currentSubject();
-      var topic = currentTopic();
-      if (supportsAutoSeed() && shouldSeedForTopic(subject, topic)) seedGuidedPath(subject, topic);
-      else syncStateFromContext();
-      return baseStartQuiz.apply(this, arguments);
-    };
-  }
-
-  var baseAns = typeof root.ans === 'function' ? root.ans : null;
-  if (baseAns) {
-    root.ans = function(){
-      var question = currentQuestion();
-      var stage = question && question.__wave89nStage ? question.__wave89nStage : '';
-      var subject = currentSubject();
-      var topic = currentTopic();
-      var hadSelection = currentSelection() != null;
-      var result = baseAns.apply(this, arguments);
-      try {
-        if (!stage || hadSelection || currentSelection() == null) return result;
-        var sample = question.__wave87xTiming && question.__wave87xTiming.last ? question.__wave87xTiming.last : null;
-        state.stageResults[stage] = {
-          attempted: true,
-          correct: norm(currentSelection()) === norm(question.answer),
-          usedHelp: usedHelpState(),
-          ms: sample && sample.ms ? Math.round(num(sample.ms)) : 0
-        };
-        recordStage(subject, topic, stage, state.stageResults[stage], question);
-        try {
-          var adaptive = root.__wave89mAdaptiveDifficulty;
-          if (adaptive && typeof adaptive.recordOutcome === 'function') {
-            var adaptiveState = adaptive.currentState && typeof adaptive.currentState === 'function' ? adaptive.currentState() : null;
-            adaptive.recordOutcome(question, {
-              correct: !!state.stageResults[stage].correct,
-              usedHelp: !!state.stageResults[stage].usedHelp,
-              ms: state.stageResults[stage].ms || 0,
-              bucket: difficultyOf(question),
-              target: adaptiveState && adaptiveState.lastTarget ? adaptiveState.lastTarget : difficultyOf(question)
-            });
-          }
-        } catch (_err) {}
-        state.currentStage = stage;
-        state.active = true;
-        state.topicKey = topicKey(subject, topic);
-        state.subjectId = cleanText(subject && subject.id);
-        state.topicId = cleanText(topic && topic.id);
-      } catch (_err) {}
-      return result;
-    };
-  }
-
-  // wave92k: guided-route nextQ/render/renderProg wrappers disabled; route seeding stays off.
-
-  var baseGo = typeof root.go === 'function' ? root.go : null;
-  if (baseGo) {
-    root.go = function(screen){
-      var result = baseGo.apply(this, arguments);
-      try {
-        if (screen === 'theory') renderTheoryCard();
-        else removeByAttr(THEORY_ATTR);
-        if (screen === 'play') renderPlayCard();
-        else removeByAttr(PLAY_ATTR);
-        if (screen === 'prog') appendProgressCard();
-        else removeByAttr(PROGRESS_ATTR);
-      } catch (_err) {}
-      return result;
-    };
-  }
-
-  var baseEndSession = typeof root.endSession === 'function' ? root.endSession : null;
-  if (baseEndSession) {
-    root.endSession = function(){
-      var result = baseEndSession.apply(this, arguments);
-      resetState();
-      removeByAttr(PLAY_ATTR);
-      return result;
-    };
-  }
-
+  // wave92l: guided route is fully passive. No startQuiz/ans/go/endSession monkey-patches.
   function init(){
     try {
       if (activeScreen('s-theory')) renderTheoryCard();
@@ -6389,7 +6242,12 @@
     qc.parentNode.insertBefore(b, qc.nextSibling);
   }
   function css(){if(document.getElementById('wave92a-grade-style'))return;var s=document.createElement('style');s.id='wave92a-grade-style';s.textContent='.wave92a-report-question{margin:8px 0 0;width:100%;font-size:12px;opacity:.88}.wave92a-report-question:focus-visible{outline:3px solid var(--accent,#2563eb);outline-offset:2px}';(document.head||document.documentElement).appendChild(s)}
-  function patch(){try{if(typeof go==='function'&&!go.__wave92a){var og=go;go=function(){var z=og.apply(this,arguments);setTimeout(mount,0);return z};go.__wave92a=1;root.go=go}}catch(_){}try{if(typeof render==='function'&&!render.__wave92a){var or=render;render=function(){var z=or.apply(this,arguments);setTimeout(mount,0);return z};render.__wave92a=1;root.render=render}}catch(_){}}
+  function patch(){
+    if(root.__wave92aReportEvents) return;
+    root.__wave92aReportEvents = true;
+    document.addEventListener('trainer:render', function(){ setTimeout(mount,0); });
+    document.addEventListener('click', function(){ setTimeout(function(){ remember(); mount(); },0); }, true);
+  }
   function boot(){css();remember();patch();setTimeout(mount,0)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   if(root&&typeof root.addEventListener==='function')root.addEventListener('load',function(){setTimeout(boot,0)},{once:true});
@@ -6650,59 +6508,43 @@
       try { preloadNext(); } catch(_) {}
     });
   }
-  function patchFunctions(){
-    if (typeof root.nextQ === 'function' && !root.nextQ.__wave92jCore) {
-      var baseNext = root.nextQ;
-      root.nextQ = function(){
-        var rep = dueRepeat();
-        if (rep && serveQuestion(rep, 'wrong-repeat')) return;
-        var prepared = root.__wave92jPreparedNext;
-        if (prepared && canPreload()) {
-          root.__wave92jPreparedNext = null;
-          if (serveQuestion(prepared.q, 'preload')) return;
-        }
-        var out = baseNext.apply(this, arguments);
-        try { preloadNext(); } catch(_) {}
-        return out;
-      };
-      root.nextQ.__wave92jCore = true;
-    }
-    if (typeof root.ans === 'function' && !root.ans.__wave92jCore) {
-      var baseAns = root.ans;
-      root.ans = function(idx){
-        var question = clone(q());
-        var chosen = question && question.options ? question.options[idx] : null;
-        var correct = !!(question && chosen === question.answer);
-        var before = root.st ? clone(root.st) : null;
-        var out = baseAns.apply(this, arguments);
-        try {
-          saveAnswer({ grade: grade(), subject: txt(root.cS && root.cS.id,60), subjectName: txt(root.cS && root.cS.nm,120), topic: txt(question && question.tag,120), question: txt(question && question.question,500), answer: txt(question && question.answer,200), chosen: txt(chosen,200), correct: correct, usedHelp: !!root.usedHelp, sessionOkBefore: before && before.ok || 0, sessionErrBefore: before && before.err || 0 });
-          haptic(correct);
-          if (!correct) scheduleWrongRepeat(question);
-          maybeCelebrate(correct);
-          setTimeout(function(){ appendWhyBlock(q(), correct); refreshProgressStrip(); }, 80);
-        } catch(_) {}
-        return out;
-      };
-      root.ans.__wave92jCore = true;
-    }
-    if (typeof root.render === 'function' && !root.render.__wave92jCore) {
-      var baseRender = root.render;
-      root.render = function(){ var out = baseRender.apply(this, arguments); try { afterRender(); } catch(_) {} return out; };
-      root.render.__wave92jCore = true;
-    }
-    if (typeof root.startQuiz === 'function' && !root.startQuiz.__wave92jCore) {
-      var baseStart = root.startQuiz;
-      root.startQuiz = function(){ repeatQueue = []; root.__wave92jPreparedNext = null; lastConfettiStreak = 0; var out = baseStart.apply(this, arguments); try { preloadNext(); refreshProgressStrip(); } catch(_) {} return out; };
-      root.startQuiz.__wave92jCore = true;
-    }
-    if (typeof root.endSession === 'function' && !root.endSession.__wave92jCore) {
-      var baseEnd = root.endSession;
-      root.endSession = function(){ repeatQueue = []; root.__wave92jPreparedNext = null; return baseEnd.apply(this, arguments); };
-      root.endSession.__wave92jCore = true;
-    }
+  function wave92jNextProvider(){
+    try {
+      var rep = dueRepeat();
+      if (rep) { track('preloaded_question_served', { source:'wrong-repeat', topic: txt(rep.tag,80) }); return { question: rep, source:'wrong-repeat' }; }
+      var prepared = root.__wave92jPreparedNext;
+      if (prepared && canPreload()) {
+        root.__wave92jPreparedNext = null;
+        track('preloaded_question_served', { source:'preload', topic: txt(prepared.q && prepared.q.tag,80) });
+        return { question: prepared.q, source:'preload' };
+      }
+    } catch(_) {}
+    return null;
   }
-  function init(){ bindShortcuts(); patchReportConfirmation(); patchFunctions(); afterRender(); setInterval(patchFunctions, 1200); }
+  function installEngineHooks(){
+    if (root.__wave92lTrainingCoreHooked) return;
+    root.__wave92lTrainingCoreHooked = true;
+    root.__trainerNextQuestionProviders = root.__trainerNextQuestionProviders || [];
+    root.__trainerNextQuestionProviders.push(wave92jNextProvider);
+    document.addEventListener('trainer:answer', function(event){
+      try {
+        var d = event && event.detail || {};
+        var question = clone(d.question || q());
+        var chosen = d.choice;
+        var correct = !!d.correct;
+        var before = d.stBefore || null;
+        saveAnswer({ grade: grade(), subject: txt(root.cS && root.cS.id,60), subjectName: txt(root.cS && root.cS.nm,120), topic: txt(question && question.tag,120), question: txt(question && question.question,500), answer: txt(question && question.answer,200), chosen: txt(chosen,200), correct: correct, usedHelp: !!d.usedHelp, sessionOkBefore: before && before.ok || 0, sessionErrBefore: before && before.err || 0 });
+        haptic(correct);
+        if (!correct) scheduleWrongRepeat(question);
+        maybeCelebrate(correct);
+        setTimeout(function(){ appendWhyBlock(q(), correct); refreshProgressStrip(); }, 80);
+      } catch(_) {}
+    });
+    document.addEventListener('trainer:render', function(){ try { afterRender(); } catch(_) {} });
+    document.addEventListener('trainer:start', function(){ repeatQueue = []; root.__wave92jPreparedNext = null; lastConfettiStreak = 0; try { preloadNext(); refreshProgressStrip(); } catch(_) {} });
+    document.addEventListener('trainer:end', function(){ repeatQueue = []; root.__wave92jPreparedNext = null; });
+  }
+  function init(){ bindShortcuts(); patchReportConfirmation(); installEngineHooks(); afterRender(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true }); else init();
   root.__wave92jTrainingCore = { version:VERSION, dbName:DB, repeatQueue:function(){ return repeatQueue.slice(); }, preloadNext:preloadNext, saveAnswer:saveAnswer };
 })();

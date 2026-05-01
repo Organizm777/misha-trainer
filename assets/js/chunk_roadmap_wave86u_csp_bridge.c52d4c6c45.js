@@ -495,7 +495,7 @@
     return panel;
   }
   function ensureButton(){
-    return; // wave92k: floating accessibility button disabled; settings remain explicit.
+    return; // wave92l: floating accessibility button disabled; settings remain explicit.
   }
   function updateButtonVisibility(){
     var b = document.getElementById('wave92g-a11y-btn');
@@ -757,7 +757,7 @@
   }
 
   function showWhatsNew(){
-    return; // wave92k: no automatic 'what is new' overlays.
+    return; // wave92l: no automatic 'what is new' overlays.
   }
 
   function handlePanelAction(target){
@@ -848,7 +848,7 @@
     window.addEventListener('online', onlineStatus);
     window.addEventListener('offline', onlineStatus);
     if (!navigator.onLine) onlineStatus();
-    /* wave92k: automatic wave92g what-is-new disabled */
+    /* wave92l: automatic wave92g what-is-new disabled */
     window.__wave92g = {
       version: VERSION,
       refreshOptionRoles: refreshOptionRoles,
@@ -945,7 +945,7 @@
   }
   function moodKey(){ var p=currentProfile(); return 'trainer_mood_wave92h:' + (p.id || 'default'); }
   function saveMood(value){
-    return; // wave92k: mood buttons disabled; no passive localStorage noise.
+    return; // wave92l: mood buttons disabled; no passive localStorage noise.
   }
 
   function installCss(){
@@ -998,7 +998,7 @@
   }
 
   function ensureIndexHub(){
-    return; // wave92k: personal home block disabled; wave92a 'Мой класс' remains.
+    return; // wave92l: personal home block disabled; wave92a 'Мой класс' remains.
   }
 
   function microLessonText(grade){
@@ -1008,11 +1008,11 @@
     return 'Мини-урок: в старших классах сначала отделяй данные, формулу/правило и проверку ответа. Это быстрее, чем угадывать из вариантов.';
   }
   function ensureGradeCoach(){
-    return; // wave92k: 30-second micro-lesson card disabled.
+    return; // wave92l: 30-second micro-lesson card disabled.
   }
 
   function enhanceQuickPanel(){
-    return; // wave92k: quick-panel extension disabled.
+    return; // wave92l: quick-panel extension disabled.
   }
 
   function closeModal(){ var m = document.getElementById('wave92h-modal'); if (m) m.remove(); }
@@ -1053,7 +1053,7 @@
     modalBase('Профиль ученика', body);
   }
   function showOnboardingModal(){
-    return; // wave92k: onboarding modal disabled unless a future explicit plan re-enables it.
+    return; // wave92l: onboarding modal disabled unless a future explicit plan re-enables it.
   }
 
   function saveProfileFromModal(){
@@ -1152,7 +1152,7 @@
   }
 
   function showWhatsNew(){
-    return; // wave92k: no automatic 'what is new' overlays.
+    return; // wave92l: no automatic 'what is new' overlays.
   }
 
   function handleClick(e){
@@ -1201,7 +1201,7 @@
       var mo = new MutationObserver(function(){ if (!inPlay()) { enhanceQuickPanel(); } });
       mo.observe(document.body, { childList:true, subtree:true });
     } catch(_) {}
-    /* wave92k: automatic wave92h what-is-new disabled */
+    /* wave92l: automatic wave92h what-is-new disabled */
     window.__wave92h = {
       version: VERSION,
       profiles: profiles,

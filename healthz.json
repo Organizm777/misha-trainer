@@ -1,12 +1,12 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92k",
-  "version": "trainer-build-wave92k-2026-04-30",
-  "build_id": "trainer-build-wave92k-2026-04-30",
-  "generated_at_utc": "2026-04-30T00:00:00Z",
+  "wave": "wave92p",
+  "version": "trainer-build-wave92p-2026-05-01",
+  "build_id": "trainer-build-wave92p-2026-05-01",
+  "generated_at_utc": "2026-05-01T00:00:00Z",
   "git_sha": null,
-  "hashed_asset_count": 128,
+  "hashed_asset_count": 127,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -35,7 +35,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92k-2026-04-30",
+  "cache": "trainer-build-wave92o-2026-05-01",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -71,7 +71,7 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "brotli_count": 207,
+  "brotli_count": 213,
   "wave92d": {
     "indexeddb_analytics": true,
     "exam_near_duplicate_threshold_pct": 5,
@@ -98,7 +98,7 @@
   "wave92f": {
     "runtime_split": true,
     "featurepack_lazy_chunk": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
     "extended_runtime_bytes": 272054,
     "featurepack_bytes": 122459,
     "indexeddb_storage_bridge": true,
@@ -112,12 +112,12 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.6f97ba36b9.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92g": {
-    "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.7b9e458324.js",
-    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92k.json",
+    "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.c52d4c6c45.js",
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
     "features": [
       "haptic feedback",
       "swipe navigation",
@@ -169,8 +169,8 @@
     "fonts_required": 20,
     "zip_method": "Deflate level 9"
   },
-  "brotli_wave": "wave92k",
-  "runtime_integrity": "assets/data/runtime_integrity_wave92k.json",
+  "brotli_wave": "wave92o",
+  "runtime_integrity": "assets/data/runtime_integrity_wave92p.json",
   "wave92j_training_core": {
     "answer_history_indexeddb": true,
     "wrong_repeat_after_3_5": true,
@@ -186,22 +186,52 @@
     "quota_guard": true,
     "sw_update_notice": true
   },
-  "wave92k": {
-    "cleanup_runtime": true,
-    "nextq_wrappers_active": 2,
-    "disabled_auto_ui": [
-      "what_is_new",
-      "grade_coach",
-      "personal_home",
-      "mood",
-      "onboarding",
-      "floating_a11y_button"
-    ],
-    "disabled_wrappers": [
-      "sm2_nextq_ans",
-      "parametric_nextq",
-      "interactive_nextq_ans_render",
-      "guided_route_nextq_render"
-    ]
-  }
+  "wave92l": {
+    "engine10_events": true,
+    "nextq_single_engine_function": true,
+    "active_grade_wrappers_removed": true,
+    "provider_hooks": true,
+    "clean_training_preserved": true
+  },
+  "cacheName": "trainer-build-wave92o-2026-05-01",
+  "wave92l_engine10": "assets/js/engine10.47425466af.js",
+  "wave92l_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
+  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
+  "engine10_events": true,
+  "single_nextq_engine": true,
+  "nextq_wrappers_active": 0,
+  "engine_event_hooks": [
+    "trainer:start",
+    "trainer:render",
+    "trainer:answer",
+    "trainer:end"
+  ],
+  "trainer_next_question_providers": true,
+  "wave92m": {
+    "event_analytics_no_monkey_patch": true,
+    "active_grade_nextq_ans_render_wrappers": 0,
+    "wave35_grade_wrappers_disabled": true
+  },
+  "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
+  "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
+  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92p.json",
+  "wave92n": {
+    "wave35_removed_from_grade_and_diagnostic": true,
+    "no_grade_wave35_eager_script": true,
+    "active_grade_nextq_ans_render_wrappers": 0,
+    "dead_bundle_audit": "tools/audit_wave92n_dead_bundle_cleanup.mjs",
+    "clean_training_preserved": true
+  },
+  "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
+  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.631966817a.js",
+  "wave92o": {
+    "wave35_removed_from_dashboard": true,
+    "wave35_removed_from_lazy_payload_map": true,
+    "wave35_removed_from_sw_precache": true,
+    "wave35_asset_deleted_from_production": true,
+    "dead_bundle_audit": "tools/audit_wave92o_wave35_full_removal.mjs",
+    "clean_training_preserved": true
+  },
+  "wave92p": "runtime_audit_resource_hints_containment"
 }
