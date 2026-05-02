@@ -1,6 +1,6 @@
 {
-  "version": "trainer-build-wave92r-2026-05-01",
-  "wave": "wave92r",
+  "version": "trainer-build-wave92q-2026-05-01",
+  "wave": "wave92q",
   "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "assets": {
     "assets/css/engine10.css": "assets/css/engine10.dac1e147e6.css",
@@ -30,7 +30,7 @@
     "assets/js/bundle_grade_runtime_inputs_timing_wave87x.js": "assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js",
     "assets/js/bundle_grade_runtime_services_wave87n.js": "assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js",
     "assets/js/bundle_navigation_logger.js": "assets/js/bundle_navigation_logger.a05b4f024f.js",
-    "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.3126a65a5d.js",
+    "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.6f6ed7e2ff.js",
     "assets/js/bundle_sharing.js": "assets/js/bundle_sharing.75450d41f8.js",
     "assets/js/bundle_shell.js": "assets/js/bundle_shell.ef4140d586.js",
     "assets/js/bundle_special_subjects.js": "assets/js/bundle_special_subjects.f45ea13d73.js",
@@ -134,7 +134,7 @@
   "generated_at": "2026-04-28T00:00:00Z",
   "hashed_asset_count": 127,
   "generated_at_utc": "2026-05-01T00:00:00Z",
-  "build_id": "trainer-build-wave92r-2026-05-01",
+  "build_id": "trainer-build-wave92q-2026-05-01",
   "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "wave91g_visual_interactive": {
     "visuals": [
@@ -228,9 +228,9 @@
   "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92f_exam": "assets/js/bundle_exam.ce8c0cea55.js",
-  "cache": "trainer-build-wave92r-2026-05-01",
+  "cache": "trainer-build-wave92q-2026-05-01",
   "wave92g_csp_mobile_a11y": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92g": {
     "mobile_ux": [
       "haptic feedback",
@@ -257,7 +257,7 @@
     ]
   },
   "wave92h_csp_personalization_focus": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-  "wave92h_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92h_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92h": {
     "personalized_home": true,
     "multi_profiles": true,
@@ -272,12 +272,12 @@
   "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
   "wave92j_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92j_dead_features_disabled": true,
-  "runtime_integrity": "assets/data/runtime_integrity_wave92r.json",
-  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "runtime_integrity": "assets/data/runtime_integrity_wave92q.json",
+  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92j_csp_storage_training": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
   "wave92l_csp_cleanup": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
   "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
-  "wave92l_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92l_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92l": {
     "completed": true,
     "cleanup": "auto overlays, floating button, coach, mood, onboarding, dead wrappers disabled",
@@ -290,10 +290,10 @@
     "generated_at_utc": "2026-05-01T00:00:00Z"
   },
   "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
-  "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "cacheName": "trainer-build-wave92r-2026-05-01",
-  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "cacheName": "trainer-build-wave92q-2026-05-01",
+  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92n": {
     "wave35_removed_from_grade_and_diagnostic": true,
     "no_grade_wave35_eager_script": true,
@@ -303,12 +303,12 @@
   },
   "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.c96b0c5f80.js",
   "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
-  "wave92p_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92p_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
+  "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
   "wave92q": {
     "csp_style_src_attr": "unsafe-inline",
     "csp_pages_patched": 20,
-    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92q.json",
     "dead_code_cleanup": true,
     "brotli_count": 215
   }
