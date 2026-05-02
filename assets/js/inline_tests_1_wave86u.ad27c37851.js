@@ -148,15 +148,23 @@ function renderPsych(mode){
 }
 
 function psychSelStyle(idx){const q=STYLE_Q[styleCur];psychSel(q.o[idx].s)}
+
+function wave92tLikertTarget(){
+  let ev=null;
+  try{ev=(typeof event!=='undefined')?event:null}catch(_){ev=null}
+  let el=ev&&ev.currentTarget&&ev.currentTarget.classList?ev.currentTarget:null;
+  if((!el||el===document)&&ev&&ev.target&&ev.target.closest)el=ev.target.closest('.likert-opt');
+  return el&&el.classList?el:null;
+}
 function psychSel(val){
   if(psychMode==='style'){
     styleAns.push(val);
     document.querySelectorAll('.likert-opt').forEach(o=>{if(o.textContent.trim()!=='')o.style.pointerEvents='none'});
-    const clicked=event.currentTarget;clicked.classList.add('selected');
+    const clicked=wave92tLikertTarget();if(clicked)clicked.classList.add('selected');
     setTimeout(()=>{styleCur++;renderPsych('style')},300);
   } else {
     tempAns.push(+val);
-    event.currentTarget.classList.add('selected');
+    const clicked=wave92tLikertTarget();if(clicked)clicked.classList.add('selected');
     setTimeout(()=>{tempCur++;renderPsych('temp')},300);
   }
 }

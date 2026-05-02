@@ -144,9 +144,17 @@ function renderPsych2(){
   }
 }
 
+
+function wave92tLikertTarget2(){
+  let ev=null;
+  try{ev=(typeof event!=='undefined')?event:null}catch(_){ev=null}
+  let el=ev&&ev.currentTarget&&ev.currentTarget.classList?ev.currentTarget:null;
+  if((!el||el===document)&&ev&&ev.target&&ev.target.closest)el=ev.target.closest('.likert-opt');
+  return el&&el.classList?el:null;
+}
 function pSel2(val){
   pAns2.push(val);
-  if(event&&event.currentTarget)event.currentTarget.classList.add('selected');
+  const clicked=wave92tLikertTarget2();if(clicked)clicked.classList.add('selected');
   setTimeout(()=>{pCur2++;renderPsych2()},300);
 }
 

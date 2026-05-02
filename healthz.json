@@ -1,12 +1,12 @@
 {
   "status": "ok",
   "app": "trainer3",
-  "wave": "wave92s",
-  "version": "trainer-build-wave92s-2026-05-02",
-  "build_id": "trainer-build-wave92s-2026-05-02",
-  "generated_at_utc": "2026-05-02T00:00:00Z",
+  "wave": "wave92u",
+  "version": "trainer-build-wave92u-2026-05-02",
+  "build_id": "trainer-build-wave92u-2026-05-02",
+  "generated_at_utc": "2026-05-02T13:21:12Z",
   "git_sha": null,
-  "hashed_asset_count": 127,
+  "hashed_asset_count": 123,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -35,7 +35,7 @@
     "streak_freeze": true,
     "audio_speech": true
   },
-  "cache": "trainer-build-wave92s-2026-05-02",
+  "cache": "trainer-build-wave92u-2026-05-02",
   "visual_interactive_wave91g": {
     "geometry_svg": true,
     "geography_svg": true,
@@ -71,7 +71,7 @@
     "fonts_preserved": true,
     "zip_deflate_required": true
   },
-  "brotli_count": 214,
+  "brotli_count": 209,
   "wave92d": {
     "indexeddb_analytics": true,
     "exam_near_duplicate_threshold_pct": 5,
@@ -98,22 +98,23 @@
   "wave92f": {
     "runtime_split": true,
     "featurepack_lazy_chunk": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
-    "extended_runtime_bytes": 272054,
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
+    "extended_runtime_bytes": 216177,
     "featurepack_bytes": 122459,
     "indexeddb_storage_bridge": true,
     "storage_db": "trainer3_store_wave92f",
-    "sm2_main_stream": true,
-    "parametric_questions": true,
+    "sm2_main_stream": false,
+    "parametric_questions": false,
     "content_expiry_valid_until": "2027-08-31",
     "real_exam_mode": true,
     "exam_bundle": "assets/js/bundle_exam.ce8c0cea55.js",
     "clean_training_screen_preserved": true,
     "fonts_preserved": true,
-    "zip_deflate_required": true
+    "zip_deflate_required": true,
+    "disabled_training_stubs_removed": true
   },
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
   "wave92g": {
     "csp_mobile_a11y_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
@@ -169,7 +170,7 @@
     "fonts_required": 20,
     "zip_method": "Deflate level 9"
   },
-  "brotli_wave": "wave92s",
+  "brotli_wave": "wave92u",
   "runtime_integrity": "assets/data/runtime_integrity_wave92r.json",
   "wave92j_training_core": {
     "answer_history_indexeddb": true,
@@ -193,10 +194,10 @@
     "provider_hooks": true,
     "clean_training_preserved": true
   },
-  "cacheName": "trainer-build-wave92s-2026-05-02",
+  "cacheName": "trainer-build-wave92u-2026-05-02",
   "wave92l_engine10": "assets/js/engine10.47425466af.js",
   "wave92l_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js",
-  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
+  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
   "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "engine10_events": true,
   "single_nextq_engine": true,
@@ -220,18 +221,18 @@
     "wave35_removed_from_grade_and_diagnostic": true,
     "no_grade_wave35_eager_script": true,
     "active_grade_nextq_ans_render_wrappers": 0,
-    "dead_bundle_audit": "tools/audit_wave92n_dead_bundle_cleanup.mjs",
-    "clean_training_preserved": true
+    "clean_training_preserved": true,
+    "dead_bundle_audit_passed": true
   },
   "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js",
-  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
+  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
   "wave92o": {
     "wave35_removed_from_dashboard": true,
     "wave35_removed_from_lazy_payload_map": true,
     "wave35_removed_from_sw_precache": true,
     "wave35_asset_deleted_from_production": true,
-    "dead_bundle_audit": "tools/audit_wave92o_wave35_full_removal.mjs",
-    "clean_training_preserved": true
+    "clean_training_preserved": true,
+    "dead_bundle_audit_passed": true
   },
   "wave92p": "runtime_audit_resource_hints_containment",
   "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
@@ -239,18 +240,18 @@
     "csp_style_src_attr": "unsafe-inline",
     "csp_pages_patched": 20,
     "csp_bridge_runtime": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
     "dead_ui_iifes_removed": [
       "wave92g automatic panel/whats-new/floating UI",
       "wave92h profiles/onboarding/mood/micro-lessons"
     ],
-    "dead_training_blocks_stubbed": [
-      "SM-2 automatic provider",
-      "Parametric automatic provider",
-      "Interactive formats",
-      "Guided route"
-    ],
-    "brotli_count": 214
+    "brotli_count": 209,
+    "dead_training_blocks_removed": [
+      "SM-2 provider stub",
+      "Parametric provider stub",
+      "Interactive formats stub",
+      "Guided route stub"
+    ]
   },
   "csp_style_src_attr": "unsafe-inline",
   "wave92s": {
@@ -258,6 +259,28 @@
     "core_iife_block_guards": true,
     "safe_init_guards": true,
     "direct_action_boot_guarded": true,
-    "ci_gate": "tools/wave92s_ci_gate.py"
+    "production_dev_files_removed": true,
+    "ci_gate_externalized": true
+  },
+  "wave92u": {
+    "dead_standalone_js_removed": [
+      "bundle_grade_after",
+      "bundle_grade_runtime_inputs_timing_wave87x",
+      "bundle_embed_widget",
+      "bundle_teacher_mode"
+    ],
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
+    "extended_dead_training_stubs_removed": [
+      "SM-2/Parametric disabled-provider stub",
+      "Interactive formats disabled stub",
+      "Guided learning path disabled stub",
+      "Dead features one-line metadata stub"
+    ],
+    "dead_js_audit_passed": true,
+    "dead_css_audit_passed": true,
+    "production_dev_files_removed": true,
+    "ci_gate_externalized": true,
+    "full_zip_required_for_sri": true,
+    "brotli_count": 209
   }
 }

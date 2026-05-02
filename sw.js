@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave92s-2026-05-02';
+const CACHE_NAME = 'trainer-build-wave92u-2026-05-02';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -59,14 +59,10 @@ const ASSETS = [
   './assets/js/bundle_error_tracking.dc19ab4e63.js',
   './assets/js/bundle_exam.ce8c0cea55.js',
   './assets/js/bundle_gamification_meta.9853e9e1bb.js',
-  './assets/js/bundle_gamification_xp.907a25e6bd.js',
-  './assets/js/bundle_grade_after.114dd48332.js',
-  './assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js',
-  './assets/js/bundle_grade_runtime_extended_wave89b.f95f800315.js',
+  './assets/js/bundle_gamification_xp.907a25e6bd.js',  './assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js',
+  './assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js',
   './assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js',
-  './assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js',
-  './assets/js/bundle_grade_runtime_inputs_timing_wave87x.1cc5c6712a.js',
-  './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
+  './assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js',  './assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js',
   './assets/js/bundle_navigation_logger.a05b4f024f.js',
   './assets/js/bundle_profile_social.3126a65a5d.js',
   './assets/js/bundle_sharing.75450d41f8.js',
@@ -163,9 +159,9 @@ const ASSETS = [
   './assets/js/inline_diagnostic_2_wave86u.1bca35f107.js',
   './assets/js/inline_index_1_wave86u.41f1a0141f.js',
   './assets/js/inline_spec_subjects_1_wave86u.1bca35f107.js',
-  './assets/js/inline_tests_1_wave86u.08cb8f7dc8.js',
+  './assets/js/inline_tests_1_wave86u.ad27c37851.js',
   './assets/js/inline_tests_2_wave86u.ae4d81b485.js',
-  './assets/js/inline_tests_3_wave86u.bab0f051a9.js',
+  './assets/js/inline_tests_3_wave86u.ed7ea97d1b.js',
   './assets/data/exam_bank/catalog.json',
   './assets/data/exam_bank/ege_base_math_2026_foundation.json',
   './assets/data/exam_bank/ege_english_2026_foundation.json',

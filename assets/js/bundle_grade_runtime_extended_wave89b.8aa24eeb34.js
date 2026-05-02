@@ -127,15 +127,6 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', migrate, { once:true }); else setTimeout(migrate, 0);
 })();
 
-/* wave92q: SM-2 and parameterized automatic question providers removed from runtime path. */
-(function(){
-  'use strict';
-  var root = window;
-  if (!root) return;
-  root.wave92fSm2 = root.wave92fSm2 || { version:'wave92q-disabled', update:function(){}, due:function(){ return null; }, all:function(){ return {}; }, count:function(){ return 0; } };
-  root.wave92fParametric = root.wave92fParametric || { version:'wave92q-disabled', templates:[], generate:function(){ return null; } };
-})();
-
 /* wave92f: content expiry metadata runtime */
 (function(){
   'use strict';
@@ -159,21 +150,7 @@
   root.__wave92fContentExpiry = { version:'wave92f', registry:REGISTRY, status:status, all:function(){ return Object.keys(REGISTRY).map(status); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once:true }); else setTimeout(mount,0);
 })();
-/* wave89b: merge pass for grade runtime extensions (wave87w + wave87x + wave88c + wave88d) */
-/* bundle_grade_runtime_interactions_wave87w disabled by wave92q: A/B/C/D core only. */
-(function(){
-  'use strict';
-  var root = window;
-  if (!root || root.__wave87wInteractiveFormats) return;
-  root.__wave87wInteractiveFormats = {
-    version:'wave92q-disabled',
-    active:false,
-    types:[],
-    isInteractiveQuestion:function(){ return false; },
-    shouldEnhance:function(){ return false; }
-  };
-})();
-
+/* wave89b: merge pass for active grade runtime extensions (wave87x + wave88c + wave88d) */
 /* bundle_grade_runtime_inputs_timing_wave87x */
 (function(){
   'use strict';
@@ -4670,26 +4647,6 @@
 })();
 
 
-/* wave89n: guided learning path disabled by wave92q. */
-(function(){
-  'use strict';
-  var root = window;
-  if (!root || root.__wave89nLearningPath) return;
-  function shouldSeedForTopic(){ return false; }
-  root.__wave89nLearningPath = {
-    version:'wave92q-disabled',
-    disabled:true,
-    shouldSeedForTopic:shouldSeedForTopic,
-    seedGuidedPath:function(){ return false; },
-    renderTheoryCard:function(){},
-    renderPlayCard:function(){},
-    appendProgressCard:function(){},
-    summarizeStore:function(){ return {}; },
-    currentState:function(){ return { active:false, phase:'disabled' }; },
-    clear:function(){}
-  };
-})();
-
 /* wave89x: lazy-load senior optional input / interaction banks to keep grade pages under the proxy JS budget */
 (function(){
   'use strict';
@@ -4916,7 +4873,7 @@
 })();
 
 
-/* wave92f: wave91f/wave91g/wave91h feature packs moved to lazy chunk. */
+/* wave92u: feature packs remain in the lazy chunk; disabled training stubs removed. */
 /* wave91i: lazy theory enrichment loader */
 (function(){
   'use strict';
@@ -4982,8 +4939,6 @@
 
 /* wave92c: clean training screen rule marker */
 (function(){if(typeof window!=='undefined'){window.__wave92cCleanTraining={version:'wave92c',simpleDefault:true,playWidgetsHidden:['wave89m-adaptive','wave89n-path','wave91e-explain-pomodoro','wave91f-difficulty-marathon','wave91g-visual-tools'],allowedPlayElements:['question','answer-options','feedback','next','question-report']};}})();
-
-(function(){if(typeof window!=='undefined'){window.__wave92jDeadFeatures={version:'wave92j',guidedRoute:true,adaptivePlayCard:true,difficultyTools:true,pomodoro:true,pvp:true,wordle:true,anki:true,embed:true,teacher:true,landing:true,contentApi:true};}})();
 
 /* wave92j: core training improvements — answer history, retry wrongs, preload, progress, why, shortcuts */
 (function(){
