@@ -1,6 +1,13 @@
 /* wave87n grade runtime core bundle: theme/a11y/main runtime/progress/perf loader. */
 
+;window.__wave92sSafeCall = window.__wave92sSafeCall || function(label, fn, ctx){
+  try { if (typeof fn === 'function') return fn.call(ctx || null); }
+  catch(e) { try { console.warn('[wave92s guard] ' + label, e); } catch(_) {} }
+  return undefined;
+};
+
 ;/* ---- chunk_roadmap_wave86q_accessibility_theme.js ---- */
+;try {
 (function(){
   'use strict';
 
@@ -333,12 +340,14 @@
     };
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave86q init', init); });
+  else window.__wave92sSafeCall('wave86q init', init);
 })();
+} catch(e) { try { console.warn('[wave92s block] chunk_roadmap_wave86q_accessibility_theme failed', e); } catch(_) {} }
 
 ;/* ---- bundle_grade_after.js ---- */
 /* --- wave17_english_infra.js --- */
+;try {
 (function(){
   if (typeof window === 'undefined') return;
   var gradeNum = +(window.GRADE_NUM || 0);
@@ -642,9 +651,11 @@
     level: computeEnglishLevel()
   };
 })();
+} catch(e) { try { console.warn('[wave92s block] wave17_english_infra failed', e); } catch(_) {} }
 
 ;
 /* --- wave9_ui.js --- */
+;try {
 (function(){
   const THEME_KEY = 'trainer_theme';
   const TOAST_HOST_ID = 'trainer-toast-host';
@@ -983,12 +994,14 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     } catch (_) {}
   }
 
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
-  else init();
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave9 init', init); }, { once: true });
+  else window.__wave92sSafeCall('wave9 init', init);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave9_ui failed', e); } catch(_) {} }
 
 ;
 /* --- wave18_cleanup.js --- */
+;try {
 (function(){
   function gradeKey(){ return String(window.GRADE_NUM || '10'); }
   function rushStoreKey(){ return 'trainer_rush_best_' + gradeKey(); }
@@ -1281,12 +1294,14 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     if(typeof window.renderPrivacyBtn === 'function') window.renderPrivacyBtn();
   }
 
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', patchFunctions, { once:true });
-  else patchFunctions();
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave18 patchFunctions', patchFunctions); }, { once:true });
+  else window.__wave92sSafeCall('wave18 patchFunctions', patchFunctions);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave18_cleanup failed', e); } catch(_) {} }
 
 ;
 /* --- wave21_progress.js --- */
+;try {
 (function(){
   const GRADE = String(window.GRADE_NUM || '10');
   const FAV_KEY = 'trainer_favs_' + GRADE;
@@ -1909,9 +1924,11 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     try { renderMainActions(); decorateTopicButtons(); injectTheoryToolbar(); renderSessionProgress(); } catch {}
   }, 0);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave21_progress failed', e); } catch(_) {} }
 
 ;
 /* --- wave23_accessibility.js --- */
+;try {
 (() => {
   const STYLE_ID = 'wave23-a11y-style';
   const LIVE_ID = 'wave23-live';
@@ -2416,7 +2433,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
       document.addEventListener(type, () => { scheduleRefresh(); }, false);
     });
     if(!window.__wave92lA11yScreenObserver && typeof MutationObserver !== 'undefined'){
-      const nodes = $('.scr');
+      const nodes = [...document.querySelectorAll('.scr')];
       if(nodes.length){
         const observer = new MutationObserver(() => { scheduleRefresh(); });
         nodes.forEach((node) => observer.observe(node, { attributes:true, attributeFilter:['class'] }));
@@ -2450,7 +2467,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     if(state.raf) return;
     state.raf = window.requestAnimationFrame(() => {
       state.raf = 0;
-      refresh();
+      try { refresh(); } catch(e) { try { console.warn('[a11y] refresh failed', e); } catch(_) {} }
     });
   }
   window.wave23A11yRefresh = scheduleRefresh;
@@ -2484,12 +2501,14 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     announce('Доступность включена');
   }
 
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
-  else init();
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('a11y init', init); }, {once:true});
+  else window.__wave92sSafeCall('a11y init', init);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave23_accessibility failed', e); } catch(_) {} }
 
 ;
 /* --- wave24_mobile.js --- */
+;try {
 (() => {
   const STYLE_ID = 'wave24-mobile-style';
   const NAV_ID = 'wave24-bottom-nav';
@@ -2973,12 +2992,14 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     exposeDebug();
   }
 
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
-  else init();
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave24 mobile init', init); }, { once: true });
+  else window.__wave92sSafeCall('wave24 mobile init', init);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave24_mobile failed', e); } catch(_) {} }
 
 ;
 /* --- wave26_quality.js --- */
+;try {
 (function(){
   if(window.__wave26QualityBooted) return;
   window.__wave26QualityBooted = true;
@@ -3177,16 +3198,18 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   }
 
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', boot, {once:true});
+    document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave26 boot', boot); }, {once:true});
   }else{
-    boot();
+    window.__wave92sSafeCall('wave26 boot', boot);
   }
-  setTimeout(boot, 0);
-  setTimeout(boot, 250);
+  setTimeout(function(){ window.__wave92sSafeCall('wave26 boot:deferred', boot); }, 0);
+  setTimeout(function(){ window.__wave92sSafeCall('wave26 boot:retry', boot); }, 250);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave26_quality failed', e); } catch(_) {} }
 
 ;
 /* --- wave27_platform.js --- */
+;try {
 (function(){
   if(window.__wave27PlatformLoaded) return;
   window.__wave27PlatformLoaded = true;
@@ -3247,12 +3270,14 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   function hookRegistration(reg){if(!reg||regSeen(reg))return;state.regs.push(reg);if(reg.waiting) showUpdateBanner(reg);reg.addEventListener('updatefound',function(){var worker=reg.installing;if(!worker)return;worker.addEventListener('statechange',function(){if(worker.state==='installed'&&navigator.serviceWorker.controller) showUpdateBanner(reg)})})}
   function initSWUpdates(){if(!('serviceWorker' in navigator) || !navigator.serviceWorker) return;var sw=navigator.serviceWorker;if(typeof sw.addEventListener==='function'){sw.addEventListener('controllerchange',function(){if(!state.refreshPending)return;state.refreshPending=false;try{location.reload()}catch(_){}})}var getReg=typeof sw.getRegistration==='function'?sw.getRegistration.bind(sw):null;if(!getReg) return;Promise.all([getReg('./sw.js').catch(function(){return null}),getReg().catch(function(){return null})]).then(function(list){list.filter(Boolean).forEach(hookRegistration)});if(sw.ready&&typeof sw.ready.then==='function'){sw.ready.then(function(reg){hookRegistration(reg);window.setTimeout(function(){try{reg.update&&reg.update()}catch(_){}},2500)}).catch(function(){})}}
   function init(){ensureColorSchemeMeta();installTimerTracking();initSWUpdates()}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){ window.__wave92sSafeCall('wave27 init', init); },{once:true}); else window.__wave92sSafeCall('wave27 init', init);
   window.__wave27Platform={version:VERSION,updateVisible:function(){return !!bannerNode()},hideUpdateBanner:hideUpdateBanner,showMockUpdateBanner:function(){return showUpdateBanner({waiting:{postMessage:function(){}}},{mock:true})},manifestHref:function(){var el=document.querySelector('link[rel="manifest"]');return el&&el.getAttribute('href')},hasAppleTouchIcon:function(){return !!document.querySelector('link[rel="apple-touch-icon"]')},preconnectCount:function(){return document.querySelectorAll('link[rel="preconnect"]').length},cspPresent:function(){return !!document.querySelector('meta[http-equiv="Content-Security-Policy"]')},timerCounts:function(){return window.__wave27Timers?window.__wave27Timers.counts():{timeouts:0,intervals:0}}};
 })();
+} catch(e) { try { console.warn('[wave92s block] wave27_platform failed', e); } catch(_) {} }
 
 ;
 /* --- wave28_spaced.js --- */
+;try {
 (function(){
   if (window.wave28Debug) return;
 
@@ -3938,9 +3963,11 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
 
   setTimeout(function(){ try{ renderReviewCard(); }catch(e){} try{ appendReviewProgress(); }catch(e){} }, 0);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave28_spaced failed', e); } catch(_) {} }
 
 ;
 /* --- wave41_olympiad_and_ux.js --- */
+;try {
 (function(){
   if (typeof window === 'undefined' || window.__wave41OlyUx) return;
   window.__wave41OlyUx = true;
@@ -4116,8 +4143,8 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   }
 
   function init(){ patchOlympiad(); }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
-  else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave41 init', init); }, { once:true });
+  else window.__wave92sSafeCall('wave41 init', init);
 
   window.wave41Debug = window.wave41Debug || {};
   window.wave41Debug.olyPatched = patchOlympiad;
@@ -4126,9 +4153,11 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     return map[kind || 'logic'] ? map[kind || 'logic']() : null;
   };
 })();
+} catch(e) { try { console.warn('[wave92s block] wave41_olympiad_and_ux failed', e); } catch(_) {} }
 
 ;/* ---- chunk_roadmap_wave86n_progress_tools.js ---- */
 /* --- wave86n_progress_tools.js --- */
+;try {
 (function(){
   if (typeof window === 'undefined' || window.wave86nProgressTools) return;
 
@@ -4539,14 +4568,16 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function(){ enhance(); initObserver(); });
+    document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave86n enhance', enhance); window.__wave92sSafeCall('wave86n initObserver', initObserver); });
   } else {
-    enhance();
-    initObserver();
+    window.__wave92sSafeCall('wave86n enhance', enhance);
+    window.__wave92sSafeCall('wave86n initObserver', initObserver);
   }
 })();
+} catch(e) { try { console.warn('[wave92s block] wave86n_progress_tools failed', e); } catch(_) {} }
 
 ;/* ---- bundle_error_tracking.js ---- */
+;try {
 (function(){
   var LOG_KEY = 'trainer_runtime_errors_v73';
   var CFG_KEY = 'trainer_runtime_errors_cfg_v73';
@@ -4614,9 +4645,11 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   window.addEventListener('unhandledrejection', function(event){ var reason = event && event.reason; record({ kind:'unhandledrejection', message: reason && reason.message ? reason.message : String(reason || 'Unhandled promise rejection'), stack: reason && reason.stack ? reason.stack : '' }); });
   tracker.record = record; tracker.getLogs = getLogs; tracker.getSummary = function(){ return summarize(); }; tracker.clear = clear; tracker.export = exportLogs; tracker.setConfig = writeConfig; tracker.renderDashboardCard = renderDashboardCard; tracker.download = function(){ return downloadText('trainer-runtime-errors.json', exportLogs(), 'application/json;charset=utf-8'); };
   window.TrainerErrorTracking = tracker;
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderDashboardCard, {once:true}); else renderDashboardCard();
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('error tracking dashboard render', renderDashboardCard); }, {once:true}); else window.__wave92sSafeCall('error tracking dashboard render', renderDashboardCard);
 })();
+} catch(e) { try { console.warn('[wave92s block] bundle_error_tracking failed', e); } catch(_) {} }
 
+;try {
 (function(){
   'use strict';
   if (typeof window === 'undefined' || window.wave87nRuntimeSplit) return;
@@ -4917,21 +4950,19 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function(){
-        record('dom_content_loaded');
-        tick();
+        window.__wave92sSafeCall('wave87n dom_content_loaded', function(){ record('dom_content_loaded'); tick(); });
       }, { once:true });
     } else {
-      record('dom_content_loaded');
-      tick();
+      window.__wave92sSafeCall('wave87n dom_content_loaded', function(){ record('dom_content_loaded'); tick(); });
     }
   }
 
   perf.connection = connectionInfo();
   perf.lowEnd = detectLowEnd(perf.connection);
-  record('core_boot');
-  bindDirectActions();
-  bindIntentWarmup();
-  waitInteractive();
+  window.__wave92sSafeCall('wave87n record core_boot', function(){ record('core_boot'); });
+  window.__wave92sSafeCall('wave87n bindDirectActions', bindDirectActions);
+  window.__wave92sSafeCall('wave87n bindIntentWarmup', bindIntentWarmup);
+  window.__wave92sSafeCall('wave87n waitInteractive', waitInteractive);
   root.addEventListener('pagehide', function(){ persist('pagehide'); }, { once:true });
 
   root.wave87nRuntimeSplit = {
@@ -4954,10 +4985,12 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     }
   };
 })();
+} catch(e) { try { console.warn('[wave92s block] wave87n_runtime_split failed', e); } catch(_) {} }
 ;window.__wave87nGradeRuntimeCoreBundle = Object.freeze({wave:'wave87n', role:'core', lazy:['assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js','assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js'], bundled:["chunk_roadmap_wave86q_accessibility_theme.js","bundle_grade_after.js","chunk_roadmap_wave86n_progress_tools.js","bundle_error_tracking.js"], generatedAt:'2026-04-23T00:00:00Z'});
 
 
 ;/* --- wave92m_event_analytics_grade_core.js --- */
+;try {
 (function(){
   'use strict';
   if (window.__wave92mEventAnalyticsBooted) return;
@@ -5068,5 +5101,6 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     annotate(); bindClicks(); bindEngineEvents(); checkScreen(); track('page_view', { title:txt(document.title,120) });
     try { new MutationObserver(function(){ annotate(); checkScreen(); }).observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['class','hidden','aria-hidden'] }); } catch(_) {}
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true }); else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ window.__wave92sSafeCall('wave92m event analytics init', init); }, { once:true }); else window.__wave92sSafeCall('wave92m event analytics init', init);
 })();
+} catch(e) { try { console.warn('[wave92s block] wave92m_event_analytics_grade_core failed', e); } catch(_) {} }
