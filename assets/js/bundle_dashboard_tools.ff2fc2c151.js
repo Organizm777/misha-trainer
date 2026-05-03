@@ -1097,3 +1097,387 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
   else init();
 })();
+
+;/* --- wave92y_dashboard_analytics.js --- */
+(function(){
+  'use strict';
+  if (window.__wave92yDashboardAnalytics) return;
+  window.__wave92yDashboardAnalytics = { version:'wave92y', ready:false, last:null };
+
+  const DB_NAME = 'trainer3_events_wave92d';
+  const STORE = 'events';
+  const FALLBACK_KEY = 'trainer_events_fallback_wave92d';
+  const DAY = 86400000;
+  const FEATURE_SIGNALS = [
+    { id:'diagnostic', label:'Диагностика', signals:['diagnostic','диагност'] },
+    { id:'tests', label:'Психологические тесты', signals:['tests.html','мотивац','стресс','психолог'] },
+    { id:'spec', label:'Спецпредметы', signals:['spec_subjects','спецпредмет'] },
+    { id:'dashboard_report', label:'TXT-сводка', signals:['dashboard-report','txt-сводка','сводка'] },
+    { id:'dashboard_csv', label:'CSV-экспорт', signals:['dashboard-csv','csv'] },
+    { id:'dashboard_png', label:'PNG-карточка', signals:['dashboard-png','png'] },
+    { id:'print', label:'Печать / PDF', signals:['print','печать','pdf'] },
+    { id:'hint', label:'Подсказки в тренировке', signals:['hint','подсказка'] },
+    { id:'sheet', label:'Шпаргалка', signals:['shp','шпаргалка'] },
+    { id:'share', label:'Поделиться результатом', signals:['share','поделиться'] }
+  ];
+  const DOW = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+
+  function esc(value){
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+  function toNum(value){ const n = Number(value); return Number.isFinite(n) ? n : 0; }
+  function clamp(value, min, max){ return Math.max(min, Math.min(max, value)); }
+  function pct(ok, total){ return total > 0 ? Math.round(ok / total * 100) : 0; }
+  function parsePct(value){
+    const m = String(value == null ? '' : value).match(/-?\d+/);
+    return m ? Number(m[0]) : null;
+  }
+  function safeJSON(raw, fallback){ try { return raw ? JSON.parse(raw) : fallback; } catch(_) { return fallback; } }
+  function dateKey(ts){
+    const d = new Date(ts || Date.now());
+    return Number.isFinite(d.getTime()) ? d.toISOString().slice(0, 10) : '';
+  }
+  function daysAgo(date){
+    if (!date) return null;
+    let d = null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(String(date))) d = new Date(String(date) + 'T00:00:00');
+    else {
+      const m = String(date).match(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})/);
+      if (m) d = new Date(Number(m[3].length === 2 ? '20' + m[3] : m[3]), Number(m[2]) - 1, Number(m[1]));
+    }
+    if (!d || !Number.isFinite(d.getTime())) return null;
+    return Math.max(0, Math.floor((Date.now() - d.getTime()) / DAY));
+  }
+  function download(filename, text, type){
+    const blob = new Blob([text], { type:type || 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 700);
+  }
+  function csv(value){
+    const s = String(value == null ? '' : value).replace(/"/g, '""');
+    return /[",\n;]/.test(s) ? '"' + s + '"' : s;
+  }
+
+  function readFallbackEvents(){
+    try {
+      const rows = safeJSON(localStorage.getItem(FALLBACK_KEY), []);
+      return Array.isArray(rows) ? rows : [];
+    } catch(_) { return []; }
+  }
+  function openEventsDb(){
+    return new Promise(function(resolve, reject){
+      if (!('indexedDB' in window)) { reject(new Error('IndexedDB unavailable')); return; }
+      const req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = function(){
+        try {
+          const db = req.result;
+          const store = db.objectStoreNames.contains(STORE) ? req.transaction.objectStore(STORE) : db.createObjectStore(STORE, { keyPath:'id', autoIncrement:true });
+          if (!store.indexNames.contains('by_ts')) store.createIndex('by_ts', 'ts');
+          if (!store.indexNames.contains('by_kind')) store.createIndex('by_kind', 'kind');
+          if (!store.indexNames.contains('by_page')) store.createIndex('by_page', 'page');
+        } catch(_) {}
+      };
+      req.onsuccess = function(){ resolve(req.result); };
+      req.onerror = function(){ reject(req.error || new Error('IndexedDB open failed')); };
+    });
+  }
+  function readIndexedDbEvents(){
+    return openEventsDb().then(function(db){
+      return new Promise(function(resolve){
+        try {
+          const req = db.transaction(STORE, 'readonly').objectStore(STORE).getAll();
+          req.onsuccess = function(){ resolve(Array.isArray(req.result) ? req.result : []); };
+          req.onerror = function(){ resolve([]); };
+        } catch(_) { resolve([]); }
+      });
+    }).catch(function(){ return []; });
+  }
+  function readAllEvents(){
+    return Promise.all([readIndexedDbEvents(), Promise.resolve(readFallbackEvents())]).then(function(parts){
+      const seen = new Set();
+      const out = [];
+      parts.flat().forEach(function(row){
+        if (!row || !row.ts) return;
+        const key = [row.ts, row.kind, row.page, row.grade, JSON.stringify(row.meta || {})].join('|');
+        if (seen.has(key)) return;
+        seen.add(key);
+        out.push(row);
+      });
+      out.sort(function(a,b){ return Date.parse(a.ts || 0) - Date.parse(b.ts || 0); });
+      return out;
+    });
+  }
+
+  function activityRows(state){
+    return Object.keys((state && state.activityMap) || {}).map(function(date){
+      const row = state.activityMap[date] || {};
+      return { date:date, total:toNum(row.total), ok:toNum(row.ok), err:toNum(row.err) };
+    }).sort(function(a,b){ return a.date.localeCompare(b.date); });
+  }
+  function collectTopics(state){
+    const rows = [];
+    ((state && state.gradeData) || []).forEach(function(gd){
+      const gradeLabel = gd && gd.grade ? gd.grade.nm : '';
+      const progress = (gd && gd.progress) || {};
+      Object.keys(progress).forEach(function(subject){
+        const topics = progress[subject] || {};
+        Object.keys(topics).forEach(function(topic){
+          const row = topics[topic] || {};
+          const ok = toNum(row.ok), err = toNum(row.err), total = ok + err;
+          if (!total) return;
+          rows.push({ grade:gradeLabel, subject:subject, topic:topic, ok:ok, err:err, total:total, acc:pct(ok,total), last:row.last || '' });
+        });
+      });
+    });
+    return rows;
+  }
+
+  function computeFunnel(events){
+    const since = Date.now() - 30 * DAY;
+    const rows = events.filter(function(ev){ return Date.parse(ev.ts || '') >= since; });
+    const count = function(kind){ return rows.filter(function(ev){ return ev.kind === kind; }).length; };
+    const starts = count('quiz_start');
+    const answers = count('answer_submit');
+    const ends = count('quiz_end');
+    const pageViews = count('page_view');
+    const correct = rows.filter(function(ev){ return ev.kind === 'answer_submit' && ev.meta && ev.meta.correct; }).length;
+    return {
+      pageViews:pageViews,
+      starts:starts,
+      answers:answers,
+      ends:ends,
+      answerAccuracy:pct(correct, answers),
+      startToAnswer:starts ? Math.round(Math.min(answers, starts) / starts * 100) : 0,
+      answerToEnd:starts ? Math.round(ends / starts * 100) : 0,
+      rows:rows.length
+    };
+  }
+  function computeFeatureUse(events){
+    const since = Date.now() - 30 * DAY;
+    const rows = events.filter(function(ev){ return Date.parse(ev.ts || '') >= since; });
+    return FEATURE_SIGNALS.map(function(feature){
+      const used = rows.some(function(ev){
+        const meta = ev.meta || {};
+        const hay = [ev.kind, ev.page, meta.action, meta.text, meta.href, meta.target].join(' ').toLowerCase();
+        return feature.signals.some(function(sig){ return hay.indexOf(String(sig).toLowerCase()) !== -1; });
+      });
+      return { id:feature.id, label:feature.label, used:used };
+    });
+  }
+  function computeDifficulty(state){
+    const topics = collectTopics(state).filter(function(row){ return row.total >= 3; });
+    const easy = topics.filter(function(row){ return row.acc >= 85; });
+    const target = topics.filter(function(row){ return row.acc >= 60 && row.acc < 85; });
+    const hard = topics.filter(function(row){ return row.acc < 60; });
+    const avg = topics.length ? Math.round(topics.reduce(function(sum,row){ return sum + row.acc; }, 0) / topics.length) : null;
+    let verdict = 'Мало данных для калибровки';
+    if (topics.length) {
+      if (hard.length > easy.length && avg < 65) verdict = 'Сложность завышена: больше коротких повторений и базовых задач';
+      else if (easy.length > hard.length * 2 && avg >= 85) verdict = 'Сложность занижена: можно чаще давать задачи уровня выше';
+      else verdict = 'Сложность в рабочем диапазоне';
+    }
+    return { topics:topics, easy:easy, target:target, hard:hard, avg:avg, verdict:verdict };
+  }
+  function computeDecay(state){
+    const topics = collectTopics(state)
+      .filter(function(row){ return row.total >= 3; })
+      .map(function(row){ return Object.assign({}, row, { age:daysAgo(row.last) }); })
+      .filter(function(row){ return row.age !== null && row.age >= 14; })
+      .sort(function(a,b){ return (b.age - a.age) || (a.acc - b.acc); });
+    const gradeGaps = ((state && state.gradeData) || [])
+      .map(function(gd){ return { label:gd && gd.grade ? gd.grade.nm : '', age:daysAgo(gd && gd.lastActivityDate), total:toNum(gd && gd.qs) }; })
+      .filter(function(row){ return row.total > 0 && row.age !== null && row.age >= 7; })
+      .sort(function(a,b){ return b.age - a.age; });
+    return { topics:topics.slice(0, 8), grades:gradeGaps.slice(0, 5) };
+  }
+  function computeForecast(state){
+    const rows = activityRows(state);
+    const last30 = rows.filter(function(row){ return Date.parse(row.date + 'T00:00:00') >= Date.now() - 30 * DAY; });
+    const last14 = rows.filter(function(row){ return Date.parse(row.date + 'T00:00:00') >= Date.now() - 14 * DAY; });
+    const total30 = last30.reduce(function(sum,row){ return sum + row.total; }, 0);
+    const ok30 = last30.reduce(function(sum,row){ return sum + row.ok; }, 0);
+    const active30 = last30.filter(function(row){ return row.total > 0; }).length;
+    const total14 = last14.reduce(function(sum,row){ return sum + row.total; }, 0);
+    const active14 = last14.filter(function(row){ return row.total > 0; }).length;
+    const pace = Math.round((active14 ? total14 / 14 : total30 / 30) * 30);
+    const basePct = parsePct(state && state.totalPct);
+    const recentPct = pct(ok30, total30);
+    const blended = basePct === null ? recentPct : Math.round((basePct * 0.65) + (recentPct * 0.35 || 0));
+    const predicted = clamp(blended + (active14 >= 3 ? 3 : active14 === 0 ? -5 : 0), 0, 100);
+    const mark = predicted >= 85 ? 5 : predicted >= 65 ? 4 : predicted >= 45 ? 3 : predicted > 0 ? 2 : null;
+    const text = mark ? 'Прогноз оценки: ' + mark + ' при текущем темпе' : 'Прогноз появится после нескольких сессий';
+    return { total30:total30, active30:active30, pace:pace, predicted:predicted, mark:mark, text:text };
+  }
+  function computeDailyPattern(events, state){
+    const hours = Array.from({ length:24 }, function(_,i){ return { hour:i, total:0, ok:0 }; });
+    const days = Array.from({ length:7 }, function(_,i){ return { day:i, label:DOW[i], total:0, ok:0 }; });
+    events.forEach(function(ev){
+      const d = new Date(ev.ts || '');
+      if (!Number.isFinite(d.getTime())) return;
+      const h = d.getHours();
+      hours[h].total += 1;
+      if (ev.kind === 'answer_submit' && ev.meta && ev.meta.correct) hours[h].ok += 1;
+      days[d.getDay()].total += 1;
+      if (ev.kind === 'answer_submit' && ev.meta && ev.meta.correct) days[d.getDay()].ok += 1;
+    });
+    if (!events.length) {
+      activityRows(state).forEach(function(row){
+        const d = new Date(row.date + 'T12:00:00');
+        if (!Number.isFinite(d.getTime())) return;
+        days[d.getDay()].total += row.total;
+        days[d.getDay()].ok += row.ok;
+      });
+    }
+    const bestHour = hours.slice().sort(function(a,b){ return b.total - a.total || b.ok - a.ok; })[0];
+    const bestDay = days.slice().sort(function(a,b){ return b.total - a.total || b.ok - a.ok; })[0];
+    return { hours:hours, days:days, bestHour:bestHour, bestDay:bestDay };
+  }
+  function computeSnapshot(events, state){
+    const funnel = computeFunnel(events);
+    const featureUse = computeFeatureUse(events);
+    const difficulty = computeDifficulty(state);
+    const decay = computeDecay(state);
+    const forecast = computeForecast(state || {});
+    const pattern = computeDailyPattern(events, state || {});
+    return { generatedAt:new Date().toISOString(), eventCount:events.length, lastEvent:events[events.length - 1] || null, funnel:funnel, featureUse:featureUse, difficulty:difficulty, decay:decay, forecast:forecast, pattern:pattern };
+  }
+
+  function ensureHost(){
+    let host = document.getElementById('wave92y-analytics');
+    if (host) return host;
+    const after = document.getElementById('wave22-insights') || document.getElementById('wave89j-parent-summary') || document.getElementById('activity');
+    const section = document.createElement('div');
+    section.className = 'section';
+    section.setAttribute('data-wave89j-advanced', '1');
+    section.textContent = 'Аналитика wave92y';
+    host = document.createElement('div');
+    host.id = 'wave92y-analytics';
+    host.setAttribute('data-wave89j-advanced', '1');
+    if (after && after.parentNode) {
+      after.parentNode.insertBefore(host, after.nextSibling);
+      after.parentNode.insertBefore(section, host);
+    } else if (document.body) {
+      document.body.appendChild(section);
+      document.body.appendChild(host);
+    }
+    return host;
+  }
+  function miniBar(label, value, max){
+    const width = max > 0 ? clamp(Math.round(value / max * 100), 0, 100) : 0;
+    return '<div class="subject-mini"><div><b>' + esc(value) + '</b><span>' + esc(label) + '</span></div></div><div class="subject-bar"><div class="subject-fill" style="width:' + width + '%;background:var(--accent)"></div></div>';
+  }
+  function renderFunnel(snapshot){
+    const f = snapshot.funnel;
+    const max = Math.max(1, f.pageViews, f.starts, f.answers, f.ends);
+    return '<div class="chart-card fade"><div class="chart-head"><div><div class="chart-title">Воронка тренировки</div><div class="chart-sub">События IndexedDB за последние 30 дней</div></div><div class="chart-meta">Точность ответов: <b>' + f.answerAccuracy + '%</b></div></div>' +
+      miniBar('просмотры', f.pageViews, max) +
+      miniBar('старты', f.starts, max) +
+      miniBar('ответы', f.answers, max) +
+      miniBar('завершения', f.ends, max) +
+      '<div class="analytics-note"><b>Переходы:</b> старт → ответ ' + f.startToAnswer + '% · старт → финал ' + f.answerToEnd + '%</div></div>';
+  }
+  function renderDifficulty(snapshot){
+    const d = snapshot.difficulty;
+    const total = Math.max(1, d.easy.length + d.target.length + d.hard.length);
+    const hardList = d.hard.slice(0, 3).map(function(row){ return esc(row.grade + ' · ' + row.topic + ' · ' + row.acc + '%'); }).join('<br>');
+    return '<div class="chart-card fade"><div class="chart-head"><div><div class="chart-title">Калибровка сложности</div><div class="chart-sub">По темам с минимум 3 попытками</div></div><div class="chart-meta"><b>' + (d.avg == null ? '—' : d.avg + '%') + '</b> средняя точность</div></div>' +
+      '<div class="analytics-grid"><div class="analytics-card"><div class="analytics-k">Легко</div><div class="analytics-v">' + d.easy.length + '</div><div class="analytics-sub">≥85%</div></div><div class="analytics-card"><div class="analytics-k">Норма</div><div class="analytics-v">' + d.target.length + '</div><div class="analytics-sub">60–84%</div></div><div class="analytics-card"><div class="analytics-k">Сложно</div><div class="analytics-v">' + d.hard.length + '</div><div class="analytics-sub"><60%</div></div></div>' +
+      '<div class="subject-bar"><div class="subject-fill" style="width:' + Math.round(d.target.length / total * 100) + '%;background:var(--accent)"></div></div><div class="analytics-note"><b>' + esc(d.verdict) + '</b>' + (hardList ? '<br>' + hardList : '') + '</div></div>';
+  }
+  function renderDecayForecast(snapshot){
+    const decay = snapshot.decay;
+    const forecast = snapshot.forecast;
+    const stale = decay.topics.length ? decay.topics.map(function(row){ return '<div class="wave89j-parent-item"><div class="wave89j-parent-icon">⏳</div><div><b>' + esc(row.grade + ' · ' + row.topic) + '</b><span>' + row.age + ' дн. без повторения · точность ' + row.acc + '%</span></div></div>'; }).join('') : '<div class="chart-empty">Критичных просрочек повторения не найдено.</div>';
+    return '<div class="chart-card fade"><div class="chart-head"><div><div class="chart-title">Decay alert + прогноз</div><div class="chart-sub">Когда пора повторить и какой темп ожидается</div></div><div class="chart-meta">30 дней: <b>' + forecast.total30 + '</b> задач</div></div>' +
+      '<div class="analytics-grid"><div class="analytics-card"><div class="analytics-k">Темп/30д</div><div class="analytics-v">' + forecast.pace + '</div><div class="analytics-sub">прогноз объёма</div></div><div class="analytics-card"><div class="analytics-k">Прогноз</div><div class="analytics-v">' + (forecast.mark || '—') + '</div><div class="analytics-sub">' + esc(forecast.predicted ? forecast.predicted + '% точности' : 'мало данных') + '</div></div></div>' +
+      '<div class="wave89j-parent-list">' + stale + '</div><div class="analytics-note"><b>' + esc(forecast.text) + '</b></div></div>';
+  }
+  function renderPatternFeatures(snapshot){
+    const p = snapshot.pattern;
+    const maxDay = Math.max(1, ...p.days.map(function(row){ return row.total; }));
+    const dayBars = p.days.map(function(row){
+      return '<span class="month-chip">' + esc(row.label) + ' · ' + row.total + '</span>';
+    }).join('');
+    const hourText = p.bestHour && p.bestHour.total ? String(p.bestHour.hour).padStart(2, '0') + ':00' : '—';
+    const dead = snapshot.featureUse.filter(function(row){ return !row.used; });
+    const used = snapshot.featureUse.filter(function(row){ return row.used; });
+    return '<div class="chart-card fade"><div class="chart-head"><div><div class="chart-title">Суточный паттерн и мёртвые фичи</div><div class="chart-sub">По событиям UI; если событий нет, используется дневная активность</div></div><div class="chart-meta">Лучший час: <b>' + esc(hourText) + '</b></div></div>' +
+      '<div class="legend-row">' + dayBars + '</div>' +
+      '<div class="analytics-note"><b>Самый активный день:</b> ' + esc(p.bestDay ? p.bestDay.label : '—') + ' · <b>использовались:</b> ' + (used.length ? used.map(function(x){ return esc(x.label); }).join(', ') : 'пока нет данных') + '<br><b>Не замечены в событиях 30 дней:</b> ' + (dead.length ? dead.map(function(x){ return esc(x.label); }).join(', ') : 'нет') + '</div></div>';
+  }
+  function renderStorage(snapshot){
+    const last = snapshot.lastEvent;
+    const lastText = last ? dateKey(last.ts) + ' · ' + esc(last.kind) + ' · ' + esc(last.page || '') : 'событий пока нет';
+    return '<div class="analytics-grid fade"><div class="analytics-card"><div class="analytics-k">IndexedDB history</div><div class="analytics-v">' + snapshot.eventCount + '</div><div class="analytics-sub">событий в ' + esc(DB_NAME) + '</div></div><div class="analytics-card"><div class="analytics-k">Последнее событие</div><div class="analytics-v" style="font-size:15px">' + esc(lastText) + '</div><div class="analytics-sub">fallback localStorage учитывается</div></div></div>';
+  }
+  function render(snapshot){
+    const host = ensureHost();
+    if (!host) return;
+    host.innerHTML = renderStorage(snapshot) + renderFunnel(snapshot) + renderDifficulty(snapshot) + renderDecayForecast(snapshot) + renderPatternFeatures(snapshot);
+  }
+  function currentState(){
+    return (window.__dashboardGetActiveState && window.__dashboardGetActiveState()) || window.__dashboardActiveState || window._dashboardState || null;
+  }
+  function refresh(){
+    const host = ensureHost();
+    if (host && !host.innerHTML) host.innerHTML = '<div class="chart-card"><div class="chart-empty">Собираю локальную аналитику…</div></div>';
+    const state = currentState();
+    return readAllEvents().then(function(events){
+      const snapshot = computeSnapshot(events, state || {});
+      window.__wave92yDashboardAnalytics.ready = true;
+      window.__wave92yDashboardAnalytics.last = snapshot;
+      render(snapshot);
+      try { window.dispatchEvent(new CustomEvent('wave92y-analytics-ready', { detail:snapshot })); } catch(_) {}
+      return snapshot;
+    }).catch(function(){
+      const snapshot = computeSnapshot([], state || {});
+      window.__wave92yDashboardAnalytics.last = snapshot;
+      render(snapshot);
+      return snapshot;
+    });
+  }
+  function buildCSV(snapshot, state){
+    const lines = ['section,key,value,extra'];
+    lines.push(['wave92y','generatedAt',snapshot.generatedAt,''].map(csv).join(','));
+    lines.push(['indexeddb','eventCount',snapshot.eventCount,DB_NAME].map(csv).join(','));
+    Object.keys(snapshot.funnel).forEach(function(key){ if (key !== 'rows') lines.push(['funnel',key,snapshot.funnel[key],'last30'].map(csv).join(',')); });
+    snapshot.featureUse.forEach(function(row){ lines.push(['feature',row.label,row.used ? 'used' : 'not_seen_30d',''].map(csv).join(',')); });
+    const d = snapshot.difficulty;
+    lines.push(['difficulty','avg',d.avg == null ? '' : d.avg,d.verdict].map(csv).join(','));
+    d.hard.forEach(function(row){ lines.push(['difficulty_hard', row.grade + ' ' + row.topic, row.acc, row.total + ' attempts'].map(csv).join(',')); });
+    snapshot.decay.topics.forEach(function(row){ lines.push(['decay', row.grade + ' ' + row.topic, row.age, row.acc + '%'].map(csv).join(',')); });
+    lines.push(['forecast','mark',snapshot.forecast.mark || '', snapshot.forecast.text].map(csv).join(','));
+    snapshot.pattern.days.forEach(function(row){ lines.push(['daily_pattern',row.label,row.total,row.ok].map(csv).join(',')); });
+    activityRows(state || {}).forEach(function(row){ lines.push(['activity',row.date,row.total,'ok=' + row.ok + ';err=' + row.err].map(csv).join(',')); });
+    return '\ufeff' + lines.join('\n');
+  }
+
+  const oldCsv = window.downloadDashboardCSV;
+  window.downloadDashboardCSV = function(){
+    const state = currentState();
+    readAllEvents().then(function(events){
+      const snapshot = computeSnapshot(events, state || {});
+      const today = new Date().toISOString().slice(0, 10);
+      download('dashboard_wave92y_analytics_' + today + '.csv', buildCSV(snapshot, state || {}), 'text/csv;charset=utf-8');
+    }).catch(function(){
+      if (typeof oldCsv === 'function') oldCsv();
+    });
+  };
+
+  window.__wave92yDashboardAnalytics.refresh = refresh;
+  window.__wave92yDashboardAnalytics.readEvents = readAllEvents;
+  window.addEventListener('dashboard-state-ready', function(){ setTimeout(refresh, 0); });
+  window.addEventListener('wave25-diagnostic-saved', function(){ setTimeout(refresh, 0); });
+  window.addEventListener('storage', function(ev){ if (ev && /^trainer_/.test(String(ev.key || ''))) setTimeout(refresh, 50); });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(refresh, 0); }, { once:true }); else setTimeout(refresh, 0);
+})();

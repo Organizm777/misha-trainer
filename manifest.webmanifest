@@ -1,36 +1,60 @@
 {
-  "name": "Тренажёр",
-  "short_name": "Тренажёр",
-  "description": "Оффлайн-тренажёр по школьным предметам с диагностикой, прогрессом и родительской панелью.",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
   "background_color": "#f5f3ee",
-  "theme_color": "#1a1a2e",
-  "lang": "ru",
-  "orientation": "portrait-primary",
   "categories": [
     "education",
     "productivity"
   ],
+  "description": "Оффлайн-тренажёр по школьным предметам с диагностикой, прогрессом и родительской панелью.",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
   "icons": [
     {
-      "src": "./assets/icons/icon-192.png",
+      "purpose": "any maskable",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "./assets/icons/icon-192.png",
+      "type": "image/png"
     },
     {
-      "src": "./assets/icons/icon-512.png",
+      "purpose": "any maskable",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "./assets/icons/icon-512.png",
+      "type": "image/png"
     }
   ],
   "id": "/misha-trainer/",
-  "display_override": [
-    "standalone",
-    "browser"
-  ],
-  "prefer_related_applications": false
+  "lang": "ru",
+  "name": "Тренажёр",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "scope": "./",
+  "short_name": "Тренажёр",
+  "start_url": "./index.html",
+  "theme_color": "#1a1a2e",
+  "wave93a_mobile": {
+    "bottom_nav": true,
+    "install_banner": true,
+    "landscape": true,
+    "offline_indicator": true,
+    "pull_to_refresh": true,
+    "safe_area": true,
+    "share_api": true,
+    "touch_size_min_px": 44
+  },
+  "wave93b_accessibility": {
+    "aria": true,
+    "focus_management": true,
+    "font_size": true,
+    "high_contrast": true,
+    "reduced_motion": true,
+    "semantic_radio": true
+  },
+  "wave93c_architecture": {
+    "containment_css": "assets/css/wave93c_architecture.61f4165edb.css",
+    "dependency_graph": "assets/data/dependency_graph_wave93c.json",
+    "split_runtime": true
+  }
 }

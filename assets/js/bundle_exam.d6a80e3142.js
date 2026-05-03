@@ -2828,3 +2828,344 @@
   root.wave92fRealExam = { version:'wave92f', key:KEY, enabled:get, set:set, apply:apply, mount:mount };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true }); else boot();
 })();
+
+
+/* wave92x: exam suite — countdown, task filters, trap hints, error review, autoplan, task hash, print */
+(function(){
+  'use strict';
+  var root = window;
+  if (!root || root.__wave92xExamSuite) return;
+  root.__wave92xExamSuite = true;
+  var VERSION = 'wave92x';
+  var STYLE_ID = 'wave92x-exam-suite-style';
+  var ACTION = 'data-wave92x-exam-action';
+  var FILTER_KEY = 'trainer_exam_task_filter_wave92x';
+  var PLAN_KEY = 'trainer_exam_autoplan_wave92x';
+  var HISTORY_KEY = 'trainer_exam_history_v1';
+
+  function esc(value){ return String(value == null ? '' : value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function num(value){ return Number(value || 0) || 0; }
+  function page(){ try { return (location.pathname || '').split('/').pop() || 'index.html'; } catch(_) { return ''; } }
+  function isDiagnostic(){ return page() === 'diagnostic.html' || !!document.getElementById('subj-grid'); }
+  function isDashboard(){ return page() === 'dashboard.html' || (!!document.getElementById('grades') && !!document.getElementById('activity')); }
+  function activePack(){ try { return root.wave30Exam && typeof root.wave30Exam.getActivePack === 'function' ? root.wave30Exam.getActivePack() : null; } catch(_) { return null; } }
+  function qList(){ try { if (typeof questions !== 'undefined' && Array.isArray(questions)) return questions; } catch(_) {} return []; }
+  function qPos(){ try { if (typeof qIndex !== 'undefined') return num(qIndex); } catch(_) {} return 0; }
+  function answerList(){ try { if (typeof answers !== 'undefined' && Array.isArray(answers)) return answers; } catch(_) {} return []; }
+  function answerMap(){ var map = {}; answerList().forEach(function(row){ if (row && typeof row.qi !== 'undefined') map[String(row.qi)] = row; }); return map; }
+  function currentSession(){ try { return root.__wave25DiagSession || null; } catch(_) { return null; } }
+  function fmtSec(sec){ sec = Math.max(0, Math.floor(num(sec))); var h = Math.floor(sec / 3600); var m = Math.floor((sec % 3600) / 60); var s = sec % 60; return (h ? (String(h).padStart(2,'0') + ':') : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0'); }
+  function loadJson(key, fallback){ try { var raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(_) { return fallback; } }
+  function saveJson(key, value){ try { localStorage.setItem(key, JSON.stringify(value)); } catch(_) {} }
+  function getFilter(){ try { return localStorage.getItem(FILTER_KEY) || 'all'; } catch(_) { return 'all'; } }
+  function setFilter(value){ try { localStorage.setItem(FILTER_KEY, value || 'all'); } catch(_) {} }
+  function setHtml(el, html){ if (el && el.__wave92xHtml !== html) { el.innerHTML = html; el.__wave92xHtml = html; } }
+  function isPartTwo(q){ return !!(q && (String(q.part || '').toUpperCase() === 'B' || num(q.points || q.max_score) > 1)); }
+  function normalizeText(s){ return String(s || '').toLowerCase().replace(/ё/g,'е'); }
+
+  function detectTrap(q){
+    if (!q) return [];
+    var text = normalizeText([q.q, q.topic, q.section].join(' '));
+    var opts = Array.isArray(q.opts) ? q.opts.map(normalizeText).join(' | ') : '';
+    var reasons = [];
+    if (/(^|\s)(не|нельзя|нет|кроме|исключая|ошибочн|неверн|противоположн)(\s|$|[.,:;!?])/.test(text)) reasons.push('есть отрицание или исключение');
+    if (/(наименьш|наибольш|минимальн|максимальн|первым|последним|вероятнее всего)/.test(text)) reasons.push('важен критерий выбора');
+    if (/(единиц|см|м²|м3|кг|процент|%|градус|секунд|минут)/.test(text + ' ' + opts)) reasons.push('проверь единицы измерения');
+    if (Array.isArray(q.opts) && q.opts.length) {
+      var numeric = q.opts.filter(function(o){ return /[-+]?\d/.test(String(o)); }).length;
+      if (numeric >= Math.max(3, q.opts.length - 1)) reasons.push('варианты близки численно');
+    }
+    if (isPartTwo(q)) reasons.push('многошаговое задание / повышенный балл');
+    return reasons.slice(0, 3);
+  }
+
+  function ensureStyle(){
+    if (document.getElementById(STYLE_ID)) return;
+    var style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = '' +
+      '.wave92x-countdown{margin:0 0 10px;padding:10px 12px;border:1px solid var(--border);border-radius:14px;background:var(--card);display:flex;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 10px 22px rgba(15,23,42,.06)}' +
+      '.wave92x-countdown b{font-family:JetBrains Mono,monospace;font-size:15px}.wave92x-countdown span{font-size:10.5px;color:var(--muted);font-weight:800}.wave92x-countdown i{display:block;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),rgba(148,163,184,.28));flex:1;min-width:80px;max-width:180px}' +
+      '.wave92x-countdown.low{border-color:rgba(245,158,11,.45);background:rgba(245,158,11,.08)}.wave92x-countdown.critical{border-color:rgba(220,38,38,.45);background:rgba(220,38,38,.08)}' +
+      '.wave92x-task-filterbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:-2px 0 10px}.wave92x-filter-meta{width:100%;font-size:10px;color:var(--muted);font-weight:900}.wave92x-filter-btn{border:1px solid var(--border);border-radius:999px;background:var(--card);color:var(--muted);padding:7px 9px;font-size:10px;font-weight:900;cursor:pointer}.wave92x-filter-btn[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}.wave30-task-btn.wave92x-filter-hidden{display:none!important}' +
+      '.wave92x-trap-note,.wave92x-part-note{margin:10px 0;padding:10px 12px;border-radius:14px;border:1px solid rgba(245,158,11,.30);background:rgba(245,158,11,.08);font-size:11px;line-height:1.45;color:var(--text)}.wave92x-part-note{border-color:rgba(37,99,235,.25);background:rgba(37,99,235,.07)}.wave92x-trap-note b,.wave92x-part-note b{font-size:11.5px}' +
+      '.wave92x-panel{margin:12px 0;padding:13px;border:1px solid var(--border);border-radius:16px;background:var(--card)}.wave92x-panel h3{margin:0 0 8px;font-size:14px}.wave92x-panel p{margin:6px 0;color:var(--muted);font-size:11px;line-height:1.45}.wave92x-plan-list{margin:8px 0 0 18px;padding:0}.wave92x-plan-list li{margin:5px 0;font-size:12px;line-height:1.45}.wave92x-task-review{display:flex;flex-direction:column;gap:8px}.wave92x-task-row{padding:10px;border:1px dashed var(--border);border-radius:12px;background:var(--bg);font-size:11px;line-height:1.45}.wave92x-task-row b{font-size:12px}.wave92x-task-row span{color:var(--muted)}' +
+      '.wave92x-print-btn{display:inline-flex;align-items:center;gap:6px;margin:8px 8px 0 0;border:1px solid var(--border);border-radius:999px;background:var(--card);color:var(--text);padding:8px 10px;font-size:11px;font-weight:900;cursor:pointer}.wave92x-print-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}' +
+      '@media print{body{background:#fff!important;color:#111!important}.hdr,.quick-links,.share-btn,.again-btn,.wave92x-print-btn,.wave30-review-actions,.dash-actions{display:none!important}.scr{display:none!important}.scr.on,#s-result{display:block!important}.w{max-width:none!important}.wave30-review{position:static!important;background:#fff!important;padding:0!important}.wave30-review-card{max-height:none!important;border:none!important}.wave92x-panel,.ins-block,.wave30-exam-stat,.wave30-sec-row{break-inside:avoid}}';
+    (document.head || document.documentElement).appendChild(style);
+  }
+
+  function renderCountdown(){
+    if (!isDiagnostic()) return;
+    ensureStyle();
+    var pack = activePack();
+    var session = currentSession();
+    var old = document.getElementById('wave92x-countdown');
+    if (!pack || !session || !session.timeLimit || !document.getElementById('s-quiz')) { if (old) old.remove(); return; }
+    var meta = document.getElementById('wave30-quiz-meta') || document.querySelector('#s-quiz .qhdr');
+    if (!meta || !meta.parentNode) return;
+    var box = old;
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'wave92x-countdown';
+      box.className = 'wave92x-countdown';
+      meta.parentNode.insertBefore(box, meta.nextSibling);
+    }
+    var left = typeof session.remaining === 'number' ? session.remaining : session.timeLimit;
+    var ratio = session.timeLimit ? Math.max(0, Math.min(100, Math.round(left / session.timeLimit * 100))) : 0;
+    var state = left <= 60 ? ' critical' : left <= 300 ? ' low' : '';
+    if (box.className !== 'wave92x-countdown' + state) box.className = 'wave92x-countdown' + state;
+    setHtml(box, '<b>⏱ ' + esc(fmtSec(left)) + '</b><span>' + (left <= 60 ? 'последняя минута' : left <= 300 ? 'финишный отрезок' : 'обратный отсчёт варианта') + '</span><i style="width:' + ratio + '%"></i>');
+  }
+
+  function renderTrapAndPartNotes(){
+    if (!isDiagnostic()) return;
+    ensureStyle();
+    var pack = activePack();
+    var qs = qList();
+    var q = qs[qPos()] || null;
+    var qcard = document.querySelector('#s-quiz .qcard');
+    var trap = document.getElementById('wave92x-trap-note');
+    var part = document.getElementById('wave92x-part-note');
+    if (!pack || !q || !qcard || !qcard.parentNode) { if (trap) trap.remove(); if (part) part.remove(); return; }
+    var reasons = detectTrap(q);
+    if (reasons.length) {
+      if (!trap) { trap = document.createElement('div'); trap.id = 'wave92x-trap-note'; trap.className = 'wave92x-trap-note'; qcard.parentNode.insertBefore(trap, qcard.nextSibling); }
+      setHtml(trap, '<b>⚠️ Ловушка задания:</b> ' + esc(reasons.join(' · ')) + '. Перед ответом перечитай условие.');
+    } else if (trap) trap.remove();
+    if (isPartTwo(q)) {
+      if (!part) { part = document.createElement('div'); part.id = 'wave92x-part-note'; part.className = 'wave92x-part-note'; qcard.parentNode.insertBefore(part, (trap && trap.parentNode) ? trap.nextSibling : qcard.nextSibling); }
+      setHtml(part, '<b>Часть 2 / повышенный балл.</b> Ответ можно изменить до финальной проверки; полезно оставить пометку «вернусь», если решение не доведено до конца.');
+    } else if (part) part.remove();
+  }
+
+  function progressStats(qs, amap){
+    var total = qs.length;
+    var answered = Object.keys(amap || {}).length;
+    var part2 = qs.filter(isPartTwo).length;
+    var flagged = document.querySelectorAll('.wave30-task-btn.flagged').length;
+    return { total: total, answered: answered, pending: Math.max(0, total - answered), part2: part2, flagged: flagged };
+  }
+
+  function renderTaskFilter(){
+    if (!isDiagnostic()) return;
+    ensureStyle();
+    var pack = activePack();
+    var meta = document.getElementById('wave30-quiz-meta');
+    var old = document.getElementById('wave92x-task-filterbar');
+    if (!pack || !meta || !meta.parentNode) { if (old) old.remove(); return; }
+    var bar = old;
+    if (!bar) { bar = document.createElement('div'); bar.id = 'wave92x-task-filterbar'; bar.className = 'wave92x-task-filterbar'; meta.parentNode.insertBefore(bar, meta.nextSibling); }
+    var mode = getFilter();
+    var qs = qList();
+    var stats = progressStats(qs, answerMap());
+    var stamp = [mode, stats.answered, stats.total, stats.pending, stats.flagged, stats.part2].join('|');
+    if (bar.getAttribute('data-wave92x-stamp') !== stamp) {
+      bar.setAttribute('data-wave92x-stamp', stamp);
+      var items = [['all','Все'], ['pending','Без ответа'], ['flagged','Отмеченные'], ['part2','Часть 2'], ['traps','Ловушки']];
+      setHtml(bar,
+        '<div class="wave92x-filter-meta">Прогресс по заданиям: ' + esc(stats.answered) + '/' + esc(stats.total) + ' · без ответа: ' + esc(stats.pending) + ' · отмечено: ' + esc(stats.flagged) + ' · часть 2: ' + esc(stats.part2) + '</div>' +
+        items.map(function(it){ return '<button type="button" class="wave92x-filter-btn" aria-pressed="' + (mode === it[0] ? 'true' : 'false') + '" ' + ACTION + '="filter" data-wave92x-filter="' + esc(it[0]) + '">' + esc(it[1]) + '</button>'; }).join('')
+      );
+    }
+    applyTaskFilter();
+  }
+
+  function applyTaskFilter(){
+    var pack = activePack();
+    if (!pack) return;
+    var mode = getFilter();
+    var qs = qList();
+    var amap = answerMap();
+    Array.prototype.slice.call(document.querySelectorAll('.wave30-task-btn')).forEach(function(btn){
+      var raw = btn.getAttribute('data-wave90b-task-index');
+      var idx = raw == null ? (num(btn.textContent) - 1) : num(raw);
+      var q = qs[idx] || null;
+      var hidden = false;
+      if (mode === 'pending') hidden = !!amap[String(idx)];
+      else if (mode === 'flagged') hidden = !btn.classList.contains('flagged');
+      else if (mode === 'part2') hidden = !isPartTwo(q);
+      else if (mode === 'traps') hidden = !detectTrap(q).length;
+      btn.classList.toggle('wave92x-filter-hidden', !!hidden);
+    });
+  }
+
+  function parseHash(){
+    var out = {};
+    try { String(location.hash || '').replace(/^#/, '').split('&').forEach(function(part){ var pair = part.split('='); if (pair[0]) out[pair[0]] = decodeURIComponent(pair.slice(1).join('=')); }); } catch(_) {}
+    return out;
+  }
+  function replaceHashValue(key, value){
+    try {
+      var h = parseHash();
+      if (value == null || value === '') delete h[key]; else h[key] = String(value);
+      var next = Object.keys(h).map(function(k){ return k + '=' + encodeURIComponent(h[k]); }).join('&');
+      if (history && history.replaceState) history.replaceState(null, '', next ? ('#' + next) : (location.pathname + location.search));
+    } catch(_) {}
+  }
+  function syncTaskHash(){
+    var pack = activePack();
+    if (!pack || !isDiagnostic()) return;
+    var qs = qList();
+    if (!qs.length) return;
+    var current = qPos() + 1;
+    var wanted = num(parseHash().task);
+    if (wanted > 0 && wanted <= qs.length && wanted !== current) {
+      var key = String(pack.id || '') + '|' + String(wanted);
+      if (root.__wave92xTaskHashApplied !== key && root.wave30Exam && typeof root.wave30Exam.goToTask === 'function') {
+        root.__wave92xTaskHashApplied = key;
+        root.wave30Exam.goToTask(wanted - 1);
+        return;
+      }
+    }
+    replaceHashValue('task', current);
+  }
+
+  function latestHistoryRow(){
+    var rows = loadJson(HISTORY_KEY, []);
+    return Array.isArray(rows) && rows.length ? rows[0] : null;
+  }
+  function buildPlan(row){
+    row = row || {};
+    var weak = Array.isArray(row.weakSections) ? row.weakSections.filter(Boolean) : [];
+    var label = row.packLabel || 'экзаменный вариант';
+    var items = [];
+    if (weak.length) {
+      weak.slice(0, 4).forEach(function(section, i){ items.push('День ' + (i + 1) + ': повторить «' + section + '» и решить 8–12 заданий этого типа.'); });
+    } else {
+      items.push('День 1: закрепить сильные разделы и разобрать 3 случайные ошибки из прошлых вариантов.');
+      items.push('День 2: пройти новый вариант в режиме «по-настоящему».');
+    }
+    items.push('Финиш: повторить вариант и сравнить сырой балл с предыдущей попыткой.');
+    return { ts: Date.now(), packId: row.packId || '', packLabel: label, weakSections: weak.slice(0, 4), items: items, href: row.packId ? ('diagnostic.html#exam=' + encodeURIComponent(row.packId)) : 'diagnostic.html' };
+  }
+  function savePlanFromRow(row){ if (!row || !row.packId) return null; var plan = buildPlan(row); saveJson(PLAN_KEY, plan); return plan; }
+  function getLatestPlan(){ var plan = loadJson(PLAN_KEY, null); if (!plan) { var row = latestHistoryRow(); if (row && row.packId) plan = savePlanFromRow(row); } return plan; }
+
+  function renderAutoplan(targetRow){
+    if (!isDiagnostic()) return;
+    ensureStyle();
+    var plan = targetRow && targetRow.packId ? savePlanFromRow(targetRow) : getLatestPlan();
+    if (!plan) return;
+    var result = document.getElementById('s-result');
+    if (result && !result.classList.contains('on')) return;
+    var target = document.getElementById('wave30-exam-block') || document.getElementById('rec-block') || document.querySelector('#s-result .w');
+    if (!target || !target.parentNode) return;
+    var rootEl = document.getElementById('wave92x-autoplan');
+    if (!rootEl) { rootEl = document.createElement('div'); rootEl.id = 'wave92x-autoplan'; rootEl.className = 'wave92x-panel'; target.parentNode.insertBefore(rootEl, target.nextSibling); }
+    setHtml(rootEl, '<h3>🗓 Автоплан после варианта</h3><p>' + esc(plan.packLabel) + (plan.weakSections.length ? (' · фокус: ' + esc(plan.weakSections.join(', '))) : ' · слабых разделов почти нет') + '</p><ol class="wave92x-plan-list">' + plan.items.map(function(item){ return '<li>' + esc(item) + '</li>'; }).join('') + '</ol><button type="button" class="wave92x-print-btn" ' + ACTION + '="print">🖨 Печать плана</button>');
+  }
+
+  function renderErrorReview(){
+    if (!isDiagnostic()) return;
+    var pack = activePack();
+    var qs = qList();
+    var result = document.getElementById('s-result');
+    if (!pack || !qs.length || !result || !result.classList.contains('on')) return;
+    ensureStyle();
+    var amap = answerMap();
+    var rows = [];
+    qs.forEach(function(q, idx){ var entry = amap[String(idx)] || null; if (!entry || !entry.correct) rows.push({ idx: idx, q: q, entry: entry }); });
+    var target = document.getElementById('wave30-exam-block') || document.getElementById('gaps-block') || document.querySelector('#s-result .w');
+    if (!target || !target.parentNode) return;
+    var rootEl = document.getElementById('wave92x-error-review');
+    if (!rootEl) { rootEl = document.createElement('div'); rootEl.id = 'wave92x-error-review'; rootEl.className = 'wave92x-panel'; target.parentNode.insertBefore(rootEl, target.nextSibling); }
+    if (!rows.length) {
+      setHtml(rootEl, '<h3>✅ Разбор ошибок по заданиям</h3><p>В этом варианте нет неверных или пустых ответов.</p>');
+      return;
+    }
+    setHtml(rootEl, '<h3>🔎 Разбор ошибок по заданиям</h3><div class="wave92x-task-review">' + rows.slice(0, 12).map(function(row){
+      var q = row.q || {};
+      var chosen = row.entry && row.entry.chosenText ? row.entry.chosenText : (row.entry && row.entry.chosen ? row.entry.chosen : 'нет ответа');
+      var trap = detectTrap(q);
+      return '<div class="wave92x-task-row"><b>Задание ' + esc(q.taskNo || (row.idx + 1)) + ' · ' + esc(q.section || q.topic || 'раздел') + '</b><br><span>Ответ: ' + esc(chosen) + ' · верно: ' + esc(q.a || q.correctAnswer || '') + '</span>' + (trap.length ? '<br><span>Ловушка: ' + esc(trap.join(' · ')) + '</span>' : '') + '</div>';
+    }).join('') + '</div>' + (rows.length > 12 ? '<p>Показаны первые 12 ошибок из ' + rows.length + '.</p>' : '') + '<button type="button" class="wave92x-print-btn" ' + ACTION + '="print">🖨 Печать разбора</button>');
+  }
+
+  function renderDashboardPlan(){
+    if (!isDashboard()) return;
+    ensureStyle();
+    var plan = getLatestPlan();
+    if (!plan) return;
+    var host = document.getElementById('wave30-exam-dashboard') || document.querySelector('.dash-actions') || document.body;
+    if (!host || !host.parentNode) return;
+    var card = document.getElementById('wave92x-dashboard-plan');
+    if (!card) { card = document.createElement('div'); card.id = 'wave92x-dashboard-plan'; card.className = 'wave92x-panel'; host.parentNode.insertBefore(card, host.nextSibling); }
+    setHtml(card, '<h3>🗓 Ближайший экзаменный план</h3><p>' + esc(plan.packLabel) + '</p><ol class="wave92x-plan-list">' + plan.items.slice(0, 3).map(function(item){ return '<li>' + esc(item) + '</li>'; }).join('') + '</ol><a class="wave30-dash-link" href="' + esc(plan.href) + '">▶ Повторить вариант</a>');
+  }
+
+  function renderPrintButtons(){
+    ensureStyle();
+    var reviewActions = document.querySelector('.wave30-review-actions');
+    if (reviewActions && !document.getElementById('wave92x-review-print')) {
+      var b = document.createElement('button'); b.id = 'wave92x-review-print'; b.type = 'button'; b.className = 'wave30-review-btn secondary'; b.setAttribute(ACTION, 'print'); b.textContent = '🖨 Печать проверки'; reviewActions.insertBefore(b, reviewActions.firstChild);
+    }
+    var result = document.querySelector('#s-result.on .res-hero');
+    if (result && !document.getElementById('wave92x-result-print')) {
+      var rb = document.createElement('button'); rb.id = 'wave92x-result-print'; rb.type = 'button'; rb.className = 'wave92x-print-btn primary'; rb.setAttribute(ACTION, 'print'); rb.textContent = '🖨 Печать результата'; result.parentNode.insertBefore(rb, result.nextSibling);
+    }
+  }
+
+  function handleAction(el, ev){
+    var act = el && el.getAttribute(ACTION);
+    if (!act) return;
+    if (ev && typeof ev.preventDefault === 'function') ev.preventDefault();
+    if (act === 'filter') {
+      setFilter(el.getAttribute('data-wave92x-filter') || 'all');
+      renderTaskFilter();
+      applyTaskFilter();
+      return;
+    }
+    if (act === 'print') {
+      try { document.body && document.body.setAttribute('data-wave92x-print-clean', '1'); } catch(_) {}
+      try { root.print(); } finally { setTimeout(function(){ try { document.body && document.body.removeAttribute('data-wave92x-print-clean'); } catch(_) {} }, 600); }
+    }
+  }
+
+  function bind(){
+    if (document.__wave92xExamSuiteBound) return;
+    document.__wave92xExamSuiteBound = true;
+    document.addEventListener('click', function(ev){
+      var actionEl = ev.target && ev.target.closest ? ev.target.closest('[' + ACTION + ']') : null;
+      if (actionEl) { handleAction(actionEl, ev); return; }
+      var task = ev.target && ev.target.closest ? ev.target.closest('.wave30-task-btn') : null;
+      if (task) { var raw = task.getAttribute('data-wave90b-task-index'); var idx = raw == null ? (num(task.textContent) - 1) : num(raw); replaceHashValue('task', idx + 1); }
+    }, true);
+    root.addEventListener('wave30-exam-saved', function(ev){
+      try { var row = ev && ev.detail; if (row && row.packId) { savePlanFromRow(row); setTimeout(function(){ renderAutoplan(row); renderDashboardPlan(); renderErrorReview(); renderPrintButtons(); }, 0); } } catch(_) {}
+    });
+    root.addEventListener('hashchange', function(){ try { syncTaskHash(); } catch(_) {} });
+  }
+
+  function tick(){
+    try {
+      ensureStyle();
+      bind();
+      renderCountdown();
+      renderTaskFilter();
+      renderTrapAndPartNotes();
+      syncTaskHash();
+      renderErrorReview();
+      renderAutoplan();
+      renderDashboardPlan();
+      renderPrintButtons();
+      applyTaskFilter();
+    } catch(err) {
+      try { console.warn('[wave92x exam suite]', err); } catch(_) {}
+    }
+  }
+
+  root.wave92xExamSuite = {
+    version: VERSION,
+    planKey: PLAN_KEY,
+    filterKey: FILTER_KEY,
+    detectTrap: detectTrap,
+    render: tick,
+    buildPlan: buildPlan
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tick, { once:true }); else tick();
+  root.addEventListener('load', tick, { once:true });
+  setTimeout(tick, 0);
+  setTimeout(tick, 80);
+  setInterval(tick, 1000);
+})();

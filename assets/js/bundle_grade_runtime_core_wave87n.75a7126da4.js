@@ -496,7 +496,7 @@
     var card = document.createElement('div');
     card.style.cssText = 'background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:18px;padding:22px 18px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 12px 30px rgba(0,0,0,.25)';
     card.onclick = function(ev){ ev.stopPropagation(); };
-    card.innerHTML = '<h3 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800;margin-bottom:12px;text-align:center">'+ title +'</h3>' + bodyHtml + '<button class="btn btn-d" style="width:100%;margin-top:14px" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+    card.innerHTML = '<h3 style="font-family:Unbounded,system-ui,sans-serif;font-size:16px;font-weight:800;margin-bottom:12px;text-align:center">'+ title +'</h3>' + bodyHtml + '<button class="btn btn-d" style="width:100%;margin-top:14px" data-wave86u-on-click="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
     mask.appendChild(card);
     document.body.appendChild(mask);
     return mask;
@@ -553,7 +553,7 @@
       '<div class="ptrack" style="margin-top:10px"><div class="pfill" style="width:'+ s.progressPct +'% ;background:'+ s.color +'"></div></div>' +
       '<div style="display:flex;justify-content:space-between;gap:10px;margin-top:8px;font-size:12px;color:var(--muted)"><span>'+ s.masteredTopics +' mastered тем</span><span>'+ s.accuracy +'% точность</span></div>' +
       '<div style="margin-top:8px;font-size:12px;color:var(--text);line-height:1.55">'+ s.hint + (s.nextLevel !== 'max' ? ' Следующий ориентир — <b>'+ s.nextLevel +'</b>.' : ' Верхняя цель текущей English vertical уже закрыта.') + '</div>' +
-      '<button class="btn btn-o" style="width:100%;margin-top:10px" onclick="showEnglishLevelModal()">Подробнее по уровням</button>';
+      '<button class="btn btn-o" style="width:100%;margin-top:10px" data-wave86u-on-click="showEnglishLevelModal()">Подробнее по уровням</button>';
     root.prepend(card);
   }
 
@@ -571,7 +571,7 @@
     block.innerHTML = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:18px">🇬🇧</span><span style="font-size:13px;font-weight:800">English level</span><span style="margin-left:auto;font-size:15px;font-weight:900;color:'+ s.color +'">'+ s.level +'</span></div>' +
       '<div style="font-size:11px;color:#cbd5e1;line-height:1.55">'+ s.hint +'</div>' +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><div style="background:rgba(255,255,255,.08);border-radius:10px;padding:8px 6px;text-align:center"><div style="font-size:15px;font-weight:900">'+ s.masteredTopics +'</div><div style="font-size:10px;color:#cbd5e1">mastered тем</div></div><div style="background:rgba(255,255,255,.08);border-radius:10px;padding:8px 6px;text-align:center"><div style="font-size:15px;font-weight:900">'+ s.accuracy +'%</div><div style="font-size:10px;color:#cbd5e1">точность</div></div></div>' +
-      '<button style="margin-top:10px;width:100%;padding:9px 10px;border:none;border-radius:10px;background:rgba(37,99,235,.18);color:#dbeafe;font-weight:800;cursor:pointer;font-size:12px" onclick="showEnglishLevelModal()">Развернуть English level</button>';
+      '<button style="margin-top:10px;width:100%;padding:9px 10px;border:none;border-radius:10px;background:rgba(37,99,235,.18);color:#dbeafe;font-weight:800;cursor:pointer;font-size:12px" data-wave86u-on-click="showEnglishLevelModal()">Развернуть English level</button>';
     var statsGrid = card.querySelector('div[style*="display:grid;grid-template-columns:1fr 1fr"]');
     if (statsGrid && statsGrid.parentNode) statsGrid.parentNode.insertBefore(block, statsGrid.nextSibling); else card.appendChild(block);
   }
@@ -592,12 +592,12 @@
     var wrap = document.createElement('div');
     wrap.id = 'eng-extra-tools';
     wrap.className = 'eng-panel';
-    var buttons = '<div class="eng-tools"><button class="eng-tool-btn level" type="button" onclick="showEnglishLevelModal()">🇬🇧 English level: '+ s.level +'</button>';
+    var buttons = '<div class="eng-tools"><button class="eng-tool-btn level" type="button" data-wave86u-on-click="showEnglishLevelModal()">🇬🇧 English level: '+ s.level +'</button>';
     if (gradeNum >= 5) {
-      buttons += '<button class="eng-tool-btn" type="button" onclick="showEnglishGuide(\'irregulars\')">📚 Неправильные</button>';
-      buttons += '<button class="eng-tool-btn" type="button" onclick="showEnglishGuide(\'wordform\')">🧩 Словообразование</button>';
-      buttons += '<button class="eng-tool-btn" type="button" onclick="showEnglishGuide(\'phrasal\')">🔗 Фразовые</button>';
-      buttons += '<button class="eng-tool-btn" type="button" onclick="showEnglishGuide(\'articles\')">🌀 Артикли</button>';
+      buttons += '<button class="eng-tool-btn" type="button" data-wave86u-on-click="showEnglishGuide(\'irregulars\')">📚 Неправильные</button>';
+      buttons += '<button class="eng-tool-btn" type="button" data-wave86u-on-click="showEnglishGuide(\'wordform\')">🧩 Словообразование</button>';
+      buttons += '<button class="eng-tool-btn" type="button" data-wave86u-on-click="showEnglishGuide(\'phrasal\')">🔗 Фразовые</button>';
+      buttons += '<button class="eng-tool-btn" type="button" data-wave86u-on-click="showEnglishGuide(\'articles\')">🌀 Артикли</button>';
     }
     buttons += '</div>';
     wrap.innerHTML = '<h4>English infrastructure</h4><p>'+ s.hint +'</p>' + buttons + '<div style="font-size:11px;color:var(--muted)">Общие шпаргалки помогают держать сквозную English vertical от A1 до C1, а не учить каждый класс отдельно как изолированный остров.</div>';
@@ -1263,7 +1263,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     }
 
     html += latestBlock(latest);
-    html += '<button type="button" style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:10px;background:var(--text);color:var(--bg);font-weight:800;cursor:pointer" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+    html += '<button type="button" style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:10px;background:var(--text);color:var(--bg);font-weight:800;cursor:pointer" data-wave86u-on-click="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
     card.innerHTML = html;
     const toggle = card.querySelector('#rush-public-toggle');
     if(toggle){
@@ -1459,10 +1459,10 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     const overGoal = !!(goal && qn > goal);
     const barWidth = goal ? Math.min(100, Math.round((Math.min(qn, goal) / goal) * 100)) : 0;
     const favBtn = (cS && cT && !globalMix && !mix && !diagMode && !rushMode)
-      ? `<button type="button" class="wave21-iconbtn ${isFav(cS.id, cT.id) ? 'alt' : ''}" onclick="wave21ToggleFavorite()">${isFav(cS.id, cT.id) ? '★ В избранном' : '☆ В избранное'}</button>`
+      ? `<button type="button" class="wave21-iconbtn ${isFav(cS.id, cT.id) ? 'alt' : ''}" data-wave86u-on-click="wave21ToggleFavorite()">${isFav(cS.id, cT.id) ? '★ В избранном' : '☆ В избранное'}</button>`
       : '';
     const restartBtn = (window.__wave21LastSessionErrors && window.__wave21LastSessionErrors.length && currentScreenId()==='s-play' && !rushMode)
-      ? `<button type="button" class="wave21-iconbtn good" onclick="wave21RepeatSessionErrors()">🔁 Ошибки</button>`
+      ? `<button type="button" class="wave21-iconbtn good" data-wave86u-on-click="wave21RepeatSessionErrors()">🔁 Ошибки</button>`
       : '';
     const label = !goal
       ? `Вопрос ${Math.max(1, qn)}`
@@ -1648,7 +1648,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
       return meta ? { key, meta } : null;
     }).filter(Boolean).slice(0, 6);
     if(!items.length) return '';
-    return `<div class="wave21-card" id="wave21-favs"><h3>★ Избранные темы</h3><div class="wave21-sub">Быстрый доступ к темам, к которым хочешь вернуться.</div><div class="wave21-favs">${items.map(({meta}) => `<button type="button" class="wave21-favbtn" onclick="wave21OpenTopic('${meta.subj.id}','${meta.topic.id}','train')"><span class="star">★</span><span style="flex:1">${esc(meta.subj.nm)} → ${esc(meta.topic.nm)}</span></button>`).join('')}</div></div>`;
+    return `<div class="wave21-card" id="wave21-favs"><h3>★ Избранные темы</h3><div class="wave21-sub">Быстрый доступ к темам, к которым хочешь вернуться.</div><div class="wave21-favs">${items.map(({meta}) => `<button type="button" class="wave21-favbtn" data-wave86u-on-click="wave21OpenTopic('${meta.subj.id}','${meta.topic.id}','train')"><span class="star">★</span><span style="flex:1">${esc(meta.subj.nm)} → ${esc(meta.topic.nm)}</span></button>`).join('')}</div></div>`;
   }
   function renderMainActions(){
     ensureStyles();
@@ -1675,12 +1675,12 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     if(snap && snap.prob){
       const count = ((snap.st && (snap.st.ok + snap.st.err)) || 0);
       const label = snapMeta ? `${snapMeta.subj.nm} → ${snapMeta.topic.nm}` : (snap.sessionMode === 'error-review' ? 'Повтор ошибок' : 'Незавершённая сессия');
-      parts.push(`<button type="button" class="scard" onclick="wave21ResumeSession()"><div class="ic" style="background:var(--abg);color:var(--accent)">▶</div><div style="flex:1"><div class="nm">Вернуться к сессии</div><div class="dt"><span class="wave21-resume-strong">${esc(label)}</span> · сохранено после ${count} ${declNum(count,'вопроса','вопросов','вопросов')}</div></div></button>`);
+      parts.push(`<button type="button" class="scard" data-wave86u-on-click="wave21ResumeSession()"><div class="ic" style="background:var(--abg);color:var(--accent)">▶</div><div style="flex:1"><div class="nm">Вернуться к сессии</div><div class="dt"><span class="wave21-resume-strong">${esc(label)}</span> · сохранено после ${count} ${declNum(count,'вопроса','вопросов','вопросов')}</div></div></button>`);
     }
     if(lastMeta){
-      parts.push(`<button type="button" class="scard" onclick="wave21ContinueLastTopic()"><div class="ic" style="background:var(--gbg);color:var(--green)">⏯</div><div style="flex:1"><div class="nm">Продолжить тему</div><div class="dt">${esc(lastMeta.subj.nm)} → ${esc(lastMeta.topic.nm)}</div></div></button>`);
+      parts.push(`<button type="button" class="scard" data-wave86u-on-click="wave21ContinueLastTopic()"><div class="ic" style="background:var(--gbg);color:var(--green)">⏯</div><div style="flex:1"><div class="nm">Продолжить тему</div><div class="dt">${esc(lastMeta.subj.nm)} → ${esc(lastMeta.topic.nm)}</div></div></button>`);
     }
-    parts.push(`<div class="wave21-chiprow"><button type="button" class="wave21-chip" onclick="wave21RandomTopic()">🎲 Случайная тема</button>${favList().length ? `<button type="button" class="wave21-chip" onclick="document.getElementById('wave21-favs') && document.getElementById('wave21-favs').scrollIntoView({behavior:'smooth',block:'center'})">★ Избранное: ${favList().length}</button>` : ''}</div>`);
+    parts.push(`<div class="wave21-chiprow"><button type="button" class="wave21-chip" data-wave86u-on-click="wave21RandomTopic()">🎲 Случайная тема</button>${favList().length ? `<button type="button" class="wave21-chip" data-wave86u-on-click="document.getElementById('wave21-favs') && document.getElementById('wave21-favs').scrollIntoView({behavior:'smooth',block:'center'})">★ Избранное: ${favList().length}</button>` : ''}</div>`);
     parts.push(renderFavsMain());
     box.innerHTML = parts.join('');
   }
@@ -1720,9 +1720,9 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     if(!cS || !cT){ bar.innerHTML = ''; return; }
     const active = isFav(cS.id, cT.id);
     bar.innerHTML = `
-      <button type="button" class="wave21-mini-btn ${active ? 'alt' : ''}" onclick="wave21ToggleFavorite()">${active ? '★ В избранном' : '☆ В избранное'}</button>
-      <button type="button" class="wave21-mini-btn" onclick="wave21RandomTopic()">🎲 Случайная тема</button>
-      <button type="button" class="wave21-mini-btn good" onclick="wave21ContinueLastTopic()">⏯ Продолжить</button>`;
+      <button type="button" class="wave21-mini-btn ${active ? 'alt' : ''}" data-wave86u-on-click="wave21ToggleFavorite()">${active ? '★ В избранном' : '☆ В избранное'}</button>
+      <button type="button" class="wave21-mini-btn" data-wave86u-on-click="wave21RandomTopic()">🎲 Случайная тема</button>
+      <button type="button" class="wave21-mini-btn good" data-wave86u-on-click="wave21ContinueLastTopic()">⏯ Продолжить</button>`;
   }
   function injectResultActions(errorReviewSubjectId, errorReviewTopicId, wasErrorReview){
     ensureStyles();
@@ -1744,8 +1744,8 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     const canRepeat = Array.isArray(window.__wave21LastSessionErrors) && window.__wave21LastSessionErrors.length > 0;
     const canContinue = !!(errorReviewSubjectId && errorReviewTopicId);
     box.innerHTML = [
-      canRepeat ? `<button type="button" class="btn btn-o" onclick="wave21RepeatSessionErrors()">🔁 Повторить ошибки этой сессии</button>` : '',
-      canContinue ? `<button type="button" class="btn btn-o" onclick="wave21OpenTopic('${errorReviewSubjectId}','${errorReviewTopicId}','train')">⏯ Вернуться к теме</button>` : ''
+      canRepeat ? `<button type="button" class="btn btn-o" data-wave86u-on-click="wave21RepeatSessionErrors()">🔁 Повторить ошибки этой сессии</button>` : '',
+      canContinue ? `<button type="button" class="btn btn-o" data-wave86u-on-click="wave21OpenTopic('${errorReviewSubjectId}','${errorReviewTopicId}','train')">⏯ Вернуться к теме</button>` : ''
     ].filter(Boolean).join('');
   }
 
@@ -2110,7 +2110,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   function decorateInteractive(root=document){
     const selector = [
       `[${BTN_ATTR}]`,
-      '[onclick]',
+      '[data-wave86u-on-click],[onclick]',
       '.hintt',
       '.shpb',
       '.weak-btn',
@@ -3141,7 +3141,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
         ${!correct ? `<span>Ваш ответ: ${esc(sel)}</span>` : ''}
         <span>Верный ответ: ${esc(prob.answer)}</span>
       </div>
-      ${theory && !(typeof diagMode !== 'undefined' && diagMode) ? '<div class="wave26-xactions"><button type="button" class="wave26-xbtn" onclick="wave26Quality.openTheory()">📖 Открыть шпаргалку</button></div>' : ''}
+      ${theory && !(typeof diagMode !== 'undefined' && diagMode) ? '<div class="wave26-xactions"><button type="button" class="wave26-xbtn" data-wave86u-on-click="wave26Quality.openTheory()">📖 Открыть шпаргалку</button></div>' : ''}
     `;
     slot.appendChild(card);
   }
@@ -3814,9 +3814,9 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
       + '</div>'
       + '<div class="wave28-muted" style="margin-bottom:10px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '. Ошибка даёт вопросу короткий интервал, дальше SM-2 растит паузу по силе запоминания: 1 день → 6 дней → дальше по коэффициенту EF.</div>'
       + '<div class="wave28-actions">'
-      + '<button class="btn btn-p" ' + (digest.due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
-      + '<button class="btn btn-o" ' + (digest.sticky ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Мои сложные</button>'
-      + '<button class="btn btn-o" onclick="showJournal()">📚 Журнал</button>'
+      + '<button class="btn btn-p" ' + (digest.due ? 'data-wave86u-on-click="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
+      + '<button class="btn btn-o" ' + (digest.sticky ? 'data-wave86u-on-click="startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Мои сложные</button>'
+      + '<button class="btn btn-o" data-wave86u-on-click="showJournal()">📚 Журнал</button>'
       + '</div>';
     host.appendChild(card);
   }
@@ -3846,9 +3846,9 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
       + '<div class="wave28-muted" style="margin-bottom:8px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '. На сегодня сильнее всего выпадают такие темы:</div>'
       + '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">' + chips + '</div>'
       + '<div class="wave28-actions">'
-      + '<button class="btn btn-p" ' + (digest.due ? 'onclick="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
-      + '<button class="btn btn-o" ' + (sticky.length ? 'onclick="startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Сложные</button>'
-      + '<button class="btn btn-o" onclick="showJournal()">📚 Открыть журнал</button>'
+      + '<button class="btn btn-p" ' + (digest.due ? 'data-wave86u-on-click="startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
+      + '<button class="btn btn-o" ' + (sticky.length ? 'data-wave86u-on-click="startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Сложные</button>'
+      + '<button class="btn btn-o" data-wave86u-on-click="showJournal()">📚 Открыть журнал</button>'
       + '</div>';
     host.appendChild(card);
   }
@@ -3884,9 +3884,9 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
       + '</div>'
       + '<div class="wave28-muted" style="margin-bottom:10px">В банке ' + digest.total + ' карточек · средний EF ' + formatEf(digest.avgEf) + '. Ошибка даёт короткий интервал, потом SM-2 растит паузу: 1 день → 6 дней → дальше по коэффициенту запоминания. Подсказка сбрасывает карточку на быстрый повтор.</div>'
       + '<div class="wave28-actions" style="margin-bottom:12px">'
-      + '<button class="btn btn-p" ' + (due.length ? 'onclick="this.closest(\'div[style*=fixed]\').remove();startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
-      + '<button class="btn btn-o" ' + (sticky.length ? 'onclick="this.closest(\'div[style*=fixed]\').remove();startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Мои сложные</button>'
-      + '<button class="btn btn-o" onclick="this.closest(\'div[style*=fixed]\').remove();startWeakTrainingByTopics && startWeakTrainingByTopics()">🎯 По слабым темам</button>'
+      + '<button class="btn btn-p" ' + (due.length ? 'data-wave86u-on-click="this.closest(\'div[style*=fixed]\').remove();startDueReview()"' : 'disabled style="opacity:.45"') + '>🔁 Повторить сегодня</button>'
+      + '<button class="btn btn-o" ' + (sticky.length ? 'data-wave86u-on-click="this.closest(\'div[style*=fixed]\').remove();startStickyReview()"' : 'disabled style="opacity:.45"') + '>📌 Мои сложные</button>'
+      + '<button class="btn btn-o" data-wave86u-on-click="this.closest(\'div[style*=fixed]\').remove();startWeakTrainingByTopics && startWeakTrainingByTopics()">🎯 По слабым темам</button>'
       + '</div>';
 
     if (grouped.length){
@@ -3895,9 +3895,9 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
         var tag = pair[0], info = pair[1], enc = encodeURIComponent(tag);
         html += '<div class="wave28-item"><div class="q">' + esc(tag) + '</div><div class="m">' + info.count + ' ' + declNum(info.count, 'вопрос', 'вопроса', 'вопросов') + ' · ' + dayLabel(info.sample.dueAt || nowTs()) + '</div>'
           + '<div class="wave28-mini-actions">'
-          + '<button class="th" onclick="event.stopPropagation();jumpToTopic(decodeURIComponent(\'' + enc + '\'),' + '\'theory\'' + ')">📖 Шпаргалка</button>'
-          + '<button class="tr" onclick="event.stopPropagation();jumpToTopic(decodeURIComponent(\'' + enc + '\'),' + '\'train\'' + ')">✏️ Тема</button>'
-          + '<button class="rv" onclick="event.stopPropagation();this.closest(\'div[style*=fixed]\').remove();startDueReview()">🔁 Повтор</button>'
+          + '<button class="th" data-wave86u-on-click="event.stopPropagation();jumpToTopic(decodeURIComponent(\'' + enc + '\'),' + '\'theory\'' + ')">📖 Шпаргалка</button>'
+          + '<button class="tr" data-wave86u-on-click="event.stopPropagation();jumpToTopic(decodeURIComponent(\'' + enc + '\'),' + '\'train\'' + ')">✏️ Тема</button>'
+          + '<button class="rv" data-wave86u-on-click="event.stopPropagation();this.closest(\'div[style*=fixed]\').remove();startDueReview()">🔁 Повтор</button>'
           + '</div></div>';
       });
       html += '</div>';
@@ -3921,8 +3921,8 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
       html += '<div style="text-align:center;color:var(--muted);padding:24px 0;font-size:13px">Ошибок пока нет. Решай задачи!</div>';
     }
 
-    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="try{if(confirm(\'Очистить журнал ошибок и SM-2 повторение?\')){localStorage.removeItem(\'' + 'trainer_journal_' + gradeKey() + '\');localStorage.removeItem(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}}catch(e){}">Очистить журнал и повторение</button>';
-    html += '<button style="margin-top:8px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--text);color:var(--bg);font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" onclick="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
+    html += '<button style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--red);font-size:11px;cursor:pointer;font-family:Golos Text,sans-serif" data-wave86u-on-click="try{if(confirm(\'Очистить журнал ошибок и SM-2 повторение?\')){localStorage.removeItem(\'' + 'trainer_journal_' + gradeKey() + '\');localStorage.removeItem(\'' + REVIEW_KEY + '\');this.closest(\'div[style*=fixed]\').remove();refreshMain&&refreshMain();renderProg&&renderProg();}}catch(e){}">Очистить журнал и повторение</button>';
+    html += '<button style="margin-top:8px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--text);color:var(--bg);font-weight:700;font-size:14px;cursor:pointer;font-family:Golos Text,sans-serif" data-wave86u-on-click="this.closest(\'div[style*=fixed]\').remove()">Закрыть</button>';
 
     card.innerHTML = html;
     overlay.appendChild(card);
@@ -3931,7 +3931,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   };
 
   function patchMainJournalButton(){
-    document.querySelectorAll('button[onclick*="showJournal"]').forEach(function(btn){
+    document.querySelectorAll('button[data-wave86u-on-click*="showJournal"],button[onclick*="showJournal"]').forEach(function(btn){
       var txt = (btn.textContent || '').trim();
       if (txt.indexOf('Слабые') !== -1) btn.textContent = '🔁 Повторение';
     });
@@ -4399,7 +4399,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     if (!host || host.querySelector('.wave86n-tool-row')) return;
     var row = document.createElement('div');
     row.className = 'wave86n-tool-row';
-    row.innerHTML = '<button type="button" class="wave86n-tool-btn" onclick="wave86nProgressTools.showStreakCalendar()">📆 Календарь серии</button><button type="button" class="wave86n-tool-btn" onclick="wave86nProgressTools.exportParentProgress(\'csv\')">⬇️ CSV</button><button type="button" class="wave86n-tool-btn" onclick="wave86nProgressTools.exportParentProgress(\'json\')">⬇️ JSON</button>';
+    row.innerHTML = '<button type="button" class="wave86n-tool-btn" data-wave86u-on-click="wave86nProgressTools.showStreakCalendar()">📆 Календарь серии</button><button type="button" class="wave86n-tool-btn" data-wave86u-on-click="wave86nProgressTools.exportParentProgress(\'csv\')">⬇️ CSV</button><button type="button" class="wave86n-tool-btn" data-wave86u-on-click="wave86nProgressTools.exportParentProgress(\'json\')">⬇️ JSON</button>';
     host.appendChild(row);
   }
   function ensureProgressExportRow(){
@@ -4408,7 +4408,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     var row = document.createElement('div');
     row.id = 'wave86n-export-row';
     row.className = 'wave86n-export-row';
-    row.innerHTML = '<button type="button" onclick="wave86nProgressTools.exportParentProgress(\'csv\')">⬇️ CSV для родителя</button><button type="button" onclick="wave86nProgressTools.exportParentProgress(\'json\')">⬇️ JSON прогресса</button><button type="button" onclick="wave86nProgressTools.showStreakCalendar()">📆 Календарь серии</button>';
+    row.innerHTML = '<button type="button" data-wave86u-on-click="wave86nProgressTools.exportParentProgress(\'csv\')">⬇️ CSV для родителя</button><button type="button" data-wave86u-on-click="wave86nProgressTools.exportParentProgress(\'json\')">⬇️ JSON прогресса</button><button type="button" data-wave86u-on-click="wave86nProgressTools.showStreakCalendar()">📆 Календарь серии</button>';
     content.parentNode.insertBefore(row, content.nextSibling);
   }
   function buildSnapshot(){
@@ -4520,7 +4520,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     var streak = streakState();
     var active = rows.filter(function(row){ return toNum(row.total) > 0 || toNum(row.pure) > 0; }).length;
     var done = rows.filter(isDayDone).length;
-    var html = '<div class="wave86n-card" onclick="event.stopPropagation()">' +
+    var html = '<div class="wave86n-card" data-wave86u-on-click="event.stopPropagation()">' +
       '<h3>📆 Календарь серии</h3>' +
       '<div style="font-size:12px;color:var(--muted);line-height:1.5;text-align:center">Последние 42 дня. Зелёный день — дневная норма или рывок 20/20.</div>' +
       '<div class="wave86n-summary-grid"><div><b>' + esc(toNum(streak.current)) + '</b><span>текущая серия</span></div><div><b>' + esc(toNum(streak.best)) + '</b><span>рекорд</span></div><div><b>' + esc(done) + '/' + esc(active || 0) + '</b><span>дней закрыто</span></div></div>' +
@@ -4531,7 +4531,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
         return '<div class="wave86n-day" data-level="' + level + '" title="' + esc(label) + '">' + esc(String(Number(row.date.slice(-2)))) + '</div>';
       }).join('') + '</div>' +
       '<div style="display:flex;gap:8px;margin-top:12px;font-size:11px;color:var(--muted);justify-content:center;flex-wrap:wrap"><span>□ нет</span><span>🟦 старт</span><span>🟨 активно</span><span>🟩 закрыто</span></div>' +
-      '<button type="button" class="close" onclick="this.closest(\'.wave86n-modal\').remove()">Закрыть</button>' +
+      '<button type="button" class="close" data-wave86u-on-click="this.closest(\'.wave86n-modal\').remove()">Закрыть</button>' +
       '</div>';
     var modal = document.createElement('div');
     modal.className = 'wave86n-modal';

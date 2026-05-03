@@ -544,7 +544,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
   function decorateInteractive(root=document){
     const selector = [
       `[${BTN_ATTR}]`,
-      '[onclick]',
+      '[data-wave86u-on-click],[onclick]',
       '.hintt',
       '.shpb',
       '.weak-btn',

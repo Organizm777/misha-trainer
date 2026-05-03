@@ -1,0 +1,1088 @@
+{
+  "wave": "wave92z",
+  "version": "trainer-build-wave92z-2026-05-03",
+  "generated_at_utc": "2026-05-03T00:00:00Z",
+  "scope": "assets/data JSON content banks; runtime JS syntax is checked separately by CI gate",
+  "dedup": {
+    "exact_normalized_q_a_duplicates": 0,
+    "exact_duplicate_excess": 0,
+    "fuzzy_scan": {
+      "threshold": 0.96,
+      "scanned_non_parametric_rows": 3960,
+      "watchlist_count": 0,
+      "watchlist_sample": [],
+      "parametric_rows_excluded": 984,
+      "cross_grade_diagnostic_excluded": true
+    },
+    "content_depth_exact_dedup_applied": true,
+    "school_pack_grade_contextualization": true
+  },
+  "content_expiry": {
+    "build_date": "2026-05-03",
+    "expired_assets": 0,
+    "policy": [
+      {
+        "file": "assets/data/api/trainer3_content_api.json",
+        "bucket": "disabled_api_metadata",
+        "question_rows": 0,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/cross_grade_diagnostic.json",
+        "bucket": "content_depth",
+        "question_rows": 330,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "bucket": "content_depth",
+        "question_rows": 120,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "bucket": "content_depth",
+        "question_rows": 500,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/manifest.json",
+        "bucket": "content_depth",
+        "question_rows": 0,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/school_question_pack_middle.json",
+        "bucket": "content_depth",
+        "question_rows": 220,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/school_question_pack_primary.json",
+        "bucket": "content_depth",
+        "question_rows": 112,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/school_question_pack_senior.json",
+        "bucket": "content_depth",
+        "question_rows": 404,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/content_depth/textbook_bindings.json",
+        "bucket": "content_depth",
+        "question_rows": 0,
+        "review_after": "2026-09-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/catalog.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 0,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_base_math_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 630,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_english_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 600,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_history_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 400,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_informatics_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 450,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_physics_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 600,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_profile_math_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 600,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_russian_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 1300,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/ege_social_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 1000,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/oge_english_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 600,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/oge_history_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 480,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/oge_informatics_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 450,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/oge_math_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 1250,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/oge_russian_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 450,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/exam_bank/oge_social_2026_foundation.json",
+        "bucket": "exam_bank_2026",
+        "question_rows": 720,
+        "review_after": "2026-09-01",
+        "valid_until": "2026-12-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/architecture.json",
+        "bucket": "special_subjects",
+        "question_rows": 150,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/construction.json",
+        "bucket": "special_subjects",
+        "question_rows": 614,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/design_entrance.json",
+        "bucket": "special_subjects",
+        "question_rows": 60,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/diplomacy.json",
+        "bucket": "special_subjects",
+        "question_rows": 540,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/fashion_design.json",
+        "bucket": "special_subjects",
+        "question_rows": 150,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/gkh.json",
+        "bucket": "special_subjects",
+        "question_rows": 540,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/graphic_design.json",
+        "bucket": "special_subjects",
+        "question_rows": 80,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/interior_design.json",
+        "bucket": "special_subjects",
+        "question_rows": 70,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/management.json",
+        "bucket": "special_subjects",
+        "question_rows": 544,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/procurement.json",
+        "bucket": "special_subjects",
+        "question_rows": 540,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      },
+      {
+        "file": "assets/data/spec_subjects/psychology.json",
+        "bucket": "special_subjects",
+        "question_rows": 300,
+        "review_after": "2026-10-01",
+        "valid_until": "2027-08-31",
+        "expired_on_build": false
+      }
+    ]
+  },
+  "parametric_questions": {
+    "tagged_rows": 984,
+    "families": {
+      "pisa_reading_case_question": 180,
+      "pisa_discount_price": 180,
+      "linear_function_value": 178,
+      "triangle_area_numeric": 140,
+      "pisa_science_variable_reasoning": 120,
+      "literary_term_definition": 45,
+      "arithmetic_expression": 40,
+      "term_short_definition": 25,
+      "pisa_speed_distance": 20,
+      "russian_orthogram_word": 20,
+      "biology_function_term": 20,
+      "ohm_law_numeric": 16
+    },
+    "templates": [
+      {
+        "family": "arithmetic_expression",
+        "template": "{grade} класс. Найди значение: {expression}.",
+        "required_params": [
+          "grade",
+          "expression"
+        ],
+        "answer_rule": "evaluate expression"
+      },
+      {
+        "family": "russian_orthogram_word",
+        "template": "{grade} класс. Какой орфографический случай нужно помнить в слове «{word}»?",
+        "required_params": [
+          "grade",
+          "word"
+        ],
+        "answer_rule": "lexical orthogram category"
+      },
+      {
+        "family": "biology_function_term",
+        "template": "{grade} класс. Для чего нужны {organ_or_part}?",
+        "required_params": [
+          "grade",
+          "organ_or_part"
+        ],
+        "answer_rule": "biological function"
+      },
+      {
+        "family": "literary_term_definition",
+        "template": "{grade} класс. Что означает термин «{term}»?",
+        "required_params": [
+          "grade",
+          "term"
+        ],
+        "answer_rule": "definition"
+      },
+      {
+        "family": "term_short_definition",
+        "template": "{grade} класс. Как кратко объяснить термин «{term}»?",
+        "required_params": [
+          "grade",
+          "term"
+        ],
+        "answer_rule": "short definition"
+      },
+      {
+        "family": "linear_function_value",
+        "template": "{grade} класс. Для функции f(x)={k}x+{b} найди f({x}).",
+        "required_params": [
+          "grade",
+          "k",
+          "b",
+          "x"
+        ],
+        "answer_rule": "k*x+b"
+      },
+      {
+        "family": "triangle_area_numeric",
+        "template": "{grade} класс. Площадь треугольника с основанием {base} и высотой {height} равна?",
+        "required_params": [
+          "grade",
+          "base",
+          "height"
+        ],
+        "answer_rule": "base*height/2"
+      },
+      {
+        "family": "ohm_law_numeric",
+        "template": "{grade} класс. По закону Ома напряжение при I={i} А и R={r} Ом равно?",
+        "required_params": [
+          "grade",
+          "i",
+          "r"
+        ],
+        "answer_rule": "i*r"
+      },
+      {
+        "family": "pisa_reading_case_question",
+        "template": "В тексте кейса {case} ученик нашёл утверждения. Какое действие помогает ответить на вопрос №{n}?",
+        "required_params": [
+          "case",
+          "n"
+        ],
+        "answer_rule": "reading strategy by focus"
+      },
+      {
+        "family": "pisa_science_variable_reasoning",
+        "template": "В опыте кейса {case} меняют одно условие. Назови элемент анализа по роли в эксперименте.",
+        "required_params": [
+          "case",
+          "role"
+        ],
+        "answer_rule": "control/variable/measurement/conclusion"
+      },
+      {
+        "family": "pisa_speed_distance",
+        "template": "Автобус едет со скоростью {v} км/ч {t} часа. Какое расстояние он пройдёт?",
+        "required_params": [
+          "v",
+          "t"
+        ],
+        "answer_rule": "v*t"
+      },
+      {
+        "family": "pisa_discount_price",
+        "template": "Скидка {discount}% на товар за {price} ₽. Какую сумму заплатит покупатель?",
+        "required_params": [
+          "discount",
+          "price"
+        ],
+        "answer_rule": "price*(1-discount/100)"
+      }
+    ],
+    "examples": [
+      {
+        "family": "pisa_reading_case_question",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[0].questions[0]",
+        "params": [
+          "1",
+          "1"
+        ],
+        "q": "В тексте кейса 1 ученик нашёл несколько утверждений. Какое действие помогает ответить на вопрос №1? Уточни, какие два факта нужно сопоставить и где они подтверждены в тексте."
+      },
+      {
+        "family": "pisa_reading_case_question",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[0].questions[1]",
+        "params": [
+          "1",
+          "2"
+        ],
+        "q": "В тексте кейса 1 ученик нашёл несколько утверждений. Какое действие помогает ответить на вопрос №2? Определи, где автор выражает отношение, а не просто сообщает факт."
+      },
+      {
+        "family": "pisa_reading_case_question",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[0].questions[2]",
+        "params": [
+          "1",
+          "3"
+        ],
+        "q": "В тексте кейса 1 ученик нашёл несколько утверждений. Какое действие помогает ответить на вопрос №3? Найди, какое событие названо причиной и к какому последствию оно ведёт."
+      },
+      {
+        "family": "pisa_reading_case_question",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[0].questions[3]",
+        "params": [
+          "1",
+          "4"
+        ],
+        "q": "В тексте кейса 1 ученик нашёл несколько утверждений. Какое действие помогает ответить на вопрос №4? Проверь, откуда взята информация и можно ли ей доверять."
+      },
+      {
+        "family": "pisa_reading_case_question",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[0].questions[4]",
+        "params": [
+          "1",
+          "5"
+        ],
+        "q": "В тексте кейса 1 ученик нашёл несколько утверждений. Какое действие помогает ответить на вопрос №5? Уточни, какие два факта нужно сопоставить и где они подтверждены в тексте."
+      },
+      {
+        "family": "pisa_reading_case_question",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[0].questions[5]",
+        "params": [
+          "1",
+          "6"
+        ],
+        "q": "В тексте кейса 1 ученик нашёл несколько утверждений. Какое действие помогает ответить на вопрос №6? Определи, где автор выражает отношение, а не просто сообщает факт."
+      },
+      {
+        "family": "pisa_science_variable_reasoning",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[1].questions[0]",
+        "params": [
+          "2"
+        ],
+        "q": "В опыте кейса 2 меняют одно условие и сравнивают результат. Как называется ключевой элемент анализа? Назови группу или условие для сравнения, где воздействие не применяют."
+      },
+      {
+        "family": "pisa_science_variable_reasoning",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[1].questions[1]",
+        "params": [
+          "2"
+        ],
+        "q": "В опыте кейса 2 меняют одно условие и сравнивают результат. Как называется ключевой элемент анализа? Назови условие, которое исследователь специально меняет."
+      },
+      {
+        "family": "pisa_science_variable_reasoning",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[1].questions[2]",
+        "params": [
+          "2"
+        ],
+        "q": "В опыте кейса 2 меняют одно условие и сравнивают результат. Как называется ключевой элемент анализа? Назови показатель, который фиксируют после изменения условия."
+      },
+      {
+        "family": "pisa_science_variable_reasoning",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[1].questions[3]",
+        "params": [
+          "2"
+        ],
+        "q": "В опыте кейса 2 меняют одно условие и сравнивают результат. Как называется ключевой элемент анализа? Назови итоговое утверждение, которое делают только после сравнения результатов."
+      },
+      {
+        "family": "pisa_speed_distance",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[2].questions[0]",
+        "params": [
+          "6",
+          "2"
+        ],
+        "q": "По расписанию автобус едет со средней скоростью 6 км/ч 2 часа. Какое расстояние он пройдёт?"
+      },
+      {
+        "family": "pisa_speed_distance",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[2].questions[1]",
+        "params": [
+          "6",
+          "3"
+        ],
+        "q": "По расписанию автобус едет со средней скоростью 6 км/ч 3 часа. Какое расстояние он пройдёт?"
+      },
+      {
+        "family": "pisa_speed_distance",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[2].questions[2]",
+        "params": [
+          "6",
+          "4"
+        ],
+        "q": "По расписанию автобус едет со средней скоростью 6 км/ч 4 часа. Какое расстояние он пройдёт?"
+      },
+      {
+        "family": "pisa_speed_distance",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[2].questions[3]",
+        "params": [
+          "6",
+          "5"
+        ],
+        "q": "По расписанию автобус едет со средней скоростью 6 км/ч 5 часа. Какое расстояние он пройдёт?"
+      },
+      {
+        "family": "pisa_discount_price",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[3].questions[0]",
+        "params": [
+          "5",
+          "112"
+        ],
+        "q": "Магазин делает скидку 5% на товар за 112 ₽. Какую сумму примерно заплатит покупатель?"
+      },
+      {
+        "family": "pisa_discount_price",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[3].questions[1]",
+        "params": [
+          "10",
+          "123"
+        ],
+        "q": "Магазин делает скидку 10% на товар за 123 ₽. Какую сумму примерно заплатит покупатель?"
+      },
+      {
+        "family": "pisa_discount_price",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[3].questions[2]",
+        "params": [
+          "15",
+          "134"
+        ],
+        "q": "Магазин делает скидку 15% на товар за 134 ₽. Какую сумму примерно заплатит покупатель?"
+      },
+      {
+        "family": "pisa_discount_price",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[3].questions[3]",
+        "params": [
+          "20",
+          "145"
+        ],
+        "q": "Магазин делает скидку 20% на товар за 145 ₽. Какую сумму примерно заплатит покупатель?"
+      },
+      {
+        "family": "pisa_discount_price",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[3].questions[4]",
+        "params": [
+          "25",
+          "156"
+        ],
+        "q": "Магазин делает скидку 25% на товар за 156 ₽. Какую сумму примерно заплатит покупатель?"
+      },
+      {
+        "family": "pisa_discount_price",
+        "file": "assets/data/content_depth/functional_literacy_pisa.json",
+        "path": ".cases[3].questions[5]",
+        "params": [
+          "30",
+          "167"
+        ],
+        "q": "Магазин делает скидку 30% на товар за 167 ₽. Какую сумму примерно заплатит покупатель?"
+      }
+    ]
+  },
+  "fgos_coverage_proxy": {
+    "basis": "local grade/subject/topic tags; coverage proxy, not an official legal-conformance statement",
+    "covered_core_grades": 11,
+    "expected_core_grades": 11,
+    "grade_subject_matrix": {
+      "1": {
+        "Сквозная диагностика": 30,
+        "Математика": 13,
+        "Русский язык": 5,
+        "Окружающий мир": 5,
+        "Чтение": 5
+      },
+      "2": {
+        "Сквозная диагностика": 30,
+        "Математика": 13,
+        "Русский язык": 5,
+        "Окружающий мир": 5,
+        "Чтение": 5
+      },
+      "3": {
+        "Сквозная диагностика": 30,
+        "Математика": 13,
+        "Русский язык": 5,
+        "Окружающий мир": 5,
+        "Чтение": 5
+      },
+      "4": {
+        "Сквозная диагностика": 30,
+        "Математика": 13,
+        "Русский язык": 5,
+        "Окружающий мир": 5,
+        "Чтение": 5
+      },
+      "5": {
+        "Сквозная диагностика": 30,
+        "Русский язык": 5,
+        "История": 5,
+        "География": 5,
+        "Биология": 5,
+        "Физика": 5,
+        "Химия": 5,
+        "Обществознание": 5,
+        "Информатика": 5,
+        "Математика": 4
+      },
+      "6": {
+        "Сквозная диагностика": 30,
+        "Русский язык": 5,
+        "История": 5,
+        "География": 5,
+        "Биология": 5,
+        "Физика": 5,
+        "Химия": 5,
+        "Обществознание": 5,
+        "Информатика": 5,
+        "Математика": 4
+      },
+      "7": {
+        "Функциональная грамотность": 100,
+        "Сквозная диагностика": 30,
+        "Русский язык": 5,
+        "История": 5,
+        "География": 5,
+        "Биология": 5,
+        "Физика": 5,
+        "Химия": 5,
+        "Обществознание": 5,
+        "Информатика": 5,
+        "Математика": 4
+      },
+      "8": {
+        "Функциональная грамотность": 100,
+        "Сквозная диагностика": 30,
+        "Русский язык": 5,
+        "История": 5,
+        "География": 5,
+        "Биология": 5,
+        "Физика": 5,
+        "Химия": 5,
+        "Обществознание": 5,
+        "Информатика": 5,
+        "Математика": 4
+      },
+      "9": {
+        "math": 1250,
+        "Обществознание": 725,
+        "Английский язык": 600,
+        "Русский язык": 455,
+        "Функциональная грамотность": 100,
+        "Сквозная диагностика": 30,
+        "История": 5,
+        "География": 5,
+        "Биология": 5,
+        "Физика": 5,
+        "Химия": 5,
+        "Информатика": 5,
+        "Математика": 4
+      },
+      "10": {
+        "Физика": 608,
+        "Английский язык": 605,
+        "Функциональная грамотность": 100,
+        "Алгебра": 89,
+        "Геометрия": 70,
+        "Сквозная диагностика": 30,
+        "Информатика": 10,
+        "Химия": 5,
+        "Русский язык": 5,
+        "Обществознание": 5,
+        "История": 5
+      },
+      "11": {
+        "Русский язык": 1305,
+        "Обществознание": 1005,
+        "Математика (база)": 630,
+        "profile_math": 600,
+        "Функциональная грамотность": 100,
+        "Алгебра": 89,
+        "Геометрия": 70,
+        "Сквозная диагностика": 30,
+        "Информатика": 10,
+        "Физика": 8,
+        "Химия": 5,
+        "История": 5,
+        "Английский язык": 5
+      },
+      "ungraded": {
+        "unknown": 3078,
+        "informatics": 900,
+        "history": 880,
+        "Духовно-нравственные ориентиры": 20,
+        "Семья и взросление": 20,
+        "Природа и человек": 20,
+        "Искусство и личность": 20,
+        "Память и история": 20,
+        "Труд и призвание": 20,
+        "architectural_styles": 15,
+        "russian_architecture": 15,
+        "great_architects": 15,
+        "architectural_composition": 15,
+        "structural_systems": 15,
+        "urban_planning": 15,
+        "drawing_reading": 15,
+        "modern_architecture": 15,
+        "architecture_interior": 15,
+        "marchi_prep": 15,
+        "fashion_history": 15,
+        "color_theory": 15,
+        "textile_materials": 15,
+        "pattern_construction": 15,
+        "fashion_modeling": 15,
+        "sewing_technology": 15,
+        "fashion_styles": 15,
+        "fashion_industry": 15,
+        "fashion_illustration": 15,
+        "sustainable_fashion": 15,
+        "drawing": 10,
+        "painting": 10,
+        "composition": 10,
+        "stroganov_mghpa": 10,
+        "marchi": 10,
+        "britanka_hse": 10,
+        "typography": 10,
+        "layout_grid": 10,
+        "branding": 10,
+        "ui_ux_basics": 10,
+        "color_models": 10,
+        "design_tools": 10,
+        "print_design": 10,
+        "web_design": 10,
+        "interior_styles": 10,
+        "ergonomics": 10,
+        "lighting": 10,
+        "color_interior": 10,
+        "materials": 10,
+        "projecting": 10,
+        "tools": 10
+      }
+    }
+  },
+  "keyword_check": {
+    "checked_rows": 11388,
+    "miss_count": 0,
+    "sample": []
+  },
+  "ab_formulations": {
+    "candidate_count": 30,
+    "candidates": [
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[0]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 1.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 1. Сфокусируйся на личном выборе героя в трудной ситуации.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[1]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 2.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 2. Раскрой тему через конфликт между желанием и ответственностью.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[2]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 3.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 3. Покажи, как поступок героя влияет на других людей.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[3]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 4.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 4. Сравни два произведения с разными авторскими позициями.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[4]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 5.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 5. Объясни, почему проблема остаётся важной для современного человека.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[5]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 6.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 6. Построй рассуждение вокруг нравственной ошибки и её последствий.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[6]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 7.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 7. Покажи путь героя от сомнения к осознанному решению.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[7]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 8.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 8. Используй пример, где внешнее давление проверяет внутренние убеждения.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[8]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 9.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 9. Сделай акцент на цене выбора и ответственности за результат.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[9]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 10.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 10. Раскрой тему через противопоставление двух героев.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[10]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 11.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 11. Покажи, как меняется человек после встречи с испытанием.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[11]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 12.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 12. Объясни роль памяти, совести или благодарности в ответе на вопрос.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[12]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 13.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 13. Подбери аргумент, где маленький поступок раскрывает большую проблему.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[13]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 14.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 14. Покажи связь темы с семейным, школьным или общественным опытом.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[14]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 15.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 15. Сформулируй тезис так, чтобы оба литературных аргумента работали на него.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[15]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 16.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 16. Раскрой вопрос через образ наставника, друга или оппонента героя.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[16]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 17.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 17. Покажи, как авторская деталь помогает понять нравственный смысл.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[17]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 18.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 18. Сравни очевидное решение с более зрелым и ответственным выбором.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[18]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 19.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 19. Заверши рассуждение выводом о том, чему учит читателя литература.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[19]",
+        "A": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 20.",
+        "B": "Итоговое сочинение. Духовно-нравственные ориентиры: почему человеку важно сохранять достоинство? Тема 20. Сделай акцент на том, где проходит граница между слабостью и силой личности.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[20]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 1.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 1. Сфокусируйся на личном выборе героя в трудной ситуации.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[21]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 2.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 2. Раскрой тему через конфликт между желанием и ответственностью.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[22]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 3.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 3. Покажи, как поступок героя влияет на других людей.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[23]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 4.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 4. Сравни два произведения с разными авторскими позициями.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[24]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 5.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 5. Объясни, почему проблема остаётся важной для современного человека.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[25]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 6.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 6. Построй рассуждение вокруг нравственной ошибки и её последствий.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[26]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 7.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 7. Покажи путь героя от сомнения к осознанному решению.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[27]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 8.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 8. Используй пример, где внешнее давление проверяет внутренние убеждения.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[28]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 9.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 9. Сделай акцент на цене выбора и ответственности за результат.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      },
+      {
+        "file": "assets/data/content_depth/final_essay_bank.json",
+        "path": ".topics[29]",
+        "A": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 10.",
+        "B": "Итоговое сочинение. Семья и взросление: почему человеку важно учиться понимать близких? Тема 10. Раскрой тему через противопоставление двух героев.",
+        "intent": "сделать формулировку не шаблонной и задать угол аргументации"
+      }
+    ]
+  },
+  "aggregated_flags": {
+    "blockers": 0,
+    "warnings": 0,
+    "flags": []
+  },
+  "json_validation": {
+    "files_checked": 35,
+    "files_invalid": 0,
+    "question_rows_checked": 14804,
+    "errors": [],
+    "warnings": []
+  },
+  "content_counts": {
+    "json_files": 35,
+    "question_rows": 14804,
+    "file_question_counts": {
+      "assets/data/api/trainer3_content_api.json": 0,
+      "assets/data/content_depth/cross_grade_diagnostic.json": 330,
+      "assets/data/content_depth/final_essay_bank.json": 120,
+      "assets/data/content_depth/functional_literacy_pisa.json": 500,
+      "assets/data/content_depth/manifest.json": 0,
+      "assets/data/content_depth/school_question_pack_middle.json": 220,
+      "assets/data/content_depth/school_question_pack_primary.json": 112,
+      "assets/data/content_depth/school_question_pack_senior.json": 404,
+      "assets/data/content_depth/textbook_bindings.json": 0,
+      "assets/data/exam_bank/catalog.json": 0,
+      "assets/data/exam_bank/ege_base_math_2026_foundation.json": 630,
+      "assets/data/exam_bank/ege_english_2026_foundation.json": 600,
+      "assets/data/exam_bank/ege_history_2026_foundation.json": 400,
+      "assets/data/exam_bank/ege_informatics_2026_foundation.json": 450,
+      "assets/data/exam_bank/ege_physics_2026_foundation.json": 600,
+      "assets/data/exam_bank/ege_profile_math_2026_foundation.json": 600,
+      "assets/data/exam_bank/ege_russian_2026_foundation.json": 1300,
+      "assets/data/exam_bank/ege_social_2026_foundation.json": 1000,
+      "assets/data/exam_bank/oge_english_2026_foundation.json": 600,
+      "assets/data/exam_bank/oge_history_2026_foundation.json": 480,
+      "assets/data/exam_bank/oge_informatics_2026_foundation.json": 450,
+      "assets/data/exam_bank/oge_math_2026_foundation.json": 1250,
+      "assets/data/exam_bank/oge_russian_2026_foundation.json": 450,
+      "assets/data/exam_bank/oge_social_2026_foundation.json": 720,
+      "assets/data/spec_subjects/architecture.json": 150,
+      "assets/data/spec_subjects/construction.json": 614,
+      "assets/data/spec_subjects/design_entrance.json": 60,
+      "assets/data/spec_subjects/diplomacy.json": 540,
+      "assets/data/spec_subjects/fashion_design.json": 150,
+      "assets/data/spec_subjects/gkh.json": 540,
+      "assets/data/spec_subjects/graphic_design.json": 80,
+      "assets/data/spec_subjects/interior_design.json": 70,
+      "assets/data/spec_subjects/management.json": 544,
+      "assets/data/spec_subjects/procurement.json": 540,
+      "assets/data/spec_subjects/psychology.json": 300
+    }
+  }
+}

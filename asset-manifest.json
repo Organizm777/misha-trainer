@@ -1,7 +1,4 @@
 {
-  "version": "trainer-build-wave92u-2026-05-02",
-  "wave": "wave92u",
-  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
   "assets": {
     "assets/css/engine10.css": "assets/css/engine10.dac1e147e6.css",
     "assets/css/wave86x_inline_dashboard.css": "assets/css/wave86x_inline_dashboard.314891eaa4.css",
@@ -14,22 +11,29 @@
     "assets/css/wave88d_breadcrumbs.css": "assets/css/wave88d_breadcrumbs.41aca30c03.css",
     "assets/css/wave89p_self_host_fonts.css": "assets/css/wave89p_self_host_fonts.5603de96b7.css",
     "assets/css/wave91j_content_depth.css": "assets/css/wave91j_content_depth.1e5dc33349.css",
+    "assets/css/wave93b_accessibility.css": "assets/css/wave93b_accessibility.f321bb4688.css",
+    "assets/css/wave93c_architecture.css": "assets/css/wave93c_architecture.61f4165edb.css",
+    "assets/data/dependency_graph_wave93c.json": "assets/data/dependency_graph_wave93c.json",
+    "assets/js/bundle_accessibility_wave93b.js": "assets/js/bundle_accessibility_wave93b.a0c0c322ee.js",
     "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.ce945f33ae.js",
     "assets/js/bundle_content_depth.js": "assets/js/bundle_content_depth.927eb95760.js",
-    "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.9025bc19a4.js",
+    "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.ff2fc2c151.js",
     "assets/js/bundle_diagnostic_tools.js": "assets/js/bundle_diagnostic_tools.9792be3cd6.js",
     "assets/js/bundle_error_tracking.js": "assets/js/bundle_error_tracking.dc19ab4e63.js",
-    "assets/js/bundle_exam.js": "assets/js/bundle_exam.ce8c0cea55.js",
+    "assets/js/bundle_exam.js": "assets/js/bundle_exam.d6a80e3142.js",
     "assets/js/bundle_gamification_meta.js": "assets/js/bundle_gamification_meta.9853e9e1bb.js",
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
-    "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js",
-    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
+    "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
+    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
     "assets/js/bundle_grade_runtime_features_wave87n.js": "assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js",
+    "assets/js/bundle_grade_runtime_inputs_timing_wave93c.js": "assets/js/bundle_grade_runtime_inputs_timing_wave93c.8c128bf54d.js",
+    "assets/js/bundle_grade_runtime_navigation_wave93c.js": "assets/js/bundle_grade_runtime_navigation_wave93c.54296c091c.js",
     "assets/js/bundle_grade_runtime_services_wave87n.js": "assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js",
+    "assets/js/bundle_mobile_wave93a.js": "assets/js/bundle_mobile_wave93a.92800655c6.js",
     "assets/js/bundle_navigation_logger.js": "assets/js/bundle_navigation_logger.a05b4f024f.js",
     "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.3126a65a5d.js",
     "assets/js/bundle_sharing.js": "assets/js/bundle_sharing.75450d41f8.js",
-    "assets/js/bundle_shell.js": "assets/js/bundle_shell.ef4140d586.js",
+    "assets/js/bundle_shell.js": "assets/js/bundle_shell.0a72050bdf.js",
     "assets/js/bundle_special_subjects.js": "assets/js/bundle_special_subjects.f45ea13d73.js",
     "assets/js/chunk_exam_bank_wave89q.js": "assets/js/chunk_exam_bank_wave89q.4babe9e870.js",
     "assets/js/chunk_grade10_lazy_wave86s.js": "assets/js/chunk_grade10_lazy_wave86s.135fbaef2b.js",
@@ -46,7 +50,7 @@
     "assets/js/chunk_grade_content_wave86l_grade56_combined_wave92a.js": "assets/js/chunk_grade_content_wave86l_grade56_combined_wave92a.fbe3c34e29.js",
     "assets/js/chunk_grade_content_wave86l_informatics_56_wave86t.js": "assets/js/chunk_grade_content_wave86l_informatics_56_wave86t.a624ae8740.js",
     "assets/js/chunk_grade_content_wave87m_transition_1011.js": "assets/js/chunk_grade_content_wave87m_transition_1011.fadee67605.js",
-    "assets/js/chunk_grade_featurepacks_wave92f.js": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
+    "assets/js/chunk_grade_featurepacks_wave92f.js": "assets/js/chunk_grade_featurepacks_wave92f.7bc99f042c.js",
     "assets/js/chunk_grade_lazy_payloads_wave91h.js": "assets/js/chunk_grade_lazy_payloads_wave91h.64da9b3095.js",
     "assets/js/chunk_roadmap_wave86q_accessibility_theme.js": "assets/js/chunk_roadmap_wave86q_accessibility_theme.15a66fbdb3.js",
     "assets/js/chunk_roadmap_wave86u_csp_bridge.js": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
@@ -73,7 +77,7 @@
     "assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.js": "assets/js/chunk_subject_expansion_wave89b_inputs_interactions_banks.bbaba018eb.js",
     "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.js": "assets/js/chunk_subject_expansion_wave89c_secondary_stem_7_9.ea7e74deee.js",
     "assets/js/chunk_theory_wave91i.js": "assets/js/chunk_theory_wave91i.a8fa390972.js",
-    "assets/js/engine10.js": "assets/js/engine10.47425466af.js",
+    "assets/js/engine10.js": "assets/js/engine10.6c3aade44b.js",
     "assets/js/exam_bank_ege_base_math_wave92d.js": "assets/js/exam_bank_ege_base_math_wave92d.7212037c25.js",
     "assets/js/exam_bank_ege_english_wave92d.js": "assets/js/exam_bank_ege_english_wave92d.3bfb4e2fae.js",
     "assets/js/exam_bank_ege_history_wave92d.js": "assets/js/exam_bank_ege_history_wave92d.f13c849b68.js",
@@ -123,34 +127,15 @@
     "assets/js/inline_diagnostic_2_wave86u.js": "assets/js/inline_diagnostic_2_wave86u.1bca35f107.js",
     "assets/js/inline_index_1_wave86u.js": "assets/js/inline_index_1_wave86u.41f1a0141f.js",
     "assets/js/inline_spec_subjects_1_wave86u.js": "assets/js/inline_spec_subjects_1_wave86u.1bca35f107.js",
-    "assets/js/inline_tests_1_wave86u.js": "assets/js/inline_tests_1_wave86u.ad27c37851.js",
+    "assets/js/inline_tests_1_wave86u.js": "assets/js/inline_tests_1_wave86u.8a2071835c.js",
     "assets/js/inline_tests_2_wave86u.js": "assets/js/inline_tests_2_wave86u.ae4d81b485.js",
-    "assets/js/inline_tests_3_wave86u.js": "assets/js/inline_tests_3_wave86u.ed7ea97d1b.js"
+    "assets/js/inline_tests_3_wave86u.js": "assets/js/inline_tests_3_wave86u.6c41c0894b.js"
   },
-  "generated_at": "2026-04-28T00:00:00Z",
-  "hashed_asset_count": 123,
-  "generated_at_utc": "2026-05-02T13:21:12Z",
-  "build_id": "trainer-build-wave92u-2026-05-02",
-  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
-  "wave91g_visual_interactive": {
-    "visuals": [
-      "geometry_svg",
-      "geography_svg",
-      "chemistry_structures",
-      "physics_experiment_schemes"
-    ],
-    "interactions": [
-      "timeline_sort",
-      "matching",
-      "data_table",
-      "graph_analysis",
-      "geometry_construction",
-      "formula_canvas"
-    ],
-    "worksheet_export": "print_to_pdf_html"
-  },
-  "brotli_count": 209,
-  "brotli_wave": "wave92u",
+  "brotli_count": 211,
+  "brotli_wave": "wave93b",
+  "build_id": "trainer-build-wave93c-2026-05-03",
+  "cache": "trainer-build-wave93c-2026-05-03",
+  "cacheName": "trainer-build-wave93c-2026-05-03",
   "fonts": [
     "assets/fonts/golos-text-cyrillic-400-normal.woff2",
     "assets/fonts/golos-text-cyrillic-500-normal.woff2",
@@ -173,9 +158,35 @@
     "assets/fonts/unbounded-latin-800-normal.woff2",
     "assets/fonts/unbounded-latin-900-normal.woff2"
   ],
+  "generated_at": "2026-04-28T00:00:00Z",
+  "generated_at_utc": "2026-05-03T00:00:00Z",
+  "hashed_asset_count": 129,
+  "original_count": 211,
+  "runtime_integrity": "assets/data/runtime_integrity_wave92r.json",
+  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "version": "trainer-build-wave93c-2026-05-03",
+  "wave": "wave93c",
+  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave91g_visual_interactive": {
+    "interactions": [
+      "timeline_sort",
+      "matching",
+      "data_table",
+      "graph_analysis",
+      "geometry_construction",
+      "formula_canvas"
+    ],
+    "visuals": [
+      "geometry_svg",
+      "geography_svg",
+      "chemistry_structures",
+      "physics_experiment_schemes"
+    ],
+    "worksheet_export": "print_to_pdf_html"
+  },
   "wave92c": {
     "clean_training_screen": true,
-    "simple_mode_default": true,
     "css_hide_selectors": true,
     "render_guards": [
       "wave89m_adaptive",
@@ -185,6 +196,7 @@
       "wave91g_visual_tools",
       "wave91h_main_card"
     ],
+    "simple_mode_default": true,
     "training_screen_allows": [
       "question",
       "answer_options",
@@ -194,40 +206,47 @@
     ]
   },
   "wave92d": {
-    "indexeddb_analytics": true,
-    "exam_near_duplicate_threshold_pct": 5,
-    "exam_near_duplicate_excess_pct": 0,
+    "accessibility_gate": true,
     "contextualized_exam_rows": 9530,
-    "mobile_bottom_nav_audited": true,
+    "exam_near_duplicate_excess_pct": 0,
+    "exam_near_duplicate_threshold_pct": 5,
+    "indexeddb_analytics": true,
     "install_banner": true,
-    "accessibility_gate": true
+    "mobile_bottom_nav_audited": true
   },
-  "wave92d_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js",
-  "wave92d_shell": "assets/js/bundle_shell.ef4140d586.js",
   "wave92d_navigation_logger": "assets/js/bundle_navigation_logger.a05b4f024f.js",
+  "wave92d_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
+  "wave92d_shell": "assets/js/bundle_shell.0a72050bdf.js",
   "wave92e": {
+    "all_questions_multiple_choice": true,
     "csp_bridge_boot_calls": [
       "bootTheme",
       "installScrubber",
       "installDelegates"
     ],
+    "csp_bridge_pages": 20,
+    "fonts_preserved": true,
+    "input_mode_disabled": true,
     "spec_subjects_back_link": true,
     "tests_psych_abort_button": true,
-    "input_mode_disabled": true,
-    "all_questions_multiple_choice": true,
-    "fonts_preserved": true,
-    "zip_deflate_required": true,
-    "csp_bridge_pages": 20
+    "zip_deflate_required": true
   },
   "wave92e_csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
-  "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
-  "wave92f_exam": "assets/js/bundle_exam.ce8c0cea55.js",
-  "cache": "trainer-build-wave92u-2026-05-02",
-  "wave92g_csp_mobile_a11y": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92f_exam": "assets/js/bundle_exam.d6a80e3142.js",
+  "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.7bc99f042c.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
   "wave92g": {
+    "accessibility": [
+      "ARIA radiogroup",
+      "focus-visible",
+      "reduced motion",
+      "dyslexia-readable mode",
+      "high contrast"
+    ],
+    "analytics": [
+      "CSV export from local IndexedDB/fallback events"
+    ],
     "mobile_ux": [
       "haptic feedback",
       "swipe navigation",
@@ -236,111 +255,232 @@
       "scroll restoration",
       "what's new"
     ],
-    "accessibility": [
-      "ARIA radiogroup",
-      "focus-visible",
-      "reduced motion",
-      "dyslexia-readable mode",
-      "high contrast"
-    ],
     "security": [
       "Subresource Integrity for HTML JS/CSS",
       "Permissions-Policy headers",
       "local old-event purge"
-    ],
-    "analytics": [
-      "CSV export from local IndexedDB/fallback events"
     ]
+  },
+  "wave92g_csp_mobile_a11y": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+  "wave92g_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92h": {
+    "clean_training_preserved": true,
+    "clipboard_backup": true,
+    "focus_mode": true,
+    "micro_lessons_30s": true,
+    "mood_checkin": true,
+    "multi_profiles": true,
+    "onboarding_quiz": true,
+    "personalized_home": true,
+    "theme_schedule": true
   },
   "wave92h_csp_personalization_focus": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
   "wave92h_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92h": {
-    "personalized_home": true,
-    "multi_profiles": true,
-    "onboarding_quiz": true,
-    "mood_checkin": true,
-    "focus_mode": true,
-    "theme_schedule": true,
-    "clipboard_backup": true,
-    "micro_lessons_30s": true,
-    "clean_training_preserved": true
-  },
-  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
-  "wave92j_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.78e118fb56.js",
-  "wave92j_dead_features_disabled": true,
-  "runtime_integrity": "assets/data/runtime_integrity_wave92r.json",
-  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "wave92j_csp_storage_training": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-  "wave92l_csp_cleanup": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
-  "wave92l_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92j_dead_features_disabled": true,
+  "wave92j_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.7bc99f042c.js",
+  "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
   "wave92l": {
-    "completed": true,
     "cleanup": "auto overlays, floating button, coach, mood, onboarding, dead wrappers disabled",
-    "nextq_wrappers_active": 2,
+    "completed": true,
     "csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-    "runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js"
+    "nextq_wrappers_active": 2,
+    "runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js"
   },
+  "wave92l_csp_cleanup": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
+  "wave92l_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
   "wave92m": {
     "event_analytics_no_monkey_patch": true,
     "generated_at_utc": "2026-05-01T00:00:00Z"
   },
-  "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js",
   "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "cacheName": "trainer-build-wave92u-2026-05-02",
-  "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
   "wave92n": {
-    "wave35_removed_from_grade_and_diagnostic": true,
-    "no_grade_wave35_eager_script": true,
     "active_grade_nextq_ans_render_wrappers": 0,
     "clean_training_preserved": true,
-    "dead_bundle_audit_passed": true
+    "dead_bundle_audit_passed": true,
+    "no_grade_wave35_eager_script": true,
+    "wave35_removed_from_grade_and_diagnostic": true
   },
-  "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.a2d967e5dd.js",
-  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
+  "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
+  "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
+  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
   "wave92p_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "wave92q": {
-    "csp_style_src_attr": "unsafe-inline",
-    "csp_pages_patched": 20,
-    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-    "dead_code_cleanup": true,
     "brotli_count": 209,
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
+    "csp_pages_patched": 20,
+    "csp_style_src_attr": "unsafe-inline",
+    "dead_code_cleanup": true,
     "dead_training_blocks_removed": [
       "SM-2 provider stub",
       "Parametric provider stub",
       "Interactive formats stub",
       "Guided route stub"
-    ]
+    ],
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json"
   },
+  "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "wave92s": {
     "a11y_cross_scope_selector_fixed": true,
+    "ci_gate_externalized": true,
     "core_iife_block_guards": true,
-    "safe_init_guards": true,
     "direct_action_boot_guarded": true,
     "production_dev_files_removed": true,
-    "ci_gate_externalized": true
+    "safe_init_guards": true
   },
-  "wave92u": {
+  "wave92u_cleanup": {
+    "brotli_count": 209,
+    "ci_gate_externalized": true,
+    "dead_css_audit_passed": true,
+    "dead_js_audit_passed": true,
     "dead_standalone_js_removed": [
       "bundle_grade_after",
       "bundle_grade_runtime_inputs_timing_wave87x",
       "bundle_embed_widget",
       "bundle_teacher_mode"
     ],
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.8aa24eeb34.js",
     "extended_dead_training_stubs_removed": [
       "SM-2/Parametric disabled-provider stub",
       "Interactive formats disabled stub",
       "Guided learning path disabled stub",
       "Dead features one-line metadata stub"
     ],
-    "dead_js_audit_passed": true,
-    "dead_css_audit_passed": true,
-    "production_dev_files_removed": true,
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "production_dev_files_removed": true
+  },
+  "wave92v": {
+    "confetti": true,
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "haptic": true,
+    "keyboard_1_2_3_4": true,
+    "no_nextq_ans_render_monkey_patch": true,
+    "preload_next_question": true,
+    "progress_strip": true,
+    "report_toast": true,
+    "scroll_memory": "sessionStorage per grade page and non-play screen",
+    "swipe_next": "wave24-mobile plus wave92v fallback",
+    "training_block_2_completed": true,
+    "why_block": true,
+    "wrong_question_repeat": true
+  },
+  "wave92w": {
+    "base_wave": "wave92v",
     "ci_gate_externalized": true,
-    "brotli_count": 209
+    "dunning_kruger_wording": "люди с низкой компетенцией склонны переоценивать свой уровень",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "full_zip_required_for_sri": true,
+    "iq_spatial_questions_rewritten": true,
+    "milgram_wording": "страдания другим",
+    "plan": "PLAN_100_WAVE92U.md",
+    "progress_strip_bonus_label": true,
+    "psychology_wording_rewritten": true
+  },
+  "wave92x": {
+    "autoplan_after_result": true,
+    "base_wave": "wave92w",
+    "ci_gate_externalized": true,
+    "countdown_enhanced": true,
+    "error_review_by_task": true,
+    "exam_block_3_suite": true,
+    "exam_bundle": "assets/js/bundle_exam.d6a80e3142.js",
+    "full_zip_required_for_sri": true,
+    "no_new_nextq_ans_render_patch": true,
+    "part2_chip": true,
+    "plan": "PLAN_100_WAVE92U.md",
+    "print_buttons": true,
+    "progress_by_tasks": true,
+    "real_exam_mode_preserved": true,
+    "task_filters": [
+      "all",
+      "pending",
+      "flagged",
+      "part2",
+      "traps"
+    ],
+    "task_hash_navigation": true,
+    "trap_hints": true
+  },
+  "wave92y": {
+    "analytics_block": true,
+    "csv_export_v2": true,
+    "daily_pattern": true,
+    "dashboard_bundle": "assets/js/bundle_dashboard_tools.ff2fc2c151.js",
+    "decay_alert": true,
+    "difficulty_calibration": true,
+    "feature_usage_dead_features": true,
+    "funnel": true,
+    "grade_forecast": true,
+    "indexeddb_history_dashboard": true
+  },
+  "wave92z": {
+    "ab_formulation_candidates": 30,
+    "base_wave": "wave92y",
+    "brotli_mirrors": 210,
+    "ci_gate_externalized": true,
+    "content_depth_exact_duplicates_removed": 5284,
+    "content_depth_total_questions": 1736,
+    "content_expired_assets": 0,
+    "content_quality_manifest": "assets/data/content_quality_wave92z.json",
+    "exact_duplicate_excess": 0,
+    "fgos_coverage_proxy_grades": 11,
+    "fuzzy_watchlist_count": 0,
+    "json_question_rows_checked": 14804,
+    "json_validation_errors": 0,
+    "keyword_miss_count": 0,
+    "originals": 210,
+    "parametric_rows_tagged": 984,
+    "plan": "PLAN_100_WAVE92U.md block 5",
+    "production_dev_files_removed": true
+  },
+  "wave93a": {
+    "base_wave": "wave92z",
+    "bottom_nav": true,
+    "brotli_mirrors": 211,
+    "ci_gate_externalized": true,
+    "install_banner": true,
+    "landscape": true,
+    "manifest_orientation_any": true,
+    "mobile_bundle": "assets/js/bundle_mobile_wave93a.92800655c6.js",
+    "offline_indicator": true,
+    "originals": 211,
+    "plan": "PLAN_100_WAVE92U.md block 6",
+    "production_dev_files_removed": true,
+    "pull_to_refresh": true,
+    "safe_area": true,
+    "share_api": true,
+    "touch_size_min_px": 44
+  },
+  "wave93b": {
+    "additive_layer": true,
+    "aria": true,
+    "base_wave": "wave93a",
+    "contrast": true,
+    "css_bundle": "assets/css/wave93b_accessibility.f321bb4688.css",
+    "focus_management": true,
+    "font_size": true,
+    "high_contrast": true,
+    "js_bundle": "assets/js/bundle_accessibility_wave93b.a0c0c322ee.js",
+    "no_auto_modal": true,
+    "no_mutation_observer_in_bundle": true,
+    "no_training_engine_monkey_patch": true,
+    "plan": "PLAN_100_WAVE92U.md block 7",
+    "reduced_motion": true,
+    "semantic_radio": true
+  },
+  "wave93c": {
+    "base_wave": "wave93b",
+    "containment_css": "assets/css/wave93c_architecture.61f4165edb.css",
+    "dependency_graph": "assets/data/dependency_graph_wave93c.json",
+    "onclick_migration": "data-wave86u-on-click",
+    "plan_block": "8 architecture",
+    "resource_hints": true,
+    "split_runtime": [
+      "assets/js/bundle_grade_runtime_inputs_timing_wave93c.8c128bf54d.js",
+      "assets/js/bundle_grade_runtime_navigation_wave93c.54296c091c.js",
+      "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js"
+    ]
   }
 }
