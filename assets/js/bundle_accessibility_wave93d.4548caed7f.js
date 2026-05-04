@@ -1,8 +1,8 @@
-/* --- wave93b_accessibility_layer.js --- */
+/* --- wave93d_accessibility_settings_layer.js --- */
 (function(){
   'use strict';
-  var WAVE = 'wave93b';
-  if (window.__wave93bA11yBooted) return;
+  var WAVE = 'wave93d';
+  if (window.__wave93dA11yBooted) return;
   var KEY_FONT = 'trainer_wave93b_font_size';
   var KEY_CONTRAST = 'trainer_wave93b_contrast';
   var KEY_MOTION = 'trainer_wave93b_motion';
@@ -15,7 +15,7 @@
   var firstScreenSync = true;
   function safe(label, fn){
     try { return typeof fn === 'function' ? fn() : undefined; }
-    catch (err) { try { console.warn('[wave93b a11y] ' + label, err); } catch (_) {} }
+    catch (err) { try { console.warn('[wave93d a11y] ' + label, err); } catch (_) {} }
   }
   function qs(sel, root){ return (root || document).querySelector(sel); }
   function qsa(sel, root){ return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -67,34 +67,10 @@
     node.textContent = '';
     window.setTimeout(function(){ node.textContent = String(message || ''); }, 30);
   }
-  function ensureToolbar(){
-    if (!document.body || document.getElementById('wave93b-a11y')) return;
-    var wrap = document.createElement('div');
-    wrap.id = 'wave93b-a11y';
-    wrap.className = 'wave93b-a11y';
-    wrap.innerHTML = '' +
-      '<button id="wave93b-a11y-trigger" class="wave93b-a11y-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="wave93b-a11y-panel">Aa</button>' +
-      '<section id="wave93b-a11y-panel" class="wave93b-a11y-panel" hidden role="region" aria-label="Настройки доступности">' +
-        '<div class="wave93b-a11y-title">Доступность</div>' +
-        '<div class="wave93b-a11y-group" role="group" aria-label="Размер текста">' +
-          '<span>Текст</span>' +
-          '<button type="button" data-wave93b-font="normal">Обычный</button>' +
-          '<button type="button" data-wave93b-font="large">Крупнее</button>' +
-          '<button type="button" data-wave93b-font="xlarge">Максимум</button>' +
-        '</div>' +
-        '<div class="wave93b-a11y-group" role="group" aria-label="Контрастность">' +
-          '<span>Контраст</span>' +
-          '<button type="button" data-wave93b-contrast="normal">Обычный</button>' +
-          '<button type="button" data-wave93b-contrast="high">Высокий</button>' +
-        '</div>' +
-        '<div class="wave93b-a11y-group" role="group" aria-label="Анимация">' +
-          '<span>Движение</span>' +
-          '<button type="button" data-wave93b-motion="system">Системно</button>' +
-          '<button type="button" data-wave93b-motion="reduce">Минимум</button>' +
-        '</div>' +
-        '<button type="button" class="wave93b-a11y-close" data-wave93b-action="close-panel">Закрыть</button>' +
-      '</section>';
-    document.body.appendChild(wrap);
+  function ensureSettingsBridge(){
+    qsa('#wave93b-a11y,.wave93b-a11y,#wave93b-a11y-panel').forEach(function(node){
+      if (node && node.parentNode) node.parentNode.removeChild(node);
+    });
     updateToolbarState();
   }
   function updateToolbarState(){
@@ -110,27 +86,11 @@
     });
   }
   function setPanel(open){
-    var panel = document.getElementById('wave93b-a11y-panel');
-    var trigger = document.getElementById('wave93b-a11y-trigger');
-    if (!panel || !trigger) return;
-    panel.hidden = !open;
-    trigger.setAttribute('aria-expanded', String(!!open));
-    if (open) {
-      var focusTarget = qs('[aria-pressed="true"]', panel) || qs('button', panel);
-      if (focusTarget && focusTarget.focus) focusTarget.focus({preventScroll:true});
-    } else if (trigger.focus) {
-      trigger.focus({preventScroll:true});
-    }
+    updateToolbarState();
   }
   function handleToolbarAction(event){
-    var target = event.target && event.target.closest ? event.target.closest('[data-wave93b-action],[data-wave93b-font],[data-wave93b-contrast],[data-wave93b-motion],#wave93b-a11y-trigger') : null;
+    var target = event.target && event.target.closest ? event.target.closest('[data-wave93b-action],[data-wave93b-font],[data-wave93b-contrast],[data-wave93b-motion]') : null;
     if (!target) return;
-    if (target.id === 'wave93b-a11y-trigger') {
-      event.preventDefault();
-      var panel = document.getElementById('wave93b-a11y-panel');
-      setPanel(!!(panel && panel.hidden));
-      return;
-    }
     var action = target.getAttribute('data-wave93b-action');
     if (action === 'close-panel') {
       event.preventDefault();
@@ -314,7 +274,7 @@
   }
   function syncAll(){
     safe('apply prefs', applyPrefs);
-    safe('ensure toolbar', ensureToolbar);
+    safe('settings bridge', ensureSettingsBridge);
     safe('live region', liveRegion);
     safe('screens', syncScreens);
     safe('interactive', syncInteractive);
@@ -339,11 +299,11 @@
     if (!intervalId) intervalId = window.setInterval(function(){ scheduleSync(0); }, 1600);
   }
   function boot(){
-    if (window.__wave93bA11yBooted) return;
-    window.__wave93bA11yBooted = true;
+    if (window.__wave93dA11yBooted) return;
+    window.__wave93dA11yBooted = true;
     syncAll();
     bindEvents();
-    window.__wave93bA11y = {
+    var api = {
       wave: WAVE,
       sync: function(){ scheduleSync(0); },
       prefs: prefs,
@@ -351,6 +311,8 @@
       setContrast: function(value){ storageSet(KEY_CONTRAST, normalize(value, CONTRAST_VALUES, 'normal')); applyPrefs(); scheduleSync(0); },
       setMotion: function(value){ storageSet(KEY_MOTION, normalize(value, MOTION_VALUES, 'system')); applyPrefs(); scheduleSync(0); }
     };
+    window.__wave93dA11y = api;
+    window.__wave93bA11y = api;
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function(){ safe('boot', boot); }, {once:true});

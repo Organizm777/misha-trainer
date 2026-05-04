@@ -44,17 +44,22 @@
     "share_api": true,
     "touch_size_min_px": 44
   },
-  "wave93b_accessibility": {
-    "aria": true,
-    "focus_management": true,
-    "font_size": true,
-    "high_contrast": true,
-    "reduced_motion": true,
-    "semantic_radio": true
-  },
   "wave93c_architecture": {
-    "containment_css": "assets/css/wave93c_architecture.61f4165edb.css",
-    "dependency_graph": "assets/data/dependency_graph_wave93c.json",
+    "containment_css": "assets/css/wave93c_architecture.6df694bc0e.css",
+    "dependency_graph": "assets/data/dependency_graph_wave93d.json",
     "split_runtime": true
+  },
+  "wave93d_accessibility": {
+    "bundle": "assets/js/bundle_accessibility_wave93d.4548caed7f.js",
+    "css": "assets/css/wave93d_accessibility.87b3610246.css",
+    "settings_menu_only": true
+  },
+  "wave93d_blockers": {
+    "eval_removed": true,
+    "floating_aa_removed": true,
+    "full_zip_deploy_required": true,
+    "function_string_removed": true,
+    "settings_only_accessibility": true,
+    "share_fab_removed": true
   }
 }

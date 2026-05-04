@@ -11,10 +11,10 @@
     "assets/css/wave88d_breadcrumbs.css": "assets/css/wave88d_breadcrumbs.41aca30c03.css",
     "assets/css/wave89p_self_host_fonts.css": "assets/css/wave89p_self_host_fonts.5603de96b7.css",
     "assets/css/wave91j_content_depth.css": "assets/css/wave91j_content_depth.1e5dc33349.css",
-    "assets/css/wave93b_accessibility.css": "assets/css/wave93b_accessibility.f321bb4688.css",
-    "assets/css/wave93c_architecture.css": "assets/css/wave93c_architecture.61f4165edb.css",
-    "assets/data/dependency_graph_wave93c.json": "assets/data/dependency_graph_wave93c.json",
-    "assets/js/bundle_accessibility_wave93b.js": "assets/js/bundle_accessibility_wave93b.a0c0c322ee.js",
+    "assets/css/wave93c_architecture.css": "assets/css/wave93c_architecture.6df694bc0e.css",
+    "assets/css/wave93d_accessibility.css": "assets/css/wave93d_accessibility.87b3610246.css",
+    "assets/data/dependency_graph_wave93d.json": "assets/data/dependency_graph_wave93d.json",
+    "assets/js/bundle_accessibility_wave93d.js": "assets/js/bundle_accessibility_wave93d.4548caed7f.js",
     "assets/js/bundle_boosters.js": "assets/js/bundle_boosters.ce945f33ae.js",
     "assets/js/bundle_content_depth.js": "assets/js/bundle_content_depth.927eb95760.js",
     "assets/js/bundle_dashboard_tools.js": "assets/js/bundle_dashboard_tools.ff2fc2c151.js",
@@ -23,17 +23,17 @@
     "assets/js/bundle_exam.js": "assets/js/bundle_exam.d6a80e3142.js",
     "assets/js/bundle_gamification_meta.js": "assets/js/bundle_gamification_meta.9853e9e1bb.js",
     "assets/js/bundle_gamification_xp.js": "assets/js/bundle_gamification_xp.907a25e6bd.js",
-    "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
-    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "assets/js/bundle_grade_runtime_core_wave87n.js": "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
+    "assets/js/bundle_grade_runtime_extended_wave89b.js": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "assets/js/bundle_grade_runtime_features_wave87n.js": "assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js",
     "assets/js/bundle_grade_runtime_inputs_timing_wave93c.js": "assets/js/bundle_grade_runtime_inputs_timing_wave93c.8c128bf54d.js",
     "assets/js/bundle_grade_runtime_navigation_wave93c.js": "assets/js/bundle_grade_runtime_navigation_wave93c.54296c091c.js",
     "assets/js/bundle_grade_runtime_services_wave87n.js": "assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js",
-    "assets/js/bundle_mobile_wave93a.js": "assets/js/bundle_mobile_wave93a.92800655c6.js",
+    "assets/js/bundle_mobile_wave93a.js": "assets/js/bundle_mobile_wave93a.e12af796d6.js",
     "assets/js/bundle_navigation_logger.js": "assets/js/bundle_navigation_logger.a05b4f024f.js",
     "assets/js/bundle_profile_social.js": "assets/js/bundle_profile_social.3126a65a5d.js",
     "assets/js/bundle_sharing.js": "assets/js/bundle_sharing.75450d41f8.js",
-    "assets/js/bundle_shell.js": "assets/js/bundle_shell.0a72050bdf.js",
+    "assets/js/bundle_shell.js": "assets/js/bundle_shell.ef02d51aca.js",
     "assets/js/bundle_special_subjects.js": "assets/js/bundle_special_subjects.f45ea13d73.js",
     "assets/js/chunk_exam_bank_wave89q.js": "assets/js/chunk_exam_bank_wave89q.4babe9e870.js",
     "assets/js/chunk_grade10_lazy_wave86s.js": "assets/js/chunk_grade10_lazy_wave86s.135fbaef2b.js",
@@ -131,11 +131,11 @@
     "assets/js/inline_tests_2_wave86u.js": "assets/js/inline_tests_2_wave86u.ae4d81b485.js",
     "assets/js/inline_tests_3_wave86u.js": "assets/js/inline_tests_3_wave86u.6c41c0894b.js"
   },
-  "brotli_count": 211,
-  "brotli_wave": "wave93b",
-  "build_id": "trainer-build-wave93c-2026-05-03",
-  "cache": "trainer-build-wave93c-2026-05-03",
-  "cacheName": "trainer-build-wave93c-2026-05-03",
+  "brotli_count": 217,
+  "brotli_wave": "wave93d",
+  "build_id": "trainer-build-wave93d-2026-05-03",
+  "cache": "trainer-build-wave93d-2026-05-03",
+  "cacheName": "trainer-build-wave93d-2026-05-03",
   "fonts": [
     "assets/fonts/golos-text-cyrillic-400-normal.woff2",
     "assets/fonts/golos-text-cyrillic-500-normal.woff2",
@@ -161,13 +161,13 @@
   "generated_at": "2026-04-28T00:00:00Z",
   "generated_at_utc": "2026-05-03T00:00:00Z",
   "hashed_asset_count": 129,
-  "original_count": 211,
+  "original_count": 217,
   "runtime_integrity": "assets/data/runtime_integrity_wave92r.json",
   "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "version": "trainer-build-wave93c-2026-05-03",
-  "wave": "wave93c",
-  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
-  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "version": "trainer-build-wave93d-2026-05-03",
+  "wave": "wave93d",
+  "wave91f_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
+  "wave91g_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave91g_visual_interactive": {
     "interactions": [
       "timeline_sort",
@@ -215,8 +215,8 @@
     "mobile_bottom_nav_audited": true
   },
   "wave92d_navigation_logger": "assets/js/bundle_navigation_logger.a05b4f024f.js",
-  "wave92d_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
-  "wave92d_shell": "assets/js/bundle_shell.0a72050bdf.js",
+  "wave92d_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
+  "wave92d_shell": "assets/js/bundle_shell.ef02d51aca.js",
   "wave92e": {
     "all_questions_multiple_choice": true,
     "csp_bridge_boot_calls": [
@@ -232,10 +232,10 @@
     "zip_deflate_required": true
   },
   "wave92e_csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92f_exam": "assets/js/bundle_exam.d6a80e3142.js",
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.7bc99f042c.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92g": {
     "accessibility": [
       "ARIA radiogroup",
@@ -280,23 +280,23 @@
   "wave92j_dead_features_disabled": true,
   "wave92j_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.7bc99f042c.js",
   "wave92j_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92j_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92l": {
     "cleanup": "auto overlays, floating button, coach, mood, onboarding, dead wrappers disabled",
     "completed": true,
     "csp_bridge": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
     "nextq_wrappers_active": 2,
-    "runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js"
+    "runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js"
   },
   "wave92l_csp_cleanup": "assets/js/chunk_roadmap_wave86u_csp_bridge.8024578e26.js",
   "wave92l_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92m": {
     "event_analytics_no_monkey_patch": true,
     "generated_at_utc": "2026-05-01T00:00:00Z"
   },
   "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
+  "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
   "wave92n": {
     "active_grade_nextq_ans_render_wrappers": 0,
     "clean_training_preserved": true,
@@ -305,8 +305,8 @@
     "wave35_removed_from_grade_and_diagnostic": true
   },
   "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
-  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
+  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92p_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "wave92q": {
     "brotli_count": 209,
@@ -319,7 +319,7 @@
       "Interactive formats stub",
       "Guided route stub"
     ],
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "runtime_integrity_manifest": "assets/data/runtime_integrity_wave92r.json"
   },
   "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
@@ -348,12 +348,12 @@
       "Guided learning path disabled stub",
       "Dead features one-line metadata stub"
     ],
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "production_dev_files_removed": true
   },
   "wave92v": {
     "confetti": true,
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "haptic": true,
     "keyboard_1_2_3_4": true,
     "no_nextq_ans_render_monkey_patch": true,
@@ -370,7 +370,7 @@
     "base_wave": "wave92v",
     "ci_gate_externalized": true,
     "dunning_kruger_wording": "люди с низкой компетенцией склонны переоценивать свой уровень",
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "full_zip_required_for_sri": true,
     "iq_spatial_questions_rewritten": true,
     "milgram_wording": "страдания другим",
@@ -443,7 +443,7 @@
     "install_banner": true,
     "landscape": true,
     "manifest_orientation_any": true,
-    "mobile_bundle": "assets/js/bundle_mobile_wave93a.92800655c6.js",
+    "mobile_bundle": "assets/js/bundle_mobile_wave93a.e12af796d6.js",
     "offline_indicator": true,
     "originals": 211,
     "plan": "PLAN_100_WAVE92U.md block 6",
@@ -458,11 +458,11 @@
     "aria": true,
     "base_wave": "wave93a",
     "contrast": true,
-    "css_bundle": "assets/css/wave93b_accessibility.f321bb4688.css",
+    "css_bundle": "assets/css/wave93d_accessibility.87b3610246.css",
     "focus_management": true,
     "font_size": true,
     "high_contrast": true,
-    "js_bundle": "assets/js/bundle_accessibility_wave93b.a0c0c322ee.js",
+    "js_bundle": "assets/js/bundle_accessibility_wave93d.4548caed7f.js",
     "no_auto_modal": true,
     "no_mutation_observer_in_bundle": true,
     "no_training_engine_monkey_patch": true,
@@ -472,15 +472,28 @@
   },
   "wave93c": {
     "base_wave": "wave93b",
-    "containment_css": "assets/css/wave93c_architecture.61f4165edb.css",
-    "dependency_graph": "assets/data/dependency_graph_wave93c.json",
+    "containment_css": "assets/css/wave93c_architecture.6df694bc0e.css",
+    "dependency_graph": "assets/data/dependency_graph_wave93d.json",
     "onclick_migration": "data-wave86u-on-click",
     "plan_block": "8 architecture",
     "resource_hints": true,
     "split_runtime": [
       "assets/js/bundle_grade_runtime_inputs_timing_wave93c.8c128bf54d.js",
       "assets/js/bundle_grade_runtime_navigation_wave93c.54296c091c.js",
-      "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js"
+      "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js"
     ]
+  },
+  "wave93d": {
+    "accessibility_bundle": "assets/js/bundle_accessibility_wave93d.4548caed7f.js",
+    "accessibility_css": "assets/css/wave93d_accessibility.87b3610246.css",
+    "blocker_release": true,
+    "dependency_graph": "assets/data/dependency_graph_wave93d.json",
+    "eval_removed": true,
+    "floating_aa_removed": true,
+    "full_zip_deploy_required": true,
+    "function_string_removed": true,
+    "progress_bonus_label_verified": true,
+    "settings_only_accessibility": true,
+    "share_fab_removed": true
   }
 }

@@ -1,6 +1,6 @@
 {
   "wave": "wave92z",
-  "version": "trainer-build-wave92z-2026-05-03",
+  "version": "trainer-build-wave93d-2026-05-03",
   "generated_at_utc": "2026-05-03T00:00:00Z",
   "scope": "assets/data JSON content banks; runtime JS syntax is checked separately by CI gate",
   "dedup": {

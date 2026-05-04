@@ -1,10 +1,10 @@
 {
   "app": "trainer3",
-  "brotli_count": 211,
-  "brotli_wave": "wave93b",
-  "build_id": "trainer-build-wave93c-2026-05-03",
-  "cache": "trainer-build-wave93c-2026-05-03",
-  "cacheName": "trainer-build-wave93c-2026-05-03",
+  "brotli_count": 217,
+  "brotli_wave": "wave93d",
+  "build_id": "trainer-build-wave93d-2026-05-03",
+  "cache": "trainer-build-wave93d-2026-05-03",
+  "cacheName": "trainer-build-wave93d-2026-05-03",
   "csp_style_src_attr": "unsafe-inline",
   "engine10_events": true,
   "engine_event_hooks": [
@@ -33,7 +33,7 @@
     "topic_map": true
   },
   "nextq_wrappers_active": 0,
-  "original_count": 211,
+  "original_count": 217,
   "pages": [
     "index.html",
     "dashboard.html",
@@ -57,7 +57,7 @@
   "single_nextq_engine": true,
   "status": "ok",
   "trainer_next_question_providers": true,
-  "version": "trainer-build-wave93c-2026-05-03",
+  "version": "trainer-build-wave93d-2026-05-03",
   "visual_interactive_wave91g": {
     "chemistry_structures": true,
     "geography_svg": true,
@@ -73,7 +73,7 @@
     "physics_schemes": true,
     "print_worksheet_pdf": true
   },
-  "wave": "wave93c",
+  "wave": "wave93d",
   "wave92c": {
     "clean_training_screen": true,
     "css_hide_selectors": true,
@@ -112,13 +112,13 @@
     "tests_psych_abort_button": true,
     "zip_deflate_required": true
   },
-  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92e_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92f": {
     "clean_training_screen_preserved": true,
     "content_expiry_valid_until": "2027-08-31",
     "disabled_training_stubs_removed": true,
     "exam_bundle": "assets/js/bundle_exam.d6a80e3142.js",
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "extended_runtime_bytes": 223466,
     "featurepack_bytes": 122459,
     "featurepack_lazy_chunk": "assets/js/chunk_grade_featurepacks_wave92f.7bc99f042c.js",
@@ -132,7 +132,7 @@
     "zip_deflate_required": true
   },
   "wave92f_featurepacks": "assets/js/chunk_grade_featurepacks_wave92f.7bc99f042c.js",
-  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92f_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92g": {
     "a11y": [
       "ARIA radiogroup",
@@ -210,15 +210,15 @@
     "provider_hooks": true
   },
   "wave92l_engine10": "assets/js/engine10.6c3aade44b.js",
-  "wave92l_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
-  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92l_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
+  "wave92l_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92m": {
     "active_grade_nextq_ans_render_wrappers": 0,
     "event_analytics_no_monkey_patch": true,
     "wave35_grade_wrappers_disabled": true
   },
   "wave92m_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
+  "wave92m_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
   "wave92n": {
     "active_grade_nextq_ans_render_wrappers": 0,
     "clean_training_preserved": true,
@@ -227,8 +227,8 @@
     "wave35_removed_from_grade_and_diagnostic": true
   },
   "wave92n_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
-  "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.75a7126da4.js",
-  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+  "wave92n_runtime_core": "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
+  "wave92n_runtime_extended": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
   "wave92o": {
     "clean_training_preserved": true,
     "dead_bundle_audit_passed": true,
@@ -253,7 +253,7 @@
       "wave92g automatic panel/whats-new/floating UI",
       "wave92h profiles/onboarding/mood/micro-lessons"
     ],
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js"
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js"
   },
   "wave92q_integrity_manifest": "assets/data/runtime_integrity_wave92r.json",
   "wave92s": {
@@ -281,14 +281,14 @@
       "Guided learning path disabled stub",
       "Dead features one-line metadata stub"
     ],
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "production_dev_files_removed": true
   },
   "wave92v": {
     "confetti": true,
     "dead_css_audit_passed": true,
     "dead_js_audit_passed": true,
-    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js",
+    "extended_runtime": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
     "haptic": true,
     "keyboard_1_2_3_4": true,
     "no_nextq_ans_render_monkey_patch": true,
@@ -379,7 +379,7 @@
     "install_banner": true,
     "landscape": true,
     "manifest_orientation_any": true,
-    "mobile_bundle": "assets/js/bundle_mobile_wave93a.92800655c6.js",
+    "mobile_bundle": "assets/js/bundle_mobile_wave93a.e12af796d6.js",
     "offline_indicator": true,
     "originals": 211,
     "plan_block": "6 mobile",
@@ -391,7 +391,7 @@
   "wave93b": {
     "additive_layer": true,
     "base_wave": "wave93a",
-    "css_bundle": "assets/css/wave93b_accessibility.f321bb4688.css",
+    "css_bundle": "assets/css/wave93d_accessibility.87b3610246.css",
     "features": {
       "aria": true,
       "contrast": true,
@@ -401,7 +401,7 @@
       "reduced_motion": true,
       "semantic_radio": true
     },
-    "js_bundle": "assets/js/bundle_accessibility_wave93b.a0c0c322ee.js",
+    "js_bundle": "assets/js/bundle_accessibility_wave93d.4548caed7f.js",
     "no_auto_modal": true,
     "no_mutation_observer_in_bundle": true,
     "no_training_engine_monkey_patch": true,
@@ -410,14 +410,27 @@
   },
   "wave93c": {
     "architecture": true,
-    "containment_css": "assets/css/wave93c_architecture.61f4165edb.css",
+    "containment_css": "assets/css/wave93c_architecture.6df694bc0e.css",
     "dead_css": 0,
     "dead_js": 0,
-    "dependency_graph": "assets/data/dependency_graph_wave93c.json",
+    "dependency_graph": "assets/data/dependency_graph_wave93d.json",
     "split_runtime": [
       "assets/js/bundle_grade_runtime_inputs_timing_wave93c.8c128bf54d.js",
       "assets/js/bundle_grade_runtime_navigation_wave93c.54296c091c.js",
-      "assets/js/bundle_grade_runtime_extended_wave89b.175e4d029c.js"
+      "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js"
     ]
+  },
+  "wave93d": {
+    "accessibility_bundle": "assets/js/bundle_accessibility_wave93d.4548caed7f.js",
+    "accessibility_css": "assets/css/wave93d_accessibility.87b3610246.css",
+    "blocker_release": true,
+    "dependency_graph": "assets/data/dependency_graph_wave93d.json",
+    "eval_removed": true,
+    "floating_aa_removed": true,
+    "full_zip_deploy_required": true,
+    "function_string_removed": true,
+    "progress_bonus_label_verified": true,
+    "settings_only_accessibility": true,
+    "share_fab_removed": true
   }
 }

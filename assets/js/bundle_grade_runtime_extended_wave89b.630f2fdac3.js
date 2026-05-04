@@ -517,6 +517,47 @@
       scheduleSync();
     }, 20);
   }
+  function a11yValue(kind){
+    var key = kind === 'font' ? 'trainer_wave93b_font_size' : kind === 'contrast' ? 'trainer_wave93b_contrast' : 'trainer_wave93b_motion';
+    var fallback = kind === 'motion' ? 'system' : 'normal';
+    var value = fallback;
+    try { value = localStorage.getItem(key) || fallback; } catch (_err) {}
+    if (kind === 'font' && !/^(normal|large|xlarge)$/.test(value)) return 'normal';
+    if (kind === 'contrast' && !/^(normal|high)$/.test(value)) return 'normal';
+    if (kind === 'motion' && !/^(system|reduce)$/.test(value)) return 'system';
+    return value;
+  }
+  function a11ySettingsButton(kind, value, label){
+    var btn = settingsButton(label);
+    btn.setAttribute('data-wave93b-' + kind, value);
+    btn.setAttribute('aria-pressed', String(a11yValue(kind) === value));
+    return btn;
+  }
+  function buildA11ySettingsSection(){
+    var section = document.createElement('div');
+    section.className = 'wave89d-settings-section wave93d-a11y-settings';
+    var row = document.createElement('div');
+    row.className = 'wave89d-settings-row';
+    var copy = document.createElement('div');
+    copy.className = 'wave89d-settings-copy';
+    var strong = document.createElement('strong');
+    strong.textContent = '♿ Доступность';
+    var desc = document.createElement('p');
+    desc.textContent = 'Размер текста, высокий контраст и минимальная анимация — только в меню настроек, без плавающей кнопки.';
+    copy.appendChild(strong); copy.appendChild(desc); row.appendChild(copy); section.appendChild(row);
+    var font = document.createElement('div'); font.className = 'wave89d-settings-actions';
+    font.appendChild(a11ySettingsButton('font','normal','Текст: обычный'));
+    font.appendChild(a11ySettingsButton('font','large','Текст: крупнее'));
+    font.appendChild(a11ySettingsButton('font','xlarge','Текст: максимум'));
+    var contrast = document.createElement('div'); contrast.className = 'wave89d-settings-actions';
+    contrast.appendChild(a11ySettingsButton('contrast','normal','Контраст: обычный'));
+    contrast.appendChild(a11ySettingsButton('contrast','high','Контраст: высокий'));
+    var motion = document.createElement('div'); motion.className = 'wave89d-settings-actions';
+    motion.appendChild(a11ySettingsButton('motion','system','Движение: системно'));
+    motion.appendChild(a11ySettingsButton('motion','reduce','Движение: минимум'));
+    section.appendChild(font); section.appendChild(contrast); section.appendChild(motion);
+    return section;
+  }
   function buildSettingsOverlay(){
     var overlay = document.createElement('div');
     overlay.id = OVERLAY_ID;
@@ -599,6 +640,7 @@
 
     card.appendChild(header);
     card.appendChild(section);
+    card.appendChild(buildA11ySettingsSection());
     card.appendChild(actions);
     overlay.appendChild(card);
     return overlay;

@@ -2039,7 +2039,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
 
   function readGlobal(name){
     try{
-      return window.eval(`typeof ${name} !== \"undefined\" ? ${name} : null`);
+      return (typeof window[name] !== 'undefined') ? window[name] : null;
     }catch(_){
       return null;
     }
@@ -3253,9 +3253,9 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     window.__wave27TimerTrackingInstalled=true;
     var rawSetTimeout=window.setTimeout.bind(window), rawClearTimeout=window.clearTimeout.bind(window), rawSetInterval=window.setInterval.bind(window), rawClearInterval=window.clearInterval.bind(window);
     var timeouts=new Set(), intervals=new Set();
-    window.setTimeout=function(fn,ms){var args=[].slice.call(arguments,2);var id=rawSetTimeout(function(){timeouts.delete(id);if(typeof fn==='function') return fn.apply(this,args);try{return Function(String(fn))()}catch(_){return void 0}},ms);timeouts.add(id);return id};
+    window.setTimeout=function(fn,ms){var args=[].slice.call(arguments,2);if(typeof fn!=='function') return rawSetTimeout(function(){},ms);var id=rawSetTimeout(function(){timeouts.delete(id);return fn.apply(this,args)},ms);timeouts.add(id);return id};
     window.clearTimeout=function(id){timeouts.delete(id);return rawClearTimeout(id)};
-    window.setInterval=function(fn,ms){var args=[].slice.call(arguments,2);var id=rawSetInterval(function(){if(typeof fn==='function') return fn.apply(this,args);try{return Function(String(fn))()}catch(_){return void 0}},ms);intervals.add(id);return id};
+    window.setInterval=function(fn,ms){var args=[].slice.call(arguments,2);if(typeof fn!=='function') return rawSetInterval(function(){},ms);var id=rawSetInterval(function(){return fn.apply(this,args)},ms);intervals.add(id);return id};
     window.clearInterval=function(id){intervals.delete(id);return rawClearInterval(id)};
     window.__wave27Timers={timeouts:timeouts,intervals:intervals,clearAll:function(){timeouts.forEach(function(id){rawClearTimeout(id)});intervals.forEach(function(id){rawClearInterval(id)});timeouts.clear();intervals.clear()},counts:function(){return{timeouts:timeouts.size,intervals:intervals.size}}};
     if(!window.requestIdleCallback){window.requestIdleCallback=function(cb,opts){var start=Date.now();return window.setTimeout(function(){cb({didTimeout:!!(opts&&opts.timeout&&(Date.now()-start)>=opts.timeout),timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}}

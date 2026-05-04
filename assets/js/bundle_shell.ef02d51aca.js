@@ -473,7 +473,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
 
   function readGlobal(name){
     try{
-      return window.eval(`typeof ${name} !== \"undefined\" ? ${name} : null`);
+      return (typeof window[name] !== 'undefined') ? window[name] : null;
     }catch(_){
       return null;
     }
@@ -1506,9 +1506,9 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     window.__wave27TimerTrackingInstalled=true;
     var rawSetTimeout=window.setTimeout.bind(window), rawClearTimeout=window.clearTimeout.bind(window), rawSetInterval=window.setInterval.bind(window), rawClearInterval=window.clearInterval.bind(window);
     var timeouts=new Set(), intervals=new Set();
-    window.setTimeout=function(fn,ms){var args=[].slice.call(arguments,2);var id=rawSetTimeout(function(){timeouts.delete(id);if(typeof fn==='function') return fn.apply(this,args);try{return Function(String(fn))()}catch(_){return void 0}},ms);timeouts.add(id);return id};
+    window.setTimeout=function(fn,ms){var args=[].slice.call(arguments,2);if(typeof fn!=='function') return rawSetTimeout(function(){},ms);var id=rawSetTimeout(function(){timeouts.delete(id);return fn.apply(this,args)},ms);timeouts.add(id);return id};
     window.clearTimeout=function(id){timeouts.delete(id);return rawClearTimeout(id)};
-    window.setInterval=function(fn,ms){var args=[].slice.call(arguments,2);var id=rawSetInterval(function(){if(typeof fn==='function') return fn.apply(this,args);try{return Function(String(fn))()}catch(_){return void 0}},ms);intervals.add(id);return id};
+    window.setInterval=function(fn,ms){var args=[].slice.call(arguments,2);if(typeof fn!=='function') return rawSetInterval(function(){},ms);var id=rawSetInterval(function(){return fn.apply(this,args)},ms);intervals.add(id);return id};
     window.clearInterval=function(id){intervals.delete(id);return rawClearInterval(id)};
     window.__wave27Timers={timeouts:timeouts,intervals:intervals,clearAll:function(){timeouts.forEach(function(id){rawClearTimeout(id)});intervals.forEach(function(id){rawClearInterval(id)});timeouts.clear();intervals.clear()},counts:function(){return{timeouts:timeouts.size,intervals:intervals.size}}};
     if(!window.requestIdleCallback){window.requestIdleCallback=function(cb,opts){var start=Date.now();return window.setTimeout(function(){cb({didTimeout:!!(opts&&opts.timeout&&(Date.now()-start)>=opts.timeout),timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}}
@@ -1748,6 +1748,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     if (typeof window.showBackupModal === 'function') actions.push({ text:'💾 Резервная копия', fn:function(){ closeSettings(); setTimeout(function(){ window.showBackupModal(); }, 20); } });
     if (typeof window.showClassSelect === 'function') actions.push({ text:'🏫 Выбрать класс', fn:function(){ closeSettings(); setTimeout(function(){ window.showClassSelect(); }, 20); } });
     if (typeof window.generateReport === 'function') actions.push({ text:'📊 Отчёт', fn:function(){ closeSettings(); setTimeout(function(){ window.generateReport(); }, 20); } });
+    if (window.__wave93aMobileLayer && typeof window.__wave93aMobileLayer.share === 'function') actions.push({ text:'↗ Поделиться', fn:function(){ closeSettings(); setTimeout(function(){ window.__wave93aMobileLayer.share(); }, 20); } });
     if (typeof window.showAbout === 'function') actions.push({ text:'ℹ️ О проекте', fn:function(){ closeSettings(); setTimeout(function(){ window.showAbout(); }, 20); } });
     return actions;
   }
@@ -1766,6 +1767,25 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     var active = getThemePref() === pref ? ' active' : '';
     return '<button type="button" class="wave40-theme-btn' + active + '" data-theme-pref="' + pref + '"><div style="font-size:18px;margin-bottom:4px">' + icon + '</div><div>' + label + '</div></button>';
   }
+  function a11yPref(kind){
+    var key = kind === 'font' ? 'trainer_wave93b_font_size' : kind === 'contrast' ? 'trainer_wave93b_contrast' : 'trainer_wave93b_motion';
+    var fallback = kind === 'motion' ? 'system' : 'normal';
+    var value = getStore(key) || fallback;
+    if (kind === 'font' && !/^(normal|large|xlarge)$/.test(value)) return 'normal';
+    if (kind === 'contrast' && !/^(normal|high)$/.test(value)) return 'normal';
+    if (kind === 'motion' && !/^(system|reduce)$/.test(value)) return 'system';
+    return value;
+  }
+  function a11yBtn(kind, value, label){
+    var current = a11yPref(kind);
+    return '<button type="button" class="wave40-action-btn" data-wave93b-' + kind + '="' + value + '" aria-pressed="' + (current === value ? 'true' : 'false') + '">' + label + '</button>';
+  }
+  function accessibilitySettingsSection(){
+    return '<div class="wave40-settings-section wave93d-a11y-settings"><div class="wave40-settings-title">♿ Доступность</div><div class="wave40-settings-note">Размер текста, контраст и анимация находятся только здесь, без плавающей кнопки.</div>' +
+      '<div class="wave93d-a11y-row"><span>Текст</span>' + a11yBtn('font','normal','Обычный') + a11yBtn('font','large','Крупнее') + a11yBtn('font','xlarge','Максимум') + '</div>' +
+      '<div class="wave93d-a11y-row"><span>Контраст</span>' + a11yBtn('contrast','normal','Обычный') + a11yBtn('contrast','high','Высокий') + '<span aria-hidden="true"></span></div>' +
+      '<div class="wave93d-a11y-row"><span>Движение</span>' + a11yBtn('motion','system','Системно') + a11yBtn('motion','reduce','Минимум') + '<span aria-hidden="true"></span></div></div>';
+  }
   function renderBody(){
     var info = installState();
     var actions = quickActions();
@@ -1774,6 +1794,7 @@ html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="
     html += '<div class="wave40-settings-section"><div class="wave40-settings-title">🎨 Оформление</div><div class="wave40-settings-note">Выберите, как тренажёр выглядит на этом устройстве.</div><div class="wave40-theme-grid">' +
       themeButton('system', '🖥️', 'Системная') + themeButton('light', '☀️', 'Светлая') + themeButton('dark', '🌙', 'Тёмная') +
       '</div></div>';
+    html += accessibilitySettingsSection();
     html += '<div class="wave40-settings-section"><div class="wave40-settings-title">📲 Приложение</div>';
     if (info.standalone) {
       html += '<div class="wave40-settings-note">Приложение уже установлено на устройство. Можно запускать его как обычное приложение.</div>';

@@ -9,7 +9,6 @@
   var INSTALL_ID = 'wave93a-install-banner';
   var OFFLINE_ID = 'wave93a-offline-indicator';
   var PULL_ID = 'wave93a-pull-indicator';
-  var SHARE_ID = 'wave93a-share-fab';
   var TIP_ID = 'wave93a-mobile-tip';
   var STORE_PREFIX = 'trainer_wave93a_mobile_';
   var state = { installPrompt: null, pull: null, refreshBusy: false, lastOffline: false, navTimer: 0, tipTimer: 0 };
@@ -65,12 +64,12 @@ html{scroll-padding-top:calc(12px + var(--wave93a-safe-top));scroll-padding-bott
 .wave93a-install-banner.is-visible{display:flex}.wave93a-install-banner strong{display:block;font-size:13px;line-height:1.15}.wave93a-install-banner span{display:block;font-size:11px;line-height:1.25;color:var(--muted,#6b6a74);margin-top:2px}.wave93a-install-copy{min-width:0;flex:1}.wave93a-install-banner button{min-height:44px;border:0;border-radius:12px;padding:8px 10px;font-weight:800;cursor:pointer;touch-action:manipulation}.wave93a-install-main{background:var(--accent,#2563eb);color:#fff}.wave93a-install-close{background:var(--abg,#eef2ff);color:var(--text,#1a1a2e)}
 .wave93a-offline-indicator{position:fixed;left:50%;top:calc(8px + var(--wave93a-safe-top));transform:translateX(-50%) translateY(-8px);z-index:10040;display:flex;align-items:center;gap:8px;max-width:min(92vw,520px);padding:9px 12px;border-radius:999px;border:1px solid var(--border,#e2e0d8);background:var(--card,#fff);color:var(--text,#1a1a2e);font-weight:800;font-size:12px;box-shadow:0 12px 30px rgba(0,0,0,.16);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;}.wave93a-offline-indicator.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}.wave93a-offline-indicator.is-offline{background:#111827;color:#fff;border-color:#111827}.wave93a-offline-indicator.is-online{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
 .wave93a-pull-indicator{position:fixed;left:50%;top:calc(10px + var(--wave93a-safe-top));z-index:10035;width:52px;height:52px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:var(--card,#fff);color:var(--text,#1a1a2e);border:1px solid var(--border,#e2e0d8);box-shadow:0 14px 36px rgba(0,0,0,.16);font-size:22px;font-weight:900;opacity:0;transform:translateX(-50%) translateY(-58px) scale(.92);transition:opacity .12s ease,transform .12s ease;pointer-events:none;}.wave93a-pull-indicator.is-visible{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}.wave93a-pull-indicator.is-armed{background:var(--accent,#2563eb);color:#fff}
-.wave93a-share-fab{position:fixed;right:max(12px,var(--wave93a-safe-right));bottom:calc(var(--wave93a-nav-total) + 76px);z-index:10020;width:48px;height:48px;border:0;border-radius:999px;background:var(--text,#1a1a2e);color:#fff;font-size:20px;font-weight:900;box-shadow:0 16px 36px rgba(0,0,0,.2);display:none;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation}.wave93a-share-fab.is-visible{display:flex}
+
 .wave93a-mobile-tip{position:fixed;left:50%;bottom:calc(var(--wave93a-nav-total) + 16px);z-index:10025;transform:translateX(-50%) translateY(8px);max-width:min(92vw,520px);padding:9px 12px;border-radius:999px;background:var(--text,#1a1a2e);color:#fff;font-size:12px;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;text-align:center}.wave93a-mobile-tip.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (max-width:1023px){body.wave93a-mobile-ready{padding-left:max(0px,var(--wave93a-safe-left));padding-right:max(0px,var(--wave93a-safe-right));}button,.btn,[role="button"],input[type="button"],input[type="submit"],.cta,.opt,.ca,.spec-opt,.spec-btn,.next-btn,.back,.nav-link{min-height:44px;touch-action:manipulation;}input,select,textarea{font-size:16px!important;}a,button{-webkit-tap-highlight-color:rgba(37,99,235,.18);}body.wave93a-has-bottom-nav{padding-bottom:calc(var(--wave93a-nav-total) + 12px)!important;}}
-@media (min-width:1024px){.wave93a-install-banner,.wave93a-offline-indicator,.wave93a-pull-indicator,.wave93a-share-fab,.wave93a-mobile-tip{display:none!important}.wave24-bottom-nav[data-wave93a="1"]{display:none!important}}
-@media (orientation:landscape) and (max-height:560px){:root{--wave93a-nav-h:54px}.wave24-bottom-nav a,.wave24-bottom-nav button{font-size:10px!important;padding-top:4px!important;padding-bottom:4px!important}.wave24-bottom-nav .wave24-ic{width:20px!important;height:20px!important;min-height:20px!important;flex-basis:20px!important}.wave93a-install-banner{display:none!important}.wave93a-share-fab{width:44px;height:44px;bottom:calc(var(--wave93a-nav-total) + 10px)}}
-@media (prefers-reduced-motion:reduce){.wave93a-install-banner,.wave93a-offline-indicator,.wave93a-pull-indicator,.wave93a-share-fab,.wave93a-mobile-tip{transition:none!important}}
+@media (min-width:1024px){.wave93a-install-banner,.wave93a-offline-indicator,.wave93a-pull-indicator,.wave93a-mobile-tip{display:none!important}.wave24-bottom-nav[data-wave93a="1"]{display:none!important}}
+@media (orientation:landscape) and (max-height:560px){:root{--wave93a-nav-h:54px}.wave24-bottom-nav a,.wave24-bottom-nav button{font-size:10px!important;padding-top:4px!important;padding-bottom:4px!important}.wave24-bottom-nav .wave24-ic{width:20px!important;height:20px!important;min-height:20px!important;flex-basis:20px!important}.wave93a-install-banner{display:none!important}}
+@media (prefers-reduced-motion:reduce){.wave93a-install-banner,.wave93a-offline-indicator,.wave93a-pull-indicator,.wave93a-mobile-tip{transition:none!important}}
 `;
     document.head.appendChild(style);
   }
@@ -184,8 +183,7 @@ html{scroll-padding-top:calc(12px + var(--wave93a-safe-top));scroll-padding-bott
     document.addEventListener('touchend', function(){ if (!state.pull) return; var armed = state.pull.armed; state.pull = null; var node = indicator || ensurePullIndicator(); node.classList.remove('is-visible','is-armed'); node.style.transform = ''; if (armed) refreshApp(); }, { passive: true });
   }
 
-  function ensureShareFab(){ var node = document.getElementById(SHARE_ID); if (!node) { node = document.createElement('button'); node.id = SHARE_ID; node.type = 'button'; node.className = 'wave93a-share-fab wave93a-mobile-ui'; node.setAttribute('aria-label','Поделиться страницей'); node.textContent = '↗'; node.addEventListener('click', shareCurrentPage); document.body.appendChild(node); } return node; }
-  function syncShareFab(){ var node = ensureShareFab(); var show = compact() && pageKey() !== 'disabled' && !blockingSession(); node.classList.toggle('is-visible', !!show); }
+    function syncShareFab(){ }
   function fallbackCopy(text){
     if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
     return new Promise(function(resolve, reject){ try { var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly',''); ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); var ok = document.execCommand('copy'); document.body.removeChild(ta); ok ? resolve() : reject(new Error('copy failed')); } catch (err) { reject(err); } });
@@ -205,7 +203,7 @@ html{scroll-padding-top:calc(12px + var(--wave93a-safe-top));scroll-padding-bott
 
   function init(){
     if (!document.body) return;
-    ensureViewportFit(); ensureStyle(); document.body.classList.add('wave93a-mobile-ready'); ensureBottomNav(); ensureInstallBanner(); ensureOfflineIndicator(); ensurePullIndicator(); ensureShareFab();
+    ensureViewportFit(); ensureStyle(); document.body.classList.add('wave93a-mobile-ready'); ensureBottomNav(); ensureInstallBanner(); ensureOfflineIndicator(); ensurePullIndicator(); syncShareFab();
     bindInstall(); bindPullToRefresh(); bindEvents(); syncLandscape(); syncOfflineIndicator(); syncInstallBanner(); syncShareFab(); scheduleNav();
     window.__wave93aMobileLayer = { version: VERSION, booted: true, pageKey: pageKey, refresh: refreshApp, share: shareCurrentPage, status: function(){ return { compact: compact(), page: pageKey(), nav: !!document.getElementById(NAV_ID), installPrompt: !!state.installPrompt, online: navigator.onLine !== false, standalone: standalone(), landscape: document.body.classList.contains('wave93a-landscape') }; } };
   }
