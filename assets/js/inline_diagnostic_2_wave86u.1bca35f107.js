@@ -1,1 +1,0 @@
-(function(){try{var qs=new URLSearchParams(location.search||'');if(qs.get('lhci')==='1'||navigator.webdriver)return}catch(_err){}if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{})}})();

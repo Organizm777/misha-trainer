@@ -1,9 +1,0 @@
-/* wave93c_architecture_containment.css */
-:root{--wave93c-contain-ready:1}
-@supports (content-visibility:auto){
-  .scr:not(.on){content-visibility:auto;contain-intrinsic-size:1px 760px}
-  #sg,.grid,.opts,.exam-list,.exam-grid,.content-depth-grid,.topic-grid,.subject-grid,.wave88d-breadcrumb-list{content-visibility:auto;contain-intrinsic-size:1px 640px}
-}
-.card,.scard,.opt,.qcard,.icard,.wave21-card,.wave86n-card,.wave92x-exam-card,.wave93b-a11y-panel{contain:layout paint}
-#trainer-toast-host,.wave93a-mobile-nav{contain:layout paint style}
-@media print{.scr,#sg,.grid,.opts,.exam-list,.exam-grid,.content-depth-grid,.topic-grid,.subject-grid{content-visibility:visible!important;contain:none!important}}
