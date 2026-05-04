@@ -1,7 +1,7 @@
 {
-  "build_id": "trainer-build-wave93d-2026-05-03",
-  "cache": "trainer-build-wave93d-2026-05-03",
-  "cacheName": "trainer-build-wave93d-2026-05-03",
+  "build_id": "trainer-build-wave93e-2026-05-04",
+  "cache": "trainer-build-wave93e-2026-05-04",
+  "cacheName": "trainer-build-wave93e-2026-05-04",
   "entries": {
     "assets/css/engine10.dac1e147e6.css": {
       "bytes": 13858,
@@ -91,13 +91,13 @@
       "bytes": 22135,
       "sha384": "sha384-oFvWkWvB5RARGLJahJjhP994YYD3Ry7FqybbHAfTE3BrnBo1rrOOmd87PCseXrwo"
     },
-    "assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js": {
+    "assets/js/bundle_grade_runtime_core_wave87n.89e22b96bf.js": {
       "bytes": 280257,
-      "sha384": "sha384-05+aUDSFg7YXxYky1cd3gOXzl8Abxrczr7GY905ZLUJNLCGrKcGPiyZkmM1TuBIO"
+      "sha384": "sha384-zOYMhcPJ5gHo1pl+IgW8jMnWJQrlyrm3ELgIf6HwvObtWkIW7GGXJEHHMsKZzqDh"
     },
-    "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js": {
-      "bytes": 168251,
-      "sha384": "sha384-/Sbe1zfidYUGV/eorrj/MdU08V5ahynOjA+DOf3AsjOkjDY5/jxyR7HFUi7NOSNs"
+    "assets/js/bundle_grade_runtime_extended_wave89b.d17ad31367.js": {
+      "bytes": 169444,
+      "sha384": "sha384-HGYrwPiAn8xlTEsUN0qfyKd2yu5/KnZcrNd5trbVeH1nWuw04nFHDKHg/+mznDXM"
     },
     "assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js": {
       "bytes": 141157,
@@ -111,9 +111,9 @@
       "bytes": 21532,
       "sha384": "sha384-dylu90nYFWirYfO5OsC0yp5pF+EOQWwYtRHSkAPHe02zljesSWCFUD4Bjr7IsQZm"
     },
-    "assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js": {
-      "bytes": 157483,
-      "sha384": "sha384-Tmeg7VW0tmJaaxBMNDsQ6ORUb067blx/IzOMtQn+pLWSVrvIBPt3y0VAuZmPGL/u"
+    "assets/js/bundle_grade_runtime_services_wave87n.339430ddf9.js": {
+      "bytes": 172473,
+      "sha384": "sha384-j4naKhPrxt/r6zjFvXITQEYoO1VmKBME8KySSC4OlN4bvdABl3NCpRUVWnKqTC0F"
     },
     "assets/js/bundle_mobile_wave93a.e12af796d6.js": {
       "bytes": 24525,
@@ -520,9 +520,9 @@
       "sha384": "sha384-3/BXcZckG5CKyybxcE9dNx0X2Md+O1sMGkWBEKZzu/nl3qznTYBy0ypOUyHXynQX"
     }
   },
-  "generated_at_utc": "2026-05-03T00:00:00Z",
-  "version": "trainer-build-wave93d-2026-05-03",
-  "wave": "wave93d",
+  "generated_at_utc": "2026-05-04T00:00:00Z",
+  "version": "trainer-build-wave93e-2026-05-04",
+  "wave": "wave93e",
   "wave92z": {
     "content_quality_manifest": "assets/data/content_quality_wave92z.json",
     "json_validation_sidecar": "wave92z_ci_gate.py",
@@ -582,8 +582,8 @@
       "dependency_graph"
     ],
     "containment_css": "assets/css/wave93c_architecture.6df694bc0e.css",
-    "dependency_graph": "assets/data/dependency_graph_wave93d.json",
-    "extended_bundle": "assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
+    "dependency_graph": "assets/data/dependency_graph_wave93e.json",
+    "extended_bundle": "assets/js/bundle_grade_runtime_extended_wave89b.d17ad31367.js",
     "input_timing_bundle": "assets/js/bundle_grade_runtime_inputs_timing_wave93c.8c128bf54d.js",
     "navigation_bundle": "assets/js/bundle_grade_runtime_navigation_wave93c.54296c091c.js",
     "plan_block": "8 architecture"
@@ -592,7 +592,7 @@
     "accessibility_bundle": "assets/js/bundle_accessibility_wave93d.4548caed7f.js",
     "accessibility_css": "assets/css/wave93d_accessibility.87b3610246.css",
     "blocker_release": true,
-    "dependency_graph": "assets/data/dependency_graph_wave93d.json",
+    "dependency_graph": "assets/data/dependency_graph_wave93e.json",
     "eval_removed": true,
     "floating_aa_removed": true,
     "full_zip_deploy_required": true,
@@ -600,5 +600,22 @@
     "progress_bonus_label_verified": true,
     "settings_only_accessibility": true,
     "share_fab_removed": true
-  }
+  },
+  "wave93e": {
+    "data_block": true,
+    "backup_export_import": true,
+    "qr_transfer": true,
+    "telegram_sync": true,
+    "auto_backup_status": true,
+    "storage_integrity_status": true,
+    "quota_guard_status": true,
+    "sw_update_notice_status": true,
+    "dependency_graph": "assets/data/dependency_graph_wave93e.json",
+    "core_bundle": "assets/js/bundle_grade_runtime_core_wave87n.89e22b96bf.js",
+    "extended_bundle": "assets/js/bundle_grade_runtime_extended_wave89b.d17ad31367.js",
+    "services_bundle": "assets/js/bundle_grade_runtime_services_wave87n.339430ddf9.js"
+  },
+  "original_count": 217,
+  "brotli_count": 217,
+  "brotli_wave": "wave93e"
 }

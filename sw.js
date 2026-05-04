@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trainer-build-wave93d-2026-05-03';
+const CACHE_NAME = 'trainer-build-wave93e-2026-05-04';
 const STATIC_CACHE = CACHE_NAME + '-static';
 const RUNTIME_CACHE = CACHE_NAME + '-runtime';
 const ASSETS = [
@@ -30,7 +30,7 @@ const ASSETS = [
   "./assets/data/content_depth/school_question_pack_senior.json",
   "./assets/data/content_depth/textbook_bindings.json",
   "./assets/data/content_quality_wave92z.json",
-  "./assets/data/dependency_graph_wave93d.json",
+  "./assets/data/dependency_graph_wave93e.json",
   "./assets/data/exam_bank/catalog.json",
   "./assets/data/exam_bank/ege_base_math_2026_foundation.json",
   "./assets/data/exam_bank/ege_english_2026_foundation.json",
@@ -90,12 +90,12 @@ const ASSETS = [
   "./assets/js/bundle_exam.d6a80e3142.js",
   "./assets/js/bundle_gamification_meta.9853e9e1bb.js",
   "./assets/js/bundle_gamification_xp.907a25e6bd.js",
-  "./assets/js/bundle_grade_runtime_core_wave87n.f229bfec7e.js",
-  "./assets/js/bundle_grade_runtime_extended_wave89b.630f2fdac3.js",
+  "./assets/js/bundle_grade_runtime_core_wave87n.89e22b96bf.js",
+  "./assets/js/bundle_grade_runtime_extended_wave89b.d17ad31367.js",
   "./assets/js/bundle_grade_runtime_features_wave87n.89522ee016.js",
   "./assets/js/bundle_grade_runtime_inputs_timing_wave93c.8c128bf54d.js",
   "./assets/js/bundle_grade_runtime_navigation_wave93c.54296c091c.js",
-  "./assets/js/bundle_grade_runtime_services_wave87n.39c7b1ae64.js",
+  "./assets/js/bundle_grade_runtime_services_wave87n.339430ddf9.js",
   "./assets/js/bundle_mobile_wave93a.e12af796d6.js",
   "./assets/js/bundle_navigation_logger.a05b4f024f.js",
   "./assets/js/bundle_profile_social.3126a65a5d.js",
