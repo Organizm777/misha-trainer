@@ -1,0 +1,169 @@
+/* --- wave86s: lazy grade10 subject chunk: alg --- */
+(function(){
+  if(String(window.GRADE_NUM || '') !== '10') return;
+  var ALG_TH={trig:'<h3>Тригонометрия</h3>\n<p><b>Что такое sin, cos, tg?</b></p>\n<p>Представь прямоугольный треугольник. У него есть гипотенуза (самая длинная сторона) и два катета.</p>\n<ul><li><b>sin α</b> = противолежащий катет / гипотенуза</li>\n<li><b>cos α</b> = прилежащий катет / гипотенуза</li>\n<li><b>tg α</b> = противолежащий / прилежащий = sin/cos</li>\n<li><b>ctg α</b> = прилежащий / противолежащий = cos/sin = 1/tg</li></ul>\n<p><b>Как запомнить таблицу:</b></p>\n<div class="fm">Угол:   0°    30°    45°     60°    90°\nsin:    0    1/2   √2/2   √3/2    1\ncos:    1   √3/2   √2/2    1/2    0\ntg:     0   √3/3    1      √3     —\nctg:    —    √3     1     √3/3    0</div>\n<p>Хитрость: sin растёт от 0 до 1, cos — наоборот. Для sin: √0/2, √1/2, √2/2, √3/2, √4/2.</p>\n<p><b>Углы больше 90°</b> — определи четверть и поставь знак:</p>\n<div class="fm">I (0–90°): всё +\nII (90–180°): только sin +, cos и tg −\nIII (180–270°): только tg +, sin и cos −\nIV (270–360°): только cos +, sin и tg −</div>\n<div class="ex">Пример: cos 150° → II четверть → cos отрицательный → берём cos 30° = √3/2 → ответ: −√3/2<br>sin 300° → IV четверть → sin отрицательный → sin 60° = √3/2 → ответ: −√3/2</div>\n<p><b>🔑 Алгоритм (3 шага):</b></p>\n<ol><li>Определи четверть: 0–90 = I, 90–180 = II, 180–270 = III, 270–360 = IV</li>\n<li>Поставь знак: помни «Все Студенты Такие Классные» → I: все +, II: sin +, III: tg +, IV: cos +</li>\n<li>Найди «базовый» угол (разница с ближайшей осью) и посмотри табличное значение</li></ol>\n<p><b>⚠️ Частые ошибки:</b></p>\n<ul><li>Путают sin и cos (sin — <b>п</b>ротиволежащий, cos — <b>п</b>рилежащий)</li>\n<li>Забывают знак для углов > 90°</li>\n<li>ctg — это НЕ cos, а 1/tg = cos/sin</li></ul>\n<p><b>Формулы сложения:</b></p>\n<div class="fm">sin(α±β) = sinα·cosβ ± cosα·sinβ\ncos(α±β) = cosα·cosβ ∓ sinα·sinβ\ntg(α±β) = (tgα ± tgβ) / (1 ∓ tgα·tgβ)</div>\n<p><b>Формулы двойного угла:</b></p>\n<div class="fm">sin 2α = 2·sinα·cosα\ncos 2α = cos²α − sin²α = 1 − 2sin²α = 2cos²α − 1\ntg 2α = 2tgα / (1 − tg²α)</div>\n<p><b>Формулы приведения</b> — правило:</p>\n<div class="fm">1) π/2 ± α или 3π/2 ± α → функция МЕНЯЕТСЯ (sin↔cos, tg↔ctg)\n2) π ± α или 2π ± α → функция НЕ меняется\n3) Знак определяется по четверти исходного угла</div>\n<div class="ex">sin(π−α) = sinα (π → не меняется, II четв. → sin+)\ncos(π/2+α) = −sinα (π/2 → меняется на sin, II четв. → cos−)</div>',pow:'<h3>Степени и корни</h3>\n<p><b>Степень</b> — сколько раз число умножается само на себя: 2³ = 2·2·2 = 8</p>\n<p><b>Правила:</b></p>\n<ul><li>Умножение: aⁿ · aᵐ = aⁿ⁺ᵐ (основания одинаковые → складываем показатели)</li>\n<li>Деление: aⁿ / aᵐ = aⁿ⁻ᵐ</li>\n<li>Степень степени: (aⁿ)ᵐ = aⁿ·ᵐ</li>\n<li>a⁰ = 1 (любое число в нулевой = 1)</li>\n<li>a⁻ⁿ = 1/aⁿ (отрицательная степень = дробь)</li></ul>\n<p><b>Корни:</b> √a = a^(½), ∛a = a^(⅓). Корень — обратная операция к степени.</p>\n<div class="fm">Квадраты: 1² = 1, 2² = 4, 3² = 9, 4² = 16, 5² = 25\n6² = 36, 7² = 49, 8² = 64, 9² = 81, 10² = 100\n11² = 121, 12² = 144, 13² = 169</div>\n<div class="ex">2³ · 2⁴ = 2⁷ = 128 (сложили показатели 3+4)<br>√144 = 12 (потому что 12² = 144)</div>',eq:'<h3>Уравнения</h3>\n<p><b>Линейное:</b> ax + b = 0. Перенеси b, раздели на a: x = −b/a</p>\n<p><b>Квадратное:</b> ax² + bx + c = 0. Два способа:</p>\n<p><b>1) Дискриминант:</b></p>\n<div class="fm">D = b² − 4ac\nЕсли D > 0: два корня x = (−b ± √D) / 2a\nЕсли D = 0: один корень x = −b / 2a\nЕсли D < 0: нет корней</div>\n<p><b>2) Теорема Виета</b> (если a = 1, т.е. x² + bx + c = 0):</p>\n<div class="fm">x₁ + x₂ = −b  (сумма корней = минус b)\nx₁ · x₂ = c   (произведение корней = c)</div>\n<div class="ex">x² − 5x + 6 = 0: сумма = 5, произведение = 6. Какие два числа? 2 и 3. ✓<br>x² + x − 12 = 0: сумма = −1, произведение = −12. Ответ: −4 и 3. ✓</div>\n<p><b>🔑 Какой способ выбрать?</b></p>\n<ul><li>Коэффициенты маленькие → <b>Виета</b> (быстрее, устно)</li>\n<li>Коэффициенты большие или не подбираются → <b>дискриминант</b> (надёжно)</li></ul>\n<p><b>⚠️ Частые ошибки:</b></p>\n<ul><li>В Виета: сумма корней = −b, НЕ b. Если x²−5x+6, то сумма = +5, не −5</li>\n<li>Забывают проверить D ≥ 0 перед извлечением корня</li>\n<li>Теряют второй корень: x² = 9 → x = 3 <b>и</b> x = −3</li></ul>',ineq:'<h3>Неравенства</h3>\n<p>Решаются как уравнения, но с одним важным правилом:</p>\n<div class="fm">При умножении или делении на ОТРИЦАТЕЛЬНОЕ число\nзнак неравенства ПЕРЕВОРАЧИВАЕТСЯ!\n> становится <,  ≤ становится ≥</div>\n<div class="ex">2x − 6 > 0 → 2x > 6 → x > 3 (делили на +2, знак не меняется)<br>−3x + 9 ≤ 0 → −3x ≤ −9 → x ≥ 3 (делили на −3, знак ПЕРЕВЕРНУЛСЯ!)</div>\n<p>Проверка: подставь число. x = 4: −3·4 + 9 = −3 ≤ 0 ✓</p>'};function genTrig(){if(Math.random()<.6){const o=pick([{d:0,s:"0",c:"1",t:"0",g:null,q:1},{d:30,s:"1/2",c:"√3/2",t:"√3/3",g:"√3",q:1},{d:45,s:"√2/2",c:"√2/2",t:"1",g:"1",q:1},{d:60,s:"√3/2",c:"1/2",t:"√3",g:"√3/3",q:1},{d:90,s:"1",c:"0",t:null,g:"0",q:1},{d:120,s:"√3/2",c:"-1/2",t:"-√3",g:"-√3/3",q:2,ref:60},{d:135,s:"√2/2",c:"-√2/2",t:"-1",g:"-1",q:2,ref:45},{d:150,s:"1/2",c:"-√3/2",t:"-√3/3",g:"-√3",q:2,ref:30},{d:180,s:"0",c:"-1",t:"0",g:null,q:2},{d:210,s:"-1/2",c:"-√3/2",t:"√3/3",g:"√3",q:3,ref:30},{d:225,s:"-√2/2",c:"-√2/2",t:"1",g:"1",q:3,ref:45},{d:240,s:"-√3/2",c:"-1/2",t:"√3",g:"√3/3",q:3,ref:60},{d:270,s:"-1",c:"0",t:null,g:"0",q:3},{d:300,s:"-√3/2",c:"1/2",t:"-√3",g:"-√3/3",q:4,ref:60},{d:315,s:"-√2/2",c:"√2/2",t:"-1",g:"-1",q:4,ref:45},{d:330,s:"-1/2",c:"√3/2",t:"-√3/3",g:"-√3",q:4,ref:30},{d:360,s:"0",c:"1",t:"0",g:null,q:1}]),a=[{n:"sin",v:o.s},{n:"cos",v:o.c}];null!==o.t&&a.push({n:"tg",v:o.t}),null!==o.g&&a.push({n:"ctg",v:o.g});const e=pick(a),n=["0","1","-1","1/2","-1/2","√2/2","-√2/2","√3/2","-√3/2","√3/3","-√3/3","√3","-√3"],t=()=>{let o;do{o=pick(n)}while(o===e.v);return o};let h;const i={1:"все +",2:"sin +, остальные −",3:"tg/ctg +, sin/cos −",4:"cos +, остальные −"};if(o.d<=90)h=`Табличное значение: ${e.n} ${o.d}° = ${e.v}`;else if(o.ref){const a=e.v.startsWith("-")?"−":"+",n=e.v.replace("-","");h=`${o.d}° → ${o.q}-я четв. (${i[o.q]}). ${e.n} ${a}. ${e.n} ${o.ref}° = ${n} → ${e.v}`}else h=`${o.d}° — граничный. ${e.n} ${o.d}° = ${e.v}`;return mkQ(`${e.n} ${o.d}° = ?`,e.v,fillW(e.v,[t,t,t]),h,"Тригонометрия","#dc2626","#fee2e2",null,!0)}{const o=pick([{q:"sin(α+β) =",a:"sinα·cosβ + cosα·sinβ",o:["sinα·cosβ + cosα·sinβ","sinα·cosβ − cosα·sinβ","cosα·cosβ + sinα·sinβ","cosα·cosβ − sinα·sinβ"],h:"Плюс → плюс"},{q:"sin(α−β) =",a:"sinα·cosβ − cosα·sinβ",o:["sinα·cosβ − cosα·sinβ","sinα·cosβ + cosα·sinβ","cosα·cosβ − sinα·sinβ","cosα·cosβ + sinα·sinβ"],h:"Минус → минус"},{q:"cos(α+β) =",a:"cosα·cosβ − sinα·sinβ",o:["cosα·cosβ − sinα·sinβ","cosα·cosβ + sinα·sinβ","sinα·cosβ + cosα·sinβ","sinα·cosβ − cosα·sinβ"],h:"Косинус суммы: минус!"},{q:"cos(α−β) =",a:"cosα·cosβ + sinα·sinβ",o:["cosα·cosβ + sinα·sinβ","cosα·cosβ − sinα·sinβ","sinα·cosβ + cosα·sinβ","sinα·cosβ − cosα·sinβ"],h:"Косинус разности: плюс!"},{q:"sin 2α =",a:"2·sinα·cosα",o:["2·sinα·cosα","sin²α + cos²α","cos²α − sin²α","2·cos²α − 1"],h:"Двойной угол"},{q:"cos 2α =",a:"cos²α − sin²α",o:["cos²α − sin²α","2·sinα·cosα","sin²α + cos²α","sin²α − cos²α"],h:"Также = 1−2sin²α = 2cos²α−1"},{q:"sin²α + cos²α =",a:"1",o:["1","0","2","sin2α"],h:"Основное тождество"},{q:"1 + tg²α =",a:"1/cos²α",o:["1/cos²α","1/sin²α","cos²α","sin²α"],h:"Следствие из sin²+cos²=1"},{q:"1 + ctg²α =",a:"1/sin²α",o:["1/sin²α","1/cos²α","sin²α","cos²α"],h:"Следствие из sin²+cos²=1"},{q:"sin(π−α) =",a:"sinα",o:["sinα","−sinα","cosα","−cosα"],h:"π → не меняется, II четв. → sin+"},{q:"cos(π−α) =",a:"−cosα",o:["−cosα","cosα","sinα","−sinα"],h:"π → не меняется, II четв. → cos−"},{q:"sin(π/2−α) =",a:"cosα",o:["cosα","sinα","−cosα","−sinα"],h:"π/2 → МЕНЯЕТСЯ sin↔cos"},{q:"cos(π/2−α) =",a:"sinα",o:["sinα","cosα","−sinα","−cosα"],h:"π/2 → МЕНЯЕТСЯ cos↔sin"},{q:"sin(π+α) =",a:"−sinα",o:["−sinα","sinα","cosα","−cosα"],h:"π → не меняется, III четв. → sin−"},{q:"cos(π+α) =",a:"−cosα",o:["−cosα","cosα","−sinα","sinα"],h:"π → не меняется, III четв. → cos−"},{q:"tg α = sin α / ?",a:"cos α",o:["cos α","sin α","tg α","1"],h:"tg = sin/cos"},{q:"ctg α = cos α / ?",a:"sin α",o:["sin α","cos α","tg α","1"],h:"ctg = cos/sin"},{q:"tg 2α =",a:"2tgα/(1−tg²α)",o:["2tgα/(1−tg²α)","2tgα/(1+tg²α)","tg²α−1","(1−tg²α)/2tgα"],h:"Двойной угол тангенса"}]);return mkQ(o.q,o.a,shuffle([...o.o]),o.h,"Тригонометрия","#dc2626","#fee2e2",null,!0)}}function genPow(){const o=pick([()=>{const o=pick([2,3,5,7]),a=pick([2,3,4]);return[`${o}${sup(a)}=?`,""+Math.pow(o,a),`${o}${sup(a)} = ${""+o+" · ".repeat(a-1)+o} = ${Math.pow(o,a)}`]},()=>{const o=pick([[4,"2"],[9,"3"],[16,"4"],[25,"5"],[36,"6"],[49,"7"],[64,"8"],[81,"9"],[100,"10"],[144,"12"]]);return[`√${o[0]}=?`,o[1],`Какое число при умножении на себя даёт ${o[0]}? ${o[1]}×${o[1]}=${o[0]}`]},()=>{const o=pick([2,3,4,5]);return[`∛${o*o*o}=?`,""+o,`Какое число в кубе = ${o*o*o}? ${o}×${o}×${o}=${o*o*o}`]},()=>{const o=pick([2,3,5]),a=pick([2,3]),e=pick([1,2,3]);return[`${o}${sup(a)}·${o}${sup(e)}=${o}${sup("?")}. ?=`,""+(a+e),`При умножении степеней с одинаковым основанием показатели складываются: ${a}+${e}=${a+e}`]}])(),a=parseInt(o[1]),e=()=>""+Math.max(0,a+pick([-3,-2,1,2,3,5]));return mkQ(o[0],o[1],fillW(o[1],[e,e,e]),o[2],"Степени","#16a34a","#dcfce7",null,!0)}function genEq(){const o=pick([()=>{const o=pick([1,2,3,-1,-2]),a=pick([-5,-3,-1,1,3,5]),e=pick([-4,-2,1,3]);return{q:`${1===o?"":-1===o?"-":o}x+${e}=${o*a+e}. x=?`,a:""+a,h:"Перенеси и раздели",pair:!1}},()=>{let o=pick([-3,-2,-1,1,2,3,4]),a=pick([-2,-1,1,2,3,5]);o===a&&a++;const e=-(o+a),n=o*a;return{q:`x²${0===e?"":e>0?"+"+e+"x":e+"x"}${0===n?"":n>0?"+"+n:""+n}=0. Корни?`,a:[o,a].sort((o,a)=>o-a).join(" и "),h:"Виета: сумма="+(o+a)+", произв.="+n,pair:!0}},()=>{const o=pick([2,3,4,5,6,7,8]);return{q:`x²=${o*o}, x>0. x=?`,a:""+o,h:"√"+o*o+"="+o,pair:!1}}])();if(o.pair){const a=o.a.split(" и ").map(Number),e=()=>{const o=pick([-2,-1,1,2]);return[a[0]+o,a[1]+pick([-1,1,2])].sort((o,a)=>o-a).join(" и ")};return mkQ(o.q,o.a,fillW(o.a,[e,e,e]),o.h,"Уравнения","#2563eb","#dbeafe",null,!0)}const a=()=>""+(parseInt(o.a)+pick([-3,-1,1,2]));return mkQ(o.q,o.a,fillW(o.a,[a,a,a]),o.h,"Уравнения","#2563eb","#dbeafe",null,!0)}function genIneq(){const o=pick([1,2,3,-1,-2,-3]),a=pick([-5,-4,-3,-2,-1,1,2,3,4,5]),e=-o*a,n=pick([">","<","≥","≤"]),t=o>0?"x "+n+" "+a:"x "+{">":"<","<":">","≥":"≤","≤":"≥"}[n]+" "+a,h=["x > "+a,"x < "+a,"x ≥ "+a,"x ≤ "+a,"x > "+-a,"x < "+-a,"x ≥ "+-a,"x ≤ "+-a].filter(o=>o!==t);return mkQ(`${1===o?"":-1===o?"-":o}x${e>0?" + "+e:e<0?" - "+-e:""} ${n} 0`,t,fillW(t,[()=>h[0],()=>h[1],()=>h[2]]),o<0?"На (−) → знак меняется":"Перенеси","Неравенства","#7c3aed","#ede9fe",null,!0)}
+  if(typeof window.__wave86sApplyGrade10Subject === 'function'){
+    window.__wave86sApplyGrade10Subject("alg", { topics:[
+      {id:"trig",nm:"Тригонометрия",gen:genTrig,th:ALG_TH.trig,dot:"#dc2626"},
+      {id:"pow",nm:"Степени и корни",gen:genPow,th:ALG_TH.pow,dot:"#16a34a"},
+      {id:"eq",nm:"Уравнения",gen:genEq,th:ALG_TH.eq,dot:"#2563eb"},
+      {id:"ineq",nm:"Неравенства",gen:genIneq,th:ALG_TH.ineq,dot:"#7c3aed"}
+    ] });
+  }
+})();
+
+/* wave87v rich-content injection: grade10 alg */
+(function(){
+  if (String(window.GRADE_NUM || '') !== '10' || typeof window.__wave86sApplyGrade10Subject !== 'function') return;
+  function mix(arr){
+    var copy = Array.isArray(arr) ? arr.slice() : [];
+    if (typeof shuffle === 'function') return shuffle(copy).slice(0, 4);
+    for (var i = copy.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = copy[i]; copy[i] = copy[j]; copy[j] = tmp;
+    }
+    return copy.slice(0, 4);
+  }
+  var recentRows = Object.create(null);
+  function pickRow(rows, key){
+    var row = rows[Math.floor(Math.random() * rows.length)];
+    for (var attempt = 0; attempt < 4 && rows.length > 1 && recentRows[key] === row.q; attempt++) {
+      row = rows[Math.floor(Math.random() * rows.length)];
+    }
+    recentRows[key] = row.q;
+    return row;
+  }
+  function clonePairs(pairs){
+    return (Array.isArray(pairs) ? pairs : []).map(function(pair){
+      return Array.isArray(pair) ? [pair[0], pair[1]] : pair;
+    });
+  }
+  function mergeExtra(row, extra){
+    if (extra && typeof extra === 'object') {
+      Object.keys(extra).forEach(function(key){ row[key] = extra[key]; });
+    }
+    return row;
+  }
+  function attachRowMeta(item, row){
+    if (!item || !row) return item;
+    if (row.interactionType) item.interactionType = row.interactionType;
+    if (Array.isArray(row.errorSteps)) item.errorSteps = row.errorSteps.slice();
+    if (Array.isArray(row.sequenceItems)) item.sequenceItems = row.sequenceItems.slice();
+    if (Array.isArray(row.sequencePool)) item.sequencePool = row.sequencePool.slice();
+    if (Array.isArray(row.matchPairs)) item.matchPairs = clonePairs(row.matchPairs);
+    if (Array.isArray(row.matchOptions)) item.matchOptions = row.matchOptions.slice();
+    return item;
+  }
+  function serializeSequence(items){
+    return (Array.isArray(items) ? items : []).map(function(item){ return String(item); }).join(' → ');
+  }
+  function uniqueStrings(items){
+    var out = [];
+    (Array.isArray(items) ? items : []).forEach(function(item){
+      item = String(item);
+      if (item && out.indexOf(item) === -1) out.push(item);
+    });
+    return out;
+  }
+  function sequenceDistractors(items){
+    var base = (Array.isArray(items) ? items : []).slice();
+    if (base.length < 3) return [];
+    var vars = [];
+    function add(seq){
+      var value = serializeSequence(seq);
+      if (value !== serializeSequence(base) && vars.indexOf(value) === -1) vars.push(value);
+    }
+    add([base[0], base[2], base[1]].concat(base.slice(3)));
+    add(base.slice().reverse());
+    add(base.slice(1).concat(base[0]));
+    add([base[0]].concat(base.slice(2), [base[1]]));
+    return vars.slice(0, 3);
+  }
+  function sequenceRow(q, items, h, ex, extra){
+    var steps = (Array.isArray(items) ? items : []).slice();
+    return mergeExtra({
+      q: q,
+      a: serializeSequence(steps),
+      o: sequenceDistractors(steps),
+      h: h || '',
+      ex: ex || h || '',
+      interactionType: 'sequence',
+      sequenceItems: steps.slice(),
+      sequencePool: mix(steps).slice(0, steps.length)
+    }, extra);
+  }
+  function serializePairs(pairs, rights){
+    return (Array.isArray(pairs) ? pairs : []).map(function(pair, idx){
+      return String(pair[0]) + ' → ' + String(rights[idx]);
+    }).join(' | ');
+  }
+  function matchDistractors(pairs){
+    var rights = (Array.isArray(pairs) ? pairs : []).map(function(pair){ return String(pair[1]); });
+    var vars = [];
+    function add(candidate){
+      var value = serializePairs(pairs, candidate);
+      if (value !== serializePairs(pairs, rights) && vars.indexOf(value) === -1) vars.push(value);
+    }
+    for (var shift = 1; shift < rights.length; shift++) add(rights.slice(shift).concat(rights.slice(0, shift)));
+    add(rights.slice().reverse());
+    return vars.slice(0, 3);
+  }
+  function matchRow(q, pairs, h, ex, extra){
+    var rows = clonePairs(pairs);
+    var rights = rows.map(function(pair){ return String(pair[1]); });
+    return mergeExtra({
+      q: q,
+      a: serializePairs(rows, rights),
+      o: matchDistractors(rows),
+      h: h || '',
+      ex: ex || h || '',
+      interactionType: 'match',
+      matchPairs: rows,
+      matchOptions: mix(rights).slice(0, rights.length)
+    }, extra);
+  }
+  function errorRow(q, steps, answerIndex, h, ex, extra){
+    var rows = (Array.isArray(steps) ? steps : []).slice();
+    return mergeExtra({
+      q: q,
+      a: rows[answerIndex],
+      o: rows.filter(function(_item, idx){ return idx !== answerIndex; }),
+      h: h || '',
+      ex: ex || h || '',
+      interactionType: 'find-error',
+      errorSteps: rows
+    }, extra);
+  }
+  function bank(rows, tag, color, bg){
+    var row = pickRow(rows, tag);
+    var item = mkQ(row.q, row.a, mix([row.a].concat(row.o || [])), row.h || '', tag, color, bg, row.code || null, !!row.isMath, row.ex || row.h || '');
+    return attachRowMeta(item, row);
+  }
+  var TH = `<h3>Формулы и преобразования</h3><div class="fm">logₐ(xy)=logₐx+logₐy<br>logₐ(x/y)=logₐx-logₐy<br>sin²x+cos²x=1<br>sin2x=2sinx·cosx<br>cos2x=cos²x-sin²x</div><p>Эта тема тренирует распознавание ключевых формул без длинных выкладок.</p>`;
+  function gen(){
+    return bank([
+      {q:'Чему равен log₂8?', a:'3', o:['2','4','8'], h:'2³ = 8.', ex:'Логарифм показывает степень, в которую нужно возвести основание 2.', isMath:true},
+      {q:'Какое тождество верно?', a:'sin²x + cos²x = 1', o:['sin²x - cos²x = 1','tg x = sin x·cos x','sin 2x = sin x + cos x'], h:'Это базовое тригонометрическое тождество.', ex:'Сумма квадратов синуса и косинуса равна 1.', isMath:true},
+      {q:'Чему равен sin 2x?', a:'2sinx·cosx', o:['sin²x + cos²x','2tgx','cos²x - sin²x'], h:'Формула двойного угла для синуса.', ex:'Запомни связку: sin 2x = 2sinx·cosx.', isMath:true},
+      {q:'Как записать logₐ(xy)?', a:'logₐx + logₐy', o:['logₐx · logₐy','logₐx - logₐy','logₐ(x+y)'], h:'Логарифм произведения превращается в сумму логарифмов.', ex:'Это одно из основных свойств логарифмов.', isMath:true},
+      {q:'Найди ошибочную формулу.', a:'logₐ(x/y) = logₐx + logₐy', o:['cos 2x = cos²x - sin²x','logₐ(xy) = logₐx + logₐy','sin²x + cos²x = 1'], h:'Для частного логарифмы вычитают.', ex:'Верная формула: logₐ(x/y) = logₐx - logₐy.', isMath:true},
+      {q:'Чему равен cos 2x?', a:'cos²x - sin²x', o:['2sinx·cosx','1 + tg²x','sin²x + cos²x'], h:'Это формула двойного угла для косинуса.', ex:'Также можно помнить эквиваленты 1-2sin²x и 2cos²x-1.', isMath:true},
+      errorRow(
+        'Найди первый шаг с ошибкой в вычислении log₂(8/2).',
+        [
+          'log₂(8/2) = log₂8 - log₂2',
+          'Это равно 3 - 1',
+          'Получаем 1',
+          'Значит, log₂(8/2) = 1'
+        ],
+        2,
+        'После свойства логарифма нужно правильно посчитать разность: 3 - 1 = 2.',
+        'Первый неверный шаг — третий. Верный ответ: log₂(8/2) = log₂4 = 2.',
+        { isMath:true }
+      )
+    ], 'Формулы и преобразования', '#dc2626', '#fee2e2');
+  }
+  window.__wave86sApplyGrade10Subject('alg', { topics:[
+    { id:'formula10w87v', nm:'Формулы и преобразования', gen:gen, th:TH, dot:'#0d9488' }
+  ] });
+})();

@@ -1,0 +1,6 @@
+#wave24-bottom-nav .is-active{color:#1d4ed8}
+
+/* wave92p: containment/performance guardrails, no UI changes */
+.card,.qcard,.icard,.rcard,.opts,.gap8,#sg,#tl,#prog-content,#main-search-slot,#topic-search-slot{contain:content;}
+@supports (content-visibility:auto){body:not(.no-cv) .card,body:not(.no-cv) .icard{content-visibility:auto;contain-intrinsic-size:140px 220px;}}
+#s-play .qcard,#s-play .opts,#s-play #fba,#s-play #ha,#s-play #pa{contain:layout style;content-visibility:visible;}
